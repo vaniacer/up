@@ -1,0 +1,15 @@
+{% extends "ups/base.html" %}
+
+{% block content %}
+
+    <p>Projects</p>
+    <ul>
+        {% for project in projects %}
+            <li>
+                <a href="{% url 'ups:project' project.id %}">{{ project }}</a>
+            </li>
+            {% empty %}
+        {% endfor %}
+    </ul>
+
+{% endblock content %}

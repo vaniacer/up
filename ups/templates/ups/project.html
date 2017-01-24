@@ -1,0 +1,23 @@
+{% extends 'ups/base.html' %}
+
+{% block content %}
+
+    <p>Project: {{ project }}</p>
+
+    <p>Servers:</p>
+    <ul>
+        {% for server in servers %}
+            <li>
+                <p>{{ server.name|linebreaks }}</p>
+                <p>{{ server.addr|linebreaks }}</p>
+                <p>{{ server.desc|linebreaks }}</p>
+                <p>{{ server.date|date:'M d, Y H:i' }}</p>
+            </li>
+            {% empty %}
+            <li>
+                There are no servers for this project yet.
+            </li>
+        {% endfor %}
+    </ul>
+
+{% endblock content %}
