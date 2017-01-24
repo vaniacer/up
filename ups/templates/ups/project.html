@@ -7,6 +7,10 @@
         <p>{{ project.desc|linebreaks }}</p>
     </ul>
 
+    <p>
+        <a href="{% url 'ups:edit_project' project.id %}">edit project</a>
+    </p>
+
     <p>Servers:</p>
 
     <p>
@@ -20,6 +24,9 @@
                 <p>{{ server.addr|linebreaks }}</p>
                 <p>{{ server.desc|linebreaks }}</p>
                 <p>{{ server.date|date:'M d, Y H:i' }}</p>
+                <p>
+                    <a href="{% url 'ups:edit_server' server.id %}">edit server</a>
+                </p>
             </li>
             {% empty %}
             <li>

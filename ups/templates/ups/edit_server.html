@@ -1,0 +1,15 @@
+{% extends "ups/base.html" %}
+
+{% block content %}
+
+    <p><a href="{% url 'ups:project' project.id %}">{{ project }}</a></p>
+
+    <p>Edit server:</p>
+
+    <form action="{% url 'ups:edit_server' server.id %}" method='post'>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button name="submit">save changes</button>
+    </form>
+
+{% endblock content %}
