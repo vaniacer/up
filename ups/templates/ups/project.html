@@ -1,4 +1,4 @@
-{% extends 'ups/base.html' %}
+{% extends "ups/base.html" %}
 
 {% block content %}
 
@@ -8,6 +8,11 @@
     </ul>
 
     <p>Servers:</p>
+
+    <p>
+        <a href="{% url 'ups:new_server' project.id %}">add new server</a>
+    </p>
+
     <ul>
         {% for server in servers %}
             <li>

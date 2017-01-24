@@ -15,5 +15,5 @@ urlpatterns = [
 	# Страница для добавления нового проекта
 	url(r'^new_project/$', views.new_project, name='new_project'),
 	# Страница для добавления нового сервера
-	url(r'^new_server/(?P<server_id>\d+)/$', views.new_server, name='new_server'),
+	url(r'^new_server/(?P<project_id>\d+)/$', views.new_server, name='new_server'),
 ]

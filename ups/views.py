@@ -27,7 +27,7 @@ def project(request, project_id):
 
 
 def new_project(request):
-	"""Определяет новую тему."""
+	"""Определяет новый проект."""
 	if request.method != 'POST':
 		# Данные не отправлялись; создается пустая форма.
 		form = ProjectForm()
@@ -43,9 +43,9 @@ def new_project(request):
 	return render(request, 'ups/new_project.html', context)
 
 
-def new_server(request, topic_id):
-	"""Добавляет новую запись по конкретной теме."""
-	server = Server.objects.get(id=topic_id)
+def new_server(request, project_id):
+	"""Добавляет новый сервер."""
+	project = Project.objects.get(id=project_id)
 
 	if request.method != 'POST':
 		# Данные не отправлялись; создается пустая форма.
@@ -56,9 +56,9 @@ def new_server(request, topic_id):
 
 	if form.is_valid():
 		new_server = form.save(commit=False)
-		new_server.server = server
+		new_server.project = project
 		new_server.save()
-		return HttpResponseRedirect(reverse('ups:server', args=[server_id]))
+		return HttpResponseRedirect(reverse('ups:new_server', args=[project_id]))
 
-	context = {'server': server, 'form': form}
+	context = {'project': project, 'form': form}
 	return render(request, 'ups/new_server.html', context)

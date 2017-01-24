@@ -1,14 +1,14 @@
-{% extends "learning_logs/base.html" %}
+{% extends "ups/base.html" %}
 
 {% block content %}
 
-   <p><a href="{% url 'learning_logs:topic' topic.id %}">{{ topic }}</a></p>
+    <p><a href="{% url 'ups:project' project.id %}">{{ project }}</a></p>
 
-  <p>Add a new entry:</p>
-   <form action="{% url 'learning_logs:new_entry' topic.id %}" method='post'>
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button name='submit'>add entry</button>
-  </form>
+    <p>Add a new server:</p>
+    <form action="{% url 'ups:new_server' project.id %}" method='post'>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button name='submit'>add server</button>
+    </form>
 
 {% endblock content %}
