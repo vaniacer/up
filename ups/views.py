@@ -3,7 +3,7 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from .models import Project, Server
+from .models import Project
 from .forms  import ProjectForm, ServerForm
 
 def index(request):
@@ -58,7 +58,7 @@ def new_server(request, project_id):
 		new_server = form.save(commit=False)
 		new_server.project = project
 		new_server.save()
-		return HttpResponseRedirect(reverse('ups:new_server', args=[project_id]))
+		return HttpResponseRedirect(reverse('ups:project', args=[project_id]))
 
 	context = {'project': project, 'form': form}
 	return render(request, 'ups/new_server.html', context)

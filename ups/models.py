@@ -15,7 +15,7 @@ class Project(models.Model):
 
 class Server(models.Model):
 	"""Серверы проекта."""
-	server = models.ForeignKey(Project)
+	project = models.ForeignKey(Project)
 	name = models.CharField(max_length=200)
 	addr = models.CharField(max_length=200)
 	wdir = models.CharField(max_length=200)
