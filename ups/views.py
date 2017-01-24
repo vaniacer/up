@@ -1,7 +1,10 @@
 # -*- encoding: utf-8 -*-
 
 from django.shortcuts import render
+from django.http import HttpResponseRedirect
+from django.core.urlresolvers import reverse
 from .models import Project, Server
+from .forms  import ProjectForm, ServerForm
 
 def index(request):
 	"""Домашняя страница приложения Learning Log"""
@@ -21,3 +24,41 @@ def project(request, project_id):
 	servers = project.server_set.order_by('name')
 	context = {'project': project, 'servers': servers}
 	return render(request, 'ups/project.html', context)
+
+
+def new_project(request):
+	"""Определяет новую тему."""
+	if request.method != 'POST':
+		# Данные не отправлялись; создается пустая форма.
+		form = ProjectForm()
+	else:
+		# Отправлены данные POST; обработать данные.
+		form = ProjectForm(request.POST)
+
+	if form.is_valid():
+		form.save()
+		return HttpResponseRedirect(reverse('ups:projects'))
+
+	context = {'form': form}
+	return render(request, 'ups/new_project.html', context)
+
+
+def new_server(request, topic_id):
+	"""Добавляет новую запись по конкретной теме."""
+	server = Server.objects.get(id=topic_id)
+
+	if request.method != 'POST':
+		# Данные не отправлялись; создается пустая форма.
+		form = ServerForm()
+	else:
+		# Отправлены данные POST; обработать данные.
+		form = ServerForm(data=request.POST)
+
+	if form.is_valid():
+		new_server = form.save(commit=False)
+		new_server.server = server
+		new_server.save()
+		return HttpResponseRedirect(reverse('ups:server', args=[server_id]))
+
+	context = {'server': server, 'form': form}
+	return render(request, 'ups/new_server.html', context)

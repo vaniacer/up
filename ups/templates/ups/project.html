@@ -3,6 +3,9 @@
 {% block content %}
 
     <p>Project: {{ project }}</p>
+    <ul>
+        <p>{{ project.desc|linebreaks }}</p>
+    </ul>
 
     <p>Servers:</p>
     <ul>
