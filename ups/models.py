@@ -4,15 +4,18 @@ from django.db import models
 from django.contrib.auth.models import Group
 
 
+# Create dummy group
+dummy = Group.objects.get_or_create(name='dummy')
+
 class Project(models.Model):
 	"""Проект: web-исполнение, web-нси, web-соглашения"""
 	name = models.CharField(max_length=200)
 	desc = models.TextField()
 	date = models.DateTimeField(auto_now_add=True)
-	view = models.ForeignKey(Group, related_name='view')
-	dump = models.ForeignKey(Group, related_name='dump')
-	updt = models.ForeignKey(Group, related_name='updt')
-	upld = models.ForeignKey(Group, related_name='upld')
+	view = models.ForeignKey(Group, related_name='view', default='dummy')
+	dump = models.ForeignKey(Group, related_name='dump', default='dummy')
+	updt = models.ForeignKey(Group, related_name='updt', default='dummy')
+	upld = models.ForeignKey(Group, related_name='upld', default='dummy')
 
 	def __unicode__(self):
 		"""Возвращает строковое представление модели."""

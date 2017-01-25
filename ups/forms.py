@@ -7,8 +7,13 @@ from .models import Project, Server
 class ProjectForm(forms.ModelForm):
 	class Meta:
 		model = Project
-		fields = ['name', 'desc']
-		labels = {'name': 'Project name', 'desc': 'Project description'}
+		fields = ['name', 'desc', 'view', 'dump', 'updt', 'upld']
+		labels = {'name': 'Project name',
+				  'desc': 'Project description',
+				  'view': 'View group',
+				  'dump': 'DB access group',
+				  'updt': 'Update group',
+				  'upld': 'Upload group'}
 
 
 class ServerForm(forms.ModelForm):

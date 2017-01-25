@@ -3,9 +3,16 @@
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
+from django.contrib.auth.models import Group
 from .forms  import ProjectForm, ServerForm
 from django.shortcuts import render
 from .models import Project, Server
+
+
+def create_groups(project):
+	groups = ('view', 'dump', 'updt', 'upld')
+	for group in groups:
+		Group.objects.get_or_create(name=project + '_' + group)
 
 
 def index(request):
@@ -42,6 +49,7 @@ def new_project(request):
 
 	if form.is_valid():
 		form.save()
+		create_groups(request.POST['name'])
 		return HttpResponseRedirect(reverse('ups:projects'))
 
 	context = {'form': form}
