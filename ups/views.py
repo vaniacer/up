@@ -8,11 +8,22 @@ from .forms  import ProjectForm, ServerForm
 from django.shortcuts import render
 from .models import Project, Server
 
+groups = ('view', 'dump', 'updt', 'upld')
 
 def create_groups(project):
-	groups = ('view', 'dump', 'updt', 'upld')
+	"""Создает группы для каждого нового проекта."""
 	for group in groups:
 		Group.objects.get_or_create(name=project + '_' + group)
+
+
+def check_groups(project):
+	"""Подключает созанные группы к проекту."""
+	names = {}
+	if project.view.name == 'dummy':
+		for group in groups:
+			name = {group: project.name + '_' + group}
+			names.update(name)
+		print names
 
 
 def index(request):
@@ -106,6 +117,7 @@ def edit_project(request, project_id):
 
 	if request.method != 'POST':
 		# Исходный запрос; форма заполняется данными текущей записи.
+		check_groups(project)
 		form = ProjectForm(instance=project)
 	else:
 		# Отправка данных POST; обработать данные.
