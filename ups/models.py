@@ -5,7 +5,7 @@ from django.contrib.auth.models import Group
 
 
 # Create dummy group
-dummy = Group.objects.get_or_create(name='dummy')
+Group.objects.get_or_create(name='dummy')
 
 class Project(models.Model):
 	"""Проект: web-исполнение, web-нси, web-соглашения"""

@@ -8,22 +8,29 @@ from .forms  import ProjectForm, ServerForm
 from django.shortcuts import render
 from .models import Project, Server
 
-groups = ('view', 'dump', 'updt', 'upld')
 
-def create_groups(project):
+def create_groups(project_name):
 	"""Создает группы для каждого нового проекта."""
+	groups = ('view', 'dump', 'updt', 'upld')
 	for group in groups:
-		Group.objects.get_or_create(name=project + '_' + group)
+		Group.objects.get_or_create(name=project_name + '_' + group)
 
 
 def check_groups(project):
-	"""Подключает созанные группы к проекту."""
-	names = {}
+	"""Подключает созданные группы к проекту."""
 	if project.view.name == 'dummy':
-		for group in groups:
-			name = {group: project.name + '_' + group}
-			names.update(name)
-		print names
+		for group in Group.objects.all():
+			if group.name == project.name + '_view':
+				project.view = group
+
+			if group.name == project.name + '_dump':
+				project.dump = group
+
+			if group.name == project.name + '_updt':
+				project.updt = group
+
+			if group.name == project.name + '_upld':
+				project.upld = group
 
 
 def index(request):
