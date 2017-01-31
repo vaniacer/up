@@ -4,14 +4,12 @@ from django.db import models
 from django.contrib.auth.models import Group
 
 
-# Create dummy group
-Group.objects.get_or_create(name='dummy')
-
 class Project(models.Model):
-	"""Проект: web-исполнение, web-нси, web-соглашения"""
+	"""Проект: web-исполнение, web-нси, web-соглашения..."""
 	name = models.CharField(max_length=200)
 	desc = models.TextField()
 	date = models.DateTimeField(auto_now_add=True)
+	admn = models.ForeignKey(Group, related_name='admn', default='dummy')
 	view = models.ForeignKey(Group, related_name='view', default='dummy')
 	dump = models.ForeignKey(Group, related_name='dump', default='dummy')
 	updt = models.ForeignKey(Group, related_name='updt', default='dummy')

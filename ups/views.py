@@ -11,25 +11,24 @@ from .models import Project, Server
 
 def create_groups(project_name):
 	"""Создает группы для каждого нового проекта."""
-	groups = ('view', 'dump', 'updt', 'upld')
+	groups = ('admn', 'view', 'dump', 'updt', 'upld')
 	for group in groups:
 		Group.objects.get_or_create(name=project_name + '_' + group)
 
 
 def check_groups(project):
 	"""Подключает созданные группы к проекту."""
-	if project.view.name == 'dummy':
+	if project.admn.name == 'dummy':
 		for group in Group.objects.all():
-			if group.name == project.name + '_view':
+			if group.name == project.name + '_admn':
+				project.admn = group
+			elif group.name == project.name + '_view':
 				project.view = group
-
-			if group.name == project.name + '_dump':
+			elif group.name == project.name + '_dump':
 				project.dump = group
-
-			if group.name == project.name + '_updt':
+			elif group.name == project.name + '_updt':
 				project.updt = group
-
-			if group.name == project.name + '_upld':
+			elif group.name == project.name + '_upld':
 				project.upld = group
 
 
