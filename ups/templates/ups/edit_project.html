@@ -9,7 +9,7 @@
     <form action="{% url 'ups:edit_project' project.id %}" method='post'>
         {% csrf_token %}
         {{ form.as_p }}
-        <button name="submit">save changes</button>
+        <button name="submit">Save changes</button>
     </form>
 
 {% endblock content %}

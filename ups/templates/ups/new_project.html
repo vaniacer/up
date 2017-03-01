@@ -6,7 +6,7 @@
     <form action="{% url 'ups:new_project' %}" method='post'>
         {% csrf_token %}
         {{ form.as_p }}
-        <button name="submit">add project</button>
+        <button name="submit">Add Project</button>
     </form>
 
 {% endblock content %}

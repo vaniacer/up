@@ -8,7 +8,7 @@
     <form action="{% url 'ups:new_server' project.id %}" method='post'>
         {% csrf_token %}
         {{ form.as_p }}
-        <button name='submit'>add server</button>
+        <button name='submit'>Add server</button>
     </form>
 
 {% endblock content %}

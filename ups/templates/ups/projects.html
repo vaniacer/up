@@ -2,16 +2,19 @@
 
 {% block content %}
 
-    <p>Projects</p>
+    <p>Projects:</p>
     <ul>
         {% for project in projects %}
             <li>
                 <a href="{% url 'ups:project' project.id %}">{{ project }}</a>
             </li>
             {% empty %}
+            <li>
+                There are no projects yet.
+            </li>
         {% endfor %}
     </ul>
 
-    <a href="{% url 'ups:new_project' %}">Add a new project:</a>
+    <a href="{% url 'ups:new_project' %}">Add new project</a>
 
 {% endblock content %}

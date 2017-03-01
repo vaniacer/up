@@ -1,39 +1,16 @@
 # -*- encoding: utf-8 -*-
 
 from django.contrib.auth.decorators import login_required
+from .forms import ProjectForm, ServerForm, UpdateForm
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from django.contrib.auth.models import Group
-from .forms  import ProjectForm, ServerForm
 from django.shortcuts import render
-from .models import Project, Server
-
-
-def create_groups(project_name):
-	"""Создает группы для каждого нового проекта."""
-	groups = ('admn', 'view', 'dump', 'updt', 'upld')
-	for group in groups:
-		Group.objects.get_or_create(name=project_name + '_' + group)
-
-
-def check_groups(project):
-	"""Подключает созданные группы к проекту."""
-	if project.admn.name == 'dummy':
-		for group in Group.objects.all():
-			if group.name == project.name + '_admn':
-				project.admn = group
-			elif group.name == project.name + '_view':
-				project.view = group
-			elif group.name == project.name + '_dump':
-				project.dump = group
-			elif group.name == project.name + '_updt':
-				project.updt = group
-			elif group.name == project.name + '_upld':
-				project.upld = group
+from .models import Project, Server, Update
+from .groups import *
 
 
 def index(request):
-	"""Домашняя страница приложения Learning Log"""
+	"""Домашняя страница приложения update server"""
 	return render(request, 'ups/index.html')
 
 
@@ -47,10 +24,11 @@ def projects(request):
 
 @login_required
 def project(request, project_id):
-	"""Выводит один проект и все его серверы."""
+	"""Выводит один проект и все его серверы и пакеты обновлений."""
 	project = Project.objects.get(id=project_id)
 	servers = project.server_set.order_by('name')
-	context = {'project': project, 'servers': servers}
+	updates = project.update_set.order_by('desc')
+	context = {'project': project, 'servers': servers, 'updates': updates}
 	return render(request, 'ups/project.html', context)
 
 
@@ -59,15 +37,16 @@ def new_project(request):
 	"""Определяет новый проект."""
 	if request.method != 'POST':
 		# Данные не отправлялись; создается пустая форма.
+		create_dummy()
 		form = ProjectForm()
 	else:
 		# Отправлены данные POST; обработать данные.
 		form = ProjectForm(request.POST)
 
-	if form.is_valid():
-		form.save()
-		create_groups(request.POST['name'])
-		return HttpResponseRedirect(reverse('ups:projects'))
+		if form.is_valid():
+			form.save()
+			create_groups(request.POST['name'])
+			return HttpResponseRedirect(reverse('ups:projects'))
 
 	context = {'form': form}
 	return render(request, 'ups/new_project.html', context)
@@ -85,35 +64,36 @@ def new_server(request, project_id):
 		# Отправлены данные POST; обработать данные.
 		form = ServerForm(data=request.POST)
 
-	if form.is_valid():
-		new_server = form.save(commit=False)
-		new_server.project = project
-		new_server.save()
-		return HttpResponseRedirect(reverse('ups:project', args=[project_id]))
+		if form.is_valid():
+			server = form.save(commit=False)
+			server.project = project
+			server.save()
+			return HttpResponseRedirect(reverse('ups:project', args=[project_id]))
 
 	context = {'project': project, 'form': form}
 	return render(request, 'ups/new_server.html', context)
 
 
 @login_required
-def edit_server(request, server_id):
-	"""Редактирует существующий сервер."""
-	server = Server.objects.get(id=server_id)
-	project = server.project
+def new_update(request, project_id):
+	"""Добавляет новое обновление."""
+	project = Project.objects.get(id=project_id)
 
 	if request.method != 'POST':
-		# Исходный запрос; форма заполняется данными текущей записи.
-		form = ServerForm(instance=server)
+		# Данные не отправлялись; создается пустая форма.
+		form = UpdateForm()
 	else:
-		# Отправка данных POST; обработать данные.
-		form = ServerForm(instance=server, data=request.POST)
+		# Отправлены данные POST; обработать данные.
+		form = UpdateForm(request.POST, request.FILES)
 
-	if form.is_valid():
-		form.save()
-		return HttpResponseRedirect(reverse('ups:project', args=[project.id]))
+		if form.is_valid():
+			update = form.save(commit=False)
+			update.project = project
+			update.save()
+			return HttpResponseRedirect(reverse('ups:project', args=[project_id]))
 
-	context = {'server': server, 'project': project, 'form': form}
-	return render(request, 'ups/edit_server.html', context)
+	context = {'project': project, 'form': form}
+	return render(request, 'ups/new_update.html', context)
 
 
 @login_required
@@ -129,9 +109,51 @@ def edit_project(request, project_id):
 		# Отправка данных POST; обработать данные.
 		form = ProjectForm(instance=project, data=request.POST)
 
-	if form.is_valid():
-		form.save()
-		return HttpResponseRedirect(reverse('ups:project', args=[project.id]))
+		if form.is_valid():
+			form.save()
+			return HttpResponseRedirect(reverse('ups:project', args=[project.id]))
 
 	context = {'project': project, 'form': form}
 	return render(request, 'ups/edit_project.html', context)
+
+
+@login_required
+def edit_server(request, server_id):
+	"""Редактирует существующий сервер."""
+	server = Server.objects.get(id=server_id)
+	project = server.project
+
+	if request.method != 'POST':
+		# Исходный запрос; форма заполняется данными текущей записи.
+		form = ServerForm(instance=server)
+	else:
+		# Отправка данных POST; обработать данные.
+		form = ServerForm(instance=server, data=request.POST)
+
+		if form.is_valid():
+			form.save()
+			return HttpResponseRedirect(reverse('ups:project', args=[project.id]))
+
+	context = {'server': server, 'project': project, 'form': form}
+	return render(request, 'ups/edit_server.html', context)
+
+
+@login_required
+def edit_update(request, update_id):
+	"""Редактирует существующий пакет обновлений."""
+	update = Update.objects.get(id=update_id)
+	project = update.project
+
+	if request.method != 'POST':
+		# Исходный запрос; форма заполняется данными текущей записи.
+		form = UpdateForm(instance=update)
+	else:
+		# Отправка данных POST; обработать данные.
+		form = UpdateForm(instance=update, data=request.POST)
+
+		if form.is_valid():
+			form.save()
+			return HttpResponseRedirect(reverse('ups:project', args=[project.id]))
+
+	context = {'update': update, 'project': project, 'form': form}
+	return render(request, 'ups/edit_update.html', context)
