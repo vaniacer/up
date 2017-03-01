@@ -149,7 +149,7 @@ def edit_update(request, update_id):
 		form = UpdateForm(instance=update)
 	else:
 		# Отправка данных POST; обработать данные.
-		form = UpdateForm(instance=update, data=request.POST)
+		form = UpdateForm(request.POST, request.FILES, instance=update)
 
 		if form.is_valid():
 			form.save()

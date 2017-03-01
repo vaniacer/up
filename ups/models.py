@@ -51,4 +51,4 @@ class Update(models.Model):
 
 	def __unicode__(self):
 		"""Возвращает строковое представление модели."""
-		return self.desc
+		return self.update

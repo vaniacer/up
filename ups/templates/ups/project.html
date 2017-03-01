@@ -15,6 +15,7 @@
     <ul>
         {% for update in updates %}
             <li>
+                <p>{{ update.update|linebreaks }}</p>
                 <p>{{ update.desc|linebreaks }}</p>
                 <p>{{ update.date|date:'M d, Y H:i' }}</p>
                 <p>
