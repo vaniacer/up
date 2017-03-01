@@ -20,7 +20,7 @@ def projects(request):
 
 @login_required
 def project(request, project_id):
-	"""Выводит один проект и все его серверы и пакеты обновлений."""
+	"""Выводит один проект, все его серверы и пакеты обновлений."""
 	project = Project.objects.get(id=project_id)
 	servers = project.server_set.order_by('name')
 	updates = project.update_set.order_by('desc')
