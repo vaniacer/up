@@ -15,12 +15,10 @@
     <ul>
         {% for update in updates %}
             <li>
-                <p>{{ update.update|linebreaks }}</p>
-                <p>{{ update.desc|linebreaks }}</p>
-                <p>{{ update.date|date:'M d, Y H:i' }}</p>
-                <p>
-                    <a href="{% url 'ups:edit_update' update.id %}">Edit update</a>
-                </p>
+                <p>Filename: {{ update }}</p>
+                <p>Description: {{ update.desc|linebreaks }}</p>
+                <p>Added: {{ update.date|date:'M d, Y H:i' }}</p>
+                <p><a href="{% url 'ups:edit_update' update.id %}">Edit update</a></p>
             </li>
             {% empty %}
             <li>
@@ -36,13 +34,11 @@
     <ul>
         {% for server in servers %}
             <li>
-                <p>{{ server.name|linebreaks }}</p>
-                <p>{{ server.addr|linebreaks }}</p>
-                <p>{{ server.desc|linebreaks }}</p>
-                <p>{{ server.date|date:'M d, Y H:i' }}</p>
-                <p>
-                    <a href="{% url 'ups:edit_server' server.id %}">Edit server</a>
-                </p>
+                <p>Name: {{ server.name }}</p>
+                <p>Address: {{ server.addr }}</p>
+                <p>Description: {{ server.desc|linebreaks }}</p>
+                <p>Added: {{ server.date|date:'M d, Y H:i' }}</p>
+                <p><a href="{% url 'ups:edit_server' server.id %}">Edit server</a></p>
             </li>
             {% empty %}
             <li>

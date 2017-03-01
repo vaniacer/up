@@ -8,10 +8,6 @@ def get_upload_to(instance, filename):
 	return 'updates/%s/%s' % (instance.project.name, filename)
 
 
-def get_upload_name(instance, filename):
-	return filename
-
-
 class Project(models.Model):
 	"""Проект: web-исполнение, web-нси, web-соглашения..."""
 	admn = models.ForeignKey(Group, related_name='admn', default='dummy')
@@ -51,4 +47,5 @@ class Update(models.Model):
 
 	def __unicode__(self):
 		"""Возвращает строковое представление модели."""
-		return self.update
+		name = self.update.name.split('/')
+		return name[2]
