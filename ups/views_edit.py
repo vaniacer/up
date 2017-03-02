@@ -24,7 +24,11 @@ def edit_project(request, project_id):
 
 		if form.is_valid():
 			form.save()
-			return HttpResponseRedirect(reverse('ups:project', args=[project.id]))
+			if request.POST.get('delete'):
+				project.delete()
+				return HttpResponseRedirect(reverse('ups:projects'))
+			else:
+				return HttpResponseRedirect(reverse('ups:project', args=[project.id]))
 
 	context = {'project': project, 'form': form}
 	return render(request, 'ups/edit_project.html', context)
@@ -45,6 +49,8 @@ def edit_server(request, server_id):
 
 		if form.is_valid():
 			form.save()
+			if request.POST.get('delete'):
+				server.delete()
 			return HttpResponseRedirect(reverse('ups:project', args=[project.id]))
 
 	context = {'server': server, 'project': project, 'form': form}
@@ -66,6 +72,8 @@ def edit_update(request, update_id):
 
 		if form.is_valid():
 			form.save()
+			if request.POST.get('delete'):
+				update.delete()
 			return HttpResponseRedirect(reverse('ups:project', args=[project.id]))
 
 	context = {'update': update, 'project': project, 'form': form}

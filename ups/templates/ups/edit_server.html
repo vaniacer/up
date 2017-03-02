@@ -10,6 +10,7 @@
         {% csrf_token %}
         {{ form.as_p }}
         <button name="submit">Save changes</button>
+        <input type="submit" name="delete" value="Delete"/>
     </form>
 
 {% endblock content %}

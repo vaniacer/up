@@ -4,19 +4,19 @@
 
     <p>Project: {{ project }}</p>
     <ul>
-        <p>{{ project.desc|linebreaks }}</p>
+        <li>{{ project.desc|linebreaks }}</li>
     </ul>
 
     <p>
-        <a href="{% url 'ups:edit_project' project.id %}">edit project</a>
+        <a href="{% url 'ups:edit_project' project.id %}">Edit project</a>
     </p>
 
     <p>Updates:</p>
     <ul>
         {% for update in updates %}
             <li>
-                <p>Filename: {{ update }}</p>
-                <p>Description: {{ update.desc|linebreaks }}</p>
+                <p>{{ update }}</p>
+                <p>{{ update.desc|linebreaks }}</p>
                 <p>Added: {{ update.date|date:'M d, Y H:i' }}</p>
                 <p><a href="{% url 'ups:edit_update' update.id %}">Edit update</a></p>
             </li>
