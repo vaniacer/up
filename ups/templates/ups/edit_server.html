@@ -9,7 +9,7 @@
     <form action="{% url 'ups:edit_server' server.id %}" method='post'>
         {% csrf_token %}
         {{ form.as_p }}
-        <button name="submit">Save changes</button>
+        <button name="submit">Save changes</button> <hr>
         <input type="submit" name="delete" value="Delete"/>
     </form>
 

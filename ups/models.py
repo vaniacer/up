@@ -15,8 +15,8 @@ class Project(models.Model):
 	dump = models.ForeignKey(Group, related_name='dump', default='dummy')
 	updt = models.ForeignKey(Group, related_name='updt', default='dummy')
 	upld = models.ForeignKey(Group, related_name='upld', default='dummy')
+	name = models.CharField(max_length=200, unique=True)
 	date = models.DateTimeField(auto_now_add=True)
-	name = models.CharField(max_length=200)
 	desc = models.TextField()
 
 	def __unicode__(self):
