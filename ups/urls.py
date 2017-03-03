@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 
-"""Определяет схемы URL для learning_logs."""
+"""Определяет схемы URL для update server'a."""
 
 from django.conf.urls import url
 from . import views, views_new, views_edit

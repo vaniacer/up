@@ -78,3 +78,11 @@ def edit_update(request, update_id):
 
 	context = {'update': update, 'project': project, 'form': form}
 	return render(request, 'ups/edit_update.html', context)
+
+
+# @login_required
+# def select_update(request):
+# 	selected = request.POST.getlist('selected_updates')
+# 	print selected
+# 	context = {'project': project, 'servers': servers, 'updates': updates}
+# 	return render(request, 'ups/project.html', context)

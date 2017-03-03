@@ -24,5 +24,11 @@ def project(request, project_id):
 	project = Project.objects.get(id=project_id)
 	servers = project.server_set.order_by('name')
 	updates = project.update_set.order_by('desc')
+
+	selected_updates = request.POST.getlist('selected_updates')
+	selected_servers = request.POST.getlist('selected_servers')
+
+	print selected_updates, selected_servers
+
 	context = {'project': project, 'servers': servers, 'updates': updates}
 	return render(request, 'ups/project.html', context)

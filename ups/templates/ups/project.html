@@ -1,57 +1,62 @@
 {% extends "ups/base.html" %}
 
 {% block content %}
+    <form method='post' action="{% url 'ups:project' project.id %}">
 
-    <p>Project: {{ project }}</p>
-    <ul>
-        <li>{{ project.desc|linebreaks }}</li>
-    </ul>
+        <p>Project: {{ project }}</p>
+        <ul>
+            <li>{{ project.desc|linebreaks }}</li>
+        </ul>
 
-    <p>
-        <a href="{% url 'ups:edit_project' project.id %}">Edit project</a>
-    </p>
+        <p>
+            <a href="{% url 'ups:edit_project' project.id %}">Edit project</a>
+        </p>
 
-    <p>Updates:</p>
-    <ul>
-        {% for update in updates %}
-            <li>
-                <p>{{ update }}</p>
-                <p>{{ update.desc|linebreaks }}</p>
-                <p>Added: {{ update.date|date:'M d, Y H:i' }}</p>
-                <p><a href="{% url 'ups:edit_update' update.id %}">Edit update</a></p>
-            </li>
-            {% empty %}
-            <li>
-                There are no updates for this project yet.
-            </li>
-        {% endfor %}
-    </ul>
-    <p>
-        <a href="{% url 'ups:new_update' project.id %}">Add new update</a>
-    </p>
+        <p>Updates:</p>
+        <ul>
+            {% for update in updates %}
+                <li>
+                    <p>{{ update }}</p>
+                    <p>{{ update.desc|linebreaks }}</p>
+                    <p>Added: {{ update.date|date:'M d, Y H:i' }}</p>
+                    <p><a href="{% url 'ups:edit_update' update.id %}">Edit update</a></p>
+                    Selected: <input type="checkbox" name="selected_updates" value="{{ update.id }}" />
+                </li>
+                {% empty %}
+                <li>
+                    There are no updates for this project yet.
+                </li>
+            {% endfor %}
+        </ul>
+        <p>
+            <a href="{% url 'ups:new_update' project.id %}">Add new update</a>
+        </p>
 
-    <p>Servers:</p>
-    <ul>
-        {% for server in servers %}
-            <li>
-                <p>Name: {{ server.name }}</p>
-                <p>Address: {{ server.addr }}</p>
-                <p>Description: {{ server.desc|linebreaks }}</p>
-                <p>Added: {{ server.date|date:'M d, Y H:i' }}</p>
-                <p><a href="{% url 'ups:edit_server' server.id %}">Edit server</a></p>
-            </li>
-            {% empty %}
-            <li>
-                There are no servers for this project yet.
-            </li>
-        {% endfor %}
-    </ul>
-    <p>
-        <a href="{% url 'ups:new_server' project.id %}">Add new server</a>
-    </p>
+        <p>Servers:</p>
+        <ul>
+            {% for server in servers %}
+                <li>
+                    <p>Name: {{ server.name }}</p>
+                    <p>Address: {{ server.addr }}</p>
+                    <p>Description: {{ server.desc|linebreaks }}</p>
+                    <p>Added: {{ server.date|date:'M d, Y H:i' }}</p>
+                    <p><a href="{% url 'ups:edit_server' server.id %}">Edit server</a></p>
+                    Selected: <input type="checkbox" name="selected_servers" value="{{ server.id }}" />
+                </li>
+                {% empty %}
+                <li>
+                    There are no servers for this project yet.
+                </li>
+            {% endfor %}
+        </ul>
+        <p>
+            <a href="{% url 'ups:new_server' project.id %}">Add new server</a>
+        </p>
 
-    <p>Availible commands:</p>
-    <button name="check">Check updates</button>
-    <button name="upload">Upload updates</button>
+        <p>Availible commands:</p>
+
+        {% csrf_token %}
+        <button name="submit">Show selected updates</button> <hr>
+    </form>
 
 {% endblock content %}

@@ -35,3 +35,7 @@ class UpdateForm(forms.ModelForm):
 		fields = ['update', 'desc']
 		labels = {'update': 'Update file', 'desc': 'Update description'}
 		widgets = {'desc': forms.Textarea(attrs={'cols': 80})}
+
+
+class SelectForm(forms.Form):
+	selected = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, label="")
