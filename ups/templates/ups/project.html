@@ -20,7 +20,7 @@
                     <p>{{ update.desc|linebreaks }}</p>
                     <p>Added: {{ update.date|date:'M d, Y H:i' }}</p>
                     <p><a href="{% url 'ups:edit_update' update.id %}">Edit update</a></p>
-                    Selected: <input type="checkbox" name="selected_updates" value="{{ update.id }}" />
+                    Select: <input type="checkbox" name="selected_updates" value="{{ update.id }}" />
                 </li>
                 {% empty %}
                 <li>
@@ -41,7 +41,7 @@
                     <p>Description: {{ server.desc|linebreaks }}</p>
                     <p>Added: {{ server.date|date:'M d, Y H:i' }}</p>
                     <p><a href="{% url 'ups:edit_server' server.id %}">Edit server</a></p>
-                    Selected: <input type="checkbox" name="selected_servers" value="{{ server.id }}" />
+                    Select: <input type="checkbox" name="selected_servers" value="{{ server.id }}" />
                 </li>
                 {% empty %}
                 <li>
