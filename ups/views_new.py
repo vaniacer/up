@@ -2,11 +2,11 @@
 
 from django.contrib.auth.decorators import login_required
 from .forms import ProjectForm, ServerForm, UpdateForm
+from .groups import create_dummy, create_groups
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.shortcuts import render
 from .models import Project
-from .groups import *
 
 
 @login_required

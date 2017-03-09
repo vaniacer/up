@@ -4,9 +4,18 @@ from django.contrib.auth.decorators import login_required
 from .forms import ProjectForm, ServerForm, UpdateForm
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from django.shortcuts import render
 from .models import Project, Server, Update
+from django.shortcuts import render
 from .groups import delete_groups
+import shutil
+
+
+def delete_project(project):
+	"""Удаляет проект, группы и файлы обновлений."""
+	shutil.rmtree("up/media/updates/{}" .format(project.name))
+	delete_groups(project)
+	project.delete()
+
 
 @login_required
 def edit_project(request, project_id):
@@ -23,8 +32,7 @@ def edit_project(request, project_id):
 		if form.is_valid():
 			form.save()
 			if request.POST.get('delete'):
-				delete_groups(project)
-				project.delete()
+				delete_project(project)
 				return HttpResponseRedirect(reverse('ups:projects'))
 			else:
 				return HttpResponseRedirect(reverse('ups:project', args=[project.id]))
