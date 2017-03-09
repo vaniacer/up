@@ -8,6 +8,7 @@ from .models import Project, Server, Update
 from django.shortcuts import render
 from .groups import delete_groups
 import shutil
+import os
 
 
 def delete_project(project):
@@ -15,6 +16,12 @@ def delete_project(project):
 	shutil.rmtree("up/media/updates/{}" .format(project.name))
 	delete_groups(project)
 	project.delete()
+
+
+def delete_update(update):
+	"""Удаляет обновление и файлы обновлений."""
+	os.remove("up/media/{}" .format(update.update))
+	update.delete()
 
 
 @login_required
@@ -80,7 +87,7 @@ def edit_update(request, update_id):
 		if form.is_valid():
 			form.save()
 			if request.POST.get('delete'):
-				update.delete()
+				delete_update(update)
 			return HttpResponseRedirect(reverse('ups:project', args=[project.id]))
 
 	context = {'update': update, 'project': project, 'form': form}
