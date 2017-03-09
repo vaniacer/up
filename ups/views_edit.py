@@ -6,7 +6,6 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.shortcuts import render
 from .models import Project, Server, Update
-from .groups import *
 
 
 @login_required
@@ -16,7 +15,6 @@ def edit_project(request, project_id):
 
 	if request.method != 'POST':
 		# Исходный запрос; форма заполняется данными текущей записи.
-		check_groups(project)
 		form = ProjectForm(instance=project)
 	else:
 		# Отправка данных POST; обработать данные.
