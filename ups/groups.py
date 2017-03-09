@@ -4,26 +4,29 @@ from django.contrib.auth.models import Group
 
 
 def create_dummy():
-	"""Создает группу-пустышку."""
+	"""Создает группу-пустышку, необходимую(пока?) при создании нового проекта."""
 	Group.objects.get_or_create(name='dummy')
 
 
-def create_groups(project):
+def create_groups(project, user):
 	"""Создает группы для нового проекта, подключает созданные группы к проекту."""
 	groups = ('admn', 'view', 'dump', 'updt', 'upld')
-	for group in groups:
-		Group.objects.get_or_create(name=project.name + '_' + group)
 
-	for group in Group.objects.all():
-		if group.name == project.name + '_admn':
-			project.admn = group
-		elif group.name == project.name + '_view':
-			project.view = group
-		elif group.name == project.name + '_dump':
-			project.dump = group
-		elif group.name == project.name + '_updt':
-			project.updt = group
-		elif group.name == project.name + '_upld':
-				project.upld = group
+	for group in groups:
+
+		new_group = Group.objects.get_or_create(name=project.name + '_' + group)  # returns tuple
+		user.groups.add(new_group[0])
+		# print new_group
+
+		if new_group[0].name == project.name + '_admn':
+			project.admn = new_group[0]
+		elif new_group[0].name == project.name + '_view':
+			project.view = new_group[0]
+		elif new_group[0].name == project.name + '_dump':
+			project.dump = new_group[0]
+		elif new_group[0].name == project.name + '_updt':
+			project.updt = new_group[0]
+		elif new_group[0].name == project.name + '_upld':
+				project.upld = new_group[0]
 
 	project.save()

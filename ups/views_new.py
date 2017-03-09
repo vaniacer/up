@@ -22,8 +22,8 @@ def new_project(request):
 
 		if form.is_valid():
 			form.save()
-			current_project = Project.objects.get_or_create(name=request.POST['name'])
-			create_groups(current_project[0])
+			current_project = Project.objects.get_or_create(name=request.POST['name'])  # returns tuple
+			create_groups(current_project[0], request.user)
 			return HttpResponseRedirect(reverse('ups:projects'))
 
 	context = {'form': form}
