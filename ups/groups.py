@@ -8,6 +8,15 @@ def create_dummy():
 	Group.objects.get_or_create(name='dummy')
 
 
+def delete_groups(project):
+	"""Удаляет группы проекта."""
+	project.admn.delete()
+	project.view.delete()
+	project.dump.delete()
+	project.updt.delete()
+	project.upld.delete()
+
+
 def create_groups(project, user):
 	"""Создает группы для нового проекта, подключает созданные группы к проекту."""
 	groups = ('admn', 'view', 'dump', 'updt', 'upld')
@@ -27,6 +36,6 @@ def create_groups(project, user):
 		elif new_group[0].name == project.name + '_updt':
 			project.updt = new_group[0]
 		elif new_group[0].name == project.name + '_upld':
-				project.upld = new_group[0]
+			project.upld = new_group[0]
 
 	project.save()

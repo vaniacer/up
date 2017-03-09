@@ -6,7 +6,7 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.shortcuts import render
 from .models import Project, Server, Update
-
+from .groups import delete_groups
 
 @login_required
 def edit_project(request, project_id):
@@ -23,6 +23,7 @@ def edit_project(request, project_id):
 		if form.is_valid():
 			form.save()
 			if request.POST.get('delete'):
+				delete_groups(project)
 				project.delete()
 				return HttpResponseRedirect(reverse('ups:projects'))
 			else:
@@ -76,4 +77,3 @@ def edit_update(request, update_id):
 
 	context = {'update': update, 'project': project, 'form': form}
 	return render(request, 'ups/edit_update.html', context)
-
