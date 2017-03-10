@@ -10,6 +10,7 @@
 
         <p>
             <a href="{% url 'ups:edit_project' project.id %}">Edit project</a>
+            <a href="{% url 'ups:permit_project' project.id %}">Set permissions</a>
         </p>
 
         <p>Updates:</p>
@@ -56,7 +57,11 @@
         <p>Availible commands:</p>
 
         {% csrf_token %}
-        <hr> <input type="submit" name="select_test" value="Show selected updates"/>
+        <hr>
+        <input type="submit" name="select_test"     value="Show selected updates"/>
+        <input type="submit" name="select_upload"   value="Upload"/>
+        <input type="submit" name="select_check"    value="Check updates on servers"/>
+        <input type="submit" name="select_schedule" value="Check scheduled updates"/>
     </form>
 
 {% endblock content %}

@@ -2,7 +2,17 @@
 
 from django.contrib import admin
 from models import Project, Server, Update
+from guardian.admin import GuardedModelAdmin
 
-admin.site.register(Project)
+
+class ProjectAdmin(GuardedModelAdmin):
+	prepopulated_fields = {"slug": ("name",)}
+	list_display = ('name', 'slug', 'date')
+	search_fields = ('name', 'content')
+	ordering = ('-date',)
+	date_hierarchy = 'date'
+
+
+admin.site.register(Project, ProjectAdmin)
 admin.site.register(Server)
 admin.site.register(Update)

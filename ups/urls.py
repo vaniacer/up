@@ -20,6 +20,8 @@ urlpatterns = [
 	url(r'^new_update/(?P<project_id>\d+)/$', views_new.new_update, name='new_update'),
 	# Страница для редактирования проекта
 	url(r'^edit_project/(?P<project_id>\d+)/$', views_edit.edit_project, name='edit_project'),
+	# Страница для редактирования разрешений проекта
+	url(r'^permit_project/(?P<project_id>\d+)/$', views_edit.permit_project, name='permit_project'),
 	# Страница для редактирования сервера
 	url(r'^edit_server/(?P<server_id>\d+)/$', views_edit.edit_server, name='edit_server'),
 	# Страница для редактирования обновления

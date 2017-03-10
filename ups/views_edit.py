@@ -13,7 +13,7 @@ import os
 
 def delete_project(project):
 	"""Удаляет проект, группы и файлы обновлений."""
-	shutil.rmtree("up/media/updates/{}" .format(project.name))
+	shutil.rmtree("up/media/updates/{}" .format(project.name), ignore_errors=True)
 	delete_groups(project)
 	project.delete()
 
@@ -46,6 +46,30 @@ def edit_project(request, project_id):
 
 	context = {'project': project, 'form': form}
 	return render(request, 'ups/edit_project.html', context)
+
+
+@login_required
+def permit_project(request, project_id):
+	"""Редактирует существующий проект."""
+	project = Project.objects.get(id=project_id)
+
+	if request.method != 'POST':
+		# Исходный запрос; форма заполняется данными текущей записи.
+		form = ProjectForm(instance=project)
+	else:
+		# Отправка данных POST; обработать данные.
+		form = ProjectForm(instance=project, data=request.POST)
+
+		if form.is_valid():
+			form.save()
+			if request.POST.get('delete'):
+				delete_project(project)
+				return HttpResponseRedirect(reverse('ups:projects'))
+			else:
+				return HttpResponseRedirect(reverse('ups:project', args=[project.id]))
+
+	context = {'project': project, 'form': form}
+	return render(request, 'ups/permit_project.html', context)
 
 
 @login_required
