@@ -54,7 +54,7 @@ def project(request, project_id):
 		print ss
 
 		opt = ' '.join(ss) + ' ' + ' '.join(su)
-		run = call("up/test {}" .format(opt), shell=True)
+		run = call("up/bash/test {}" .format(opt), shell=True)
 		print run
 
 		return HttpResponseRedirect('')
