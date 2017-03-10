@@ -6,7 +6,6 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from .models import Project, Server, Update
 from django.shortcuts import render
-from .groups import delete_groups
 import shutil
 import os
 
@@ -14,13 +13,12 @@ import os
 def delete_project(project):
 	"""Удаляет проект, группы и файлы обновлений."""
 	shutil.rmtree("up/media/updates/{}" .format(project.name), ignore_errors=True)
-	delete_groups(project)
 	project.delete()
 
 
 def delete_update(update):
 	"""Удаляет обновление и файлы обновлений."""
-	os.remove("up/media/{}" .format(update.update))
+	os.remove("up/media/{}" .format(update.file))
 	update.delete()
 
 
@@ -76,7 +74,7 @@ def permit_project(request, project_id):
 def edit_server(request, server_id):
 	"""Редактирует существующий сервер."""
 	server = Server.objects.get(id=server_id)
-	project = server.project
+	project = server.proj
 
 	if request.method != 'POST':
 		# Исходный запрос; форма заполняется данными текущей записи.
@@ -99,7 +97,7 @@ def edit_server(request, server_id):
 def edit_update(request, update_id):
 	"""Редактирует существующий пакет обновлений."""
 	update = Update.objects.get(id=update_id)
-	project = update.project
+	project = update.proj
 
 	if request.method != 'POST':
 		# Исходный запрос; форма заполняется данными текущей записи.

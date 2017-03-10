@@ -8,6 +8,7 @@ from subprocess import call
 
 
 def check_perm(perm, obj, user):
+	"""Проверяет разрешения объекта."""
 	if not user.has_perm(perm, obj):
 		raise Http404
 

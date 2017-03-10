@@ -7,7 +7,6 @@ from .models import Project, Server, Update
 class ProjectForm(forms.ModelForm):
 	class Meta:
 		model = Project
-		# fields = ['name', 'desc']
 		fields = ['name', 'desc']
 		labels = {'name': 'Project name', 'desc': 'Project description'}
 		widgets = {'desc': forms.Textarea(attrs={'cols': 80})}
@@ -24,8 +23,8 @@ class ServerForm(forms.ModelForm):
 class UpdateForm(forms.ModelForm):
 	class Meta:
 		model = Update
-		fields = ['update', 'desc']
-		labels = {'update': 'Update file', 'desc': 'Update description'}
+		fields = ['file', 'desc']
+		labels = {'file': 'Update file', 'desc': 'Update description'}
 		widgets = {'desc': forms.Textarea(attrs={'cols': 80})}
 
 
