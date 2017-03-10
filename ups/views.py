@@ -8,10 +8,8 @@ from subprocess import call
 
 
 def check_perm(perm, obj, user):
-	if user.has_perm(perm, obj):
-		print 'ok'
-	else:
-		return Http404()
+	if not user.has_perm(perm, obj):
+		raise Http404
 
 
 def index(request):
