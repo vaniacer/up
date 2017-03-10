@@ -11,16 +11,11 @@ def get_upload_to(instance, filename):
 
 class Project(models.Model):
 	"""Проект: web-исполнение, web-нси, web-соглашения..."""
-	admn = models.ForeignKey(Group, related_name='admn', default='dummy')
-	view = models.ForeignKey(Group, related_name='view', default='dummy')
-	dump = models.ForeignKey(Group, related_name='dump', default='dummy')
-	updt = models.ForeignKey(Group, related_name='updt', default='dummy')
-	upld = models.ForeignKey(Group, related_name='upld', default='dummy')
 	name = models.CharField(max_length=200, unique=True)
 	date = models.DateTimeField(auto_now_add=True, db_index=True)
 	desc = models.TextField()
 	slug = models.SlugField(max_length=64)
-	created_at = models.DateTimeField(auto_now_add=True, db_index=True)
+	# created_at = models.DateTimeField(auto_now_add=True, db_index=True)
 
 	class Meta:
 		"""Добавляет доп. разрешения."""

@@ -8,17 +8,8 @@ class ProjectForm(forms.ModelForm):
 	class Meta:
 		model = Project
 		# fields = ['name', 'desc']
-		fields = ['name', 'desc', 'admn', 'view', 'dump', 'updt', 'upld']
-		labels = {
-			'name': 'Project name',
-			'desc': 'Project description',
-			'admn': 'Admin group',
-			'view': 'View group',
-			'dump': 'DB access group',
-			'updt': 'Update group',
-			'upld': 'Upload group'
-		}
-
+		fields = ['name', 'desc']
+		labels = {'name': 'Project name', 'desc': 'Project description'}
 		widgets = {'desc': forms.Textarea(attrs={'cols': 80})}
 
 

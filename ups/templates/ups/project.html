@@ -10,7 +10,6 @@
 
         <p>
             <a href="{% url 'ups:edit_project' project.id %}">Edit project</a>
-            <a href="{% url 'ups:permit_project' project.id %}">Set permissions</a>
         </p>
 
         <p>Updates:</p>
@@ -54,7 +53,7 @@
             <a href="{% url 'ups:new_server' project.id %}">Add new server</a>
         </p>
 
-        <p>Availible commands:</p>
+        <p>Available commands:</p>
 
         {% csrf_token %}
         <hr>

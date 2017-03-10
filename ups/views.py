@@ -1,17 +1,21 @@
 # -*- encoding: utf-8 -*-
 
-from django.contrib.auth.decorators import login_required, permission_required
-from django.http import HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect, Http404
 from .models import Project, Server, Update
-from .permissions import check_view_perm
 from django.shortcuts import render
 from subprocess import call
 
 
+def check_perm(perm, obj, user):
+	if user.has_perm(perm, obj):
+		print 'ok'
+	else:
+		return Http404()
+
+
 def index(request):
 	"""Домашняя страница приложения update server"""
-	print request.user.get_all_permissions()
-	# print request.user.has_perm('view_project', test1)
 	return render(request, 'ups/index.html')
 
 
@@ -25,13 +29,12 @@ def projects(request):
 	return render(request, 'ups/projects.html', context)
 
 
-# @login_required
-@permission_required('ups.view_project')
+@login_required
 def project(request, project_id):
 	"""Выводит один проект, все его серверы, пакеты обновлений и обрабатывает кнопки действий."""
 	current_project = Project.objects.get(id=project_id)
 
-	# check_view_perm(current_project, request.user)
+	check_perm('view_project', current_project, request.user)
 
 	servers = current_project.server_set.order_by('name')
 	updates = current_project.update_set.order_by('desc')

@@ -1,10 +1,9 @@
 # -*- encoding: utf-8 -*-
 
-from .permissions import check_upload_perm, check_admin_perm
 from django.contrib.auth.decorators import login_required, permission_required
 from .forms import ProjectForm, ServerForm, UpdateForm
 from .groups import create_dummy, create_groups
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.core.urlresolvers import reverse
 from django.shortcuts import render
 from .models import Project
@@ -37,8 +36,6 @@ def new_server(request, project_id):
 	"""Добавляет новый сервер."""
 	project = Project.objects.get(id=project_id)
 
-	check_admin_perm(project, request.user)
-
 	if request.method != 'POST':
 		# Данные не отправлялись; создается пустая форма.
 		form = ServerForm()
@@ -60,8 +57,6 @@ def new_server(request, project_id):
 def new_update(request, project_id):
 	"""Добавляет новое обновление."""
 	project = Project.objects.get(id=project_id)
-
-	check_upload_perm(project, request.user)
 
 	if request.method != 'POST':
 		# Данные не отправлялись; создается пустая форма.
