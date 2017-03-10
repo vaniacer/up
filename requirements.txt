@@ -1,0 +1,7 @@
+Django==1.10.5
+argparse==1.2.1
+django-bootstrap3==8.1.0
+django-guardian==1.4.6
+pytz==2016.10
+six==1.10.0
+wsgiref==0.1.2

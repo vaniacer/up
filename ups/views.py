@@ -21,8 +21,6 @@ def index(request):
 def projects(request):
 	"""Выводит список проектов."""
 	project_list = Project.objects.order_by('name')
-	for p in project_list:
-		print request.user.has_perm('view_project', p)
 	context = {'projects': project_list}
 	return render(request, 'ups/projects.html', context)
 
