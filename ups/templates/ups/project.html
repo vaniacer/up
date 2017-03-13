@@ -1,6 +1,10 @@
 {% extends "ups/base.html" %}
+{% load guardian_tags %}
 
 {% block content %}
+
+    {% get_obj_perms request.user for project as "pr_view_perms" %}
+
     <form method='post' action="{% url 'ups:project' project.id %}">
 
         <p>Project: {{ project }}</p>
@@ -9,7 +13,9 @@
         </ul>
 
         <p>
-            <a href="{% url 'ups:edit_project' project.id %}">Edit project</a>
+            {% if "edit_project" in pr_view_perms %}
+                <a href="{% url 'ups:edit_project' project.id %}">Edit project</a>
+            {% endif %}
         </p>
 
         <p>Updates:</p>
@@ -19,8 +25,13 @@
                     <p>{{ update }}</p>
                     <p>{{ update.desc|linebreaks }}</p>
                     <p>Added: {{ update.date|date:'M d, Y H:i' }}</p>
-                    <p><a href="{% url 'ups:edit_update' update.id %}">Edit update</a></p>
-                    Select: <input type="checkbox" name="selected_updates" value="{{ update.id }}" />
+                    <p>
+                        {% if "edit_update" in pr_view_perms %}
+                            <a href="{% url 'ups:edit_update' update.id %}">Edit update</a></p>
+                        {% endif %}
+                    {% if "run_command" in pr_view_perms %}
+                        Select: <input type="checkbox" name="selected_updates" value="{{ update.id }}" />
+                    {% endif %}
                 </li>
                 {% empty %}
                 <li>
@@ -29,7 +40,9 @@
             {% endfor %}
         </ul>
         <p>
-            <a href="{% url 'ups:new_update' project.id %}">Add new update</a>
+            {% if "add_update" in pr_view_perms %}
+                <a href="{% url 'ups:new_update' project.id %}">Add new update</a>
+            {% endif %}
         </p>
 
         <p>Servers:</p>
@@ -40,8 +53,14 @@
                     <p>Address: {{ server.addr }}</p>
                     <p>Description: {{ server.desc|linebreaks }}</p>
                     <p>Added: {{ server.date|date:'M d, Y H:i' }}</p>
-                    <p><a href="{% url 'ups:edit_server' server.id %}">Edit server</a></p>
-                    Select: <input type="checkbox" name="selected_servers" value="{{ server.id }}" />
+                    <p>
+                        {% if "edit_server" in pr_view_perms %}
+                            <a href="{% url 'ups:edit_server' server.id %}">Edit server</a></p>
+                        {% endif %}
+
+                    {% if "run_command" in pr_view_perms %}
+                        Select: <input type="checkbox" name="selected_servers" value="{{ server.id }}" />
+                    {% endif %}
                 </li>
                 {% empty %}
                 <li>
@@ -50,17 +69,21 @@
             {% endfor %}
         </ul>
         <p>
-            <a href="{% url 'ups:new_server' project.id %}">Add new server</a>
+            {% if "add_server" in pr_view_perms %}
+                <a href="{% url 'ups:new_server' project.id %}">Add new server</a>
+            {% endif %}
         </p>
 
-        <p>Available commands:</p>
+        {% if "run_command" in pr_view_perms %}
+            <p>Available commands:</p>
 
-        {% csrf_token %}
-        <hr>
-        <input type="submit" name="select_test"     value="Show selected updates"/>
-        <input type="submit" name="select_upload"   value="Upload"/>
-        <input type="submit" name="select_check"    value="Check updates on servers"/>
-        <input type="submit" name="select_schedule" value="Check scheduled updates"/>
+            {% csrf_token %}
+            <hr>
+            <input type="submit" name="select_test"     value="Show selected updates"/>
+            <input type="submit" name="select_upload"   value="Upload"/>
+            <input type="submit" name="select_check"    value="Check updates on servers"/>
+            <input type="submit" name="select_schedule" value="Check scheduled updates"/>
+        {% endif %}
     </form>
 
 {% endblock content %}

@@ -1,13 +1,20 @@
 {% extends "ups/base.html" %}
+{% load guardian_tags %}
 
 {% block content %}
 
     <p>Projects:</p>
     <ul>
         {% for project in projects %}
-            <li>
-                <a href="{% url 'ups:project' project.id %}">{{ project }}</a>
-            </li>
+
+            {% get_obj_perms request.user for project as "project_perms" %}
+
+            {% if "view_project" in project_perms %}
+                <li>
+                    <a href="{% url 'ups:project' project.id %}">{{ project }}</a>
+                </li>
+            {% endif %}
+
             {% empty %}
             <li>
                 There are no projects yet.
@@ -15,6 +22,8 @@
         {% endfor %}
     </ul>
 
-    <a href="{% url 'ups:new_project' %}">Add new project</a>
+    {% if perms.ups.add_project %}
+        <a href="{% url 'ups:new_project' %}">Add new project</a>
+    {% endif %}
 
 {% endblock content %}

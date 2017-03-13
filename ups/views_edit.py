@@ -67,6 +67,7 @@ def edit_server(request, server_id):
 		if form.is_valid():
 			form.save()
 			if request.POST.get('delete'):
+				check_perm('del_server', project, request.user)
 				server.delete()
 			return HttpResponseRedirect(reverse('ups:project', args=[project.id]))
 
@@ -92,6 +93,7 @@ def edit_update(request, update_id):
 		if form.is_valid():
 			form.save()
 			if request.POST.get('delete'):
+				check_perm('del_update', project, request.user)
 				delete_update(update)
 			return HttpResponseRedirect(reverse('ups:project', args=[project.id]))
 

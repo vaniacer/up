@@ -1,6 +1,9 @@
 {% extends "ups/base.html" %}
+{% load guardian_tags %}
 
 {% block content %}
+
+    {% get_obj_perms request.user for project as "edit_update_perms" %}
 
     <p><a href="{% url 'ups:project' project.id %}">{{ project }}</a></p>
 
@@ -9,8 +12,14 @@
     <form action="{% url 'ups:edit_update' update.id %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
-        <button name="submit">Save changes</button> <hr>
-        <input type="submit" name="delete" value="Delete"/>
+
+        <button name="submit">Save changes</button>
+
+        {% if "del_update" in edit_update_perms %}
+            <hr>
+            <input type="submit" name="delete" value="Delete"/>
+        {% endif %}
+
     </form>
 
 {% endblock content %}

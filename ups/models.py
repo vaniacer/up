@@ -25,6 +25,8 @@ class Project(models.Model):
 			("run_command", "Can run project's commands"),
 			("add_server", "Can add server to project"),
 			("add_update", "Can add update to project"),
+			("del_server", "Can delete project's servers"),
+			("del_update", "Can delete project's updates"),
 		)
 		get_latest_by = 'date'
 
