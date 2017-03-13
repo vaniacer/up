@@ -5,11 +5,12 @@ from .forms import ProjectForm, ServerForm, UpdateForm
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.shortcuts import render
+from .permissions import check_perm
 from .models import Project
 
 
 # @login_required
-@permission_required('project.can_add_project')
+@permission_required('ups.add_project')
 def new_project(request):
 	"""Определяет новый проект."""
 	if request.method != 'POST':
@@ -32,6 +33,8 @@ def new_server(request, project_id):
 	"""Добавляет новый сервер."""
 	project = Project.objects.get(id=project_id)
 
+	check_perm('add_server', project, request.user)
+
 	if request.method != 'POST':
 		# Данные не отправлялись; создается пустая форма.
 		form = ServerForm()
@@ -53,6 +56,8 @@ def new_server(request, project_id):
 def new_update(request, project_id):
 	"""Добавляет новое обновление."""
 	project = Project.objects.get(id=project_id)
+
+	check_perm('add_update', project, request.user)
 
 	if request.method != 'POST':
 		# Данные не отправлялись; создается пустая форма.

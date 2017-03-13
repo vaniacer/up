@@ -1,16 +1,11 @@
 # -*- encoding: utf-8 -*-
 
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect, Http404
+from django.http import HttpResponseRedirect
 from .models import Project, Server, Update
 from django.shortcuts import render
+from .permissions import check_perm
 from subprocess import call
-
-
-def check_perm(perm, obj, user):
-	"""Проверяет разрешения объекта."""
-	if not user.has_perm(perm, obj):
-		raise Http404
 
 
 def index(request):
@@ -43,6 +38,9 @@ def project(request, project_id):
 	ss = []
 
 	if request.POST.get('select_test'):
+
+		check_perm('run_command', current_project, request.user)
+
 		for i in selected_updates:
 			update = Update.objects.get(id=i)
 			su.append(str(update))

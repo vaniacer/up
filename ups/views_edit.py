@@ -6,12 +6,13 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from .models import Project, Server, Update
 from django.shortcuts import render
+from .permissions import check_perm
 import shutil
 import os
 
 
 def delete_project(project):
-	"""Удаляет проект, группы и файлы обновлений."""
+	"""Удаляет проект и файлы обновлений."""
 	shutil.rmtree("up/media/updates/{}" .format(project.name), ignore_errors=True)
 	project.delete()
 
@@ -26,6 +27,8 @@ def delete_update(update):
 def edit_project(request, project_id):
 	"""Редактирует существующий проект."""
 	project = Project.objects.get(id=project_id)
+
+	check_perm('edit_project', project, request.user)
 
 	if request.method != 'POST':
 		# Исходный запрос; форма заполняется данными текущей записи.
@@ -47,34 +50,12 @@ def edit_project(request, project_id):
 
 
 @login_required
-def permit_project(request, project_id):
-	"""Редактирует существующий проект."""
-	project = Project.objects.get(id=project_id)
-
-	if request.method != 'POST':
-		# Исходный запрос; форма заполняется данными текущей записи.
-		form = ProjectForm(instance=project)
-	else:
-		# Отправка данных POST; обработать данные.
-		form = ProjectForm(instance=project, data=request.POST)
-
-		if form.is_valid():
-			form.save()
-			if request.POST.get('delete'):
-				delete_project(project)
-				return HttpResponseRedirect(reverse('ups:projects'))
-			else:
-				return HttpResponseRedirect(reverse('ups:project', args=[project.id]))
-
-	context = {'project': project, 'form': form}
-	return render(request, 'ups/permit_project.html', context)
-
-
-@login_required
 def edit_server(request, server_id):
 	"""Редактирует существующий сервер."""
 	server = Server.objects.get(id=server_id)
 	project = server.proj
+
+	check_perm('edit_server', project, request.user)
 
 	if request.method != 'POST':
 		# Исходный запрос; форма заполняется данными текущей записи.
@@ -98,6 +79,8 @@ def edit_update(request, update_id):
 	"""Редактирует существующий пакет обновлений."""
 	update = Update.objects.get(id=update_id)
 	project = update.proj
+
+	check_perm('edit_update', project, request.user)
 
 	if request.method != 'POST':
 		# Исходный запрос; форма заполняется данными текущей записи.
