@@ -1,5 +1,13 @@
 {% extends "ups/base.html" %}
 
+{% block header %}
+    <div class='jumbotron'>
+       <h4><a href="{% url 'ups:projects' %}">Update your servers</a></h4>
+    </div>
+{% endblock header %}
+
 {% block content %}
-    <p>Update Server helps you keep your servers up to date.</p>
+<h5>
+    Update Server helps you keep your servers up to date.
+</h5>
 {% endblock content %}

@@ -1,14 +1,20 @@
 {% extends "ups/base.html" %}
+{% load bootstrap3 %}
+
+{% block header %}
+    <h2>Add a new update to project - <a href="{% url 'ups:project' project.id %}">{{ project }}</a></h2>
+{% endblock header %}
 
 {% block content %}
 
-    <p><a href="{% url 'ups:project' project.id %}">{{ project }}</a></p>
-
-    <p>Add a new update:</p>
     <form action="{% url 'ups:new_update' project.id %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button name='submit'>Add Update</button>
+        {% bootstrap_form form %}
+
+        {% buttons %}
+            <button name='submit' class="btn btn-primary">Add Update</button>
+            <button onclick="window.history.back();" class="btn btn-primary">Cancel</button>
+        {% endbuttons %}
     </form>
 
-{% endblock content %}4
+{% endblock content %}

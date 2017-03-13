@@ -1,12 +1,20 @@
 {% extends "ups/base.html" %}
+{% load bootstrap3 %}
+
+{% block header %}
+    <h2>Add a new project:</h2>
+{% endblock header %}
 
 {% block content %}
 
-    <p>Add a new project:</p>
     <form action="{% url 'ups:new_project' %}" method='post'>
         {% csrf_token %}
-        {{ form.as_p }}
-        <button name="submit">Add Project</button>
+        {% bootstrap_form form %}
+
+        {% buttons %}
+            <button name="submit" class="btn btn-primary">Add Project</button>
+            <button onclick="window.history.back();" class="btn btn-primary">Cancel</button>
+        {% endbuttons %}
     </form>
 
 {% endblock content %}

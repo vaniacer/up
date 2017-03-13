@@ -45,6 +45,7 @@ INSTALLED_APPS = [
 	'users',
 	'ups',
 	# mods
+	'bootstrap3',
 	'guardian',
 	'pytz',
 ]
@@ -131,6 +132,11 @@ STATIC_URL = '/static/'
 
 # Мои настройки
 LOGIN_URL = '/users/login/'
+
+# Настройки django-bootstrap3
+BOOTSTRAP3 = {
+	'include_jquery': True,
+}
 
 AUTHENTICATION_BACKENDS = (
 	'django.contrib.auth.backends.ModelBackend',  # this is default

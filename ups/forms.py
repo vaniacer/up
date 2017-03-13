@@ -16,7 +16,10 @@ class ServerForm(forms.ModelForm):
 	class Meta:
 		model = Server
 		fields = ['name', 'addr', 'wdir', 'desc']
-		labels = {'name': 'Server name', 'desc': 'Server description', 'addr': 'IP addres', 'wdir': 'Working directory'}
+		labels = {
+			'name': 'Server name', 'desc': 'Server description',
+			'addr': 'IP address', 'wdir': 'Working directory',
+		}
 		widgets = {'desc': forms.Textarea(attrs={'cols': 80})}
 
 
@@ -26,7 +29,3 @@ class UpdateForm(forms.ModelForm):
 		fields = ['file', 'desc']
 		labels = {'file': 'Update file', 'desc': 'Update description'}
 		widgets = {'desc': forms.Textarea(attrs={'cols': 80})}
-
-
-class SelectForm(forms.Form):
-	selected = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, label="")

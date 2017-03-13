@@ -2,6 +2,7 @@
 
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
+from django.core.urlresolvers import reverse
 from .models import Project, Server, Update
 from django.shortcuts import render
 from .permissions import check_perm
@@ -56,6 +57,8 @@ def project(request, project_id):
 		print run
 
 		return HttpResponseRedirect('')
+	elif request.POST.get('cancel'):
+		return HttpResponseRedirect(reverse('ups:projects'))
 
 	context = {'project': current_project, 'servers': servers, 'updates': updates}
 	return render(request, 'ups/project.html', context)

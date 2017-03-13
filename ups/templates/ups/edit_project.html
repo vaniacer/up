@@ -1,24 +1,28 @@
 {% extends "ups/base.html" %}
 {% load guardian_tags %}
+{% load bootstrap3 %}
+
+{% block header %}
+    <h2>Edit project - <a href="{% url 'ups:project' project.id %}">{{ project }}</a></h2>
+{% endblock header %}
 
 {% block content %}
 
     {% get_obj_perms request.user for project as "edit_project_perms" %}
 
-    <p><a href="{% url 'ups:project' project.id %}">{{ project }}</a></p>
-
-    <p>Edit project:</p>
-
     <form action="{% url 'ups:edit_project' project.id %}" method='post'>
         {% csrf_token %}
-        {{ form.as_p }}
-        <button name="submit">Save changes</button>
+        {% bootstrap_form form %}
 
-        {% if "delete_project" in edit_project_perms %}
-            <hr>
-            <input type="submit" name="delete" value="Delete"/>
-        {% endif %}
+        {% buttons %}
+            <input type="submit" name="ok" value="Save changes" class="btn btn-primary"/>
+            <input type="submit" name="cancel" value="Cancel" class="btn btn-primary"/>
 
+            {% if "delete_project" in edit_project_perms %}
+                <hr>
+                <input type="submit" name="delete" value="Delete" class="btn btn-primary"/>
+            {% endif %}
+        {% endbuttons %}
     </form>
 
 {% endblock content %}

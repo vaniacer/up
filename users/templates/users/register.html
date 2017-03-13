@@ -1,12 +1,20 @@
 {% extends "ups/base.html" %}
+{% load bootstrap3 %}
+
+{% block header %}
+    <h2>Register new account.</h2>
+{% endblock header %}
 
 {% block content %}
 
     <form method="post" action="{% url 'users:register' %}">
         {% csrf_token %}
-        {{ form.as_p }}
+        {% bootstrap_form form %}
 
-        <button name="submit">register</button>
+        {% buttons %}
+            <button name="submit" class="btn btn-primary">register</button>
+        {% endbuttons %}
+
         <input type="hidden" name="next" value="{% url 'ups:index' %}" />
     </form>
 

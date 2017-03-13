@@ -38,12 +38,15 @@ def edit_project(request, project_id):
 		form = ProjectForm(instance=project, data=request.POST)
 
 		if form.is_valid():
-			form.save()
 			if request.POST.get('delete'):
 				delete_project(project)
 				return HttpResponseRedirect(reverse('ups:projects'))
-			else:
+			elif request.POST.get('cancel'):
 				return HttpResponseRedirect(reverse('ups:project', args=[project.id]))
+			elif request.POST.get('ok'):
+				form.save()
+
+			return HttpResponseRedirect(reverse('ups:project', args=[project.id]))
 
 	context = {'project': project, 'form': form}
 	return render(request, 'ups/edit_project.html', context)
@@ -65,10 +68,14 @@ def edit_server(request, server_id):
 		form = ServerForm(instance=server, data=request.POST)
 
 		if form.is_valid():
-			form.save()
 			if request.POST.get('delete'):
 				check_perm('del_server', project, request.user)
 				server.delete()
+			elif request.POST.get('cancel'):
+				return HttpResponseRedirect(reverse('ups:project', args=[project.id]))
+			elif request.POST.get('ok'):
+				form.save()
+
 			return HttpResponseRedirect(reverse('ups:project', args=[project.id]))
 
 	context = {'server': server, 'project': project, 'form': form}
@@ -91,10 +98,14 @@ def edit_update(request, update_id):
 		form = UpdateForm(request.POST, request.FILES, instance=update)
 
 		if form.is_valid():
-			form.save()
 			if request.POST.get('delete'):
 				check_perm('del_update', project, request.user)
 				delete_update(update)
+			elif request.POST.get('cancel'):
+				return HttpResponseRedirect(reverse('ups:project', args=[project.id]))
+			elif request.POST.get('ok'):
+				form.save()
+
 			return HttpResponseRedirect(reverse('ups:project', args=[project.id]))
 
 	context = {'update': update, 'project': project, 'form': form}

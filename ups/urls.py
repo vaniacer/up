@@ -4,6 +4,8 @@
 
 from django.conf.urls import url
 from . import views, views_new, views_edit
+from django.contrib.auth.views import login
+
 
 urlpatterns = [
 	# Домашняя страница
