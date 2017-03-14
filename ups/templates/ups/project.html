@@ -19,12 +19,11 @@
 {% endblock header %}
 
 {% block content %}
+
     {% get_obj_perms request.user for project as "pr_view_perms" %}
 
     <form method='post' action="{% url 'ups:project' project.id %}">
         {% csrf_token %}
-
-        <div>
 
         <!-- Nav tabs -->
         <ul class="nav nav-tabs" role="tablist">
@@ -43,10 +42,9 @@
 
         <!-- Tab panes -->
         <div class="tab-content">
-            <div role="tabpanel" class="tab-pane active" id="updates">{% include "ups/project_updates.html" %}</div>
-            <div role="tabpanel" class="tab-pane" id="servers">{% include "ups/project_servers.html" %}</div>
-        </div>
-
+            <div role="tabpanel" class="tab-pane fade in active" id="updates">{% include "ups/project_updates.html" %}
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="servers">{% include "ups/project_servers.html" %}</div>
         </div>
 
         {% if "run_command" in pr_view_perms %}
@@ -54,7 +52,7 @@
             <hr>
 
             {% buttons %}
-                <input type="submit" class="btn btn-primary" name="select_test"     value="Show selected updates"/>
+                <input type="submit" class="btn btn-primary" name="select_test"     value="Show selected"/>
                 <input type="submit" class="btn btn-primary" name="select_upload"   value="Upload"/>
                 <input type="submit" class="btn btn-primary" name="select_check"    value="Check updates on servers"/>
                 <input type="submit" class="btn btn-primary" name="select_schedule" value="Check scheduled updates"/>

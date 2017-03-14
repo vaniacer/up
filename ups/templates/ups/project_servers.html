@@ -1,3 +1,5 @@
+<br>
+
 {% for server in servers %}
     <div class="panel panel-default">
 
@@ -18,9 +20,12 @@
             </small>
 
             {% if "run_command" in pr_view_perms %}
-            <div style="display: inline-block; float:right">
-                <input type="checkbox" name="selected_servers" value="{{ server.id }}" />
-            </div>
+                <div class="pull-right">
+                    <label>
+                        Select this server
+                        <input type="checkbox" name="selected_servers" value="{{ server.id }}" />
+                    </label>
+                </div>
             {% endif %}
         </div>
 

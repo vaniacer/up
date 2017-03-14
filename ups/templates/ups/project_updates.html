@@ -1,28 +1,35 @@
+<br xmlns="http://www.w3.org/1999/html">
+
 {% for update in updates %}
-    <div class="panel panel-default">
 
-        <div class="panel-heading">
-            <h4 style="display:inline-block">{{ update }}</h4>
-            <small style="display:inline-block">
-                {% if "edit_update" in pr_view_perms %}
-                    <a href="{% url 'ups:edit_update' update.id %}">Edit</a>
+        <div class="panel panel-default">
+
+            <div class="panel-heading">
+                <h4 style="display:inline-block">{{ update }}</h4>
+                <small style="display:inline-block">
+                    {% if "edit_update" in pr_view_perms %}
+                        <a href="{% url 'ups:edit_update' update.id %}">Edit</a>
+                    {% endif %}
+                </small>
+            </div>
+
+            <div class="panel-body option_item">
+                {{ update.desc|linebreaks }}
+                <small style="display: inline-block">
+                    {{ update.date|date:'M d, Y H:i' }}
+                </small>
+                {% if "run_command" in pr_view_perms %}
+                    <div class="pull-right">
+                        <label>
+                            Select this update
+                            <input type="checkbox" name="selected_updates" value="{{ update.id }}"/>
+                        </label>
+                    </div>
                 {% endif %}
-            </small>
-        </div>
+            </div>
 
-        <div class="panel-body">
-            {{ update.desc|linebreaks }}
-            <small style="display: inline-block">
-                {{ update.date|date:'M d, Y H:i' }}
-            </small>
-            {% if "run_command" in pr_view_perms %}
-                <div style="display: inline-block; float:right">
-                    <input type="checkbox" name="selected_updates" value="{{ update.id }}" />
-                </div>
-            {% endif %}
-        </div>
+        </div> <!-- panel -->
 
-    </div> <!-- panel -->
     {% empty %}
 
     There are no updates for this project yet.
