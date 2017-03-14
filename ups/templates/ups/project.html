@@ -6,6 +6,7 @@
 
     {% get_obj_perms request.user for project as "pr_view_perms" %}
 
+    <br>
     <h2 style="display:inline-block">{{ project }}</h2>
     <small style="display:inline-block">
         {% if "edit_project" in pr_view_perms %}
@@ -23,90 +24,32 @@
     <form method='post' action="{% url 'ups:project' project.id %}">
         {% csrf_token %}
 
-        <h3>Updates:</h3>
+        <div>
 
-            {% for update in updates %}
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 style="display:inline-block">{{ update }}</h4>
-                        <small style="display:inline-block">
-                            {% if "edit_update" in pr_view_perms %}
-                                <a href="{% url 'ups:edit_update' update.id %}">Edit</a>
-                            {% endif %}
-                        </small>
-                    </div>
-                    <div class="panel-body">
-                        <div style="display: inline-block">
-                            {{ update.desc|linebreaks }}
-                            <small>
-                                {{ update.date|date:'M d, Y H:i' }}
-                            </small>
-                            </div>
-                        {% if "run_command" in pr_view_perms %}
-                            <div style="display: inline-block; float:right; vertical-align: bottom;">
-                                <input type="checkbox" name="selected_updates" value="{{ update.id }}" />
-                            </div>
-                        {% endif %}
-                    </div>
-                </div> <!-- panel -->
-                {% empty %}
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active">
+                <a href="#updates" aria-controls="updates" role="tab" data-toggle="tab">
+                    <h4>Updates</h4>
+                </a>
+            </li>
 
-                There are no updates for this project yet.
+            <li role="presentation">
+                <a href="#servers" aria-controls="servers" role="tab" data-toggle="tab">
+                    <h4>Servers</h4>
+                </a>
+            </li>
+        </ul>
 
-            {% endfor %}
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="updates">{% include "ups/project_updates.html" %}</div>
+            <div role="tabpanel" class="tab-pane" id="servers">{% include "ups/project_servers.html" %}</div>
+        </div>
 
-        <p>
-            {% if "add_update" in pr_view_perms %}
-                <a href="{% url 'ups:new_update' project.id %}">Add new update</a>
-            {% endif %}
-        </p>
-
-        <hr>
-
-        <p>Servers:</p>
-
-            {% for server in servers %}
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-
-                        <div style="width: 1000px; display: inline-block">
-                            <h3>
-                                {{ server.name }}
-                            </h3>
-                            <h5>
-                                {{ server.addr }}
-                                {{ server.desc|linebreaks }}
-                            </h5>
-                            <small>
-                                {{ server.date|date:'M d, Y H:i' }}
-                                {% if "edit_server" in pr_view_perms %}
-                                    <a href="{% url 'ups:edit_server' server.id %}">Edit server</a>
-                                {% endif %}
-                            </small>
-                        </div>
-
-                        <div style="display: inline-block">
-                            {% if "run_command" in pr_view_perms %}
-                                Select: <input type="checkbox" name="selected_servers" value="{{ server.id }}" />
-                            {% endif %}
-                        </div>
-
-                    </div>
-                </div> <!-- panel -->
-
-                {% empty %}
-                There are no servers for this project yet.
-
-            {% endfor %}
-
-        <p>
-            {% if "add_server" in pr_view_perms %}
-                <a href="{% url 'ups:new_server' project.id %}">Add new server</a>
-            {% endif %}
-        </p>
+        </div>
 
         {% if "run_command" in pr_view_perms %}
-            <p>Available commands:</p>
 
             <hr>
 
@@ -116,6 +59,7 @@
                 <input type="submit" class="btn btn-primary" name="select_check"    value="Check updates on servers"/>
                 <input type="submit" class="btn btn-primary" name="select_schedule" value="Check scheduled updates"/>
             {% endbuttons %}
+
         {% endif %}
 
         {% buttons %}
