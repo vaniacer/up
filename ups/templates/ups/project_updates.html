@@ -1,0 +1,36 @@
+{% for update in updates %}
+    <div class="panel panel-default">
+
+        <div class="panel-heading">
+            <h4 style="display:inline-block">{{ update }}</h4>
+            <small style="display:inline-block">
+                {% if "edit_update" in pr_view_perms %}
+                    <a href="{% url 'ups:edit_update' update.id %}">Edit</a>
+                {% endif %}
+            </small>
+        </div>
+
+        <div class="panel-body">
+            {{ update.desc|linebreaks }}
+            <small style="display: inline-block">
+                {{ update.date|date:'M d, Y H:i' }}
+            </small>
+            {% if "run_command" in pr_view_perms %}
+                <div style="display: inline-block; float:right">
+                    <input type="checkbox" name="selected_updates" value="{{ update.id }}" />
+                </div>
+            {% endif %}
+        </div>
+
+    </div> <!-- panel -->
+    {% empty %}
+
+    There are no updates for this project yet.
+
+{% endfor %}
+
+<p>
+    {% if "add_update" in pr_view_perms %}
+        <a href="{% url 'ups:new_update' project.id %}">Add new update</a>
+    {% endif %}
+</p>

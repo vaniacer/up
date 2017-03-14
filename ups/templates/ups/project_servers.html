@@ -1,0 +1,38 @@
+{% for server in servers %}
+    <div class="panel panel-default">
+
+        <div class="panel-heading">
+            <h4 style="display:inline-block">{{ server.name }}</h4>
+            <small style="display:inline-block">
+                {% if "edit_server" in pr_view_perms %}
+                    <a href="{% url 'ups:edit_server' server.id %}">Edit</a>
+                {% endif %}
+            </small>
+        </div>
+
+        <div class="panel-body">
+            {{ server.addr }}
+            {{ server.desc|linebreaks }}
+            <small style="display:inline-block">
+                {{ server.date|date:'M d, Y H:i' }}
+            </small>
+
+            {% if "run_command" in pr_view_perms %}
+            <div style="display: inline-block; float:right">
+                <input type="checkbox" name="selected_servers" value="{{ server.id }}" />
+            </div>
+            {% endif %}
+        </div>
+
+    </div> <!-- panel -->
+
+    {% empty %}
+    There are no servers for this project yet.
+
+{% endfor %}
+
+<p>
+    {% if "add_server" in pr_view_perms %}
+        <a href="{% url 'ups:new_server' project.id %}">Add new server</a>
+    {% endif %}
+</p>
