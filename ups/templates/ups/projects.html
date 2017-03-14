@@ -1,25 +1,27 @@
 {% extends "ups/base.html" %}
 {% load guardian_tags %}
+{% load bootstrap3 %}
 
 {% block header %}
-    <h1>Projects</h1>
+    <br>
+    <h2>Projects</h2>
 {% endblock header %}
 
 {% block content %}
 
     {% for project in projects %}
+
         {% get_obj_perms request.user for project as "project_perms" %}
+
         {% if "view_project" in project_perms %}
-                <div class="panel panel-default">
-                    <div class="panel-heading">
+                <div class="well">
                         <h3>
                             <a href="{% url 'ups:project' project.id %}">{{ project }}</a>
                         </h3>
                         <small>
                             {{ project.desc|linebreaks }}
                         </small>
-                    </div>
-                </div> <!-- panel -->
+                </div>
         {% endif %}
 
         {% empty %}

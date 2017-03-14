@@ -3,16 +3,18 @@
 {% load bootstrap3 %}
 
 {% block header %}
+
     {% get_obj_perms request.user for project as "pr_view_perms" %}
 
-    <h2>{{ project }}</h2>
-    <h5>{{ project.desc|linebreaks }}</h5>
-
-    <small>
+    <h2 style="display:inline-block">{{ project }}</h2>
+    <small style="display:inline-block">
         {% if "edit_project" in pr_view_perms %}
-        <a href="{% url 'ups:edit_project' project.id %}">Edit project</a>
+            <a href="{% url 'ups:edit_project' project.id %}">Edit</a>
         {% endif %}
     </small>
+
+    <h5>{{ project.desc|linebreaks }}</h5>
+
 {% endblock header %}
 
 {% block content %}
@@ -21,32 +23,30 @@
     <form method='post' action="{% url 'ups:project' project.id %}">
         {% csrf_token %}
 
-        <p>Updates:</p>
+        <h3>Updates:</h3>
 
             {% for update in updates %}
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <div style="width: 1000px; display: inline-block">
-                            <h3>
-                                {{ update }}
-                            </h3>
-                            <h5>
-                                {{ update.desc|linebreaks }}
-                                {{ update.date|date:'M d, Y H:i' }}
-                            </h5>
-                            <small>
-                                {% if "edit_update" in pr_view_perms %}
-                                    <a href="{% url 'ups:edit_update' update.id %}">Edit update</a>
-                                {% endif %}
-                            </small>
-                        </div>
-
-                        <div style="display: inline-block">
-                            {% if "run_command" in pr_view_perms %}
-                                Select: <input type="checkbox" name="selected_updates" value="{{ update.id }}" />
+                        <h4 style="display:inline-block">{{ update }}</h4>
+                        <small style="display:inline-block">
+                            {% if "edit_update" in pr_view_perms %}
+                                <a href="{% url 'ups:edit_update' update.id %}">Edit</a>
                             {% endif %}
-                        </div>
-
+                        </small>
+                    </div>
+                    <div class="panel-body">
+                        <div style="display: inline-block">
+                            {{ update.desc|linebreaks }}
+                            <small>
+                                {{ update.date|date:'M d, Y H:i' }}
+                            </small>
+                            </div>
+                        {% if "run_command" in pr_view_perms %}
+                            <div style="display: inline-block; float:right; vertical-align: bottom;">
+                                <input type="checkbox" name="selected_updates" value="{{ update.id }}" />
+                            </div>
+                        {% endif %}
                     </div>
                 </div> <!-- panel -->
                 {% empty %}
@@ -76,9 +76,9 @@
                             <h5>
                                 {{ server.addr }}
                                 {{ server.desc|linebreaks }}
-                                {{ server.date|date:'M d, Y H:i' }}
                             </h5>
                             <small>
+                                {{ server.date|date:'M d, Y H:i' }}
                                 {% if "edit_server" in pr_view_perms %}
                                     <a href="{% url 'ups:edit_server' server.id %}">Edit server</a>
                                 {% endif %}
