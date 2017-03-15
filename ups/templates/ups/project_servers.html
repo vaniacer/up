@@ -1,4 +1,11 @@
+{% load bootstrap3 %}
+
 <br>
+
+{% buttons %}
+    <input class="btn btn-info" value="Select All"   onclick="select_all('selected_servers', 'server-body', true)"/>
+    <input class="btn btn-info" value="Deselect All" onclick="select_all('selected_servers', 'server-body', false)"/>
+{% endbuttons %}
 
 {% for server in servers %}
     <div class="panel panel-default" onclick="checker({{ server.id }})">
@@ -12,7 +19,7 @@
             </small>
         </div>
 
-        <div class="panel-body">
+        <div class="panel-body server-body" id="body{{ server.id }}">
             {{ server.addr }}
             {{ server.desc|linebreaks }}
             <small style="display:inline-block">
@@ -22,8 +29,9 @@
             {% if "run_command" in pr_view_perms %}
                 <div class="pull-right">
                     <label>
-                        Select this server
-                        <input type="checkbox" name="selected_servers" value="{{ server.id }}" id="{{ server.id }}"/>
+                        Click to select
+                        <input style="display:none" type="checkbox" name="selected_servers"
+                               value="{{ server.id }}" id="{{ server.id }}"/>
                     </label>
                 </div>
             {% endif %}

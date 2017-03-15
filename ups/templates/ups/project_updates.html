@@ -1,4 +1,11 @@
+{% load bootstrap3 %}
+
 <br>
+
+{% buttons %}
+    <input class="btn btn-info" value="Select All"   onclick="select_all('selected_updates', 'update-body', true)"/>
+    <input class="btn btn-info" value="Deselect All" onclick="select_all('selected_updates', 'update-body', false)"/>
+{% endbuttons %}
 
 {% for update in updates %}
 
@@ -13,7 +20,7 @@
             </small>
         </div>
 
-        <div class="panel-body option_item">
+        <div class="panel-body update-body" id="body{{ update.id }}">
             {{ update.desc|linebreaks }}
             <small style="display: inline-block">
                 {{ update.date|date:'M d, Y H:i' }}
@@ -21,8 +28,9 @@
             {% if "run_command" in pr_view_perms %}
                 <div class="pull-right">
                     <label>
-                        Select this update
-                        <input type="checkbox" name="selected_updates" value="{{ update.id }}" id="{{ update.id }}"/>
+                        Click to select
+                        <input style="display:none" type="checkbox" name="selected_updates"
+                               value="{{ update.id }}" id="{{ update.id }}"/>
                     </label>
                 </div>
             {% endif %}

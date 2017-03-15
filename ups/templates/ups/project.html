@@ -22,10 +22,19 @@
 
     <script type="text/javascript">
         function checker(id) {
-            var box = document.getElementById(id);
+            var box  = document.getElementById(id);
+            var body = document.getElementById("body" + id);
             if   ( box.checked == false )
-                 { box.checked = true;  }
-            else { box.checked = false; }
+                 { box.checked = true;  body.style.background = '#dff0d8'; }
+            else { box.checked = false; body.style.background = '';}
+        }
+
+        function select_all(box_name, body_name, state) {
+            var color = ''; if ( state == true ) { var color = '#dff0d8'; }
+            var boxes  = document.getElementsByName(box_name);
+            var bodies = document.getElementsByClassName(body_name);
+            for (i = 0; i < boxes.length;  i++) { boxes[i].checked = state; }
+            for (i = 0; i < bodies.length; i++) { bodies[i].style.background = color; }
         }
     </script>
 
@@ -35,7 +44,7 @@
         {% csrf_token %}
 
         <!-- Nav tabs -->
-        <ul class="nav nav-tabs" role="tablist">
+        <ul class="nav nav-tabs nav-justified" role="tablist">
             <li role="presentation" class="active">
                 <a href="#updates" aria-controls="updates" role="tab" data-toggle="tab">
                     <h4>Updates</h4>
