@@ -3,8 +3,10 @@
 <br>
 
 {% buttons %}
-    <input class="btn btn-info" value="Select All"   onclick="select_all('selected_servers', 'server-body', true)"/>
-    <input class="btn btn-info" value="Deselect All" onclick="select_all('selected_servers', 'server-body', false)"/>
+    <input class="btn btn-info btn-xs" value="Select All"
+           onclick="select_all('selected_servers', 'server-body', true)"/>
+    <input class="btn btn-info btn-xs" value="Deselect All"
+           onclick="select_all('selected_servers', 'server-body', false)"/>
 {% endbuttons %}
 
 {% for server in servers %}

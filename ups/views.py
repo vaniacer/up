@@ -30,7 +30,7 @@ def project(request, project_id):
 	check_perm('view_project', current_project, request.user)
 
 	servers = current_project.server_set.order_by('name')
-	updates = current_project.update_set.order_by('date')
+	updates = current_project.update_set.order_by('date').reverse()
 
 	selected_updates = request.POST.getlist('selected_updates')
 	selected_servers = request.POST.getlist('selected_servers')
