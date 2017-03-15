@@ -1,7 +1,7 @@
 <br>
 
 {% for server in servers %}
-    <div class="panel panel-default">
+    <div class="panel panel-default" onclick="checker({{ server.id }})">
 
         <div class="panel-heading">
             <h4 style="display:inline-block">{{ server.name }}</h4>
@@ -23,7 +23,7 @@
                 <div class="pull-right">
                     <label>
                         Select this server
-                        <input type="checkbox" name="selected_servers" value="{{ server.id }}" />
+                        <input type="checkbox" name="selected_servers" value="{{ server.id }}" id="{{ server.id }}"/>
                     </label>
                 </div>
             {% endif %}
@@ -31,8 +31,8 @@
 
     </div> <!-- panel -->
 
-    {% empty %}
-    There are no servers for this project yet.
+{% empty %}
+There are no servers for this project yet.
 
 {% endfor %}
 

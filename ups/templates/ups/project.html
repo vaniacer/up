@@ -20,6 +20,15 @@
 
 {% block content %}
 
+    <script type="text/javascript">
+        function checker(id) {
+            var box = document.getElementById(id);
+            if   ( box.checked == false )
+                 { box.checked = true;  }
+            else { box.checked = false; }
+        }
+    </script>
+
     {% get_obj_perms request.user for project as "pr_view_perms" %}
 
     <form method='post' action="{% url 'ups:project' project.id %}">
