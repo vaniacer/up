@@ -2,6 +2,7 @@
 {% load guardian_tags %}
 {% load bootstrap3 %}
 
+
 {% block header %}
 
     {% get_obj_perms request.user for project as "pr_view_perms" %}
