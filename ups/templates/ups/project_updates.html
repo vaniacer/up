@@ -15,18 +15,19 @@
 
         <div class="panel-heading">
             <h4 style="display:inline-block">{{ update }}</h4>
-            <small style="display:inline-block">
-                {% if "edit_update" in pr_view_perms %}
-                    <a href="{% url 'ups:edit_update' update.id %}">Edit</a>
-                {% endif %}
-            </small>
+            {% if "edit_update" in pr_view_perms %}
+                <small style="display:inline-block"><a href="{% url 'ups:edit_update' update.id %}">Edit</a></small>
+            {% endif %}
         </div>
 
         <div class="panel-body update-body" id="body{{ update.id }}">
-            {{ update.desc|linebreaks }}
-            <small style="display: inline-block">
-                {{ update.date|date:'M d, Y H:i' }}
-            </small>
+            <div class="pull-left">
+                <dl class="dl-horizontal">
+                    <dt>Description</dt><dd>{{ update.desc }}</dd>
+                    <dt><small>Date added</small></dt><dd><small>{{ update.date|date:'M d, Y H:i' }}</small></dd>
+                </dl>
+            </div>
+
             {% if "run_command" in pr_view_perms %}
                 <div class="pull-right">
                     <label>

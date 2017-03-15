@@ -14,19 +14,20 @@
 
         <div class="panel-heading">
             <h4 style="display:inline-block">{{ server.name }}</h4>
-            <small style="display:inline-block">
-                {% if "edit_server" in pr_view_perms %}
-                    <a href="{% url 'ups:edit_server' server.id %}">Edit</a>
-                {% endif %}
-            </small>
+            {% if "edit_server" in pr_view_perms %}
+                <small style="display:inline-block"><a href="{% url 'ups:edit_server' server.id %}">Edit</a></small>
+            {% endif %}
         </div>
 
         <div class="panel-body server-body" id="body{{ server.id }}">
-            {{ server.addr }}
-            {{ server.desc|linebreaks }}
-            <small style="display:inline-block">
-                {{ server.date|date:'M d, Y H:i' }}
-            </small>
+            <div class="pull-left">
+                <dl class="dl-horizontal">
+                    <dt>Server address</dt><dd>{{ server.addr }}</dd>
+                    <dt>Working folder</dt><dd>{{ server.wdir }}</dd>
+                    <dt>Description</dt><dd>{{ server.desc }}</dd>
+                    <dt><small>Date added</small></dt><dd><small>{{ server.date|date:'M d, Y H:i' }}</small></dd>
+                </dl>
+            </div>
 
             {% if "run_command" in pr_view_perms %}
                 <div class="pull-right">
