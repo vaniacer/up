@@ -14,14 +14,14 @@
         {% get_obj_perms request.user for project as "project_perms" %}
 
         {% if "view_project" in project_perms %}
-                <div class="well">
-                        <h3>
-                            <a href="{% url 'ups:project' project.id %}">{{ project }}</a>
-                        </h3>
-                        <small>
-                            {{ project.desc|linebreaks }}
-                        </small>
-                </div>
+            <div class="well"onclick="location.href='{% url 'ups:project' project.id %}'" >
+                <h3>
+                    <a href="{% url 'ups:project' project.id %}">{{ project }}</a>
+                </h3>
+                <small>
+                    {{ project.desc|linebreaks }}
+                </small>
+            </div>
         {% endif %}
 
         {% empty %}

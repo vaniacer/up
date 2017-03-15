@@ -3,7 +3,7 @@
 
 {% block header %}
     <br>
-    <div class='jumbotron'>
+    <div class='jumbotron' onclick="location.href='{% url 'ups:projects' %}'">
        <h4><a href="{% url 'ups:projects' %}">Update your servers</a></h4>
     </div>
 {% endblock header %}
