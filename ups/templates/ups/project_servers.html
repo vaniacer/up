@@ -7,6 +7,10 @@
            onclick="select_all('selected_servers', 'server-body', true)"/>
     <input class="btn btn-info btn-xs" value="Deselect All"
            onclick="select_all('selected_servers', 'server-body', false)"/>
+
+    {% if "add_server" in pr_view_perms %}
+        <a class="btn btn-success btn-xs" href="{% url 'ups:new_server' project.id %}">Add new server</a>
+    {% endif %}
 {% endbuttons %}
 
 {% for server in servers %}
@@ -46,9 +50,3 @@
 There are no servers for this project yet.
 
 {% endfor %}
-
-<p>
-    {% if "add_server" in pr_view_perms %}
-        <a href="{% url 'ups:new_server' project.id %}">Add new server</a>
-    {% endif %}
-</p>

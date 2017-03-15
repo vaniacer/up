@@ -7,6 +7,10 @@
            onclick="select_all('selected_updates', 'update-body', true)"/>
     <input class="btn btn-info btn-xs" value="Deselect All"
            onclick="select_all('selected_updates', 'update-body', false)"/>
+
+    {% if "add_update" in pr_view_perms %}
+        <a class="btn btn-success btn-xs" href="{% url 'ups:new_update' project.id %}">Add new update</a>
+    {% endif %}
 {% endbuttons %}
 
 {% for update in updates %}
@@ -46,9 +50,3 @@
 There are no updates for this project yet.
 
 {% endfor %}
-
-<p>
-    {% if "add_update" in pr_view_perms %}
-        <a href="{% url 'ups:new_update' project.id %}">Add new update</a>
-    {% endif %}
-</p>

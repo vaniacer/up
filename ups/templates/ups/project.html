@@ -6,9 +6,6 @@
 
     {% get_obj_perms request.user for project as "pr_view_perms" %}
 
-    <br>
-
-    <div class="well">
         <h2 style="display:inline-block">{{ project }}</h2>
         <small style="display:inline-block">
             {% if "edit_project" in pr_view_perms %}
@@ -17,7 +14,6 @@
         </small>
 
         <h5>{{ project.desc|linebreaks }}</h5>
-    </div>
 
 {% endblock header %}
 
@@ -68,9 +64,9 @@
             <div role="tabpanel" class="tab-pane fade" id="servers">{% include "ups/project_servers.html" %}</div>
         </div>
 
-        {% if "run_command" in pr_view_perms %}
+        <hr>
 
-            <hr>
+        {% if "run_command" in pr_view_perms %}
 
             {% buttons %}
                 <input type="submit" class="btn btn-primary" name="select_test"     value="Show selected"/>
@@ -82,7 +78,7 @@
         {% endif %}
 
         {% buttons %}
-            <input type="submit" name="cancel" value="Go to Projects" class="btn btn-primary"/>
+            <input type="submit" name="cancel" value="Go to Projects" class="btn btn-warning"/>
         {% endbuttons %}
     </form>
 
