@@ -1,13 +1,10 @@
 # -*- encoding: utf-8 -*-
 
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect
-from django.core.urlresolvers import reverse
-from .models import Project, Server, Update
 from django.shortcuts import render
-from .permissions import check_perm
-from django.conf import settings
-from subprocess import call
+from .permissions import check_perm, check_perm_button
+from .buttons import buttons
+from .models import Project
 
 
 def index(request):
@@ -33,55 +30,8 @@ def project(request, project_id):
 	servers = current_project.server_set.order_by('name')
 	updates = current_project.update_set.order_by('date').reverse()
 
-	selected_updates = request.POST.getlist('selected_updates')
-	selected_servers = request.POST.getlist('selected_servers')
-
-	su = []
-	ss = []
-
-	if request.POST.get('select_test'):
-
-		check_perm('run_command', current_project, request.user)
-
-		for i in selected_updates:
-			update = Update.objects.get(id=i)
-			su.append(str(update))
-		print su
-
-		for i in selected_servers:
-			server = Server.objects.get(id=i)
-			ss.append(server.addr)
-		print ss
-
-		opt = ' '.join(ss) + ' ' + ' '.join(su)
-		run = call("bash/test {}" .format(opt), shell=True)
-		print run
-
-		return HttpResponseRedirect('')
-
-	elif request.POST.get('cancel'):
-		return HttpResponseRedirect(reverse('ups:projects'))
-
-	elif request.POST.get('select_upload'):
-
-		check_perm('run_command', current_project, request.user)
-
-		for i in selected_updates:
-			update = Update.objects.get(id=i)
-			su.append('media/' + str(update.file))
-		print su
-
-		for i in selected_servers:
-			server = Server.objects.get(id=i)
-			ss.append(server)
-		print ss
-
-		for s in ss:
-			opt = str(s.addr) + ' ' + str(s.wdir) + ' ' + ' '.join(su)
-			run = call("bash/copy {}" .format(opt), shell=True)
-			print run
-
-		return HttpResponseRedirect('')
+	if check_perm_button('run_command', current_project, request.user):
+		buttons(request)
 
 	context = {'project': current_project, 'servers': servers, 'updates': updates}
 	return render(request, 'ups/project.html', context)

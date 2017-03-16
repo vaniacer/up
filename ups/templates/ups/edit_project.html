@@ -17,7 +17,7 @@
 
         {% buttons %}
             <input type="submit" name="ok" value="Save changes" class="btn btn-primary"/>
-            <input type="submit" name="cancel" value="Cancel" class="btn btn-primary"/>
+            <a class="btn btn-warning" href="{% url 'ups:project' project.id %}">Cancel</a>
 
             {% if "delete_project" in edit_project_perms %}
                 <hr>

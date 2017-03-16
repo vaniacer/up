@@ -41,8 +41,6 @@ def edit_project(request, project_id):
 			if request.POST.get('delete'):
 				delete_project(project)
 				return HttpResponseRedirect(reverse('ups:projects'))
-			elif request.POST.get('cancel'):
-				return HttpResponseRedirect(reverse('ups:project', args=[project.id]))
 			elif request.POST.get('ok'):
 				form.save()
 
@@ -71,8 +69,6 @@ def edit_server(request, server_id):
 			if request.POST.get('delete'):
 				check_perm('del_server', project, request.user)
 				server.delete()
-			elif request.POST.get('cancel'):
-				return HttpResponseRedirect(reverse('ups:project', args=[project.id]))
 			elif request.POST.get('ok'):
 				form.save()
 
@@ -101,8 +97,6 @@ def edit_update(request, update_id):
 			if request.POST.get('delete'):
 				check_perm('del_update', project, request.user)
 				delete_update(update)
-			elif request.POST.get('cancel'):
-				return HttpResponseRedirect(reverse('ups:project', args=[project.id]))
 			elif request.POST.get('ok'):
 				form.save()
 

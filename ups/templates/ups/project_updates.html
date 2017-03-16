@@ -2,16 +2,18 @@
 
 <br>
 
-{% buttons %}
-    <input class="btn btn-info btn-xs" value="Select All"
-           onclick="select_all('selected_updates', 'update-body', true)"/>
-    <input class="btn btn-info btn-xs" value="Deselect All"
-           onclick="select_all('selected_updates', 'update-body', false)"/>
+{% if "run_command" in pr_view_perms %}
+    {% buttons %}
+        <input class="btn btn-info btn-xs" value="Select All"
+               onclick="select_all('selected_updates', 'update-body', true)"/>
+        <input class="btn btn-info btn-xs" value="Deselect All"
+               onclick="select_all('selected_updates', 'update-body', false)"/>
 
-    {% if "add_update" in pr_view_perms %}
-        <a class="btn btn-success btn-xs" href="{% url 'ups:new_update' project.id %}">Add new update</a>
-    {% endif %}
-{% endbuttons %}
+        {% if "add_update" in pr_view_perms %}
+            <a class="btn btn-success btn-xs" href="{% url 'ups:new_update' project.id %}">Add new update</a>
+        {% endif %}
+    {% endbuttons %}
+{% endif %}
 
 {% for update in updates %}
 

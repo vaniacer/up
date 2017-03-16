@@ -2,18 +2,21 @@
 
 <br>
 
-{% buttons %}
-    <input class="btn btn-info btn-xs" value="Select All"
-           onclick="select_all('selected_servers', 'server-body', true)"/>
-    <input class="btn btn-info btn-xs" value="Deselect All"
-           onclick="select_all('selected_servers', 'server-body', false)"/>
+{% if "run_command" in pr_view_perms %}
+    {% buttons %}
+        <input class="btn btn-info btn-xs" value="Select All"
+               onclick="select_all('selected_servers', 'server-body', true)"/>
+        <input class="btn btn-info btn-xs" value="Deselect All"
+               onclick="select_all('selected_servers', 'server-body', false)"/>
 
-    {% if "add_server" in pr_view_perms %}
-        <a class="btn btn-success btn-xs" href="{% url 'ups:new_server' project.id %}">Add new server</a>
-    {% endif %}
-{% endbuttons %}
+        {% if "add_server" in pr_view_perms %}
+            <a class="btn btn-success btn-xs" href="{% url 'ups:new_server' project.id %}">Add new server</a>
+        {% endif %}
+    {% endbuttons %}
+{% endif %}
 
 {% for server in servers %}
+
     <div class="panel panel-default" onclick="checker('server_box{{ server.id }}', 'server_body{{ server.id }}')">
 
         <div class="panel-heading">
