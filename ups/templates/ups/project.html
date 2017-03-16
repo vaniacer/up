@@ -6,14 +6,7 @@
 
     {% get_obj_perms request.user for project as "pr_view_perms" %}
 
-        <h2 style="display:inline-block">{{ project }}</h2>
-        <small style="display:inline-block">
-            {% if "edit_project" in pr_view_perms %}
-                <a href="{% url 'ups:edit_project' project.id %}">Edit</a>
-            {% endif %}
-        </small>
 
-        <h5>{{ project.desc|linebreaks }}</h5>
 
 {% endblock header %}
 
