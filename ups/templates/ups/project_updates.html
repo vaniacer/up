@@ -15,7 +15,7 @@
 
 {% for update in updates %}
 
-    <div class="panel panel-default" onclick="checker({{ update.id }})">
+    <div class="panel panel-default" onclick="checker('update_box{{ update.id }}', 'update_body{{ update.id }}')">
 
         <div class="panel-heading">
             <h4 style="display:inline-block">{{ update }}</h4>
@@ -24,7 +24,7 @@
             {% endif %}
         </div>
 
-        <div class="panel-body update-body" id="body{{ update.id }}">
+        <div class="panel-body update-body" id="update_body{{ update.id }}">
             <div class="pull-left">
                 <dl class="dl-horizontal">
                     <dt>Description</dt><dd>{{ update.desc }}</dd>
@@ -37,7 +37,7 @@
                     <label>
                         Click to select
                         <input style="display:none" type="checkbox" name="selected_updates"
-                               value="{{ update.id }}" id="{{ update.id }}"/>
+                               value="{{ update.id }}" id="update_box{{ update.id }}"/>
                     </label>
                 </div>
             {% endif %}

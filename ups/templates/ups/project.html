@@ -20,9 +20,9 @@
 {% block content %}
 
     <script type="text/javascript">
-        function checker(id) {
-            var box  = document.getElementById(id);
-            var body = document.getElementById("body" + id);
+        function checker(box_id, body_id) {
+            var box  = document.getElementById(box_id);
+            var body = document.getElementById(body_id);
             if   ( box.checked == false )
                  { box.checked = true;  body.style.background = '#dff0d8'; }
             else { box.checked = false; body.style.background = '';}
