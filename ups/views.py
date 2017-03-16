@@ -6,6 +6,7 @@ from django.core.urlresolvers import reverse
 from .models import Project, Server, Update
 from django.shortcuts import render
 from .permissions import check_perm
+from django.conf import settings
 from subprocess import call
 
 
@@ -57,8 +58,30 @@ def project(request, project_id):
 		print run
 
 		return HttpResponseRedirect('')
+
 	elif request.POST.get('cancel'):
 		return HttpResponseRedirect(reverse('ups:projects'))
+
+	elif request.POST.get('select_upload'):
+
+		check_perm('run_command', current_project, request.user)
+
+		for i in selected_updates:
+			update = Update.objects.get(id=i)
+			su.append('media/' + str(update.file))
+		print su
+
+		for i in selected_servers:
+			server = Server.objects.get(id=i)
+			ss.append(server)
+		print ss
+
+		for s in ss:
+			opt = str(s.addr) + ' ' + str(s.wdir) + ' ' + ' '.join(su)
+			run = call("bash/copy {}" .format(opt), shell=True)
+			print run
+
+		return HttpResponseRedirect('')
 
 	context = {'project': current_project, 'servers': servers, 'updates': updates}
 	return render(request, 'ups/project.html', context)

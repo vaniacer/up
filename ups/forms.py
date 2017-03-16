@@ -19,7 +19,7 @@ class ServerForm(forms.ModelForm):
 		fields = ['name', 'addr', 'wdir', 'desc']
 		labels = {
 			'name': 'Server name', 'desc': 'Server description',
-			'addr': 'IP address', 'wdir': 'Working directory',
+			'addr': 'SSH address', 'wdir': 'Working directory',
 		}
 		widgets = {'desc': forms.Textarea(attrs={'cols': 80})}
 
