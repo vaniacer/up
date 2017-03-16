@@ -1,7 +1,5 @@
 # -*- encoding: utf-8 -*-
 
-from django.http import HttpResponseRedirect
-from django.core.urlresolvers import reverse
 from .models import Server, Update
 from subprocess import call
 
@@ -45,20 +43,3 @@ def select_upload(selected_updates, selected_servers):
 		opt = str(s.addr) + ' ' + str(s.wdir) + ' ' + ' '.join('media/' + str(u.file) for u in updates)
 		run = call("bash/copy {}".format(opt), shell=True)
 		print run
-
-
-def buttons(request):
-	"""Обрабатывает кнопки."""
-
-	# Selected objects ID's.
-	selected_updates = request.POST.getlist('selected_updates')
-	selected_servers = request.POST.getlist('selected_servers')
-
-	if request.POST.get('select_test'):
-		select_test(selected_updates, selected_servers)
-
-	elif request.POST.get('select_upload'):
-		select_upload(selected_updates, selected_servers)
-
-	return HttpResponseRedirect('')
-
