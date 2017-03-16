@@ -136,6 +136,7 @@ LOGIN_URL = '/users/login/'
 # Настройки django-bootstrap3
 BOOTSTRAP3 = {
 	'include_jquery': True,
+	'button_class': 'btn-primary',
 }
 
 AUTHENTICATION_BACKENDS = (

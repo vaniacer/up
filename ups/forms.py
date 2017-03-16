@@ -1,6 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 from django import forms
+# from bootstrap3 import forms as b3forms
 from .models import Project, Server, Update
 
 
@@ -28,4 +29,7 @@ class UpdateForm(forms.ModelForm):
 		model = Update
 		fields = ['file', 'desc']
 		labels = {'file': 'Update file', 'desc': 'Update description'}
-		widgets = {'desc': forms.Textarea(attrs={'cols': 80})}
+		widgets = {
+			# 'file': b3forms.FileInput(attrs={'button_class': 'btn-primary'}),
+			'desc': forms.Textarea(attrs={'cols': 80}),
+		}
