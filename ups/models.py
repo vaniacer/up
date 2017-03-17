@@ -74,6 +74,9 @@ class History(models.Model):
 	exit = models.CharField(max_length=200)
 	proj = models.ForeignKey(Project)
 
+	class Meta:
+		verbose_name_plural = 'events'
+
 	def __unicode__(self):
 		"""Возвращает строковое представление модели."""
 		return self.name

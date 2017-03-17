@@ -19,8 +19,8 @@
             <div class="container">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed"
-                    data-toggle="collapse" data-target="#navbar"
-                    aria-expanded="false" aria-controls="navbar">
+                        data-toggle="collapse" data-target="#navbar"
+                        aria-expanded="false" aria-controls="navbar">
                     </button>
                     <a class="navbar-brand" href="{% url 'ups:index'  %}">Update Server</a>
                 </div>
@@ -35,11 +35,11 @@
 
                     <ul class="nav navbar-nav navbar-right">
                         {% if user.is_authenticated %}
-                        <li><a>Hello, {{ user.username }}.</a></li>
-                        <li><a href="{% url 'users:logout' %}">log out</a></li>
+                            <li><a>Hello, {{ user.username }}.</a></li>
+                            <li><a href="{% url 'users:logout' %}">log out</a></li>
                         {% else %}
-                        <li><a href="{% url 'users:register' %}">register</a></li>
-                        <li><a href="{% url 'users:login' %}">log in</a></li>
+                            <li><a href="{% url 'users:register' %}">register</a></li>
+                            <li><a href="{% url 'users:login' %}">log in</a></li>
                         {% endif %}
                     </ul>
                 </div><!--/.nav-collapse -->

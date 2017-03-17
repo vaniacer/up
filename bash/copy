@@ -3,12 +3,12 @@
 read addr wdir files <<< "$@"
 
 # Simple copy
-echo -e "\nКопирую файл(ы) $files на сервер $addr."
+echo -e "Копирую файл(ы) $files на сервер $addr."
 
 # Check if file exist
 for file in ${files}; do
     filename=$(basename ${file})
     ssh ${addr} "ls ${wdir}/updates/new/${filename} &> /dev/null" &&
-    echo -e "Файл существует, пропускаю." ||
+    echo -e "Файл - ${filename} существует, пропускаю." ||
     scp ${file} ${addr}:${wdir}/updates/new
 done

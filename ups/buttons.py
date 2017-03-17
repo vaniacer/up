@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 from .models import Server, Update, History
-from subprocess import call, Popen, PIPE
+from subprocess import Popen, PIPE
 
 
 def make_lists(selected_updates, selected_servers):
