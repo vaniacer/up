@@ -53,4 +53,4 @@ def select_upload(selected_updates, selected_servers, project):
 	for s in servers:
 		opt = str(s.addr) + ' ' + str(s.wdir) + ' ' + ' '.join('media/' + str(u.file) for u in updates)
 		log, err = run_cmd('bash/copy', opt)
-		add_event(project, 'Test', log, err)
+		add_event(project, 'Upload to servers', log, err)
