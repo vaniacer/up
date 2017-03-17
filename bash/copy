@@ -12,5 +12,3 @@ for file in ${files}; do
     echo -e "Файл существует, пропускаю." ||
     scp ${file} ${addr}:${wdir}/updates/new
 done
-
-exit 0

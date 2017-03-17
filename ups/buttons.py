@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
-from .models import Server, Update
-from subprocess import call
+from .models import Server, Update, History
+from subprocess import call, Popen, PIPE
 
 
 def make_lists(selected_updates, selected_servers):
@@ -16,11 +16,22 @@ def make_lists(selected_updates, selected_servers):
 	for i in selected_servers:
 		servers.append(Server.objects.get(id=i))
 
-	print updates, '\n', servers
+	# print updates, '\n', servers
 	return [servers, updates]
 
 
-def select_test(selected_updates, selected_servers):
+def run_cmd(cmd, opt):
+	run = Popen([cmd, opt], stdin=PIPE, stdout=PIPE, stderr=PIPE)
+	out, err = run.communicate()
+	rc = run.returncode
+	return out + err, rc
+
+
+def add_event(project, name, out, err):
+	History.objects.create(proj=project, name=name, desc=out, exit=err)
+
+
+def select_test(selected_updates, selected_servers, project):
 	"""Обрабатывает событие select_test."""
 
 	selected = make_lists(selected_updates, selected_servers)
@@ -28,11 +39,11 @@ def select_test(selected_updates, selected_servers):
 	updates = selected[1]
 
 	opt = ' '.join(str(u) for u in updates) + ' ' + ' '.join(str(s.addr) for s in servers)
-	run = call("bash/test {}".format(opt), shell=True)
-	print run
+	log, err = run_cmd('bash/test', opt)
+	add_event(project, 'Test', log, err)
 
 
-def select_upload(selected_updates, selected_servers):
+def select_upload(selected_updates, selected_servers, project):
 	"""Обрабатывает событие select_upload."""
 
 	selected = make_lists(selected_updates, selected_servers)
@@ -41,5 +52,5 @@ def select_upload(selected_updates, selected_servers):
 
 	for s in servers:
 		opt = str(s.addr) + ' ' + str(s.wdir) + ' ' + ' '.join('media/' + str(u.file) for u in updates)
-		run = call("bash/copy {}".format(opt), shell=True)
-		print run
+		log, err = run_cmd('bash/copy', opt)
+		add_event(project, 'Test', log, err)

@@ -64,3 +64,16 @@ class Update(models.Model):
 		"""Возвращает строковое представление модели."""
 		name = self.file.name.split('/')
 		return name[2]
+
+
+class History(models.Model):
+	"""История проекта."""
+	date = models.DateTimeField(auto_now_add=True, db_index=True)
+	name = models.CharField(max_length=200)
+	desc = models.TextField()
+	exit = models.CharField(max_length=200)
+	proj = models.ForeignKey(Project)
+
+	def __unicode__(self):
+		"""Возвращает строковое представление модели."""
+		return self.name

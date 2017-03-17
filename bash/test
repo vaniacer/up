@@ -4,6 +4,4 @@ name=$(basename "$0")
 wdir=$(cd "$(dirname "$0")" && pwd)
 
 read opts <<< "$@"
-echo "$opts" > ${wdir}/../file
-
-exit 0
+echo -e "Выбраны объекты: \n$opts\n"

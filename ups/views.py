@@ -30,19 +30,20 @@ def project(request, project_id):
 
 	servers = current_project.server_set.order_by('name')
 	updates = current_project.update_set.order_by('date').reverse()
+	events = current_project.history_set.order_by('date').reverse()
 
 	selected_updates = request.POST.getlist('selected_updates')
 	selected_servers = request.POST.getlist('selected_servers')
 
 	if request.POST.get('select_test'):
 		check_perm('run_command', current_project, request.user)
-		select_test(selected_updates, selected_servers)
+		select_test(selected_updates, selected_servers, current_project)
 		return HttpResponseRedirect('')
 
 	elif request.POST.get('select_upload'):
 		check_perm('run_command', current_project, request.user)
-		select_upload(selected_updates, selected_servers)
+		select_upload(selected_updates, selected_servers, current_project)
 		return HttpResponseRedirect('')
 
-	context = {'project': current_project, 'servers': servers, 'updates': updates}
+	context = {'project': current_project, 'servers': servers, 'updates': updates, 'events': events}
 	return render(request, 'ups/project.html', context)
