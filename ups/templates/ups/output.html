@@ -1,19 +1,25 @@
 {% extends "ups/base.html" %}
 {% load bootstrap3 %}
 
-{% block header %}
-{% endblock header %}
-
 {% block content %}
+
+    <script type="text/javascript">
+        function color(body_id, ec) {
+            var body = document.getElementById(body_id);
+            if (ec != 0) { body.style.background = '#f2dede'; }
+        }
+    </script>
 
     <br>
 
-    <dl class="dl-horizontal">
+    <dl class="dl-horizontal" id="output_log">
         <dt>Event logs</dt><dd>{{ log|linebreaks }}</dd>
         <dt>Error codes</dt><dd>{{ err }}</dd>
     </dl>
 
     <a class="btn btn-primary" href="{% url 'ups:project' project.id %}">Back</a>
+
+    <style onload="color('output_log', '{{ err }}')"></style>
 
     <br>
 
