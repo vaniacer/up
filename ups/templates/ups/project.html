@@ -6,14 +6,19 @@
 
     {% get_obj_perms request.user for project as "pr_view_perms" %}
 
-    <h2 style="display:inline-block">{{ project }}</h2>
-    <small style="display:inline-block">
-        {% if "edit_project" in pr_view_perms %}
-            <a href="{% url 'ups:edit_project' project.id %}">Edit</a>
-        {% endif %}
-    </small>
+    <br>
 
-    <h5>{{ project.desc|linebreaks }}</h5>
+    <div class="row">
+        <div class="col-md-2">
+            <h2 style="display:inline-block">{{ project }}</h2>
+            <small style="display:inline-block">
+                {% if "edit_project" in pr_view_perms %}
+                <a href="{% url 'ups:edit_project' project.id %}">Edit</a>
+                {% endif %}
+            </small>
+        </div>
+        <div class="col-md-6"><h5>{{ project.desc|linebreaks }}</h5></div>
+    </div>
 
 {% endblock header %}
 
@@ -90,14 +95,8 @@
         <!-- Nav tabs -->
         <ul class="nav nav-tabs nav-justified" role="tablist">
             <li role="presentation" class="active">
-                <a href="#updates" aria-controls="updates" role="tab" data-toggle="tab">
-                    <h4>Updates</h4>
-                </a>
-            </li>
-
-            <li role="presentation">
-                <a href="#servers" aria-controls="servers" role="tab" data-toggle="tab">
-                    <h4>Servers</h4>
+                <a href="#updates_servers" aria-controls="updates_servers" role="tab" data-toggle="tab">
+                    <h4>Updates & Servers</h4>
                 </a>
             </li>
 
@@ -111,50 +110,13 @@
 
         <!-- Tab panes -->
         <div class="tab-content">
-            <div role="tabpanel" class="tab-pane fade in active" id="updates">{% include "ups/project_updates.html" %}
+            <div role="tabpanel" class="tab-pane fade in active" id="updates_servers">
+                {% include "ups/project_servers_updates.html" %}
             </div>
-            <div role="tabpanel" class="tab-pane fade" id="servers">{% include "ups/project_servers.html" %}</div>
             <div role="tabpanel" class="tab-pane fade" id="history">{% include "ups/project_history.html" %}</div>
         </div>
 
-        <!-- Нижняя статическая навигационная панель -->
-        <nav class="navbar navbar-default navbar-fixed-bottom">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed"
-                        data-toggle="collapse" data-target="#navbar_bottom"
-                        aria-expanded="false" aria-controls="navbar_bottom">
-                    </button>
-                </div>
-
-                <div id="navbar_bottom" class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li><a href="{% url 'ups:projects' %}">Projects</a></li>
-                        {% if "run_command" in pr_view_perms %}
-                            <li><input type="submit"
-                                       name="select_test"
-                                       value="Show selected"
-                                       class="btn btn-default navbar-btn"
-                                       onclick="return SelectValidation()"></li>
-
-                            <li><input type="submit"
-                                       name="select_upload"
-                                       value="Copy"
-                                       class="btn btn-default navbar-btn"
-                                       onclick="return CopyValidation()"></li>
-                            <!--<li><input type="submit" class="btn btn-default navbar-btn"-->
-                                       <!--name="select_check"    value="Check updates on servers"/></li>-->
-                            <!--<li><input type="submit" class="btn btn-default navbar-btn"-->
-                                       <!--name="select_schedule" value="Check scheduled updates"/></li>-->
-                        {% endif %}
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><input type="button" class="btn btn-default navbar-btn"
-                                   onclick="topFunction()" value="Go to top"/></li>
-                    </ul>
-                </div><!--/.nav-collapse -->
-            </div>
-        </nav>
+    {% include "ups/bottom_panel.html" %}
 
     </form>
 

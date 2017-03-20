@@ -15,12 +15,12 @@
 
         {% if "view_project" in project_perms %}
             <div class="well" onclick="location.href='{% url 'ups:project' project.id %}'" >
-                <h3>
-                    <a href="{% url 'ups:project' project.id %}">{{ project }}</a>
-                </h3>
-                <small>
-                    {{ project.desc|linebreaks }}
-                </small>
+                <div class="row">
+                    <div class="col-md-2">
+                        <h3><a href="{% url 'ups:project' project.id %}">{{ project }}</a></h3>
+                    </div>
+                    <div class="col-md-6"><small>{{ project.desc|linebreaks }}</small></div>
+                </div>
             </div>
         {% endif %}
 
