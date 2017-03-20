@@ -1,0 +1,30 @@
+{% load bootstrap3 %}
+
+<br>
+
+<script type="text/javascript">
+    function color(body_id, ec) {
+        var body = document.getElementById(body_id);
+        if (ec > 0) { body.style.background = '#f2dede'; }
+    }
+</script>
+
+{% for event in events %}
+
+    <dl class="dl-horizontal" id="event{{ event.id }}">
+        <dt>Event name</dt><dd>{{ event.name }}</dd>
+        <dt>Event log</dt><dd>{{ event.desc|linebreaks }}</dd>
+        <dt>Error code</dt><dd>{{ event.exit }}</dd>
+        <dt><small>Date</small></dt><dd><small>{{ event.date|date:'M d, Y H:i' }}</small></dd>
+    </dl>
+
+    <style onload="color('event{{ event.id }}', '{{ event.exit }}')"></style>
+
+    <hr>
+
+{% empty %}
+    There are no events in this project yet.
+
+{% endfor %}
+
+<br>
