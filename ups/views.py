@@ -41,7 +41,6 @@ def project(request, project_id):
 		print log, err
 		context = {'project': current_project, 'log': log, 'err': err}
 		return render(request, 'ups/output.html', context)
-		# return HttpResponseRedirect('')
 
 	if request.POST.get('select_upload'):
 		check_perm('run_command', current_project, request.user)
@@ -49,7 +48,6 @@ def project(request, project_id):
 		print log, err
 		context = {'project': current_project, 'log': log, 'err': err}
 		return render(request, 'ups/output.html', context)
-		# return HttpResponseRedirect('')
 
 	context = {'project': current_project, 'servers': servers, 'updates': updates, 'events': events}
 	return render(request, 'ups/project.html', context)

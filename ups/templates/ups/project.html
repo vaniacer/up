@@ -35,11 +35,56 @@
             for (i = 0; i < boxes.length;  i++) { boxes[i].checked = state; }
             for (i = 0; i < bodies.length; i++) { bodies[i].style.background = color; }
         }
+
+        function topFunction() {
+            document.body.scrollTop = 0; // For Chrome, Safari and Opera
+            document.documentElement.scrollTop = 0; // For IE and Firefox
+        }
+
+        function SelectValidation() {
+
+            var selected = false;
+
+            var updates =  document.getElementsByName('selected_updates');
+            var servers =  document.getElementsByName('selected_servers');
+
+            for (i = 0; i < updates.length; i++) { if (updates[i].checked) { selected = true; } }
+            for (i = 0; i < servers.length; i++) { if (servers[i].checked) { selected = true; } }
+
+            if (selected == false) {
+                alert('None selected.');
+                return false;
+            }
+
+        }
+
+        function CopyValidation() {
+
+            var selected_updates = false;
+            var selected_servers = false;
+
+            var updates =  document.getElementsByName('selected_updates');
+            var servers =  document.getElementsByName('selected_servers');
+
+            for (i = 0; i < updates.length; i++) { if (updates[i].checked) { selected_updates = true; } }
+            for (i = 0; i < servers.length; i++) { if (servers[i].checked) { selected_servers = true; } }
+
+            if (selected_updates == false) {
+                alert('Update(s) not selected.');
+                return false;
+            }
+
+            if (selected_servers == false) {
+                alert('Server(s) not selected.');
+                return false;
+            }
+
+        }
     </script>
 
     {% get_obj_perms request.user for project as "pr_view_perms" %}
 
-    <form method='post' action="{% url 'ups:project' project.id %}">
+    <form method='post' action="{% url 'ups:project' project.id %}" id="selector">
         {% csrf_token %}
 
         <!-- Nav tabs -->
@@ -86,15 +131,26 @@
                     <ul class="nav navbar-nav">
                         <li><a href="{% url 'ups:projects' %}">Projects</a></li>
                         {% if "run_command" in pr_view_perms %}
-                            <li><input type="submit" class="btn btn-default navbar-btn"
-                                       name="select_test"     value="Show selected"/></li>
-                            <li><input type="submit" class="btn btn-default navbar-btn"
-                                       name="select_upload"   value="Copy"/></li>
+                            <li><input type="submit"
+                                       name="select_test"
+                                       value="Show selected"
+                                       class="btn btn-default navbar-btn"
+                                       onclick="return SelectValidation()"></li>
+
+                            <li><input type="submit"
+                                       name="select_upload"
+                                       value="Copy"
+                                       class="btn btn-default navbar-btn"
+                                       onclick="return CopyValidation()"></li>
                             <!--<li><input type="submit" class="btn btn-default navbar-btn"-->
                                        <!--name="select_check"    value="Check updates on servers"/></li>-->
                             <!--<li><input type="submit" class="btn btn-default navbar-btn"-->
                                        <!--name="select_schedule" value="Check scheduled updates"/></li>-->
                         {% endif %}
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><input type="button" class="btn btn-default navbar-btn"
+                                   onclick="topFunction()" value="Go to top"/></li>
                     </ul>
                 </div><!--/.nav-collapse -->
             </div>

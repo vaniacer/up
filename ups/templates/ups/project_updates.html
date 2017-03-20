@@ -2,17 +2,7 @@
 
 <br>
 
-{% buttons %}
-    {% if "run_command" in pr_view_perms %}
-        <input type="button" class="btn btn-info btn-xs" value="Select All"
-               onclick="select_all('selected_updates', 'update-body', true)"/>
-        <input type="button" class="btn btn-info btn-xs" value="Deselect All"
-               onclick="select_all('selected_updates', 'update-body', false)"/>
-    {% endif %}
-    {% if "add_update" in pr_view_perms %}
-        <a class="btn btn-success btn-xs" href="{% url 'ups:new_update' project.id %}">Add new update</a>
-    {% endif %}
-{% endbuttons %}
+{% include "ups/project_updates_buttons.html" %}
 
 {% for update in updates %}
 
@@ -52,5 +42,7 @@
 There are no updates for this project yet.
 
 {% endfor %}
+
+{% include "ups/project_updates_buttons.html" %}
 
 <br>
