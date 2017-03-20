@@ -41,6 +41,7 @@ def select_test(selected_updates, selected_servers, project):
 	opt = ' '.join(str(u) for u in updates) + ' ' + ' '.join(str(s.addr) for s in servers)
 	log, err = run_cmd('bash/test', opt)
 	add_event(project, 'Test', log, err)
+	return log, err
 
 
 def select_upload(selected_updates, selected_servers, project):
@@ -50,7 +51,12 @@ def select_upload(selected_updates, selected_servers, project):
 	servers = selected[0]
 	updates = selected[1]
 
+	logs, errs = '', ''
+
 	for s in servers:
 		opt = str(s.addr) + ' ' + str(s.wdir) + ' ' + ' '.join('media/' + str(u.file) for u in updates)
 		log, err = run_cmd('bash/copy', opt)
 		add_event(project, 'Upload to servers', log, err)
+		logs = logs + str(log) + '\n'
+		errs = errs + str(err) + '\n'
+	return logs, errs

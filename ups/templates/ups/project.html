@@ -86,10 +86,14 @@
                     <ul class="nav navbar-nav">
                         <li><a href="{% url 'ups:projects' %}">Projects</a></li>
                         {% if "run_command" in pr_view_perms %}
-                            <input type="submit" class="btn btn-default navbar-btn" name="select_test"     value="Show selected"/>
-                            <input type="submit" class="btn btn-default navbar-btn" name="select_upload"   value="Upload"/>
-                            <input type="submit" class="btn btn-default navbar-btn" name="select_check"    value="Check updates on servers"/>
-                            <input type="submit" class="btn btn-default navbar-btn" name="select_schedule" value="Check scheduled updates"/>
+                            <li><input type="submit" class="btn btn-default navbar-btn"
+                                       name="select_test"     value="Show selected"/></li>
+                            <li><input type="submit" class="btn btn-default navbar-btn"
+                                       name="select_upload"   value="Copy"/></li>
+                            <!--<li><input type="submit" class="btn btn-default navbar-btn"-->
+                                       <!--name="select_check"    value="Check updates on servers"/></li>-->
+                            <!--<li><input type="submit" class="btn btn-default navbar-btn"-->
+                                       <!--name="select_schedule" value="Check scheduled updates"/></li>-->
                         {% endif %}
                     </ul>
                 </div><!--/.nav-collapse -->

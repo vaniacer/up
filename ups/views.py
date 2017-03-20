@@ -37,13 +37,19 @@ def project(request, project_id):
 
 	if request.POST.get('select_test'):
 		check_perm('run_command', current_project, request.user)
-		select_test(selected_updates, selected_servers, current_project)
-		return HttpResponseRedirect('')
+		log, err = select_test(selected_updates, selected_servers, current_project)
+		print log, err
+		context = {'project': current_project, 'log': log, 'err': err}
+		return render(request, 'ups/output.html', context)
+		# return HttpResponseRedirect('')
 
-	elif request.POST.get('select_upload'):
+	if request.POST.get('select_upload'):
 		check_perm('run_command', current_project, request.user)
-		select_upload(selected_updates, selected_servers, current_project)
-		return HttpResponseRedirect('')
+		log, err = select_upload(selected_updates, selected_servers, current_project)
+		print log, err
+		context = {'project': current_project, 'log': log, 'err': err}
+		return render(request, 'ups/output.html', context)
+		# return HttpResponseRedirect('')
 
 	context = {'project': current_project, 'servers': servers, 'updates': updates, 'events': events}
 	return render(request, 'ups/project.html', context)

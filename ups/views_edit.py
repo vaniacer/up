@@ -13,13 +13,13 @@ import os
 
 def delete_project(project):
 	"""Удаляет проект и файлы обновлений."""
-	shutil.rmtree("up/media/updates/{}" .format(project.name), ignore_errors=True)
+	shutil.rmtree("media/updates/{}" .format(project.name), ignore_errors=True)
 	project.delete()
 
 
 def delete_update(update):
 	"""Удаляет обновление и файлы обновлений."""
-	os.remove("up/media/{}" .format(update.file))
+	os.remove("media/{}" .format(update.file))
 	update.delete()
 
 
