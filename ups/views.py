@@ -2,7 +2,6 @@
 
 from django.contrib.auth.decorators import login_required
 from .buttons import select_test, select_upload
-from django.http import HttpResponseRedirect
 from .models import Project
 from django.shortcuts import render
 from .permissions import check_perm
@@ -38,14 +37,12 @@ def project(request, project_id):
 	if request.POST.get('select_test'):
 		check_perm('run_command', current_project, request.user)
 		log, err = select_test(selected_updates, selected_servers, current_project)
-		# print log, err
 		context = {'project': current_project, 'log': log, 'err': err}
 		return render(request, 'ups/output.html', context)
 
 	if request.POST.get('select_upload'):
 		check_perm('run_command', current_project, request.user)
 		log, err = select_upload(selected_updates, selected_servers, current_project)
-		# print log, err
 		context = {'project': current_project, 'log': log, 'err': err}
 		return render(request, 'ups/output.html', context)
 

@@ -20,8 +20,9 @@ def make_lists(selected_updates, selected_servers):
 	return [servers, updates]
 
 
-def run_cmd(cmd, opt):
-	run = Popen([cmd, opt], stdin=PIPE, stdout=PIPE, stderr=PIPE)
+def run_cmd(opt):
+	print opt
+	run = Popen(opt, stdin=PIPE, stdout=PIPE, stderr=PIPE)
 	out, err = run.communicate()
 	rc = run.returncode
 	return out + err, rc
@@ -38,8 +39,10 @@ def select_test(selected_updates, selected_servers, project):
 	servers = selected[0]
 	updates = selected[1]
 
-	opt = ' '.join(str(u) for u in updates) + ' ' + ' '.join(str(s.addr) for s in servers)
-	log, err = run_cmd('bash/test', opt)
+	obj = ' '.join(str(u) for u in updates) + ' ' + ' '.join(str(s.addr) for s in servers)
+	opt = ['bash/test', obj]
+
+	log, err = run_cmd(opt)
 	add_event(project, 'Test', log, err)
 	return log, err
 
@@ -51,12 +54,11 @@ def select_upload(selected_updates, selected_servers, project):
 	servers = selected[0]
 	updates = selected[1]
 
-	logs, errs = '', ''
+	srv = ' '.join(str(s.addr) + ':' + str(s.wdir) for s in servers)
+	upd = ' '.join('media/' + str(u.file) for u in updates)
+	opt = ['bash/copy.sh', '-server', srv, '-update', upd]
 
-	for s in servers:
-		opt = str(s.addr) + ' ' + str(s.wdir) + ' ' + ' '.join('media/' + str(u.file) for u in updates)
-		log, err = run_cmd('bash/copy', opt)
-		add_event(project, 'Upload to servers', log, err)
-		logs = logs + str(log) + '\n'
-		errs = errs + str(err) + '\n'
-	return logs, errs
+	log, err = run_cmd(opt)
+	add_event(project, 'Upload to servers', log, err)
+
+	return log, err
