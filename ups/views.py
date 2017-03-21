@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 from django.contrib.auth.decorators import login_required
-from .buttons import select_test, select_upload
+from .buttons import select_test, select_upload, select_logs
 from .models import Project
 from django.shortcuts import render
 from .permissions import check_perm
@@ -43,6 +43,12 @@ def project(request, project_id):
 	if request.POST.get('select_upload'):
 		check_perm('run_command', current_project, request.user)
 		log, err = select_upload(selected_updates, selected_servers, current_project)
+		context = {'project': current_project, 'log': log, 'err': err}
+		return render(request, 'ups/output.html', context)
+
+	if request.POST.get('select_logs'):
+		check_perm('run_command', current_project, request.user)
+		log, err = select_logs(selected_servers)
 		context = {'project': current_project, 'log': log, 'err': err}
 		return render(request, 'ups/output.html', context)
 

@@ -23,15 +23,18 @@ until [ -z "$1" ]; do
 done
 
 # Simple copy
-for server in ${servers[@]}; do
+for server in "${servers[@]}"; do
 
+    # server comes like this jboss@localhost:/var/lib/jboss
+    # cut address jboss@localhost
     addr=${server%%:*}
+    # cut working directory /var/lib/jboss
     wdir=${server##*:}
 
     echo -e "Сервер - ${addr}"
-    ssh ${addr} "echo > /dev/null" || { error+=$?; break; }
+    ssh ${addr} "echo > /dev/null" || { error+="$? "; break; }
 
-    for file in ${updates[@]}; do
+    for file in "${updates[@]}"; do
         filename=$(basename ${file})
         echo -e "Копирую файл - ${filename}"
         # Check if file exist

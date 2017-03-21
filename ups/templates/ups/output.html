@@ -8,12 +8,17 @@
             var body = document.getElementById(body_id);
             if (ec != 0) { body.style.background = '#f2dede'; }
         }
+
+        function topFunction() {
+            document.body.scrollTop = 0; // For Chrome, Safari and Opera
+            document.documentElement.scrollTop = 0; // For IE and Firefox
+        }
     </script>
 
     <br>
 
     <dl class="dl-horizontal" id="output_log">
-        <dt>Event logs</dt><dd>{{ log|linebreaks }}</dd>
+        <dt>Event logs</dt><dd><pre>{{ log|linebreaks }}</pre></dd>
         <dt>Error codes</dt><dd>{{ err }}</dd>
     </dl>
 
@@ -22,5 +27,7 @@
     <style onload="color('output_log', '{{ err }}')"></style>
 
     <br>
+
+    {% include "ups/output_bottom_panel.html" %}
 
 {% endblock content %}

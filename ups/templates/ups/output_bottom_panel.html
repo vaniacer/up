@@ -1,0 +1,24 @@
+<!-- Нижняя статическая навигационная панель -->
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed"
+                data-toggle="collapse" data-target="#navbar_bottom"
+                aria-expanded="false" aria-controls="navbar_bottom">
+            </button>
+        </div>
+
+        <div id="navbar_bottom" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="{% url 'ups:projects' %}">Projects</a></li>
+                {% if project %}
+                    <li><a href="{% url 'ups:project' project.id %}">{{ project }}</a></li>
+                {% endif %}
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><input type="button" class="btn btn-default navbar-btn"
+                           onclick="topFunction()" value="Top"/></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</nav>
