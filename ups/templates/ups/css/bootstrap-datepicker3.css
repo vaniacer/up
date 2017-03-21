@@ -5,6 +5,10 @@
  * Improvements by Andrew Rowls
  * Licensed under the Apache License v2.0 (http://www.apache.org/licenses/LICENSE-2.0)
  */
+
+.date-input {
+  width: 120px;
+}
 .datepicker {
   border-radius: 4px;
   direction: ltr;

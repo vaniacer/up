@@ -4,6 +4,9 @@
  * Licensed under MIT (https://github.com/weareoutman/clockpicker/blob/gh-pages/LICENSE)
  */
 
+.clock-input {
+  width: 100px;
+}
 .clockpicker .input-group-addon {
 	cursor: pointer;
 }
