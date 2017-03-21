@@ -24,7 +24,10 @@
 
 {% block content %}
 
-    <script type="text/javascript">{% include "ups/project.js" %}</script>
+    <script type="text/javascript">
+        {% include "ups/js/bootstrap-datepicker.js" %}
+        {% include "ups/js/project.js" %}
+    </script>
 
     {% get_obj_perms request.user for project as "pr_view_perms" %}
 

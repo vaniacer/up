@@ -70,3 +70,5 @@ function CopyValidation() {
         return false;
     }
 }
+
+$('.datepicker').datepicker();
