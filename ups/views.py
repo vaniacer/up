@@ -35,6 +35,7 @@ def project(request, project_id):
 	selected_servers = request.POST.getlist('selected_servers')
 
 	if request.POST.get('select_test'):
+		print request.POST
 		check_perm('run_command', current_project, request.user)
 		log, err = select_test(selected_updates, selected_servers, current_project)
 		context = {'project': current_project, 'log': log, 'err': err}

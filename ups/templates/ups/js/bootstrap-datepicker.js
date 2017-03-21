@@ -1728,7 +1728,7 @@
 
 	var defaults = $.fn.datepicker.defaults = {
 		assumeNearbyYear: false,
-		autoclose: false,
+		autoclose: true,
 		beforeShowDay: $.noop,
 		beforeShowMonth: $.noop,
 		beforeShowYear: $.noop,
@@ -1744,7 +1744,7 @@
 		forceParse: true,
 		format: 'mm/dd/yyyy',
 		keyboardNavigation: true,
-		language: 'en',
+		language: 'ru',
 		minViewMode: 0,
 		maxViewMode: 4,
 		multidate: false,

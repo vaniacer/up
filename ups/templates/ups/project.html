@@ -24,16 +24,6 @@
 
 {% block content %}
 
-    <style type="text/css">
-        {% include "ups/css/bootstrap-datepicker3.css" %}
-        {% include "ups/css/clockpicker.css" %}
-    </style>
-    <script type="text/javascript">
-        {% include "ups/js/bootstrap-datepicker.js" %}
-        {% include "ups/js/clockpicker.js" %}
-        {% include "ups/js/project.js" %}
-    </script>
-
     {% get_obj_perms request.user for project as "pr_view_perms" %}
 
     <form method='post' action="{% url 'ups:project' project.id %}" id="selector">
