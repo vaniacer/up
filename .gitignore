@@ -2,3 +2,4 @@ db.sqlite3
 *.pyc
 media
 media/*
+ups/migrations/0*
