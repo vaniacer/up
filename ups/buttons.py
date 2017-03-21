@@ -29,7 +29,7 @@ def make_servers_lists(selected_servers):
 
 
 def run_cmd(opt):
-	print opt
+	# print opt
 	run = Popen(opt, stdin=PIPE, stdout=PIPE, stderr=PIPE)
 	out, err = run.communicate()
 	rc = run.returncode
