@@ -1735,7 +1735,7 @@
 		beforeShowDecade: $.noop,
 		beforeShowCentury: $.noop,
 		calendarWeeks: false,
-		clearBtn: false,
+		clearBtn: true,
 		toggleActive: false,
 		daysOfWeekDisabled: [],
 		daysOfWeekHighlighted: [],
