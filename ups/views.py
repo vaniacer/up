@@ -7,6 +7,12 @@ from django.shortcuts import render
 from .permissions import check_perm
 
 
+def get_cron_jobs(current_project):
+	"""Получает список заданий в кроне для проекта."""
+
+	pass
+
+
 def index(request):
 	"""Домашняя страница приложения update server"""
 	return render(request, 'ups/index.html')
@@ -29,7 +35,8 @@ def project(request, project_id):
 
 	servers = current_project.server_set.order_by('name')
 	updates = current_project.update_set.order_by('date').reverse()
-	events = current_project.history_set.order_by('date').reverse()
+	history = current_project.history_set.order_by('date').reverse()
+	cronjob = get_cron_jobs(current_project)
 
 	selected_updates = request.POST.getlist('selected_updates')
 	selected_servers = request.POST.getlist('selected_servers')
@@ -61,5 +68,12 @@ def project(request, project_id):
 		context = {'project': current_project, 'log': log, 'err': err}
 		return render(request, 'ups/output.html', context)
 
-	context = {'project': current_project, 'servers': servers, 'updates': updates, 'events': events}
+	context = {
+		'project': current_project,
+		'servers': servers,
+		'updates': updates,
+		'history': history,
+		'cronjob': cronjob,
+	}
+
 	return render(request, 'ups/project.html', context)

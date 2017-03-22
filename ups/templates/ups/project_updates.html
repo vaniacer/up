@@ -26,11 +26,9 @@
 
             {% if "run_command" in pr_view_perms %}
                 <div class="pull-right">
-                    <label>
-                        Click to select
-                        <input style="display:none" type="checkbox" name="selected_updates"
+                    <small>Click to select</small>
+                    <input  style="display:none" type="checkbox" readonly="readonly" name="selected_updates"
                                value="{{ update.id }}" id="update_box{{ update.id }}"/>
-                    </label>
                 </div>
             {% endif %}
         </div>

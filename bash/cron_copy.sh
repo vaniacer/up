@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 folder=$(cd "$(dirname "$0")" && pwd)
 
 #Get opts
@@ -38,5 +40,3 @@ cncl="(crontab -l | sed \"${sedr}\") | crontab -"
 
 # Set crontab job
 (crontab -l ; echo -e "${date} * ${cmnd}; ${cncl}") | crontab -
-
-exit $?

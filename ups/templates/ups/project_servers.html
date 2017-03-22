@@ -27,11 +27,9 @@
 
             {% if "run_command" in pr_view_perms %}
                 <div class="pull-right">
-                    <label>
-                        Click to select
-                        <input style="display:none" type="checkbox" name="selected_servers"
+                    <small>Click to select</small>
+                    <input  style="display:none" type="checkbox" readonly="readonly" name="selected_servers"
                                value="{{ server.id }}" id="server_box{{ server.id }}"/>
-                    </label>
                 </div>
             {% endif %}
         </div>
