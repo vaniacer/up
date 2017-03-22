@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 from django.contrib.auth.decorators import login_required
-from .buttons import select_test, select_upload, select_logs
+from .buttons import select_test, select_copy, select_cron_copy, select_logs
 from .models import Project
 from django.shortcuts import render
 from .permissions import check_perm
@@ -34,6 +34,11 @@ def project(request, project_id):
 	selected_updates = request.POST.getlist('selected_updates')
 	selected_servers = request.POST.getlist('selected_servers')
 
+	date = request.POST.get('selected_date')
+	time = request.POST.get('selected_time')
+
+	# print selected_date, selected_time
+
 	if request.POST.get('select_test'):
 		print request.POST
 		check_perm('run_command', current_project, request.user)
@@ -41,9 +46,12 @@ def project(request, project_id):
 		context = {'project': current_project, 'log': log, 'err': err}
 		return render(request, 'ups/output.html', context)
 
-	if request.POST.get('select_upload'):
+	if request.POST.get('select_copy'):
 		check_perm('run_command', current_project, request.user)
-		log, err = select_upload(selected_updates, selected_servers, current_project)
+		if date and time:
+			log, err = select_cron_copy(selected_updates, selected_servers, current_project, date, time)
+		else:
+			log, err = select_copy(selected_updates, selected_servers, current_project)
 		context = {'project': current_project, 'log': log, 'err': err}
 		return render(request, 'ups/output.html', context)
 

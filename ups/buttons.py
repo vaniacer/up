@@ -54,8 +54,8 @@ def select_test(selected_updates, selected_servers, project):
 	return log, err
 
 
-def select_upload(selected_updates, selected_servers, project):
-	"""Обрабатывает событие select_upload."""
+def select_copy(selected_updates, selected_servers, project):
+	"""Обрабатывает событие select_copy."""
 
 	servers = make_servers_lists(selected_servers)
 	updates = make_updates_lists(selected_updates)
@@ -65,7 +65,23 @@ def select_upload(selected_updates, selected_servers, project):
 	opt = ['bash/copy.sh', '-server', srv, '-update', upd]
 
 	log, err = run_cmd(opt)
-	add_event(project, 'Upload to servers', log, err)
+	add_event(project, 'Copy update(s) to server(s)', log, err)
+
+	return log, err
+
+
+def select_cron_copy(selected_updates, selected_servers, project, date, time):
+	"""Обрабатывает событие select_copy."""
+
+	servers = make_servers_lists(selected_servers)
+	updates = make_updates_lists(selected_updates)
+
+	srv = ' '.join(str(s.addr) + ':' + str(s.wdir) for s in servers)
+	upd = ' '.join('media/' + str(u.file) for u in updates)
+	opt = ['bash/cron_copy.sh', '-server', srv, '-update', upd, '-date', date, '-time', time]
+
+	log, err = run_cmd(opt)
+	add_event(project, 'Set cron job - Copy update(s) to server(s)', log, err)
 
 	return log, err
 

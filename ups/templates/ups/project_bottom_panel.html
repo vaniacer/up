@@ -72,7 +72,7 @@
                                onclick="return SelectValidation()"></li>
 
                     <li><input type="submit"
-                               name="select_upload"
+                               name="select_copy"
                                value="Copy"
                                class="btn btn-default navbar-btn"
                                onclick="return CopyValidation()"></li>
@@ -80,7 +80,7 @@
 
                     <!--Date picker-->
                     <li><div class="input-group date navbar-btn date-input" data-provide="datepicker">
-                        <input type="text" class="form-control" name="selected_date" data-autoclose="true">
+                        <input type="text" class="form-control" name="selected_date" id="selected_date">
                         <div class="input-group-addon">
                             <span class="glyphicon glyphicon-calendar"></span>
                         </div>
@@ -89,7 +89,7 @@
                     <!--Clock picker-->
                     <li><div class="input-group clockpicker navbar-btn clock-input" data-placement="top"
                              data-align="top" data-autoclose="true">
-                        <input type="text" class="form-control" name="selected_time">
+                        <input type="text" class="form-control" name="selected_time" id="selected_time">
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-time"></span>
                         </span>

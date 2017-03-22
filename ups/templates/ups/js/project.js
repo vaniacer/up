@@ -57,6 +57,9 @@ function CopyValidation() {
     var updates =  document.getElementsByName('selected_updates');
     var servers =  document.getElementsByName('selected_servers');
 
+    var date =  document.getElementById('selected_date');
+    var time =  document.getElementById('selected_time');
+
     for (i = 0; i < updates.length; i++) { if (updates[i].checked) { selected_updates = true; } }
     for (i = 0; i < servers.length; i++) { if (servers[i].checked) { selected_servers = true; } }
 
@@ -68,6 +71,20 @@ function CopyValidation() {
     if (selected_servers == false) {
         alert('Server(s) not selected.');
         return false;
+    }
+
+    if (date.value) {
+         if (!time.value) {
+            alert('Time not selected.');
+            return false;
+         }
+    }
+
+    if (time.value) {
+        if (!date.value) {
+            alert('Date not selected.');
+            return false;
+        }
     }
 }
 

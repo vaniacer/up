@@ -1,13 +1,5 @@
 #!/bin/bash
 
-error=$?
-
-server=false
-update=false
-
-servers=()
-updates=()
-
 #Get opts
 until [ -z "$1" ]; do
 
