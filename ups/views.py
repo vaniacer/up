@@ -1,16 +1,11 @@
 # -*- encoding: utf-8 -*-
 
-from django.contrib.auth.decorators import login_required
 from .buttons import select_test, select_copy, select_cron_copy, select_logs
-from .models import Project
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from .permissions import check_perm
-
-
-def get_cron_jobs(current_project):
-	"""Получает список заданий в кроне для проекта."""
-
-	pass
+from .cron import get_cron_jobs
+from .models import Project
 
 
 def index(request):
@@ -47,7 +42,6 @@ def project(request, project_id):
 	# print selected_date, selected_time
 
 	if request.POST.get('select_test'):
-		print request.POST
 		check_perm('run_command', current_project, request.user)
 		log, err = select_test(selected_updates, selected_servers, current_project)
 		context = {'project': current_project, 'log': log, 'err': err}

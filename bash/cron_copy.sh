@@ -23,20 +23,16 @@ done
 # Get time
 hh=${time%:*}; mm=${time#*:}; DD=${date%%.*}; MM=${date#*.}; MM=${MM%.*}
 
+date="${mm} ${hh} ${DD} ${MM}"                              # Cron format date
+sedr="/${date}/d"                                           # Sed rule to delete old cron job
+cmnd="${folder}/copy.sh -u ${updates[@]} -s ${servers[@]}"  # Command to run
+cncl="(crontab -l | sed \"${sedr}\") | crontab -"           # Command to cancel executed cron job
+
 # Info
 echo -e "Setting cron job."
 echo -e "Servers: ${servers[@]}"
 echo -e "Updates: ${updates[@]}"
 echo
-
-# Cron format date
-date="${mm} ${hh} ${DD} ${MM}"
-# Sed rule to delete old cron job
-sedr="/${date}/d"
-# Command to run
-cmnd="${folder}/copy.sh -u ${updates[@]} -s ${servers[@]}"
-# Command to cancel old executed cron jobs
-cncl="(crontab -l | sed \"${sedr}\") | crontab -"
 
 # Set crontab job
 (crontab -l ; echo -e "${date} * ${cmnd}; ${cncl}") | crontab -

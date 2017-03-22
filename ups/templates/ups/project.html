@@ -36,7 +36,11 @@
                     <h4>Updates & Servers</h4>
                 </a>
             </li>
-
+            <li role="presentation">
+                <a href="#cron" aria-controls="cron" role="tab" data-toggle="tab">
+                    <h4>Cron Jobs</h4>
+                </a>
+            </li>
             <li role="presentation">
                 <a href="#history" aria-controls="history" role="tab" data-toggle="tab">
                     <h4>History</h4>
@@ -49,6 +53,9 @@
         <div class="tab-content">
             <div role="tabpanel" class="tab-pane fade in active" id="updates_servers">
                 {% include "ups/project_servers_updates.html" %}
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="cron">
+                {% include "ups/project_cron.html" %}
             </div>
             <div role="tabpanel" class="tab-pane fade" id="history">
                 {% include "ups/project_history.html" %}
