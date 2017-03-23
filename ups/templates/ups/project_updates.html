@@ -16,20 +16,18 @@
         </div>
 
         <div class="panel-body update-body" id="update_body{{ update.id }}">
-            <div class="pull-left">
-                <dl class="dl-horizontal">
-                    <!--<dt>File</dt><dd>{{ update.file }}</dd>-->
-                    <dt>Description</dt><dd>{{ update.desc|linebreaks }}</dd>
-                    <dt><small>Date added</small></dt><dd><small>{{ update.date|date:'M d, Y H:i' }}</small></dd>
-                </dl>
-            </div>
-
+            <dl class="dl-horizontal">
+                <!--<dt>File</dt><dd>{{ update.file }}</dd>-->
+                <dt>Description</dt><dd>{{ update.desc|linebreaks }}</dd>
+                <dt><small>Date added</small></dt><dd><small>{{ update.date|date:'M d, Y H:i' }}</small></dd>
+            </dl>
             {% if "run_command" in pr_view_perms %}
-                <div class="pull-right">
-                    <small>Click to select</small>
-                    <input  style="display:none" type="checkbox" readonly="readonly" name="selected_updates"
-                               value="{{ update.id }}" id="update_box{{ update.id }}"/>
-                </div>
+                <input  style="display:none"
+                        type="checkbox"
+                        readonly="readonly"
+                        name="selected_updates"
+                        value="{{ update.id }}"
+                        id="update_box{{ update.id }}"/>
             {% endif %}
         </div>
 

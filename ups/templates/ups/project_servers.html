@@ -16,21 +16,19 @@
         </div>
 
         <div class="panel-body server-body" id="server_body{{ server.id }}">
-            <div class="pull-left">
-                <dl class="dl-horizontal">
-                    <dt>Server address</dt><dd>{{ server.addr }}</dd>
-                    <dt>Working folder</dt><dd>{{ server.wdir }}</dd>
-                    <dt>Description</dt><dd>{{ server.desc|linebreaks }}</dd>
-                    <dt><small>Date added</small></dt><dd><small>{{ server.date|date:'M d, Y H:i' }}</small></dd>
-                </dl>
-            </div>
-
+            <dl class="dl-horizontal">
+                <dt>Server address</dt><dd>{{ server.addr }}</dd>
+                <dt>Working folder</dt><dd>{{ server.wdir }}</dd>
+                <dt>Description</dt><dd>{{ server.desc|linebreaks }}</dd>
+                <dt><small>Date added</small></dt><dd><small>{{ server.date|date:'M d, Y H:i' }}</small></dd>
+            </dl>
             {% if "run_command" in pr_view_perms %}
-                <div class="pull-right">
-                    <small>Click to select</small>
-                    <input  style="display:none" type="checkbox" readonly="readonly" name="selected_servers"
-                               value="{{ server.id }}" id="server_box{{ server.id }}"/>
-                </div>
+                <input  style="display:none"
+                        type="checkbox"
+                        readonly="readonly"
+                        name="selected_servers"
+                        value="{{ server.id }}"
+                        id="server_box{{ server.id }}"/>
             {% endif %}
         </div>
 
