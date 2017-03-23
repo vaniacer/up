@@ -37,7 +37,7 @@ crontab -l | grep "${date}" > /dev/null && {
 # Info
 echo -e "Setting cron job for copy Updates:"
 for u in ${updates_full[@]}; do echo ${u}; done
-echo -e "\nTo Servers: \n"
+echo -e "\nto Servers:"
 for s in ${servers[@]}; do echo ${s}; done
 echo
 

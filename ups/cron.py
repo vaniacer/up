@@ -54,7 +54,7 @@ def get_cron_jobs(current_project):
 			job.name = 'Cron_copy' + str(job_counter)
 			job.kill = re.sub('^.*"; ', '', line)
 			job.date = day + '.' + mon + ' ' + hrs + ':' + mnt
-			job.desc = 'Copy Updates: \n' + updates + '\n' + 'To Servers: \n' + servers
+			job.desc = 'Copy Updates: \n' + updates + '\n\n' + 'to Servers: \n' + servers
 
 			jobs.append(job)
 			job_counter += 1
