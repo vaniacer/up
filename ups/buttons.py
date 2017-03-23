@@ -12,7 +12,6 @@ def make_updates_lists(selected_updates):
 	for i in selected_updates:
 		updates.append(Update.objects.get(id=i))
 
-	# print updates, '\n', servers
 	return updates
 
 
@@ -24,15 +23,15 @@ def make_servers_lists(selected_servers):
 	for i in selected_servers:
 		servers.append(Server.objects.get(id=i))
 
-	# print updates, '\n', servers
 	return servers
 
 
 def run_cmd(opt):
-	# print opt
+	"""Выполняет комманду."""
 	run = Popen(opt, stdin=PIPE, stdout=PIPE, stderr=PIPE)
 	out, err = run.communicate()
 	rc = run.returncode
+
 	return out + err, rc
 
 
@@ -51,6 +50,7 @@ def select_test(selected_updates, selected_servers, project):
 
 	log, err = run_cmd(opt)
 	add_event(project, 'Test', log, err)
+
 	return log, err
 
 
@@ -93,8 +93,8 @@ def select_logs(selected_servers):
 
 	srv = ' '.join(str(s.addr) + ':' + str(s.wdir) for s in servers)
 	opt = ['bash/logs.sh', srv]
-
 	log, err = run_cmd(opt)
+
 	return log, err
 
 
@@ -102,7 +102,7 @@ def select_job_del(selected_jobs, project):
 
 	jbs = '; '.join(selected_jobs)
 	opt = ['bash/cron_del.sh', jbs]
-
 	log, err = run_cmd(opt)
 	add_event(project, 'Delete cron job(s)', log, err)
+
 	return log, err
