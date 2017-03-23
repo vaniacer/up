@@ -9,7 +9,34 @@
 {% endblock header %}
 
 {% block content %}
-<h5>
-    Update Server helps to keep your servers up to date.
-</h5>
+
+    <p><big>Update Server helps to keep your servers up to date.</big></p>
+
+    <p>
+        Start by pressing an 'Update your servers' button or a 'Projects' link at the top.<br>
+        Select project by clicking on it. Or create new one via 'Add new project' link.<br>
+        In the project section navigate using tabs: 'Updates & Servers', 'Cron Jobs' and 'History'.<br>
+    </p>
+    <p>
+        On the 'Updates & Servers' tab you can view, select and add new Updates & Servers.<br>
+        'Edit' link brings you the edit form for the selected object.
+    </p>
+    <p>
+        On the 'Cron Jobs' tab you can view, cron jobs scheduled for this project.<br>
+        You can select them via click or by pressing 'Select All Jobs' button.<br>
+        And cancel them by pressing 'Delete' button.
+    </p>
+    <p>
+        On the 'History' tab you can view, history log. Events ended with errors marked red.
+    </p>
+    <p>
+        'Add' and 'Select' buttons duplicated at the bottom nav bar.<br>
+        'Copy Update(s) to Server(s)' button starts copy process.<br>
+        Selected updates will be copied to the selected servers.<br>
+        If you select date and time then the 'Copy Update(s) to Server(s)'
+        button will schedule this job instead of running right now.<br>
+        'View server's log' brings you the system log of the selected server.
+    </p>
+
+
 {% endblock content %}
