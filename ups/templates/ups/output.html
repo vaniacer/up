@@ -17,7 +17,7 @@
 
     <br>
 
-    <dl class="dl-horizontal" id="output_log">
+    <dl style="overflow:hidden" class="dl-horizontal" id="output_log">
         <dt>Event logs</dt><dd>{{ log|linebreaks }}</dd>
         <dt>Error codes</dt><dd>{{ err }}</dd>
     </dl>
@@ -26,7 +26,7 @@
 
     <style onload="color('output_log', '{{ err }}')"></style>
 
-    <br>
+    <br> <br> <br> <br>
 
     {% include "ups/output_bottom_panel.html" %}
 

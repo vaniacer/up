@@ -96,3 +96,13 @@ def select_logs(selected_servers):
 
 	log, err = run_cmd(opt)
 	return log, err
+
+
+def select_job_del(selected_jobs, project):
+
+	jbs = '; '.join(selected_jobs)
+	opt = ['bash/cron_del.sh', jbs]
+
+	log, err = run_cmd(opt)
+	add_event(project, 'Delete cron job(s)', log, err)
+	return log, err

@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 
-from .buttons import select_test, select_copy, select_cron_copy, select_logs
+from .buttons import select_test, select_copy, select_cron_copy, select_logs, select_job_del
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from .permissions import check_perm
@@ -35,11 +35,12 @@ def project(request, project_id):
 
 	selected_updates = request.POST.getlist('selected_updates')
 	selected_servers = request.POST.getlist('selected_servers')
+	selected_jobs = request.POST.getlist('selected_jobs')
 
 	date = request.POST.get('selected_date')
 	time = request.POST.get('selected_time')
 
-	# print selected_date, selected_time
+	# print request.POST
 
 	if request.POST.get('select_test'):
 		check_perm('run_command', current_project, request.user)
@@ -59,6 +60,12 @@ def project(request, project_id):
 	if request.POST.get('select_logs'):
 		check_perm('run_command', current_project, request.user)
 		log, err = select_logs(selected_servers)
+		context = {'project': current_project, 'log': log, 'err': err}
+		return render(request, 'ups/output.html', context)
+
+	if request.POST.get('select_job_del'):
+		check_perm('run_command', current_project, request.user)
+		log, err = select_job_del(selected_jobs, current_project)
 		context = {'project': current_project, 'log': log, 'err': err}
 		return render(request, 'ups/output.html', context)
 

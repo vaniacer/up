@@ -1,0 +1,46 @@
+{% load bootstrap3 %}
+
+<br>
+
+{% buttons %}
+    {% if "run_command" in pr_view_perms %}
+        <input type="button" class="btn btn-info btn-xs" value="Select All Jobs"
+               onclick="select_all('selected_jobs', 'job_body', true)"/>
+        <input type="button" class="btn btn-info btn-xs" value="Deselect All Jobs"
+               onclick="select_all('selected_jobs', 'job_body', false)"/>
+        <input type="submit"
+               name="select_job_del"
+               value="Delete"
+               class="btn btn-danger btn-xs"
+               onclick="return JobValidation()"/>
+    {% endif %}
+{% endbuttons %}
+
+{% for job in cronjob %}
+
+    <div onclick="checker('job_box{{ job.name }}', 'job_body{{ job.name }}')">
+        <dl class="dl-horizontal job_body" id="job_body{{ job.name }}">
+            <!--<dt>Cron Job</dt><dd>{{ job.name }}</dd>-->
+            <dt>Description</dt><dd>{{ job.desc|linebreaks }}</dd>
+            <dt><big>Date</big></dt><dd><big>{{ job.date }}</big></dd>
+            <dd><br></dd>
+            <dt><small>Full command</small></dt><dd><small>{{ job.full }}</small></dd>
+        </dl>
+    </div>
+
+    {% if "run_command" in pr_view_perms %}
+        <div class="pull-right">
+            <!--<small>Click to select</small>-->
+            <input style="display:none" type="checkbox" readonly="readonly" name="selected_jobs"
+                       value="{{ job.kill }}" id="job_box{{ job.name }}"/>
+        </div>
+    {% endif %}
+
+    <hr>
+
+{% empty %}
+    There are no cron jobs in this project yet.
+
+{% endfor %}
+
+<br>

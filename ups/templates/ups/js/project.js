@@ -49,6 +49,20 @@ function SelectValidation() {
     }
 }
 
+function JobValidation() {
+
+    var selected = false;
+
+    var jobs =  document.getElementsByName('selected_jobs');
+
+    for (i = 0; i < jobs.length; i++) { if (jobs[i].checked) { selected = true; } }
+
+    if (selected == false) {
+        alert('None selected.');
+        return false;
+    }
+}
+
 function CopyValidation() {
 
     var selected_updates = false;

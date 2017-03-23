@@ -6,18 +6,15 @@
 until [ -z "$1" ]; do
 
     case $1 in
-	    -server | -s) server=true; update=false; shift;;
-	    -update | -u) update=true; server=false; shift;;
+	    -server | -s) servers=${2};;
+	    -update | -u) updates=${2};;
     esac
 
-    [ ${server} = true ] && servers+=($1)
-    [ ${update} = true ] && updates+=($1)
-
-    shift
+    shift 2
 done
 
 # Simple copy
-for server in "${servers[@]}"; do
+for server in ${servers}; do
 
     # server comes like this jboss@localhost:/var/lib/jboss
     # cut address jboss@localhost
@@ -28,7 +25,7 @@ for server in "${servers[@]}"; do
     echo -e "Сервер - ${addr}"
     ssh ${addr} "echo > /dev/null" && {
 
-        for file in "${updates[@]}"; do
+        for file in ${updates}; do
             filename=$(basename ${file})
             echo -e "Копирую файл - ${filename}"
             # Check if file exist
