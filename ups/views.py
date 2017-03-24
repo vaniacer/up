@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 
-from .buttons import select_test, select_copy, select_cron_copy, select_logs, select_job_del
+from .buttons import select_test, select_copy, select_cron_copy, select_logs, select_job_del, select_ls
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from .permissions import check_perm
@@ -60,6 +60,12 @@ def project(request, project_id):
 	if request.POST.get('select_logs'):
 		check_perm('run_command', current_project, request.user)
 		log, err = select_logs(selected_servers)
+		context = {'project': current_project, 'log': log, 'err': err}
+		return render(request, 'ups/output.html', context)
+
+	if request.POST.get('select_ls'):
+		check_perm('run_command', current_project, request.user)
+		log, err = select_ls(selected_servers)
 		context = {'project': current_project, 'log': log, 'err': err}
 		return render(request, 'ups/output.html', context)
 

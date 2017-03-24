@@ -11,8 +11,9 @@ for server in ${servers[@]}; do
     # cut working directory /var/lib/jboss
     wdir=${server##*:}
 
-    echo -e "Сервер - ${addr}"
-    ssh ${addr} "cat ${wdir}/jboss-bas-*/standalone/log/server.log" || error=$?
+    echo -e "Сервер - ${addr}\n"
+    echo -e "Пакеты обновлений:\n"
+    ssh ${addr} "ls ${wdir}/updates/new" || error=$?
     echo
 
 done

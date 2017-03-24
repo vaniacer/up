@@ -97,6 +97,17 @@ def select_logs(selected_servers):
 
 	return log, err
 
+def select_ls(selected_servers):
+	"""Обрабатывает событие select_ls."""
+
+	servers = make_servers_lists(selected_servers)
+
+	srv = ' '.join(str(s.addr) + ':' + str(s.wdir) for s in servers)
+	opt = ['bash/ls.sh', srv]
+	log, err = run_cmd(opt)
+
+	return log, err
+
 
 def select_job_del(selected_jobs, project):
 

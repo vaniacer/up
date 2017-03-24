@@ -29,8 +29,8 @@ for server in ${servers}; do
             filename=$(basename ${file})
             echo -e "Копирую файл - ${filename}"
             # Check if file exist
-            ssh ${addr} "ls ${wdir}/updates/new/${filename} &> /dev/null" && {
-                echo -e "Файл - ${filename} существует, пропускаю."; }    || {
+            ssh ${addr} ls ${wdir}/updates/new/${filename} &> /dev/null && {
+                echo -e "Файл - ${filename} существует, пропускаю."; }  || {
                 # Copy if not exist
                 scp ${file} ${server}/updates/new || error="$?"; }
             echo
