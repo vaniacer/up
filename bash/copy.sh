@@ -22,12 +22,16 @@ for server in ${servers}; do
     # get working directory /var/lib/jboss
     wdir=${server##*:}
 
-    echo -e "Сервер - ${addr}"
+    name="| Сервер - ${addr} |"
+    line=$[ (100-${#name})/2 ]
+
+    printf %.s- $(seq ${line}); printf "${name}"; printf %.s- $(seq ${line})
+
     ssh ${addr} "echo > /dev/null" && {
 
         for file in ${updates}; do
             filename=$(basename ${file})
-            echo -e "Копирую файл - ${filename}"
+            echo -e "\n\nКопирую файл - ${filename}"
             # Check if file exist
             ssh ${addr} ls ${wdir}/updates/new/${filename} &> /dev/null && {
                 echo -e "Файл - ${filename} существует, пропускаю."; }  || {

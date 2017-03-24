@@ -11,8 +11,11 @@ for server in ${servers[@]}; do
     # cut working directory /var/lib/jboss
     wdir=${server##*:}
 
-    echo -e "Сервер - ${addr}\n"
-    echo -e "Пакеты обновлений:\n"
+    name="| Сервер - ${addr} |"
+    line=$[ (100-${#name})/2 ]
+
+    printf %.s- $(seq ${line}); printf "${name}"; printf %.s- $(seq ${line})
+    echo -e "\nПакеты обновлений:\n"
     ssh ${addr} "ls ${wdir}/updates/new" || error=$?
     echo
 
