@@ -17,9 +17,9 @@ done
 for server in ${servers}; do
 
     # server comes like this jboss@localhost:/var/lib/jboss
-    # cut address jboss@localhost
+    # get address jboss@localhost
     addr=${server%%:*}
-    # cut working directory /var/lib/jboss
+    # get working directory /var/lib/jboss
     wdir=${server##*:}
 
     echo -e "Сервер - ${addr}"
@@ -32,7 +32,7 @@ for server in ${servers}; do
             ssh ${addr} "ls ${wdir}/updates/new/${filename} &> /dev/null" && {
                 echo -e "Файл - ${filename} существует, пропускаю."; }    || {
                 # Copy if not exist
-                scp ${file} ${server}/updates/new; }
+                scp ${file} ${server}/updates/new || error="$?"; }
             echo
         done
     } || { error="$?"; echo -e "Server unreachable."; }
