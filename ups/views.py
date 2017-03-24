@@ -71,7 +71,7 @@ def project(request, project_id):
 
 	if request.POST.get('select_job_del'):
 		check_perm('run_command', current_project, request.user)
-		log, err = select_job_del(selected_jobs, current_project)
+		log, err = select_job_del(selected_jobs, current_project, request.user)
 		context = {'project': current_project, 'log': log, 'err': err}
 		return render(request, 'ups/output.html', context)
 

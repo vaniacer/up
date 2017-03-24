@@ -22,7 +22,8 @@
         <dt>Error codes</dt><dd>{{ err }}</dd>
     </dl>
 
-    <a class="btn btn-primary" href="{% url 'ups:project' project.id %}">Back</a>
+    <!--<a class="btn btn-primary" href="{% url 'ups:project' project.id %}">Back</a>-->
+    <button class="btn btn-primary" onclick="goBack()">Back</button>
 
     <style onload="color('output_log', '{{ err }}')"></style>
 

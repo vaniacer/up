@@ -19,6 +19,10 @@ function topFunction() {
     document.documentElement.scrollTop = 0; // For IE and Firefox
 }
 
+function goBack() {
+    window.history.back();
+}
+
 function NameValidation(name) {
 
     var selected = false;

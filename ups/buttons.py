@@ -110,11 +110,11 @@ def select_ls(selected_servers):
 	return log, err
 
 
-def select_job_del(selected_jobs, project):
+def select_job_del(selected_jobs, project, user):
 
 	jbs = '; '.join(selected_jobs)
 	opt = ['bash/cron_del.sh', jbs]
 	log, err = run_cmd(opt)
-	add_event(project, 'Delete cron job(s)', log, err)
+	add_event(project, user, 'Delete cron job(s)', log, err)
 
 	return log, err
