@@ -12,10 +12,12 @@
 {% for event in history %}
 
     <dl class="dl-horizontal" id="event{{ event.id }}">
+        <dt>Date</dt><dd>{{ event.date|date:'M d, Y H:i' }}</dd>
+        <dt>User</dt><dd>{{ event.user }}</dd>
         <dt>Event name</dt><dd>{{ event.name }}</dd>
         <dt>Event log</dt><dd>{{ event.desc|linebreaks }}</dd>
         <dt>Error code</dt><dd>{{ event.exit }}</dd>
-        <dt><small>Date</small></dt><dd><small>{{ event.date|date:'M d, Y H:i' }}</small></dd>
+        <!--<dt><small>Date</small></dt><dd><small>{{ event.date|date:'M d, Y H:i' }}</small></dd>-->
     </dl>
 
     <style onload="color('event{{ event.id }}', '{{ event.exit }}')"></style>

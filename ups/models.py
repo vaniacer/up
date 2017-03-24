@@ -1,6 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 from django.db import models
+from django.contrib.auth.models import User
 
 
 def get_upload_to(instance, filename):
@@ -70,9 +71,10 @@ class History(models.Model):
 	"""История проекта."""
 	date = models.DateTimeField(auto_now_add=True, db_index=True)
 	name = models.CharField(max_length=200)
-	desc = models.TextField()
 	exit = models.CharField(max_length=200)
 	proj = models.ForeignKey(Project)
+	user = models.ForeignKey(User)
+	desc = models.TextField()
 
 	class Meta:
 		verbose_name_plural = 'events'

@@ -51,9 +51,9 @@ def project(request, project_id):
 	if request.POST.get('select_copy'):
 		check_perm('run_command', current_project, request.user)
 		if date and time:
-			log, err = select_cron_copy(selected_updates, selected_servers, current_project, date, time)
+			log, err = select_cron_copy(selected_updates, selected_servers, current_project, request.user, date, time)
 		else:
-			log, err = select_copy(selected_updates, selected_servers, current_project)
+			log, err = select_copy(selected_updates, selected_servers, current_project, request.user)
 		context = {'project': current_project, 'log': log, 'err': err}
 		return render(request, 'ups/output.html', context)
 

@@ -35,8 +35,8 @@ def run_cmd(opt):
 	return out + err, rc
 
 
-def add_event(project, name, out, err):
-	History.objects.create(proj=project, name=name, desc=out, exit=err)
+def add_event(project, user, name, out, err):
+	History.objects.create(proj=project, user=user, name=name, desc=out, exit=err)
 
 
 def select_test(selected_updates, selected_servers, project):
@@ -54,7 +54,7 @@ def select_test(selected_updates, selected_servers, project):
 	return log, err
 
 
-def select_copy(selected_updates, selected_servers, project):
+def select_copy(selected_updates, selected_servers, project, user):
 	"""Обрабатывает событие select_copy."""
 
 	servers = make_servers_lists(selected_servers)
@@ -65,12 +65,12 @@ def select_copy(selected_updates, selected_servers, project):
 	opt = ['bash/copy.sh', '-server', srv, '-update', upd]
 
 	log, err = run_cmd(opt)
-	add_event(project, 'Copy update(s) to server(s)', log, err)
+	add_event(project, user, 'Copy update(s) to server(s)', log, err)
 
 	return log, err
 
 
-def select_cron_copy(selected_updates, selected_servers, project, date, time):
+def select_cron_copy(selected_updates, selected_servers, project, user, date, time):
 	"""Обрабатывает событие select_copy."""
 
 	servers = make_servers_lists(selected_servers)
@@ -81,7 +81,7 @@ def select_cron_copy(selected_updates, selected_servers, project, date, time):
 	opt = ['bash/cron_copy.sh', '-server', srv, '-update', upd, '-date', date, '-time', time]
 
 	log, err = run_cmd(opt)
-	add_event(project, 'Set cron job - Copy update(s) to server(s)', log, err)
+	add_event(project, user, 'Set cron job - Copy update(s) to server(s)', log, err)
 
 	return log, err
 
@@ -96,6 +96,7 @@ def select_logs(selected_servers):
 	log, err = run_cmd(opt)
 
 	return log, err
+
 
 def select_ls(selected_servers):
 	"""Обрабатывает событие select_ls."""
