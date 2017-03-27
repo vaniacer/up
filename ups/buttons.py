@@ -2,6 +2,7 @@
 
 from .models import Server, Update, History
 from subprocess import Popen, PIPE
+from django.conf import settings as s
 
 
 def make_updates_lists(selected_updates):
@@ -12,7 +13,9 @@ def make_updates_lists(selected_updates):
 	for i in selected_updates:
 		updates.append(Update.objects.get(id=i))
 
-	return updates
+	upd = ' '.join(s.MEDIA_ROOT + '/' + str(u.file) for u in updates)
+
+	return upd
 
 
 def make_servers_lists(selected_servers):
@@ -23,7 +26,9 @@ def make_servers_lists(selected_servers):
 	for i in selected_servers:
 		servers.append(Server.objects.get(id=i))
 
-	return servers
+	srv = ' '.join(str(s.addr) + ':' + str(s.wdir) for s in servers)
+
+	return srv
 
 
 def run_cmd(opt):
@@ -39,30 +44,13 @@ def add_event(project, user, name, out, err):
 	History.objects.create(proj=project, user=user, name=name, desc=out, exit=err)
 
 
-def select_test(selected_updates, selected_servers, project):
-	"""Обрабатывает событие select_test."""
-
-	servers = make_servers_lists(selected_servers)
-	updates = make_updates_lists(selected_updates)
-
-	obj = ' '.join(str(u) for u in updates) + ' ' + ' '.join(str(s.addr) for s in servers)
-	opt = ['bash/test', obj]
-
-	log, err = run_cmd(opt)
-	add_event(project, 'Test', log, err)
-
-	return log, err
-
-
 def select_copy(selected_updates, selected_servers, project, user):
 	"""Обрабатывает событие select_copy."""
 
 	servers = make_servers_lists(selected_servers)
 	updates = make_updates_lists(selected_updates)
 
-	srv = ' '.join(str(s.addr) + ':' + str(s.wdir) for s in servers)
-	upd = ' '.join('media/' + str(u.file) for u in updates)
-	opt = ['bash/copy.sh', '-server', srv, '-update', upd]
+	opt = ['bash/copy.sh', '-server', servers, '-update', updates]
 
 	log, err = run_cmd(opt)
 	add_event(project, user, 'Copy update(s) to server(s)', log, err)
@@ -76,9 +64,7 @@ def select_cron_copy(selected_updates, selected_servers, project, user, date, ti
 	servers = make_servers_lists(selected_servers)
 	updates = make_updates_lists(selected_updates)
 
-	srv = ' '.join(str(s.addr) + ':' + str(s.wdir) for s in servers)
-	upd = ' '.join('media/' + str(u.file) for u in updates)
-	opt = ['bash/cron_copy.sh', '-server', srv, '-update', upd, '-date', date, '-time', time]
+	opt = [s.BASE_DIR + '/bash/cron_copy.sh', '-server', servers, '-update', updates, '-date', date, '-time', time]
 
 	log, err = run_cmd(opt)
 	add_event(project, user, 'Set cron job - Copy update(s) to server(s)', log, err)
@@ -91,8 +77,7 @@ def select_logs(selected_servers):
 
 	servers = make_servers_lists(selected_servers)
 
-	srv = ' '.join(str(s.addr) + ':' + str(s.wdir) for s in servers)
-	opt = ['bash/logs.sh', srv]
+	opt = ['bash/logs.sh', servers]
 	log, err = run_cmd(opt)
 
 	return log, err
@@ -103,8 +88,7 @@ def select_ls(selected_servers):
 
 	servers = make_servers_lists(selected_servers)
 
-	srv = ' '.join(str(s.addr) + ':' + str(s.wdir) for s in servers)
-	opt = ['bash/ls.sh', srv]
+	opt = ['bash/ls.sh', servers]
 	log, err = run_cmd(opt)
 
 	return log, err

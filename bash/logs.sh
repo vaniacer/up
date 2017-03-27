@@ -11,7 +11,10 @@ for server in ${servers[@]}; do
     # cut working directory /var/lib/jboss
     wdir=${server##*:}
 
-    echo -e "Сервер - ${addr}"
+    name="| Сервер - ${addr} |"
+    line=$[ (100-${#name})/2 ]
+
+    printf %.s- $(seq ${line}); printf "${name}"; printf %.s- $(seq ${line}); echo -e "\n"
     ssh ${addr} "cat ${wdir}/jboss-bas-*/standalone/log/server.log" || error=$?
     echo
 
