@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 
 from .models import Server, Update, History
+from django.conf import settings as conf
 from subprocess import Popen, PIPE
-from django.conf import settings as s
 
 
 def make_updates_lists(selected_updates):
@@ -13,7 +13,7 @@ def make_updates_lists(selected_updates):
 	for i in selected_updates:
 		updates.append(Update.objects.get(id=i))
 
-	upd = ' '.join(s.MEDIA_ROOT + '/' + str(u.file) for u in updates)
+	upd = ' '.join(conf.MEDIA_ROOT + '/' + str(u.file) for u in updates)
 
 	return upd
 
@@ -64,7 +64,7 @@ def select_cron_copy(selected_updates, selected_servers, project, user, date, ti
 	servers = make_servers_lists(selected_servers)
 	updates = make_updates_lists(selected_updates)
 
-	opt = [s.BASE_DIR + '/bash/cron_copy.sh', '-server', servers, '-update', updates, '-date', date, '-time', time]
+	opt = [conf.BASE_DIR + '/bash/cron_copy.sh', '-server', servers, '-update', updates, '-date', date, '-time', time]
 
 	log, err = run_cmd(opt)
 	add_event(project, user, 'Set cron job - Copy update(s) to server(s)', log, err)
