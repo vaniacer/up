@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
-# import dj_database_url
+import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -43,7 +43,6 @@ DEBUG = False
 ALLOWED_HOSTS = ['*']
 
 # Application definition
-
 INSTALLED_APPS = [
 	'django.contrib.admin',
 	'django.contrib.auth',
@@ -60,6 +59,7 @@ INSTALLED_APPS = [
 	'pytz',
 	'dj_database_url',
 	'dj_static',
+	'psycopg2',
 ]
 
 MIDDLEWARE = [
@@ -97,15 +97,13 @@ WSGI_APPLICATION = 'up.wsgi.application'
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
 DATABASES = {
-	'default': {
-		'ENGINE': 'django.db.backends.sqlite3',
-		'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-	}
+	# 'default': {
+	# 	'ENGINE': 'django.db.backends.sqlite3',
+	# 	'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+	# }
+	# 'default': dj_database_url.config(default='postgres://user:pass@localhost/dbname')
+	'default': dj_database_url.config(default='postgres://updater:1234qwer@localhost/update_server')
 }
-
-# DATABASES = {
-# 	'default': dj_database_url.config(default='postgres://localhost')
-# }
 
 
 # Password validation
