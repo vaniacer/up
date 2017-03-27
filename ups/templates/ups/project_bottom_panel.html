@@ -116,16 +116,18 @@
                 {% endif %}
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><input type="submit"
-                           name="select_ls"
-                           value="Check updates"
-                           class="btn btn-default navbar-btn"
-                           onclick="return NameValidation('selected_servers')"></li>
-                <li><input type="submit"
-                           name="select_logs"
-                           value="View server's log"
-                           class="btn btn-default navbar-btn"
-                           onclick="return NameValidation('selected_servers')"></li>
+                {% if "run_command" in pr_view_perms %}
+                    <li><input type="submit"
+                               name="select_ls"
+                               value="Check updates"
+                               class="btn btn-default navbar-btn"
+                               onclick="return NameValidation('selected_servers')"></li>
+                    <li><input type="submit"
+                               name="select_logs"
+                               value="View server's log"
+                               class="btn btn-default navbar-btn"
+                               onclick="return NameValidation('selected_servers')"></li>
+                {% endif %}
                 <li><input type="button" class="btn btn-default navbar-btn"
                            onclick="topFunction()" value="Top"/></li>
             </ul>

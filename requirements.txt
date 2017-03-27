@@ -1,7 +1,12 @@
 Django==1.10.5
 argparse==1.2.1
+dj-database-url==0.4.2
+dj-static==0.0.6
 django-bootstrap3==8.1.0
 django-guardian==1.4.6
+gunicorn==19.7.1
+psycopg2==2.7.1
 pytz==2016.10
 six==1.10.0
+static3==0.7.0
 wsgiref==0.1.2

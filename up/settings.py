@@ -13,15 +13,23 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
+# import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+STATIC_ROOT = 'staticfiles'
+STATICFILES_DIRS = (
+	os.path.join(BASE_DIR, 'static'),
+)
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
+
+# Поддержка заголовка 'X-Forwarded-Proto' для request.is_secure().
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '20)3uo!@xp0@^2ljzw)%@s^3%gq_f(e8usbe2(g@pz*3x^btfs'
@@ -31,8 +39,8 @@ SECRET_KEY = '20)3uo!@xp0@^2ljzw)%@s^3%gq_f(e8usbe2(g@pz*3x^btfs'
 DEBUG = False
 
 # ALLOWED_HOSTS = []
-ALLOWED_HOSTS = ['localhost']
-
+# ALLOWED_HOSTS = ['localhost']
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -50,6 +58,8 @@ INSTALLED_APPS = [
 	'bootstrap3',
 	'guardian',
 	'pytz',
+	'dj_database_url',
+	'dj_static',
 ]
 
 MIDDLEWARE = [
@@ -92,6 +102,10 @@ DATABASES = {
 		'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
 	}
 }
+
+# DATABASES = {
+# 	'default': dj_database_url.config(default='postgres://localhost')
+# }
 
 
 # Password validation

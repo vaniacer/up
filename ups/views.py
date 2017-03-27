@@ -2,7 +2,7 @@
 
 from .buttons import select_copy, select_cron_copy, select_logs, select_job_del, select_ls
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .permissions import check_perm
 from .cron import get_cron_jobs
 from .models import Project
@@ -24,7 +24,8 @@ def projects(request):
 @login_required
 def project(request, project_id):
 	"""Выводит один проект, все его серверы, пакеты обновлений и обрабатывает кнопки действий."""
-	current_project = Project.objects.get(id=project_id)
+	# current_project = Project.objects.get(id=project_id)
+	current_project = get_object_or_404(Project, id=project_id)
 
 	check_perm('view_project', current_project, request.user)
 

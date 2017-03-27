@@ -18,5 +18,8 @@ echo -e "Create db and admin user."
 echo "from django.contrib.auth.models import User; User.objects.create_superuser('${admin}','${email}','${paswd}')" | \
     python manage.py shell
 
+echo -e "Static files."
+./manage.py help collectstatic --noinput
+
 echo -e "Runserver."
 ./manage.py runserver

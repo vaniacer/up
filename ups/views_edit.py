@@ -2,11 +2,11 @@
 
 from django.contrib.auth.decorators import login_required
 from .forms import ProjectForm, ServerForm, UpdateForm
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from .models import Project, Server, Update
 from django.conf import settings as conf
-from django.shortcuts import render
 from .permissions import check_perm
 import shutil
 import os
@@ -27,7 +27,8 @@ def delete_update(update):
 @login_required
 def edit_project(request, project_id):
 	"""Редактирует существующий проект."""
-	project = Project.objects.get(id=project_id)
+	# project = Project.objects.get(id=project_id)
+	project = get_object_or_404(Project, id=project_id)
 
 	check_perm('edit_project', project, request.user)
 
@@ -54,7 +55,8 @@ def edit_project(request, project_id):
 @login_required
 def edit_server(request, server_id):
 	"""Редактирует существующий сервер."""
-	server = Server.objects.get(id=server_id)
+	# server = Server.objects.get(id=server_id)
+	server = get_object_or_404(Server, id=server_id)
 	project = server.proj
 
 	check_perm('edit_server', project, request.user)
@@ -82,7 +84,8 @@ def edit_server(request, server_id):
 @login_required
 def edit_update(request, update_id):
 	"""Редактирует существующий пакет обновлений."""
-	update = Update.objects.get(id=update_id)
+	# update = Update.objects.get(id=update_id)
+	update = get_object_or_404(Update, id=update_id)
 	project = update.proj
 
 	check_perm('edit_update', project, request.user)
