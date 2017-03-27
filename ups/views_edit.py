@@ -5,6 +5,7 @@ from .forms import ProjectForm, ServerForm, UpdateForm
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from .models import Project, Server, Update
+from django.conf import settings as conf
 from django.shortcuts import render
 from .permissions import check_perm
 import shutil
@@ -13,13 +14,13 @@ import os
 
 def delete_project(project):
 	"""Удаляет проект и файлы обновлений."""
-	shutil.rmtree("media/updates/{}" .format(project.name), ignore_errors=True)
+	shutil.rmtree(conf.MEDIA_ROOT + '/updates/' + project.name, ignore_errors=True)
 	project.delete()
 
 
 def delete_update(update):
 	"""Удаляет обновление и файлы обновлений."""
-	os.remove("media/{}" .format(update.file))
+	os.remove(conf.MEDIA_ROOT + '/' + update.file)
 	update.delete()
 
 
