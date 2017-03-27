@@ -14,59 +14,62 @@
         <style type="text/css">
             {% include "ups/css/datepicker.css" %}
             {% include "ups/css/clockpicker.css" %}
+            {% include "ups/css/loader.css" %}
         </style>
         <script type="text/javascript">
             {% include "ups/js/datepicker.js" %}
             {% include "ups/js/datepicker.ru.js" %}
             {% include "ups/js/clockpicker.js" %}
-            {% include "ups/js/blockUI.js" %}
             {% include "ups/js/project.js" %}
         </script>
     </head>
 
     <body>
-        <!-- Статическая навигационная панель -->
-        <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="whole_page">
+            <!-- Статическая навигационная панель -->
+            <nav class="navbar navbar-default navbar-fixed-top">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed"
+                            data-toggle="collapse" data-target="#navbar"
+                            aria-expanded="false" aria-controls="navbar">
+                        </button>
+                        <a class="navbar-brand" href="{% url 'ups:index'  %}">Update Server</a>
+                    </div>
+
+                    <div id="navbar" class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav">
+                            <li><a href="{% url 'ups:projects' %}">Projects</a></li>
+                            {% if project %}
+                                <li><a href="{% url 'ups:project' project.id %}">{{ project }}</a></li>
+                            {% endif %}
+                        </ul>
+
+                        <ul class="nav navbar-nav navbar-right">
+                            {% if user.is_authenticated %}
+                                <li><a>Hello, {{ user.username }}.</a></li>
+                                <li><a href="{% url 'users:logout' %}">log out</a></li>
+                            {% else %}
+                                <li><a href="{% url 'users:register' %}">register</a></li>
+                                <li><a href="{% url 'users:login' %}">log in</a></li>
+                            {% endif %}
+                        </ul>
+                    </div><!--/.nav-collapse -->
+                </div>
+            </nav>
+
             <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed"
-                        data-toggle="collapse" data-target="#navbar"
-                        aria-expanded="false" aria-controls="navbar">
-                    </button>
-                    <a class="navbar-brand" href="{% url 'ups:index'  %}">Update Server</a>
+                <div class="page-header">
+                    {% block header %}{% endblock header %}
+                </div>
+                <div>
+                    {% block content %}{% endblock content %}
                 </div>
 
-                <div id="navbar" class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li><a href="{% url 'ups:projects' %}">Projects</a></li>
-                        {% if project %}
-                            <li><a href="{% url 'ups:project' project.id %}">{{ project }}</a></li>
-                        {% endif %}
-                    </ul>
+            </div> <!-- /container -->
+        </div>
 
-                    <ul class="nav navbar-nav navbar-right">
-                        {% if user.is_authenticated %}
-                            <li><a>Hello, {{ user.username }}.</a></li>
-                            <li><a href="{% url 'users:logout' %}">log out</a></li>
-                        {% else %}
-                            <li><a href="{% url 'users:register' %}">register</a></li>
-                            <li><a href="{% url 'users:login' %}">log in</a></li>
-                        {% endif %}
-                    </ul>
-                </div><!--/.nav-collapse -->
-            </div>
-        </nav>
-
-        <div class="container">
-            <div class="page-header">
-                {% block header %}{% endblock header %}
-            </div>
-            <div>
-                {% block content %}{% endblock content %}
-            </div>
-
-        </div> <!-- /container -->
-
+        <div class="loader"></div>
     </body>
 
 </html>

@@ -21,7 +21,6 @@ function topFunction() {
 
 function goBack() {
     window.history.back();
-    $.unblockUI();
 }
 
 function NameValidation(name) {
@@ -36,7 +35,8 @@ function NameValidation(name) {
         alert('None selected.');
         return false;
     }
-    $.blockUI({ message: null });
+    $(".whole_page").hide();
+    $(".loader").show();
 }
 
 function SelectValidation() {
