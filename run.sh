@@ -43,7 +43,7 @@ function reset {
 #Get opts
 until [ -z "$1" ]; do case $1 in
 
-    -host  | -H) shift; host=${1};;
+    -addr  | -a) shift; addr=${1};;
     -port  | -p) shift; port=${1};;
     -kill  | -k) stop;;
     -help  | -h) echo -e "${help}"; exit 0;;

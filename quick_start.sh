@@ -5,6 +5,9 @@ admin=admin
 paswd=1234qwer
 email=marov@krista.ru
 
+echo -e "Install libs."
+sudo apt-get install -y libpq-dev python-dev
+
 echo -e "Add virtual env."
 virtualenv ../env
 source ../env/bin/activate
