@@ -20,10 +20,12 @@
     <dl style="overflow:hidden" class="dl-horizontal" id="output_log">
         <dt>Event logs</dt><dd><tt>{{ log|linebreaks }}</tt></dd>
         <dt>Error codes</dt><dd>{{ err }}</dd>
+        <dt>
+            <br>
+            <a class="btn btn-primary" href="{% url 'ups:project' project.id %}">Back</a>
+            <!--<button class="btn btn-primary" onclick="goBack()">Back</button>-->
+        </dt>
     </dl>
-
-    <!--<a class="btn btn-primary" href="{% url 'ups:project' project.id %}">Back</a>-->
-    <button class="btn btn-primary" onclick="goBack()">Back</button>
 
     <style onload="color('output_log', '{{ err }}')"></style>
 

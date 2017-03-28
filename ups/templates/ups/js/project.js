@@ -63,6 +63,7 @@ function SelectValidation() {
         alert('None selected.');
         return false;
     }
+    hide_page();
 }
 
 function JobValidation() {
@@ -116,6 +117,7 @@ function CopyValidation() {
             return false;
         }
     }
+    hide_page();
 }
 
 $('.datepicker').datepicker();

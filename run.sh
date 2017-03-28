@@ -6,7 +6,7 @@ port=8000
 
 function start {
     source ../env/bin/activate
-    gunicorn ups.wsgi --log-file ../log --pid ../pid \
+    gunicorn ups.wsgi --log-file ../log --error-logfile ../log --pid ../pid \
              --daemon --bind ${host}:${port} --graceful-timeout 600 --timeout 600
 }
 
