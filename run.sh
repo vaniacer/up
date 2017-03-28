@@ -38,16 +38,20 @@ function reset {
     start
 }
 
-[ "$@" ] || start
-
 #Get opts
 until [ -z "$1" ]; do case $1 in
 
     -addr  | -a) shift; addr=${1};;
     -port  | -p) shift; port=${1};;
-    -kill  | -k) stop;;
+    -kill  | -k) starter=kill;;
+    -reset | -r) starter=reset;;
     -help  | -h) echo -e "${help}"; exit 0;;
-    -reset | -r) reset;;
               *) echo -e "Unknown option - ${1}"; exit 1;;
 
 esac; shift; done
+
+case ${starter} in
+    kill ) stop;;
+    reset) reset;;
+        *) start;;
+esac
