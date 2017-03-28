@@ -9,6 +9,9 @@ echo -e "Add virtual env."
 virtualenv ../env
 source ../env/bin/activate
 
+echo -e "Create some folders."
+mkdir static ../logs
+
 echo -e "Install requirements."
 easy_install $(cat requirements.txt)
 
