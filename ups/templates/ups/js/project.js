@@ -20,7 +20,18 @@ function topFunction() {
 }
 
 function goBack() {
-    window.history.back();
+    history.back();
+    hide_loader();
+}
+
+function hide_page() {
+    $(".whole_page").hide();
+    $(".loader").show();
+}
+
+function hide_loader() {
+    $(".whole_page").show();
+    $(".loader").hide();
 }
 
 function NameValidation(name) {
@@ -35,8 +46,7 @@ function NameValidation(name) {
         alert('None selected.');
         return false;
     }
-    $(".whole_page").hide();
-    $(".loader").show();
+    hide_page();
 }
 
 function SelectValidation() {
@@ -109,3 +119,7 @@ function CopyValidation() {
 }
 
 $('.datepicker').datepicker();
+
+$(document).ready(function() {
+    hide_loader();
+});
