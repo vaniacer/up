@@ -88,7 +88,7 @@ def select_ls(selected_servers):
 
 	servers = make_servers_lists(selected_servers)
 
-	opt = ['bash/ls.sh', servers]
+	opt = ['bash/ls.sh', servers, ' ']
 	log, err = run_cmd(opt)
 
 	return log, err

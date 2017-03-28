@@ -6,9 +6,9 @@ set -e
 until [ -z "$1" ]; do
 
     case $1 in
-	    -project | -p) project=$2; update=false; shift 2;;
+	    -project | -p) project=$2; shift 2;;
     esac
 
 done
 
-crontab -l | grep ${project}
+crontab -l | grep "/${project}/"
