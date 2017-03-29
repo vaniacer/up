@@ -5,9 +5,9 @@ port=8000
 pidf=/tmp/gpid
 daem=--daemon
 logd=../logs/
-acsf=${logd}access
-errf=${logd}error
-logf=${logd}log
+acsf=access
+errf=error
+logf=log
 time=600
 #-----------------------------------------------------------------------------------------------------------------------
 [ -f run.conf ] && . run.conf
@@ -38,17 +38,17 @@ port=${port}
 pidf=${pidf}
 daem=${daem}
 logd=${logd}
-acsf=\${logd}${acsf//${logd}}
-errf=\${logd}${errf//${logd}}
-logf=\${logd}${logf//${logd}}
+acsf=${acsf}
+errf=${errf}
+logf=${logf}
 time=${time}
 EOF
 }
 
 function start {
     . ../env/bin/activate
-    gunicorn ups.wsgi --error-logfile ${errf} --log-file ${logf} --access-logfile ${acsf} --pid ${pidf} \
-             --bind ${addr}:${port} --graceful-timeout ${time} --timeout ${time} ${daem} && { conf; }
+    gunicorn ups.wsgi --error-logfile ${logd}${errf} --log-file ${logd}${logf} --access-logfile ${logd}${acsf} \
+             --pid ${pidf} --bind ${addr}:${port} --graceful-timeout ${time} --timeout ${time} ${daem} && { conf; }
 }
 
 function stop {
