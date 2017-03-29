@@ -1,0 +1,17 @@
+# -*- encoding: utf-8 -*-
+
+"""Configuration file"""
+
+import dj_database_url
+
+dbhost = 'localhost'
+dbport = '5432'
+dbname = 'update_server'
+dbuser = 'updater'
+dbpass = '1234qwer'
+
+DATABASES = {
+	'default': dj_database_url.config(
+		default='postgres://' + dbuser + ':' + dbpass + '@' + dbhost + ':' + dbport + '/' + dbname
+	)
+}

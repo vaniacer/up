@@ -13,7 +13,9 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
-import dj_database_url
+# import dj_database_url
+from .conf import DATABASES
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -96,14 +98,14 @@ WSGI_APPLICATION = 'up.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
-DATABASES = {
+# DATABASES = {
 	# 'default': {
 	# 	'ENGINE': 'django.db.backends.sqlite3',
 	# 	'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
 	# }
 	# 'default': dj_database_url.config(default='postgres://user:pass@localhost/dbname')
-	'default': dj_database_url.config(default='postgres://updater:1234qwer@localhost/update_server')
-}
+	# 'default': dj_database_url.config(default='postgres://updater:1234qwer@localhost/update_server')
+# }
 
 
 # Password validation
