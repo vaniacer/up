@@ -8,8 +8,7 @@ logd=../logs/
 acsf=${logd}access
 errf=${logd}error
 logf=${logd}log
-time=${logd}600
-
+time=600
 #-----------------------------------------------------------------------------------------------------------------------
 [ -f run.conf ] && . run.conf
 
@@ -39,9 +38,9 @@ port=${port}
 pidf=${pidf}
 daem=${daem}
 logd=${logd}
-acsf=\${logd}${acsf}
-errf=\${logd}${errf}
-logf=\${logd}${logf}
+acsf=\${logd}${acsf//${logd}}
+errf=\${logd}${errf//${logd}}
+logf=\${logd}${logf//${logd}}
 time=${time}
 EOF
 }
