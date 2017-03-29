@@ -4,6 +4,8 @@ addr=localhost
 port=8000
 pidf=/tmp/gpid
 
+[ -f run.conf ] && . run.conf
+
 help="
 Available options are:
     -addr  | -a  Bind address(localhost).
@@ -23,10 +25,18 @@ Usage:
     ./$(basename $0) -k
 "
 
+function conf {
+cat > run.conf << EOF
+addr=${addr}
+port=${port}
+pidf=${pidf}
+EOF
+}
+
 function start {
     source ../env/bin/activate
     gunicorn ups.wsgi --error-logfile ../logs/error --log-file ../logs/log --access-logfile ../logs/access \
-             --pid ${pidf} --daemon --bind ${addr}:${port} --graceful-timeout 600 --timeout 600
+             --pid ${pidf} --daemon --bind ${addr}:${port} --graceful-timeout 600 --timeout 600 && { conf; }
 }
 
 function stop {

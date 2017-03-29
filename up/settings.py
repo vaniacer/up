@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
-# import dj_database_url
 from .conf import DATABASES
 
 
@@ -104,7 +103,6 @@ WSGI_APPLICATION = 'up.wsgi.application'
 	# 	'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
 	# }
 	# 'default': dj_database_url.config(default='postgres://user:pass@localhost/dbname')
-	# 'default': dj_database_url.config(default='postgres://updater:1234qwer@localhost/update_server')
 # }
 
 
