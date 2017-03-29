@@ -10,7 +10,7 @@ sudo apt-get install -y libpq-dev python-dev
 
 echo -e "Add virtual env."
 virtualenv ../env
-source ../env/bin/activate
+. ../env/bin/activate
 
 echo -e "Create some folders."
 mkdir static ../logs

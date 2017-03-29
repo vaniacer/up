@@ -1,6 +1,7 @@
-# up
+# Update Server
 ![screeenshot](https://cloud.githubusercontent.com/assets/18072680/24416507/b0b2d82a-13ed-11e7-8cc9-f9cc1cc6d1c2.png)
-Update Server helps to keep your servers up to date.
+
+It's an ssh wrapper, run ssh commands from web interface.
 
 Start by pressing an 'Update your servers' button or a 'Projects' link at the top.
 Select project by clicking on it. Or create a new one via 'Add new project' link.

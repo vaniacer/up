@@ -48,7 +48,7 @@ function reset {
     start
 }
 
-#Get opts
+# Get opts
 until [ -z "$1" ]; do case $1 in
 
     -addr  | -a) shift; addr=${1};;
