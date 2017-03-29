@@ -39,7 +39,7 @@ for server in ${servers}; do
                 scp ${file} ${server}/updates/new || error="$?"; }
             echo
         done
-    } || { error="$?"; echo -e "Server unreachable."; }
+    } || { error="$?"; echo -e "\nServer unreachable."; }
 
     echo
 done
