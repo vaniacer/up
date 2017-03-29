@@ -25,7 +25,7 @@ echo "from django.contrib.auth.models import User; User.objects.create_superuser
     python manage.py shell
 
 echo -e "Static files."
-./manage.py help collectstatic --noinput
+./manage.py collectstatic --noinput
 
 echo -e "Runserver."
 ./manage.py runserver
