@@ -36,17 +36,17 @@ Usage:
 
 function conf {
 cat > run.conf << EOF
-addr=${addr}
-port=${port}
-pidf=${pidf}
-daem=${daem}
-logd=${logd}
-acsf=${acsf}
-errf=${errf}
-logf=${logf}
-time=${time}
-work=${work}
-grce=${grce}
+addr=${addr} # Bind address
+port=${port} # Bind port
+pidf=${pidf} # Pid file
+daem=${daem} # Daemon mode
+logd=${logd} # Logs dir
+acsf=${acsf} # Access log filename(in logs dir)
+errf=${errf} # Error log filename(in logs dir)
+logf=${logf} # Main log filename(in logs dir)
+time=${time} # Timeout in sec
+grce=${grce} # Graceful timeout in sec
+work=${work} # Number of workers
 EOF
 }
 
