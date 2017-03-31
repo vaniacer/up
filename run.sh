@@ -36,17 +36,17 @@ Usage:
 
 function conf {
 cat > run.conf << EOF
-addr=${addr}$(echo -e '\t\t')# Bind address
-port=${port}$(echo -e '\t\t')# Bind port
-pidf=${pidf}$(echo -e '\t\t')# Pid file
-daem=${daem}$(echo -e '\t\t')# Daemon mode
-logd=${logd}$(echo -e '\t\t')# Logs dir
-acsf=${acsf}$(echo -e '\t\t')# Access log filename(in logs dir)
-errf=${errf}$(echo -e '\t\t')# Error log filename(in logs dir)
-logf=${logf}$(echo -e '\t\t')# Main log filename(in logs dir)
-time=${time}$(echo -e '\t\t')# Timeout in sec
-grce=${grce}$(echo -e '\t\t\t')# Graceful timeout in sec
-work=${work}$(echo -e '\t\t\t')# Number of workers
+addr=${addr}$(echo -e '\t')# Bind address
+port=${port}$(echo -e '\t')# Bind port
+pidf=${pidf}$(echo -e '\t')# Pid file
+daem=${daem}$(echo -e '\t')# Daemon mode
+logd=${logd}$(echo -e '\t')# Logs dir
+acsf=${acsf}$(echo -e '\t')# Access log filename(in logs dir)
+errf=${errf}$(echo -e '\t')# Error log filename(in logs dir)
+logf=${logf}$(echo -e '\t')# Main log filename(in logs dir)
+time=${time}$(echo -e '\t')# Timeout in sec
+grce=${grce}$(echo -e '\t\t')# Graceful timeout in sec
+work=${work}$(echo -e '\t\t')# Number of workers
 EOF
 }
 
