@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# Default options |-----------------------------------------------------------------------------------------------------
 addr=localhost  # Bind address
 port=8000       # Bind port
 pidf=/tmp/gpid  # Pid file
@@ -13,7 +14,7 @@ grce=10         # Graceful timeout in sec
 work=5          # Number of workers
 
 #-----------------------------------------------------------------------------------------------------------------------
-[ -f run.conf ] && . run.conf
+[ -f run.conf ] && . run.conf # get saved conf if exist
 
 help="
 Available options are:
