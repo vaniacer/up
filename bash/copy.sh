@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#set -e
+error=0
 
 #Get opts
 until [ -z "$1" ]; do
@@ -27,6 +27,7 @@ for server in ${servers}; do
     # server comes like this jboss@localhost:/var/lib/jboss
     # get address jboss@localhost
     addr=${server%%:*}
+
     # get working directory /var/lib/jboss
     wdir=${server##*:}
 
@@ -37,9 +38,11 @@ for server in ${servers}; do
         for file in ${updates}; do
             filename=$(basename ${file})
             echo -e "\nКопирую файл - ${filename}"
+
             # Check if file exist
             ssh ${addr} ls ${wdir}/updates/new/${filename} &> /dev/null && {
                 echo -e "Файл - ${filename} существует, пропускаю."; }  || {
+
                 # Copy if not exist
                 scp ${file} ${server}/updates/new || error="$?"; }
             echo
@@ -49,5 +52,5 @@ for server in ${servers}; do
     echo
 done
 
-[ "${cron}" ] && echo "Error code: ${error}"
+[ "${cron}" ] && { echo "Date: $(date +'%b %d, %Y %R')"; echo "Error code: ${error}"; }
 exit ${error}

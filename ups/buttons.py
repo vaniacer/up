@@ -42,8 +42,8 @@ def run_cmd(opt):
 	return out + err, rc
 
 
-def add_event(project, user, name, out, err):
-	History.objects.create(proj=project, user=user, name=name, desc=out, exit=err)
+def add_event(project, user, name, out, err, cron):
+	History.objects.create(proj=project, user=user, name=name, desc=out, exit=err, cron=cron)
 
 
 def select_copy(selected_updates, selected_servers, project, user):
@@ -55,7 +55,7 @@ def select_copy(selected_updates, selected_servers, project, user):
 	opt = ['bash/copy.sh', '-server', servers, '-update', updates]
 
 	log, err = run_cmd(opt)
-	add_event(project, user, 'Copy update(s) to server(s)', log, err)
+	add_event(project, user, 'Copy update(s) to server(s)', log, err, '')
 
 	return log, err
 
@@ -66,7 +66,7 @@ def select_cron_copy(selected_updates, selected_servers, project, user, date, ti
 	servers = make_servers_lists(selected_servers)
 	updates = make_updates_lists(selected_updates)
 
-	key = b64encode(urandom(5))
+	key = b64encode(urandom(6), 'dfsDFAsfsf')
 	opt = [
 		conf.BASE_DIR + '/bash/cron_copy.sh',
 		'-server', servers,
@@ -77,7 +77,7 @@ def select_cron_copy(selected_updates, selected_servers, project, user, date, ti
 	]
 
 	log, err = run_cmd(opt)
-	add_event(project, user, 'Set cron job - Copy update(s) to server(s) id: ' + str(key), log, err)
+	add_event(project, user, 'Set cron job - Copy update(s) to server(s)', log, err, str(key))
 
 	return log, err
 
@@ -107,8 +107,9 @@ def select_ls(selected_servers):
 def select_job_del(selected_jobs, project, user):
 
 	jbs = '; '.join(selected_jobs)
+	print jbs
 	opt = ['bash/cron_del.sh', jbs]
 	log, err = run_cmd(opt)
-	add_event(project, user, 'Delete cron job(s)', log, err)
+	add_event(project, user, 'Delete cron job(s)', log, err, '')
 
 	return log, err

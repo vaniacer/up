@@ -72,6 +72,7 @@ class History(models.Model):
 	date = models.DateTimeField(auto_now_add=True, db_index=True)
 	name = models.CharField(max_length=200)
 	exit = models.CharField(max_length=200)
+	cron = models.CharField(max_length=10)
 	proj = models.ForeignKey(Project)
 	user = models.ForeignKey(User)
 	desc = models.TextField()

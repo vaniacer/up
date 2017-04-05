@@ -3,7 +3,7 @@
 #set -e
 
 folder=$(dirname $0)
-logdir=${folder}/../../logs
+logdir=${folder}/../../logs/cron
 
 #Get opts
 until [ -z "$1" ]; do
@@ -32,7 +32,7 @@ date="${mm} ${hh} ${DD} ${MM}"
 sedr="/${id}/d"
 
 # Command to run
-cmnd="${folder}/copy.sh -u \"${updates[@]}\" -s \"${servers[@]}\" -cron true > ${logdir}/cron.${id} 2>&1"
+cmnd="${folder}/copy.sh -u \"${updates[@]}\" -s \"${servers[@]}\" -cron true > ${logdir}/${id} 2>&1"
 
 # Command to cancel executed cron job
 cncl="(crontab -l | sed \"${sedr}\") | crontab -"

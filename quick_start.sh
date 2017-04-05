@@ -13,7 +13,7 @@ virtualenv ../env
 . ../env/bin/activate
 
 echo -e "Create some folders."
-mkdir static ../logs
+mkdir -p static ../logs/cron
 
 echo -e "Install requirements."
 easy_install $(cat requirements.txt)

@@ -39,10 +39,13 @@
                                     <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                <li><a href="#" onclick="select_all('selected_servers', 'server-body', true);
-                                       select_all('selected_updates', 'update-body', true)">Select All</a></li>
-                                <li><a href="#" onclick="select_all('selected_servers', 'server-body', false);
-                                       select_all('selected_updates', 'update-body', false)">Deselect All</a></li>
+
+                                <li><a href="#" onclick="select_all('selected_jobs', 'job_body', true)">
+                                    Select All Jobs</a>
+                                </li>
+                                <li><a href="#" onclick="select_all('selected_jobs', 'job_body', false)">
+                                    Deselect All Jobs</a>
+                                </li>
 
                                 <li role="separator" class="divider"></li>
 
@@ -64,12 +67,10 @@
 
                                 <li role="separator" class="divider"></li>
 
-                                <li><a href="#" onclick="select_all('selected_jobs', 'job_body', true)">
-                                    Select All Jobs</a>
-                                </li>
-                                <li><a href="#" onclick="select_all('selected_jobs', 'job_body', false)">
-                                    Deselect All Jobs</a>
-                                </li>
+                                <li><a href="#" onclick="select_all('selected_servers', 'server-body', true);
+                                       select_all('selected_updates', 'update-body', true)">Select All</a></li>
+                                <li><a href="#" onclick="select_all('selected_servers', 'server-body', false);
+                                       select_all('selected_updates', 'update-body', false)">Deselect All</a></li>
 
                             </ul>
                         </div>

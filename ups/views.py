@@ -4,7 +4,7 @@ from .buttons import select_copy, select_cron_copy, select_logs, select_job_del,
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 from .permissions import check_perm
-from .cron import get_cron_jobs
+from .cron import get_cron_jobs, get_cron_logs
 from .models import Project
 
 
@@ -33,6 +33,7 @@ def project(request, project_id):
 	updates = current_project.update_set.order_by('date').reverse()
 	history = current_project.history_set.order_by('date').reverse()
 	cronjob = get_cron_jobs(current_project)
+	cronlog = get_cron_logs(current_project)
 
 	selected_updates = request.POST.getlist('selected_updates')
 	selected_servers = request.POST.getlist('selected_servers')
