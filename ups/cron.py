@@ -47,7 +47,7 @@ def get_cron_jobs(current_project):
 			updates = re.sub('" -s .*$', '', updates)
 			updates = re.sub(' ', '\n', updates)
 			servers = re.sub('^.*-s "', '', line)
-			servers = re.sub('"; .*$', '', servers)
+			servers = re.sub('".*$', '', servers)
 			servers = re.sub(' ', '\n', servers)
 
 			job.full = line

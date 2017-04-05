@@ -77,7 +77,7 @@ def select_cron_copy(selected_updates, selected_servers, project, user, date, ti
 	]
 
 	log, err = run_cmd(opt)
-	add_event(project, user, 'Set cron job - Copy update(s) to server(s)', log, err)
+	add_event(project, user, 'Set cron job - Copy update(s) to server(s) id: ' + str(key), log, err)
 
 	return log, err
 
