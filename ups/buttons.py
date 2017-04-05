@@ -3,6 +3,8 @@
 from .models import Server, Update, History
 from django.conf import settings as conf
 from subprocess import Popen, PIPE
+from base64 import b64encode
+from os import urandom
 
 
 def make_updates_lists(selected_updates):
@@ -64,7 +66,15 @@ def select_cron_copy(selected_updates, selected_servers, project, user, date, ti
 	servers = make_servers_lists(selected_servers)
 	updates = make_updates_lists(selected_updates)
 
-	opt = [conf.BASE_DIR + '/bash/cron_copy.sh', '-server', servers, '-update', updates, '-date', date, '-time', time]
+	key = b64encode(urandom(5))
+	opt = [
+		conf.BASE_DIR + '/bash/cron_copy.sh',
+		'-server', servers,
+		'-update', updates,
+		'-date', date,
+		'-time', time,
+		'-id', str(key)
+	]
 
 	log, err = run_cmd(opt)
 	add_event(project, user, 'Set cron job - Copy update(s) to server(s)', log, err)

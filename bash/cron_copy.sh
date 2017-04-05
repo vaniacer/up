@@ -12,6 +12,7 @@ until [ -z "$1" ]; do
 	    -update | -u) updates=${2};;
 	    -date   | -d) date=${2};;
 	    -time   | -t) time=${2};;
+	             -id) id=${2};;
     esac
 
     shift 2
@@ -23,16 +24,23 @@ done
 # Get time
 hh=${time%:*}; mm=${time#*:}; DD=${date%%.*}; MM=${date#*.}; MM=${MM%.*}
 
-date="${mm} ${hh} ${DD} ${MM}"                                      # Cron format date
-sedr="/${date}/d"                                                   # Sed rule to delete old cron job
-cmnd="${folder}/copy.sh -u \"${updates[@]}\" -s \"${servers[@]}\""  # Command to run
-cncl="(crontab -l | sed \"${sedr}\") | crontab -"                   # Command to cancel executed cron job
+# Cron format date
+date="${mm} ${hh} ${DD} ${MM}"
+
+# Sed rule to delete old cron job
+sedr="/${id}/d"
+
+# Command to run
+cmnd="${folder}/copy.sh -u \"${updates[@]}\" -s \"${servers[@]}\""
+
+# Command to cancel executed cron job
+cncl="(crontab -l | sed \"${sedr}\") | crontab -"
 
 # Check if job with the same time exist, time have to be unique
-crontab -l | grep "${date}" > /dev/null && {
-    echo -e "На это время запланировано другое задание, измените время!"
-    exit 1
-}
+#crontab -l | grep "${date}" > /dev/null && {
+#    echo -e "На это время запланировано другое задание, измените время!"
+#    exit 1
+#}
 
 # Info
 echo -e "Setting cron job for copy Updates:"
