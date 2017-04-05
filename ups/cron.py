@@ -87,9 +87,11 @@ def get_cron_logs(project):
 	"""Создает события в истории на основе логок крона."""
 
 	logfiles = os.listdir(crondir)
-	history = project.history_set.order_by('date').reverse()
 
 	if logfiles:
+
+		history = project.history_set.order_by('date').reverse()
+
 		for filename in logfiles:
 			event = history.filter(cron=str(filename))[0]
 
