@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
-from .conf import DATABASES, LANGUAGE_CODE, TIME_ZONE, USE_I18N, USE_L10N, USE_TZ
+from .conf import DATABASES, LANGUAGE_CODE, TIME_ZONE, USE_I18N, USE_L10N, USE_TZ, DEBUG
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -35,13 +35,11 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '20)3uo!@xp0@^2ljzw)%@s^3%gq_f(e8usbe2(g@pz*3x^btfs'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
-DEBUG = False
 
 # ALLOWED_HOSTS = []
 # ALLOWED_HOSTS = ['localhost']
 ALLOWED_HOSTS = ['*']
+
 
 # Application definition
 INSTALLED_APPS = [
@@ -92,18 +90,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'up.wsgi.application'
-
-
-# Database
-# https://docs.djangoproject.com/en/1.10/ref/settings/#databases
-
-# DATABASES = {
-	# 'default': {
-	# 	'ENGINE': 'django.db.backends.sqlite3',
-	# 	'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-	# }
-	# 'default': dj_database_url.config(default='postgres://user:pass@localhost/dbname')
-# }
 
 
 # Password validation
