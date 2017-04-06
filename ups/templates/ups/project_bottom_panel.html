@@ -40,55 +40,35 @@
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
 
-                                <li><a href="#" onclick="select_all('selected_jobs', 'job_body', true)">
-                                    Select All Jobs</a>
-                                </li>
+                                <li><a href="#" onclick="select_all('selected_servers', 'server-body', false);
+                                       select_all('selected_updates', 'update-body', false)">Deselect All</a></li>
                                 <li><a href="#" onclick="select_all('selected_jobs', 'job_body', false)">
-                                    Deselect All Jobs</a>
-                                </li>
+                                    Deselect All Jobs</a></li>
+                                <li><a href="#" onclick="select_all('selected_servers', 'server-body', false)">
+                                    Deselect All Servers</a></li>
+                                <li><a href="#" onclick="select_all('selected_updates', 'update-body', false)">
+                                    Deselect All Updates</a></li>
 
                                 <li role="separator" class="divider"></li>
 
                                 <li><a href="#" onclick="select_all('selected_updates', 'update-body', true)">
-                                    Select All Updates</a>
-                                </li>
-                                <li><a href="#" onclick="select_all('selected_updates', 'update-body', false)">
-                                    Deselect All Updates</a>
-                                </li>
-
-                                <li role="separator" class="divider"></li>
-
+                                    Select All Updates</a></li>
                                 <li><a href="#" onclick="select_all('selected_servers', 'server-body', true)">
-                                    Select All Servers</a>
-                                </li>
-                                <li><a href="#" onclick="select_all('selected_servers', 'server-body', false)">
-                                    Deselect All Servers</a>
-                                </li>
-
-                                <li role="separator" class="divider"></li>
-
+                                    Select All Servers</a></li>
+                                <li><a href="#" onclick="select_all('selected_jobs', 'job_body', true)">
+                                    Select All Jobs</a></li>
                                 <li><a href="#" onclick="select_all('selected_servers', 'server-body', true);
                                        select_all('selected_updates', 'update-body', true)">Select All</a></li>
-                                <li><a href="#" onclick="select_all('selected_servers', 'server-body', false);
-                                       select_all('selected_updates', 'update-body', false)">Deselect All</a></li>
-
                             </ul>
                         </div>
                     </li>
 
-                    <!--Test button-->
-                    <!--<li><input type="submit"-->
-                               <!--name="select_test"-->
-                               <!--value="Show selected"-->
-                               <!--class="btn btn-default navbar-btn"-->
-                               <!--onclick="return SelectValidation()"></li>-->
 
                     <li><input type="submit"
                                name="select_copy"
                                value="Copy Update(s) to Server(s)"
                                class="btn btn-default navbar-btn"
                                onclick="return CopyValidation()"></li>
-
 
                     <!--Date picker-->
                     <li><div class="input-group date navbar-btn date-input" data-provide="datepicker">
@@ -110,10 +90,6 @@
                         $('.clockpicker').clockpicker();
                     </script></li>
 
-                    <!--<li><input type="submit" class="btn btn-default navbar-btn"-->
-                               <!--name="select_check"    value="Check updates on servers"/></li>-->
-                    <!--<li><input type="submit" class="btn btn-default navbar-btn"-->
-                               <!--name="select_schedule" value="Check scheduled updates"/></li>-->
                 {% endif %}
             </ul>
             <ul class="nav navbar-nav navbar-right">
