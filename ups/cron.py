@@ -7,8 +7,6 @@ import re
 import os
 
 
-job_counter = 0
-
 crondir = os.path.join(conf.BASE_DIR, '../logs/cron/')
 
 
@@ -31,7 +29,6 @@ def get_cron_jobs(current_project):
 	"""Получает список заданий крона для проекта."""
 
 	jobs = []
-	global job_counter
 
 	opt = ['bash/cron_list.sh', '-project', current_project.name]
 	run = Popen(opt, stdout=PIPE)
@@ -57,7 +54,6 @@ def get_cron_jobs(current_project):
 			servers = re.sub(' ', '\n', servers)
 
 			job.full = line
-			# job.name = 'Cron_copy' + str(job_counter)
 			job.name = re.sub('^.*-cron ', '', line)
 			job.name = re.sub(';.*$', '', job.name)
 			job.kill = re.sub('^.*; ', '', line)
@@ -65,7 +61,6 @@ def get_cron_jobs(current_project):
 			job.desc = 'Copy Updates: \n' + updates + '\n\n' + 'to Servers: \n' + servers
 
 			jobs.append(job)
-			job_counter += 1
 
 	return jobs
 
