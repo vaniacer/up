@@ -7,9 +7,6 @@ import re
 import os
 
 
-crondir = os.path.join(conf.BASE_DIR, '../logs/cron/')
-
-
 class Job:
 	"""Задания в кроне."""
 
@@ -53,6 +50,7 @@ def get_cron_jobs(current_project):
 			servers = re.sub('".*$', '', servers)
 			servers = re.sub(' ', '\n', servers)
 
+			# Job's details
 			job.full = line
 			job.name = re.sub('^.*-cron ', '', line)
 			job.name = re.sub(';.*$', '', job.name)
@@ -68,7 +66,7 @@ def get_cron_jobs(current_project):
 def get_cron_logs(project):
 	"""Создает события в истории на основе логов крона."""
 
-	logfiles = os.listdir(crondir)
+	logfiles = os.listdir(conf.CRON_DIR)
 
 	if logfiles:
 
@@ -77,7 +75,7 @@ def get_cron_logs(project):
 		for filename in logfiles:
 			event = history.filter(cron=str(filename))[0]
 
-			f = open(os.path.join(crondir, filename), 'r')
+			f = open(os.path.join(conf.CRON_DIR, filename), 'r')
 			out = f.readlines()
 			f.close()
 
@@ -93,4 +91,4 @@ def get_cron_logs(project):
 			name = re.sub('Set', 'Run', event.name)
 
 			add_event(event.proj, event.user, name, out, int(err), event.cron, date)
-			os.remove(os.path.join(crondir, filename))
+			os.remove(os.path.join(conf.CRON_DIR, filename))
