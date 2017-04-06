@@ -22,7 +22,7 @@
 
     <dl class="dl-horizontal job_body" id="job_body{{ job.name }}"
         onclick="checker('job_box{{ job.name }}', 'job_body{{ job.name }}')">
-        <!--<dt>Cron Job</dt><dd>{{ job.name }}</dd>-->
+        <dt>Cron job id</dt><dd>{{ job.name }}</dd>
         <dt>Description</dt><dd>{{ job.desc|linebreaks }}</dd>
         <dt><big>Date\Time</big></dt><dd><big>{{ job.date }}</big></dd>
         <!--<dt>kill</dt><dd><big>{{ job.kill }}</big></dd>-->

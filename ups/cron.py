@@ -57,7 +57,9 @@ def get_cron_jobs(current_project):
 			servers = re.sub(' ', '\n', servers)
 
 			job.full = line
-			job.name = 'Cron_copy' + str(job_counter)
+			# job.name = 'Cron_copy' + str(job_counter)
+			job.name = re.sub('^.*-cron ', '', line)
+			job.name = re.sub(';.*$', '', job.name)
 			job.kill = re.sub('^.*; ', '', line)
 			job.date = day + '.' + mon + ' ' + hrs + ':' + mnt
 			job.desc = 'Copy Updates: \n' + updates + '\n\n' + 'to Servers: \n' + servers
@@ -97,4 +99,3 @@ def get_cron_logs(project):
 
 			add_event(event.proj, event.user, name, out, int(err), event.cron, date)
 			os.remove(os.path.join(crondir, filename))
-
