@@ -42,8 +42,8 @@ def run_cmd(opt):
 	return out + err, rc
 
 
-def add_event(project, user, name, out, err, cron):
-	History.objects.create(proj=project, user=user, name=name, desc=out, exit=err, cron=cron)
+def add_event(project, user, name, out, err, cron, date):
+	History.objects.create(proj=project, user=user, name=name, desc=out, exit=err, cron=cron, cdat=date)
 
 
 def select_copy(selected_updates, selected_servers, project, user):
@@ -55,7 +55,7 @@ def select_copy(selected_updates, selected_servers, project, user):
 	opt = ['bash/copy.sh', '-server', servers, '-update', updates]
 
 	log, err = run_cmd(opt)
-	add_event(project, user, 'Copy update(s) to server(s)', log, err, '')
+	add_event(project, user, 'Copy update(s) to server(s)', log, err, '', '')
 
 	return log, err
 
@@ -77,7 +77,7 @@ def select_cron_copy(selected_updates, selected_servers, project, user, date, ti
 	]
 
 	log, err = run_cmd(opt)
-	add_event(project, user, 'Set cron job - Copy update(s) to server(s)', log, err, str(key))
+	add_event(project, user, 'Set cron job - Copy update(s) to server(s)', log, err, str(key), '')
 
 	return log, err
 
@@ -110,6 +110,6 @@ def select_job_del(selected_jobs, project, user):
 	print jbs
 	opt = ['bash/cron_del.sh', jbs]
 	log, err = run_cmd(opt)
-	add_event(project, user, 'Delete cron job(s)', log, err, '')
+	add_event(project, user, 'Delete cron job(s)', log, err, '', '')
 
 	return log, err

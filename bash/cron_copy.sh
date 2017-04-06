@@ -32,7 +32,7 @@ date="${mm} ${hh} ${DD} ${MM}"
 sedr="/${id}/d"
 
 # Command to run
-cmnd="${folder}/copy.sh -u \"${updates[@]}\" -s \"${servers[@]}\" -cron true > ${logdir}/${id} 2>&1"
+cmnd="${folder}/copy.sh -u \"${updates[@]}\" -s \"${servers[@]}\" -cron ${id}"
 
 # Command to cancel executed cron job
 cncl="(crontab -l | sed \"${sedr}\") | crontab -"

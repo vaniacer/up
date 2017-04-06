@@ -12,7 +12,14 @@
 {% for event in history %}
 
     <dl class="dl-horizontal" id="event{{ event.id }}">
-        <dt>Event date</dt><dd>{{ event.date|date:'M d, Y H:i' }}</dd>
+        <dt>Event date</dt>
+        <dd>
+            {% if event.cdat %}
+                {{ event.cdat }}
+            {% else %}
+                {{ event.date|date:'M d, Y H:i' }}
+            {% endif %}
+        </dd>
         <dt>Event user</dt><dd>{{ event.user }}</dd>
         {% if event.cron %}
             <dt>Cron job id</dt><dd>{{ event.cron }}</dd>

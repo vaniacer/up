@@ -1,6 +1,8 @@
 #!/bin/bash
 
 error=0
+folder=$(dirname $0)
+logdir=${folder}/../../logs/cron
 
 #Get opts
 until [ -z "$1" ]; do
@@ -21,36 +23,44 @@ function info () {
     printf %.s- $(seq ${line}); printf "${name}"; printf %.s- $(seq ${line}); printf "\n"
 }
 
-# Simple copy
-for server in ${servers}; do
+function copy () {
+    for server in ${servers}; do
 
-    # server comes like this jboss@localhost:/var/lib/jboss
-    # get address jboss@localhost
-    addr=${server%%:*}
+        # server comes like this jboss@localhost:/var/lib/jboss
+        # get address jboss@localhost
+        addr=${server%%:*}
 
-    # get working directory /var/lib/jboss
-    wdir=${server##*:}
+        # get working directory /var/lib/jboss
+        wdir=${server##*:}
 
-    info ${addr}
+        info ${addr}
 
-    ssh ${addr} "echo > /dev/null" && {
+        ssh ${addr} "echo > /dev/null" \
+            && { for file in ${updates}; do
+                    filename=$(basename ${file})
+                    echo -e "\nКопирую файл - ${filename}"
 
-        for file in ${updates}; do
-            filename=$(basename ${file})
-            echo -e "\nКопирую файл - ${filename}"
+                    # Check if file exist, copy if not exist
+                    ssh ${addr} ls ${wdir}/updates/new/${filename} &> /dev/null \
+                        && { echo -e "Файл - ${filename} существует, пропускаю."; } \
+                        || { scp ${file} ${server}/updates/new || error="$?"; }
 
-            # Check if file exist
-            ssh ${addr} ls ${wdir}/updates/new/${filename} &> /dev/null && {
-                echo -e "Файл - ${filename} существует, пропускаю."; }  || {
+                    echo # Add empty line
+                done; } \
+            || { error=$?; echo -e "\nServer unreachable."; }
 
-                # Copy if not exist
-                scp ${file} ${server}/updates/new || error="$?"; }
-            echo
-        done
-    } || { error=$?; echo -e "\nServer unreachable."; }
+        echo # Add empty line
+    done
 
-    echo
-done
+    echo "__ERROR__${error}"
+}
 
-[ "${cron}" ] && { echo "Date: $(date +'%b %d, %Y %R')"; echo "Error code: ${error}"; }
-exit ${error}
+log=$(copy)
+err=$(echo ${log//*__ERROR__})
+log=${log//__ERROR__*}
+dat=$(date +'%b %d, %Y %R'); dat=${dat//.}; dat=${dat^};
+
+[ "${cron}" ] && { log=${log}"\nDate: ${dat}\nError: ${err}"; echo -e "${log}" > ${logdir}/${cron}; } \
+              || { echo -e "${log}"; }
+
+exit ${err}

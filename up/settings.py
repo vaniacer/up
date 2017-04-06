@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
-from .conf import DATABASES
+from .conf import DATABASES, LANGUAGE_CODE, TIME_ZONE, USE_I18N, USE_L10N, USE_TZ
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -123,21 +123,6 @@ AUTH_PASSWORD_VALIDATORS = [
 		'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
 	},
 	]
-
-
-# Internationalization
-# https://docs.djangoproject.com/en/1.10/topics/i18n/
-
-# LANGUAGE_CODE = 'en-us'
-LANGUAGE_CODE = 'ru-ru'
-
-TIME_ZONE = 'UTC'
-
-USE_I18N = True
-
-USE_L10N = True
-
-USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)

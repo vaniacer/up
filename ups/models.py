@@ -73,6 +73,7 @@ class History(models.Model):
 	name = models.CharField(max_length=200)
 	exit = models.CharField(max_length=200)
 	cron = models.CharField(max_length=10)
+	cdat = models.CharField(max_length=30)
 	proj = models.ForeignKey(Project)
 	user = models.ForeignKey(User)
 	desc = models.TextField()

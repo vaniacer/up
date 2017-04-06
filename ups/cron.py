@@ -27,21 +27,6 @@ class Job:
 		return self.name
 
 
-class JobLog:
-	"""Логи задач крона."""
-
-	def __init__(self, name, full, desc, date, kill):
-		self.name = name
-		self.full = full
-		self.desc = desc
-		self.date = date
-		self.kill = kill
-
-	def __unicode__(self):
-		"""Возвращает строковое представление модели."""
-		return self.name
-
-
 def get_cron_jobs(current_project):
 	"""Получает список заданий крона для проекта."""
 
@@ -84,7 +69,7 @@ def get_cron_jobs(current_project):
 
 
 def get_cron_logs(project):
-	"""Создает события в истории на основе логок крона."""
+	"""Создает события в истории на основе логов крона."""
 
 	logfiles = os.listdir(crondir)
 
@@ -95,25 +80,21 @@ def get_cron_logs(project):
 		for filename in logfiles:
 			event = history.filter(cron=str(filename))[0]
 
-			file = open(os.path.join(crondir, filename), 'r')
-			out = file.readlines()
-			file.close()
+			f = open(os.path.join(crondir, filename), 'r')
+			out = f.readlines()
+			f.close()
 
 			err = out[-1]
-			err = re.sub('Error code: ', '', err)
+			err = re.sub('Error: ', '', err)
 
-			del out[-1]
+			date = out[-2]
+			date = re.sub('Date: ', '', date)
+
+			del out[-2:]
 			out = ''.join(out)
 
-			name = re.sub('Set c', 'C', event.name)
+			name = re.sub('Set', 'Run', event.name)
 
-			# print file, event
-			# print event.cron
-			# print event.proj
-			# print event.user
-			# print event.name
-			# print out, err
-
-			add_event(event.proj, event.user, name, out, int(err), event.cron)
+			add_event(event.proj, event.user, name, out, int(err), event.cron, date)
 			os.remove(os.path.join(crondir, filename))
 
