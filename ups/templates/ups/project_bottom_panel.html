@@ -1,4 +1,7 @@
 <!-- Нижняя статическая навигационная панель -->
+
+<!--f5f5f5-->
+
 <nav class="navbar navbar-default navbar-fixed-bottom">
     <div class="container">
         <div class="navbar-header">
@@ -10,7 +13,8 @@
 
         <div id="navbar_bottom" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <!--<li><a href="{% url 'ups:projects' %}">Projects</a></li>-->
+
+                <!--Add-->
                 {% if "add_update" in pr_view_perms or "add_server" in pr_view_perms %}
                     <li>
                         <div class="dropup">
@@ -30,8 +34,9 @@
                         </div>
                     </li>
                 {% endif %}
+
                 {% if "run_command" in pr_view_perms %}
-                    <li>
+                    <li> <!--Select-->
                         <div class="dropup">
                             <button class="btn btn-default dropdown-toggle navbar-btn" type="button" id="dropdownMenu2"
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -63,12 +68,41 @@
                         </div>
                     </li>
 
+                    <li> <!--Run-->
+                        <div class="dropup">
+                            <button class="btn btn-default dropdown-toggle navbar-btn" type="button" id="dropdownMenu3"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    RUN
+                                    <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu3">
 
-                    <li><input type="submit"
-                               name="select_copy"
-                               value="Copy Update(s) to Server(s)"
-                               class="btn btn-default navbar-btn"
-                               onclick="return CopyValidation()"></li>
+                                <li><input type="submit"
+                                           name="select_copy"
+                                           value="Copy"
+                                           class="btn btn-default navbar-btn"
+                                           onclick="return CopyValidation()"></li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li> <!--Cron-->
+                        <div class="dropup">
+                            <button class="btn btn-default dropdown-toggle navbar-btn" type="button" id="dropdownMenu4"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    CRON
+                                    <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu4">
+
+                                <li><input type="submit"
+                                           name="select_copy"
+                                           value="Copy"
+                                           class="btn btn-default navbar-btn"
+                                           onclick="return CopyValidation()"></li>
+                            </ul>
+                        </div>
+                    </li>
 
                     <!--Date picker-->
                     <li><div class="input-group date navbar-btn date-input" data-provide="datepicker">
@@ -101,7 +135,7 @@
                                onclick="return NameValidation('selected_servers')"></li>
                     <li><input type="submit"
                                name="select_logs"
-                               value="View server's log"
+                               value="Check logs"
                                class="btn btn-default navbar-btn blockUI"
                                onclick="return NameValidation('selected_servers')"></li>
                 {% endif %}
