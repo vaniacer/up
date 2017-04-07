@@ -139,5 +139,6 @@ function CopyValidation() {
 $('.datepicker').datepicker();
 
 $(document).ready(function() {
+    $('a[href="' + window.location.hash + '"]').click()
     hide_loader();
 });
