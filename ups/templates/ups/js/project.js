@@ -1,11 +1,6 @@
-function run_cron(choice) {
-    if ( choice == 'RUN' ) {
-        var enable  = document.getElementById('RUN');
-        var disable = document.getElementById('CRON');
-    } else {
-        var enable  = document.getElementById('CRON');
-        var disable = document.getElementById('RUN');
-    }
+function run_cron(check, uncheck) {
+    var enable  = document.getElementById(check);
+    var disable = document.getElementById(uncheck);
 
     enable.checked = true
     disable.checked = false
