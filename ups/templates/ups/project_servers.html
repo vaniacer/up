@@ -23,7 +23,8 @@
                 <dt><small>Date added</small></dt><dd><small>{{ server.date|date:'M d, Y H:i' }}</small></dd>
             </dl>
             {% if "run_command" in pr_view_perms %}
-                <input  style="display:none"
+                <!--Hidden checkboxes-->
+                <input  class="box"
                         type="checkbox"
                         readonly="readonly"
                         name="selected_servers"

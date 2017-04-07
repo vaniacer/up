@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 
 from .buttons import select_copy, select_cron_copy, select_logs, select_job_del, select_ls
+from django.shortcuts import render, get_object_or_404, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, get_object_or_404
 from .permissions import check_perm
 from .cron import get_cron_jobs, get_cron_logs
 from .models import Project
@@ -48,6 +48,7 @@ def project(request, project_id):
 		check_perm('run_command', current_project, request.user)
 		if request.POST.get('select_copy'):
 			select_cron_copy(selected_updates, selected_servers, current_project, request.user, date, time)
+			return HttpResponseRedirect('')
 			# log, err = select_cron_copy(selected_updates, selected_servers, current_project, request.user, date, time)
 			# context = {'project': current_project, 'log': log, 'err': err}
 			# return render(request, 'ups/output.html', context)
@@ -73,9 +74,11 @@ def project(request, project_id):
 
 	if request.POST.get('select_job_del'):
 		check_perm('run_command', current_project, request.user)
-		log, err = select_job_del(selected_jobs, current_project, request.user)
-		context = {'project': current_project, 'log': log, 'err': err}
-		return render(request, 'ups/output.html', context)
+		select_job_del(selected_jobs, current_project, request.user)
+		return HttpResponseRedirect('')
+		# log, err = select_job_del(selected_jobs, current_project, request.user)
+		# context = {'project': current_project, 'log': log, 'err': err}
+		# return render(request, 'ups/output.html', context)
 
 	context = {
 		'project': current_project,
