@@ -1,7 +1,0 @@
-#!/bin/bash
-
-name=$(basename "$0")
-wdir=$(cd "$(dirname "$0")" && pwd)
-
-read opts <<< "$@"
-echo -e "Выбраны объекты: \n$opts\n"

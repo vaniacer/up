@@ -20,28 +20,21 @@ until [ -z "$1" ]; do
 done
 
 # Get time
-case ${time} in
-    '__TIME__')
+case ${time}:${date} in
+    '__TIME__':'__DATE__')
         DD=$(date +'%d')
         MM=$(date +'%m')
         hh=$(date +'%H')
         mm=$(date +'%M'); ((mm++))
         [ ${mm} -gt 59 ] && { mm=00; ((hh++)); [ ${hh} -gt 23 ] && hh=00; };;
-    *)
+    *:*)
         hh=${time%:*}; mm=${time#*:}; DD=${date%%.*}; MM=${date#*.}; MM=${MM%.*};;
 esac
 
-# Cron format date
-date="${mm} ${hh} ${DD} ${MM}"
-
-# Sed rule to delete old cron job
-sedr="/${id}/d"
-
-# Command to run
-cmnd="${folder}/copy.sh -u \"${updates[@]}\" -s \"${servers[@]}\" -cron ${id}"
-
-# Command to cancel executed cron job
-cncl="(crontab -l | sed \"${sedr}\") | crontab -"
+date="${mm} ${hh} ${DD} ${MM}"                                                  # Cron format date
+sedr="/${id}/d"                                                                 # Sed rule to delete old cron job
+cmnd="${folder}/copy.sh -u \"${updates[@]}\" -s \"${servers[@]}\" -cron ${id}"  # Command to run
+cncl="(crontab -l | sed \"${sedr}\") | crontab -"                               # Command to cancel executed cron job
 
 # Info
 echo -e "Setting cron job for copy Updates:"
