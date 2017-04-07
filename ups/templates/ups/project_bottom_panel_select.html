@@ -1,0 +1,32 @@
+<li> <!--Select-->
+    <div class="dropup">
+        <button class="btn btn-default dropdown-toggle navbar-btn"
+                type="button" id="dropdownMenu2"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false">Select<span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+
+            <li><a href="#" onclick="select_all('selected_servers', 'server-body', false);
+                   select_all('selected_updates', 'update-body', false)">Deselect All</a></li>
+            <li><a href="#" onclick="select_all('selected_jobs', 'job_body', false)">
+                Deselect All Jobs</a></li>
+            <li><a href="#" onclick="select_all('selected_servers', 'server-body', false)">
+                Deselect All Servers</a></li>
+            <li><a href="#" onclick="select_all('selected_updates', 'update-body', false)">
+                Deselect All Updates</a></li>
+
+            <li role="separator" class="divider"></li>
+
+            <li><a href="#" onclick="select_all('selected_updates', 'update-body', true)">
+                Select All Updates</a></li>
+            <li><a href="#" onclick="select_all('selected_servers', 'server-body', true)">
+                Select All Servers</a></li>
+            <li><a href="#" onclick="select_all('selected_jobs', 'job_body', true)">
+                Select All Jobs</a></li>
+            <li><a href="#" onclick="select_all('selected_servers', 'server-body', true);
+                   select_all('selected_updates', 'update-body', true)">Select All</a></li>
+        </ul>
+    </div>
+</li>

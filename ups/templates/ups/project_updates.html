@@ -9,9 +9,9 @@
     <div class="panel panel-default" onclick="checker('update_box{{ update.id }}', 'update_body{{ update.id }}')">
 
         <div class="panel-heading">
-            <h4 style="display:inline-block">{{ update }}</h4>
+            <h4 class="Name">{{ update }}</h4>
             {% if "edit_update" in pr_view_perms %}
-                <small style="display:inline-block"><a href="{% url 'ups:edit_update' update.id %}">Edit</a></small>
+                <a href="{% url 'ups:edit_update' update.id %}" class="Edit">Edit</a>
             {% endif %}
         </div>
 
@@ -40,5 +40,3 @@
 There are no updates for this project yet.
 
 {% endfor %}
-
-<!--{% include "ups/project_updates_buttons.html" %}-->

@@ -21,3 +21,16 @@
 .box {
     display: none;
 }
+
+.Edit {
+    display: inline;
+    font-size: small;
+}
+
+.Name {
+    display: inline;
+}
+
+.output {
+    overflow: hidden;
+}

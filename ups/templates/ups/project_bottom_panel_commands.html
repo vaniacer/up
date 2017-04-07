@@ -1,0 +1,33 @@
+<li> <!--Run-->
+    <div class="dropup">
+        <button class="btn btn-default dropdown-toggle navbar-btn"
+                type="submit"
+                id="dropdownMenu3"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+                onclick="run_cron('RUN', 'CRON')">RUN<span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu"
+            aria-labelledby="dropdownMenu3">
+            {% include "ups/commands.html" %}
+        </ul>
+    </div>
+</li>
+
+<li> <!--Cron-->
+    <div class="dropup">
+        <button class="btn btn-default dropdown-toggle navbar-btn"
+                type="submit"
+                id="dropdownMenu4"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+                onclick="run_cron('CRON', 'RUN')">CRON<span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu"
+            aria-labelledby="dropdownMenu4">
+            {% include "ups/commands.html" %}
+        </ul>
+    </div>
+</li>
