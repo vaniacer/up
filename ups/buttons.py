@@ -118,3 +118,48 @@ def select_job_del(selected_jobs, project, user):
 	add_event(project, user, 'Delete cron job(s)', log, err, '', '')
 
 	return log, err
+
+
+def select_update(selected_updates, selected_servers, project, user):
+	"""Обрабатывает событие select_update."""
+	servers = make_servers_lists(selected_servers)
+	updates = make_updates_lists(selected_updates)
+
+	opt = [
+		'bash/update.sh',
+		'-server', servers,
+		'-update', updates,
+	]
+
+	log, err = run_cmd(opt)
+	add_event(project, user, 'Update server(s)', log, err, '', '')
+
+	return log, err
+
+
+def select_cron_update(selected_updates, selected_servers, project, user, date, time):
+	"""Обрабатывает событие select_update."""
+
+	if not date:
+		date = '__DATE__'
+
+	if not time:
+		time = '__TIME__'
+
+	servers = make_servers_lists(selected_servers)
+	updates = make_updates_lists(selected_updates)
+
+	key = b64encode(urandom(6), 'dfsDFAsfsf')
+	opt = [
+		conf.BASE_DIR + '/bash/cron_update.sh',
+		'-server', servers,
+		'-update', updates,
+		'-date', date,
+		'-time', time,
+		'-id', str(key)
+	]
+
+	log, err = run_cmd(opt)
+	add_event(project, user, 'Update server(s)', log, err, str(key), '')
+
+	return log, err

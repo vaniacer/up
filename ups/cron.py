@@ -29,9 +29,9 @@ def get_cron_jobs(current_project):
 
 	opt = ['bash/cron_list.sh', '-project', current_project.name]
 	run = Popen(opt, stdout=PIPE)
-	out = run.communicate()  # Returns tuple
+	out = run.communicate()[0]  # Returns tuple
 
-	for line in out[0].split('\n'):
+	for line in out.split('\n'):
 		if line:
 			job = Job('', '', '', '', '')
 
@@ -49,6 +49,8 @@ def get_cron_jobs(current_project):
 			servers = re.sub('^.*-s "', '', line)
 			servers = re.sub('".*$', '', servers)
 			servers = re.sub(' ', '\n', servers)
+			command = re.sub('^.*bash/', '', line)
+			command = re.sub('.sh.*$', '', command)
 
 			# Job's details
 			job.full = line
@@ -56,7 +58,11 @@ def get_cron_jobs(current_project):
 			job.name = re.sub(';.*$', '', job.name)
 			job.kill = re.sub('^.*; ', '', line)
 			job.date = day + '.' + mon + ' ' + hrs + ':' + mnt
-			job.desc = 'Copy Updates: \n' + updates + '\n\n' + 'to Servers: \n' + servers
+			if command == 'copy':
+				job.desc = 'Copy Update(s): \n' + updates + '\n\n' + 'to Server(s): \n' + servers
+
+			if command == 'update':
+				job.desc = 'Update server(s): \n' + servers + '\n\n' + 'with update(s): \n' + updates
 
 			jobs.append(job)
 

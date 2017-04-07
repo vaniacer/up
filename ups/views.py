@@ -1,6 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 from .buttons import select_copy, select_cron_copy, select_logs, select_job_del, select_ls
+from .buttons import select_update, select_cron_update
 from django.shortcuts import render, get_object_or_404, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from .permissions import check_perm
@@ -49,14 +50,20 @@ def project(request, project_id):
 		if request.POST.get('select_copy'):
 			select_cron_copy(selected_updates, selected_servers, current_project, request.user, date, time)
 			return HttpResponseRedirect('')
-			# log, err = select_cron_copy(selected_updates, selected_servers, current_project, request.user, date, time)
-			# context = {'project': current_project, 'log': log, 'err': err}
-			# return render(request, 'ups/output.html', context)
+
+		if request.POST.get('select_update'):
+			select_cron_update(selected_updates, selected_servers, current_project, request.user, date, time)
+			return HttpResponseRedirect('')
 
 	if request.POST.get('RUN'):
 		check_perm('run_command', current_project, request.user)
 		if request.POST.get('select_copy'):
 			log, err = select_copy(selected_updates, selected_servers, current_project, request.user)
+			context = {'project': current_project, 'log': log, 'err': err}
+			return render(request, 'ups/output.html', context)
+
+		if request.POST.get('select_update'):
+			log, err = select_update(selected_updates, selected_servers, current_project, request.user)
 			context = {'project': current_project, 'log': log, 'err': err}
 			return render(request, 'ups/output.html', context)
 
