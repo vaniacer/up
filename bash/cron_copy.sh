@@ -19,11 +19,17 @@ until [ -z "$1" ]; do
     shift 2
 done
 
-# Full path for updates
-#for u in ${updates}; do updates_full+=("${folder}/../${u}"); done
-
 # Get time
-hh=${time%:*}; mm=${time#*:}; DD=${date%%.*}; MM=${date#*.}; MM=${MM%.*}
+case ${time} in
+    '__TIME__')
+        DD=$(date +'%d')
+        MM=$(date +'%m')
+        hh=$(date +'%H')
+        mm=$(date +'%M'); ((mm++))
+        [ ${mm} -gt 59 ] && { mm=00; ((hh++)); [ ${hh} -gt 23 ] && hh=00; };;
+    *)
+        hh=${time%:*}; mm=${time#*:}; DD=${date%%.*}; MM=${date#*.}; MM=${MM%.*};;
+esac
 
 # Cron format date
 date="${mm} ${hh} ${DD} ${MM}"
@@ -36,12 +42,6 @@ cmnd="${folder}/copy.sh -u \"${updates[@]}\" -s \"${servers[@]}\" -cron ${id}"
 
 # Command to cancel executed cron job
 cncl="(crontab -l | sed \"${sedr}\") | crontab -"
-
-# Check if job with the same time exist, time have to be unique
-#crontab -l | grep "${date}" > /dev/null && {
-#    echo -e "На это время запланировано другое задание, измените время!"
-#    exit 1
-#}
 
 # Info
 echo -e "Setting cron job for copy Updates:"

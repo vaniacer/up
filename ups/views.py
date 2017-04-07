@@ -33,7 +33,7 @@ def project(request, project_id):
 	updates = current_project.update_set.order_by('date').reverse()
 	history = current_project.history_set.order_by('date').reverse()
 	cronjob = get_cron_jobs(current_project)
-	cronlog = get_cron_logs(current_project)
+	get_cron_logs(current_project)
 
 	selected_updates = request.POST.getlist('selected_updates')
 	selected_servers = request.POST.getlist('selected_servers')
@@ -42,16 +42,21 @@ def project(request, project_id):
 	date = request.POST.get('selected_date')
 	time = request.POST.get('selected_time')
 
-	print request.POST
+	# print request.POST
 
-	if request.POST.get('select_copy'):
+	if request.POST.get('CRON'):
 		check_perm('run_command', current_project, request.user)
-		if date and time:
+		if request.POST.get('select_copy'):
 			log, err = select_cron_copy(selected_updates, selected_servers, current_project, request.user, date, time)
-		else:
+			context = {'project': current_project, 'log': log, 'err': err}
+			return render(request, 'ups/output.html', context)
+
+	if request.POST.get('RUN'):
+		check_perm('run_command', current_project, request.user)
+		if request.POST.get('select_copy'):
 			log, err = select_copy(selected_updates, selected_servers, current_project, request.user)
-		context = {'project': current_project, 'log': log, 'err': err}
-		return render(request, 'ups/output.html', context)
+			context = {'project': current_project, 'log': log, 'err': err}
+			return render(request, 'ups/output.html', context)
 
 	if request.POST.get('select_logs'):
 		check_perm('run_command', current_project, request.user)

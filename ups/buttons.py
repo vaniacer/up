@@ -63,6 +63,12 @@ def select_copy(selected_updates, selected_servers, project, user):
 def select_cron_copy(selected_updates, selected_servers, project, user, date, time):
 	"""Обрабатывает событие select_copy."""
 
+	if not date:
+		date = '__DATE__'
+
+	if not time:
+		time = '__TIME__'
+
 	servers = make_servers_lists(selected_servers)
 	updates = make_updates_lists(selected_updates)
 
