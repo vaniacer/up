@@ -54,6 +54,7 @@ function NameValidation(name) {
         alert('None selected.');
         return false;
     }
+
     hide_page();
 }
 
@@ -71,6 +72,7 @@ function SelectValidation() {
         alert('None selected.');
         return false;
     }
+
     hide_page();
 }
 
@@ -86,6 +88,8 @@ function JobValidation() {
         alert('None selected.');
         return false;
     }
+
+    hide_page();
 }
 
 function CopyValidation() {
