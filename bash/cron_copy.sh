@@ -36,12 +36,13 @@ sedr="/${id}/d"                                                                 
 cmnd="${folder}/copy.sh -u \"${updates[@]}\" -s \"${servers[@]}\" -cron ${id}"  # Command to run
 cncl="(crontab -l | sed \"${sedr}\") | crontab -"                               # Command to cancel executed cron job
 
+# Set crontab job
+(crontab -l ; echo -e "${date} * ${cmnd}; ${cncl}") | crontab -
+
 # Info
-echo -e "Setting cron job for copy Updates:"
+echo -e "Setting cron job id: ${id}, date: ${DD}.${MM} ${hh}:${mm}\n"
+echo -e "Copy Updates:"
 for u in ${updates[@]}; do echo ${u}; done
 echo -e "\nto Servers:"
 for s in ${servers[@]}; do echo ${s}; done
 echo
-
-# Set crontab job
-(crontab -l ; echo -e "${date} * ${cmnd}; ${cncl}") | crontab -
