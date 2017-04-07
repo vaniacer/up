@@ -1,6 +1,5 @@
 <!-- Нижняя статическая навигационная панель -->
 
-<!--f5f5f5-->
 <style>
     .link {
         background: none;
@@ -12,6 +11,12 @@
         padding-left: 20;
         outline: none;
         outline-offset: 0;
+    }
+    .link_copy {
+        padding-right: 67%;
+    }
+    .link:hover {
+        background: #f5f5f5;
     }
 </style>
 
@@ -83,11 +88,21 @@
 
                     <li> <!--Run-->
                         <div class="dropup">
-                            <button class="btn btn-default dropdown-toggle navbar-btn" type="button" id="dropdownMenu3"
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <!--<input type="button"-->
+                                   <!--name="RUN"-->
+                                   <!--value="RUN"-->
+                                   <!--id="dropdownMenu3"-->
+                                   <!--data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"-->
+                                   <!--class="btn btn-default dropdown-toggle navbar-btn"-->
+                                   <!--onclick="return CopyValidation()"><span class="caret"></span>-->
+
+
+                            <button class="btn btn-default dropdown-toggle navbar-btn" type="submit" id="dropdownMenu3"
+                                    value="RUN" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     RUN
                                     <span class="caret"></span>
                             </button>
+
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenu3">
 
                                 <li><input type="submit"

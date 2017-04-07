@@ -42,7 +42,7 @@ def project(request, project_id):
 	date = request.POST.get('selected_date')
 	time = request.POST.get('selected_time')
 
-	# print request.POST
+	print request.POST
 
 	if request.POST.get('select_copy'):
 		check_perm('run_command', current_project, request.user)
