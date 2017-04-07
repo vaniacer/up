@@ -1,3 +1,16 @@
+function run_cron(choice) {
+    if ( choice == 'RUN' ) {
+        var enable  = document.getElementById('RUN');
+        var disable = document.getElementById('CRON');
+    } else {
+        var enable  = document.getElementById('CRON');
+        var disable = document.getElementById('RUN');
+    }
+
+    enable.checked = true
+    disable.checked = false
+}
+
 function checker(box_id, body_id) {
     var box  = document.getElementById(box_id);
     var body = document.getElementById(body_id);

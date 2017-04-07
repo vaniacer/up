@@ -12,11 +12,17 @@
         outline: none;
         outline-offset: 0;
     }
+
     .link_copy {
         padding-right: 67%;
     }
+
     .link:hover {
         background: #f5f5f5;
+    }
+
+    .box {
+        display: none;
     }
 </style>
 
@@ -88,21 +94,12 @@
 
                     <li> <!--Run-->
                         <div class="dropup">
-                            <!--<input type="button"-->
-                                   <!--name="RUN"-->
-                                   <!--value="RUN"-->
-                                   <!--id="dropdownMenu3"-->
-                                   <!--data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"-->
-                                   <!--class="btn btn-default dropdown-toggle navbar-btn"-->
-                                   <!--onclick="return CopyValidation()"><span class="caret"></span>-->
-
-
-                            <button class="btn btn-default dropdown-toggle navbar-btn" type="submit" id="dropdownMenu3"
-                                    value="RUN" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <button class="btn btn-default dropdown-toggle navbar-btn" type="submit"
+                                    id="dropdownMenu3" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false" onclick="run_cron('RUN')">
                                     RUN
                                     <span class="caret"></span>
                             </button>
-
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenu3">
 
                                 <li><input type="submit"
@@ -116,8 +113,9 @@
 
                     <li> <!--Cron-->
                         <div class="dropup">
-                            <button class="btn btn-default dropdown-toggle navbar-btn" type="button" id="dropdownMenu4"
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <button class="btn btn-default dropdown-toggle navbar-btn" type="submit"
+                                    id="dropdownMenu4" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false" onclick="run_cron('CRON')">
                                     CRON
                                     <span class="caret"></span>
                             </button>
@@ -131,6 +129,19 @@
                             </ul>
                         </div>
                     </li>
+
+                    <!--Hidden checkboxes-->
+                    <input  type="checkbox"
+                            class="box"
+                            readonly="readonly"
+                            name="RUN"
+                            id="RUN"/>
+
+                    <input  type="checkbox"
+                            class="box"
+                            readonly="readonly"
+                            name="CRON"
+                            id="CRON"/>
 
                     <!--Date picker-->
                     <li><div class="input-group date navbar-btn date-input" data-provide="datepicker">
