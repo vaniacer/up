@@ -139,10 +139,29 @@ function CopyValidation() {
 $('.datepicker').datepicker();
 
 $(document).ready(function() {
-    $('a[href="' + window.location.hash + '"]').click()
+//    $('a[href="' + window.location.hash + '"]').click()
     hide_loader();
 });
 
-$(document).on('shown.bs.tab', function(event) {
-  window.location.hash = $(event.target).attr('href');
+//$(document).on('shown.bs.tab', function(event) {
+//  window.location.hash = $(event.target).attr('href');
+//});
+
+$(function(){
+  // Change tab on load
+  var hash = window.location.hash;
+  hash && $('ul.nav a[href="' + hash + '"]').tab('show');
+
+  $('.nav-tabs a').click(function (e) {
+    $(this).tab('show');
+    var scrollmem = $('body').scrollTop();
+    window.location.hash = this.hash;
+    $('html,body').scrollTop(scrollmem);
+  });
+
+  // Change tab on hashchange
+  window.addEventListener('hashchange', function() {
+    var changedHash = window.location.hash;
+    changedHash && $('ul.nav a[href="' + changedHash + '"]').tab('show');
+  }, false);
 });
