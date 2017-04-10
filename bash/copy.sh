@@ -11,10 +11,16 @@ until [ -z "$1" ]; do
 	    -server | -s) servers=${2};;
 	    -update | -u) updates=${2};;
 	           -cron) cron=${2};;
+	           -desc) desc=${2};;
     esac
 
     shift 2
 done
+
+case ${desc} in true)
+    echo -e "Copy Updates:\n${updates// /\\n}\nto Servers:\n${servers// /\\n}\n"
+    exit 0;;
+esac
 
 function info () {
     name="| Сервер - ${1} |"

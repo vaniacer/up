@@ -1,11 +1,10 @@
 # -*- encoding: utf-8 -*-
 
-from .buttons import select_copy, select_cron_copy, select_logs, select_job_del, select_ls
-from .buttons import select_update, select_cron_update
+from .buttons import cron_job, select_logs, select_job_del, select_ls, run_now
 from django.shortcuts import render, get_object_or_404, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
-from .permissions import check_perm
 from .cron import get_cron_jobs, get_cron_logs
+from .permissions import check_perm
 from .models import Project
 
 
@@ -43,29 +42,19 @@ def project(request, project_id):
 	date = request.POST.get('selected_date')
 	time = request.POST.get('selected_time')
 
-	# print request.POST
+	cmd = [request.POST.get('select_copy') or '', request.POST.get('select_update') or '']
+	cmd = ''.join(cmd)
 
 	if request.POST.get('CRON'):
 		check_perm('run_command', current_project, request.user)
-		if request.POST.get('select_copy'):
-			select_cron_copy(selected_updates, selected_servers, current_project, request.user, date, time)
-			return HttpResponseRedirect('')
-
-		if request.POST.get('select_update'):
-			select_cron_update(selected_updates, selected_servers, current_project, request.user, date, time)
-			return HttpResponseRedirect('')
+		cron_job(selected_updates, selected_servers, current_project, request.user, date, time, cmd)
+		return HttpResponseRedirect('')
 
 	if request.POST.get('RUN'):
 		check_perm('run_command', current_project, request.user)
-		if request.POST.get('select_copy'):
-			log, err = select_copy(selected_updates, selected_servers, current_project, request.user)
-			context = {'project': current_project, 'log': log, 'err': err}
-			return render(request, 'ups/output.html', context)
-
-		if request.POST.get('select_update'):
-			log, err = select_update(selected_updates, selected_servers, current_project, request.user)
-			context = {'project': current_project, 'log': log, 'err': err}
-			return render(request, 'ups/output.html', context)
+		log, err = run_now(selected_updates, selected_servers, current_project, request.user, cmd)
+		context = {'project': current_project, 'log': log, 'err': err}
+		return render(request, 'ups/output.html', context)
 
 	if request.POST.get('select_logs'):
 		check_perm('run_command', current_project, request.user)
@@ -83,9 +72,6 @@ def project(request, project_id):
 		check_perm('run_command', current_project, request.user)
 		select_job_del(selected_jobs, current_project, request.user)
 		return HttpResponseRedirect('#cron')
-		# log, err = select_job_del(selected_jobs, current_project, request.user)
-		# context = {'project': current_project, 'log': log, 'err': err}
-		# return render(request, 'ups/output.html', context)
 
 	context = {
 		'project': current_project,

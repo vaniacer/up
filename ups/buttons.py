@@ -33,6 +33,10 @@ def make_servers_lists(selected_servers):
 	return srv
 
 
+def add_event(project, user, name, out, err, cron, date):
+	History.objects.create(proj=project, user=user, name=name, desc=out, exit=err, cron=cron, cdat=date)
+
+
 def run_cmd(opt):
 	"""Выполняет комманду."""
 	run = Popen(opt, stdin=PIPE, stdout=PIPE, stderr=PIPE)
@@ -40,52 +44,6 @@ def run_cmd(opt):
 	rc = run.returncode
 
 	return out + err, rc
-
-
-def add_event(project, user, name, out, err, cron, date):
-	History.objects.create(proj=project, user=user, name=name, desc=out, exit=err, cron=cron, cdat=date)
-
-
-def select_copy(selected_updates, selected_servers, project, user):
-	"""Обрабатывает событие select_copy."""
-
-	servers = make_servers_lists(selected_servers)
-	updates = make_updates_lists(selected_updates)
-
-	opt = ['bash/copy.sh', '-server', servers, '-update', updates]
-
-	log, err = run_cmd(opt)
-	add_event(project, user, 'Copy update(s) to server(s)', log, err, '', '')
-
-	return log, err
-
-
-def select_cron_copy(selected_updates, selected_servers, project, user, date, time):
-	"""Обрабатывает событие select_copy."""
-
-	if not date:
-		date = '__DATE__'
-
-	if not time:
-		time = '__TIME__'
-
-	servers = make_servers_lists(selected_servers)
-	updates = make_updates_lists(selected_updates)
-
-	key = b64encode(urandom(6), 'dfsDFAsfsf')
-	opt = [
-		conf.BASE_DIR + '/bash/cron_copy.sh',
-		'-server', servers,
-		'-update', updates,
-		'-date', date,
-		'-time', time,
-		'-id', str(key)
-	]
-
-	log, err = run_cmd(opt)
-	add_event(project, user, 'Set cron job - Copy update(s) to server(s)', log, err, str(key), '')
-
-	return log, err
 
 
 def select_logs(selected_servers):
@@ -120,25 +78,26 @@ def select_job_del(selected_jobs, project, user):
 	return log, err
 
 
-def select_update(selected_updates, selected_servers, project, user):
-	"""Обрабатывает событие select_update."""
-	servers = make_servers_lists(selected_servers)
-	updates = make_updates_lists(selected_updates)
+def run_now(updates, servers, project, user, cmd):
+	"""Выполняет комманду."""
+
+	servers = make_servers_lists(servers)
+	updates = make_updates_lists(updates)
 
 	opt = [
-		'bash/update.sh',
+		'bash/' + cmd + '.sh',
 		'-server', servers,
-		'-update', updates,
+		'-update', updates
 	]
 
 	log, err = run_cmd(opt)
-	add_event(project, user, 'Update server(s)', log, err, '', '')
+	add_event(project, user, 'Copy update(s) to server(s)', log, err, '', '')
 
 	return log, err
 
 
-def select_cron_update(selected_updates, selected_servers, project, user, date, time):
-	"""Обрабатывает событие select_update."""
+def cron_job(selected_updates, selected_servers, project, user, date, time, cmd):
+	"""Создает задачу в кроне."""
 
 	if not date:
 		date = '__DATE__'
@@ -151,11 +110,12 @@ def select_cron_update(selected_updates, selected_servers, project, user, date, 
 
 	key = b64encode(urandom(6), 'dfsDFAsfsf')
 	opt = [
-		conf.BASE_DIR + '/bash/cron_update.sh',
+		conf.BASE_DIR + '/bash/cron_job.sh',
 		'-server', servers,
 		'-update', updates,
 		'-date', date,
 		'-time', time,
+		'-cmd', cmd,
 		'-id', str(key)
 	]
 

@@ -1,7 +1,5 @@
 #!/bin/bash
 
-#set -e
-
 folder=$(dirname $0)
 logdir=${folder}/../../logs/cron
 
@@ -13,6 +11,7 @@ until [ -z "$1" ]; do
 	    -update | -u) updates=${2};;
 	    -date   | -d) date=${2};;
 	    -time   | -t) time=${2};;
+	    -cmd    | -c) cmd=${2};;
 	             -id) id=${2};;
     esac
 
@@ -31,18 +30,14 @@ case ${time}:${date} in
         hh=${time%:*}; mm=${time#*:}; DD=${date%%.*}; MM=${date#*.}; MM=${MM%.*};;
 esac
 
-date="${mm} ${hh} ${DD} ${MM}"                                                  # Cron format date
-sedr="/${id}/d"                                                                 # Sed rule to delete old cron job
-cmnd="${folder}/copy.sh -u \"${updates[@]}\" -s \"${servers[@]}\" -cron ${id}"  # Command to run
-cncl="(crontab -l | sed \"${sedr}\") | crontab -"                               # Command to cancel executed cron job
+date="${mm} ${hh} ${DD} ${MM}"                                                      # Cron format date
+sedr="/${id}/d"                                                                     # Sed rule to delete old cron job
+cmnd="${folder}/${cmd}.sh -u \"${updates[@]}\" -s \"${servers[@]}\" -cron ${id}"    # Command to run
+cncl="(crontab -l | sed \"${sedr}\") | crontab -"                                   # Command to cancel executed cron job
 
 # Set crontab job
 (crontab -l ; echo -e "${date} * ${cmnd}; ${cncl}") | crontab -
 
 # Info
 echo -e "Setting cron job id: ${id}, date: ${DD}.${MM} ${hh}:${mm}\n"
-echo -e "Copy Updates:"
-for u in ${updates[@]}; do echo ${u}; done
-echo -e "\nto Servers:"
-for s in ${servers[@]}; do echo ${s}; done
-echo
+${folder}/${cmd}.sh -u "${updates[@]}" -s "${servers[@]}" -desc true
