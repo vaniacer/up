@@ -142,3 +142,7 @@ $(document).ready(function() {
     $('a[href="' + window.location.hash + '"]').click()
     hide_loader();
 });
+
+$(document).on('shown.bs.tab', function(event) {
+  window.location.hash = $(event.target).attr('href');
+});

@@ -42,7 +42,10 @@ def project(request, project_id):
 	date = request.POST.get('selected_date')
 	time = request.POST.get('selected_time')
 
-	cmd = [request.POST.get('select_copy') or '', request.POST.get('select_update') or '']
+	cmd = [
+		request.POST.get('select_copy') or '',
+		request.POST.get('select_update') or ''
+	]
 	cmd = ''.join(cmd)
 
 	if request.POST.get('CRON'):
@@ -72,6 +75,7 @@ def project(request, project_id):
 		check_perm('run_command', current_project, request.user)
 		select_job_del(selected_jobs, current_project, request.user)
 		return HttpResponseRedirect('#cron')
+		# return HttpResponseRedirect('')
 
 	context = {
 		'project': current_project,

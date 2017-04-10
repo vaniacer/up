@@ -78,11 +78,11 @@ def select_job_del(selected_jobs, project, user):
 	return log, err
 
 
-def run_now(updates, servers, project, user, cmd):
+def run_now(selected_updates, selected_servers, project, user, cmd):
 	"""Выполняет комманду."""
 
-	servers = make_servers_lists(servers)
-	updates = make_updates_lists(updates)
+	servers = make_servers_lists(selected_servers)
+	updates = make_updates_lists(selected_updates)
 
 	opt = [
 		'bash/' + cmd + '.sh',
