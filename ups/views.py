@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from .cron import get_cron_jobs, get_cron_logs
 from .permissions import check_perm
 from .models import Project
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 def index(request):
@@ -47,6 +48,17 @@ def project(request, project_id):
 		request.POST.get('select_update') or ''
 	]
 	cmd = ''.join(cmd)
+
+	hist_pages = Paginator(history, 10)
+	page = request.GET.get('page')
+	try:
+		history = hist_pages.page(page)
+	except PageNotAnInteger:
+		# If page is not an integer, deliver first page.
+		history = hist_pages.page(1)
+	except EmptyPage:
+		# If page is out of range (e.g. 9999), deliver last page of results.
+		history = hist_pages.page(hist_pages.num_pages)
 
 	if request.POST.get('CRON'):
 		check_perm('run_command', current_project, request.user)
