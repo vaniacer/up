@@ -1,0 +1,17 @@
+<div class="pagination">
+    <span class="step-links">
+        {% if history.has_previous %}
+            <a href="?page={{ history.previous_page_number }}#history">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ history.number }} of {{ history.paginator.num_pages }}.
+        </span>
+
+        {% if history.has_next %}
+            <a href="?page={{ history.next_page_number }}#history">next</a>
+        {% endif %}
+    </span>
+</div>
+
+<br> <br> <br>
