@@ -2,11 +2,11 @@
 
 from .buttons import cron_job, select_logs, select_job_del, select_ls, run_now
 from django.shortcuts import render, get_object_or_404, HttpResponseRedirect
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
 from .cron import get_cron_jobs, get_cron_logs
 from .permissions import check_perm
 from .models import Project
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 def index(request):
