@@ -18,7 +18,7 @@ until [ -z "$1" ]; do
 done
 
 case ${desc} in true)
-    echo -e "Copy Updates:\n ${updates[@]// /\\n}\nto Servers:\n${servers[@]// /\\n}\n"
+    echo -e "Update servers:\n${servers// /\\n}\n\nwith updates:\n${updates// /\\n}\n"
     exit 0;;
 esac
 
