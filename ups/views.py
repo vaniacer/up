@@ -1,21 +1,12 @@
 # -*- encoding: utf-8 -*-
 
-from .buttons import cron_job, select_logs, select_job_del, select_ls, run_now
 from django.shortcuts import render, get_object_or_404, HttpResponseRedirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
 from .cron import get_cron_jobs, get_cron_logs
 from .permissions import check_perm
 from .models import Project
-
-
-commands = {
-	'RUN': {'cmd': run_now, 'url': ''},
-	'CRON': {'cmd': cron_job, 'url': ''},
-	'select_ls': {'cmd': select_ls, 'url': ''},
-	'select_logs': {'cmd': select_logs, 'url': ''},
-	'select_job_del': {'cmd': select_job_del, 'url': '#cron'},
-}
+from .cmd import commands
 
 
 def index(request):
