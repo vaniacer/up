@@ -46,10 +46,10 @@ def run_cmd(opt):
 	return out + err, rc
 
 
-def select_logs(selected_servers):
+def select_logs(selected, project, user, date_time, cmd_name):
 	"""Обрабатывает событие select_logs."""
 
-	servers = make_servers_lists(selected_servers)
+	servers = make_servers_lists(selected[1])
 
 	opt = ['bash/logs.sh', servers]
 	log, err = run_cmd(opt)
@@ -57,10 +57,10 @@ def select_logs(selected_servers):
 	return log, err
 
 
-def select_ls(selected_servers):
+def select_ls(selected, project, user, date_time, cmd_name):
 	"""Обрабатывает событие select_ls."""
 
-	servers = make_servers_lists(selected_servers)
+	servers = make_servers_lists(selected[1])
 
 	opt = ['bash/ls.sh', servers, ' ']
 	log, err = run_cmd(opt)
@@ -68,9 +68,9 @@ def select_ls(selected_servers):
 	return log, err
 
 
-def select_job_del(selected_jobs, project, user):
+def select_job_del(selected, project, user, date_time, cmd):
 
-	jbs = '; '.join(selected_jobs)
+	jbs = '; '.join(selected[2])
 	opt = ['bash/cron_del.sh', jbs]
 	log, err = run_cmd(opt)
 	add_event(project, user, 'Delete cron job(s)', log, err, '', '')
@@ -78,11 +78,11 @@ def select_job_del(selected_jobs, project, user):
 	return log, err
 
 
-def run_now(selected_updates, selected_servers, project, user, cmd):
+def run_now(selected, project, user, date_time, cmd):
 	"""Выполняет комманду."""
 
-	servers = make_servers_lists(selected_servers)
-	updates = make_updates_lists(selected_updates)
+	updates = make_updates_lists(selected[0])
+	servers = make_servers_lists(selected[1])
 
 	opt = [
 		'bash/' + cmd + '.sh',
@@ -96,17 +96,13 @@ def run_now(selected_updates, selected_servers, project, user, cmd):
 	return log, err
 
 
-def cron_job(selected_updates, selected_servers, project, user, date, time, cmd):
+def cron_job(selected, project, user, date_time, cmd):
 	"""Создает задачу в кроне."""
 
-	if not date:
-		date = '__DATE__'
+	date, time = date_time
 
-	if not time:
-		time = '__TIME__'
-
-	servers = make_servers_lists(selected_servers)
-	updates = make_updates_lists(selected_updates)
+	updates = make_updates_lists(selected[0])
+	servers = make_servers_lists(selected[1])
 
 	key = b64encode(urandom(6), 'dfsDFAsfsf')
 	opt = [

@@ -9,6 +9,10 @@
     }
 </script>
 
+{% if history %}
+    {% include "ups/project_history_paginator.html" %}
+{% endif %}
+
 {% for event in history %}
 
     <dl class="dl-horizontal" id="event{{ event.id }}">
@@ -42,3 +46,5 @@
 {% if history %}
     {% include "ups/project_history_paginator.html" %}
 {% endif %}
+
+<br> <br>
