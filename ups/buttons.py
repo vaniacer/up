@@ -46,10 +46,10 @@ def run_cmd(opt):
 	return out + err, rc
 
 
-def select_logs(selected, project, user, date_time, cmd_name):
+def select_logs(selected):
 	"""Обрабатывает событие select_logs."""
 
-	servers = make_servers_lists(selected[1])
+	servers = make_servers_lists(selected['objects'][1])
 
 	opt = ['bash/logs.sh', servers]
 	log, err = run_cmd(opt)
@@ -57,10 +57,10 @@ def select_logs(selected, project, user, date_time, cmd_name):
 	return log, err
 
 
-def select_ls(selected, project, user, date_time, cmd_name):
+def select_ls(selected):
 	"""Обрабатывает событие select_ls."""
 
-	servers = make_servers_lists(selected[1])
+	servers = make_servers_lists(selected['objects'][1])
 
 	opt = ['bash/ls.sh', servers, ' ']
 	log, err = run_cmd(opt)
@@ -68,41 +68,41 @@ def select_ls(selected, project, user, date_time, cmd_name):
 	return log, err
 
 
-def select_job_del(selected, project, user, date_time, cmd):
+def select_job_del(selected):
 
-	jbs = '; '.join(selected[2])
+	jbs = '; '.join(selected['objects'][2])
 	opt = ['bash/cron_del.sh', jbs]
 	log, err = run_cmd(opt)
-	add_event(project, user, 'Delete cron job(s)', log, err, '', '')
+	add_event(selected['project'], selected['user'], 'Delete cron job(s)', log, err, '', '')
 
 	return log, err
 
 
-def run_now(selected, project, user, date_time, cmd):
+def run_now(selected):
 	"""Выполняет комманду."""
 
-	updates = make_updates_lists(selected[0])
-	servers = make_servers_lists(selected[1])
+	updates = make_updates_lists(selected['objects'][0])
+	servers = make_servers_lists(selected['objects'][1])
 
 	opt = [
-		'bash/' + cmd + '.sh',
+		'bash/' + selected['cmd'] + '.sh',
 		'-server', servers,
 		'-update', updates
 	]
 
 	log, err = run_cmd(opt)
-	add_event(project, user, 'Copy update(s) to server(s)', log, err, '', '')
+	add_event(selected['project'], selected['user'], 'Copy update(s) to server(s)', log, err, '', '')
 
 	return log, err
 
 
-def cron_job(selected, project, user, date_time, cmd):
+def cron_job(selected):
 	"""Создает задачу в кроне."""
 
-	date, time = date_time
+	date, time = selected['date']
 
-	updates = make_updates_lists(selected[0])
-	servers = make_servers_lists(selected[1])
+	updates = make_updates_lists(selected['objects'][0])
+	servers = make_servers_lists(selected['objects'][1])
 
 	key = b64encode(urandom(6), 'dfsDFAsfsf')
 	opt = [
@@ -111,11 +111,11 @@ def cron_job(selected, project, user, date_time, cmd):
 		'-update', updates,
 		'-date', date,
 		'-time', time,
-		'-cmd', cmd,
+		'-cmd', selected['cmd'],
 		'-id', str(key)
 	]
 
 	log, err = run_cmd(opt)
-	add_event(project, user, 'Update server(s)', log, err, str(key), '')
+	add_event(selected['project'], selected['user'], 'Update server(s)', log, err, str(key), '')
 
 	return log, err
