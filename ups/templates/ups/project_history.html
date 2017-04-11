@@ -39,4 +39,6 @@
 
 {% endfor %}
 
-{% include "ups/project_history_paginator.html" %}
+{% if history %}
+    {% include "ups/project_history_paginator.html" %}
+{% endif %}

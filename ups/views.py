@@ -50,7 +50,7 @@ def project(request, project_id):
 	cmd = ''.join(cmd)
 
 	hist_pages = Paginator(history, 20)
-	page = request.GET.get('page')
+	page = request.GET.get('page') or 1
 	try:
 		history = hist_pages.page(page)
 	except PageNotAnInteger:
