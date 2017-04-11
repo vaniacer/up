@@ -49,7 +49,7 @@ def project(request, project_id):
 	]
 	cmd = ''.join(cmd)
 
-	hist_pages = Paginator(history, 10)
+	hist_pages = Paginator(history, 20)
 	page = request.GET.get('page')
 	try:
 		history = hist_pages.page(page)
@@ -59,6 +59,13 @@ def project(request, project_id):
 	except EmptyPage:
 		# If page is out of range (e.g. 9999), deliver last page of results.
 		history = hist_pages.page(hist_pages.num_pages)
+
+	hist_range = list(hist_pages.page_range)
+	hist_fd = hist_range[int(page):int(page) + 3]
+	back = int(page) - 4
+	if back < 0:
+		back = 0
+	hist_bk = hist_range[back:int(page) - 1]
 
 	if request.POST.get('CRON'):
 		check_perm('run_command', current_project, request.user)
@@ -94,6 +101,8 @@ def project(request, project_id):
 		'servers': servers,
 		'updates': updates,
 		'history': history,
+		'hist_bk': hist_bk,
+		'hist_fd': hist_fd,
 		'cronjob': cronjob,
 	}
 
