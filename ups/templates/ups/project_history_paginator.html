@@ -1,17 +1,25 @@
-<div class="pagination">
-    <span class="step-links">
-        {% if history.has_previous %}
-            <a href="?page={{ history.previous_page_number }}#history">previous</a>
+<nav aria-label="...">
+    <ul class="pager">
+        {% if history.number > 1 %}
+            <li><a href="?page=1#history">first</a></li>
         {% endif %}
 
-        <span class="current">
-            Page {{ history.number }} of {{ history.paginator.num_pages }}.
-        </span>
+        {% if history.has_previous %}
+            <li><a href="?page={{ history.previous_page_number }}#history">previous</a></li>
+        {% endif %}
+
+        <li class="current">
+            Page {{ history.number }} of {{ history.paginator.num_pages }}
+        </li>
 
         {% if history.has_next %}
-            <a href="?page={{ history.next_page_number }}#history">next</a>
+            <li><a href="?page={{ history.next_page_number }}#history">next</a></li>
         {% endif %}
-    </span>
-</div>
 
-<br> <br> <br>
+        {% if history.number < history.paginator.num_pages %}
+            <li><a href="?page={{ history.paginator.num_pages }}#history">last</a></li>
+        {% endif %}
+    </ul>
+</nav>
+
+<br>
