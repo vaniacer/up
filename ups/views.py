@@ -70,11 +70,12 @@ def project(request, project_id):
 	current_project = get_object_or_404(Project, id=project_id)
 	check_perm('view_project', current_project, request.user)
 
+	get_cron_logs(current_project)
+	cronjob = get_cron_jobs(current_project)
 	servers = current_project.server_set.order_by('name')
 	updates = current_project.update_set.order_by('date').reverse()
 	history = current_project.history_set.order_by('date').reverse()
-	cronjob = get_cron_jobs(current_project)
-	get_cron_logs(current_project)
+	history, hist_fd, hist_bk = pagination(request, history)
 
 	selected = {
 		'date': [
@@ -90,12 +91,6 @@ def project(request, project_id):
 		'user': request.user,
 	}
 
-	history, hist_fd, hist_bk = pagination(request, history)
-
-	for key, value in commands.iteritems():
-		if request.POST.get(key):
-			return post_render(request, selected, value['cmd'], value['url'])
-
 	context = {
 		'project': current_project,
 		'servers': servers,
@@ -105,5 +100,9 @@ def project(request, project_id):
 		'hist_bk': hist_bk,
 		'hist_fd': hist_fd,
 	}
+
+	for key, value in commands.iteritems():
+		if request.POST.get(key):
+			return post_render(request, selected, value['cmd'], value['url'])
 
 	return render(request, 'ups/project.html', context)
