@@ -87,7 +87,7 @@ def run_now(selected):
 	opt = [
 		'bash/' + selected['cmd'] + '.sh',
 		'-server', servers,
-		'-update', updates
+		'-update', updates,
 	]
 
 	log, err = run_cmd(opt)
@@ -112,7 +112,7 @@ def cron_job(selected):
 		'-date', date,
 		'-time', time,
 		'-cmd', selected['cmd'],
-		'-id', str(key)
+		'-id', str(key),
 	]
 
 	log, err = run_cmd(opt)
