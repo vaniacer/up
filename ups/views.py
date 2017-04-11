@@ -5,8 +5,8 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
 from .cron import get_cron_jobs, get_cron_logs
 from .permissions import check_perm
+from .commands import commands
 from .models import Project
-from .cmd import commands
 
 
 def index(request):
