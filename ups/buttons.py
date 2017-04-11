@@ -49,7 +49,7 @@ def run_cmd(opt):
 def select_logs(selected):
 	"""Обрабатывает событие select_logs."""
 
-	servers = make_servers_lists(selected['objects'][1])
+	servers = make_servers_lists(selected['servers'])
 
 	opt = ['bash/logs.sh', servers]
 	log, err = run_cmd(opt)
@@ -60,7 +60,7 @@ def select_logs(selected):
 def select_ls(selected):
 	"""Обрабатывает событие select_ls."""
 
-	servers = make_servers_lists(selected['objects'][1])
+	servers = make_servers_lists(selected['servers'])
 
 	opt = ['bash/ls.sh', servers, ' ']
 	log, err = run_cmd(opt)
@@ -70,7 +70,7 @@ def select_ls(selected):
 
 def select_job_del(selected):
 
-	jbs = '; '.join(selected['objects'][2])
+	jbs = '; '.join(selected['cronjbs'])
 	opt = ['bash/cron_del.sh', jbs]
 	log, err = run_cmd(opt)
 	add_event(selected['project'], selected['user'], 'Delete cron job(s)', log, err, '', '')
@@ -81,8 +81,8 @@ def select_job_del(selected):
 def run_now(selected):
 	"""Выполняет комманду."""
 
-	updates = make_updates_lists(selected['objects'][0])
-	servers = make_servers_lists(selected['objects'][1])
+	updates = make_updates_lists(selected['updates'])
+	servers = make_servers_lists(selected['servers'])
 
 	opt = [
 		'bash/' + selected['cmd'] + '.sh',
@@ -101,8 +101,8 @@ def cron_job(selected):
 
 	date, time = selected['date']
 
-	updates = make_updates_lists(selected['objects'][0])
-	servers = make_servers_lists(selected['objects'][1])
+	updates = make_updates_lists(selected['updates'])
+	servers = make_servers_lists(selected['servers'])
 
 	key = b64encode(urandom(6), 'dfsDFAsfsf')
 	opt = [

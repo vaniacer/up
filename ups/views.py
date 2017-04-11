@@ -9,6 +9,15 @@ from .permissions import check_perm
 from .models import Project
 
 
+commands = {
+	'RUN': {'cmd': run_now, 'url': ''},
+	'CRON': {'cmd': cron_job, 'url': ''},
+	'select_ls': {'cmd': select_ls, 'url': ''},
+	'select_logs': {'cmd': select_logs, 'url': ''},
+	'select_job_del': {'cmd': select_job_del, 'url': '#cron'},
+}
+
+
 def index(request):
 	"""Домашняя страница приложения update server."""
 	return render(request, 'ups/index.html')
@@ -59,7 +68,6 @@ def projects(request):
 def project(request, project_id):
 	"""Выводит один проект, все его серверы, пакеты обновлений и обрабатывает кнопки действий."""
 	current_project = get_object_or_404(Project, id=project_id)
-
 	check_perm('view_project', current_project, request.user)
 
 	servers = current_project.server_set.order_by('name')
@@ -69,36 +77,24 @@ def project(request, project_id):
 	get_cron_logs(current_project)
 
 	selected = {
-		'objects': [
-			request.POST.getlist('selected_updates'),
-			request.POST.getlist('selected_servers'),
-			request.POST.getlist('selected_jobs')],
 		'date': [
 			request.POST.get('selected_date') or '__DATE__',
 			request.POST.get('selected_time') or '__TIME__'],
 		'cmd': ''.join([
 			request.POST.get('select_copy') or '',
 			request.POST.get('select_update') or '']),
+		'updates': request.POST.getlist('selected_updates'),
+		'servers': request.POST.getlist('selected_servers'),
+		'cronjbs': request.POST.getlist('selected_jobs'),
 		'project': current_project,
 		'user': request.user,
 	}
 
 	history, hist_fd, hist_bk = pagination(request, history)
 
-	if request.POST.get('CRON'):
-		return post_render(request, cron_job, selected, '')
-
-	if request.POST.get('RUN'):
-		return post_render(request, run_now, selected, '')
-
-	if request.POST.get('select_logs'):
-		return post_render(request, select_logs, selected, '')
-
-	if request.POST.get('select_ls'):
-		return post_render(request, select_ls, selected, '')
-
-	if request.POST.get('select_job_del'):
-		return post_render(request, select_job_del, selected, '#cron')
+	for key, value in commands.iteritems():
+		if request.POST.get(key):
+			return post_render(request, value['cmd'], selected, value['url'])
 
 	context = {
 		'project': current_project,
