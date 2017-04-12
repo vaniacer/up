@@ -138,17 +138,6 @@ function Validation(box) {
     document.getElementById('selector').submit();
 }
 
-$('.datepicker').datepicker();
-
-$(document).ready(function() {
-//    $('a[href="' + window.location.hash + '"]').click()
-    hide_loader();
-});
-
-//$(document).on('shown.bs.tab', function(event) {
-//  window.location.hash = $(event.target).attr('href');
-//});
-
 $(function() {
   // Change tab on load
   var hash = window.location.hash;
@@ -167,3 +156,9 @@ $(function() {
     changedHash && $('ul.nav a[href="' + changedHash + '"]').tab('show');
   }, false);
 });
+
+$(document).ready(function() {
+    hide_loader();
+});
+
+$('.datepicker').datepicker();
