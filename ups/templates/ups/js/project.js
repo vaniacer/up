@@ -94,7 +94,6 @@ function JobValidation() {
 
 function Validation(box) {
 
-//    var cron = document.getElementById('CRON');
     var selected_updates = false;
     var selected_servers = false;
 
@@ -115,22 +114,6 @@ function Validation(box) {
         alert('Server(s) not selected.');
         return false;
     }
-
-//    if (cron.checked) {
-//        if (date.value) {
-//             if (!time.value) {
-//                alert('Time not selected.');
-//                return false;
-//             }
-//        }
-//
-//        if (time.value) {
-//            if (!date.value) {
-//                alert('Date not selected.');
-//                return false;
-//            }
-//        }
-//    }
 
     hide_page();
     document.getElementById(box).checked = true;
