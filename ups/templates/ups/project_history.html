@@ -3,8 +3,9 @@
 <br>
 
 <script type="text/javascript">
-    function color(body_id, ec) {
+    function color(body_id, ec, cron) {
         var body = document.getElementById(body_id);
+        if (cron)   { body.style.background = '#e1f9f6'; }
         if (ec > 0) { body.style.background = '#f2dede'; }
     }
 </script>
@@ -31,16 +32,14 @@
         <dt>Event name</dt><dd>{{ event.name }}</dd>
         <dt>Event logs</dt><dd>{{ event.desc|linebreaks }}</dd>
         <dt>Error code</dt><dd>{{ event.exit }}</dd>
-        <!--<dt><small>Date</small></dt><dd><small>{{ event.date|date:'M d, Y H:i' }}</small></dd>-->
     </dl>
 
-    <style onload="color('event{{ event.id }}', '{{ event.exit }}')"></style>
+    <style onload="color('event{{ event.id }}', '{{ event.exit }}', '{{ event.cron }}')"></style>
 
     <hr>
 
 {% empty %}
     There are no events in this project yet.
-
 {% endfor %}
 
 {% if history %}
