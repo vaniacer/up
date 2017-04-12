@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 
 from django.conf import settings as conf
+from .commands_engine import add_event
 from subprocess import Popen, PIPE
-from .buttons import add_event
 import re
 import os
 
