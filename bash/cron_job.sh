@@ -30,14 +30,14 @@ case ${time}:${date} in
         hh=${time%:*}; mm=${time#*:}; DD=${date%%.*}; MM=${date#*.}; MM=${MM%.*};;
 esac
 
-date="${mm} ${hh} ${DD} ${MM}"                                                      # Cron format date
-sedr="/${id}/d"                                                                     # Sed rule to delete old cron job
-cmnd="${folder}/${cmd}.sh -u \"${updates[@]}\" -s \"${servers[@]}\" -cron ${id}"    # Command to run
-cncl="(crontab -l | sed \"${sedr}\") | crontab -"                                   # Command to cancel executed cron job
+date="${mm} ${hh} ${DD} ${MM}"                                                # Cron format date
+sedr="/${id}/d"                                                               # Sed rule to delete old cron job
+cmnd="${folder}/${cmd}.sh -u \"${updates}\" -s \"${servers}\" -cron ${id}"    # Command to run
+cncl="(crontab -l | sed \"${sedr}\") | crontab -"                             # Command to cancel executed cron job
 
 # Set crontab job
 (crontab -l ; echo -e "${date} * ${cmnd}; ${cncl}") | crontab -
 
 # Info
 echo -e "Setting cron job id: ${id}, date: ${DD}.${MM} ${hh}:${mm}\n"
-${folder}/${cmd}.sh -u "${updates[@]}" -s "${servers[@]}" -desc true
+${folder}/${cmd}.sh -u "${updates}" -s "${servers}" -desc true

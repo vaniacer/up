@@ -42,15 +42,25 @@ def get_cron_jobs(current_project):
 			day = raw[2]
 			mon = raw[3]
 
-			# Get list of servers\updates
+			# Get list of servers\updates and command name
 			updates = re.sub('^.*-u "', '', line)
 			updates = re.sub('" -s .*$', '', updates)
 			updates = re.sub(' ', '\n', updates)
 			servers = re.sub('^.*-s "', '', line)
 			servers = re.sub('".*$', '', servers)
 			servers = re.sub(' ', '\n', servers)
-			command = re.sub('^.*bash/', '', line)
-			command = re.sub('.sh.*$', '', command)
+			command = re.sub('^.* \* ', '', line)
+			command = re.sub(' -u .*$', '', command)
+
+			# Get job description
+			opt = [
+				command,
+				'-update', updates,
+				'-server', servers,
+				'-desc', 'true', ]
+
+			run = Popen(opt, stdout=PIPE)
+			out = run.communicate()[0]  # Returns tuple
 
 			# Job's details
 			job.full = line
@@ -58,14 +68,9 @@ def get_cron_jobs(current_project):
 			job.name = re.sub(';.*$', '', job.name)
 			job.kill = re.sub('^.*; ', '', line)
 			job.date = day + '.' + mon + ' ' + hrs + ':' + mnt
-			if command == 'copy':
-				job.desc = 'Copy Update(s): \n' + updates + '\n\n' + 'to Server(s): \n' + servers
-
-			if command == 'update':
-				job.desc = 'Update server(s): \n' + servers + '\n\n' + 'with update(s): \n' + updates
+			job.desc = out
 
 			jobs.append(job)
-
 	return jobs
 
 
@@ -87,14 +92,11 @@ def get_cron_logs(project):
 
 			err = out[-1]
 			err = re.sub('Error: ', '', err)
-
 			date = out[-2]
 			date = re.sub('Date: ', '', date)
 
 			del out[-2:]
 			out = ''.join(out)
 
-			name = re.sub('Set', 'Run', event.name)
-
-			add_event(event.proj, event.user, name, out, int(err), event.cron, date)
+			add_event(event.proj, event.user, event.name, out, int(err), event.cron, date)
 			os.remove(os.path.join(conf.CRON_DIR, filename))
