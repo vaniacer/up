@@ -38,10 +38,9 @@ def pagination(request, history):
 		# If page is out of range (e.g. 9999), deliver last page of results.
 		history = hist_pages.page(hist_pages.num_pages)
 
-	hist_range = list(hist_pages.page_range)
-	hist_fd = hist_range[int(page):int(page) + 4]
-	back = max(int(page) - 5, 0)
-	hist_bk = hist_range[back:int(page) - 1]
+	hist_pg = list(hist_pages.page_range)
+	hist_fd = hist_pg[int(page):int(page) + 4]
+	hist_bk = hist_pg[max(int(page) - 5, 0):int(page) - 1]
 	return history, hist_fd, hist_bk
 
 
