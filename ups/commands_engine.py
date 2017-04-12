@@ -65,7 +65,7 @@ def select_job_del(selected):
 	jbs = '; '.join(selected['cronjbs'])
 	opt = ['bash/cron_del.sh', jbs]
 	log, err = run_cmd(opt)
-	add_event(selected['project'], selected['user'], 'Delete cron job(s)', log, err, '', '')
+	add_event(selected['project'], selected['user'], 'Delete cron job(s)', log, err, '0', '')
 
 	return log, err
 
