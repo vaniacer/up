@@ -82,7 +82,7 @@ def run_now(selected):
 	]
 
 	log, err = run_cmd(opt)
-	add_event(selected['project'], selected['user'], 'Copy update(s) to server(s)', log, err, '', '')
+	add_event(selected['project'], selected['user'], selected['cmd'].title(), log, err, '', '')
 	return log, err
 
 
@@ -105,5 +105,5 @@ def cron_job(selected):
 	]
 
 	log, err = run_cmd(opt)
-	add_event(selected['project'], selected['user'], 'Update server(s)', log, err, str(key), '')
+	add_event(selected['project'], selected['user'], selected['cmd'].title(), log, err, str(key), '')
 	return log, err

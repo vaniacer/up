@@ -14,7 +14,7 @@ def index(request):
 	return render(request, 'ups/index.html')
 
 
-def post_render(request, selected, cmd, url):
+def cmd_render(request, selected, cmd, url):
 	"""Выводит результат нажатия кнопок."""
 	check_perm('run_command', selected['project'], selected['user'])
 	log, err = cmd(selected)
@@ -91,6 +91,6 @@ def project(request, project_id):
 
 	for key, value in commands.iteritems():
 		if request.POST.get(key):
-			return post_render(request, selected, value['cmd'], value['url'])
+			return cmd_render(request, selected, value['cmd'], value['url'])
 
 	return render(request, 'ups/project.html', context)
