@@ -2508,7 +2508,7 @@
         showClose: false,
         widgetPositioning: {
             horizontal: 'auto',
-            vertical: 'auto'
+            vertical: 'top'
         },
         widgetParent: null,
         ignoreReadonly: false,
