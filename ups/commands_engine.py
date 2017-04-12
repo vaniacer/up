@@ -88,8 +88,6 @@ def run_now(selected):
 
 def cron_job(selected):
 	"""Создает задачу в кроне."""
-	date, time = selected['date']
-
 	updates = make_updates_lists(selected['updates'])
 	servers = make_servers_lists(selected['servers'])
 
@@ -98,8 +96,7 @@ def cron_job(selected):
 		conf.BASE_DIR + '/bash/cron_job.sh',
 		'-server', servers,
 		'-update', updates,
-		'-date', date,
-		'-time', time,
+		'-date', selected['date'],
 		'-cmd', selected['cmd'],
 		'-id', str(key),
 	]

@@ -66,12 +66,10 @@ def project(request, project_id):
 	history, hist_fd, hist_bk = pagination(request, history)
 
 	selected = {
-		'date': [
-			request.POST.get('selected_date') or '__DATE__',
-			request.POST.get('selected_time') or '__TIME__'],
 		'cmd': ''.join([
 			request.POST.get('select_copy') or '',
 			request.POST.get('select_update') or '']),
+		'date': request.POST.get('selected_date') or '__DATE__',
 		'updates': request.POST.getlist('selected_updates'),
 		'servers': request.POST.getlist('selected_servers'),
 		'cronjbs': request.POST.getlist('selected_jobs'),

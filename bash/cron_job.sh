@@ -10,7 +10,6 @@ until [ -z "$1" ]; do
 	    -server | -s) servers=${2};;
 	    -update | -u) updates=${2};;
 	    -date   | -d) date=${2};;
-	    -time   | -t) time=${2};;
 	    -cmd    | -c) cmd=${2};;
 	             -id) id=${2};;
     esac
@@ -19,14 +18,15 @@ until [ -z "$1" ]; do
 done
 
 # Get time
-case ${time}:${date} in
-    '__TIME__':'__DATE__')
+case ${date} in
+    '__DATE__')
         DD=$(date +'%d')
         MM=$(date +'%m')
         hh=$(date +'%H')
         mm=$(date +'%M'); ((mm++))
         [ ${mm} -gt 59 ] && { mm=00; ((hh++)); [ ${hh} -gt 23 ] && hh=00; };;
     *:*)
+        time=${date#* }; date=${date% *}
         hh=${time%:*}; mm=${time#*:}; DD=${date%%.*}; MM=${date#*.}; MM=${MM%.*};;
 esac
 

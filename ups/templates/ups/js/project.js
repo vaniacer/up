@@ -94,7 +94,7 @@ function JobValidation() {
 
 function Validation(box) {
 
-    var cron = document.getElementById('CRON');
+//    var cron = document.getElementById('CRON');
     var selected_updates = false;
     var selected_servers = false;
 
@@ -102,7 +102,6 @@ function Validation(box) {
     var servers =  document.getElementsByName('selected_servers');
 
     var date =  document.getElementById('selected_date');
-    var time =  document.getElementById('selected_time');
 
     for (i = 0; i < updates.length; i++) { if (updates[i].checked) { selected_updates = true; } }
     for (i = 0; i < servers.length; i++) { if (servers[i].checked) { selected_servers = true; } }
@@ -117,21 +116,21 @@ function Validation(box) {
         return false;
     }
 
-    if (cron.checked) {
-        if (date.value) {
-             if (!time.value) {
-                alert('Time not selected.');
-                return false;
-             }
-        }
-
-        if (time.value) {
-            if (!date.value) {
-                alert('Date not selected.');
-                return false;
-            }
-        }
-    }
+//    if (cron.checked) {
+//        if (date.value) {
+//             if (!time.value) {
+//                alert('Time not selected.');
+//                return false;
+//             }
+//        }
+//
+//        if (time.value) {
+//            if (!date.value) {
+//                alert('Date not selected.');
+//                return false;
+//            }
+//        }
+//    }
 
     hide_page();
     document.getElementById(box).checked = true;
@@ -160,5 +159,3 @@ $(function() {
 $(document).ready(function() {
     hide_loader();
 });
-
-$('.datepicker').datepicker();
