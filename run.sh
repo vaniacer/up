@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Default options |-----------------------------------------------------------------------------------------------------
+#---------------| Default options |-------------------------------------------------------------------------------------
 addr=localhost  # Bind address
 port=8000       # Bind port
 pidf=/tmp/gpid  # Pid file
@@ -12,7 +12,6 @@ logf=log        # Main log filename(in logs dir)
 time=600        # Timeout in sec
 grce=10         # Graceful timeout in sec
 work=5          # Number of workers
-
 #-----------------------------------------------------------------------------------------------------------------------
 [ -f run.conf ] && . run.conf # get saved conf if exist
 
