@@ -92,7 +92,7 @@ function JobValidation() {
     hide_page();
 }
 
-function CopyValidation() {
+function Validation(box) {
 
     var cron = document.getElementById('CRON');
     var selected_updates = false;
@@ -134,6 +134,8 @@ function CopyValidation() {
     }
 
     hide_page();
+    document.getElementById(box).checked = true;
+    document.getElementById('selector').submit();
 }
 
 $('.datepicker').datepicker();
@@ -147,7 +149,7 @@ $(document).ready(function() {
 //  window.location.hash = $(event.target).attr('href');
 //});
 
-$(function(){
+$(function() {
   // Change tab on load
   var hash = window.location.hash;
   hash && $('ul.nav a[href="' + hash + '"]').tab('show');

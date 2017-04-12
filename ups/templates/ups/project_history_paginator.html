@@ -19,7 +19,8 @@
 
             {% if history.has_next %}
                 <li><a href="?page={{ history.next_page_number }}#history">next</a></li>
-                <li><a href="?page={{ history.paginator.num_pages }}#history">last</a></li>
+                <li><a href="?page={{ history.paginator.num_pages }}#history">
+                    last ({{ history.paginator.num_pages }})</a></li>
             {% endif %}
         </ul>
     </nav>
