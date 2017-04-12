@@ -40,9 +40,7 @@ def pagination(request, history):
 
 	hist_range = list(hist_pages.page_range)
 	hist_fd = hist_range[int(page):int(page) + 4]
-	back = int(page) - 5
-	if back < 0:
-		back = 0
+	back = max(int(page) - 5, 0)
 	hist_bk = hist_range[back:int(page) - 1]
 	return history, hist_fd, hist_bk
 
