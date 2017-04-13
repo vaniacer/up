@@ -1,15 +1,22 @@
 # -*- encoding: utf-8 -*-
 
 from django.conf import settings as conf
-from .models import History
 from subprocess import Popen, PIPE
 from base64 import b64encode
+from .models import History
 from os import urandom
 
 
-def add_event(project, user, name, out, err, cron, date):
+def add_event(selected, out, err, cron, date):
 	"""Создает событие в истории."""
-	History.objects.create(proj=project, user=user, name=name, desc=out, exit=err, cron=cron, cdat=date)
+	History.objects.create(
+		name=selected['cmd'].capitalize(),
+		proj=selected['project'],
+		user=selected['user'],
+		cron=cron,
+		cdat=date,
+		desc=out,
+		exit=err)
 
 
 def run_cmd(opt):
@@ -39,7 +46,8 @@ def select_job_del(selected):
 	jbs = '; '.join(selected['cronjbs'])
 	opt = ['bash/cron_del.sh', jbs]
 	log, err = run_cmd(opt)
-	add_event(selected['project'], selected['user'], 'Delete cron job(s)', log, err, '0', '')
+	selected['cmd'] = 'Delete cron job(s)'
+	add_event(selected, log, err, '0', '')
 	return log, err
 
 
@@ -52,13 +60,13 @@ def run_now(selected):
 	]
 
 	log, err = run_cmd(opt)
-	add_event(selected['project'], selected['user'], selected['cmd'].title(), log, err, '', '')
+	add_event(selected, log, err, '', '')
 	return log, err
 
 
 def cron_job(selected):
 	"""Создает задачу в кроне."""
-	key = b64encode(urandom(6), 'dfsDFAsfsf')
+	key = str(b64encode(urandom(6), 'dfsDFAsfsf'))
 	opt = [
 		conf.BASE_DIR + '/bash/cron_job.sh',
 		'-server', ' '.join(selected['servers']),
@@ -69,5 +77,5 @@ def cron_job(selected):
 	]
 
 	log, err = run_cmd(opt)
-	add_event(selected['project'], selected['user'], selected['cmd'].title(), log, err, str(key), '')
+	add_event(selected, log, err, key, '')
 	return log, err
