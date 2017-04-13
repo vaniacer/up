@@ -65,8 +65,7 @@ def run_now(selected):
 
 def cron_job(selected):
 	"""Создает задачу в кроне."""
-	key = str(b64encode(urandom(6), 'dfsDFAsfsf'))
-	key = str(selected['project']) + '_' + key
+	key = str(selected['project']) + '_' + str(b64encode(urandom(6), 'dfsDFAsfsf'))
 	opt = [
 		conf.BASE_DIR + '/bash/cron_job.sh',
 		'-server', ' '.join(selected['servers']),
