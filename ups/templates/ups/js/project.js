@@ -92,7 +92,7 @@ function JobValidation() {
     hide_page();
 }
 
-function Validation(box) {
+function Validation(box, srv, upd) {
 
     var selected_updates = false;
     var selected_servers = false;
@@ -105,15 +105,15 @@ function Validation(box) {
     for (i = 0; i < updates.length; i++) { if (updates[i].checked) { selected_updates = true; } }
     for (i = 0; i < servers.length; i++) { if (servers[i].checked) { selected_servers = true; } }
 
-    if (selected_updates == false) {
-        alert('Update(s) not selected.');
-        return false;
-    }
+    if (upd) {
+        if (selected_updates == false) {
+            alert('Update(s) not selected.');
+            return false; }}
 
-    if (selected_servers == false) {
-        alert('Server(s) not selected.');
-        return false;
-    }
+    if (srv) {
+        if (selected_servers == false) {
+            alert('Server(s) not selected.');
+            return false; }}
 
     hide_page();
     document.getElementById(box).checked = true;

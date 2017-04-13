@@ -68,7 +68,8 @@ def project(request, project_id):
 	selected = {
 		'cmd': ''.join([
 			request.POST.get('select_copy') or '',
-			request.POST.get('select_update') or '', ]),
+			request.POST.get('select_update') or '',
+			request.POST.get('select_restart') or '', ]),
 		'date': request.POST.get('selected_date') or '__DATE__',
 		'updates': request.POST.getlist('selected_updates'),
 		'servers': request.POST.getlist('selected_servers'),

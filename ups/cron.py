@@ -33,6 +33,7 @@ def get_cron_jobs(current_project):
 
 	for line in out.split('\n'):
 		if line:
+			print line
 			job = Job('', '', '', '', '')
 
 			# Format time\date
@@ -98,5 +99,6 @@ def get_cron_logs(project):
 			del out[-2:]
 			out = ''.join(out)
 
-			add_event(event.proj, event.user, event.name, out, int(err), event.cron, date)
+			dick = {'project': event.proj, 'user': event.user, 'cmd': event.name}
+			add_event(dick, out, int(err), event.cron, date)
 			os.remove(os.path.join(conf.CRON_DIR, filename))

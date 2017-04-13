@@ -11,4 +11,4 @@ until [ -z "$1" ]; do
 
 done
 
-crontab -l | grep "/${project}/"
+crontab -l | grep " ${project}_"

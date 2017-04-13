@@ -66,13 +66,14 @@ def run_now(selected):
 def cron_job(selected):
 	"""Создает задачу в кроне."""
 	key = str(b64encode(urandom(6), 'dfsDFAsfsf'))
+	key = str(selected['project']) + '_' + key
 	opt = [
 		conf.BASE_DIR + '/bash/cron_job.sh',
 		'-server', ' '.join(selected['servers']),
 		'-update', ' '.join(selected['updates']),
 		'-date', selected['date'],
 		'-cmd', selected['cmd'],
-		'-id', str(key), ]
+		'-id', key, ]
 
 	log, err = run_cmd(opt)
 	add_event(selected, log, err, key, '')
