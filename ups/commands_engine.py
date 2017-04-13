@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
-from .models import Server, Update, History
 from django.conf import settings as conf
+from .models import History
 from subprocess import Popen, PIPE
 from base64 import b64encode
 from os import urandom
@@ -48,7 +48,7 @@ def run_now(selected):
 	opt = [
 		'bash/' + selected['cmd'] + '.sh',
 		'-server', ' '.join(selected['servers']),
-		'-update', ' '.join(conf.MEDIA_ROOT + '/' + u for u in selected['updates']),
+		'-update', ' '.join(selected['updates']),
 	]
 
 	log, err = run_cmd(opt)
@@ -62,7 +62,7 @@ def cron_job(selected):
 	opt = [
 		conf.BASE_DIR + '/bash/cron_job.sh',
 		'-server', ' '.join(selected['servers']),
-		'-update', ' '.join(conf.MEDIA_ROOT + '/' + u for u in selected['updates']),
+		'-update', ' '.join(selected['updates']),
 		'-date', selected['date'],
 		'-cmd', selected['cmd'],
 		'-id', str(key),

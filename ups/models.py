@@ -1,12 +1,13 @@
 # -*- encoding: utf-8 -*-
 
-from django.db import models
 from django.contrib.auth.models import User
+from django.conf import settings as conf
+from django.db import models
 
 
 def get_upload_to(instance, filename):
 	"""Задаёт путь сохранения пакетов обновлений."""
-	return 'updates/%s/%s' % (instance.proj.name, filename)
+	return conf.MEDIA_ROOT + '/updates/%s/%s' % (instance.proj.name, filename)
 
 
 class Project(models.Model):
