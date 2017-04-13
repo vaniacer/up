@@ -33,7 +33,6 @@ def get_cron_jobs(current_project):
 
 	for line in out.split('\n'):
 		if line:
-			print line
 			job = Job('', '', '', '', '')
 
 			# Format time\date
