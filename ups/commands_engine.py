@@ -7,7 +7,7 @@ from .models import History
 from os import urandom
 
 
-def add_event(selected, out, err, cron, date):
+def add_event(selected, log, err, cron, date):
 	"""Создает событие в истории."""
 	History.objects.create(
 		name=selected['cmd'].capitalize(),
@@ -15,8 +15,8 @@ def add_event(selected, out, err, cron, date):
 		user=selected['user'],
 		cron=cron,
 		cdat=date,
-		desc=out,
-		exit=err)
+		desc=log,
+		exit=err, )
 
 
 def run_cmd(opt):
@@ -47,7 +47,7 @@ def select_job_del(selected):
 	opt = ['bash/cron_del.sh', jbs]
 	log, err = run_cmd(opt)
 	selected['cmd'] = 'Delete cron job(s)'
-	add_event(selected, log, err, '0', '')
+	add_event(selected, log, err, '-/-', '')
 	return log, err
 
 
@@ -56,8 +56,7 @@ def run_now(selected):
 	opt = [
 		'bash/' + selected['cmd'] + '.sh',
 		'-server', ' '.join(selected['servers']),
-		'-update', ' '.join(selected['updates']),
-	]
+		'-update', ' '.join(selected['updates']), ]
 
 	log, err = run_cmd(opt)
 	add_event(selected, log, err, '', '')
@@ -73,8 +72,7 @@ def cron_job(selected):
 		'-update', ' '.join(selected['updates']),
 		'-date', selected['date'],
 		'-cmd', selected['cmd'],
-		'-id', str(key),
-	]
+		'-id', str(key), ]
 
 	log, err = run_cmd(opt)
 	add_event(selected, log, err, key, '')

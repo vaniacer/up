@@ -68,14 +68,13 @@ def project(request, project_id):
 	selected = {
 		'cmd': ''.join([
 			request.POST.get('select_copy') or '',
-			request.POST.get('select_update') or '']),
+			request.POST.get('select_update') or '', ]),
 		'date': request.POST.get('selected_date') or '__DATE__',
 		'updates': request.POST.getlist('selected_updates'),
 		'servers': request.POST.getlist('selected_servers'),
 		'cronjbs': request.POST.getlist('selected_jobs'),
 		'project': current_project,
-		'user': request.user,
-	}
+		'user': request.user, }
 
 	context = {
 		'project': current_project,
@@ -84,8 +83,7 @@ def project(request, project_id):
 		'cronjob': cronjob,
 		'history': history,
 		'hist_bk': hist_bk,
-		'hist_fd': hist_fd,
-	}
+		'hist_fd': hist_fd, }
 
 	for key, value in commands.iteritems():
 		if request.POST.get(key):
