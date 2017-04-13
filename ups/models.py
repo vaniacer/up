@@ -64,8 +64,8 @@ class Update(models.Model):
 
 	def __unicode__(self):
 		"""Возвращает строковое представление модели."""
-		name = self.file.name.split('/')
-		return name[2]
+		name = self.file.name.split('/')[-1]
+		return name
 
 
 class History(models.Model):
