@@ -36,7 +36,7 @@ cmnd="${folder}/${cmd}.sh -u \"${updates}\" -s \"${servers}\" -cron ${id}"    # 
 cncl="(crontab -l | sed \"${sedr}\") | crontab -"                             # Command to cancel executed cron job
 
 # Set crontab job
-(crontab -l ; echo -e "${date} * ${cmnd}; ${cncl}") | crontab -
+(crontab -l ; echo -e "${date} * ${cmnd} ; ${cncl}") | crontab -
 
 # Info
 echo -e "Setting cron job id: ${id}, date: ${DD}.${MM} ${hh}:${mm}\n"

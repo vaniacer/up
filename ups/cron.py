@@ -1,8 +1,7 @@
 # -*- encoding: utf-8 -*-
 
+from .commands_engine import add_event, run_cmd
 from django.conf import settings as conf
-from .commands_engine import add_event
-from subprocess import Popen, PIPE
 import re
 import os
 
@@ -28,45 +27,27 @@ def get_cron_jobs(current_project):
 	jobs = []
 
 	opt = ['bash/cron_list.sh', '-project', current_project.name]
-	run = Popen(opt, stdout=PIPE)
-	out = run.communicate()[0]  # Returns tuple
+	out, err = run_cmd(opt)
 
 	for line in out.split('\n'):
 		if line:
 			job = Job('', '', '', '', '')
+			raw = line.split()
 
 			# Format time\date
-			raw = line.split()
-			mnt = raw[0]
-			hrs = raw[1]
-			day = raw[2]
-			mon = raw[3]
-
-			# Get list of servers\updates and command name
-			updates = re.sub('^.*-u "', '', line)
-			updates = re.sub('" -s .*$', '', updates)
-			updates = re.sub(' ', '\n', updates)
-			servers = re.sub('^.*-s "', '', line)
-			servers = re.sub('".*$', '', servers)
-			servers = re.sub(' ', '\n', servers)
-			command = re.sub('^.* \* ', '', line)
-			command = re.sub(' -u .*$', '', command)
+			mnt, hrs, day, mon = raw[0:4]
 
 			# Get job description
-			opt = [
-				command,
-				'-update', updates,
-				'-server', servers,
-				'-desc', 'true', ]
-
-			run = Popen(opt, stdout=PIPE)
-			out = run.communicate()[0]  # Returns tuple
+			cmd = raw[5]
+			upd = line.split('"')[1]
+			srv = line.split('"')[3]
+			opt = [cmd, '-u', upd, '-s', srv, '-desc', 'true']
+			out, err = run_cmd(opt)
 
 			# Job's details
 			job.full = line
-			job.name = re.sub('^.*-cron ', '', line)
-			job.name = re.sub(';.*$', '', job.name)
-			job.kill = re.sub('^.*; ', '', line)
+			job.name = raw[-10]
+			job.kill = ' '.join(raw[-8:])
 			job.date = day + '.' + mon + ' ' + hrs + ':' + mnt
 			job.desc = out
 
