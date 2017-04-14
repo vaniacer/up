@@ -18,17 +18,9 @@ until [ -z "$1" ]; do
 done
 
 # Get time
-case ${date} in
-    '__DATE__')
-        DD=$(date +'%d')
-        MM=$(date +'%m')
-        hh=$(date +'%H')
-        mm=$(date +'%M'); ((mm++))
-        [ ${mm} -gt 59 ] && { mm=00; ((hh++)); [ ${hh} -gt 23 ] && hh=00; };;
-    *:*)
-        time=${date#* }; date=${date% *}
-        hh=${time%:*}; mm=${time#*:}; DD=${date%%.*}; MM=${date#*.}; MM=${MM%.*};;
-esac
+read date time <<< "${date}"
+mess="Set new cronjob. Run date: ${date} ${time}\n"
+hh=${time%:*}; mm=${time#*:}; DD=${date%%.*}; MM=${date#*.}; MM=${MM%.*}
 
 date="${mm} ${hh} ${DD} ${MM}"                                                # Cron format date
 sedr="/${id}/d"                                                               # Sed rule to delete old cron job
@@ -39,4 +31,5 @@ cncl="(crontab -l | sed \"${sedr}\") | crontab -"                             # 
 (crontab -l ; echo -e "${date} * ${cmnd} ; ${cncl}") | crontab -
 
 # Info
+echo -e "${mess}"
 ${folder}/${cmd}.sh -u "${updates}" -s "${servers}" -desc true

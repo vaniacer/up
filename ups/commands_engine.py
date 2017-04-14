@@ -92,7 +92,7 @@ def cron_job(selected):
 		'-cmd', selected['cmd'],
 		'-id', key, ]
 
-	kill = '(crontab -l | sed "/' + key + '/d") | crontab -'
+	kill = '(crontab -l | sed "/' + key + '/d") | crontab -)'
 
 	log, err = run_cmd(opt)
 	add_event(selected, log, err, key, '')
