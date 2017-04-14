@@ -58,7 +58,7 @@ def project(request, project_id):
 	current_project = get_object_or_404(Project, id=project_id)
 	check_perm('view_project', current_project, request.user)
 
-	get_cron_logs(current_project)
+	get_cron_logs()
 	cronjob = current_project.job_set.order_by('date').reverse()
 	servers = current_project.server_set.order_by('name')
 	updates = current_project.update_set.order_by('date').reverse()
