@@ -2,9 +2,10 @@
 
 from django.conf import settings as conf
 from subprocess import Popen, PIPE
+from .models import History, Job
 from base64 import b64encode
-from .models import History
 from os import urandom
+import datetime
 
 
 def add_event(selected, log, err, cron, date):
@@ -17,6 +18,27 @@ def add_event(selected, log, err, cron, date):
 		cdat=date,
 		desc=log,
 		exit=err, )
+
+
+def add_job(selected, log, cron, kill):
+	"""Создает запись о крон жобе."""
+	date = selected['date']
+	if date == '__DATE__':
+		date = datetime.datetime.now().strftime("%d.%m.%Y %H:%M")
+
+	Job.objects.create(
+		name=selected['cmd'].capitalize(),
+		proj=selected['project'],
+		user=selected['user'],
+		cdat=date,
+		kill=kill,
+		cron=cron,
+		desc=log, )
+
+
+def del_job(selected):
+	for i in selected['cronjbs']:
+		Job.objects.get(cron=i).delete()
 
 
 def run_cmd(opt):
@@ -43,11 +65,12 @@ def select_ls(selected):
 
 def select_job_del(selected):
 	"""Обрабатывает событие select_job_del."""
-	jbs = '; '.join(selected['cronjbs'])
+	jbs = '; '.join(Job.objects.get(cron=i).kill for i in selected['cronjbs'])
 	opt = ['bash/cron_del.sh', jbs]
 	log, err = run_cmd(opt)
 	selected['cmd'] = 'Delete cron job(s)'
 	add_event(selected, log, err, '-/-', '')
+	del_job(selected)
 	return log, err
 
 
@@ -65,7 +88,7 @@ def run_now(selected):
 
 def cron_job(selected):
 	"""Создает задачу в кроне."""
-	key = str(selected['project']) + '_' + str(b64encode(urandom(6), 'dfsDFAsfsf'))
+	key = str(b64encode(urandom(6), 'dfsDFAsfsf'))
 	opt = [
 		conf.BASE_DIR + '/bash/cron_job.sh',
 		'-server', ' '.join(selected['servers']),
@@ -74,6 +97,9 @@ def cron_job(selected):
 		'-cmd', selected['cmd'],
 		'-id', key, ]
 
+	kill = '(crontab -l | sed "/' + key + '/d") | crontab -'
+
 	log, err = run_cmd(opt)
 	add_event(selected, log, err, key, '')
+	add_job(selected, log, key, kill)
 	return log, err

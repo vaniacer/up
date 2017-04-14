@@ -20,16 +20,13 @@
 
 {% for job in cronjob %}
 
-    <dl class="dl-horizontal job_body" id="job_body{{ job.name }}"
-        onclick="checker('job_box{{ job.name }}', 'job_body{{ job.name }}')">
-        <dt>Cron job id</dt><dd>{{ job.name }}</dd>
+    <dl class="dl-horizontal job_body" id="job_body{{ job.id }}"
+        onclick="checker('job_box{{ job.id }}', 'job_body{{ job.id }}')">
+        <dt>Cron job id</dt><dd>{{ job.cron }}</dd>
+        <dt>Job name</dt><dd>{{ job.name }}</dd>
         <dt>Description</dt><dd>{{ job.desc|linebreaks }}</dd>
-        <dt><big>Date\Time</big></dt><dd><big>{{ job.date }}</big></dd>
-        <!--<dt>kill</dt><dd><big>{{ job.kill }}</big></dd>-->
-        <dd><br></dd>
-        <dt><small>Cron string</small></dt><dd><small>{{ job.full }}</small></dd>
+        <dt><big>Date\Time</big></dt><dd><big>{{ job.cdat }}</big></dd>
     </dl>
-
 
     {% if "run_command" in pr_view_perms %}
         <!--Hidden checkboxes-->
@@ -37,8 +34,8 @@
                type="checkbox"
                readonly="readonly"
                name="selected_jobs"
-               value="{{ job.kill }}"
-               id="job_box{{ job.name }}"/>
+               value="{{ job.cron }}"
+               id="job_box{{ job.id }}"/>
     {% endif %}
 
     <hr>

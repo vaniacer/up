@@ -39,5 +39,4 @@ cncl="(crontab -l | sed \"${sedr}\") | crontab -"                             # 
 (crontab -l ; echo -e "${date} * ${cmnd} ; ${cncl}") | crontab -
 
 # Info
-echo -e "Setting cron job id: ${id}, date: ${DD}.${MM} ${hh}:${mm}\n"
 ${folder}/${cmd}.sh -u "${updates}" -s "${servers}" -desc true

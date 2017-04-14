@@ -3,7 +3,7 @@
 from django.shortcuts import render, get_object_or_404, HttpResponseRedirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
-from .cron import get_cron_jobs, get_cron_logs
+from .cron import get_cron_logs
 from .permissions import check_perm
 from .commands import commands
 from .models import Project
@@ -59,7 +59,7 @@ def project(request, project_id):
 	check_perm('view_project', current_project, request.user)
 
 	get_cron_logs(current_project)
-	cronjob = get_cron_jobs(current_project)
+	cronjob = current_project.job_set.order_by('date').reverse()
 	servers = current_project.server_set.order_by('name')
 	updates = current_project.update_set.order_by('date').reverse()
 	history = current_project.history_set.order_by('date').reverse()
