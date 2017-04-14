@@ -7,11 +7,18 @@ from .cron import get_cron_logs
 from .permissions import check_perm
 from .commands import commands
 from .models import Project
+import datetime
 
 
 def index(request):
 	"""Домашняя страница приложения update server."""
 	return render(request, 'ups/index.html')
+
+
+def run_date():
+	date = datetime.datetime.now()
+	date = date + datetime.timedelta(minutes=1)
+	return date.strftime("%d.%m.%Y %H:%M")
 
 
 def cmd_render(request, selected, cmd, url):
@@ -70,7 +77,7 @@ def project(request, project_id):
 			request.POST.get('select_copy') or '',
 			request.POST.get('select_update') or '',
 			request.POST.get('select_restart') or '', ]),
-		'date': request.POST.get('selected_date') or '__DATE__',
+		'date': request.POST.get('selected_date') or run_date(),
 		'updates': request.POST.getlist('selected_updates'),
 		'servers': request.POST.getlist('selected_servers'),
 		'cronjbs': request.POST.getlist('selected_jobs'),

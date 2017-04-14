@@ -5,7 +5,6 @@ from subprocess import Popen, PIPE
 from .models import History, Job
 from base64 import b64encode
 from os import urandom
-import datetime
 
 
 def add_event(selected, log, err, cron, date):
@@ -22,15 +21,11 @@ def add_event(selected, log, err, cron, date):
 
 def add_job(selected, log, cron, kill):
 	"""Создает запись о крон жобе."""
-	date = selected['date']
-	if date == '__DATE__':
-		date = datetime.datetime.now().strftime("%d.%m.%Y %H:%M")
-
 	Job.objects.create(
 		name=selected['cmd'].capitalize(),
 		proj=selected['project'],
 		user=selected['user'],
-		cdat=date,
+		cdat=selected['date'],
 		kill=kill,
 		cron=cron,
 		desc=log, )
