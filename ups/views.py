@@ -3,8 +3,8 @@
 from django.shortcuts import render, get_object_or_404, HttpResponseRedirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
-from .cron import get_cron_logs
 from .permissions import check_perm
+from .cron import get_cron_logs
 from .commands import commands
 from .models import Project
 import datetime
@@ -16,8 +16,7 @@ def index(request):
 
 
 def run_date():
-	date = datetime.datetime.now()
-	date = date + datetime.timedelta(minutes=1)
+	date = datetime.datetime.now() + datetime.timedelta(minutes=1)
 	return date.strftime("%d.%m.%Y %H:%M")
 
 
@@ -91,7 +90,8 @@ def project(request, project_id):
 		'cronjob': cronjob,
 		'history': history,
 		'hist_bk': hist_bk,
-		'hist_fd': hist_fd, }
+		'hist_fd': hist_fd,
+		'request': request, }
 
 	for key, value in commands.iteritems():
 		if request.POST.get(key):

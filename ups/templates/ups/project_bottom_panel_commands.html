@@ -2,14 +2,14 @@
     <div class="dropup">
         <button class="btn btn-default dropdown-toggle navbar-btn"
                 type="submit"
-                id="dropdownMenu3"
+                id="dropdown_RUN"
                 data-toggle="dropdown"
                 aria-haspopup="true"
                 aria-expanded="false"
                 onclick="run_or_cron('RUN', 'CRON')">RUN<span class="caret"></span>
         </button>
         <ul class="dropdown-menu"
-            aria-labelledby="dropdownMenu3">
+            aria-labelledby="dropdown_RUN">
             {% include "ups/commands.html" %}
         </ul>
     </div>
@@ -19,14 +19,14 @@
     <div class="dropup">
         <button class="btn btn-default dropdown-toggle navbar-btn"
                 type="submit"
-                id="dropdownMenu4"
+                id="dropdown_CRON"
                 data-toggle="dropdown"
                 aria-haspopup="true"
                 aria-expanded="false"
                 onclick="run_or_cron('CRON', 'RUN')">CRON<span class="caret"></span>
         </button>
         <ul class="dropdown-menu"
-            aria-labelledby="dropdownMenu4">
+            aria-labelledby="dropdown_CRON">
             {% include "ups/commands.html" %}
         </ul>
     </div>

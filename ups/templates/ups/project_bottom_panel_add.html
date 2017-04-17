@@ -2,12 +2,12 @@
     <div class="dropup">
         <button class="btn btn-default dropdown-toggle navbar-btn"
                 type="button"
-                id="dropdownMenu1"
+                id="dropdown_ADD"
                 data-toggle="dropdown"
                 aria-haspopup="true"
                 aria-expanded="false">Add<span class="caret"></span>
         </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+        <ul class="dropdown-menu" aria-labelledby="dropdown_ADD">
             {% if "add_update" in pr_view_perms %}
                 <li><a href="{% url 'ups:new_update' project.id %}">Add new update</a></li>
             {% endif %}
