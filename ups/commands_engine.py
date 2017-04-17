@@ -71,10 +71,12 @@ def select_job_del(selected):
 
 def run_now(selected):
 	"""Выполняет комманду."""
-	opt = [
-		'bash/' + selected['cmd'] + '.sh',
-		'-server', ' '.join(selected['servers']),
-		'-update', ' '.join(selected['updates']), ]
+	opt = ['bash/' + selected['cmd'] + '.sh']
+
+	if selected['servers']:
+		opt.extend(['-server', ' '.join(selected['servers'])])
+	if selected['updates']:
+		opt.extend(['-update', ' '.join(selected['updates'])])
 
 	log, err = run_cmd(opt)
 	add_event(selected, log, err, '', '')
@@ -86,15 +88,17 @@ def cron_job(selected):
 	key = str(b64encode(urandom(6), 'dfsDFAsfsf'))
 	opt = [
 		conf.BASE_DIR + '/bash/cron_job.sh',
-		'-server', ' '.join(selected['servers']),
-		'-update', ' '.join(selected['updates']),
 		'-date', selected['date'],
 		'-cmd', selected['cmd'],
 		'-id', key, ]
 
-	kill = '(crontab -l | sed "/' + key + '/d") | crontab -)'
+	if selected['servers']:
+		opt.extend(['-server', ' '.join(selected['servers'])])
+	if selected['updates']:
+		opt.extend(['-update', ' '.join(selected['updates'])])
+
+	kill = '(crontab -l | sed "/' + key + '/d") | crontab -'
 
 	log, err = run_cmd(opt)
-	add_event(selected, log, err, key, '')
 	add_job(selected, log, key, kill)
 	return log, err
