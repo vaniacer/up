@@ -90,8 +90,7 @@ def project(request, project_id):
 		'cronjob': cronjob,
 		'history': history,
 		'hist_bk': hist_bk,
-		'hist_fd': hist_fd,
-		'request': request, }
+		'hist_fd': hist_fd, }
 
 	for key, value in commands.iteritems():
 		if request.POST.get(key):
