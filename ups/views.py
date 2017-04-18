@@ -29,10 +29,10 @@ def cmd_render(request, current_project):
 		'user': request.user,
 		'cron': request.POST.get('CRON') or '',
 		'date': request.POST.get('selected_date') or run_date(),
-		'command': request.POST.get('selected_comands'),
 		'updates': request.POST.getlist('selected_updates'),
 		'servers': request.POST.getlist('selected_servers'),
 		'cronjbs': request.POST.getlist('selected_jobs'),
+		'command': request.POST.get('selected_commands'),
 		'project': current_project, }
 
 	cmd, url = commands(selected)
@@ -94,7 +94,7 @@ def project(request, project_id):
 		'hist_bk': hist_bk,
 		'hist_fd': hist_fd, }
 
-	if request.POST.get('selected_comands'):
+	if request.POST.get('selected_commands'):
 		return cmd_render(request, current_project)
 
 	return render(request, 'ups/project.html', context)
