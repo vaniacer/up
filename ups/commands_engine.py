@@ -86,4 +86,7 @@ def cron_job(selected):
 
 	log, err = run_cmd(opt)
 	add_job(selected, log, key)
+	if selected['history']:
+		selected['command'] = 'Set job - ' + selected['command']
+		add_event(selected, log, err, key, '')
 	return log, err
