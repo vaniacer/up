@@ -3,13 +3,13 @@
 <ul class="nav navbar-nav navbar-right">
     {% if "run_command" in pr_view_perms %}
         <li><input type="submit"
-                   name="select_ls"
-                   value="Check updates"
+                   name="selected_comands"
+                   value="check_updates"
                    class="btn btn-default navbar-btn blockUI"
                    onclick="return Validation('', 'true', '', '')"></li>
         <li><input type="submit"
-                   name="select_logs"
-                   value="Check logs"
+                   name="selected_comands"
+                   value="check_logs"
                    class="btn btn-default navbar-btn blockUI"
                    onclick="return Validation('', 'true', '', '')"></li>
     {% endif %}

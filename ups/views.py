@@ -20,11 +20,24 @@ def run_date():
 	return date.strftime("%d.%m.%Y %H:%M")
 
 
-def cmd_render(request, selected, cmd, url):
+def cmd_render(request, current_project):
 	"""Выводит результат нажатия кнопок."""
-	check_perm('run_command', selected['project'], selected['user'])
+	check_perm('run_command', current_project, request.user)
+
+	selected = {
+		'user': request.user,
+		'cron': request.POST.get('CRON') or '',
+		'date': request.POST.get('selected_date') or run_date(),
+		'command': request.POST.get('selected_comands'),
+		'updates': request.POST.getlist('selected_updates'),
+		'servers': request.POST.getlist('selected_servers'),
+		'cronjbs': request.POST.getlist('selected_jobs'),
+		'project': current_project, }
+
+	cmd, url = commands(selected)
 	log, err = cmd(selected)
 	context = {'project': selected['project'], 'log': log, 'err': err}
+
 	if url:
 		return HttpResponseRedirect(url)
 	else:
@@ -71,18 +84,6 @@ def project(request, project_id):
 	history = current_project.history_set.order_by('date').reverse()
 	history, hist_fd, hist_bk = pagination(request, history)
 
-	selected = {
-		'cmd': ''.join([
-			request.POST.get('select_copy') or '',
-			request.POST.get('select_update') or '',
-			request.POST.get('select_restart') or '', ]),
-		'date': request.POST.get('selected_date') or run_date(),
-		'updates': request.POST.getlist('selected_updates'),
-		'servers': request.POST.getlist('selected_servers'),
-		'cronjbs': request.POST.getlist('selected_jobs'),
-		'project': current_project,
-		'user': request.user, }
-
 	context = {
 		'project': current_project,
 		'servers': servers,
@@ -92,8 +93,7 @@ def project(request, project_id):
 		'hist_bk': hist_bk,
 		'hist_fd': hist_fd, }
 
-	for key, value in commands.iteritems():
-		if request.POST.get(key):
-			return cmd_render(request, selected, value['cmd'], value['url'])
+	if request.POST.get('selected_comands'):
+		return cmd_render(request, current_project)
 
 	return render(request, 'ups/project.html', context)

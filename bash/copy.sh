@@ -10,6 +10,7 @@ until [ -z "$1" ]; do
     case $1 in
 	    -server | -s) servers=${2};;
 	    -update | -u) updates=${2};;
+        -job    | -j) jobs=${2};;
 	           -cron) cron=${2};;
 	           -desc) desc=${2};;
     esac

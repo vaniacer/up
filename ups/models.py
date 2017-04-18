@@ -77,7 +77,6 @@ class Job(models.Model):
 	proj = models.ForeignKey(Project)
 	user = models.ForeignKey(User)
 	desc = models.TextField()
-	kill = models.TextField()
 
 	def __unicode__(self):
 		"""Возвращает строковое представление модели."""

@@ -9,6 +9,7 @@ until [ -z "$1" ]; do
 	    -server | -s) servers=${2};;
 	    -update | -u) updates=${2};;
 	    -date   | -d) date=${2};;
+	    -job    | -j) jobs=${2};;
 	    -cmd    | -c) cmd=${2};;
 	             -id) id=${2};;
     esac

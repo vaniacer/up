@@ -10,7 +10,7 @@ from os import urandom
 def add_event(selected, log, err, cron, date):
 	"""Создает событие в истории."""
 	History.objects.create(
-		name=selected['cmd'].capitalize(),
+		name=selected['command'].capitalize(),
 		proj=selected['project'],
 		user=selected['user'],
 		cron=cron,
@@ -19,21 +19,15 @@ def add_event(selected, log, err, cron, date):
 		exit=err, )
 
 
-def add_job(selected, log, cron, kill):
+def add_job(selected, log, cron):
 	"""Создает запись о крон жобе."""
 	Job.objects.create(
-		name=selected['cmd'].capitalize(),
+		name=selected['command'].capitalize(),
 		proj=selected['project'],
 		user=selected['user'],
 		cdat=selected['date'],
-		kill=kill,
 		cron=cron,
 		desc=log, )
-
-
-def del_job(selected):
-	for i in selected['cronjbs']:
-		Job.objects.get(cron=i).delete()
 
 
 def run_cmd(opt):
@@ -44,34 +38,23 @@ def run_cmd(opt):
 	return out + err, rc
 
 
-def select_logs(selected):
-	"""Обрабатывает событие select_logs."""
-	opt = ['bash/logs.sh', ' '.join(selected['servers'])]
+def del_job(selected):
+	opt = ['bash/delete_job.sh', '-job', ' '.join(selected['cronjbs'])]
+
+	for i in selected['cronjbs']:
+		try:
+			Job.objects.get(cron=i).delete()
+		except:
+			continue
+
 	log, err = run_cmd(opt)
-	return log, err
-
-
-def select_ls(selected):
-	"""Обрабатывает событие select_ls."""
-	opt = ['bash/ls.sh', ' '.join(selected['servers']), ' ']
-	log, err = run_cmd(opt)
-	return log, err
-
-
-def select_job_del(selected):
-	"""Обрабатывает событие select_job_del."""
-	jbs = '; '.join(Job.objects.get(cron=i).kill for i in selected['cronjbs'])
-	opt = ['bash/cron_del.sh', jbs]
-	log, err = run_cmd(opt)
-	selected['cmd'] = 'Delete cron job(s)'
-	add_event(selected, log, err, '-/-', '')
-	del_job(selected)
+	add_event(selected, log, err, '', '')
 	return log, err
 
 
 def run_now(selected):
 	"""Выполняет комманду."""
-	opt = ['bash/' + selected['cmd'] + '.sh']
+	opt = ['bash/' + selected['command'] + '.sh']
 
 	if selected['servers']:
 		opt.extend(['-server', ' '.join(selected['servers'])])
@@ -79,7 +62,8 @@ def run_now(selected):
 		opt.extend(['-update', ' '.join(selected['updates'])])
 
 	log, err = run_cmd(opt)
-	add_event(selected, log, err, '', '')
+	if selected['history']:
+		add_event(selected, log, err, '', '')
 	return log, err
 
 
@@ -89,7 +73,7 @@ def cron_job(selected):
 	opt = [
 		conf.BASE_DIR + '/bash/cron_job.sh',
 		'-date', selected['date'],
-		'-cmd', selected['cmd'],
+		'-cmd', selected['command'],
 		'-id', key, ]
 
 	if selected['servers']:
@@ -97,8 +81,6 @@ def cron_job(selected):
 	if selected['updates']:
 		opt.extend(['-update', ' '.join(selected['updates'])])
 
-	kill = '(crontab -l | sed "/' + key + '/d") | crontab -'
-
 	log, err = run_cmd(opt)
-	add_job(selected, log, key, kill)
+	add_job(selected, log, key)
 	return log, err
