@@ -24,7 +24,7 @@ hh=${time%:*}; mm=${time#*:}; DD=${date%%.*}; MM=${date#*.}; MM=${MM%.*}
 date="${mm} ${hh} ${DD} ${MM}"                              # Cron format date
 sedr="/${id}/d"                                             # Sed rule to delete old cron job
 cncl="sed \"${sedr}\" -i /var/spool/cron/crontabs/${USER}"  # Command to cancel executed cron job
-cmnd="${folder}/${cmd}.sh -cron ${id}"                      # Command to run
+cmnd="${folder}/${cmd} -cron ${id}"                         # Command to run
 [ "${updates}" ] && cmnd="${cmnd} -u \"${updates}\""        # Add updates to command if exist
 [ "${servers}" ] && cmnd="${cmnd} -s \"${servers}\""        # Add servers to command if exist
 
@@ -32,4 +32,4 @@ cmnd="${folder}/${cmd}.sh -cron ${id}"                      # Command to run
 (crontab -l ; echo -e "${date} * ${cmnd}; ${cncl}") | crontab -
 
 # Info
-${folder}/${cmd}.sh -u "${updates}" -s "${servers}" -desc true
+${folder}/${cmd} -u "${updates}" -s "${servers}" -desc true

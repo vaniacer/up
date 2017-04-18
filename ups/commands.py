@@ -13,13 +13,13 @@ def commands(selected):
 		runcron, url = run_now, ''
 
 	cmd = {
-		'Copy':          {'cmd': runcron, 'name': 'copy',          'url': url,     'history': 'true'},
-		'Update':        {'cmd': runcron, 'name': 'update',        'url': url,     'history': 'true'},
-		'Restart':       {'cmd': runcron, 'name': 'restart',       'url': url,     'history': 'true'},
-		'Check updates': {'cmd': run_now, 'name': 'check_updates', 'url': url,     'history': ''},
-		'Check logs':    {'cmd': run_now, 'name': 'check_logs',    'url': url,     'history': ''},
-		'Delete job':    {'cmd': del_job, 'name': 'delete_job',    'url': '#cron', 'history': 'true'}, }
+		'Copy':          {'cmd': runcron, 'history': True,  'bash': 'copy.sh',          'url': url, },
+		'Update':        {'cmd': runcron, 'history': True,  'bash': 'update.sh',        'url': url, },
+		'Restart':       {'cmd': runcron, 'history': True,  'bash': 'restart.sh',       'url': url, },
+		'Delete job':    {'cmd': del_job, 'history': True,  'bash': 'delete_job.sh',    'url': '#cron', },
+		'Check logs':    {'cmd': run_now, 'history': False, 'bash': 'check_logs.sh',    'url': url, },
+		'Check updates': {'cmd': run_now, 'history': False, 'bash': 'check_updates.sh', 'url': url, }, }
 
 	selected['history'] = cmd[command]['history']
-	selected['cmdname'] = cmd[command]['name']
+	selected['cmdname'] = cmd[command]['bash']
 	return cmd[command]['cmd'], cmd[command]['url']
