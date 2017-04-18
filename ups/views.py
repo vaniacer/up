@@ -16,6 +16,7 @@ def index(request):
 
 
 def run_date():
+	"""Если не указана дата, возвращает текущую дату + 1 минута."""
 	date = datetime.datetime.now() + datetime.timedelta(minutes=1)
 	return date.strftime("%d.%m.%Y %H:%M")
 

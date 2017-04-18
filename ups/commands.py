@@ -4,7 +4,7 @@ from .commands_engine import cron_job, run_now, del_job
 
 
 def commands(selected):
-
+	"""Определяет команду."""
 	command = ''.join(selected['command'])
 
 	if selected['cron']:

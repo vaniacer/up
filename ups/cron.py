@@ -8,7 +8,6 @@ import os
 
 def get_cron_logs():
 	"""Создает события в истории на основе логов крона."""
-
 	logfiles = os.listdir(conf.CRON_DIR)
 
 	if logfiles:
@@ -24,7 +23,7 @@ def get_cron_logs():
 			out = ''.join(out[:-2])
 
 			dick = {'project': job.proj, 'user': job.user, 'command': job.name}
-			add_event(dick, out, int(err), filename, dat)
-			os.remove(os.path.join(conf.CRON_DIR, filename))
-			Job.objects.get(cron=filename).delete()
 			run_cmd(['bash/delete_job.sh', '-job', str(filename)])
+			os.remove(os.path.join(conf.CRON_DIR, filename))
+			add_event(dick, out, int(err), filename, dat)
+			Job.objects.get(cron=filename).delete()
