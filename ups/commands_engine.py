@@ -39,9 +39,7 @@ def run_cmd(opt):
 
 
 def del_job(selected):
-	# opt = ['bash/delete_job.sh', '-job', ' '.join(selected['cronjbs'])]
 	logs, errs = '', 0
-
 	for i in selected['cronjbs']:
 		try:
 			Job.objects.get(cron=i).delete()
@@ -52,7 +50,6 @@ def del_job(selected):
 			logs += u'Задача: ' + i + u' не существует.\n'
 			continue
 
-	# log, err = run_cmd(opt)
 	add_event(selected, logs, errs, '', '')
 	return logs, errs
 

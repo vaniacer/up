@@ -28,6 +28,3 @@ def get_cron_logs():
 			os.remove(os.path.join(conf.CRON_DIR, filename))
 			Job.objects.get(cron=filename).delete()
 			run_cmd(['bash/delete_job.sh', '-job', str(filename)])
-
-	# opt = ['bash/delete_job.sh', '-job', logfiles]
-	# run_cmd(opt)
