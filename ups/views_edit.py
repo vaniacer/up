@@ -20,7 +20,7 @@ def delete_project(project):
 
 def delete_update(update):
 	"""Удаляет обновление и файлы обновлений."""
-	os.remove(conf.MEDIA_ROOT + '/' + str(update.file))
+	os.remove(str(update.file))
 	update.delete()
 
 
