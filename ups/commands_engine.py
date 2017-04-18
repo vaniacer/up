@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 
+from django.core.exceptions import ObjectDoesNotExist
 from django.conf import settings as conf
 from subprocess import Popen, PIPE
 from .models import History, Job
@@ -44,10 +45,11 @@ def del_job(selected):
 		try:
 			Job.objects.get(cron=i).delete()
 			log, err = run_cmd(['bash/delete_job.sh', '-job', i])
+			print log
 			logs += log
 			errs += err
-		except:
-			logs += u'Задача: ' + i + u' не существует.\n'
+		except ObjectDoesNotExist:
+			logs += 'Задача: %s не существует.\n' % str(i)
 			continue
 
 	add_event(selected, logs, errs, '', '')
