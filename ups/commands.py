@@ -13,12 +13,13 @@ def commands(selected):
 		runcron, url = run_now, ''
 
 	cmd = {
-		'copy':          {'cmd': runcron,  'url': url,     'history': 'true'},
-		'update':        {'cmd': runcron,  'url': url,     'history': 'true'},
-		'restart':       {'cmd': runcron,  'url': url,     'history': 'true'},
-		'check_updates': {'cmd': run_now,  'url': url,     'history': ''},
-		'check_logs':    {'cmd': run_now,  'url': url,     'history': ''},
-		'delete_job':    {'cmd': del_job,  'url': '#cron', 'history': 'true'}, }
+		'Copy':          {'cmd': runcron, 'name': 'copy',          'url': url,     'history': 'true'},
+		'Update':        {'cmd': runcron, 'name': 'update',        'url': url,     'history': 'true'},
+		'Restart':       {'cmd': runcron, 'name': 'restart',       'url': url,     'history': 'true'},
+		'Check updates': {'cmd': run_now, 'name': 'check_updates', 'url': url,     'history': ''},
+		'Check logs':    {'cmd': run_now, 'name': 'check_logs',    'url': url,     'history': ''},
+		'Delete job':    {'cmd': del_job, 'name': 'delete_job',    'url': '#cron', 'history': 'true'}, }
 
 	selected['history'] = cmd[command]['history']
+	selected['cmdname'] = cmd[command]['name']
 	return cmd[command]['cmd'], cmd[command]['url']
