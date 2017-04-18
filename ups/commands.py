@@ -20,6 +20,6 @@ def commands(selected):
 		'Check logs':    {'cmd': run_now, 'history': False, 'bash': 'check_logs.sh',    'url': url, },
 		'Check updates': {'cmd': run_now, 'history': False, 'bash': 'check_updates.sh', 'url': url, }, }
 
-	selected['history'] = cmd[command]['history']
 	selected['cmdname'] = cmd[command]['bash']
+	selected['history'] = cmd[command]['history']
 	return cmd[command]['cmd'], cmd[command]['url']
