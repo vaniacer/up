@@ -14,11 +14,8 @@ until [ -z "$1" ]; do
     shift 2
 done
 
-echo -e "Отменяю задачи в кроне.\n"
 for id in ${jobs}; do
-    echo ${id}
     rule="/${id}/d;"${rule}
-
+    echo -e "Отменяю задачу: ${id}"
 done
-
 sed "${rule}" -i /var/spool/cron/crontabs/${USER}
