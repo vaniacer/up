@@ -45,7 +45,6 @@ def del_job(selected):
 		try:
 			Job.objects.get(cron=i).delete()
 			log, err = run_cmd(['bash/delete_job.sh', '-job', i])
-			print log
 			logs += log
 			errs += err
 		except ObjectDoesNotExist:
