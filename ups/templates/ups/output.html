@@ -4,59 +4,31 @@
 {% block content %}
 
     <script type="text/javascript">
-        function color(body_id, ec) {
-            var body = document.getElementById(body_id);
-            if (ec != 0) { body.style.background = '#f2dede'; }
-        }
-
         function topFunction() {
             document.body.scrollTop = 0; // For Chrome, Safari and Opera
             document.documentElement.scrollTop = 0; // For IE and Firefox
         }
+
+        function autoRefresh_div() {
+            $("#log").load("/logs");
+        }
+
+        $(document).ready(function() {
+        	setInterval(function() { autoRefresh_div(); }, 500);
+        });
+
     </script>
 
     <br>
+    <div id="log"></div>
+    <br>
 
-    <dl class="dl-horizontal output" id="output_log">
-        <!--<dt>Event logs</dt><dd><tt>{{ log|linebreaks }}</tt></dd>-->
-        <dt>Event logs</dt><dd><tt>{% for string in log %}{{ string }}{% endfor %}</tt></dd>
-        <dt>Error code</dt><dd>{{ err }}</dd>
-        <dt>
-            <br>
-            <a class="btn btn-primary" href="{% url 'ups:project' project.id %}">Back</a>
-            <!--<button class="btn btn-primary" onclick="goBack()">Back</button>-->
-        </dt>
-    </dl>
-
-    <style onload="color('output_log', '{{ err }}')"></style>
+    <a class="btn btn-primary" href="{% url 'ups:project' project.id %}">Back</a>
+    <!--<button class="btn btn-primary" onclick="goBack()">Back</button>-->
+    <button class="btn btn-primary" onclick="autoRefresh_div()">refresh</button>
 
     <br> <br> <br> <br>
 
     {% include "ups/output_bottom_panel.html" %}
 
 {% endblock content %}
-
-<!--function cpu_system() {-->
-
-	<!--var xmlhttp;-->
-
-	<!--if (window.XMLHttpRequest) { // code for IE7+, Firefox, Chrome, Opera, Safari-->
-		<!--xmlhttp=new XMLHttpRequest();-->
-	<!--}-->
-
-	<!--else { // code for IE6, IE5-->
-		<!--xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");-->
-    <!--}-->
-
-	<!--xmlhttp.onreadystatechange=function() {-->
-		<!--if (xmlhttp.readyState==4 && xmlhttp.status==200) {-->
-			<!--document.getElementById("cpu-system").innerHTML=xmlhttp.responseText;-->
-		<!--}-->
-	<!--}-->
-
-	<!--setInterval(function() {-->
-		<!--xmlhttp.open("POST","/static/stats/%system.txt",true);-->
-		<!--xmlhttp.send();-->
-	<!--}, 5000);-->
-
-<!--}-->

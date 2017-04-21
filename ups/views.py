@@ -3,12 +3,13 @@
 from django.shortcuts import render, get_object_or_404, HttpResponseRedirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
+from django.conf import settings as conf
+from django.http import FileResponse
 from .permissions import check_perm
 from .cron import get_cron_logs
 from .commands import commands
 from .models import Project
 import datetime
-from django.http import StreamingHttpResponse, FileResponse
 
 
 def index(request):
@@ -37,13 +38,9 @@ def cmd_render(request, current_project):
 		'project': current_project, }
 
 	cmd, url = commands(selected)
-	# rc = cmd.returncode
-	# log, err = StreamingHttpResponse(cmd(selected).communicate()).streaming_content
 	cmd(selected)
-	log = FileResponse(open('/home/vaniac/GIT/up/logs/run/log', 'rb')).streaming_content
-	err = 0
 
-	context = {'project': selected['project'], 'log': log, 'err': err}
+	context = {'project': selected['project']}
 
 	if url:
 		return HttpResponseRedirect(url)
@@ -76,6 +73,17 @@ def projects(request):
 	project_list = Project.objects.order_by('name')
 	context = {'projects': project_list}
 	return render(request, 'ups/projects.html', context)
+
+
+@login_required
+def logs(request):
+	"""Выводит логи."""
+	log = FileResponse(open(conf.LOG_FILE, 'rb')).streaming_content
+	err = FileResponse(open(conf.ERR_FILE, 'rb')).streaming_content
+
+	context = {'log': log, 'err': err}
+
+	return render(request, 'ups/output_log.html', context)
 
 
 @login_required

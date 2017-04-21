@@ -64,10 +64,11 @@ def run_now(selected):
 	if selected['updates']:
 		opt.extend(['-update', ' '.join(selected['updates'])])
 
-	run = Popen(opt, stdin=PIPE, stdout=PIPE, stderr=PIPE)
+	# run = \
+	Popen(opt, stdin=PIPE, stdout=PIPE, stderr=PIPE)
 	# out, err = run.communicate()
 	# rc = run.returncode
-	return run
+	# return out + err, rc
 
 
 def run_now2(selected):

@@ -2,7 +2,8 @@
 
 error=0
 folder=$(dirname $0)
-logdir=${folder}/../../logs/cron
+crondir=${folder}/../../logs/cron
+rundir=${folder}/../../logs/run
 
 #Get opts
 until [ -z "$1" ]; do
@@ -59,17 +60,16 @@ function copy () {
         echo # Add empty line
     done
 
-    echo "__ERROR__${error}"
+    echo -e "\nDone.\nERROR: ${error}"
+    echo ${error} > ${rundir}/err
 }
 
-#log=$(copy)
-#err=$(echo ${log//*__ERROR__})
-#log=${log//__ERROR__*}
-#dat=$(date +'%b %d, %Y %R'); dat=${dat//.}; dat=${dat^};
-#
-#[ "${cron}" ] && { log=${log}"\nDate: ${dat}\nError: ${err}"; echo -e "${log}" > ${logdir}/${cron}; } \
-#              || { echo -e "${log}"; }
-
-copy > ${folder}/../../logs/run/log
+[ "${cron}" ] \
+&& { log=$(copy)
+     err=$(echo ${log//*ERROR:})
+     log=${log//ERROR:*}
+     dat=$(date +'%b %d, %Y %R'); dat=${dat//.}; dat=${dat^}
+     log=${log}"\nDate: ${dat}\nError: ${err}"; echo -e "${log}" > ${crondir}/${cron}; } \
+|| { copy > ${rundir}/log; }
 
 exit ${err}
