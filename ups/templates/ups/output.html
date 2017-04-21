@@ -18,7 +18,8 @@
     <br>
 
     <dl class="dl-horizontal output" id="output_log">
-        <dt>Event logs</dt><dd><tt>{{ log|linebreaks }}</tt></dd>
+        <!--<dt>Event logs</dt><dd><tt>{{ log|linebreaks }}</tt></dd>-->
+        <dt>Event logs</dt><dd><tt>{% for string in log %}{{ string }}{% endfor %}</tt></dd>
         <dt>Error code</dt><dd>{{ err }}</dd>
         <dt>
             <br>
@@ -34,3 +35,28 @@
     {% include "ups/output_bottom_panel.html" %}
 
 {% endblock content %}
+
+<!--function cpu_system() {-->
+
+	<!--var xmlhttp;-->
+
+	<!--if (window.XMLHttpRequest) { // code for IE7+, Firefox, Chrome, Opera, Safari-->
+		<!--xmlhttp=new XMLHttpRequest();-->
+	<!--}-->
+
+	<!--else { // code for IE6, IE5-->
+		<!--xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");-->
+    <!--}-->
+
+	<!--xmlhttp.onreadystatechange=function() {-->
+		<!--if (xmlhttp.readyState==4 && xmlhttp.status==200) {-->
+			<!--document.getElementById("cpu-system").innerHTML=xmlhttp.responseText;-->
+		<!--}-->
+	<!--}-->
+
+	<!--setInterval(function() {-->
+		<!--xmlhttp.open("POST","/static/stats/%system.txt",true);-->
+		<!--xmlhttp.send();-->
+	<!--}, 5000);-->
+
+<!--}-->

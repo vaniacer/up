@@ -24,7 +24,7 @@ case ${desc} in true)
 esac
 
 function info () {
-    name="| Сервер - ${1} |"
+    name="| Server - ${1} |"
     line=$[ (100-${#name})/2 ]
 
     printf %.s- $(seq ${line}); printf "${name}"; printf %.s- $(seq ${line}); printf "\n"
@@ -45,11 +45,11 @@ function copy () {
         ssh ${addr} "echo > /dev/null" \
             && { for file in ${updates}; do
                     filename=$(basename ${file})
-                    echo -e "\nКопирую файл - ${filename}"
+                    echo -e "\nCopy file - ${filename}"
 
                     # Check if file exist, copy if not exist
                     ssh ${addr} ls ${wdir}/updates/new/${filename} &> /dev/null \
-                        && { echo -e "Файл - ${filename} существует, пропускаю."; } \
+                        && { echo -e "File - ${filename} exist, skip."; } \
                         || { scp ${file} ${server}/updates/new || error="$?"; }
 
                     echo # Add empty line
@@ -62,12 +62,14 @@ function copy () {
     echo "__ERROR__${error}"
 }
 
-log=$(copy)
-err=$(echo ${log//*__ERROR__})
-log=${log//__ERROR__*}
-dat=$(date +'%b %d, %Y %R'); dat=${dat//.}; dat=${dat^};
+#log=$(copy)
+#err=$(echo ${log//*__ERROR__})
+#log=${log//__ERROR__*}
+#dat=$(date +'%b %d, %Y %R'); dat=${dat//.}; dat=${dat^};
+#
+#[ "${cron}" ] && { log=${log}"\nDate: ${dat}\nError: ${err}"; echo -e "${log}" > ${logdir}/${cron}; } \
+#              || { echo -e "${log}"; }
 
-[ "${cron}" ] && { log=${log}"\nDate: ${dat}\nError: ${err}"; echo -e "${log}" > ${logdir}/${cron}; } \
-              || { echo -e "${log}"; }
+copy > ${folder}/../../logs/run/log
 
 exit ${err}

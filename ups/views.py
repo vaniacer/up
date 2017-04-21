@@ -8,6 +8,7 @@ from .cron import get_cron_logs
 from .commands import commands
 from .models import Project
 import datetime
+from django.http import StreamingHttpResponse, FileResponse
 
 
 def index(request):
@@ -36,7 +37,12 @@ def cmd_render(request, current_project):
 		'project': current_project, }
 
 	cmd, url = commands(selected)
-	log, err = cmd(selected)
+	# rc = cmd.returncode
+	# log, err = StreamingHttpResponse(cmd(selected).communicate()).streaming_content
+	cmd(selected)
+	log = FileResponse(open('/home/vaniac/GIT/up/logs/run/log', 'rb')).streaming_content
+	err = 0
+
 	context = {'project': selected['project'], 'log': log, 'err': err}
 
 	if url:
