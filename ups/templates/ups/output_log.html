@@ -2,14 +2,22 @@
 
 <dl class="dl-horizontal output" id="output_log">
     <dt>Event logs</dt><dd><tt>{% for string in log %}{{ string|linebreaks }}{% endfor %}</tt></dd>
-    <dt>Error code</dt>
-    <dd>
-        {% for num in err %}
-            {{ num }}
-            <script type="text/javascript">
-                var body = document.getElementById('output_log');
-                if ({{ num }} != '0') { body.style.background = '#f2dede'; }
-            </script>
-        {% endfor %}
-    </dd>
+        {% if err %}
+            <dt>Error code</dt>
+            <dd>
+                {{ err }}
+                <script type="text/javascript">
+                    var body = document.getElementById('output_log');
+                    if ({{ err }} != '0') { body.style.background = '#f2dede'; }
+                </script>
+            </dd>
+        {% endif %}
 </dl>
+
+{% if not err %}
+    <div class="small_loader"></div>
+{% else %}
+    <dl class="dl-horizontal output">
+        <dt><a class="btn btn-primary" href="">Back</a></dt>
+    </dl>
+{% endif %}

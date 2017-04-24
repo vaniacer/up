@@ -37,10 +37,9 @@ def cmd_render(request, current_project):
 		'command': request.POST.get('selected_commands'),
 		'project': current_project, }
 
+	context = {'project': current_project}
 	cmd, url = commands(selected)
 	cmd(selected)
-
-	context = {'project': selected['project']}
 
 	if url:
 		return HttpResponseRedirect(url)
@@ -79,9 +78,13 @@ def projects(request):
 def logs(request):
 	"""Выводит логи."""
 	log = FileResponse(open(conf.LOG_FILE, 'rb')).streaming_content
-	err = FileResponse(open(conf.ERR_FILE, 'rb')).streaming_content
+	err = open(conf.ERR_FILE, 'r').read()
+	context = {'log': log}
 
-	context = {'log': log, 'err': err}
+	try:
+		context['err'] = int(err)
+	except ValueError:
+		pass
 
 	return render(request, 'ups/output_log.html', context)
 

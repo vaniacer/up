@@ -14,18 +14,14 @@
         }
 
         $(document).ready(function() {
-        	setInterval(function() { autoRefresh_div(); }, 500);
+        	setInterval(function() { autoRefresh_div(); }, 2000);
+        	autoRefresh_div();
         });
-
     </script>
 
     <br>
     <div id="log"></div>
     <br>
-
-    <a class="btn btn-primary" href="{% url 'ups:project' project.id %}">Back</a>
-    <!--<button class="btn btn-primary" onclick="goBack()">Back</button>-->
-    <button class="btn btn-primary" onclick="autoRefresh_div()">refresh</button>
 
     <br> <br> <br> <br>
 

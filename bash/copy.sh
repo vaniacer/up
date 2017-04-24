@@ -5,6 +5,8 @@ folder=$(dirname $0)
 crondir=${folder}/../../logs/cron
 rundir=${folder}/../../logs/run
 
+echo '' > ${rundir}/err
+
 #Get opts
 until [ -z "$1" ]; do
 
