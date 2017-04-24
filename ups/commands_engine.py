@@ -63,12 +63,7 @@ def run_now(selected):
 		opt.extend(['-server', ' '.join(selected['servers'])])
 	if selected['updates']:
 		opt.extend(['-update', ' '.join(selected['updates'])])
-
-	# run = \
 	Popen(opt, stdin=PIPE, stdout=PIPE, stderr=PIPE)
-	# out, err = run.communicate()
-	# rc = run.returncode
-	# return out + err, rc
 
 
 def run_now2(selected):

@@ -4,6 +4,7 @@ from django.shortcuts import render, get_object_or_404, HttpResponseRedirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
 from django.conf import settings as conf
+from .commands_engine import add_event
 from django.http import FileResponse
 from .permissions import check_perm
 from .cron import get_cron_logs
@@ -15,6 +16,13 @@ import datetime
 def index(request):
 	"""Домашняя страница приложения update server."""
 	return render(request, 'ups/index.html')
+
+
+def update_history(request, current_project, log, err):
+	"""Добавляет событие в историю."""
+	dick = {'project': current_project, 'user': request.user, 'command': ''}
+	add_event(dick, log, err, '', '')
+	pass
 
 
 def run_date():
@@ -75,14 +83,18 @@ def projects(request):
 
 
 @login_required
-def logs(request):
+def logs(request, project_id):
 	"""Выводит логи."""
+	current_project = get_object_or_404(Project, id=project_id)
+	check_perm('view_project', current_project, request.user)
+
 	log = FileResponse(open(conf.LOG_FILE, 'rb')).streaming_content
 	err = open(conf.ERR_FILE, 'r').read()
 	context = {'log': log}
 
 	try:
 		context['err'] = int(err)
+		# update_history(request, current_project, log, err)
 	except ValueError:
 		pass
 

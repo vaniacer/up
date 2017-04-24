@@ -13,7 +13,7 @@ urlpatterns = [
 	# Вывод всех проектов.
 	url(r'^projects/$', views.projects, name='projects'),
 	# Вывод логов.
-	url(r'^logs/$', views.logs, name='logs'),
+	url(r'^logs/(?P<project_id>\d+)$', views.logs, name='logs'),
 	# Страница с подробной информацией по отдельному проекту
 	url(r'^projects/(?P<project_id>\d+)/$', views.project, name='project'),
 	# Страница для добавления нового проекта

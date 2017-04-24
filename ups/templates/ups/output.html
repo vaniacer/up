@@ -10,7 +10,7 @@
         }
 
         function autoRefresh_div() {
-            $("#log").load("/logs");
+            $("#log").load("/logs/{{ project.id }}");
         }
 
         $(document).ready(function() {
