@@ -66,6 +66,21 @@ def run_now(selected):
 	Popen(opt, stdin=PIPE, stdout=PIPE, stderr=PIPE)
 
 
+def run_now2(selected):
+	"""Выполняет комманду."""
+	opt = ['bash/' + selected['cmdname']]
+
+	if selected['servers']:
+		opt.extend(['-server', ' '.join(selected['servers'])])
+	if selected['updates']:
+		opt.extend(['-update', ' '.join(selected['updates'])])
+
+	log, err = run_cmd(opt)
+	if selected['history']:
+		add_event(selected, log, err, '', '')
+	return log, err
+
+
 def cron_job(selected):
 	"""Создает задачу в кроне."""
 	key = str(b64encode(urandom(6), 'dfsDFAsfsf'))

@@ -25,7 +25,8 @@ def index(request):
 
 def update_history(log, err):
 	"""Добавляет событие в историю."""
-	add_event(selected, log, err, '', '')
+	if selected['history']:
+		add_event(selected, log, err, '', '')
 
 
 def run_date():
