@@ -13,16 +13,18 @@ from .models import Project
 import datetime
 
 
+hist_updated = False
+selected = {}
+
+
 def index(request):
 	"""Домашняя страница приложения update server."""
 	return render(request, 'ups/index.html')
 
 
-def update_history(request, current_project, log, err):
+def update_history(log, err):
 	"""Добавляет событие в историю."""
-	dick = {'project': current_project, 'user': request.user, 'command': ''}
-	add_event(dick, log, err, '', '')
-	pass
+	add_event(selected, log, err, '', '')
 
 
 def run_date():
@@ -34,6 +36,8 @@ def run_date():
 def cmd_render(request, current_project):
 	"""Выводит результат нажатия кнопок."""
 	check_perm('run_command', current_project, request.user)
+
+	global selected
 
 	selected = {
 		'user': request.user,
@@ -88,16 +92,20 @@ def logs(request, project_id):
 	current_project = get_object_or_404(Project, id=project_id)
 	check_perm('view_project', current_project, request.user)
 
-	log = FileResponse(open(conf.LOG_FILE, 'rb')).streaming_content
+	global hist_updated
+
+	# log = FileResponse(open(conf.LOG_FILE, 'rb')).streaming_content
+	log = open(conf.LOG_FILE, 'r').read()
 	err = open(conf.ERR_FILE, 'r').read()
 	context = {'log': log}
 
 	try:
 		context['err'] = int(err)
-		# update_history(request, current_project, log, err)
+		if not hist_updated:
+			hist_updated = True
+			update_history(log, context['err'])
 	except ValueError:
 		pass
-
 	return render(request, 'ups/output_log.html', context)
 
 
@@ -106,6 +114,9 @@ def project(request, project_id):
 	"""Выводит один проект, все его серверы, пакеты обновлений и обрабатывает кнопки действий."""
 	current_project = get_object_or_404(Project, id=project_id)
 	check_perm('view_project', current_project, request.user)
+
+	global hist_updated
+	hist_updated = False
 
 	get_cron_logs()
 	servers = current_project.server_set.order_by('name')
@@ -125,5 +136,4 @@ def project(request, project_id):
 
 	if request.POST.get('selected_commands'):
 		return cmd_render(request, current_project)
-
 	return render(request, 'ups/project.html', context)

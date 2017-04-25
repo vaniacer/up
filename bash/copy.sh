@@ -72,6 +72,6 @@ function copy () {
      log=${log//ERROR:*}
      dat=$(date +'%b %d, %Y %R'); dat=${dat//.}; dat=${dat^}
      log=${log}"\nDate: ${dat}\nError: ${err}"; echo -e "${log}" > ${crondir}/${cron}; } \
-|| { copy > ${rundir}/log; }
+|| { copy &> ${rundir}/log; }
 
 exit ${err}
