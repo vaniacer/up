@@ -19,12 +19,7 @@ until [ -z "$1" ]; do
     shift 2
 done
 
-function info () {
-    name="| Server - ${1} |"
-    line=$[ (100-${#name})/2 ]
-
-    printf %.s- $(seq ${line}); printf "${name}"; printf %.s- $(seq ${line}); printf "\n"
-}
+. ${folder}/func.sh
 
 function run () {
     # Get logs

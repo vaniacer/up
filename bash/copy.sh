@@ -26,12 +26,7 @@ case ${desc} in true)
     exit 0;;
 esac
 
-function info () {
-    name="| Server - ${1} |"
-    line=$[ (100-${#name})/2 ]
-
-    printf %.s- $(seq ${line}); printf "${name}"; printf %.s- $(seq ${line}); printf "\n"
-}
+. ${folder}/func.sh
 
 function run () {
     for server in ${servers}; do
