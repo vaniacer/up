@@ -11,10 +11,10 @@ def commands(selected):
 		runcron, url = cron_job, '#updates_servers'
 	else:
 		runcron, url = run_now, ''
-#                        +----------------+-----------------+--------------------------+-----------+
-#                        | function in    | write history   | bash command name        | url after |
-#                        | commands_engine| log or not      |                          | command   |
-	cmd = {            # +----------------+-----------------+--------------------------+-----------+
+#                        +----------------+-----------------+---------------------------+-----------+
+#                        | function in    | write history   | bash command name         | url after |
+#                        | commands_engine| log or not      |                           | command   |
+	cmd = {            # +----------------+-----------------+---------------------------+-----------+
 		'Copy':          {'cmd': runcron, 'history': True,  'bash': 'copy.sh',          'url': url, },
 		'Update':        {'cmd': runcron, 'history': True,  'bash': 'update.sh',        'url': url, },
 		'Restart':       {'cmd': runcron, 'history': True,  'bash': 'restart.sh',       'url': url, },
