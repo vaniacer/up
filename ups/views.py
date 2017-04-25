@@ -5,7 +5,6 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
 from django.conf import settings as conf
 from .commands_engine import add_event
-from django.http import FileResponse
 from .permissions import check_perm
 from .cron import get_cron_logs
 from .commands import commands
@@ -94,7 +93,6 @@ def logs(request, project_id):
 
 	global hist_updated
 
-	# log = FileResponse(open(conf.LOG_FILE, 'rb')).streaming_content
 	log = open(conf.LOG_FILE, 'r').read()
 	err = open(conf.ERR_FILE, 'r').read()
 	context = {'log': log}

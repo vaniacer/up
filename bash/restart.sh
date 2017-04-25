@@ -2,7 +2,10 @@
 
 error=0
 folder=$(dirname $0)
-logdir=${folder}/../../logs/cron
+crondir=${folder}/../../logs/cron
+rundir=${folder}/../../logs/run
+
+echo '' > ${rundir}/err
 
 #Get opts
 until [ -z "$1" ]; do
@@ -30,18 +33,19 @@ function info () {
     printf %.s- $(seq ${line}); printf "${name}"; printf %.s- $(seq ${line}); printf "\n"
 }
 
-function restart () {
+function run () {
     echo -e "Not ready yet"
     error=$?
-    echo "__ERROR__${error}"
+    echo -e "\nDone.\nERROR: ${error}"
+    echo ${error} > ${rundir}/err
 }
 
-log=$(restart)
-err=$(echo ${log//*__ERROR__})
-log=${log//__ERROR__*}
-dat=$(date +'%b %d, %Y %R'); dat=${dat//.}; dat=${dat^};
-
-[ "${cron}" ] && { log=${log}"\nDate: ${dat}\nError: ${err}"; echo -e "${log}" > ${logdir}/${cron}; } \
-              || { echo -e "${log}"; }
+[ "${cron}" ] \
+&& { log=$(run)
+     err=$(echo ${log//*ERROR:})
+     log=${log//ERROR:*}
+     dat=$(date +'%b %d, %Y %R'); dat=${dat//.}; dat=${dat^}
+     log=${log}"\nDate: ${dat}\nError: ${err}"; echo -e "${log}" > ${crondir}/${cron}; } \
+|| { run &> ${rundir}/log; }
 
 exit ${err}

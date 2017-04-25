@@ -33,7 +33,7 @@ function info () {
     printf %.s- $(seq ${line}); printf "${name}"; printf %.s- $(seq ${line}); printf "\n"
 }
 
-function copy () {
+function run () {
     for server in ${servers}; do
 
         # server comes like this jboss@localhost:/var/lib/jboss
@@ -67,11 +67,11 @@ function copy () {
 }
 
 [ "${cron}" ] \
-&& { log=$(copy)
+&& { log=$(run)
      err=$(echo ${log//*ERROR:})
      log=${log//ERROR:*}
      dat=$(date +'%b %d, %Y %R'); dat=${dat//.}; dat=${dat^}
      log=${log}"\nDate: ${dat}\nError: ${err}"; echo -e "${log}" > ${crondir}/${cron}; } \
-|| { copy &> ${rundir}/log; }
+|| { run &> ${rundir}/log; }
 
 exit ${err}
