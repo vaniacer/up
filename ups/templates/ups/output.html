@@ -4,11 +4,6 @@
 {% block content %}
 
     <script type="text/javascript">
-        function topFunction() {
-            document.body.scrollTop = 0; // For Chrome, Safari and Opera
-            document.documentElement.scrollTop = 0; // For IE and Firefox
-        }
-
         function autoRefresh_div() {
             $("#log").load("/logs/{{ project.id }}");
         }
@@ -19,9 +14,7 @@
         });
     </script>
 
-    <br>
     <div id="log"></div>
-    <br>
 
     <br> <br> <br> <br>
 
