@@ -5,6 +5,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
 from django.conf import settings as conf
 from .commands_engine import add_event
+# from django.views.static import serve
 from .permissions import check_perm
 from .cron import get_cron_logs
 from .commands import commands
@@ -56,6 +57,8 @@ def cmd_render(request, current_project):
 		return HttpResponseRedirect(url)
 	else:
 		return render(request, 'ups/output.html', context)
+	# filepath = '/some/path/to/local/file.txt'
+	# return serve(request, os.path.basename(filepath), os.path.dirname(filepath))
 
 
 def pagination(request, history):
