@@ -17,7 +17,6 @@ until [ -z "$1" ]; do case $1 in
 
 esac; shift 2; done
 
-echo '' > ${rundir}/err${key}
 . ${folder}/func.sh
 
 case ${desc} in true)
@@ -26,10 +25,10 @@ case ${desc} in true)
 esac
 
 function run () {
+    [ "${cron}" ] || echo ${cron} > ${rundir}/err${key}
     echo -e "Not ready yet"
     error=$?
     echo -e "\nDone.\nERROR: ${error}"
-    echo ${error} > ${rundir}/err${key}
 }
 
 [ "${cron}" ] \
@@ -38,6 +37,6 @@ function run () {
      log=${log//ERROR:*}
      dat=$(date +'%b %d, %Y %R'); dat=${dat//.}; dat=${dat^}
      log=${log}"\nDate: ${dat}\nError: ${err}"; echo -e "${log}" > ${crondir}/${cron}; } \
-|| { run &> ${rundir}/log${key}; }
+|| { run &> ${rundir}/log${key}; echo ${error} > ${rundir}/err${key}; }
 
 exit ${err}

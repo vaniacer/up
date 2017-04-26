@@ -14,6 +14,7 @@ from .models import Project
 import datetime
 import os
 
+
 def index(request):
 	"""Домашняя страница приложения update server."""
 	return render(request, 'ups/index.html')
