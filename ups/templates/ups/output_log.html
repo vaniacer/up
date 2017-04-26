@@ -1,5 +1,3 @@
-{% load bootstrap3 %}
-
 <dl class="dl-horizontal output" id="output_log">
     <dt>Event logs</dt><dd><tt>{{ log|linebreaks }}</tt></dd>
         {% if err >= 0 %}
@@ -7,6 +5,7 @@
             <dd>
                 {{ err }}
                 <script type="text/javascript">
+                    var log_ready = true;
                     var body = document.getElementById('output_log');
                     if ({{ err }} > 0) { body.style.background = '#f2dede'; }
                 </script>
@@ -18,9 +17,6 @@
     <dl class="dl-horizontal output">
         <dt><a class="btn btn-primary" href="">Back</a></dt>
     </dl>
-    <script type="text/javascript">
-        var log_ready = true;
-    </script>
 {% else %}
     <div class="small_loader"></div>
 {% endif %}
