@@ -8,6 +8,11 @@ from base64 import b64encode
 from os import urandom
 
 
+def get_key():
+	"""Создает случайную последовательность символов."""
+	return str(b64encode(urandom(6), 'dfsDFAsfsf'))
+
+
 def add_event(selected, log, err, cron, date):
 	"""Создает событие в истории."""
 	History.objects.create(
@@ -57,7 +62,7 @@ def del_job(selected):
 
 def run_now(selected):
 	"""Выполняет комманду."""
-	opt = ['bash/' + selected['cmdname']]
+	opt = ['bash/' + selected['cmdname'], '-key', selected['key']]
 
 	if selected['servers']:
 		opt.extend(['-server', ' '.join(selected['servers'])])
@@ -83,7 +88,7 @@ def run_now2(selected):
 
 def cron_job(selected):
 	"""Создает задачу в кроне."""
-	key = str(b64encode(urandom(6), 'dfsDFAsfsf'))
+	key = get_key()
 	opt = [
 		conf.BASE_DIR + '/bash/cron_job.sh',
 		'-date', selected['date'],

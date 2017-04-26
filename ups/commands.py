@@ -19,10 +19,10 @@ def commands(selected):
 		'Update':        {'cmd': runcron, 'history': True,  'bash': 'update.sh',        'url': url, },
 		'Restart':       {'cmd': runcron, 'history': True,  'bash': 'restart.sh',       'url': url, },
 		'Delete job':    {'cmd': del_job, 'history': True,  'bash': 'delete_job.sh',    'url': '#cron', },
-		'Check logs':    {'cmd': run_now, 'history': False, 'bash': 'check_logs.sh',    'url': url, },
-		'Check updates': {'cmd': run_now, 'history': False, 'bash': 'check_updates.sh', 'url': url, },
+		'Check_logs':    {'cmd': run_now, 'history': False, 'bash': 'check_logs.sh',    'url': url, },
+		'Check_updates': {'cmd': run_now, 'history': False, 'bash': 'check_updates.sh', 'url': url, },
 	}
 
 	selected['cmdname'] = cmd[command]['bash']
 	selected['history'] = cmd[command]['history']
-	return cmd[command]['cmd'], cmd[command]['url']
+	return cmd[command]['cmd'], cmd[command]['url'], selected['history']

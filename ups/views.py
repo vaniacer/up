@@ -4,7 +4,7 @@ from django.shortcuts import render, get_object_or_404, HttpResponseRedirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
 from django.conf import settings as conf
-from .commands_engine import add_event
+from .commands_engine import add_event, get_key
 # from django.views.static import serve
 # from django.http import FileResponse
 from .permissions import check_perm
@@ -12,21 +12,11 @@ from .cron import get_cron_logs
 from .commands import commands
 from .models import Project
 import datetime
-
-
-hist_updated = False
-selected = {}
-
+import os
 
 def index(request):
 	"""Домашняя страница приложения update server."""
 	return render(request, 'ups/index.html')
-
-
-def update_history(log, err):
-	"""Добавляет событие в историю."""
-	if selected['history']:
-		add_event(selected, log, err, '', '')
 
 
 def run_date():
@@ -39,9 +29,8 @@ def cmd_render(request, current_project):
 	"""Выводит результат нажатия кнопок."""
 	check_perm('run_command', current_project, request.user)
 
-	global selected
-
 	selected = {
+		'key': get_key(),
 		'user': request.user,
 		'cron': request.POST.get('CRON') or '',
 		'date': request.POST.get('selected_date') or run_date(),
@@ -51,8 +40,9 @@ def cmd_render(request, current_project):
 		'command': request.POST.get('selected_commands'),
 		'project': current_project, }
 
-	context = {'project': current_project}
-	cmd, url = commands(selected)
+	print selected['command']
+	context = {'project': current_project, 'key': selected['key'], 'cmd': selected['command']}
+	cmd, url, his = commands(selected)
 	cmd(selected)
 
 	if url:
@@ -91,23 +81,24 @@ def projects(request):
 
 
 @login_required
-def logs(request, project_id):
+def logs(request, project_id, log_id, cmd):
 	"""Выводит логи."""
 	current_project = get_object_or_404(Project, id=project_id)
 	check_perm('view_project', current_project, request.user)
 
-	global hist_updated
+	log = open(conf.LOG_FILE + log_id, 'r').read()
+	err = open(conf.ERR_FILE + log_id, 'r').read()
+	dum, url, his = commands({'command': cmd, 'cron': ''})
 
-	# log = FileResponse(open(conf.LOG_FILE, 'rb')).streaming_content
-	log = open(conf.LOG_FILE, 'r').read()
-	err = open(conf.ERR_FILE, 'r').read()
 	context = {'log': log}
+	history = {'project': current_project, 'user': request.user, 'command': cmd}
 
 	try:
 		context['err'] = int(err)
-		if not hist_updated:
-			hist_updated = True
-			update_history(log, context['err'])
+		if his:
+			add_event(history, log, context['err'], '', '')
+		os.remove(conf.LOG_FILE + log_id)
+		os.remove(conf.ERR_FILE + log_id)
 	except ValueError:
 		pass
 	return render(request, 'ups/output_log.html', context)
@@ -118,9 +109,6 @@ def project(request, project_id):
 	"""Выводит один проект, все его серверы, пакеты обновлений и обрабатывает кнопки действий."""
 	current_project = get_object_or_404(Project, id=project_id)
 	check_perm('view_project', current_project, request.user)
-
-	global hist_updated
-	hist_updated = False
 
 	get_cron_logs()
 	servers = current_project.server_set.order_by('name')

@@ -12,8 +12,6 @@ urlpatterns = [
 	url(r'^$', views.index, name='index'),
 	# Вывод всех проектов.
 	url(r'^projects/$', views.projects, name='projects'),
-	# Вывод логов.
-	url(r'^logs/(?P<project_id>\d+)$', views.logs, name='logs'),
 	# Страница с подробной информацией по отдельному проекту
 	url(r'^projects/(?P<project_id>\d+)/$', views.project, name='project'),
 	# Страница для добавления нового проекта
@@ -28,4 +26,6 @@ urlpatterns = [
 	url(r'^edit_server/(?P<server_id>\d+)/$', views_edit.edit_server, name='edit_server'),
 	# Страница для редактирования обновления
 	url(r'^edit_update/(?P<update_id>\d+)/$', views_edit.edit_update, name='edit_update'),
+	# Вывод логов.
+	url(r'^logs/(?P<project_id>\w+)/(?P<log_id>\w+)/(?P<cmd>\w+)/$', views.logs, name='logs'),
 ]

@@ -2,16 +2,18 @@
 
 <ul class="nav navbar-nav navbar-right">
     {% if "run_command" in pr_view_perms %}
-        <li><input type="submit"
+        <li><button type="submit"
                    name="selected_commands"
-                   value="Check updates"
+                   value="Check_updates"
                    class="btn btn-default navbar-btn blockUI"
-                   onclick="return Validation('', 'true', '', '')"></li>
-        <li><input type="submit"
+                   onclick="return Validation('', 'true', '', '')">Check updates
+        </button></li>
+        <li><button type="submit"
                    name="selected_commands"
-                   value="Check logs"
+                   value="Check_logs"
                    class="btn btn-default navbar-btn blockUI"
-                   onclick="return Validation('', 'true', '', '')"></li>
+                   onclick="return Validation('', 'true', '', '')">Check logs
+        </button></li>
     {% endif %}
     <li><input type="button" class="btn btn-default navbar-btn"
                onclick="topFunction()" value="Top"/></li>

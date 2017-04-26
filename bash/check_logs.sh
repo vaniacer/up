@@ -5,20 +5,17 @@ folder=$(dirname $0)
 crondir=${folder}/../../logs/cron
 rundir=${folder}/../../logs/run
 
-echo '' > ${rundir}/err
-
 #Get opts
-until [ -z "$1" ]; do
+until [ -z "$1" ]; do case $1 in
 
-    case $1 in
-	    -server | -s) servers=${2};;
-	    -update | -u) updates=${2};;
-        -job    | -j) jobs=${2};;
-    esac
+    -server | -s) servers=${2};;
+    -update | -u) updates=${2};;
+    -job    | -j) jobs=${2};;
+            -key) key=${2};;
 
-    shift 2
-done
+esac; shift 2; done
 
+echo '' > ${rundir}/err${key}
 . ${folder}/func.sh
 
 function run () {
@@ -38,8 +35,8 @@ function run () {
     done
 
     echo -e "\nDone.\nERROR: ${error}"
-    echo ${error} > ${rundir}/err
+    echo ${error} > ${rundir}/err${key}
 }
 
-run &> ${rundir}/log
+run &> ${rundir}/log${key}
 exit ${error}
