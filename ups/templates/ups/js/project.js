@@ -1,3 +1,4 @@
+var log_ready = false;
 
 function goBack() {
     history.back();

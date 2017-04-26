@@ -5,7 +5,7 @@
 
     <script type="text/javascript">
         function autoRefresh_div() {
-            $("#log").load("/logs/{{ project.id }}");
+            if (!log_ready) { $("#log").load("/logs/{{ project.id }}"); }
         }
 
         $(document).ready(function() {
