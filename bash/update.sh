@@ -25,7 +25,6 @@ case ${desc} in true)
 esac
 
 function run () {
-    [ "${cron}" ] || echo ${cron} > ${rundir}/err${key}
     echo -e "Not ready yet"
     error=$?
     echo -e "\nDone.\nERROR: ${error}"
@@ -37,6 +36,8 @@ function run () {
      log=${log//ERROR:*}
      dat=$(date +'%b %d, %Y %R'); dat=${dat//.}; dat=${dat^}
      log=${log}"\nDate: ${dat}\nError: ${err}"; echo -e "${log}" > ${crondir}/${cron}; } \
-|| { run &> ${rundir}/log${key}; echo ${error} > ${rundir}/err${key}; }
+|| { echo '' > ${rundir}/err${key}
+     run    &> ${rundir}/log${key}
+     echo ${error} > ${rundir}/err${key}; }
 
-exit ${err}
+exit ${error}

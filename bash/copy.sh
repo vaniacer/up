@@ -25,9 +25,7 @@ case ${desc} in true)
 esac
 
 function run () {
-    [ "${cron}" ] || echo ${cron} > ${rundir}/err${key}
     for server in ${servers}; do
-
         # server comes like this jboss@localhost:/var/lib/jboss
         # get address jboss@localhost
         addr=${server%%:*}
@@ -63,6 +61,8 @@ function run () {
      log=${log//ERROR:*}
      dat=$(date +'%b %d, %Y %R'); dat=${dat//.}; dat=${dat^}
      log=${log}"\nDate: ${dat}\nError: ${err}"; echo -e "${log}" > ${crondir}/${cron}; } \
-|| { run &> ${rundir}/log${key}; echo ${error} > ${rundir}/err${key}; }
+|| { echo '' > ${rundir}/err${key}
+     run    &> ${rundir}/log${key}
+     echo ${error} > ${rundir}/err${key}; }
 
-exit ${err}
+exit ${error}
