@@ -41,7 +41,6 @@ def cmd_render(request, current_project):
 		'command': request.POST.get('selected_commands'),
 		'project': current_project, }
 
-	print selected['command']
 	context = {'project': current_project, 'key': selected['key'], 'cmd': selected['command']}
 	cmd, url, his = commands(selected)
 	cmd(selected)
