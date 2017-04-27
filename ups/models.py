@@ -13,7 +13,7 @@ def get_upload_to(instance, filename):
 class Project(models.Model):
 	"""Проект: web-исполнение, web-нси, web-соглашения..."""
 	date = models.DateTimeField(auto_now_add=True, db_index=True)
-	name = models.CharField(max_length=200, unique=True)
+	name = models.CharField(max_length=255, unique=True)
 	desc = models.TextField(max_length=255)
 	slug = models.SlugField(max_length=64)
 
@@ -22,13 +22,13 @@ class Project(models.Model):
 		permissions = (
 			("view_project", "Can view project"),
 			("edit_project", "Can edit project"),
-			("edit_server", "Can edit projects's servers"),
-			("edit_update", "Can edit projects's updates"),
-			("run_command", "Can run project's commands"),
-			("add_server", "Can add server to project"),
-			("add_update", "Can add update to project"),
-			("del_server", "Can delete project's servers"),
-			("del_update", "Can delete project's updates"),
+			("edit_server",  "Can edit projects's servers"),
+			("edit_update",  "Can edit projects's updates"),
+			("run_command",  "Can run project's commands"),
+			("add_server",   "Can add server to project"),
+			("add_update",   "Can add update to project"),
+			("del_server",   "Can delete project's servers"),
+			("del_update",   "Can delete project's updates"),
 		)
 		get_latest_by = 'date'
 
@@ -44,9 +44,9 @@ class Project(models.Model):
 class Server(models.Model):
 	"""Серверы проекта."""
 	date = models.DateTimeField(auto_now_add=True, db_index=True)
-	name = models.CharField(max_length=200)
-	addr = models.CharField(max_length=200)
-	wdir = models.CharField(max_length=200)
+	name = models.CharField(max_length=255)
+	addr = models.CharField(max_length=255)
+	wdir = models.CharField(max_length=255)
 	desc = models.TextField(max_length=255)
 	proj = models.ForeignKey(Project)
 
@@ -71,8 +71,8 @@ class Update(models.Model):
 class Job(models.Model):
 	"""Задания в кроне."""
 	date = models.DateTimeField(auto_now_add=True, db_index=True)
-	name = models.CharField(max_length=200)
-	cron = models.CharField(max_length=210)
+	name = models.CharField(max_length=255)
+	cron = models.CharField(max_length=255)
 	cdat = models.CharField(max_length=30)
 	proj = models.ForeignKey(Project)
 	user = models.ForeignKey(User)
@@ -86,10 +86,10 @@ class Job(models.Model):
 class History(models.Model):
 	"""История проекта."""
 	date = models.DateTimeField(auto_now_add=True, db_index=True)
-	name = models.CharField(max_length=200)
-	cron = models.CharField(max_length=210)
-	exit = models.CharField(max_length=10)
+	name = models.CharField(max_length=255)
+	cron = models.CharField(max_length=255)
 	cdat = models.CharField(max_length=30)
+	exit = models.CharField(max_length=10)
 	proj = models.ForeignKey(Project)
 	user = models.ForeignKey(User)
 	desc = models.TextField()

@@ -3,8 +3,8 @@
 from django.shortcuts import render, get_object_or_404, HttpResponseRedirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
-from django.conf import settings as conf
 from .commands_engine import add_event, get_key
+from django.conf import settings as conf
 # from django.views.static import serve
 # from django.http import FileResponse
 from .permissions import check_perm
