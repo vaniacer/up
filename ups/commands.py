@@ -21,7 +21,7 @@ def commands(selected):
 		'Update':        {'cmd': runcron, 'history': True,  'bash': 'update.sh',        'url': url, },
 		'Reload':        {'cmd': runcron, 'history': True,  'bash': 'reload.sh',        'url': url, },
 		'Restart':       {'cmd': runcron, 'history': True,  'bash': 'restart.sh',       'url': url, },
-		'Delete job':    {'cmd': del_job, 'history': True,  'bash': 'delete_job.sh',    'url': '#cron', },
+		'Delete_job':    {'cmd': del_job, 'history': True,  'bash': 'delete_job.sh',    'url': '#cron', },
 		'Check_logs':    {'cmd': run_now, 'history': False, 'bash': 'check_logs.sh',    'url': url, },
 		'Check_updates': {'cmd': run_now, 'history': False, 'bash': 'check_updates.sh', 'url': url, },
 	}
