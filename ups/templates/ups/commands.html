@@ -38,6 +38,26 @@
         value="Reload"
         id="Reload"/>
 
+<li><a  onclick="return Validation('Maintenance_ON', 'true', '', '')"
+        title="Reload config on selected server(s)."
+        href="javascript:;">Maintenance ON</a></li>
+<input  name="selected_commands"
+        value="Maintenance_ON"
+        id="Maintenance_ON"
+        readonly="readonly"
+        type="checkbox"
+        class="hidden"/>
+
+<li><a  onclick="return Validation('Maintenance_OFF', 'true', '', '')"
+        title="Reload config on selected server(s)."
+        href="javascript:;">Maintenance OFF</a></li>
+<input  name="selected_commands"
+        value="Maintenance_OFF"
+        id="Maintenance_OFF"
+        readonly="readonly"
+        type="checkbox"
+        class="hidden"/>
+
 <li role="separator" class="divider"></li>
 
 <li><a  onclick="return Validation('Update', 'true', 'true', '')"

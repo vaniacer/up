@@ -16,7 +16,7 @@ def get_key():
 def add_event(selected, log, err, cron, date):
 	"""Создает событие в истории."""
 	History.objects.create(
-		name=selected['command'].capitalize(),
+		name=selected['command'].capitalize().replace('_', ' '),
 		proj=selected['project'],
 		user=selected['user'],
 		cron=cron,
@@ -28,7 +28,7 @@ def add_event(selected, log, err, cron, date):
 def add_job(selected, log, cron):
 	"""Создает запись о крон жобе."""
 	Job.objects.create(
-		name=selected['command'].capitalize(),
+		name=selected['command'].capitalize().replace('_', ' '),
 		proj=selected['project'],
 		user=selected['user'],
 		cdat=selected['date'],
