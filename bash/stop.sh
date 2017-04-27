@@ -20,7 +20,7 @@ esac; shift 2; done
 . ${folder}/func.sh
 
 case ${desc} in true)
-    echo -e "Restart server(s):\n${servers// /\\n}\n"
+    echo -e "Shutdown server(s):\n${servers// /\\n}\n"
     exit 0;;
 esac
 
@@ -37,8 +37,7 @@ function run () {
 
         # Check access and run command or send 'Server unreachable'
         ssh ${addr} "echo > /dev/null" \
-            && { ssh ${addr} ${wdir}/krupd jboss.stop  || error=$?
-                 ssh ${addr} ${wdir}/krupd jboss.start || error=$?; } \
+            && { ssh ${addr} ${wdir}/jboss-bas-*/bin/jboss-cli.sh -c command=":shutdown" || error=$?; } \
             || { error=$?; echo -e "\nServer unreachable."; }
 
         echo # Add empty line

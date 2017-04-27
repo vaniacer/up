@@ -20,7 +20,7 @@ esac; shift 2; done
 . ${folder}/func.sh
 
 case ${desc} in true)
-    echo -e "Copy Updates:\n${updates// /\\n}\n\nto Servers:\n${servers// /\\n}\n"
+    echo -e "Copy Update(s):\n${updates// /\\n}\n\nto Server(s):\n${servers// /\\n}\n"
     exit 0;;
 esac
 
@@ -35,6 +35,7 @@ function run () {
 
         info ${addr}
 
+        # Check access
         ssh ${addr} "echo > /dev/null" \
             && { for file in ${updates}; do
                     filename=$(basename ${file})
@@ -55,14 +56,4 @@ function run () {
     echo -e "\nDone.\nERROR: ${error}"
 }
 
-[ "${cron}" ] \
-&& { log=$(run)
-     err=$(echo ${log//*ERROR:})
-     log=${log//ERROR:*}
-     dat=$(date +'%b %d, %Y %R'); dat=${dat//.}; dat=${dat^}
-     log=${log}"\nDate: ${dat}\nError: ${err}"; echo -e "${log}" > ${crondir}/${cron}; } \
-|| { echo '' > ${rundir}/err${key}
-     run    &> ${rundir}/log${key}
-     echo ${error} > ${rundir}/err${key}; }
-
-exit ${error}
+starter # From func.sh
