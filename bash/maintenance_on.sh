@@ -3,10 +3,7 @@
 # Get options and functions
 . $(dirname $0)/func.sh
 
-case ${desc} in true)
-    echo -e "Start dummy page on server(s):\n${servers// /\\n}\n"
-    exit 0;; esac
-
+case ${desc} in true) echo -e "Start dummy page on server(s):\n${servers// /\\n}\n"; exit 0;; esac
 function run () { #----------------------------------|Main function|----------------------------------------------------
     for server in ${servers}; do
         # server comes like this jboss@localhost:/var/lib/jboss
