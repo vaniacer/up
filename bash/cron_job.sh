@@ -1,19 +1,7 @@
 #!/bin/bash
 
-folder=$(dirname $0)
-
-#----------|Get opts|------------
-until [ -z "$1" ]; do case $1 in
-
-    -server | -s) servers=${2};;
-    -update | -u) updates=${2};;
-    -date   | -d) date=${2};;
-    -job    | -j) jobs=${2};;
-    -cmd    | -c) cmd=${2};;
-             -id) id=${2};;
-
-esac; shift 2; done
-#--------------------------------
+# Get options and functions
+. $(dirname $0)/func.sh
 
 # Get time
 read date time <<< "${date}"
@@ -22,7 +10,7 @@ hh=${time%:*}; mm=${time#*:}; DD=${date%%.*}; MM=${date#*.}; MM=${MM%.*}
 date="${mm} ${hh} ${DD} ${MM}"                              # Cron format date
 sedr="/${id}/d"                                             # Sed rule to delete old cron job
 cncl="sed \"${sedr}\" -i /var/spool/cron/crontabs/${USER}"  # Command to cancel executed cron job
-cmnd="${folder}/${cmd} -cron ${id}"                         # Command to run
+cmnd="${workdir}/${cmd} -cron ${id}"                         # Command to run
 [ "${updates}" ] && cmnd="${cmnd} -u \"${updates}\""        # Add updates to command if exist
 [ "${servers}" ] && cmnd="${cmnd} -s \"${servers}\""        # Add servers to command if exist
 
@@ -30,4 +18,4 @@ cmnd="${folder}/${cmd} -cron ${id}"                         # Command to run
 (crontab -l ; echo -e "${date} * ${cmnd}; ${cncl}") | crontab -
 
 # Info
-${folder}/${cmd} -u "${updates}" -s "${servers}" -desc true
+${workdir}/${cmd} -u "${updates}" -s "${servers}" -desc true

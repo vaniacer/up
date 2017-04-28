@@ -1,16 +1,8 @@
 #!/bin/bash
 
 set -e
-
-#----------|Get opts|------------
-until [ -z "$1" ]; do case $1 in
-
-    -server | -s) servers=${2};;
-    -update | -u) updates=${2};;
-    -job    | -j) jobs=${2};;
-
-esac; shift 2; done
-#--------------------------------
+# Get options and functions
+. $(dirname $0)/func.sh
 
 for id in ${jobs}; do
     rule="/${id}/d;"${rule}
