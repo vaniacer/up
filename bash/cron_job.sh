@@ -1,8 +1,7 @@
 #!/bin/bash
 
 # Get options and functions
-. $(dirname $0)/func.sh
-cronfile=/var/spool/cron/crontabs/${USER}
+. $(dirname $0)/func.sh; cronfile=/var/spool/cron/crontabs/${USER}
 
 # Get time
 time=${date#* }; date=${date% *}; hh=${time%:*}; mm=${time#*:}; DD=${date%%.*}; MM=${date#*.}; MM=${MM%.*}
