@@ -2,17 +2,15 @@
 
 set -e
 
-#Get opts
-until [ -z "$1" ]; do
+#----------|Get opts|------------
+until [ -z "$1" ]; do case $1 in
 
-    case $1 in
-	    -server | -s) servers=${2};;
-	    -update | -u) updates=${2};;
-	    -job    | -j) jobs=${2};;
-    esac
+    -server | -s) servers=${2};;
+    -update | -u) updates=${2};;
+    -job    | -j) jobs=${2};;
 
-    shift 2
-done
+esac; shift 2; done
+#--------------------------------
 
 for id in ${jobs}; do
     rule="/${id}/d;"${rule}

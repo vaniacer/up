@@ -2,20 +2,18 @@
 
 folder=$(dirname $0)
 
-#Get opts
-until [ -z "$1" ]; do
+#----------|Get opts|------------
+until [ -z "$1" ]; do case $1 in
 
-    case $1 in
-	    -server | -s) servers=${2};;
-	    -update | -u) updates=${2};;
-	    -date   | -d) date=${2};;
-	    -job    | -j) jobs=${2};;
-	    -cmd    | -c) cmd=${2};;
-	             -id) id=${2};;
-    esac
+    -server | -s) servers=${2};;
+    -update | -u) updates=${2};;
+    -date   | -d) date=${2};;
+    -job    | -j) jobs=${2};;
+    -cmd    | -c) cmd=${2};;
+             -id) id=${2};;
 
-    shift 2
-done
+esac; shift 2; done
+#--------------------------------
 
 # Get time
 read date time <<< "${date}"

@@ -5,7 +5,7 @@ folder=$(dirname $0)
 crondir=${folder}/../../logs/cron
 rundir=${folder}/../../logs/run
 
-#Get opts
+#----------|Get opts|------------
 until [ -z "$1" ]; do case $1 in
 
     -server | -s) servers=${2};;
@@ -14,21 +14,16 @@ until [ -z "$1" ]; do case $1 in
             -key) key=${2};;
 
 esac; shift 2; done
+#--------------------------------
 
-echo '' > ${rundir}/err${key}
 . ${folder}/func.sh
 
-function run () {
-    # Get logs
-    for server in ${servers[@]}; do
-
+function run () { #----------------------------------|Main function|----------------------------------------------------
+    echo '' > ${rundir}/err${key}
+    for server in ${servers}; do
         # server comes like this jboss@localhost:/var/lib/jboss
-        # cut address jboss@localhost
-        addr=${server%%:*}
-        # cut working directory /var/lib/jboss
-        wdir=${server##*:}
-
-        info ${addr}
+        # get address jboss@localhost and working directory /var/lib/jboss
+        addr=${server%%:*}; wdir=${server##*:}; info ${addr} # add delimiter string with server name
 
         echo -e "\nПакеты обновлений:\n"
         ssh ${addr} "ls ${wdir}/updates/new" || error=$?
@@ -38,7 +33,7 @@ function run () {
 
     echo -e "\nDone.\nERROR: ${error}"
     echo ${error} > ${rundir}/err${key}
-}
+} #---------------------------------------------------------------------------------------------------------------------
 
 run &> ${rundir}/log${key}
 exit ${error}

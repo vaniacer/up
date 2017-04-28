@@ -13,8 +13,8 @@ function starter () {
          log=${log//ERROR:*}
          dat=$(date +'%b %d, %Y %R'); dat=${dat//.}; dat=${dat^}
          log=${log}"\nDate: ${dat}\nError: ${err}"; echo -e "${log}" > ${crondir}/${cron}; } \
-    || { echo '' > ${rundir}/err${key}
-         run    &> ${rundir}/log${key}
+    || { echo       '' > ${rundir}/err${key}
+         run          &> ${rundir}/log${key}
          echo ${error} > ${rundir}/err${key}; }
 
     exit ${error}
