@@ -28,14 +28,11 @@ function info () {
 
 function starter () {
     [ "${cron}" ] \
-    && { log=$(run)
-         err=$(echo ${log//*ERROR:})
-         log=${log//ERROR:*}
-         dat=$(date +'%b %d, %Y %R'); dat=${dat//.}; dat=${dat^}
-         log=${log}"\nDate: ${dat}\nError: ${err}"; echo -e "${log}" > ${crondir}/${cron}; } \
-    || { echo       '' > ${rundir}/err${key}
-         run          &> ${rundir}/log${key}
-         echo ${error} > ${rundir}/err${key}; }
+        && { log=$(run);  dat=$(date +'%b %d, %Y %R'); dat=${dat//.}; dat=${dat^}
+             log=${log}"\nDate: ${dat}"; echo -e "${log}" > ${crondir}/${cron}; } \
+        || { echo       '' > ${rundir}/err${key}
+             run          &> ${rundir}/log${key}
+             echo ${error} > ${rundir}/err${key}; }
 
     exit ${error}
 }

@@ -18,8 +18,8 @@ def get_cron_logs():
 			out = f.readlines()
 			f.close()
 
-			err = ''.join(out[-1].split()[1:])
-			dat = ' '.join(out[-2].split()[1:])
+			err = ''.join(out[-2].split()[1:])
+			dat = ' '.join(out[-1].split()[1:])
 			out = ''.join(out[:-2])
 
 			dick = {'project': job.proj, 'user': job.user, 'command': job.name}
