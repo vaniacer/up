@@ -4,6 +4,7 @@ error=0
 workdir=$(dirname $0)
 crondir=${workdir}/../../logs/cron
 rundir=${workdir}/../../logs/run
+cronfile=/var/spool/cron/crontabs/${USER}
 #----------|Get opts|------------
 until [ -z "$1" ]; do case $1 in
 
@@ -14,6 +15,7 @@ until [ -z "$1" ]; do case $1 in
     -desc   | -D) desc=${2};;
     -job    | -j) jobs=${2};;
     -cmd    | -c) cmd=${2};;
+    -run    | -r) run=${2};;
     -key    | -k) key=${2};;
     -id     | -i) id=${2};;
 
@@ -40,4 +42,5 @@ function starter () {
     exit ${error}
 }
 
+[ "${run}"  ] && cmd=${run}
 [ "${desc}" ] && description || starter

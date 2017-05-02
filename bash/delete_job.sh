@@ -1,7 +1,6 @@
 #!/bin/bash
 
 function run () { #----------------------------------|Main function|----------------------------------------------------
-    echo '' > ${rundir}/err${key}
     for id in ${jobs}; do
         rule="/${id}/d;"${rule}
         echo -e "Отменяю задачу: ${id}"
@@ -9,6 +8,5 @@ function run () { #----------------------------------|Main function|------------
 
     sed "${rule}" -i /var/spool/cron/crontabs/${USER}
 
-    echo -e "\nDone.\nERROR: ${error}"
-    echo ${error} > ${rundir}/err${key}
+    echo -e "\nDone.\nError: ${error}"
 } #---------------------------------------------------------------------------------------------------------------------

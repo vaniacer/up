@@ -4,9 +4,9 @@ from django.shortcuts import render, get_object_or_404, HttpResponseRedirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
 from .commands_engine import add_event, get_key
+from .commands_engine import starter, add_job
 from django.conf import settings as conf
 # from django.views.static import serve
-# from django.http import FileResponse
 from .permissions import check_perm
 from .cron import get_cron_logs
 from .commands import commands
@@ -33,7 +33,7 @@ def cmd_render(request, current_project):
 	selected = {
 		'key': get_key(),
 		'user': request.user,
-		'cron': request.POST.get('CRON') or '',
+		'cron': request.POST.get('CRON') or False,
 		'date': request.POST.get('selected_date') or run_date(),
 		'updates': request.POST.getlist('selected_updates'),
 		'servers': request.POST.getlist('selected_servers'),
@@ -41,16 +41,20 @@ def cmd_render(request, current_project):
 		'command': request.POST.get('selected_commands'),
 		'project': current_project, }
 
-	context = {'project': current_project, 'key': selected['key'], 'cmd': selected['command']}
-	cmd, url, his = commands(selected)
-	cmd(selected)
+	context = {
+		'date': selected['date'].replace(' ', 'SS').replace(':', 'PP').replace('.', 'OO'),
+		'project': current_project,
+		'cmd':  selected['command'],
+		'cron': selected['cron'],
+		'key':  selected['key'], }
+
+	url, his = commands(selected)
+	starter(selected)
 
 	if url:
 		return HttpResponseRedirect(url)
 	else:
 		return render(request, 'ups/output.html', context)
-	# filepath = '/some/path/to/local/file.txt'
-	# return serve(request, os.path.basename(filepath), os.path.dirname(filepath))
 
 
 def pagination(request, history):
@@ -81,20 +85,28 @@ def projects(request):
 
 
 @login_required
-def logs(request, project_id, log_id, cmd):
+def logs(request, project_id, log_id, cmd, cron, date):
 	"""Выводит логи."""
 	current_project = get_object_or_404(Project, id=project_id)
 	check_perm('view_project', current_project, request.user)
 
 	log = open(conf.LOG_FILE + log_id, 'r').read()
 	err = open(conf.ERR_FILE + log_id, 'r').read()
-	dum, url, his = commands({'command': cmd, 'cron': ''})
+	url, his = commands({'command': cmd, 'cron': '', })
 
 	context = {'log': log}
-	history = {'project': current_project, 'user': request.user, 'command': cmd}
+	history = {
+		'date': date.replace('SS', ' ').replace('PP', ':').replace('OO', '.'),
+		'project': current_project,
+		'user': request.user,
+		'command': cmd}
 
 	try:
 		context['err'] = int(err)
+		if cron == 'True':
+			add_job(history, log, log_id)
+			context['log'] = 'Set cron job.\n' + log
+			history['command'] = 'Set cron job - ' + cmd.lower()
 		if his:
 			add_event(history, log, context['err'], '', '')
 		os.remove(conf.LOG_FILE + log_id)

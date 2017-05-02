@@ -1,7 +1,6 @@
 #!/bin/bash
 
 function run () { #----------------------------------|Main function|----------------------------------------------------
-    echo '' > ${rundir}/err${key}
     for server in ${servers}; do
         # server comes like this jboss@localhost:/var/lib/jboss
         # get address jboss@localhost and working directory /var/lib/jboss
@@ -13,6 +12,5 @@ function run () { #----------------------------------|Main function|------------
 
     done
 
-    echo -e "\nDone.\nERROR: ${error}"
-    echo ${error} > ${rundir}/err${key}
+    echo -e "\nDone.\nError: ${error}"
 } #---------------------------------------------------------------------------------------------------------------------

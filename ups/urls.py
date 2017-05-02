@@ -27,5 +27,8 @@ urlpatterns = [
 	# Страница для редактирования обновления
 	url(r'^edit_update/(?P<update_id>\d+)/$', views_edit.edit_update, name='edit_update'),
 	# Вывод логов.
-	url(r'^logs/(?P<project_id>\w+)/(?P<log_id>\w+)/(?P<cmd>\w+)/$', views.logs, name='logs'),
+	url(
+		r'^logs/(?P<project_id>\w+)/(?P<log_id>\w+)/(?P<cmd>\w+)/(?P<cron>\w+)/(?P<date>\w+)/$',
+		views.logs,
+		name='logs'),
 ]

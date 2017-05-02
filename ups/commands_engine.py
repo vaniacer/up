@@ -36,33 +36,17 @@ def add_job(selected, log, cron):
 		desc=log, )
 
 
-def run_cmd(opt):
-	"""Выполняет сценаий bash."""
-	run = Popen(opt, stdin=PIPE, stdout=PIPE, stderr=PIPE)
-	out, err = run.communicate()
-	rc = run.returncode
-	return out + err, rc
-
-
 def del_job(selected):
-	# logs, errs = '', 0
 	for i in selected['cronjbs']:
 		try:
 			Job.objects.get(cron=i).delete()
-			# log, err = run_cmd(['bash/delete_job.sh', '-job', i])
-			# logs += log
-			# errs += err
 		except ObjectDoesNotExist:
-			# logs += 'Задача: %s не существует.\n' % str(i)
 			continue
 
-	# add_event(selected, logs, errs, '', '')
-	# return logs, errs
 
-
-def run_now(selected):
+def starter(selected):
 	"""Выполняет комманду."""
-	opt = ['bash/starter.sh', '-cmd', selected['cmdname'], '-key', selected['key']]
+	opt = [conf.BASE_DIR + '/bash/starter.sh', '-cmd', selected['cmdname'], '-key', selected['key']]
 
 	if selected['servers']:
 		opt.extend(['-server', ' '.join(selected['servers'])])
@@ -71,26 +55,12 @@ def run_now(selected):
 	if selected['cronjbs']:
 		opt.extend(['-job', ' '.join(selected['cronjbs'])])
 		del_job(selected)
+	if selected['cron']:
+		opt.extend([
+			'-run',  selected['cmdname'],
+			'-date', selected['date'],
+			'-id',   selected['key'],
+			'-cmd',  'cron.sh'])
+
 	Popen(opt, stdin=PIPE, stdout=PIPE, stderr=PIPE)
 
-
-def cron_job(selected):
-	"""Создает задачу в кроне."""
-	key = get_key()
-	opt = [
-		conf.BASE_DIR + '/bash/cron_job.sh',
-		'-date', selected['date'],
-		'-cmd', selected['cmdname'],
-		'-id', key, ]
-
-	if selected['servers']:
-		opt.extend(['-server', ' '.join(selected['servers'])])
-	if selected['updates']:
-		opt.extend(['-update', ' '.join(selected['updates'])])
-
-	log, err = run_cmd(opt)
-	add_job(selected, log, key)
-	if selected['history']:
-		selected['command'] = 'Set job - ' + selected['command']
-		add_event(selected, log, err, key, '')
-	return log, err
