@@ -9,7 +9,7 @@ from django.conf import settings as conf
 # from django.views.static import serve
 from .permissions import check_perm
 from .cron import get_cron_logs
-from .commands import commands
+from .commands import command
 from .models import Project
 import datetime
 import os
@@ -24,6 +24,25 @@ def run_date():
 	"""Если не указана дата, возвращает текущую дату + 1 минута."""
 	date = datetime.datetime.now() + datetime.timedelta(minutes=1)
 	return date.strftime("%d.%m.%Y %H:%M")
+
+
+def pagination(request, history):
+	"""Создает страницы для закладки 'History'."""
+	hist_pages = Paginator(history, 20)
+	page = request.GET.get('page') or 1
+	try:
+		history = hist_pages.page(page)
+	except PageNotAnInteger:
+		# If page is not an integer, deliver first page.
+		history = hist_pages.page(1)
+	except EmptyPage:
+		# If page is out of range (e.g. 9999), deliver last page of results.
+		history = hist_pages.page(hist_pages.num_pages)
+
+	hist_pg = list(hist_pages.page_range)
+	hist_fd = hist_pg[int(page):int(page) + 4]
+	hist_bk = hist_pg[max(int(page) - 5, 0):int(page) - 1]
+	return history, hist_fd, hist_bk
 
 
 def cmd_render(request, current_project):
@@ -48,32 +67,10 @@ def cmd_render(request, current_project):
 		'cron': selected['cron'],
 		'key':  selected['key'], }
 
-	url, his = commands(selected)
+	url, his = command(selected)
 	starter(selected)
-
-	if url:
-		return HttpResponseRedirect(url)
-	else:
-		return render(request, 'ups/output.html', context)
-
-
-def pagination(request, history):
-	"""Создает страницы для закладки 'History'."""
-	hist_pages = Paginator(history, 20)
-	page = request.GET.get('page') or 1
-	try:
-		history = hist_pages.page(page)
-	except PageNotAnInteger:
-		# If page is not an integer, deliver first page.
-		history = hist_pages.page(1)
-	except EmptyPage:
-		# If page is out of range (e.g. 9999), deliver last page of results.
-		history = hist_pages.page(hist_pages.num_pages)
-
-	hist_pg = list(hist_pages.page_range)
-	hist_fd = hist_pg[int(page):int(page) + 4]
-	hist_bk = hist_pg[max(int(page) - 5, 0):int(page) - 1]
-	return history, hist_fd, hist_bk
+	context['url'] = url
+	return render(request, 'ups/output.html', context)
 
 
 @login_required
@@ -90,9 +87,9 @@ def logs(request, project_id, log_id, cmd, cron, date):
 	current_project = get_object_or_404(Project, id=project_id)
 	check_perm('view_project', current_project, request.user)
 
+	url, his = command({'command': cmd, 'cron': '', })
 	log = open(conf.LOG_FILE + log_id, 'r').read()
 	err = open(conf.ERR_FILE + log_id, 'r').read()
-	url, his = commands({'command': cmd, 'cron': '', })
 
 	context = {'log': log}
 	history = {

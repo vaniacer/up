@@ -36,6 +36,14 @@ def add_job(selected, log, cron):
 		desc=log, )
 
 
+def run_cmd(opt):
+	"""Выполняет сценаий bash."""
+	run = Popen(opt, stdin=PIPE, stdout=PIPE, stderr=PIPE)
+	out, err = run.communicate()
+	rc = run.returncode
+	return out + err, rc
+
+
 def del_job(selected):
 	for i in selected['cronjbs']:
 		try:
@@ -59,8 +67,8 @@ def starter(selected):
 		opt.extend([
 			'-run',  selected['cmdname'],
 			'-date', selected['date'],
+			'-key',  selected['key'],
 			'-id',   selected['key'],
 			'-cmd',  'cron.sh'])
 
 	Popen(opt, stdin=PIPE, stdout=PIPE, stderr=PIPE)
-

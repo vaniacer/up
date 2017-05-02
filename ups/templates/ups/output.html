@@ -4,7 +4,7 @@
 
     <script type="text/javascript">
         function autoRefresh_div() {
-            if (!log_ready) { $("#log").load("/logs/{{ project.id }}/{{ key }}/{{ cmd }}/{{ cron }}/{{ date }}/"); }
+            if (!log_ready) { $('#log').load('/logs/{{ project.id }}/{{ key }}/{{ cmd }}/{{ cron }}/{{ date }}/'); }
         }
 
         $(document).ready(function() {
