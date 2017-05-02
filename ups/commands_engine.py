@@ -45,19 +45,19 @@ def run_cmd(opt):
 
 
 def del_job(selected):
-	logs, errs = '', 0
+	# logs, errs = '', 0
 	for i in selected['cronjbs']:
 		try:
 			Job.objects.get(cron=i).delete()
-			log, err = run_cmd(['bash/delete_job.sh', '-job', i])
-			logs += log
-			errs += err
+			# log, err = run_cmd(['bash/delete_job.sh', '-job', i])
+			# logs += log
+			# errs += err
 		except ObjectDoesNotExist:
-			logs += 'Задача: %s не существует.\n' % str(i)
+			# logs += 'Задача: %s не существует.\n' % str(i)
 			continue
 
-	add_event(selected, logs, errs, '', '')
-	return logs, errs
+	# add_event(selected, logs, errs, '', '')
+	# return logs, errs
 
 
 def run_now(selected):
@@ -68,6 +68,9 @@ def run_now(selected):
 		opt.extend(['-server', ' '.join(selected['servers'])])
 	if selected['updates']:
 		opt.extend(['-update', ' '.join(selected['updates'])])
+	if selected['cronjbs']:
+		opt.extend(['-job', ' '.join(selected['cronjbs'])])
+		del_job(selected)
 	Popen(opt, stdin=PIPE, stdout=PIPE, stderr=PIPE)
 
 

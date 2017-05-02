@@ -5,6 +5,7 @@ error=0
 workdir=$(dirname $0)
 crondir=${workdir}/../../logs/cron
 rundir=${workdir}/../../logs/run
+cronfile=/var/spool/cron/crontabs/${USER}
 #----------|Get opts|------------
 until [ -z "$1" ]; do case $1 in
 
@@ -32,7 +33,7 @@ cmnd="${workdir}/starter.sh -cmd ${cmd} -cron ${id}"    # Command to run
 [ "${servers}" ] && cmnd="${cmnd} -s \"${servers}\""    # Add servers to command if exist
 
 # Set crontab job
-$(crontab -l; echo -e "\n${date} * ${cmnd}; ${cncl}") | crontab -
+echo -e "$(crontab -l)\n${date} * ${cmnd}; ${cncl}" | crontab -
 
 # Info
 ${workdir}/starter.sh -cmd "${cmd}" -u "${updates}" -s "${servers}" -desc true
