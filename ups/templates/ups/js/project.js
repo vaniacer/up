@@ -37,9 +37,9 @@ function checker(box_id, body_id) {
 }
 
 function select_all(box_name, body_name, state) {
-    var color = ''; if ( state == true ) { var color = '#dff0d8'; }
     var boxes  = document.getElementsByName(box_name);
     var bodies = document.getElementsByClassName(body_name);
+    var color = ''; if ( state == true ) { var color = '#dff0d8'; }
     for (i = 0; i < boxes.length;  i++) { boxes[i].checked = state; }
     for (i = 0; i < bodies.length; i++) { bodies[i].style.background = color; }
 }

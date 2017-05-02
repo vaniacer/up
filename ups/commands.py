@@ -6,9 +6,9 @@ def command(selected):
 	cmd = ''.join(selected['command'])
 	url = ''  # #cron, #upser, #history
 
-#                          +-----------------+-----------------------------+-----------+
-#                          | write history   | bash command name           | url after |
-#                          | log or not      |                             | command   |
+#                           +-----------------+-----------------------------+-----------+
+#                           | write history   | bash command name           | url after |
+#                           | log or not      |                             | command   |
 	dick = {              # +-----------------+-----------------------------+-----------+
 		'Stop':            {'history': True,  'bash': 'stop.sh',            'url': url, },
 		'Copy':            {'history': True,  'bash': 'copy.sh',            'url': url, },
@@ -16,9 +16,9 @@ def command(selected):
 		'Update':          {'history': True,  'bash': 'update.sh',          'url': url, },
 		'Reload':          {'history': True,  'bash': 'reload.sh',          'url': url, },
 		'Restart':         {'history': True,  'bash': 'restart.sh',         'url': url, },
-		'Delete_job':      {'history': True,  'bash': 'delete_job.sh',      'url': '#cron', },
+		'Delete_job':      {'history': True,  'bash': 'delete_job.sh',      'url': url, },
 		'Check_logs':      {'history': False, 'bash': 'check_logs.sh',      'url': url, },
-		'Check_updates':   {'history': False, 'bash': 'check_updates.sh',   'url': url, },
+		'Check_updates':   {'history': False, 'bash': 'check_updates.sh',   'url': '#upser', },
 		'Maintenance_ON':  {'history': True,  'bash': 'maintenance_on.sh',  'url': url, },
 		'Maintenance_OFF': {'history': True,  'bash': 'maintenance_off.sh', 'url': url, },
 	}

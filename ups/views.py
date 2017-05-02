@@ -67,9 +67,8 @@ def cmd_render(request, current_project):
 		'cron': selected['cron'],
 		'key':  selected['key'], }
 
-	url, his = command(selected)
+	context['url'], his = command(selected)
 	starter(selected)
-	context['url'] = url
 	return render(request, 'ups/output.html', context)
 
 
@@ -91,7 +90,7 @@ def logs(request, project_id, log_id, cmd, cron, date):
 	log = open(conf.LOG_FILE + log_id, 'r').read()
 	err = open(conf.ERR_FILE + log_id, 'r').read()
 
-	context = {'log': log}
+	context = {'log': log, 'the_url': url}
 	history = {
 		'date': date.replace('SS', ' ').replace('PP', ':').replace('OO', '.'),
 		'project': current_project,
