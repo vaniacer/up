@@ -26,6 +26,8 @@ function info () {
     [ ${#name} -lt 100 ] && name=-${name}; echo -e ${name}
 }
 
+. ${workdir}/${cmd}
+
 function starter () {
     [ "${desc}" ] && description
     [ "${cron}" ] \
@@ -37,3 +39,5 @@ function starter () {
 
     exit ${error}
 }
+
+[ "${desc}" ] && description || starter

@@ -62,7 +62,7 @@ def del_job(selected):
 
 def run_now(selected):
 	"""Выполняет комманду."""
-	opt = ['bash/' + selected['cmdname'], '-key', selected['key']]
+	opt = ['bash/starter.sh', '-cmd', selected['cmdname'], '-key', selected['key']]
 
 	if selected['servers']:
 		opt.extend(['-server', ' '.join(selected['servers'])])

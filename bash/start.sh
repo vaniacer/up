@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# Get options and functions
-. $(dirname $0)/func.sh
-
 function description () {
     echo -e "Start server(s):\n${servers// /\\n}\n"; exit 0
 }
@@ -23,5 +20,3 @@ function run () { #----------------------------------|Main function|------------
 
     echo -e "\nDone.\nERROR: ${error}"
 } #---------------------------------------------------------------------------------------------------------------------
-
-starter # From func.sh

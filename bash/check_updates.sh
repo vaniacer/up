@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# Get options and functions
-. $(dirname $0)/func.sh
-
 function run () { #----------------------------------|Main function|----------------------------------------------------
     echo '' > ${rundir}/err${key}
     for server in ${servers}; do
@@ -19,6 +16,3 @@ function run () { #----------------------------------|Main function|------------
     echo -e "\nDone.\nERROR: ${error}"
     echo ${error} > ${rundir}/err${key}
 } #---------------------------------------------------------------------------------------------------------------------
-
-run &> ${rundir}/log${key}
-exit ${error}
