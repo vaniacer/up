@@ -62,8 +62,8 @@ def starter(selected):
 	if selected['updates']:
 		opt.extend(['-update', ' '.join(selected['updates'])])
 	if selected['cronjbs']:
-		opt.extend(['-job', ' '.join(selected['cronjbs'])])
 		del_job(selected)
+		opt.extend(['-job', ' '.join(selected['cronjbs'])])
 	if selected['cron']:
 		opt.extend([
 			'-run',  selected['cmdname'],

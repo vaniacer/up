@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 
-from django.shortcuts import render, get_object_or_404, HttpResponseRedirect
+from django.shortcuts import render, get_object_or_404  # , HttpResponseRedirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
 from .commands_engine import add_event, get_key
@@ -50,7 +50,7 @@ def cmd_render(request, current_project):
 	check_perm('run_command', current_project, request.user)
 
 	selected = {
-		'key': get_key(),
+		'key':  get_key(),
 		'user': request.user,
 		'cron': request.POST.get('CRON') or False,
 		'date': request.POST.get('selected_date') or run_date(),
@@ -61,14 +61,14 @@ def cmd_render(request, current_project):
 		'project': current_project, }
 
 	context = {
-		'date': selected['date'].replace(' ', 'SS').replace(':', 'PP').replace('.', 'OO'),
-		'cmd': selected['command'],
 		'project': current_project,
+		'date': selected['date'].replace(' ', 'SS').replace(':', 'PP').replace('.', 'OO'),
+		'cmd':  selected['command'],
 		'cron': selected['cron'],
 		'key':  selected['key'], }
+	url = 'ups/output.html'
 
 	command(selected)
-	url = 'ups/output.html'
 	starter(selected)
 	return url, context
 
