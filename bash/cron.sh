@@ -20,6 +20,5 @@ function run () { #----------------------------------|Main function|------------
 
     # Info
     ${workdir}/starter.sh -cmd "${cmd}" -u "${updates}" -s "${servers}" -desc true
-
-    echo -e "\nDone.\nError: ${error}"
+    echo -e "\nDone."
 } #---------------------------------------------------------------------------------------------------------------------

@@ -26,7 +26,5 @@ function run () { #----------------------------------|Main function|------------
             || { error=$?; echo -e "\nServer unreachable."; }
 
         echo # Add empty line
-    done
-
-    echo -e "\nDone.\nError: ${error}"
+    done; echo -e "\nDone."
 } #---------------------------------------------------------------------------------------------------------------------

@@ -12,8 +12,5 @@ function run () { #----------------------------------|Main function|------------
 
         ssh  ${addr} "cat ${wdir}/jboss-bas-*/standalone/log/server.log" || error=$?
         echo
-
-    done
-
-    echo -e "\nDone.\nError: ${error}"
+    done; echo -e "\nDone."
 } #---------------------------------------------------------------------------------------------------------------------
