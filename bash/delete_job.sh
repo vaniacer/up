@@ -1,5 +1,9 @@
 #!/bin/bash
 
+function description () {
+    echo -e "Delete cron job(s):\n${jobs// /\\n}\n"; exit 0
+}
+
 function run () { #----------------------------------|Main function|----------------------------------------------------
     for id in ${jobs}; do
         rule="/${id}/d;"${rule}

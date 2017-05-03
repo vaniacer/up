@@ -31,7 +31,6 @@ function info () {
 . ${workdir}/${cmd}
 
 function starter () {
-    [ "${desc}" ] && description
     [ "${cron}" ] \
         && { log=$(run);  dat=$(date +'%b %d, %Y %R'); dat=${dat//.}; dat=${dat^}
              log=${log}"\nDate: ${dat}"; echo -e "${log}" > ${crondir}/${cron}; } \

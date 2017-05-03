@@ -1,5 +1,9 @@
 #!/bin/bash
 
+function description () {
+    echo -e "Set cron job ${cmd} for server(s):\n${servers// /\\n}\n"; exit 0
+}
+
 function run () { #----------------------------------|Main function|----------------------------------------------------
     # Get time
     time=${date#* }; date=${date% *}; hh=${time%:*}; mm=${time#*:}; DD=${date%%.*}; MM=${date#*.}; MM=${MM%.*}
