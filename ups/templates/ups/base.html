@@ -10,12 +10,13 @@
         <title>Update Server</title>
 
         {% bootstrap_css %}
-        {% bootstrap_javascript %}
         <style type="text/css">
             {% include "ups/css/loader.css"  %}
             {% include "ups/css/control.css" %}
             {% include "ups/css/datepicker.css" %}
         </style>
+
+        {% bootstrap_javascript %}
         <script type="text/javascript">
             {% include "ups/js/project.js" %}
             {% include "ups/js/moment.js"  %}
@@ -57,8 +58,8 @@
                                 <li><a href="{% url 'users:login' %}">log in</a></li>
                             {% endif %}
                         </ul>
-                    </div><!--/.nav-collapse -->
-                </div>
+                    </div> <!--/.nav-collapse -->
+                </div> <!-- /container -->
             </nav>
 
             <div class="container">
@@ -70,7 +71,7 @@
                 </div>
 
             </div> <!-- /container -->
-        </div>
+        </div> <!-- /whole_page -->
 
         <div class="loader"></div>
     </body>

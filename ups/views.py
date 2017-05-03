@@ -68,8 +68,9 @@ def cmd_render(request, current_project):
 		'key':  selected['key'], }
 
 	context['url'], his = command(selected)
+	url = 'ups/output.html'
 	starter(selected)
-	return render(request, 'ups/output.html', context)
+	return url, context
 
 
 @login_required
@@ -133,7 +134,8 @@ def project(request, project_id):
 		'history': history,
 		'hist_bk': hist_bk,
 		'hist_fd': hist_fd, }
+	url = 'ups/project.html'
 
 	if request.POST.get('selected_commands'):
-		return cmd_render(request, current_project)
-	return render(request, 'ups/project.html', context)
+		url, context = cmd_render(request, current_project)
+	return render(request, url, context)
