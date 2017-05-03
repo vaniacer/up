@@ -18,7 +18,7 @@ def command(selected):
 		'Restart':         {'history': True,  'bash': 'restart.sh',         'url': url, },
 		'Delete_job':      {'history': True,  'bash': 'delete_job.sh',      'url': url, },
 		'Check_logs':      {'history': False, 'bash': 'check_logs.sh',      'url': url, },
-		'Check_updates':   {'history': False, 'bash': 'check_updates.sh',   'url': '#upser', },
+		'Check_updates':   {'history': False, 'bash': 'check_updates.sh',   'url': url, },
 		'Maintenance_ON':  {'history': True,  'bash': 'maintenance_on.sh',  'url': url, },
 		'Maintenance_OFF': {'history': True,  'bash': 'maintenance_off.sh', 'url': url, },
 	}

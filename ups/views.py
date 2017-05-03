@@ -62,12 +62,12 @@ def cmd_render(request, current_project):
 
 	context = {
 		'date': selected['date'].replace(' ', 'SS').replace(':', 'PP').replace('.', 'OO'),
+		'cmd': selected['command'],
 		'project': current_project,
-		'cmd':  selected['command'],
 		'cron': selected['cron'],
 		'key':  selected['key'], }
 
-	context['url'], his = command(selected)
+	command(selected)
 	url = 'ups/output.html'
 	starter(selected)
 	return url, context

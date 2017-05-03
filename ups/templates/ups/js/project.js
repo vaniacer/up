@@ -1,21 +1,5 @@
 var log_ready = false;
 
-function autoRefresh_div() {
-    if (!log_ready) { $('#output').load('/logs/{{ project.id }}/{{ key }}/{{ cmd }}/{{ cron }}/{{ date }}/'); }
-}
-
-function show_out() {
-    setInterval(function() { autoRefresh_div(); }, 2000);
-    autoRefresh_div();
-    $(".whole_page").hide();
-    $(".output").show();
-}
-
-function hide_out() {
-    $(".whole_page").hide();
-    $(".output").show();
-}
-
 function hide_page() {
     $(".whole_page").hide();
     $(".loader").show();
@@ -81,8 +65,7 @@ function Validation(box, srv, upd, job) {
             alert('Server(s) not selected.');
             return false; }}
 
-//    hide_page();
-    show_out();
+    hide_page();
     if (box) {
         document.getElementById(box).checked = true;
         document.getElementById('selector').submit(); }
