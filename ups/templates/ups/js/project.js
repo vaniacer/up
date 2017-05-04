@@ -12,6 +12,12 @@ function show_log() {
     autoRefresh_div();
 }
 
+function show_loader() {
+    $('.output_bottom').show();
+    $('.project').hide();
+    $('.loader').show();
+}
+
 function hide_log() {
     $('.output_bottom').hide();
     $('.project').show();
@@ -73,6 +79,7 @@ function Validation(box, srv, upd, job) {
             alert('Server(s) not selected.');
             return false; }}
 
+    show_loader();
     if (box) {
         document.getElementById(box).checked = true;
         document.getElementById('selector').submit(); }
@@ -98,5 +105,6 @@ $(function() {
 });
 
 $(document).ready(function() {
+    $('.loader').hide();
     if ('{{ log }}' != '') { show_log(); } else { hide_log(); }
 });
