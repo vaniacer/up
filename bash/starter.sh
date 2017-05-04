@@ -2,9 +2,9 @@
 
 error=0
 workdir=$(dirname $0)
+cronfile=/var/spool/cron/crontabs/${USER}
 crondir=${workdir}/../../logs/cron
 rundir=${workdir}/../../logs/run
-cronfile=/var/spool/cron/crontabs/${USER}
 #----------|Get opts|------------
 until [ -z "$1" ]; do case $1 in
 
@@ -40,5 +40,5 @@ function starter () {
     exit ${error}
 }
 
-[ "${run}"  ] && cmd=${run}
+[ "${run}"  ] && cmd=${run} # need this to start command as cron job
 [ "${desc}" ] && description || starter
