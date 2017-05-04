@@ -66,6 +66,7 @@ def cmd_render(request, current_project, context):
 		'cron': selected['cron'],
 		'key':  selected['key'],
 		'log':  'true', }
+
 	context.update(con)
 	command(selected)
 	starter(selected)
@@ -88,7 +89,10 @@ def logs(request, project_id, log_id, cmd, cron, date):
 
 	url, his = command({'command': cmd, 'cron': '', })
 	log = open(conf.LOG_FILE + log_id, 'r').read()
-	err = open(conf.ERR_FILE + log_id, 'r').read()
+	try:
+		err = open(conf.ERR_FILE + log_id, 'r').read()
+	except IOError:
+		err = ''
 
 	context = {'log': log, 'the_url': url}
 	history = {
@@ -97,7 +101,7 @@ def logs(request, project_id, log_id, cmd, cron, date):
 		'user': request.user,
 		'command': cmd}
 
-	try:
+	if err:
 		context['err'] = int(err)
 		if cron == 'True':
 			add_job(history, log.replace('Done.', ''), log_id)
@@ -107,8 +111,7 @@ def logs(request, project_id, log_id, cmd, cron, date):
 			add_event(history, log, context['err'], '', '')
 		os.remove(conf.LOG_FILE + log_id)
 		os.remove(conf.ERR_FILE + log_id)
-	except ValueError:
-		pass
+
 	return render(request, 'ups/output.html', context)
 
 
@@ -133,8 +136,7 @@ def project(request, project_id):
 		'history': history,
 		'hist_bk': hist_bk,
 		'hist_fd': hist_fd, }
-	url = 'ups/project.html'
 
 	if request.POST.get('selected_commands'):
 		context = cmd_render(request, current_project, context)
-	return render(request, url, context)
+	return render(request, 'ups/project.html', context)

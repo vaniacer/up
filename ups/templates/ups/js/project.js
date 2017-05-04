@@ -1,7 +1,7 @@
 var log_ready = false;
 
 function autoRefresh_div() {
-if (!log_ready) { $('.output').load('/logs/{{ project.id }}/{{ key }}/{{ cmd }}/{{ cron }}/{{ date }}/'); }
+    if (!log_ready) { $('.output').load('/logs/{{ project.id }}/{{ key }}/{{ cmd }}/{{ cron }}/{{ date }}/'); }
 }
 
 function show_log() {
@@ -98,6 +98,5 @@ $(function() {
 });
 
 $(document).ready(function() {
-    if ('{{ log }}' != '') { show_log(); }
-    else { hide_log(); }
+    if ('{{ log }}' != '') { show_log(); } else { hide_log(); }
 });

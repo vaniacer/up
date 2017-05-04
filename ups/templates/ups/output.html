@@ -1,20 +1,21 @@
-<dl class="dl-horizontal output" id="output_log">
+<script type="text/javascript">
+
+    var err = {{ err }};
+    if (err >= 0) { log_ready = true; }
+    var body = document.getElementById('output_log');
+    if (err > 0) { body.style.background = '#f2dede'; }
+
+</script>
+
+<dl class="dl-horizontal" id="output_log">
     <dt>Event logs</dt><dd><tt>{{ log|linebreaks }}</tt></dd>
-        {% if err >= 0 %}
-            <dt>Error code</dt>
-            <dd>
-                {{ err }}
-                <script type="text/javascript">
-                    var log_ready = true;
-                    var body = document.getElementById('output_log');
-                    if ({{ err }} > 0) { body.style.background = '#f2dede'; }
-                </script>
-            </dd>
-        {% endif %}
+    {% if err >= 0 %}
+        <dt>Error code</dt><dd>{{ err }}</dd>
+    {% endif %}
 </dl>
 
 {% if err >= 0 %}
-    <dl class="dl-horizontal output">
+    <dl class="dl-horizontal">
         <dt><a class="btn btn-primary" href="">Back</a></dt>
     </dl>
 {% else %}

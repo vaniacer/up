@@ -34,8 +34,7 @@ function starter () {
     [ "${cron}" ] \
         && { log=$(run);  dat=$(date +'%b %d, %Y %R'); dat=${dat//.}; dat=${dat^}
              log=${log}"\nError: ${error}\nDate: ${dat}"; echo -e "${log}" > ${crondir}/${cron}; } \
-        || { echo       '' > ${rundir}/err${key}
-             run          &> ${rundir}/log${key}
+        || { run          &> ${rundir}/log${key}
              echo ${error} > ${rundir}/err${key}; }
 
     exit ${error}
