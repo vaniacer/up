@@ -1,13 +1,21 @@
 var log_ready = false;
 
-function hide_page() {
-    $(".whole_page").hide();
-    $(".loader").show();
+function autoRefresh_div() {
+if (!log_ready) { $('.output').load('/logs/{{ project.id }}/{{ key }}/{{ cmd }}/{{ cron }}/{{ date }}/'); }
 }
 
-function hide_loader() {
-    $(".whole_page").show();
-    $(".loader").hide();
+function show_log() {
+    setInterval(function() { autoRefresh_div(); }, 2000);
+    $('.output_bottom').show();
+    $('.project').hide();
+    $('.output').show();
+    autoRefresh_div();
+}
+
+function hide_log() {
+    $('.output_bottom').hide();
+    $('.project').show();
+    $('.output').hide();
 }
 
 function topFunction() {
@@ -65,7 +73,6 @@ function Validation(box, srv, upd, job) {
             alert('Server(s) not selected.');
             return false; }}
 
-    hide_page();
     if (box) {
         document.getElementById(box).checked = true;
         document.getElementById('selector').submit(); }
@@ -91,5 +98,6 @@ $(function() {
 });
 
 $(document).ready(function() {
-    hide_loader();
+    if ('{{ log }}' != '') { show_log(); }
+    else { hide_log(); }
 });

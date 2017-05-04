@@ -45,7 +45,7 @@ def pagination(request, history):
 	return history, hist_fd, hist_bk
 
 
-def cmd_render(request, current_project):
+def cmd_render(request, current_project, context):
 	"""Выводит результат нажатия кнопок."""
 	check_perm('run_command', current_project, request.user)
 
@@ -60,17 +60,16 @@ def cmd_render(request, current_project):
 		'command': request.POST.get('selected_commands'),
 		'project': current_project, }
 
-	context = {
-		'project': current_project,
+	con = {
 		'date': selected['date'].replace(' ', 'SS').replace(':', 'PP').replace('.', 'OO'),
 		'cmd':  selected['command'],
 		'cron': selected['cron'],
-		'key':  selected['key'], }
-	url = 'ups/output.html'
-
+		'key':  selected['key'],
+		'log':  'true', }
+	context.update(con)
 	command(selected)
 	starter(selected)
-	return url, context
+	return context
 
 
 @login_required
@@ -110,7 +109,7 @@ def logs(request, project_id, log_id, cmd, cron, date):
 		os.remove(conf.ERR_FILE + log_id)
 	except ValueError:
 		pass
-	return render(request, 'ups/output_log.html', context)
+	return render(request, 'ups/output.html', context)
 
 
 @login_required
@@ -137,5 +136,5 @@ def project(request, project_id):
 	url = 'ups/project.html'
 
 	if request.POST.get('selected_commands'):
-		url, context = cmd_render(request, current_project)
+		context = cmd_render(request, current_project, context)
 	return render(request, url, context)
