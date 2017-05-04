@@ -20,7 +20,6 @@ function show_loader() {
 
 function hide_log() {
     $('.output_bottom').hide();
-    $('.project').show();
     $('.output').hide();
 }
 
