@@ -12,15 +12,15 @@ function show_log() {
     autoRefresh_div();
 }
 
+function hide_log() {
+    $('.output_bottom').hide();
+    $('.output').hide();
+}
+
 function show_loader() {
     $('.output_bottom').show();
     $('.project').hide();
     $('.loader').show();
-}
-
-function hide_log() {
-    $('.output_bottom').hide();
-    $('.output').hide();
 }
 
 function go_up() {
@@ -37,17 +37,16 @@ function go_down() {
 function run_or_cron(check, uncheck) {
     var enable  = document.getElementById(check);
     var disable = document.getElementById(uncheck);
-
-    enable.checked = true
     disable.checked = false
+    enable.checked  = true
 }
 
 function checker(box_id, body_id) {
     var box  = document.getElementById(box_id);
     var body = document.getElementById(body_id);
     if   ( box.checked == false )
-         { box.checked = true;  body.style.background = '#dff0d8'; }
-    else { box.checked = false; body.style.background = '';}
+         { box.checked =  true;  body.style.background = '#dff0d8'; }
+    else { box.checked =  false; body.style.background = ''; }
 }
 
 function select_all(box_name, body_name, state) {
@@ -61,33 +60,22 @@ function select_all(box_name, body_name, state) {
 function Validation(box, srv, upd, job) {
 
     if (job) {
-        var jobs =  document.getElementsByName('selected_jobs');
-        for (i = 0; i < jobs.length; i++) { if (jobs[i].checked) { var selected_jobs = true; break; } }
-
-        if (!selected_jobs) {
-            alert('Job(s) not selected.');
-            return false; }}
+        var jobs = document.getElementsByName('selected_jobs');
+        for (i = 0; i < jobs.length; i++) { if (jobs[i].checked) { var selected_jobs = true; break; }}
+        if  (!selected_jobs) { alert('Job(s) not selected.'); return false; }}
 
     if (upd) {
-        var updates =  document.getElementsByName('selected_updates');
-        for (i = 0; i < updates.length; i++) { if (updates[i].checked) { var selected_updates = true; break; } }
-
-        if (!selected_updates) {
-            alert('Update(s) not selected.');
-            return false; }}
+        var updates = document.getElementsByName('selected_updates');
+        for (i = 0; i < updates.length; i++) { if (updates[i].checked) { var selected_updates = true; break; }}
+        if  (!selected_updates) { alert('Update(s) not selected.'); return false; }}
 
     if (srv) {
-        var servers =  document.getElementsByName('selected_servers');
-        for (i = 0; i < servers.length; i++) { if (servers[i].checked) { var selected_servers = true; break; } }
-
-        if (!selected_servers) {
-            alert('Server(s) not selected.');
-            return false; }}
+        var servers = document.getElementsByName('selected_servers');
+        for (i = 0; i < servers.length; i++) { if (servers[i].checked) { var selected_servers = true; break; }}
+        if  (!selected_servers) { alert('Server(s) not selected.'); return false; }}
 
     show_loader();
-    if (box) {
-        document.getElementById(box).checked = true;
-        document.getElementById('selector').submit(); }
+    if (box) { document.getElementById(box).checked = true; document.getElementById('selector').submit(); }
 }
 
 $(function() {
