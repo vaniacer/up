@@ -16,8 +16,16 @@
                 {% endif %}
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><input type="button" class="btn btn-default navbar-btn"
-                           onclick="topFunction()" value="Top"/></li>
+                    <!--Up and down navigation-->
+                    <li><input class="btn btn-default navbar-btn"
+                               onclick="go_up()"
+                               type="button"
+                               value="Up"/></li>
+
+                    <li><input class="btn btn-default navbar-btn"
+                               onclick="go_down()"
+                               type="button"
+                               value="Down"/></li>
             </ul>
         </div><!--/.nav-collapse -->
     </div>

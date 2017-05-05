@@ -23,9 +23,15 @@ function hide_log() {
     $('.output').hide();
 }
 
-function topFunction() {
+function go_up() {
     document.body.scrollTop = 0; // For Chrome, Safari and Opera
     document.documentElement.scrollTop = 0; // For IE and Firefox
+}
+
+function go_down() {
+    var jump = $(document).height();
+    document.body.scrollTop = jump; // For Chrome, Safari and Opera
+    document.documentElement.scrollTop = jump; // For IE and Firefox
 }
 
 function run_or_cron(check, uncheck) {
