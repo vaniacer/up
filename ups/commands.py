@@ -16,6 +16,7 @@ def command(selected):
 		'Update':          {'history': True,  'bash': 'update.sh',          'url': url, },
 		'Reload':          {'history': True,  'bash': 'reload.sh',          'url': url, },
 		'Restart':         {'history': True,  'bash': 'restart.sh',         'url': url, },
+		'Get_dump':        {'history': True,  'bash': 'get_dump.sh',        'url': url, },
 		'Delete_job':      {'history': True,  'bash': 'delete_job.sh',      'url': url, },
 		'Check_logs':      {'history': False, 'bash': 'check_logs.sh',      'url': url, },
 		'Check_updates':   {'history': False, 'bash': 'check_updates.sh',   'url': url, },

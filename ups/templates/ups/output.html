@@ -8,7 +8,7 @@
 </script>
 
 <dl class="dl-horizontal" id="output_log">
-    <dt>Event logs</dt><dd><tt>{{ log|linebreaks }}</tt></dd>
+    <dt>Event logs</dt><dd><tt>{{ log|safe|linebreaks }}</tt></dd>
     {% if err >= 0 %}
         <dt>Error code</dt><dd>{{ err }}</dd>
     {% endif %}

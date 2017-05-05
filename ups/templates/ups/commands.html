@@ -1,3 +1,4 @@
+<!--                    Validation(box, srv, upd, job)   -->
 <li><a  onclick="return Validation('Start', 'true', '', '')"
         title="Start selected server(s)."
         href="javascript:;">Start</a></li>
@@ -59,6 +60,16 @@
         class="hidden"/>
 
 <li role="separator" class="divider"></li>
+
+<li><a  onclick="return Validation('Get_dump', 'true', '', '')"
+        title="Get DB dump from selected server(s)."
+        href="javascript:;">Get dump</a></li>
+<input  name="selected_commands"
+        readonly="readonly"
+        type="checkbox"
+        class="hidden"
+        value="Get_dump"
+        id="Get_dump"/>
 
 <li><a  onclick="return Validation('Update', 'true', 'true', '')"
         title="Update selected server(s)."
