@@ -97,8 +97,8 @@ def logs(request, project_id, log_id, cmd, cron, date):
 	context = {'log': log, 'the_url': url}
 	history = {
 		'date': date.replace('SS', ' ').replace('PP', ':').replace('OO', '.'),
-		'project': current_project,
 		'user': request.user,
+		'project': current_project,
 		'command': cmd}
 
 	if err:
@@ -108,10 +108,9 @@ def logs(request, project_id, log_id, cmd, cron, date):
 			context['log'] = 'Set cron job.\n' + log
 			history['command'] = 'Set cron job - ' + cmd.lower()
 		if his:
-			add_event(history, log, context['err'], '', '')
+			add_event(history, log, context['err'], log_id, '')
 		os.remove(conf.LOG_FILE + log_id)
 		os.remove(conf.ERR_FILE + log_id)
-
 	return render(request, 'ups/output.html', context)
 
 

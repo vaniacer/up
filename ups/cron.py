@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 
-from .commands_engine import add_event, run_cmd
+from .commands_engine import add_event, run_cmd, del_job
 from django.conf import settings as conf
 from .models import Job
 import os
@@ -26,4 +26,4 @@ def get_cron_logs():
 			run_cmd(['bash/delete_job.sh', '-job', str(filename)])
 			os.remove(os.path.join(conf.CRON_DIR, filename))
 			add_event(dick, out, int(err), filename, dat)
-			Job.objects.get(cron=filename).delete()
+	del_job({'cronjbs': logfiles})

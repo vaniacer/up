@@ -9,18 +9,16 @@ echo -e "Install libs."
 sudo apt-get install -y libpq-dev python-dev
 
 echo -e "Add virtual env."
-virtualenv ../env
-. ../env/bin/activate
+virtualenv ../env; . ../env/bin/activate
 
 echo -e "Create some folders."
-mkdir -p static ../logs/{cron,run,srv} media/updates/dumps
+mkdir -p static media/updates/dumps ../logs/{cron,run,srv}
 
 echo -e "Install requirements."
 easy_install $(cat requirements.txt)
 
 echo -e "Create db and admin user."
-./manage.py makemigrations ups
-./manage.py migrate
+./manage.py makemigrations ups; ./manage.py migrate
 echo "from django.contrib.auth.models import User; User.objects.create_superuser('${admin}','${email}','${paswd}')" | \
     python manage.py shell
 

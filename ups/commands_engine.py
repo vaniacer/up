@@ -49,7 +49,6 @@ def del_job(selected):
 		try:
 			Job.objects.get(cron=i).delete()
 		except ObjectDoesNotExist:
-			# selected['log'] = 'Задача: %s не существует.\n' % str(i)
 			continue
 
 
