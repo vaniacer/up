@@ -1,5 +1,5 @@
-<!--                    Validation(box, srv, upd, job)   -->
-<li><a  onclick="return Validation('Start', 'true', '', '')"
+<!-- Validation(input_id(if it not submit type), check_srv, check_upd, check_job) -->
+<li><a  onclick="return Validation('Start', true, false, false)"
         title="Start selected server(s)."
         href="javascript:;">Start</a></li>
 <input  name="selected_commands"
@@ -9,7 +9,7 @@
         value="Start"
         id="Start"/>
 
-<li><a  onclick="return Validation('Stop', 'true', '', '')"
+<li><a  onclick="return Validation('Stop', true, false, false)"
         title="Stop selected server(s)."
         href="javascript:;">Stop</a></li>
 <input  name="selected_commands"
@@ -19,7 +19,7 @@
         value="Stop"
         id="Stop"/>
 
-<li><a  onclick="return Validation('Restart', 'true', '', '')"
+<li><a  onclick="return Validation('Restart', true, false, false)"
         title="Restart selected server(s)."
         href="javascript:;">Restart</a></li>
 <input  name="selected_commands"
@@ -29,7 +29,7 @@
         class="hidden"
         id="Restart"/>
 
-<li><a  onclick="return Validation('Reload', 'true', '', '')"
+<li><a  onclick="return Validation('Reload', true, false, false)"
         title="Reload config on selected server(s)."
         href="javascript:;">Reload</a></li>
 <input  name="selected_commands"
@@ -39,7 +39,7 @@
         value="Reload"
         id="Reload"/>
 
-<li><a  onclick="return Validation('Maintenance_ON', 'true', '', '')"
+<li><a  onclick="return Validation('Maintenance_ON', true, false, false)"
         title="Show 'Maintenance' page on selected server(s)."
         href="javascript:;">Maintenance ON</a></li>
 <input  name="selected_commands"
@@ -49,7 +49,7 @@
         type="checkbox"
         class="hidden"/>
 
-<li><a  onclick="return Validation('Maintenance_OFF', 'true', '', '')"
+<li><a  onclick="return Validation('Maintenance_OFF', true, false, false)"
         title="Hide 'Maintenance' page on selected server(s)."
         href="javascript:;">Maintenance OFF</a></li>
 <input  name="selected_commands"
@@ -61,7 +61,7 @@
 
 <li role="separator" class="divider"></li>
 
-<li><a  onclick="return Validation('Get_dump', 'true', '', '')"
+<li><a  onclick="return Validation('Get_dump', true, false, false)"
         title="Get DB dump from selected server(s)."
         href="javascript:;">Get dump</a></li>
 <input  name="selected_commands"
@@ -71,7 +71,7 @@
         value="Get_dump"
         id="Get_dump"/>
 
-<li><a  onclick="return Validation('Update', 'true', 'true', '')"
+<li><a  onclick="return Validation('Update', true, true, false)"
         title="Update selected server(s)."
         href="javascript:;">Update</a></li>
 <input  name="selected_commands"
@@ -81,7 +81,7 @@
         value="Update"
         id="Update"/>
 
-<li><a  onclick="return Validation('Copy', 'true', 'true', '')"
+<li><a  onclick="return Validation('Copy', true, true, false)"
         title="Copy selected update(s) to selected server(s)."
         href="javascript:;">Copy</a></li>
 <input  name="selected_commands"

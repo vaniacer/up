@@ -1,4 +1,5 @@
-<li><a  onclick="return Validation('Check_updates', 'true', '', '')"
+<!-- Validation(input_id(if it not submit type), check_srv, check_upd, check_job) -->
+<li><a  onclick="return Validation('Check_updates', true, false, false)"
         title="Check updates on selected server(s)."
         href="javascript:;">Check updates</a>
 <input  name="selected_commands"
@@ -8,7 +9,7 @@
         type="checkbox"
         class="hidden"/></li>
 
-<li><a  onclick="return Validation('Check_logs', 'true', '', '')"
+<li><a  onclick="return Validation('Check_logs', true, false, false)"
         title="Check logs on selected server(s)."
         href="javascript:;">Check logs</a>
 <input  name="selected_commands"
@@ -18,7 +19,7 @@
         type="checkbox"
         class="hidden"/></li>
 
-<li><a  onclick="return Validation('Delete_job', '', '', 'true')"
+<li><a  onclick="return Validation('Delete_job', false, false, true)"
         title="Delete selected job(s)."
         href="javascript:;">Delete job</a>
 <input  name="selected_commands"
