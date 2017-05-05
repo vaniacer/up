@@ -31,11 +31,3 @@
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
-
-.divider-vertical {
-    border-left: 1px solid gray;
-    float: left right;
-    margin: 10 15px;
-    height: 30px;
-    opacity: 0.5;
-}

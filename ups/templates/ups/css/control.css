@@ -10,3 +10,11 @@
 .output {
     overflow: hidden;
 }
+
+.divider-vertical {
+    border-left: 1px solid gray;
+    float: left right;
+    margin: 10 15px;
+    height: 30px;
+    opacity: 0.5;
+}

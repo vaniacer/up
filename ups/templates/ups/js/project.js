@@ -1,15 +1,13 @@
 var log_ready = false;
 
-function autoRefresh_div() {
-    if (!log_ready) { $('.output').load('/logs/{{ project.id }}/{{ key }}/{{ cmd }}/{{ cron }}/{{ date }}/'); }
+function load_div(div) {
+    if (!log_ready) { $(div).load('/logs/{{ project.id }}/{{ key }}/{{ cmd }}/{{ cron }}/{{ date }}/'); }
 }
 
 function show_log() {
-    setInterval(function() { autoRefresh_div(); }, 2000);
-    $('.output_bottom').show();
+    setInterval(function() { load_div('.output'); }, 2000);
     $('.project').hide();
-    $('.output').show();
-    autoRefresh_div();
+    load_div('.output');
 }
 
 function hide_log() {
@@ -99,5 +97,4 @@ $(function() {
 
 $(document).ready(function() {
     $('.loader').hide();
-    if ('{{ log }}' != '') { show_log(); } else { hide_log(); }
 });

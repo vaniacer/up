@@ -45,7 +45,7 @@ def pagination(request, history):
 	return history, hist_fd, hist_bk
 
 
-def cmd_render(request, current_project, context):
+def cmd_run(request, current_project, context):
 	"""Выводит результат нажатия кнопок."""
 	check_perm('run_command', current_project, request.user)
 
@@ -138,5 +138,5 @@ def project(request, project_id):
 		'hist_fd': hist_fd, }
 
 	if request.POST.get('selected_commands'):
-		context = cmd_render(request, current_project, context)
+		context = cmd_run(request, current_project, context)
 	return render(request, 'ups/project.html', context)

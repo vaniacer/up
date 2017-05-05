@@ -6,10 +6,10 @@ def command(selected):
 	cmd = ''.join(selected['command'])
 	url = ''  # #cron, #upser, #history
 
-#                          +-----------------+-----------------------------+-------------------+
-#                          | write history   | bash command name           | url after command |
-#                          | log or not      |                             | not working yet ( |
-	dick = {             # +-----------------+-----------------------------+-------------------+
+#                         +------------------+-----------------------------+-------------------+
+#                         | write history    | bash command name           | url after command |
+#                         | log or not       |                             | not working yet ( |
+	dick = {            # +------------------+-----------------------------+-------------------+
 		'Stop':            {'history': True,  'bash': 'stop.sh',            'url': url, },
 		'Copy':            {'history': True,  'bash': 'copy.sh',            'url': url, },
 		'Start':           {'history': True,  'bash': 'start.sh',           'url': url, },

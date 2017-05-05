@@ -71,8 +71,11 @@
                 </div>
 
                 <div class="loader"></div>
-                <div class="output"></div>
-                <div class="output_bottom">{% include "ups/output_bottom_panel.html" %}</div>
+                {% if log %}
+                    <div class="output"></div>
+                    <script type="text/javascript">show_log();</script>
+                    <div class="output_bottom">{% include "ups/output_bottom_panel.html" %}</div>
+                {% endif %}
             </div> <!-- /container -->
         </div> <!-- /whole_page -->
     </body>
