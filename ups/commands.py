@@ -4,26 +4,25 @@
 def command(selected):
 	"""Определяет команду."""
 	cmd = ''.join(selected['command'])
-	url = ''  # #cron, #upser, #history
 
 #                         +------------------+-----------------------------+-------------------+
-#                         | write history    | bash command name           | url after command |
-#                         | log or not       |                             | not working yet ( |
+#                         | write history    | bash command name           | html tags in      |
+#                         | log or not       |                             | output            |
 	dick = {            # +------------------+-----------------------------+-------------------+
-		'Stop':            {'history': True,  'bash': 'stop.sh',            'url': url, },
-		'Copy':            {'history': True,  'bash': 'copy.sh',            'url': url, },
-		'Start':           {'history': True,  'bash': 'start.sh',           'url': url, },
-		'Update':          {'history': True,  'bash': 'update.sh',          'url': url, },
-		'Reload':          {'history': True,  'bash': 'reload.sh',          'url': url, },
-		'Restart':         {'history': True,  'bash': 'restart.sh',         'url': url, },
-		'Get_dump':        {'history': True,  'bash': 'get_dump.sh',        'url': url, },
-		'Delete_job':      {'history': True,  'bash': 'delete_job.sh',      'url': url, },
-		'Check_logs':      {'history': False, 'bash': 'check_logs.sh',      'url': url, },
-		'Check_updates':   {'history': False, 'bash': 'check_updates.sh',   'url': url, },
-		'Maintenance_ON':  {'history': True,  'bash': 'maintenance_on.sh',  'url': url, },
-		'Maintenance_OFF': {'history': True,  'bash': 'maintenance_off.sh', 'url': url, },
+		'Stop':            {'history': True,  'bash': 'stop.sh',            'tag': False, },
+		'Copy':            {'history': True,  'bash': 'copy.sh',            'tag': False, },
+		'Start':           {'history': True,  'bash': 'start.sh',           'tag': False, },
+		'Update':          {'history': True,  'bash': 'update.sh',          'tag': False, },
+		'Reload':          {'history': True,  'bash': 'reload.sh',          'tag': False, },
+		'Restart':         {'history': True,  'bash': 'restart.sh',         'tag': False, },
+		'Get_dump':        {'history': True,  'bash': 'get_dump.sh',        'tag': True, },
+		'Delete_job':      {'history': True,  'bash': 'delete_job.sh',      'tag': False, },
+		'Check_logs':      {'history': False, 'bash': 'check_logs.sh',      'tag': False, },
+		'Check_updates':   {'history': False, 'bash': 'check_updates.sh',   'tag': False, },
+		'Maintenance_ON':  {'history': True,  'bash': 'maintenance_on.sh',  'tag': False, },
+		'Maintenance_OFF': {'history': True,  'bash': 'maintenance_off.sh', 'tag': False, },
 	}
 
 	selected['cmdname'] = dick[cmd]['bash']
 	selected['history'] = dick[cmd]['history']
-	return dick[cmd]['url'], selected['history']
+	return dick[cmd]['tag'], selected['history']

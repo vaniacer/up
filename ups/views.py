@@ -87,14 +87,14 @@ def logs(request, project_id, log_id, cmd, cron, date):
 	current_project = get_object_or_404(Project, id=project_id)
 	check_perm('view_project', current_project, request.user)
 
-	url, his = command({'command': cmd, 'cron': '', })
+	tag, his = command({'command': cmd, 'cron': '', })
 	log = open(conf.LOG_FILE + log_id, 'r').read()
 	try:
 		err = open(conf.ERR_FILE + log_id, 'r').read()
 	except IOError:
 		err = ''
 
-	context = {'log': log, 'the_url': url}
+	context = {'log': log, 'tag': tag}
 	history = {
 		'date': date.replace('SS', ' ').replace('PP', ':').replace('OO', '.'),
 		'user': request.user,
