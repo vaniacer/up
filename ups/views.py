@@ -46,7 +46,7 @@ def pagination(request, history):
 
 
 def cmd_run(request, current_project, context):
-	"""Выводит результат нажатия кнопок."""
+	"""Запускает выбранную команду."""
 	check_perm('run_command', current_project, request.user)
 
 	selected = {
@@ -83,7 +83,7 @@ def projects(request):
 
 @login_required
 def logs(request, project_id, log_id, cmd, cron, date):
-	"""Выводит логи."""
+	"""Выводит логи комманд."""
 	current_project = get_object_or_404(Project, id=project_id)
 	check_perm('view_project', current_project, request.user)
 
