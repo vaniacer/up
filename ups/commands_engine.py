@@ -45,6 +45,7 @@ def run_cmd(opt):
 
 
 def del_job(selected):
+	"""Удаляет из базы записи о крон жобах."""
 	for i in selected['cronjbs']:
 		try:
 			Job.objects.get(cron=i).delete()

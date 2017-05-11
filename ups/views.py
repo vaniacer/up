@@ -106,9 +106,9 @@ def logs(request, project_id, log_id, cmd, cron, date):
 		if cron == 'True':
 			add_job(history, log.replace('Done.', ''), log_id)
 			context['log'] = 'Set cron job.\n' + log
-			history['command'] = 'Set cron job - ' + cmd.lower()
+			history['command'] = 'Set cron job - %s' % cmd.lower()
 		if his:
-			add_event(history, log, context['err'], log_id, '')
+			add_event(history, log, context['err'], '', '')
 		os.remove(conf.LOG_FILE + log_id)
 		os.remove(conf.ERR_FILE + log_id)
 	return render(request, 'ups/output.html', context)
