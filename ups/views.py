@@ -83,7 +83,7 @@ def projects(request):
 
 @login_required
 def logs(request, project_id, log_id, cmd, cron, date):
-	"""Выводит логи комманд."""
+	"""Выводит лог выполняющейся комманды."""
 	current_project = get_object_or_404(Project, id=project_id)
 	check_perm('view_project', current_project, request.user)
 
