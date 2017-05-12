@@ -33,8 +33,8 @@ function info () {
 
 function starter () {
     [ "${cron}" ] \
-        && { log=$(run);  dat=$(date +'%b %d, %Y %R'); dat=${dat//.}; dat=${dat^}
-             log=${log}"\nError: ${error}\nDate: ${dat}"; echo -e "${log}" > ${crondir}/${cron}; } \
+        && { run &> ${crondir}/${cron}; dat=$(date +'%b %d, %Y %R'); dat=${dat//.}; dat=${dat^}
+             echo -e "\nError: ${error}\nDate: ${dat}" >> ${crondir}/${cron}; } \
         || { run          &> ${rundir}/log${key}
              echo ${error} > ${rundir}/err${key}; }
 

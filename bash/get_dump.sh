@@ -13,7 +13,11 @@ function run () { #----------------------------------|Main function|------------
         # Check access and run command or send 'Server unreachable'
         ssh ${addr} "echo > /dev/null" \
             && { ssh ${addr} "${wdir}/krupd bkp db" || error=$?
-                 name=$(tail -n2 ${rundir}/log${key}); name=${name#*\"}; name=${name//\"./}
+                 [ "${cron}" ] \
+                    && { name=$(tail -n2 ${crondir}/${cron});  } \
+                    || { name=$(tail -n2 ${rundir}/log${key}); }
+                 name=${name#*\"}; name=${name//\"./}
+
                  echo -e "Копирую файл - ${name}"; scp ${addr}:${name} ${dumpdir} || error=$?
                  echo -e " Удаляю файл - ${name}"; ssh ${addr} "rm ${name}"       || error=$?;
                  echo -e "\n<a href='/updates/dumps/${name//\/*\//}'>download</a>"; } \

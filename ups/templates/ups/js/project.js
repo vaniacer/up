@@ -10,11 +10,6 @@ function show_log() {
     load_div('.output');
 }
 
-function hide_log() {
-    $('.output_bottom').hide();
-    $('.output').hide();
-}
-
 function show_loader() {
     $('.output_bottom').show();
     $('.project').hide();

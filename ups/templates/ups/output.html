@@ -7,21 +7,23 @@
 
 </script>
 
-<dl class="dl-horizontal">
-    {% if tag %}
-        <dt>Event logs</dt><dd><tt>{{ log|safe|linebreaks }}</tt></dd>
-    {% else %}
-        <dt>Event logs</dt><dd><tt>{{ log|linebreaks }}</tt></dd>
-    {% endif %}
-</dl>
-
-{% if err >= 0 %}
+<div id="output_log">
     <dl class="dl-horizontal">
-        <dt>Error code</dt><dd>{{ err }}</dd>
-        <dt><br><a class="btn btn-primary" href="">OK</a></dt>
+        {% if tag %}
+            <dt>Event logs</dt><dd><tt>{{ log|safe|linebreaks }}</tt></dd>
+        {% else %}
+            <dt>Event logs</dt><dd><tt>{{ log|linebreaks }}</tt></dd>
+        {% endif %}
     </dl>
-{% else %}
-    <div class="small_loader"></div>
-{% endif %}
+
+    {% if err >= 0 %}
+        <dl class="dl-horizontal">
+            <dt>Error code</dt><dd>{{ err }}</dd>
+            <dt><br><a class="btn btn-primary" href="">OK</a></dt>
+        </dl>
+    {% else %}
+        <div class="small_loader"></div>
+    {% endif %}
+</div>
 
 <br><br><br><br><br>
