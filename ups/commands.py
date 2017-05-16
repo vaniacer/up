@@ -13,6 +13,7 @@ def command(selected):
 		'Stop':            {'history': True,  'bash': 'stop.sh',            'tag': False, },
 		'Copy':            {'history': True,  'bash': 'copy.sh',            'tag': False, },
 		'Start':           {'history': True,  'bash': 'start.sh',           'tag': False, },
+		'script':          {'history': True,  'bash': 'script.sh',          'tag': False, },
 		'cutils':          {'history': True,  'bash': 'cutils.sh',          'tag': False, },
 		'Update':          {'history': True,  'bash': 'update.sh',          'tag': False, },
 		'Reload':          {'history': True,  'bash': 'reload.sh',          'tag': False, },
