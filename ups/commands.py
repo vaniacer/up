@@ -18,6 +18,8 @@ def command(selected):
 		'Update':          {'history': True,  'bash': 'update.sh',          'tag': False, },
 		'Reload':          {'history': True,  'bash': 'reload.sh',          'tag': False, },
 		'Restart':         {'history': True,  'bash': 'restart.sh',         'tag': False, },
+		'delallup':        {'history': True,  'bash': 'delallup.sh',        'tag': False, },
+		'delselup':        {'history': True,  'bash': 'delselup.sh',        'tag': False, },
 		'Get_dump':        {'history': True,  'bash': 'get_dump.sh',        'tag': True, },
 		'Delete_job':      {'history': True,  'bash': 'delete_job.sh',      'tag': False, },
 		'Check_logs':      {'history': False, 'bash': 'check_logs.sh',      'tag': False, },

@@ -59,9 +59,30 @@
         type="checkbox"
         class="hidden"/>
 
-<li role="separator" class="divider"></li>
+<li><a  onclick="return Validation('delallup', true, false, false)"
+        title="Delete all updates from selected server(s)."
+        href="javascript:;">Delete all updates.</a></li>
+<input  name="selected_commands"
+        readonly="readonly"
+        type="checkbox"
+        value="delallup"
+        class="hidden"
+        id="delallup"/>
 
-<li><a  onclick="return Validation('script', true, false, false)"
+<li><a  onclick="return Validation('delselup', true, true, false)"
+        title="Delete selected update(s) from selected server(s)."
+        href="javascript:;">Delete selected updates.</a></li>
+<input  name="selected_commands"
+        readonly="readonly"
+        type="checkbox"
+        value="delselup"
+        class="hidden"
+        id="delselup"/>
+
+<li role="separator" class="divider"></li>
+<!-- Validation(input_id(if it not submit type), check_srv, check_upd, check_job) -->
+
+<li><a  onclick="return Validation('script', true, true, false)"
         title="Run selected script(s) on selected server(s). Script(s) have to be loaded(and selected) as updates."
         href="javascript:;">Run custom script</a></li>
 <input  name="selected_commands"
