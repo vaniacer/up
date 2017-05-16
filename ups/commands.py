@@ -5,10 +5,10 @@ def command(selected):
 	"""Определяет команду."""
 	cmd = ''.join(selected['command'])
 
-#                         +------------------+-----------------------------+-------------------+
-#                         | write history    | bash command name           | html tags in      |
-#                         | log or not       |                             | output            |
-	dick = {            # +------------------+-----------------------------+-------------------+
+#                         +------------------+-----------------------------+----------------+
+#                         | write history    | bash command name           | html tags in   |
+#                         | log or not       |                             | output         |
+	dick = {            # +------------------+-----------------------------+----------------+
 
 		'Stop':            {'history': True,  'bash': 'stop.sh',            'tag': False, },
 		'Copy':            {'history': True,  'bash': 'copy.sh',            'tag': False, },
@@ -20,7 +20,7 @@ def command(selected):
 		'Restart':         {'history': True,  'bash': 'restart.sh',         'tag': False, },
 		'delallup':        {'history': True,  'bash': 'delallup.sh',        'tag': False, },
 		'delselup':        {'history': True,  'bash': 'delselup.sh',        'tag': False, },
-		'Get_dump':        {'history': True,  'bash': 'get_dump.sh',        'tag': True, },
+		'Get_dump':        {'history': True,  'bash': 'get_dump.sh',        'tag':  True, },
 		'Delete_job':      {'history': True,  'bash': 'delete_job.sh',      'tag': False, },
 		'Check_logs':      {'history': False, 'bash': 'check_logs.sh',      'tag': False, },
 		'Check_conf':      {'history': False, 'bash': 'check_conf.sh',      'tag': False, },
