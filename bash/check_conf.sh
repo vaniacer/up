@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function description () {
-    echo -e "Show logs of server(s):\n${servers// /\\n}\n"; exit 0
+    echo -e "Show conf of server(s):\n${servers// /\\n}\n"; exit 0
 }
 
 function run () { #----------------------------------|Main function|----------------------------------------------------
@@ -10,7 +10,7 @@ function run () { #----------------------------------|Main function|------------
         # get address jboss@localhost and working directory /var/lib/jboss
         addr=${server%%:*}; wdir=${server##*:}; info ${addr} # add delimiter string with server name
 
-        ssh  ${addr} "cat ${wdir}/jboss-bas-*/standalone/log/server.log" || error=$?
+        ssh  ${addr} "cat ${wdir}/jboss-bas-*/standalone/configuration/standalone-full.xml" || error=$?
         echo # Add empty line
     done; echo -e "\nDone."
 } #---------------------------------------------------------------------------------------------------------------------

@@ -4,6 +4,7 @@
     {% if "run_command" in pr_view_perms %}
 
         <li><button onclick="return Validation('', 'true', '', '')"
+                    title="Check updates on selected server(s)."
                     class="btn btn-default navbar-btn blockUI"
                     name="selected_commands"
                     value="Check_updates"
@@ -11,9 +12,17 @@
 
         <li><button onclick="return Validation('', 'true', '', '')"
                     class="btn btn-default navbar-btn blockUI"
+                    title="Check logs on selected server(s)."
                     name="selected_commands"
                     value="Check_logs"
                     type="submit">Check logs</button></li>
+
+        <li><button title="Show conf(standalone-full.xml) of selected server(s)."
+                    onclick="return Validation('', 'true', '', '')"
+                    class="btn btn-default navbar-btn blockUI"
+                    name="selected_commands"
+                    value="Check_conf"
+                    type="submit">Check conf</button></li>
     {% endif %}
 
     <!--Divider-->
@@ -21,11 +30,13 @@
 
     <!--Up and down navigation-->
     <li><input class="btn btn-default navbar-btn"
+               title="Go to top of the page."
                onclick="go_up()"
                type="button"
                value="Up"/></li>
 
     <li><input class="btn btn-default navbar-btn"
+               title="Go to bottom of the page."
                onclick="go_down()"
                type="button"
                value="Down"/></li>
