@@ -61,6 +61,16 @@
 
 <li role="separator" class="divider"></li>
 
+<li><a  onclick="return Validation('cutils', true, false, false)"
+        title="Copy utils folder to selected server(s)."
+        href="javascript:;">Copy utils</a></li>
+<input  name="selected_commands"
+        readonly="readonly"
+        type="checkbox"
+        class="hidden"
+        value="cutils"
+        id="cutils"/>
+
 <li><a  onclick="return Validation('Get_dump', true, false, false)"
         title="Get DB dump from selected server(s)."
         href="javascript:;">Get dump</a></li>
