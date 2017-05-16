@@ -16,8 +16,10 @@ function run () { #----------------------------------|Main function|------------
                     filename=$(basename ${file})
                     echo -e "\nCopy script - ${filename}"
                     scp ${file} ${server}/updates/new || error="$?"
-                    echo -e "\nRun script - ${filename}"
+
+                    echo -e "Run script - ${filename}\n"
                     ssh ${addr} "cd ${wdir}; chmod +x updates/new/${filename}; updates/new/${filename}" || error="$?"
+
                     echo # Add empty line
                 done; } \
             || { error=$?; echo -e "\nServer unreachable."; }
