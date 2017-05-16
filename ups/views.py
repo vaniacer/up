@@ -1,29 +1,21 @@
 # -*- encoding: utf-8 -*-
 
-from django.shortcuts import render, get_object_or_404  # , HttpResponseRedirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
-from .commands_engine import add_event, get_key
-from .commands_engine import starter, add_job
+from django.shortcuts import render, get_object_or_404
 from django.conf import settings as conf
-# from django.views.static import serve
+from .commands import command, cmd_run
+from .commands_engine import add_event
+from .commands_engine import add_job
 from .permissions import check_perm
 from .cron import get_cron_logs
-from .commands import command
 from .models import Project
-import datetime
 import os
 
 
 def index(request):
 	"""Домашняя страница приложения update server."""
 	return render(request, 'ups/index.html')
-
-
-def run_date():
-	"""Если не указана дата, возвращает текущую дату + 1 минута."""
-	date = datetime.datetime.now() + datetime.timedelta(minutes=1)
-	return date.strftime("%d.%m.%Y %H:%M")
 
 
 def pagination(request, history):
@@ -43,34 +35,6 @@ def pagination(request, history):
 	hist_fd = hist_pg[int(page):int(page) + 4]
 	hist_bk = hist_pg[max(int(page) - 5, 0):int(page) - 1]
 	return history, hist_fd, hist_bk
-
-
-def cmd_run(request, current_project, context):
-	"""Запускает выбранную команду."""
-	check_perm('run_command', current_project, request.user)
-
-	selected = {
-		'key':  get_key(),
-		'user': request.user,
-		'cron': request.POST.get('CRON') or False,
-		'date': request.POST.get('selected_date') or run_date(),
-		'updates': request.POST.getlist('selected_updates'),
-		'servers': request.POST.getlist('selected_servers'),
-		'cronjbs': request.POST.getlist('selected_jobs'),
-		'command': request.POST.get('selected_commands'),
-		'project': current_project, }
-
-	con = {
-		'date': selected['date'].replace(' ', 'SS').replace(':', 'PP').replace('.', 'OO'),
-		'cmd':  selected['command'],
-		'cron': selected['cron'],
-		'key':  selected['key'],
-		'log':  'true', }
-
-	context.update(con)
-	command(selected)
-	starter(selected)
-	return context
 
 
 @login_required
