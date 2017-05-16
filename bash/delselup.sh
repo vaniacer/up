@@ -15,7 +15,7 @@ function run () { #----------------------------------|Main function|------------
             && { for file in ${updates}; do
                     filename=$(basename ${file})
                     echo -e "Delete file - ${filename}."
-                    ssh ${addr} "rm ${wdir}/updates/new/${filename}" || error="$?"
+                    ssh ${addr} "rm ${wdir}/updates/new/${filename}" || error=$?
 
                     echo # Add empty line
                 done; } \

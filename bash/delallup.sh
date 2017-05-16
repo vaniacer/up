@@ -13,7 +13,7 @@ function run () { #----------------------------------|Main function|------------
         # Check access
         ssh ${addr} "echo > /dev/null" \
             && { ssh ${addr} "echo -e \"Delete files:\n$(ls ${wdir}/updates/new)\""
-                 ssh ${addr} "rm ${wdir}/updates/new/*" || error="$?"
+                 ssh ${addr} "rm ${wdir}/updates/new/*" || error=$?
                  # Add empty line
                  echo; } \
             || { error=$?; echo -e "\nServer unreachable."; }

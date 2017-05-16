@@ -19,7 +19,7 @@ function run () { #----------------------------------|Main function|------------
                     # Check if file exist, copy if not exist
                     ssh ${addr} ls ${wdir}/updates/new/${filename} &> /dev/null \
                         && { echo -e "File - ${filename} exist, skip."; } \
-                        || { scp ${file} ${server}/updates/new || error="$?"; }
+                        || { scp ${file} ${server}/updates/new || error=$?; }
 
                     echo # Add empty line
                 done; } \

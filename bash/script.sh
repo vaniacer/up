@@ -15,11 +15,11 @@ function run () { #----------------------------------|Main function|------------
             && { for file in ${updates}; do
                     filename=$(basename ${file})
                     echo -e "\nCopy script - ${filename}"
-                    scp ${file} ${server}/updates/new || error="$?"
+                    scp ${file} ${server}/updates/new || error=$?
 
-                    echo -e "Run script - ${filename}\n"
-                    ssh ${addr} "cd ${wdir}; chmod +x updates/new/${filename}; updates/new/${filename}" || error="$?"
-
+                    echo -e "Run  script - ${filename}\n"
+                    ssh ${addr} "cd ${wdir}; chmod +x updates/new/${filename}; updates/new/${filename}" || error=$?
+                    ssh ${addr} "rm ${wdir}/updates/new/${filename}" || error=$?
                     echo # Add empty line
                 done; } \
             || { error=$?; echo -e "\nServer unreachable."; }
