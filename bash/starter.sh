@@ -29,6 +29,12 @@ function info () {
     [ ${#name} -lt 100 ] && name=-${name}; echo -e ${name}
 }
 
+function addr () {
+    # server comes like this jboss@localhost:/var/lib/jboss
+    # get address jboss@localhost and working directory /var/lib/jboss
+    addr=${server%%:*}; wdir=${server##*:}; info ${addr} # add delimiter string with server name
+}
+
 . ${workdir}/${cmd}
 
 function starter () {

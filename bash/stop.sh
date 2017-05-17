@@ -5,16 +5,12 @@ function description () {
 }
 
 function run () { #----------------------------------|Main function|----------------------------------------------------
-    for server in ${servers}; do
-        # server comes like this jboss@localhost:/var/lib/jboss
-        # get address jboss@localhost and working directory /var/lib/jboss
-        addr=${server%%:*}; wdir=${server##*:}; info ${addr} # add delimiter string with server name
+    for server in ${servers}; do addr
 
         # Check access and run command or send 'Server unreachable'
         ssh ${addr} "echo > /dev/null" \
             && { ssh ${addr} ${wdir}/jboss-bas-*/bin/jboss-cli.sh -c command=":shutdown" || error=$?; } \
             || { error=$?; echo -e "\nServer unreachable."; }
 
-        echo # Add empty line
-    done; echo -e "\nDone."
+    echo; done; echo -e "\nDone."
 } #---------------------------------------------------------------------------------------------------------------------

@@ -9,7 +9,7 @@ import datetime
 def command(selected):
 	"""Определяет команду(bash script) по полученному command id."""
 # -----------------------+-------------------+-----------------------------+-----------------+----------------
-#     -------------------|  Write history    |  Bash command name          |  Html tags in   |------------
+#     -------------------|  Write history    |  Bash script names          |  Html tags in   |------------
 	dick = {  # ---------|  log or not       |                             |  output         |--------
 		# RUN only |-----+-------------------+-----------------------------+-----------------+---
 		'delete_job':      {'history':  True, 'bash':      'delete_job.sh', 'tag': False, },
