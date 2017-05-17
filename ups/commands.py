@@ -23,9 +23,13 @@ def command(selected):
 		'delallup':        {'history':  True, 'bash': 'delallup.sh',        'tag': False, },
 		'delselup':        {'history':  True, 'bash': 'delselup.sh',        'tag': False, },
 		'Get_dump':        {'history':  True, 'bash': 'get_dump.sh',        'tag':  True, },
+		'Backup_db':       {'history':  True, 'bash': 'backup_db.sh',       'tag': False, },
+		'SQL_script':      {'history':  True, 'bash': 'sql_script.sh',      'tag': False, },
 		'Delete_job':      {'history':  True, 'bash': 'delete_job.sh',      'tag': False, },
 		'Check_logs':      {'history': False, 'bash': 'check_logs.sh',      'tag': False, },
 		'Check_conf':      {'history': False, 'bash': 'check_conf.sh',      'tag': False, },
+		'Backup_sys':      {'history':  True, 'bash': 'backup_sys.sh',      'tag': False, },
+		'Backup_full':     {'history':  True, 'bash': 'backup_full.sh',     'tag': False, },
 		'Check_updates':   {'history': False, 'bash': 'check_updates.sh',   'tag': False, },
 		'Maintenance_ON':  {'history':  True, 'bash': 'maintenance_on.sh',  'tag': False, },
 		'Maintenance_OFF': {'history':  True, 'bash': 'maintenance_off.sh', 'tag': False, }, }

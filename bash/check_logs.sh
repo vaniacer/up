@@ -11,6 +11,7 @@ function run () { #----------------------------------|Main function|------------
         addr=${server%%:*}; wdir=${server##*:}; info ${addr} # add delimiter string with server name
 
         ssh  ${addr} "cat ${wdir}/jboss-bas-*/standalone/log/server.log" || error=$?
+
         echo # Add empty line
     done; echo -e "\nDone."
 } #---------------------------------------------------------------------------------------------------------------------

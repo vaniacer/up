@@ -1,3 +1,4 @@
+<!---------------------------------MAINTENANCE-------------------------------------->
 <!-- Validation(input_id(if it not submit type), check_srv, check_upd, check_job) -->
 <li><a  onclick="return Validation('Start', true, false, false)"
         title="Start selected server(s)."
@@ -59,15 +60,9 @@
         type="checkbox"
         class="hidden"/>
 
-<li><a  onclick="return Validation('delallup', true, false, false)"
-        title="Delete all updates from selected server(s)."
-        href="javascript:;">Delete all updates.</a></li>
-<input  name="selected_commands"
-        readonly="readonly"
-        type="checkbox"
-        value="delallup"
-        class="hidden"
-        id="delallup"/>
+<!--------------------------------DELETE UPDATES------------------------------------>
+<!-- Validation(input_id(if it not submit type), check_srv, check_upd, check_job) -->
+<li role="separator" class="divider"></li>
 
 <li><a  onclick="return Validation('delselup', true, true, false)"
         title="Delete selected update(s) from selected server(s)."
@@ -79,11 +74,56 @@
         class="hidden"
         id="delselup"/>
 
-<li role="separator" class="divider"></li>
+<li><a  onclick="return Validation('delallup', true, false, false)"
+        title="Delete all updates from selected server(s)."
+        href="javascript:;">Delete all updates.</a></li>
+<input  name="selected_commands"
+        readonly="readonly"
+        type="checkbox"
+        value="delallup"
+        class="hidden"
+        id="delallup"/>
+
+<!----------------------------------BACKUP------------------------------------------>
 <!-- Validation(input_id(if it not submit type), check_srv, check_upd, check_job) -->
+<li role="separator" class="divider"></li>
+
+<li><a  onclick="return Validation('Backup_full', true, false, false)"
+        title="System and DB backup via './krupd bkp full'."
+        href="javascript:;">Backup full</a></li>
+<input  name="selected_commands"
+        readonly="readonly"
+        value="Backup_full"
+        id="Backup_full"
+        type="checkbox"
+        class="hidden"/>
+
+<li><a  onclick="return Validation('Backup_db', true, false, false)"
+        title="Database backup via './krupd bkp db'."
+        href="javascript:;">Backup base</a></li>
+<input  name="selected_commands"
+        readonly="readonly"
+        value="Backup_db"
+        type="checkbox"
+        id="Backup_db"
+        class="hidden"/>
+
+<li><a  onclick="return Validation('Backup_sys', true, false, false)"
+        title="System backup via './krupd bkp sys'."
+        href="javascript:;">Backup system</a></li>
+<input  name="selected_commands"
+        readonly="readonly"
+        value="Backup_sys"
+        id="Backup_sys"
+        type="checkbox"
+        class="hidden"/>
+
+<!-----------------------------------MAIN------------------------------------------->
+<!-- Validation(input_id(if it not submit type), check_srv, check_upd, check_job) -->
+<li role="separator" class="divider"></li>
 
 <li><a  onclick="return Validation('script', true, true, false)"
-        title="Run selected script(s) on selected server(s). Script(s) have to be loaded(and selected) as updates."
+        title="Run selected script(s) on selected server(s). Script(s) have to be loaded(and selected) as update."
         href="javascript:;">Run custom script</a></li>
 <input  name="selected_commands"
         readonly="readonly"
@@ -92,15 +132,15 @@
         value="script"
         id="script"/>
 
-<li><a  onclick="return Validation('cutils', true, false, false)"
-        title="Copy utils folder to selected server(s)."
-        href="javascript:;">Copy utils</a></li>
+<li><a  onclick="return Validation('SQL_script', true, true, false)"
+        title="Run SQL script in DB. Script(s) have to be loaded(and selected) as update."
+        href="javascript:;">Run SQL script</a></li>
 <input  name="selected_commands"
         readonly="readonly"
+        value="SQL_script"
         type="checkbox"
-        class="hidden"
-        value="cutils"
-        id="cutils"/>
+        id="SQL_script"
+        class="hidden"/>
 
 <li><a  onclick="return Validation('Get_dump', true, false, false)"
         title="Get DB dump from selected server(s)."
@@ -111,6 +151,16 @@
         class="hidden"
         value="Get_dump"
         id="Get_dump"/>
+
+<li><a  onclick="return Validation('cutils', true, false, false)"
+        title="Copy utils folder to selected server(s)."
+        href="javascript:;">Copy utils</a></li>
+<input  name="selected_commands"
+        readonly="readonly"
+        type="checkbox"
+        class="hidden"
+        value="cutils"
+        id="cutils"/>
 
 <li><a  onclick="return Validation('Update', true, true, false)"
         title="Update selected server(s)."
