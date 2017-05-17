@@ -1,5 +1,5 @@
 # Update Server
-![screeenshot](https://cloud.githubusercontent.com/assets/18072680/25487684/9c268c2a-2b6d-11e7-9d71-e4b5e0610434.png)
+![screeenshot](https://cloud.githubusercontent.com/assets/18072680/26149466/10945f20-3b03-11e7-9c68-4bdd4b8e0e5b.png)
 
 It's an ssh wrapper, run ssh commands from web interface.
 
