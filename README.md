@@ -1,7 +1,7 @@
 # Update Server
 ![screeenshot](https://cloud.githubusercontent.com/assets/18072680/26149466/10945f20-3b03-11e7-9c68-4bdd4b8e0e5b.png)
 
-It's an ssh wrapper, run ssh commands from web interface.
+It's a ssh\bash wrapper, run ssh\bash commands on your servers from web interface.
 
 Start by pressing an 'Update your servers' button or a 'Projects' link at the top.
 Select project by clicking on it. Or create a new one via 'Add new project' link.
