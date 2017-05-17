@@ -3,7 +3,8 @@
 
 <li><a  onclick="return Validation('stop', true, false, false)"
         title="Stop selected server(s)."
-        href="javascript:;">Stop</a></li>
+        href="javascript:;"
+        class="danger">Stop</a></li>
 <input  name="selected_commands"
         readonly="readonly"
         type="checkbox"
@@ -13,7 +14,8 @@
 
 <li><a  onclick="return Validation('start', true, false, false)"
         title="Start selected server(s)."
-        href="javascript:;">Start</a></li>
+        href="javascript:;"
+        class="danger">Start</a></li>
 <input  name="selected_commands"
         readonly="readonly"
         type="checkbox"
@@ -23,7 +25,8 @@
 
 <li><a  onclick="return Validation('restart', true, false, false)"
         title="Restart selected server(s)."
-        href="javascript:;">Restart</a></li>
+        href="javascript:;"
+        class="danger">Restart</a></li>
 <input  name="selected_commands"
         readonly="readonly"
         type="checkbox"
@@ -33,7 +36,8 @@
 
 <li><a  onclick="return Validation('reload', true, false, false)"
         title="Reload config on selected server(s)."
-        href="javascript:;">Reload</a></li>
+        href="javascript:;"
+        class="danger">Reload</a></li>
 <input  name="selected_commands"
         readonly="readonly"
         type="checkbox"
@@ -43,7 +47,8 @@
 
 <li><a  onclick="return Validation('maintenance_on', true, false, false)"
         title="Show 'Maintenance' page on selected server(s)."
-        href="javascript:;">Maintenance ON</a></li>
+        href="javascript:;"
+        class="danger">Maintenance ON</a></li>
 <input  name="selected_commands"
         value="maintenance_on"
         id="maintenance_on"
@@ -53,7 +58,8 @@
 
 <li><a  onclick="return Validation('maintenance_off', true, false, false)"
         title="Hide 'Maintenance' page on selected server(s)."
-        href="javascript:;">Maintenance OFF</a></li>
+        href="javascript:;"
+        class="danger">Maintenance OFF</a></li>
 <input  name="selected_commands"
         value="maintenance_off"
         id="maintenance_off"
@@ -63,11 +69,12 @@
 
 <!--------------------------------DELETE UPDATES------------------------------------>
 <!-- Validation(input_id(if it not submit type), check_srv, check_upd, check_job) -->
-<li role="separator" class="divider"></li>
+<li role="separator" class="divider danger"></li>
 
 <li><a  onclick="return Validation('del_sel_updates', true, true, false)"
         title="Delete selected update(s) from selected server(s)."
-        href="javascript:;">Delete selected updates.</a></li>
+        href="javascript:;"
+        class="danger">Delete selected updates.</a></li>
 <input  name="selected_commands"
         value="del_sel_updates"
         id="del_sel_updates"
@@ -77,7 +84,8 @@
 
 <li><a  onclick="return Validation('del_all_updates', true, false, false)"
         title="Delete all updates from selected server(s)."
-        href="javascript:;">Delete all updates.</a></li>
+        href="javascript:;"
+        class="danger">Delete all updates.</a></li>
 <input  name="selected_commands"
         value="del_all_updates"
         id="del_all_updates"

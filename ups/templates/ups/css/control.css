@@ -18,3 +18,7 @@
     height: 30px;
     opacity: 0.5;
 }
+
+.danger {
+    background: #f2dede;
+}
