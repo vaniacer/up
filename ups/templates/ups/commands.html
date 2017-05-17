@@ -1,61 +1,62 @@
 <!---------------------------------MAINTENANCE-------------------------------------->
 <!-- Validation(input_id(if it not submit type), check_srv, check_upd, check_job) -->
-<li><a  onclick="return Validation('Start', true, false, false)"
-        title="Start selected server(s)."
-        href="javascript:;">Start</a></li>
-<input  name="selected_commands"
-        readonly="readonly"
-        type="checkbox"
-        class="hidden"
-        value="Start"
-        id="Start"/>
 
-<li><a  onclick="return Validation('Stop', true, false, false)"
+<li><a  onclick="return Validation('stop', true, false, false)"
         title="Stop selected server(s)."
         href="javascript:;">Stop</a></li>
 <input  name="selected_commands"
         readonly="readonly"
         type="checkbox"
         class="hidden"
-        value="Stop"
-        id="Stop"/>
+        value="stop"
+        id="stop"/>
 
-<li><a  onclick="return Validation('Restart', true, false, false)"
+<li><a  onclick="return Validation('start', true, false, false)"
+        title="Start selected server(s)."
+        href="javascript:;">Start</a></li>
+<input  name="selected_commands"
+        readonly="readonly"
+        type="checkbox"
+        class="hidden"
+        value="start"
+        id="start"/>
+
+<li><a  onclick="return Validation('restart', true, false, false)"
         title="Restart selected server(s)."
         href="javascript:;">Restart</a></li>
 <input  name="selected_commands"
         readonly="readonly"
         type="checkbox"
-        value="Restart"
+        value="restart"
         class="hidden"
-        id="Restart"/>
+        id="restart"/>
 
-<li><a  onclick="return Validation('Reload', true, false, false)"
+<li><a  onclick="return Validation('reload', true, false, false)"
         title="Reload config on selected server(s)."
         href="javascript:;">Reload</a></li>
 <input  name="selected_commands"
         readonly="readonly"
         type="checkbox"
         class="hidden"
-        value="Reload"
-        id="Reload"/>
+        value="reload"
+        id="reload"/>
 
-<li><a  onclick="return Validation('Maintenance_ON', true, false, false)"
+<li><a  onclick="return Validation('maintenance_on', true, false, false)"
         title="Show 'Maintenance' page on selected server(s)."
         href="javascript:;">Maintenance ON</a></li>
 <input  name="selected_commands"
-        value="Maintenance_ON"
-        id="Maintenance_ON"
+        value="maintenance_on"
+        id="maintenance_on"
         readonly="readonly"
         type="checkbox"
         class="hidden"/>
 
-<li><a  onclick="return Validation('Maintenance_OFF', true, false, false)"
+<li><a  onclick="return Validation('maintenance_off', true, false, false)"
         title="Hide 'Maintenance' page on selected server(s)."
         href="javascript:;">Maintenance OFF</a></li>
 <input  name="selected_commands"
-        value="Maintenance_OFF"
-        id="Maintenance_OFF"
+        value="maintenance_off"
+        id="maintenance_off"
         readonly="readonly"
         type="checkbox"
         class="hidden"/>
@@ -64,57 +65,57 @@
 <!-- Validation(input_id(if it not submit type), check_srv, check_upd, check_job) -->
 <li role="separator" class="divider"></li>
 
-<li><a  onclick="return Validation('delselup', true, true, false)"
+<li><a  onclick="return Validation('del_sel_updates', true, true, false)"
         title="Delete selected update(s) from selected server(s)."
         href="javascript:;">Delete selected updates.</a></li>
 <input  name="selected_commands"
+        value="del_sel_updates"
+        id="del_sel_updates"
         readonly="readonly"
         type="checkbox"
-        value="delselup"
-        class="hidden"
-        id="delselup"/>
+        class="hidden"/>
 
-<li><a  onclick="return Validation('delallup', true, false, false)"
+<li><a  onclick="return Validation('del_all_updates', true, false, false)"
         title="Delete all updates from selected server(s)."
         href="javascript:;">Delete all updates.</a></li>
 <input  name="selected_commands"
+        value="del_all_updates"
+        id="del_all_updates"
         readonly="readonly"
         type="checkbox"
-        value="delallup"
-        class="hidden"
-        id="delallup"/>
+        class="hidden"/>
 
 <!----------------------------------BACKUP------------------------------------------>
 <!-- Validation(input_id(if it not submit type), check_srv, check_upd, check_job) -->
 <li role="separator" class="divider"></li>
 
-<li><a  onclick="return Validation('Backup_full', true, false, false)"
+<li><a  onclick="return Validation('backup_full', true, false, false)"
         title="System and DB backup via './krupd bkp full'."
         href="javascript:;">Backup full</a></li>
 <input  name="selected_commands"
         readonly="readonly"
-        value="Backup_full"
-        id="Backup_full"
+        value="backup_full"
+        id="backup_full"
         type="checkbox"
         class="hidden"/>
 
-<li><a  onclick="return Validation('Backup_db', true, false, false)"
+<li><a  onclick="return Validation('backup_db', true, false, false)"
         title="Database backup via './krupd bkp db'."
         href="javascript:;">Backup base</a></li>
 <input  name="selected_commands"
         readonly="readonly"
-        value="Backup_db"
+        value="backup_db"
         type="checkbox"
-        id="Backup_db"
+        id="backup_db"
         class="hidden"/>
 
-<li><a  onclick="return Validation('Backup_sys', true, false, false)"
+<li><a  onclick="return Validation('backup_sys', true, false, false)"
         title="System backup via './krupd bkp sys'."
         href="javascript:;">Backup system</a></li>
 <input  name="selected_commands"
         readonly="readonly"
-        value="Backup_sys"
-        id="Backup_sys"
+        value="backup_sys"
+        id="backup_sys"
         type="checkbox"
         class="hidden"/>
 
@@ -132,52 +133,52 @@
         value="script"
         id="script"/>
 
-<li><a  onclick="return Validation('SQL_script', true, true, false)"
+<li><a  onclick="return Validation('sql_script', true, true, false)"
         title="Run SQL script in DB. Script(s) have to be loaded(and selected) as update."
         href="javascript:;">Run SQL script</a></li>
 <input  name="selected_commands"
         readonly="readonly"
-        value="SQL_script"
+        value="sql_script"
         type="checkbox"
-        id="SQL_script"
+        id="sql_script"
         class="hidden"/>
 
-<li><a  onclick="return Validation('Get_dump', true, false, false)"
+<li><a  onclick="return Validation('get_dump', true, false, false)"
         title="Get DB dump from selected server(s)."
         href="javascript:;">Get dump</a></li>
 <input  name="selected_commands"
         readonly="readonly"
         type="checkbox"
         class="hidden"
-        value="Get_dump"
-        id="Get_dump"/>
+        value="get_dump"
+        id="get_dump"/>
 
-<li><a  onclick="return Validation('cutils', true, false, false)"
+<li><a  onclick="return Validation('copy_utils', true, false, false)"
         title="Copy utils folder to selected server(s)."
         href="javascript:;">Copy utils</a></li>
 <input  name="selected_commands"
         readonly="readonly"
+        value="copy_utils"
+        id="copy_utils"
         type="checkbox"
-        class="hidden"
-        value="cutils"
-        id="cutils"/>
+        class="hidden"/>
 
-<li><a  onclick="return Validation('Update', true, true, false)"
+<li><a  onclick="return Validation('update', true, true, false)"
         title="Update selected server(s)."
         href="javascript:;">Update</a></li>
 <input  name="selected_commands"
         readonly="readonly"
         type="checkbox"
         class="hidden"
-        value="Update"
-        id="Update"/>
+        value="update"
+        id="update"/>
 
-<li><a  onclick="return Validation('Copy', true, true, false)"
+<li><a  onclick="return Validation('copy', true, true, false)"
         title="Copy selected update(s) to selected server(s)."
         href="javascript:;">Copy</a></li>
 <input  name="selected_commands"
         readonly="readonly"
         type="checkbox"
         class="hidden"
-        value="Copy"
-        id="Copy"/>
+        value="copy"
+        id="copy"/>

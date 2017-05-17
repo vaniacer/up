@@ -9,30 +9,35 @@ import datetime
 def command(selected):
 	"""Определяет команду(bash script) по полученному command id."""
 #   ---------------------+-------------------+-----------------------------+-----------------+-------------
-# -----------------------|  write history    |  bash command name          |  html tags in   |-----------------
+# -----------------------|  Write history    |  Bash command name          |  Html tags in   |-----------------
 #     -------------------|  log or not       |                             |  output         |------------
 	dick = {  # ---------+-------------------+-----------------------------+-----------------+--------
-		'Stop':            {'history':  True, 'bash': 'stop.sh',            'tag': False, },
-		'Copy':            {'history':  True, 'bash': 'copy.sh',            'tag': False, },
-		'Start':           {'history':  True, 'bash': 'start.sh',           'tag': False, },
-		'script':          {'history':  True, 'bash': 'script.sh',          'tag': False, },
-		'cutils':          {'history':  True, 'bash': 'cutils.sh',          'tag': False, },
-		'Update':          {'history':  True, 'bash': 'update.sh',          'tag': False, },
-		'Reload':          {'history':  True, 'bash': 'reload.sh',          'tag': False, },
-		'Restart':         {'history':  True, 'bash': 'restart.sh',         'tag': False, },
-		'delallup':        {'history':  True, 'bash': 'delallup.sh',        'tag': False, },
-		'delselup':        {'history':  True, 'bash': 'delselup.sh',        'tag': False, },
-		'Get_dump':        {'history':  True, 'bash': 'get_dump.sh',        'tag':  True, },
-		'Backup_db':       {'history':  True, 'bash': 'backup_db.sh',       'tag': False, },
-		'SQL_script':      {'history':  True, 'bash': 'sql_script.sh',      'tag': False, },
-		'Delete_job':      {'history':  True, 'bash': 'delete_job.sh',      'tag': False, },
-		'Check_logs':      {'history': False, 'bash': 'check_logs.sh',      'tag': False, },
-		'Check_conf':      {'history': False, 'bash': 'check_conf.sh',      'tag': False, },
-		'Backup_sys':      {'history':  True, 'bash': 'backup_sys.sh',      'tag': False, },
-		'Backup_full':     {'history':  True, 'bash': 'backup_full.sh',     'tag': False, },
-		'Check_updates':   {'history': False, 'bash': 'check_updates.sh',   'tag': False, },
-		'Maintenance_ON':  {'history':  True, 'bash': 'maintenance_on.sh',  'tag': False, },
-		'Maintenance_OFF': {'history':  True, 'bash': 'maintenance_off.sh', 'tag': False, }, }
+		# RUN only commands |---------------------------------------------------------------
+		'delete_job':      {'history':  True, 'bash':      'delete_job.sh', 'tag': False, },
+		'check_logs':      {'history': False, 'bash':      'check_logs.sh', 'tag': False, },
+		'check_conf':      {'history': False, 'bash':      'check_conf.sh', 'tag': False, },
+		'check_updates':   {'history': False, 'bash':   'check_updates.sh', 'tag': False, },
+		# Maintenance |---------------------------------------------------------------------
+		'stop':            {'history':  True, 'bash':            'stop.sh', 'tag': False, },
+		'start':           {'history':  True, 'bash':           'start.sh', 'tag': False, },
+		'reload':          {'history':  True, 'bash':          'reload.sh', 'tag': False, },
+		'restart':         {'history':  True, 'bash':         'restart.sh', 'tag': False, },
+		'maintenance_on':  {'history':  True, 'bash':  'maintenance_on.sh', 'tag': False, },
+		'maintenance_off': {'history':  True, 'bash': 'maintenance_off.sh', 'tag': False, },
+		# Delete updates |------------------------------------------------------------------
+		'del_all_updates': {'history':  True, 'bash':        'delallup.sh', 'tag': False, },
+		'del_sel_updates': {'history':  True, 'bash':        'delselup.sh', 'tag': False, },
+		# Backup |--------------------------------------------------------------------------
+		'backup_db':       {'history':  True, 'bash':       'backup_db.sh', 'tag': False, },
+		'backup_sys':      {'history':  True, 'bash':      'backup_sys.sh', 'tag': False, },
+		'backup_full':     {'history':  True, 'bash':     'backup_full.sh', 'tag': False, },
+		# Main |----------------------------------------------------------------------------
+		'copy':            {'history':  True, 'bash':            'copy.sh', 'tag': False, },
+		'script':          {'history':  True, 'bash':          'script.sh', 'tag': False, },
+		'update':          {'history':  True, 'bash':          'update.sh', 'tag': False, },
+		'get_dump':        {'history':  True, 'bash':        'get_dump.sh', 'tag':  True, },
+		'copy_utils':      {'history':  True, 'bash':          'cutils.sh', 'tag': False, },
+		'sql_script':      {'history':  True, 'bash':      'sql_script.sh', 'tag': False, }, }
 
 	cmd = ''.join(selected['command'])
 	selected['cmdname'] = dick[cmd]['bash']
