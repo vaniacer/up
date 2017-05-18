@@ -25,7 +25,7 @@ esac; shift 2; done
 
 function info () {
     # Print delimiter line with server name in center.
-    name="| Server - ${1} |"; line=$[ (100-${#name})/2 ]
+    name="| ${1} |"; line=$[ (100-${#name})/2 ]
     name=$(printf %.s- $(seq ${line}); printf "${name}"; printf %.s- $(seq ${line}); printf "\n")
     [ ${#name} -lt 100 ] && name=-${name}; echo -e ${name}
 }
@@ -33,7 +33,7 @@ function info () {
 function addr () {
     # Server comes like this - jboss@localhost:/var/lib/jboss.
     # Get ssh address jboss@localhost and working directory /var/lib/jboss.
-    addr=${server%%:*}; wdir=${server##*:}; info ${addr}
+    addr=${server%%:*}; wdir=${server##*:}; info "Server - ${addr}"
 }
 
 . ${workdir}/${cmd} # Load 'run' and 'description' functions from ${cmd}.

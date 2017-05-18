@@ -13,5 +13,5 @@ function run () { #----------------------------------|Main function|------------
             && { ssh ${addr} echo "Put your code here" || error=$?; } \
             || { error=$?; echo -e "\nServer unreachable."; }
 
-    echo; done; echo -e "\nDone."
+    echo; done; info 'Done'
 } #---------------------------------------------------------------------------------------------------------------------

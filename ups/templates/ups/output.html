@@ -19,7 +19,11 @@
     {% if err >= 0 %}
         <dl class="dl-horizontal">
             <dt>Error code</dt><dd>{{ err }}</dd>
-            <dt><br><a class="btn btn-primary" href="">OK</a></dt>
+            {% if err > 0 %}
+                <dt><br><a class="btn btn-danger" href="">OK</a></dt>
+            {% else %}
+                <dt><br><a class="btn btn-success" href="">OK</a></dt>
+            {% endif %}
         </dl>
     {% else %}
         <div class="small_loader"></div>

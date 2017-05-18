@@ -12,5 +12,5 @@ function run () { #----------------------------------|Main function|------------
             && { ssh ${addr} '~/.utils/dp.sh --start && echo Start dummy page.' || error=$?; } \
             || { error=$?; echo -e "\nServer unreachable."; }
 
-    echo; done; echo -e "\nDone."
+    echo; done; info 'Done'
 } #---------------------------------------------------------------------------------------------------------------------

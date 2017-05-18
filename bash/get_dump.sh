@@ -17,8 +17,8 @@ function run () { #----------------------------------|Main function|------------
 
                  echo -e "Копирую файл - ${name}"; scp ${addr}:${name} ${dumpdir} || error=$?
                  echo -e " Удаляю файл - ${name}"; ssh ${addr} "rm ${name}"       || error=$?;
-                 echo -e "\n<a href='/updates/dumps/${name//\/*\//}'>download</a>"; } \
+                 echo -e "\n<a class='btn btn-primary' href='/updates/dumps/${name//\/*\//}'>Download</a>\n"; } \
             || { error=$?; echo -e "\nServer unreachable."; }
 
-    echo; done; echo -e "\nDone."
+    echo; done; info 'Done'
 } #---------------------------------------------------------------------------------------------------------------------
