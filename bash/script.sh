@@ -14,7 +14,7 @@ function run () { #---------------------------------| Main function |-----------
                     echo -e "\nCopy script - ${filename}"
                     scp ${file} ${server}/updates/new || error=$?
 
-                    echo -e "Run  script - ${filename}\n"
+                    echo -e "Run script - ${filename}\n"
                     ssh ${addr} "cd ${wdir}; chmod +x updates/new/${filename}; updates/new/${filename}" || error=$?
                     ssh ${addr} "rm ${wdir}/updates/new/${filename}" || error=$?
 

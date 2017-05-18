@@ -9,7 +9,7 @@ function run () { #---------------------------------| Main function |-----------
 
         # Check access and run command or send 'Server unreachable'
         ssh ${addr} "echo > /dev/null" \
-            && { ssh ${addr} ${wdir}/jboss-bas-*/bin/jboss-cli.sh -c command=":shutdown" || error=$?; } \
+            && { ssh ${addr} ${wdir}/krupd jboss.stop || error=$?; } \
             || { error=$?; echo -e "\nServer unreachable."; }
 
     echo; done; info 'Done'
