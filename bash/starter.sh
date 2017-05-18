@@ -24,10 +24,10 @@ esac; shift 2; done
 #--------------------------------
 
 function info () {
-    # Print delimiter line with server name in center.
-    name="| ${1} |"; line=$[ (100-${#name})/2 ]
+    # Print delimiter line with server name(${1}) in center.
+    L=120; name="| ${1} |"; line=$[ (${L}-${#name})/2 ]
     name=$(printf %.s- $(seq ${line}); printf "${name}"; printf %.s- $(seq ${line}); printf "\n")
-    [ ${#name} -lt 100 ] && name=-${name}; echo -e ${name}
+    [ ${#name} -lt ${L} ] && name=-${name}; echo -e ${name}
 }
 
 function addr () {
