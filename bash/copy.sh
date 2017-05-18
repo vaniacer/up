@@ -1,10 +1,10 @@
 #!/bin/bash
 
-function description () {
+function description () { #---------------------| Function description |------------------------------------------------
     echo -e "Copy Update(s):\n${updates// /\\n}\n\nto Server(s):\n${servers// /\\n}\n"; exit 0
 }
 
-function run () { #----------------------------------|Main function|----------------------------------------------------
+function run () { #---------------------------------| Main function |---------------------------------------------------
     for server in ${servers}; do addr
 
         # Check access

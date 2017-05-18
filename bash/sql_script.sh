@@ -1,10 +1,10 @@
 #!/bin/bash
 
-function description () {
+function description () { #---------------------| Function description |------------------------------------------------
     echo -e "Run SQL script(s):\n${updates// /\\n}\n\non Server(s):\n${servers// /\\n}\n"; exit 0
 }
 
-function run () { #----------------------------------|Main function|----------------------------------------------------
+function run () { #---------------------------------| Main function |---------------------------------------------------
     for server in ${servers}; do addr
 
         # Check access

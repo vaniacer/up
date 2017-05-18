@@ -1,10 +1,10 @@
 #!/bin/bash
 
-function description () {
+function description () { #---------------------| Function description |------------------------------------------------
     echo -e "Delete cron job(s):\n${jobs// /\\n}\n"; exit 0
 }
 
-function run () { #----------------------------------|Main function|----------------------------------------------------
+function run () { #---------------------------------| Main function |---------------------------------------------------
     for id in ${jobs}; do
         rule="/${id}/d;"${rule}
         echo -e "Отменяю задачу: ${id}"

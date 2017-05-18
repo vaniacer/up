@@ -1,10 +1,10 @@
 #!/bin/bash
 
-function description () {
+function description () { #---------------------| Function description |------------------------------------------------
     echo -e "Backup full on server(s):\n${servers// /\\n}\n"; exit 0
 }
 
-function run () { #----------------------------------|Main function|----------------------------------------------------
+function run () { #---------------------------------| Main function |---------------------------------------------------
     for server in ${servers}; do addr
 
         # Check access and run command or send 'Server unreachable'
