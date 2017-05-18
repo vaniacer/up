@@ -30,7 +30,7 @@
             <dt>Cron job id</dt><dd>{{ event.cron }}</dd>
         {% endif %}
         <dt>Event name</dt><dd>{{ event.name }}</dd>
-        <dt>Event logs</dt><dd>{{ event.desc|safe|linebreaks }}</dd>
+        <dt>Event logs</dt><dd><tt>{{ event.desc|safe|linebreaks }}</tt></dd>
         <dt>Error code</dt><dd>{{ event.exit }}</dd>
     </dl>
 
@@ -46,4 +46,4 @@
     {% include "ups/project_history_paginator.html" %}
 {% endif %}
 
-<br> <br>
+<br><br>
