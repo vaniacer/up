@@ -22,18 +22,18 @@ until [ -z "$1" ]; do case $1 in
 
 esac; shift 2; done
 #--------------------------------
-faces=(O_o o_O o_o O_O º_o º_O O_º o_º º_º); facesN=${#faces[@]}
-function face { printf "${faces[$((RANDOM % ${facesN}))]}"; }
 
-function info () { # Print delimiter line with server name(${1}) in center.
-    [ ${2} ] && { [ ${2} = 0 ] && smile=":) " || smile=":( "; }
-    L=120; B='='; S="<"; E=">"; N="| ${1} ${smile}|"; l=$[ (${L}-${#N}-${#S}-${#E})/2 ]
-    line=$(printf %.s${B} $(seq ${l})); C=$[ ${#S}+${#N}+${#E}+${#line}*2 ]
-    [ ${C} -lt ${L} ] && N=${B}${N}; echo -e "${S}${line}${N}${line}${E}\n"
+function info () { # Print delimiter line with info(${1}) in center.
+    [ ${2} ] && { [ ${2} = 0 ] && smile=":) " || smile=":( "; } # Add smile to info if ${2}(error code) is set.
+    #Length|Body symbol|Start symbol|End symbol|Center part with info|Calculate number of body symbols |
+    L=120  ; B='='     ; S="<"      ; E=">"    ; N="| ${1} ${smile}|"; l=$[ (${L}-${#N}-${#S}-${#E})/2 ]
+    line=$(printf %.s${B} $(seq ${l})); C=$[ ${#S}+${#N}+${#E}+${#line}*2 ] # Make line and calculate current length.
+    [ ${C} -lt ${L} ] && N=${N}${B};        # Add ${B} if current length less then ${L}.
+    printf "\n${S}${line}${N}${line}${E}\n" # Print result.
 }
 
 function addr () { # Server comes like this - jboss@localhost:/var/lib/jboss.
-    #  Get ssh address jboss@localhost and working directory /var/lib/jboss.
+    # Cut ssh address 'jboss@localhost' and working directory '/var/lib/jboss'.
     addr=${server%%:*}; wdir=${server##*:}; info "Server - ${addr}"
 }
 

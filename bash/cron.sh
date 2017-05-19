@@ -19,7 +19,7 @@ function run () { #---------------------------------| Main function |-----------
     echo -e "$(crontab -l)\n${date} * ${cmnd}; ${cncl}" | crontab - || error=$?
 
     # Info
-    info 'Set cron job.'
+    info 'Set cron job'
     ${workdir}/starter.sh -cmd "${run}" -u "${updates}" -s "${servers}" -desc true
     info 'Done' ${error}
 } #---------------------------------------------------------------------------------------------------------------------

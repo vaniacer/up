@@ -5,7 +5,7 @@ function description () { #---------------------| Function description |--------
 }
 
 function run () { #---------------------------------| Main function |---------------------------------------------------
-    info "Отменяю задачи"
+    info 'Cancel jobs'
     for id in ${jobs}; do
         rule="/${id}/d;"${rule}
         echo "${id}"
