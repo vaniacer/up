@@ -23,7 +23,7 @@ def get_cron_logs():
 			out = ''.join(out[:-2])
 
 			dick = {'project': job.proj, 'user': job.user, 'command': job.name}
-			run_cmd(['bash/delete_job.sh', '-job', str(filename)])
+			run_cmd(['bash/cancel_job.sh', '-job', str(filename)])
 			os.remove(os.path.join(conf.CRON_DIR, filename))
 			add_event(dick, out, int(err), filename, dat)
 	del_job({'cronjbs': logfiles})

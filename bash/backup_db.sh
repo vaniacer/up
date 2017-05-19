@@ -12,5 +12,5 @@ function run () { #---------------------------------| Main function |-----------
             && { ssh ${addr} "${wdir}/krupd bkp db" || error=$?; } \
             || { error=$?; echo -e "\nServer unreachable."; }
 
-    echo; done; info 'Done'
+    echo; done; info 'Done' ${error}
 } #---------------------------------------------------------------------------------------------------------------------

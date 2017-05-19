@@ -9,5 +9,5 @@ function run () { #---------------------------------| Main function |-----------
 
         ssh  ${addr} "cat ${wdir}/jboss-bas-*/standalone/configuration/standalone-full.xml" || error=$?
 
-    echo; done; info 'Done'
+    echo; done; info 'Done' ${error}
 } #---------------------------------------------------------------------------------------------------------------------

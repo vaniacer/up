@@ -68,8 +68,7 @@ def logs(request, project_id, log_id, cmd, cron, date):
 	if err:
 		context['err'] = int(err)
 		if cron == 'True':
-			add_job(history, log.replace('Done.', ''), log_id)
-			context['log'] = 'Set cron job.\n' + log
+			add_job(history, log, log_id)
 			history['command'] = 'Set cron job - %s' % cmd.lower()
 		if his:
 			add_event(history, log, context['err'], '', '')

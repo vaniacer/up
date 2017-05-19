@@ -16,9 +16,10 @@ function run () { #---------------------------------| Main function |-----------
     [ "${servers}" ] && cmnd="${cmnd} -s \"${servers}\""    # Add servers to command if exist
 
     # Set crontab job
-    echo -e "$(crontab -l)\n${date} * ${cmnd}; ${cncl}" | crontab -
+    echo -e "$(crontab -l)\n${date} * ${cmnd}; ${cncl}" | crontab - || error=$?
 
     # Info
+    info 'Set cron job.'
     ${workdir}/starter.sh -cmd "${run}" -u "${updates}" -s "${servers}" -desc true
-    info 'Done'
+    info 'Done' ${error}
 } #---------------------------------------------------------------------------------------------------------------------

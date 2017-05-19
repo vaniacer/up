@@ -5,11 +5,12 @@ function description () { #---------------------| Function description |--------
 }
 
 function run () { #---------------------------------| Main function |---------------------------------------------------
+    info "Отменяю задачи"
     for id in ${jobs}; do
         rule="/${id}/d;"${rule}
-        echo -e "Отменяю задачу: ${id}"
+        echo "${id}"
     done
 
-    sed "${rule}" -i /var/spool/cron/crontabs/${USER}
-    info 'Done'
+    sed "${rule}" -i /var/spool/cron/crontabs/${USER} || error=$?
+    info 'Done' ${error}
 } #---------------------------------------------------------------------------------------------------------------------

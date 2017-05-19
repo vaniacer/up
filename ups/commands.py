@@ -15,7 +15,7 @@ def command(selected):
 		'check_updates':   {'history': False, 'bash':   'check_updates.sh', 'tag': False, },
 		'check_conf':      {'history': False, 'bash':      'check_conf.sh', 'tag': False, },
 		'check_logs':      {'history': False, 'bash':      'check_logs.sh', 'tag': False, },
-		'delete_job':      {'history':  True, 'bash':      'delete_job.sh', 'tag': False, },
+		'cancel_job':      {'history':  True, 'bash':      'cancel_job.sh', 'tag': False, },
 		# Maintenance |----------------------+-----------------------------+----------------+
 		'stop':            {'history':  True, 'bash':            'stop.sh', 'tag': False, },
 		'start':           {'history':  True, 'bash':           'start.sh', 'tag': False, },

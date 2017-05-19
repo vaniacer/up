@@ -20,5 +20,5 @@ function run () { #---------------------------------| Main function |-----------
                  echo; done; } \
             || { error=$?; echo -e "\nServer unreachable."; }
 
-    echo; done; info 'Done'
+    echo; done; info 'Done' ${error}
 } #---------------------------------------------------------------------------------------------------------------------

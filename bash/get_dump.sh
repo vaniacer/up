@@ -20,5 +20,5 @@ function run () { #---------------------------------| Main function |-----------
                  echo -e "\n<a class='btn btn-primary' href='/updates/dumps/${name//\/*\//}'>Download</a>\n"; } \
             || { error=$?; echo -e "\nServer unreachable."; }
 
-    echo; done; info 'Done'
+    echo; done; info 'Done' ${error}
 } #---------------------------------------------------------------------------------------------------------------------
