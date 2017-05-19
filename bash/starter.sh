@@ -33,8 +33,7 @@ function info () { # Print delimiter line with info(${1}) in center.
     # Make line segment.            | Calculate current length.      | Add one ${B} if current length less then ${L}. |
     #-------------------------------+--------------------------------+------------------------------------------------+
     N=$(printf %.s${B} $(seq ${b})) ; l=$[${#S}+${#C}+${#E}+${#N}*2] ; [ ${l} -lt ${L} ] && C=${C}${B}
-
-    echo -e "${S}${N}${C}${N}${E}\n" # Print result.
+    printf "\n${S}${N}${C}${N}${E}\n" # Print result.
 }
 
 function addr () {
@@ -45,7 +44,7 @@ function addr () {
     addr=${server%%:*}; wdir=${server##*:}; info "Server - ${addr}"
 }
 
-function starter () { # Run command now or set a cronjob.
+function starter ()  { # Run command now or set a cronjob.
     [ "${cron}" ] && { run &> ${crondir}/${cron}; dat=$(date +'%b %d, %Y %R'); dat=${dat//.}; dat=${dat^}
                        echo -e "\nError: ${error}\nDate: ${dat}" >> ${crondir}/${cron}; } \
                   || { run          &> ${rundir}/log${key}
