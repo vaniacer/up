@@ -6,8 +6,8 @@ cronfile=/var/spool/cron/crontabs/${USER}
 dumpdir=${workdir}/../media/updates/dumps
 crondir=${workdir}/../../logs/cron
 rundir=${workdir}/../../logs/run
-#---------| Get opts |-----------
-until [ -z "$1" ]; do case $1 in
+#---------| Get opts |------------
+until [ -z ${1} ]; do case ${1} in
 
     -server | -s) servers=${2};;
     -update | -u) updates=${2};;
@@ -21,27 +21,35 @@ until [ -z "$1" ]; do case $1 in
     -id     | -i) id=${2};;
 
 esac; shift 2; done
-#--------------------------------
+#---------------------------------
 
 function info () { # Print delimiter line with info(${1}) in center.
-    [ ${2} ] && { [ ${2} = 0 ] && smile=":) " || smile=":( "; } # Add smile to info if ${2}(error code) is set.
-    #Length|Body symbol|Start symbol|End symbol|Center part with info|Calculate number of body symbols |
-    L=120  ; B='='     ; S="<"      ; E=">"    ; N="| ${1} ${smile}|"; l=$[ (${L}-${#N}-${#S}-${#E})/2 ]
-    line=$(printf %.s${B} $(seq ${l})); C=$[ ${#S}+${#N}+${#E}+${#line}*2 ] # Make line and calculate current length.
-    [ ${C} -lt ${L} ] && N=${N}${B};        # Add ${B} if current length less then ${L}.
-    printf "\n${S}${line}${N}${line}${E}\n" # Print result.
+    [ ${2} ] && { [ ${2} = 0 ] && F=':) ' || F=':( '; } # Add a smile to info if ${2}(error code) is set.
+    #--------+-------------+--------------+------------+-----------------------+--------------------------------------+
+    # Length | Body symbol | Start symbol | End symbol | Center part with info | Calculate number of body symbols     |
+    #--------+-------------+--------------+------------+-----------------------+--------------------------------------+
+    L=120    ; B='='       ; S='<'        ; E='>'      ; C="| ${1} ${F}|"      ; b=$[(${L}-${#C}-${#S}-${#E})/2]
+    #-------------------------------+--------------------------------+------------------------------------------------+
+    # Make line segment.            | Calculate current length.      | Add one ${B} if current length less then ${L}. |
+    #-------------------------------+--------------------------------+------------------------------------------------+
+    N=$(printf %.s${B} $(seq ${b})) ; l=$[${#S}+${#C}+${#E}+${#N}*2] ; [ ${l} -lt ${L} ] && C=${C}${B}
+
+    echo -e "${S}${N}${C}${N}${E}\n" # Print result.
 }
 
-function addr () { # Server comes like this - jboss@localhost:/var/lib/jboss.
-    # Cut ssh address 'jboss@localhost' and working directory '/var/lib/jboss'.
+function addr () {
+    # Server comes like this - jboss@localhost:/var/lib/jboss, split it to:
+    #-----------------+-------------------+-------------------------------+
+    # Ssh address     | Working directory | And show ${addr} as info      |
+    #-----------------+-------------------+-------------------------------+
     addr=${server%%:*}; wdir=${server##*:}; info "Server - ${addr}"
 }
 
-function starter () { [ "${cron}" ] \
-    && { run &> ${crondir}/${cron}; dat=$(date +'%b %d, %Y %R'); dat=${dat//.}; dat=${dat^}
-         echo -e "\nError: ${error}\nDate: ${dat}" >> ${crondir}/${cron}; } \
-    || { run          &> ${rundir}/log${key}
-         echo ${error} > ${rundir}/err${key}; }
+function starter () { # Run command now or set a cronjob.
+    [ "${cron}" ] && { run &> ${crondir}/${cron}; dat=$(date +'%b %d, %Y %R'); dat=${dat//.}; dat=${dat^}
+                       echo -e "\nError: ${error}\nDate: ${dat}" >> ${crondir}/${cron}; } \
+                  || { run          &> ${rundir}/log${key}
+                       echo ${error} > ${rundir}/err${key}; }
     exit ${error}
 }
 
