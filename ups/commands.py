@@ -27,9 +27,9 @@ def command(selected):
 		'del_sel_updates': {'history':  True, 'bash': 'del_sel_updates.sh', 'tag': False, },
 		'del_all_updates': {'history':  True, 'bash': 'del_all_updates.sh', 'tag': False, },
 		# Backup |---------------------------+-----------------------------+----------------+
-		'backup_db':       {'history':  True, 'bash':       'backup_db.sh', 'tag': False, },
-		'backup_sys':      {'history':  True, 'bash':      'backup_sys.sh', 'tag': False, },
-		'backup_full':     {'history':  True, 'bash':     'backup_full.sh', 'tag': False, },
+		'backup_db':       {'history':  True, 'bash':       'backup_db.sh', 'tag':  True, },
+		'backup_sys':      {'history':  True, 'bash':      'backup_sys.sh', 'tag':  True, },
+		'backup_full':     {'history':  True, 'bash':     'backup_full.sh', 'tag':  True, },
 		# Main |-----------------------------+-----------------------------+----------------+
 		'copy':            {'history':  True, 'bash':            'copy.sh', 'tag': False, },
 		'script':          {'history':  True, 'bash':          'script.sh', 'tag': False, },

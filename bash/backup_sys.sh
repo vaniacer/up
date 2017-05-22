@@ -9,7 +9,7 @@ function run () { #---------------------------------| Main function |-----------
 
         # Check access and run command or send 'Server unreachable'
         ssh ${addr} "echo > /dev/null" \
-            && { ssh ${addr} "${wdir}/krupd bkp sys" || error=$?; } \
+            && { ssh ${addr} "${wdir}/krupd bkp sys" || error=$?; download; } \
             || { error=$?; echo -e "\nServer unreachable."; }
 
     echo; done; info 'Done' ${error}
