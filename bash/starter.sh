@@ -44,14 +44,13 @@ function addr () {
     addr=${server%%:*}; wdir=${server##*:}; info "Server - ${addr}"
 }
 
-function download () {
-    [ "${cron}" ] \
-        && { name=$(tail -n2 ${crondir}/${cron});  } \
-        || { name=$(tail -n2 ${rundir}/log${key}); }
-             name=${name#*\"}; name=${name//\"./}
+function download () { # Used in backup_* and get_dump. SCP files to ${dumpdir} and add 'download' button in output.
+    [ "${cron}" ] && { name=$(tail -n2 ${crondir}/${cron}) ; } \
+                  || { name=$(tail -n2 ${rundir}/log${key}); }
+                       name=${name#*\"}; name=${name//\"./}
 
-        echo -e "Копирую файл - ${name}"; scp ${addr}:${name} ${dumpdir} || error=$?
-        echo -e "\n<a class='btn btn-primary' href='/updates/dumps/${name//\/*\//}'>Download</a>\n"
+    echo -e "Копирую файл - ${name}"; scp ${addr}:${name} ${dumpdir} || error=$?
+    echo -e "\n<a class='btn btn-primary' href='/updates/dumps/${name//\/*\//}'>Download</a>\n"
 }
 
 function starter ()  { # Run command now or set a cronjob.
