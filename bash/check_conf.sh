@@ -7,7 +7,10 @@ function description () { #---------------------| Function description |--------
 function run () { #---------------------------------| Main function |---------------------------------------------------
     for server in ${servers}; do addr
 
-        ssh  ${addr} "cat ${wdir}/jboss-bas-*/standalone/configuration/standalone-full.xml" || error=$?
+        # Check access and run command or send 'Server unreachable'
+        ssh ${addr} "echo > /dev/null" \
+            && { ssh  ${addr} "cat ${wdir}/jboss-bas-*/standalone/configuration/standalone-full.xml" || error=$?; } \
+            || { error=$?; echo -e "\nServer unreachable."; }
 
     echo; done; info 'Done' ${error}
 } #---------------------------------------------------------------------------------------------------------------------

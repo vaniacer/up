@@ -7,8 +7,11 @@ function description () { #---------------------| Function description |--------
 function run () { #---------------------------------| Main function |---------------------------------------------------
     for server in ${servers}; do addr
 
-        echo -e "\nПакеты обновлений:\n"
-        ssh ${addr} "ls ${wdir}/updates/new" || error=$?
+        # Check access and run command or send 'Server unreachable'
+        ssh ${addr} "echo > /dev/null" \
+            && { echo -e "\nПакеты обновлений:\n"
+                 ssh ${addr} "ls ${wdir}/updates/new" || error=$?; } \
+            || { error=$?; echo -e "\nServer unreachable."; }
 
     echo; done; info 'Done' ${error}
 } #---------------------------------------------------------------------------------------------------------------------

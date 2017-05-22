@@ -7,7 +7,7 @@ function description () { #---------------------| Function description |--------
 function run () { #---------------------------------| Main function |---------------------------------------------------
     for server in ${servers}; do addr
 
-        # Check access
+        # Check access and run command or send 'Server unreachable'
         ssh ${addr} "echo > /dev/null" \
             && { for file in ${updates}; do
                     filename=$(basename ${file})
