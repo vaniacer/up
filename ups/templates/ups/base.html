@@ -75,6 +75,8 @@
                     <div class="output"></div>
                     <script type="text/javascript">show_log();</script>
                     <div class="output_bottom">{% include "ups/output_bottom_panel.html" %}</div>
+                {% else %}
+                    <script type="text/javascript">restoreScroll();</script>
                 {% endif %}
             </div> <!-- /container -->
         </div> <!-- /whole_page -->

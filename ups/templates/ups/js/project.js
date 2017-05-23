@@ -91,6 +91,12 @@ function Validation(box, srv, upd, job) {
     if (box) { document.getElementById(box).checked = true; document.getElementById('selector').submit(); }
 }
 
+function restoreScroll() {
+    var scroll = getCookie('scrollmem');
+    if (scroll > 0) { $('html,body').scrollTop(scroll); };
+    setCookie('scrollmem', 0);
+}
+
 $(function() {
     // Change tab on load
     var hash = window.location.hash;
@@ -110,8 +116,4 @@ $(function() {
     }, false);
 });
 
-$(document).ready(function() {
-    $('.loader').hide();
-    var scroll = getCookie('scrollmem');
-    if (scroll > 0) { $('html,body').scrollTop(scroll); };
-});
+$(document).ready(function() { $('.loader').hide(); });
