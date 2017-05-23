@@ -100,7 +100,6 @@ $(function() {
         $(this).tab('show');
         var scrollmem = $('body').scrollTop();
         window.location.hash = this.hash;
-        alert(window.pageYOffset);
         $('html,body').scrollTop(scrollmem);
     });
 
