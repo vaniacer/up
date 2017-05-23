@@ -50,6 +50,26 @@ function select_all(box_name, body_name, state) {
     for (i = 0; i < bodies.length; i++) { bodies[i].style.background = color; }
 }
 
+function setCookie(cname, cvalue) {
+    var d = new Date();
+    document.cookie = cname + "=" + cvalue;
+}
+
+function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
+
 function Validation(box, srv, upd, job) {
 
     if (job) {
@@ -67,29 +87,32 @@ function Validation(box, srv, upd, job) {
         for (i = 0; i < servers.length; i++) { if (servers[i].checked) { var selected_servers = true; break; }}
         if  (!selected_servers) { alert('Server(s) not selected.'); return false; }}
 
-    show_loader();
+    setCookie('scrollmem', window.pageYOffset); show_loader();
     if (box) { document.getElementById(box).checked = true; document.getElementById('selector').submit(); }
 }
 
 $(function() {
-  // Change tab on load
-  var hash = window.location.hash;
-  hash && $('ul.nav a[href="' + hash + '"]').tab('show');
+    // Change tab on load
+    var hash = window.location.hash;
+    hash && $('ul.nav a[href="' + hash + '"]').tab('show');
 
-  $('.nav-tabs a').click(function (e) {
-    $(this).tab('show');
-    var scrollmem = $('body').scrollTop();
-    window.location.hash = this.hash;
-    $('html,body').scrollTop(scrollmem);
-  });
+    $('.nav-tabs a').click(function (e) {
+        $(this).tab('show');
+        var scrollmem = $('body').scrollTop();
+        window.location.hash = this.hash;
+        alert(window.pageYOffset);
+        $('html,body').scrollTop(scrollmem);
+    });
 
-  // Change tab on hashchange
-  window.addEventListener('hashchange', function() {
-    var changedHash = window.location.hash;
-    changedHash && $('ul.nav a[href="' + changedHash + '"]').tab('show');
-  }, false);
+    // Change tab on hashchange
+    window.addEventListener('hashchange', function() {
+        var changedHash = window.location.hash;
+        changedHash && $('ul.nav a[href="' + changedHash + '"]').tab('show');
+    }, false);
 });
 
 $(document).ready(function() {
     $('.loader').hide();
+    var scroll = getCookie('scrollmem');
+    if (scroll > 0) { $('html,body').scrollTop(scroll); };
 });

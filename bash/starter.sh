@@ -24,7 +24,7 @@ esac; shift 2; done
 #---------------------------------
 
 function info () { # Print delimiter line with info(${1}) in center.
-    [ ${2} ] && { [ ${2} = 0 ] && F=':) ' || F=':( '; } # Add a smile to info if ${2}(error code) is set.
+    [ ${2} ]  && { [ ${2} = 0 ] && F=':) ' || F=':( '; } # Add a smile to info if ${2}(error code) is set.
     #--------+-------------+--------------+------------+-----------------------+--------------------------------------+
     # Length | Body symbol | Start symbol | End symbol | Center part with info | Calculate number of body symbols     |
     #--------+-------------+--------------+------------+-----------------------+--------------------------------------+
@@ -44,7 +44,8 @@ function addr () {
     addr=${server%%:*}; wdir=${server##*:}; info "Server - ${addr}"
 }
 
-function download () { # Used in backup_* and get_dump. SCP files to ${dumpdir} and add 'download' button in output.
+# SCP files created in the process to ${dumpdir} and add a 'download' button to the output log.
+function download () { # Used in backup_* and get_dump.
     [ "${cron}" ] && { name=$(tail -n2 ${crondir}/${cron}) ; } \
                   || { name=$(tail -n2 ${rundir}/log${key}); }
                        name=${name#*\"}; name=${name//\"./}
@@ -53,7 +54,7 @@ function download () { # Used in backup_* and get_dump. SCP files to ${dumpdir} 
     echo -e "\n<a class='btn btn-primary' href='/updates/dumps/${name//\/*\//}'>Download</a>\n"
 }
 
-function starter ()  { # Run command now or set a cronjob.
+function starter  () { # Run command now or set a cronjob.
     [ "${cron}" ] && { run &> ${crondir}/${cron}; dat=$(date +'%b %d, %Y %R'); dat=${dat//.}; dat=${dat^}
                        echo -e "\nError: ${error}\nDate: ${dat}" >> ${crondir}/${cron}; } \
                   || { run          &> ${rundir}/log${key}
