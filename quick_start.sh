@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 admin=admin
 paswd=1234qwer
 email=marov@krista.ru
@@ -26,36 +25,39 @@ echo -e "Static files."
 ./manage.py collectstatic --noinput
 
 cd media/updates && ln -s ../../theme .theme; cd -
-echo -e "To add download function please install nginx and add following conf:"
+echo -e "\n\e[1mTo add download function please install nginx\e[0m:
+    sudo apt-get install nginx
+
+\e[1mAnd add following conf:\e[0m"
 echo "
-server {
+    server {
 
-    listen 80;
-    root ${PWD}/media;
+        listen 80;
+        root ${PWD}/media;
 
-    access_log  /var/log/nginx/updates.log;
+        access_log  /var/log/nginx/updates.log;
 
-    location / {
-        fancyindex on;
-        fancyindex_exact_size off;
-        fancyindex_localtime  on;
-        fancyindex_header   /updates/.theme/header.html;
-        fancyindex_css_href /updates/.theme/style.css;
+        location / {
+            fancyindex on;
+            fancyindex_exact_size off;
+            fancyindex_localtime  on;
+            fancyindex_header   /updates/.theme/header.html;
+            fancyindex_css_href /updates/.theme/style.css;
+        }
+
+        if (-f \$document_root/error503.html) { return 503; }
+
+        error_page 503 @maintenance;
+
+        location @maintenance { rewrite ^(.*)$ /error503.html break; }
+
+        error_page  404  /404.html;
+
+        location /404.html {
+            root  /var/spool/www;
+            rewrite ^(.*)$ /error404.html break;
+        }
     }
-
-    if (-f \$document_root/error503.html) { return 503; }
-
-    error_page 503 @maintenance;
-
-    location @maintenance { rewrite ^(.*)$ /error503.html break; }
-
-    error_page  404  /404.html;
-
-    location /404.html {
-        root  /var/spool/www;
-        rewrite ^(.*)$ /error404.html break;
-    }
-}
 "
 
 echo -e "Runserver."
