@@ -10,22 +10,23 @@ function run () { #---------------------------------| Main function |-----------
         # Check access and run command or send 'Server unreachable'
         ssh ${addr} "echo > /dev/null" \
             && { ssh ${addr} "
-                    echo Hostname: \${HOSTNAME}; echo
+                    echo \<b\>Hostname:\</b\> \${HOSTNAME}; echo
 
-                    echo Interfaces: \$(ip a | grep 'inet ' | grep -v '127.0.0.1' | sed 's/inet //g; s|/.*$||g'); echo
+                    echo \<b\>Interfaces:\</b\>
+                    ip a | grep 'inet ' | grep -v '127.0.0.1' | sed 's/inet //g; s|/.*$||g'; echo
 
-                    echo Uptime: \$(uptime); echo
+                    echo \<b\>Uptime:\</b\> \$(uptime); echo
 
-                    echo Logged in Users:
+                    echo \<b\>Logged in Users:\</b\>
                     w; echo
 
-                    echo Memory:
+                    echo \<b\>Memory:\</b\>
                     free -h; echo
 
-                    echo Disk:
+                    echo \<b\>Disk:\</b\>
                     df -h; echo; df -ih; echo
 
-                    echo Processes:
+                    echo \<b\>Processes:\</b\>
                     top -b -n1
 
                     " || error=$?
