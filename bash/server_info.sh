@@ -13,7 +13,7 @@ function run () { #---------------------------------| Main function |-----------
                     echo \<b\>Hostname:\</b\> \${HOSTNAME}; echo
 
                     echo \<b\>Interfaces:\</b\>
-                    ip a | grep 'inet ' | grep -v '127.0.0.1' | sed 's/inet //g; s|/.*$||g'; echo
+                    ip a | grep 'inet ' | sed '/127.0.0.1/d; s/inet //g; s|/.*$||g'; echo
 
                     echo \<b\>Memory:\</b\>
                     free -h; echo

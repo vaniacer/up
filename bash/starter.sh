@@ -32,7 +32,7 @@ function info () { # Print delimiter line with info(${1}) in center.
     #-------------------------------+--------------------------------+------------------------------------------------+
     # Make line segment.            | Calculate current length.      | Add one ${B} if current length less then ${L}. |
     #-------------------------------+--------------------------------+------------------------------------------------+
-    N=$(printf %.s${B} $(seq ${b})) ; l=$[${#S}+${#C}+${#E}+${#N}*2] ; [ ${l} -lt ${L} ] && C=${C}${B}
+    N=$(printf %.s${B} $(seq ${b})) ; l=$[${#S}+${#C}+${#E}+${#N}*2] ; [ ${l} -lt ${L} ] && C+=${B}
     printf "\n${S}${N}${C}${N}${E}\n" # Print result.
 }
 
