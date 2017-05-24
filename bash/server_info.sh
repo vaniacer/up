@@ -18,7 +18,7 @@ function run () { #---------------------------------| Main function |-----------
                     echo \<b\>Uptime:\</b\> \$(uptime); echo
 
                     echo \<b\>Logged in Users:\</b\>
-                    w; echo
+                    who; echo
 
                     echo \<b\>Memory:\</b\>
                     free -h; echo
