@@ -17,8 +17,8 @@ function run () { #---------------------------------| Main function |-----------
                     ssh ${addr} "${wdir}/krupd execsql ${wdir}/updates/new/${filename}" || error=$?
                     ssh ${addr} "rm ${wdir}/updates/new/${filename}" || error=$?
 
-                 echo; done; } \
+                 done; } \
             || { error=$?; echo -e "\nServer unreachable."; }
 
-    echo; done; info 'Done' ${error}
+    done; info 'Done' ${error}
 } #---------------------------------------------------------------------------------------------------------------------

@@ -13,5 +13,5 @@ function run () { #---------------------------------| Main function |-----------
                  scp -r ~/utils/* ${addr}:~/.utils || error=$?; } \
             || { error=$?; echo -e "\nServer unreachable."; }
 
-    echo; done; info 'Done' ${error}
+    done; info 'Done' ${error}
 } #---------------------------------------------------------------------------------------------------------------------

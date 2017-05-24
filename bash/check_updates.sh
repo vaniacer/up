@@ -13,5 +13,5 @@ function run () { #---------------------------------| Main function |-----------
                  ssh ${addr} "ls ${wdir}/updates/new" || error=$?; } \
             || { error=$?; echo -e "\nServer unreachable."; }
 
-    echo; done; info 'Done' ${error}
+    done; info 'Done' ${error}
 } #---------------------------------------------------------------------------------------------------------------------

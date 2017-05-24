@@ -18,8 +18,8 @@ function run () { #---------------------------------| Main function |-----------
                         && { echo -e "File - ${filename} exist, skip."; } \
                         || { scp ${file} ${server}/updates/new || error=$?; }
 
-                echo; done; } \
+                done; } \
             || { error=$?; echo -e "\nServer unreachable."; }
 
-    echo; done; info 'Done' ${error}
+    done; info 'Done' ${error}
 } #---------------------------------------------------------------------------------------------------------------------

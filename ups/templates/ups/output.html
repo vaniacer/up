@@ -10,9 +10,9 @@
 <div id="output_log">
     <dl class="dl-horizontal">
         {% if tag %}
-            <dt>Event logs</dt><dd><tt>{{ log|safe|linebreaks }}</tt></dd>
+            <dt>Event logs</dt><dd class="log"><tt>{{ log|safe }}</tt></dd>
         {% else %}
-            <dt>Event logs</dt><dd><tt>{{ log|linebreaks }}</tt></dd>
+            <dt>Event logs</dt><dd class="log"><tt>{{ log }}</tt></dd>
         {% endif %}
     </dl>
 

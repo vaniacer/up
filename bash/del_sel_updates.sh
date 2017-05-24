@@ -14,8 +14,8 @@ function run () { #---------------------------------| Main function |-----------
                     echo -e "Delete file - ${filename}."
                     ssh ${addr} "rm ${wdir}/updates/new/${filename}" || error=$?
 
-                echo; done; } \
+                done; } \
             || { error=$?; echo -e "\nServer unreachable."; }
 
-    echo; done; info 'Done' ${error}
+    done; info 'Done' ${error}
 } #---------------------------------------------------------------------------------------------------------------------

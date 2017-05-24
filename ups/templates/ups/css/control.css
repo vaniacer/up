@@ -11,6 +11,10 @@
     overflow: hidden;
 }
 
+.log {
+     white-space: pre-wrap;
+}
+
 .divider-vertical {
     border-left: 1px solid gray;
     float: left right;

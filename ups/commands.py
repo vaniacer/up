@@ -13,6 +13,7 @@ def command(selected):
 	dick = {  # ----------|  log or not      |                             |  output        |--------
 		# RUN only |------+------------------+-----------------------------+----------------+---
 		'check_updates':   {'history': False, 'bash':   'check_updates.sh', 'tag': False, },
+		'server_info':     {'history': False, 'bash':     'server_info.sh', 'tag': False, },
 		'check_conf':      {'history': False, 'bash':      'check_conf.sh', 'tag': False, },
 		'check_logs':      {'history': False, 'bash':      'check_logs.sh', 'tag': False, },
 		'cancel_job':      {'history':  True, 'bash':      'cancel_job.sh', 'tag': False, },
