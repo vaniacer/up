@@ -3,7 +3,7 @@
 
     {% if "run_command" in pr_view_perms %}
 
-        <li><button onclick="return Validation('', 'true', '', '')"
+        <li><button onclick="return Validation(false, true, false, false)"
                     title="Check updates on selected server(s)."
                     class="btn btn-default navbar-btn blockUI"
                     name="selected_commands"
@@ -11,18 +11,26 @@
                     type="submit">Check updates</button></li>
 
         <li><button title="Show conf(standalone-full.xml) of selected server(s)."
-                    onclick="return Validation('', 'true', '', '')"
+                    onclick="return Validation(false, true, false, false)"
                     class="btn btn-default navbar-btn blockUI"
                     name="selected_commands"
                     value="check_conf"
                     type="submit">Check conf</button></li>
 
-        <li><button onclick="return Validation('', 'true', '', '')"
+        <li><button onclick="return Validation(false, true, false, false)"
                     class="btn btn-default navbar-btn blockUI"
                     title="Check logs on selected server(s)."
                     name="selected_commands"
                     value="check_logs"
                     type="submit">Check logs</button></li>
+
+        <li><button onclick="return Validation(false, true, false, false)"
+                title="Show system info: CPU, mem, disk etc."
+                class="btn btn-default navbar-btn blockUI"
+                name="selected_commands"
+                value="server_info"
+                type="submit">Server info</button></li>
+
     {% endif %}
 
     <!--Divider-->
