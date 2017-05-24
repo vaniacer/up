@@ -15,14 +15,14 @@ function run () { #---------------------------------| Main function |-----------
                     echo \<b\>Interfaces:\</b\>
                     ip a | grep 'inet ' | grep -v '127.0.0.1' | sed 's/inet //g; s|/.*$||g'; echo
 
-                    echo \<b\>Logged in Users:\</b\>
-                    who; echo
-
                     echo \<b\>Memory:\</b\>
                     free -h; echo
 
                     echo \<b\>Disk:\</b\>
                     df -h; echo; df -ih; echo
+
+                    echo \<b\>Logged in Users:\</b\>
+                    who; echo
 
                     echo \<b\>Processes:\</b\>
                     top -b -n1
