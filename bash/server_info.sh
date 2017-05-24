@@ -18,6 +18,9 @@ function run () { #---------------------------------| Main function |-----------
                     echo \<b\>Memory:\</b\>
                     free -h; echo
 
+                    echo \<b\>CPU:\</b\>
+                    lscpu; echo
+
                     echo \<b\>Disk:\</b\>
                     df -h; echo; df -ih; echo
 
