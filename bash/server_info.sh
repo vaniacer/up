@@ -12,10 +12,12 @@ function run () { #---------------------------------| Main function |-----------
             && { ssh ${addr} "
                     echo Hostname: \${HOSTNAME}; echo
 
-                    echo Interfaces: $(ip a | grep 'inet ' | grep -v '127.0.0.1' | sed 's/inet //g; s|/.*$||g'); echo
+                    echo Interfaces: \$(ip a | grep 'inet ' | grep -v '127.0.0.1' | sed 's/inet //g; s|/.*$||g'); echo
+
+                    echo Uptime: \$(uptime); echo
 
                     echo Logged in Users:
-                    who; echo
+                    w; echo
 
                     echo Memory:
                     free -h; echo
