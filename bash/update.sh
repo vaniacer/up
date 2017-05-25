@@ -9,25 +9,18 @@ function run () { #---------------------------------| Main function |-----------
 
         # Check access and run command or send 'Server unreachable'
         ssh ${addr} "echo > /dev/null" \
-            && { #ssh ${addr} "${wdir}/krupd bkp full" || error 'Backup'
+            && { #. ${workdir}/backup_full.sh   ; run 'silent' || error 'Backup'    ; echo
 
-                 for file in ${updates}; {
-                    filename=$(basename ${file})
-                    echo -e "\nCopy file - ${filename}"
+                 . ${workdir}/copy.sh           ; run 'silent' || error 'Copy'      ; echo
 
-                    # Check if file exist, copy if not exist
-                    ssh ${addr} ls ${wdir}/updates/new/${filename} &> /dev/null \
-                        && { echo -e "File - ${filename} exist, skip."; } \
-                        || { scp ${file} ${server}/updates/new || error=$?; }
-                 }
                  # Update
-                 ssh ${addr} '~/.utils/dp.sh --start && echo -e \\nStart dummy page.\\n' || error 'Dummy page'
-                 ssh ${addr} ${wdir}/krupd jboss.stop  || error 'Jboss stop'
+                 . ${workdir}/maintenance_on.sh ; run 'silent' || error 'Dummy page'; echo
+                 . ${workdir}/stop.sh           ; run 'silent' || error 'Jboss stop'; echo
 
-                 echo -e "\n<b>Update files.</b>\n"
+                 echo -e "<b>Update files.</b>\n"
 
-                 ssh ${addr} ${wdir}/krupd jboss.start || error 'Jboss start'
-                 ssh ${addr} '~/.utils/dp.sh --stop && echo -e \\nStop dummy page.\\n' || error 'Dummy page'; } \
+                 . ${workdir}/start.sh          ; run 'silent' || error 'Jboss start'; echo
+                 . ${workdir}/maintenance_off.sh; run 'silent' || error 'Dummy page' ; echo; } \
             || { error=$?; echo -e "\nServer unreachable."; }
 
     }; info 'Done' ${error}

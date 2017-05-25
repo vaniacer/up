@@ -15,9 +15,9 @@ function run () { #---------------------------------| Main function |-----------
                     scp ${file} ${server}/updates/new || error=$?
 
                     ssh ${addr} "${wdir}/krupd execsql ${wdir}/updates/new/${filename}" || error=$?
-                    ssh ${addr} "rm ${wdir}/updates/new/${filename}" || error=$?
+                    ssh ${addr} "rm ${wdir}/updates/new/${filename}" || error=$?; }
 
-               }; } \
+               } \
             || { error=$?; echo -e "\nServer unreachable."; }
 
     }; info 'Done' ${error}

@@ -5,12 +5,12 @@ function description () { #---------------------| Function description |--------
 }
 
 function run () { #---------------------------------| Main function |---------------------------------------------------
-    for server in ${servers}; { addr
+    for server in ${servers}; { [ ${1} ] || addr
 
         # Check access and run command or send 'Server unreachable'
         ssh ${addr} "echo > /dev/null" \
             && { ssh ${addr} ${wdir}/krupd jboss.stop || error=$?; } \
             || { error=$?; echo -e "\nServer unreachable."; }
 
-    }; info 'Done' ${error}
+    }; [ ${1} ] || info 'Done' ${error}
 } #---------------------------------------------------------------------------------------------------------------------

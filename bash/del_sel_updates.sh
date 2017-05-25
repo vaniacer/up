@@ -12,9 +12,8 @@ function run () { #---------------------------------| Main function |-----------
             && { for file in ${updates}; {
                     filename=$(basename ${file})
                     echo -e "Delete file - ${filename}."
-                    ssh ${addr} "rm ${wdir}/updates/new/${filename}" || error=$?
-
-               }; } \
+                    ssh ${addr} "rm ${wdir}/updates/new/${filename}" || error=$?; }
+               } \
             || { error=$?; echo -e "\nServer unreachable."; }
 
     }; info 'Done' ${error}

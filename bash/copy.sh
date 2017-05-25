@@ -5,7 +5,7 @@ function description () { #---------------------| Function description |--------
 }
 
 function run () { #---------------------------------| Main function |---------------------------------------------------
-    for server in ${servers}; { addr
+    for server in ${servers}; { [ ${1} ] || addr
 
         # Check access and run command or send 'Server unreachable'
         ssh ${addr} "echo > /dev/null" \
@@ -15,11 +15,10 @@ function run () { #---------------------------------| Main function |-----------
 
                     # Check if file exist, copy if not exist
                     ssh ${addr} ls ${wdir}/updates/new/${filename} &> /dev/null \
-                        && { echo -e "File - ${filename} exist, skip."; } \
-                        || { scp ${file} ${server}/updates/new || error=$?; }
-
-               }; } \
+                        && { echo -e "File - ${filename} exist, skip."    ; } \
+                        || { scp ${file} ${server}/updates/new || error=$?; }; }
+               } \
             || { error=$?; echo -e "\nServer unreachable."; }
 
-    }; info 'Done' ${error}
+    }; [ ${1} ] || info 'Done' ${error}
 } #---------------------------------------------------------------------------------------------------------------------
