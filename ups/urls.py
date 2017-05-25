@@ -25,9 +25,9 @@ urlpatterns = [
 	# Страница для редактирования обновления
 	url(r'^edit_update/(?P<update_id>\d+)/$', views_edit.edit_update, name='edit_update'),
 	# Скачать файл обновления.
-	url(r'^download_upd/(?P<project_id>.+)/(?P<update_id>.+)$', views.download_upd, name='download_upd'),
+	url(r'^download_upd/(?P<project_id>\d+)/(?P<update_id>\d+)$', views.download_upd, name='download_upd'),
 	# Скачать dump.
-	url(r'^download_dump/(?P<project_id>.+)/(?P<dump>.+)$', views.download_dump, name='download_dump'),
+	url(r'^download_dump/(?P<project_id>\d+)/(?P<dump>.+)$', views.download_dump, name='download_dump'),
 	# Вывод логов.
 	url(
 		r'^logs/(?P<project_id>\w+)/(?P<log_id>\w+)/(?P<cmd>\w+)/(?P<cron>\w+)/(?P<date>\w+)/$',

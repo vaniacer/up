@@ -41,6 +41,7 @@ def pagination(request, history):
 
 
 def download(file_path, file_name):
+	"""Закачка файлов."""
 	file_mimetype = mimetypes.guess_type(file_path)
 	file_wrapper = FileWrapper(file(file_path, 'rb'))
 	response = HttpResponse(file_wrapper, content_type=file_mimetype)
@@ -51,15 +52,8 @@ def download(file_path, file_name):
 
 
 @login_required
-def projects(request):
-	"""Выводит список проектов."""
-	project_list = Project.objects.order_by('name')
-	context = {'projects': project_list}
-	return render(request, 'ups/projects.html', context)
-
-
-@login_required
 def download_upd(request, project_id, update_id):
+	"""Закачка обновлений."""
 	update = get_object_or_404(Update, id=update_id)
 	current_project = get_object_or_404(Project, id=project_id)
 	check_perm('view_project', current_project, request.user)
@@ -68,9 +62,18 @@ def download_upd(request, project_id, update_id):
 
 @login_required
 def download_dump(request, project_id, dump):
+	"""Закачка дампов."""
 	current_project = get_object_or_404(Project, id=project_id)
 	check_perm('view_project', current_project, request.user)
 	return download(conf.MEDIA_ROOT + '/updates/dumps/' + str(dump), str(dump))
+
+
+@login_required
+def projects(request):
+	"""Выводит список проектов."""
+	project_list = Project.objects.order_by('name')
+	context = {'projects': project_list}
+	return render(request, 'ups/projects.html', context)
 
 
 @login_required
