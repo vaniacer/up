@@ -5,11 +5,11 @@ function description () { #---------------------| Function description |--------
 }
 
 function run () { #---------------------------------| Main function |---------------------------------------------------
-    for server in ${servers}; do addr
+    for server in ${servers}; { addr
 
         # Check access and run command or send 'Server unreachable'
         ssh ${addr} "echo > /dev/null" \
-            && { for file in ${updates}; do
+            && { for file in ${updates}; {
                     filename=$(basename ${file})
                     echo -e "\nCopy script - ${filename}"
                     scp ${file} ${server}/updates/new || error=$?
@@ -17,8 +17,8 @@ function run () { #---------------------------------| Main function |-----------
                     ssh ${addr} "${wdir}/krupd execsql ${wdir}/updates/new/${filename}" || error=$?
                     ssh ${addr} "rm ${wdir}/updates/new/${filename}" || error=$?
 
-                 done; } \
+               }; } \
             || { error=$?; echo -e "\nServer unreachable."; }
 
-    done; info 'Done' ${error}
+    }; info 'Done' ${error}
 } #---------------------------------------------------------------------------------------------------------------------

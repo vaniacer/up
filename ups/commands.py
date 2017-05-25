@@ -34,7 +34,7 @@ def command(selected):
 		# Main |-----------------------------+-----------------------------+----------------+
 		'copy':            {'history':  True, 'bash':            'copy.sh', 'tag': False, },
 		'script':          {'history':  True, 'bash':          'script.sh', 'tag': False, },
-		'update':          {'history':  True, 'bash':          'update.sh', 'tag': False, },
+		'update':          {'history':  True, 'bash':          'update.sh', 'tag':  True, },
 		'get_dump':        {'history':  True, 'bash':        'get_dump.sh', 'tag':  True, },
 		'copy_utils':      {'history':  True, 'bash':      'copy_utils.sh', 'tag': False, },
 		'sql_script':      {'history':  True, 'bash':      'sql_script.sh', 'tag': False, }, }

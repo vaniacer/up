@@ -5,11 +5,11 @@ function description () { #---------------------| Function description |--------
 }
 
 function run () { #---------------------------------| Main function |---------------------------------------------------
-    for server in ${servers}; do addr
+    for server in ${servers}; { addr
 
         # Check access and run command or send 'Server unreachable'
         ssh ${addr} "echo > /dev/null" \
-            && { for file in ${updates}; do
+            && { for file in ${updates}; {
                     filename=$(basename ${file})
                     echo -e "\nCopy file - ${filename}"
 
@@ -18,8 +18,8 @@ function run () { #---------------------------------| Main function |-----------
                         && { echo -e "File - ${filename} exist, skip."; } \
                         || { scp ${file} ${server}/updates/new || error=$?; }
 
-                done; } \
+               }; } \
             || { error=$?; echo -e "\nServer unreachable."; }
 
-    done; info 'Done' ${error}
+    }; info 'Done' ${error}
 } #---------------------------------------------------------------------------------------------------------------------
