@@ -55,7 +55,11 @@ def del_job(selected):
 
 def starter(selected):
 	"""Выполняет комманду."""
-	opt = [conf.BASE_DIR + '/bash/starter.sh', '-cmd', selected['cmdname'], '-key', selected['key']]
+	opt = [
+		conf.BASE_DIR + '/bash/starter.sh',
+		'-prj', str(selected['project'].id),
+		'-cmd', selected['cmdname'],
+		'-key', selected['key']]
 
 	if selected['servers']:
 		opt.extend(['-server', ' '.join(selected['servers'])])

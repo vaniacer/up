@@ -18,6 +18,7 @@ until [ -z ${1} ]; do case ${1} in
     -cmd    | -c) cmd=${2};;
     -run    | -r) run=${2};;
     -key    | -k) key=${2};;
+    -prj    | -p) prj=${2};;
     -id     | -i) id=${2};;
 
 esac; shift 2; done
@@ -51,7 +52,7 @@ function download () { # Used in backup_* and get_dump.
                        name=${name#*\"}; name=${name//\"./}
 
     echo -e "Копирую файл - ${name}"; scp ${addr}:${name} ${dumpdir} || error=$?
-    echo -e "\n<a class='btn btn-primary' href='/updates/dumps/${name//\/*\//}'>Download</a>\n"
+    echo -e "\n<a class='btn btn-primary' href='/download_dump/${prj}/${name//\/*\//}'>Download</a>\n"
 }
 
 function starter  () { # Run command now or set a cronjob.

@@ -7,9 +7,12 @@ from django.conf import settings as conf
 from .commands import command, cmd_run
 from .commands_engine import add_event
 from .commands_engine import add_job
+from wsgiref.util import FileWrapper
+from django.http import HttpResponse
 from .permissions import check_perm
+from .models import Project, Update
 from .cron import get_cron_logs
-from .models import Project
+import mimetypes
 import os
 
 
@@ -43,6 +46,37 @@ def projects(request):
 	project_list = Project.objects.order_by('name')
 	context = {'projects': project_list}
 	return render(request, 'ups/projects.html', context)
+
+
+@login_required
+def download_upd(request, project_id, update_id):
+	update = get_object_or_404(Update, id=update_id)
+	current_project = get_object_or_404(Project, id=project_id)
+	check_perm('view_project', current_project, request.user)
+
+	file_path = str(update.file)
+	file_mimetype = mimetypes.guess_type(file_path)
+	file_wrapper = FileWrapper(file(file_path, 'rb'))
+	response = HttpResponse(file_wrapper, content_type=file_mimetype)
+	response['Content-Disposition'] = 'attachment; filename=%s' % str(update)
+	response['Content-Length'] = os.stat(file_path).st_size
+	response['X-Sendfile'] = file_path
+	return response
+
+
+@login_required
+def download_dump(request, project_id, dump):
+	current_project = get_object_or_404(Project, id=project_id)
+	check_perm('view_project', current_project, request.user)
+
+	file_path = conf.MEDIA_ROOT + '/updates/dumps/' + str(dump)
+	file_mimetype = mimetypes.guess_type(file_path)
+	file_wrapper = FileWrapper(file(file_path, 'rb'))
+	response = HttpResponse(file_wrapper, content_type=file_mimetype)
+	response['Content-Disposition'] = 'attachment; filename=%s' % str(dump)
+	response['Content-Length'] = os.stat(file_path).st_size
+	response['X-Sendfile'] = file_path
+	return response
 
 
 @login_required

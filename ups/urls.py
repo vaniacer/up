@@ -2,10 +2,8 @@
 
 """Определяет схемы URL для update server'a."""
 
-from django.conf.urls import url
 from . import views, views_new, views_edit
-from django.contrib.auth.views import login
-
+from django.conf.urls import url
 
 urlpatterns = [
 	# Домашняя страница
@@ -26,6 +24,10 @@ urlpatterns = [
 	url(r'^edit_server/(?P<server_id>\d+)/$', views_edit.edit_server, name='edit_server'),
 	# Страница для редактирования обновления
 	url(r'^edit_update/(?P<update_id>\d+)/$', views_edit.edit_update, name='edit_update'),
+	# Скачать файл обновления.
+	url(r'^download_upd/(?P<project_id>.+)/(?P<update_id>.+)$', views.download_upd, name='download_upd'),
+	# Скачать dump.
+	url(r'^download_dump/(?P<project_id>.+)/(?P<dump>.+)$', views.download_dump, name='download_dump'),
 	# Вывод логов.
 	url(
 		r'^logs/(?P<project_id>\w+)/(?P<log_id>\w+)/(?P<cmd>\w+)/(?P<cron>\w+)/(?P<date>\w+)/$',
