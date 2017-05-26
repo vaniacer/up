@@ -55,7 +55,7 @@ function download () { # Used in backup_* and get_dump.
     echo -e "\n<a class='btn btn-primary' href='/download_dump/${prj}/${name//\/*\//}'>Download</a>\n"
 }
 
-function error () { error=$?; echo -e "${1} error, exit."; break; }
+function error () { error=$?; echo -e "${1} error."; break; }
 
 function starter  () { # Run command now or set a cronjob.
     [ "${cron}" ] && { run &> ${crondir}/${cron}; dat=$(date +'%b %d, %Y %R'); dat=${dat//.}; dat=${dat^}
