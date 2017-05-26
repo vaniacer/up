@@ -5,12 +5,10 @@ function description () { #---------------------| Function description |--------
 }
 
 function run () { #---------------------------------| Main function |---------------------------------------------------
-    for server in ${servers}; { [ ${1} ] || addr
+    for server in ${servers}; { addr
 
-        # Check access and run command or send 'Server unreachable'
-        ssh ${addr} "echo > /dev/null" \
-            && { ssh ${addr} '~/.utils/dp.sh --stop && echo Stop dummy page.' || error=$?; } \
-            || { error=$?; echo -e "\nServer unreachable."; }
+        echo -e "Stop dummy page."
+        ssh ${addr} '~/.utils/dp.sh --stop' || error=$?
 
-    }; [ ${1} ] || info 'Done' ${error}
+    }; info 'Done' ${error}
 } #---------------------------------------------------------------------------------------------------------------------

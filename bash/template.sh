@@ -6,12 +6,9 @@ function description () { #---------------------| Function description |--------
 }
 
 function run () { #---------------------------------| Main function |---------------------------------------------------
-    for server in ${servers}; { [ ${1} ] || addr
+    for server in ${servers}; { addr
 
-        # Check access and run command or send 'Server unreachable'
-        ssh ${addr} "echo > /dev/null" \
-            && { ssh ${addr} echo "Put your code here" || error=$?; } \
-            || { error=$?; echo -e "\nServer unreachable."; }
+        ssh ${addr} echo "Put your code here" || error=$?
 
-    }; [ ${1} ] || info 'Done' ${error}
+    }; info 'Done' ${error}
 } #---------------------------------------------------------------------------------------------------------------------

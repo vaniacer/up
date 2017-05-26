@@ -16,20 +16,28 @@ function restore () { [ ${error} -gt 0 ] && {
 function run () { #---------------------------------| Main function |---------------------------------------------------
     for server in ${servers}; { addr
 
-        # Check access and run command or send 'Server unreachable'
-        ssh ${addr} "echo > /dev/null" \
-            && {                                                                      echo -e "\n<b>Backup.</b>"
-                . ${workdir}/backup_full.sh   ; run 0 || error 'Backup'; bkp=${name}; echo -e "<b>Copy update.</b>"
-                . ${workdir}/copy.sh          ; run 0 || error 'Copy'               ; echo -e "<b>"
-                . ${workdir}/maintenance_on.sh; run 0 || error 'Dummy page'         ; echo -e "\nStop jboss.</b>\n"
-                . ${workdir}/stop.sh          ; run 0 || error 'Jboss stop'         ; echo -e "\n<b>Update files.</b>\n"
+        echo -e "<b>Backup.</b>"
+        ssh ${addr} ${wdir}/krupd bkp db  || error=$?; download
+        ssh ${addr} ${wdir}/krupd bkp sys || error=$?; download; bkp=${name}
 
-                ssh ${addr} "unzip -o ${wdir}/updates/new/${filename} \
-                    -d jboss-bas-*/standalone/deployments"     || error=$?; echo -e "\n<b>Start jboss.</b>\n"
+        echo -e "<b>Copy update - ${updates##*/}.</b>\n"
+        scp ${updates} ${server}/updates/new/ || error=$
 
-                . ${workdir}/start.sh          ; run 0 || error 'Jboss start'; restore; echo "<b>"
-                . ${workdir}/maintenance_off.sh; run 0 || error 'Dummy page' ; echo "</b>"; } \
-            || { error=$?; echo -e "\nServer unreachable."; }
+        echo -e "<b>Start dummy page.</b>\n"
+        ssh ${addr} '~/.utils/dp.sh --start'  || error=$?
+
+        echo -e "<b>Stop jboss.</b>"
+        ssh ${addr} ${wdir}/krupd jboss.stop  || error=$?
+
+        echo -e "\n<b>Update files.</b>"
+        ssh ${addr} "unzip -o ${wdir}/updates/new/${updates##*/} \
+            -d ${wdir}/jboss-bas-*/standalone/deployments" || error=$?
+
+        echo -e "\n<b>Start jboss.</b>"
+        ssh ${addr} ${wdir}/krupd jboss.start || error=$?
+
+        echo -e "<b>Stop dummy page.</b>"
+        ssh ${addr} '~/.utils/dp.sh --stop'   || error=$?
 
     }; info 'Done' ${error}
 } #---------------------------------------------------------------------------------------------------------------------

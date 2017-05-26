@@ -5,20 +5,16 @@ function description () { #---------------------| Function description |--------
 }
 
 function run () { #---------------------------------| Main function |---------------------------------------------------
-    for server in ${servers}; { [ ${1} ] || addr
+    for server in ${servers}; { addr
 
-        # Check access and run command or send 'Server unreachable'
-        ssh ${addr} "echo > /dev/null" \
-            && { for file in ${updates}; {
-                    filename=$(basename ${file})
-                    echo -e "\nCopy file - ${filename}"
+        for file in ${updates}; { filename=${file##*/}
+            # Check if file exist, copy if not exist
+            ssh ${addr} ls ${wdir}/updates/new/${filename} &> /dev/null \
+                && { echo -e "File - ${filename} exist, skip."; continue; }
 
-                    # Check if file exist, copy if not exist
-                    ssh ${addr} ls ${wdir}/updates/new/${filename} &> /dev/null \
-                        && { echo -e "File - ${filename} exist, skip."    ; } \
-                        || { scp ${file} ${server}/updates/new || error=$?; }; }
-               } \
-            || { error=$?; echo -e "\nServer unreachable."; }
+            echo -e "\nCopy file - ${filename}"
+            scp ${file} ${server}/updates/new/ || error=$?
+        }
 
-    }; [ ${1} ] || info 'Done' ${error}
+    }; info 'Done' ${error}
 } #---------------------------------------------------------------------------------------------------------------------

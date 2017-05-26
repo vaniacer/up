@@ -7,19 +7,14 @@ function description () { #---------------------| Function description |--------
 function run () { #---------------------------------| Main function |---------------------------------------------------
     for server in ${servers}; { addr
 
-        # Check access and run command or send 'Server unreachable'
-        ssh ${addr} "echo > /dev/null" \
-            && { for file in ${updates}; do
-                    filename=$(basename ${file})
-                    echo -e "\nCopy script - ${filename}"
-                    scp ${file} ${server}/updates/new || error=$?
+        for file in ${updates}; { filename=${file##*/}
 
-                    echo -e "Run script - ${filename}\n"
-                    ssh ${addr} "cd ${wdir}; chmod +x updates/new/${filename}; updates/new/${filename}" || error=$?
-                    ssh ${addr} "rm ${wdir}/updates/new/${filename}" || error=$?
+            echo -e "\nCopy script - ${filename}"
+            scp ${file} ${server}/updates/new || error=$?
 
-                 done; } \
-            || { error=$?; echo -e "\nServer unreachable."; }
-
+            echo -e "Run script - ${filename}\n"
+            ssh ${addr} "cd ${wdir}; chmod +x updates/new/${filename}; updates/new/${filename}" || error=$?
+            ssh ${addr} "rm ${wdir}/updates/new/${filename}" || error=$?
+        }
     }; info 'Done' ${error}
 } #---------------------------------------------------------------------------------------------------------------------

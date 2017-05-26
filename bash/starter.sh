@@ -43,6 +43,8 @@ function addr () {
     # Ssh address     | Working directory | And show ${addr} as info      |
     #-----------------+-------------------+-------------------------------+
     addr=${server%%:*}; wdir=${server##*:}; info "Server - ${addr}"
+    # Check access and run command or send 'Server unreachable'
+    ssh ${addr} "echo > /dev/null" || { error=$?; echo -e "\nServer unreachable."; continue; }
 }
 
 # SCP files created in the process to ${dumpdir} and add a 'download' button to the output log.
