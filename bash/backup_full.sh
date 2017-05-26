@@ -9,8 +9,8 @@ function run () { #---------------------------------| Main function |-----------
 
         # Check access and run command or send 'Server unreachable'
         ssh ${addr} "echo > /dev/null" \
-            && { ssh ${addr} "${wdir}/krupd bkp db"  || error=$?; download
-                 ssh ${addr} "${wdir}/krupd bkp sys" || error=$?; download; } \
+            && { . ${workdir}/backup_db.sh  ; run 'silent' || error 'Backup'
+                 . ${workdir}/backup_sys.sh ; run 'silent' || error 'Backup'; } \
             || { error=$?; echo -e "\nServer unreachable."; }
 
     }; [ ${1} ] || info 'Done' ${error}
