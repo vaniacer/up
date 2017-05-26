@@ -4,9 +4,9 @@ function description () { #---------------------| Function description |--------
     echo -e "Update server(s):\n${servers// /\\n}\n\nwith update(s):\n${updates// /\\n}\n"; exit 0
 }
 
- # Run system restore if there where error on jboss start.
+ # Run system restore if jboss start ended with errors.
 function restore () { [ ${error} -gt 0 ] && {
-    echo -e "\n<b>Restore system files - ${bkp}.</b>"
+    echo -e   "\n<b>Restore system files - ${bkp}.</b>"
     ssh ${addr} "${wdir}/krupd restore sys ${bkp}" || error=$?
 
     echo -e "\n<b>Start jboss.</b>\n"
