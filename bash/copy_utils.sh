@@ -4,11 +4,11 @@ function description () { #---------------------| Function description |--------
     echo -e "Copy utils folder to server(s):\n${servers// /\\n}\n"; exit 0
 }
 
-function run () { #---------------------------------| Main function |---------------------------------------------------
-    for server in ${servers}; { addr
+function body () { #---------------------------------| Main function |--------------------------------------------------
 
-        ssh ${addr} [ -d '.utils' ] || mkdir .utils || error=$?
-        scp -r ~/utils/* ${addr}:~/.utils || error=$?
+    ssh ${addr} [ -d '.utils' ] || mkdir .utils || error=$?
+    scp -r ~/utils/* ${addr}:~/.utils || error=$?
 
-    }; info 'Done' ${error}
 } #---------------------------------------------------------------------------------------------------------------------
+
+function run () { for server in ${servers}; { addr; body; }; info 'Done' ${error}; }

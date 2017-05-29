@@ -4,10 +4,10 @@ function description () { #---------------------| Function description |--------
     echo -e "Reload config on server(s):\n${servers// /\\n}\n"; exit 0
 }
 
-function run () { #---------------------------------| Main function |---------------------------------------------------
-    for server in ${servers}; { addr
+function body () { #---------------------------------| Main function |--------------------------------------------------
 
-        ssh ${addr} ${wdir}/jboss-bas-*/bin/jboss-cli.sh -c command=":reload" || error=$?
+    ssh ${addr} ${wdir}/jboss-bas-*/bin/jboss-cli.sh -c command=":reload" || error=$?
 
-    }; info 'Done' ${error}
 } #---------------------------------------------------------------------------------------------------------------------
+
+function run () { for server in ${servers}; { addr; body; }; info 'Done' ${error}; }

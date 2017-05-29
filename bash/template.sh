@@ -5,10 +5,10 @@ function description () { #---------------------| Function description |--------
     Copy Update(s):\n${updates// /\\n}\n\nto Server(s):\n${servers// /\\n}\n"; exit 0
 }
 
-function run () { #---------------------------------| Main function |---------------------------------------------------
-    for server in ${servers}; { addr
+function body () { #---------------------------------| Main function |--------------------------------------------------
 
-        ssh ${addr} echo "Put your code here" || error=$?
+    ssh ${addr} echo "Put your code here" || error=$?
 
-    }; info 'Done' ${error}
 } #---------------------------------------------------------------------------------------------------------------------
+
+function run () { for server in ${servers}; { addr; body; }; info 'Done' ${error}; }

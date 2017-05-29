@@ -4,12 +4,12 @@ function description () { #---------------------| Function description |--------
     echo -e "Delete Update(s):\n${updates// /\\n}\n\nfrom Server(s):\n${servers// /\\n}\n"; exit 0
 }
 
-function run () { #---------------------------------| Main function |---------------------------------------------------
-    for server in ${servers}; { addr
+function body () { #---------------------------------| Main function |--------------------------------------------------
 
-        for file in ${updates}; {
-            filename=${file##*/}; echo -e "Delete file - ${filename}."
-            ssh ${addr} "rm ${wdir}/updates/new/${filename}" || error=$?; }
-
-    }; info 'Done' ${error}
+    for file in ${updates}; {
+        filename=${file##*/}; echo -e "Delete file - ${filename}."
+        ssh ${addr} "rm ${wdir}/updates/new/${filename}" || error=$?
+    }
 } #---------------------------------------------------------------------------------------------------------------------
+
+function run () { for server in ${servers}; { addr; body; }; info 'Done' ${error}; }

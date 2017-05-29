@@ -4,11 +4,11 @@ function description () { #---------------------| Function description |--------
     echo -e "Stop dummy page on server(s):\n${servers// /\\n}\n"; exit 0
 }
 
-function run () { #---------------------------------| Main function |---------------------------------------------------
-    for server in ${servers}; { addr
+function body () { #---------------------------------| Main function |--------------------------------------------------
 
-        echo -e "Stop dummy page."
-        ssh ${addr} '~/.utils/dp.sh --stop' || error=$?
+    echo -e "Stop dummy page."
+    ssh ${addr} '~/.utils/dp.sh --stop' || error=$?
 
-    }; info 'Done' ${error}
 } #---------------------------------------------------------------------------------------------------------------------
+
+function run () { for server in ${servers}; { addr; body; }; info 'Done' ${error}; }

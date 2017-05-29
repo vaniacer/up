@@ -4,10 +4,10 @@ function description () { #---------------------| Function description |--------
     echo -e "Show logs of server(s):\n${servers// /\\n}\n"; exit 0
 }
 
-function run () { #---------------------------------| Main function |---------------------------------------------------
-    for server in ${servers}; { addr
+function body () { #---------------------------------| Main function |--------------------------------------------------
 
-        ssh ${addr} "cat ${wdir}/jboss-bas-*/standalone/log/server.log" || error=$?
+    ssh ${addr} "cat ${wdir}/jboss-bas-*/standalone/log/server.log" || error=$?
 
-    }; info 'Done' ${error}
 } #---------------------------------------------------------------------------------------------------------------------
+
+function run () { for server in ${servers}; { addr; body; }; info 'Done' ${error}; }

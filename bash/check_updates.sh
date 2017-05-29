@@ -4,11 +4,11 @@ function description () { #---------------------| Function description |--------
     echo -e "Show updates of server(s):\n${servers// /\\n}\n"; exit 0
 }
 
-function run () { #---------------------------------| Main function |---------------------------------------------------
-    for server in ${servers}; { addr
+function body () { #---------------------------------| Main function |--------------------------------------------------
 
-        echo -e "\nПакеты обновлений:\n"
-        ssh ${addr} "ls ${wdir}/updates/new" || error=$?
+    echo -e "\nПакеты обновлений:\n"
+    ssh ${addr} "ls ${wdir}/updates/new" || error=$?
 
-    }; info 'Done' ${error}
 } #---------------------------------------------------------------------------------------------------------------------
+
+function run () { for server in ${servers}; { addr; body; }; info 'Done' ${error}; }
