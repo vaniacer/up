@@ -43,7 +43,7 @@ function addr () {
     # Ssh address     | Working directory | And show ${addr} as info      |
     #-----------------+-------------------+-------------------------------+
     addr=${server%%:*}; wdir=${server##*:}; info "Server - ${addr}"
-    # Check access and run command or send 'Server unreachable'
+    # Check access to server, send 'Server unreachable' if access fail.
     ssh ${addr} "echo > /dev/null" || { error=$?; echo -e "\nServer unreachable."; continue; }
 }
 
@@ -57,14 +57,14 @@ function download () { # Used in backup_* and get_dump.
     echo -e "\n<a class='btn btn-primary' href='/download_dump/${prj}/${name//\/*\//}'>Download</a>\n"
 }
 
-function starter  () { # Run command now or set a cronjob.
+. ${workdir}/${cmd} # Load 'run' and 'description' functions from ${cmd}.
+
+function starter  () { # Start run function, save logs to ${rundir} or ${crondir} if started from cron.
     [ "${cron}" ] && { run &> ${crondir}/${cron}; dat=$(date +'%b %d, %Y %R'); dat=${dat//.}; dat=${dat^}
                        echo -e "\nError: ${error}\nDate: ${dat}" >> ${crondir}/${cron}; } \
                   || { run          &> ${rundir}/log${key}
                        echo ${error} > ${rundir}/err${key}; }
     exit ${error}
 }
-
-. ${workdir}/${cmd} # Load 'run' and 'description' functions from ${cmd}.
 
 [ "${desc}" ] && description || starter

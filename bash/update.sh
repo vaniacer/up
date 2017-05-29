@@ -39,6 +39,7 @@ function body () { #---------------------------------| Main function |----------
 
     echo -e "<b>Stop dummy page.</b>"
     ssh ${addr} '~/.utils/dp.sh --stop'   || error=$?
+
 } #---------------------------------------------------------------------------------------------------------------------
 
 function run () { for server in ${servers}; { addr; body; }; info 'Done' ${error}; }
