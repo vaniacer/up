@@ -6,7 +6,7 @@ function description () { #---------------------| Function description |--------
 
  # Run system restore if jboss start ended with errors.
 function restore () { [ ${error} -gt 0 ] && {
-    echo -e   "\n<b>Restore system files - ${bkp}.</b>"
+    echo -e   "\n<b>Update ended with errors. Restore system files from - ${bkp}.</b>"
     ssh ${addr} "${wdir}/krupd restore sys ${bkp}" || error=$?
 
     echo -e "\n<b>Start jboss.</b>\n"
@@ -34,7 +34,7 @@ function run () { #---------------------------------| Main function |-----------
             -d ${wdir}/jboss-bas-*/standalone/deployments" || error=$?
 
         echo -e "\n<b>Start jboss.</b>"
-        ssh ${addr} ${wdir}/krupd jboss.start || error=$?
+        ssh ${addr} ${wdir}/krupd jboss.start || error=$?; restore
 
         echo -e "<b>Stop dummy page.</b>"
         ssh ${addr} '~/.utils/dp.sh --stop'   || error=$?
