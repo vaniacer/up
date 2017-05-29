@@ -12,7 +12,7 @@ function body () { #---------------------------------| Main function |----------
         ssh ${addr} ls ${wdir}/updates/new/${filename} &> /dev/null \
             && { echo -e "File - ${filename} exist, skip."; continue; }
 
-        echo -e "\nCopy file - ${filename}"
+        echo -e "Copy file - ${filename}"
         scp ${file} ${server}/updates/new/ || error=$?
     }
 } #---------------------------------------------------------------------------------------------------------------------
