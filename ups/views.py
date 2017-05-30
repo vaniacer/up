@@ -1,20 +1,20 @@
 # -*- encoding: utf-8 -*-
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 from django.conf import settings as conf
-from .commands import command, cmd_run, run_date
+from .commands import command, cmd_run
 from .commands_engine import add_event
 from .commands_engine import add_job
 from wsgiref.util import FileWrapper
-from django.http import HttpResponse, HttpResponseRedirect
 from .permissions import check_perm
 from .models import Project, Update
 from .cron import get_cron_logs
+from subprocess import Popen
 import mimetypes
 import os
-from subprocess import Popen
 
 
 def index(request):
@@ -39,6 +39,12 @@ def pagination(request, history):
 	hist_fd = hist_pg[int(page):int(page) + 4]
 	hist_bk = hist_pg[max(int(page) - 5, 0):int(page) - 1]
 	return history, hist_fd, hist_bk
+
+
+def delete_files(files):
+	"""Удаляет список файлов."""
+	for f in files:
+		os.remove(f)
 
 
 def download(file_path, file_name):
@@ -89,10 +95,9 @@ def cancel(request, project_id, pid, cmd, log_id):
 		log = open(conf.LOG_FILE + log_id, 'r').read()
 		history = {'user': request.user, 'project': current_project, 'command': cmd}
 		add_event(history, log + '\nCanceled.', 1, '', '')
-	os.remove(conf.LOG_FILE + log_id)
-	os.remove(conf.PID_FILE + log_id)
+	delete_files([conf.LOG_FILE + log_id, conf.PID_FILE + log_id])
 	try:
-		os.remove(conf.ERR_FILE + log_id)
+		delete_files([conf.ERR_FILE + log_id])
 	except OSError:
 		pass
 	return HttpResponseRedirect('/projects/' + project_id)
@@ -112,12 +117,9 @@ def logs(request, project_id, log_id, cmd, cron, date):
 	except IOError:
 		err = ''
 
+	date = date.replace('SS', ' ').replace('PP', ':').replace('OO', '.')
+	history = {'date': date, 'user': request.user, 'command': cmd, 'project': current_project}
 	context = {'log': log, 'tag': tag, 'pid': pid, 'cmd': cmd,  'log_id': log_id, 'project': project_id}
-	history = {
-		'date': date.replace('SS', ' ').replace('PP', ':').replace('OO', '.'),
-		'user': request.user,
-		'project': current_project,
-		'command': cmd}
 
 	if err:
 		context['err'] = int(err)
@@ -126,9 +128,7 @@ def logs(request, project_id, log_id, cmd, cron, date):
 			history['command'] = 'Set cron job - %s' % cmd.lower()
 		if his:
 			add_event(history, log, context['err'], '', '')
-		os.remove(conf.LOG_FILE + log_id)
-		os.remove(conf.ERR_FILE + log_id)
-		os.remove(conf.PID_FILE + log_id)
+		delete_files([conf.LOG_FILE + log_id, conf.PID_FILE + log_id, conf.ERR_FILE + log_id])
 	return render(request, 'ups/output.html', context)
 
 
