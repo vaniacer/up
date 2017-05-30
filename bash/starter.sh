@@ -63,7 +63,7 @@ function starter  () { # Start run function, save logs to ${rundir} or ${crondir
     [ "${cron}" ] && { run &> ${crondir}/${cron}; dat=$(date +'%b %d, %Y %R'); dat=${dat//.}; dat=${dat^}
                        echo -e "\nError: ${error}\nDate: ${dat}" >> ${crondir}/${cron}; } \
                   || { echo "$$"     > ${rundir}/pid${key}
-                       run           > ${rundir}/log${key}
+                       run          &> ${rundir}/log${key}
                        echo ${error} > ${rundir}/err${key}; }
     exit ${error}
 }
