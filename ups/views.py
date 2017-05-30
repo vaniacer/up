@@ -85,9 +85,9 @@ def cancel(request, project_id, pid, cmd, log_id):
 
 	Popen(['kill', str(pid)])
 	tag, his = command({'command': cmd, 'cron': '', })
-	log = open(conf.LOG_FILE + log_id, 'r').read()
-	history = {'user': request.user, 'project': current_project, 'command': cmd}
 	if his:
+		log = open(conf.LOG_FILE + log_id, 'r').read()
+		history = {'user': request.user, 'project': current_project, 'command': cmd}
 		add_event(history, log + '\nCanceled.', 1, '', '')
 	os.remove(conf.LOG_FILE + log_id)
 	os.remove(conf.PID_FILE + log_id)
