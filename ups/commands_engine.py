@@ -2,8 +2,8 @@
 
 from django.core.exceptions import ObjectDoesNotExist
 from django.conf import settings as conf
-from subprocess import Popen, PIPE
 from .models import History, Job
+from subprocess import Popen
 from base64 import b64encode
 from os import urandom
 
@@ -34,14 +34,6 @@ def add_job(selected, log, cron):
 		cdat=selected['date'],
 		cron=cron,
 		desc=log, )
-
-
-def run_cmd(opt):
-	"""Выполняет сценаий bash."""
-	run = Popen(opt, stdin=PIPE, stdout=PIPE, stderr=PIPE)
-	out, err = run.communicate()
-	rc = run.returncode
-	return out + err, rc
 
 
 def del_job(selected):
@@ -76,4 +68,4 @@ def starter(selected):
 			'-id',   selected['key'],
 			'-cmd',  'cron.sh'])
 
-	Popen(opt, stdin=PIPE, stdout=PIPE, stderr=PIPE)
+	Popen(opt)

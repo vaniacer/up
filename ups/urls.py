@@ -24,6 +24,8 @@ urlpatterns = [
 	url(r'^edit_server/(?P<server_id>\d+)/$', views_edit.edit_server, name='edit_server'),
 	# Страница для редактирования обновления
 	url(r'^edit_update/(?P<update_id>\d+)/$', views_edit.edit_update, name='edit_update'),
+	# Отмена команды.
+	url(r'^cancel/(?P<project_id>\d+)/(?P<pid>\d+)/(?P<cmd>\w+)/(?P<log_id>\w+)/$', views.cancel, name='cancel'),
 	# Скачать файл обновления.
 	url(r'^download_upd/(?P<project_id>\d+)/(?P<update_id>\d+)$', views.download_upd, name='download_upd'),
 	# Скачать dump.

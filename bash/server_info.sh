@@ -23,10 +23,10 @@ function body () { #---------------------------------| Main function |----------
 
         echo \<b\>Software:\</b\>
         uname -a; echo
-        [ -e /usr/bin/lsb_release ] && lsb_release -a; echo
-        [ -e /usr/bin/java        ] && java  -version; echo
-        [ -e /usr/bin/psql        ] && psql  -V      ; echo
-        [ -e /usr/sbin/nginx      ] && nginx -v      ; echo
+        [ -e /usr/bin/lsb_release ] && { lsb_release -a; echo; }
+        [ -e /usr/bin/java        ] && { java  -version; echo; }
+        [ -e /usr/bin/psql        ] && { psql  -V      ; echo; }
+        [ -e /usr/sbin/nginx      ] && { nginx -v      ; echo; }
 
         echo \<b\>Logged in Users:\</b\>
         who; echo

@@ -4,16 +4,17 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 from django.conf import settings as conf
-from .commands import command, cmd_run
+from .commands import command, cmd_run, run_date
 from .commands_engine import add_event
 from .commands_engine import add_job
 from wsgiref.util import FileWrapper
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from .permissions import check_perm
 from .models import Project, Update
 from .cron import get_cron_logs
 import mimetypes
 import os
+from subprocess import Popen
 
 
 def index(request):
@@ -77,6 +78,27 @@ def projects(request):
 
 
 @login_required
+def cancel(request, project_id, pid, cmd, log_id):
+	"""Отмена команды."""
+	current_project = get_object_or_404(Project, id=project_id)
+	check_perm('view_project', current_project, request.user)
+
+	Popen(['kill', str(pid)])
+	tag, his = command({'command': cmd, 'cron': '', })
+	log = open(conf.LOG_FILE + log_id, 'r').read()
+	history = {'user': request.user, 'project': current_project, 'command': cmd}
+	if his:
+		add_event(history, log + '\nCanceled.', 1, '', '')
+	os.remove(conf.LOG_FILE + log_id)
+	os.remove(conf.PID_FILE + log_id)
+	try:
+		os.remove(conf.ERR_FILE + log_id)
+	except OSError:
+		pass
+	return HttpResponseRedirect('/projects/' + project_id)
+
+
+@login_required
 def logs(request, project_id, log_id, cmd, cron, date):
 	"""Выводит лог выполняющейся комманды."""
 	current_project = get_object_or_404(Project, id=project_id)
@@ -84,12 +106,13 @@ def logs(request, project_id, log_id, cmd, cron, date):
 
 	tag, his = command({'command': cmd, 'cron': '', })
 	log = open(conf.LOG_FILE + log_id, 'r').read()
+	pid = open(conf.PID_FILE + log_id, 'r').read()
 	try:
 		err = open(conf.ERR_FILE + log_id, 'r').read()
 	except IOError:
 		err = ''
 
-	context = {'log': log, 'tag': tag}
+	context = {'log': log, 'tag': tag, 'pid': pid, 'cmd': cmd,  'log_id': log_id, 'project': project_id}
 	history = {
 		'date': date.replace('SS', ' ').replace('PP', ':').replace('OO', '.'),
 		'user': request.user,
@@ -105,6 +128,7 @@ def logs(request, project_id, log_id, cmd, cron, date):
 			add_event(history, log, context['err'], '', '')
 		os.remove(conf.LOG_FILE + log_id)
 		os.remove(conf.ERR_FILE + log_id)
+		os.remove(conf.PID_FILE + log_id)
 	return render(request, 'ups/output.html', context)
 
 

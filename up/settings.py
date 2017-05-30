@@ -20,6 +20,7 @@ from .conf import DATABASES, LANGUAGE_CODE, TIME_ZONE, USE_I18N, USE_L10N, USE_T
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LOG_FILE = os.path.join(BASE_DIR, '../logs/run/log')
 ERR_FILE = os.path.join(BASE_DIR, '../logs/run/err')
+PID_FILE = os.path.join(BASE_DIR, '../logs/run/pid')
 CRON_DIR = os.path.join(BASE_DIR, '../logs/cron/')
 RUN_DIR = os.path.join(BASE_DIR, '../logs/run/')
 STATIC_ROOT = 'staticfiles'

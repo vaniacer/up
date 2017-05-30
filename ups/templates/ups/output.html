@@ -26,7 +26,11 @@
             {% endif %}
         </dl>
     {% else %}
-        <div class="small_loader"></div>
+        <dl class="dl-horizontal">
+            <dd><div class="small_loader"></div></dd><br>
+            <dt><br><a class="btn btn-primary"
+                       href="/cancel/{{ project }}/{{ pid }}/{{ cmd }}/{{ log_id }}">Cancel</a></dt>
+        </dl>
     {% endif %}
 </div>
 
