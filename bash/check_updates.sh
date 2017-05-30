@@ -11,11 +11,11 @@ function body () { #---------------------------------| Main function |----------
 
 } #---------------------------------------------------------------------------------------------------------------------
 
-#function run () { for server in ${servers}; { addr; body; }; info 'Done' ${error}; }
+function run () { for server in ${servers}; { addr; body; }; info 'Done' ${error}; }
 
 # Test function
-function run () { for server in ${servers}; { addr; for ((i=0; i<10; i++)); { sleep 1
-
-    echo ok
-
-}; }; }; info 'Done' ${error}
+#function run () { for server in ${servers}; { addr; for ((i=0; i<10; i++)); { sleep 1
+#
+#    echo ok
+#
+#}; }; }; info 'Done' ${error}
