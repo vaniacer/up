@@ -7,31 +7,31 @@ function description () { #---------------------| Function description |--------
 function body () { #---------------------------------| Main function |--------------------------------------------------
 
     ssh ${addr} "
-        echo \<b\>Hostname:\</b\> \$(hostname); echo
+        echo '<b>Hostname:</b>' \$(hostname); echo
 
-        echo \<b\>Interfaces:\</b\>
+        echo '<b>Interfaces:</b>'
         ip a | grep 'inet ' | sed '/127.0.0.1/d; s/inet //g; s|/.*$||g'; echo
 
-        echo \<b\>Memory:\</b\>
+        echo '<b>Memory:</b>'
         free -h; echo
 
-        echo \<b\>CPU:\</b\>
+        echo '<b>CPU:</b>'
         lscpu; echo
 
-        echo \<b\>Disk:\</b\>
+        echo '<b>Disk:</b>'
         df -h; echo; df -ih; echo; lsblk; echo
 
-        echo \<b\>Software:\</b\>
+        echo '<b>Software:</b>'
         uname -a; echo
         [ -e /usr/bin/lsb_release ] && { lsb_release -a; echo; }
         [ -e /usr/bin/java        ] && { java  -version; echo; }
         [ -e /usr/bin/psql        ] && { psql  -V      ; echo; }
         [ -e /usr/sbin/nginx      ] && { nginx -v      ; echo; }
 
-        echo \<b\>Logged in Users:\</b\>
+        echo '<b>Logged in Users:</b>'
         who; echo
 
-        echo \<b\>Processes:\</b\>
+        echo '<b>Processes:</b>'
         top -b -n1" || error=$?
 
 } #---------------------------------------------------------------------------------------------------------------------

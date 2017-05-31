@@ -13,6 +13,9 @@
             {% if "edit_server" in pr_view_perms %}
                 <a href="{% url 'ups:edit_server' server.id %}" class="Edit">Edit</a>
             {% endif %}
+            {% if "run_command" in pr_view_perms %}
+                {% include "ups/commands_servers.html" %}
+            {% endif %}
         </div>
 
         <div class="panel-body server-body" id="server_body{{ server.id }}">

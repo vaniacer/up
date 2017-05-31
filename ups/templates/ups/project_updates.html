@@ -10,10 +10,10 @@
 
         <div class="panel-heading">
             <h4 class="Name">{{ update }}</h4>
-            <a href="/download_upd/{{ project.id }}/{{ update.id }}" class="Edit">Download</a>
             {% if "edit_update" in pr_view_perms %}
                 <a href="{% url 'ups:edit_update' update.id %}" class="Edit">Edit</a>
             {% endif %}
+            <a href="/download_upd/{{ project.id }}/{{ update.id }}" class="Edit">Download</a>
         </div>
 
         <div class="panel-body update-body" id="update_body{{ update.id }}">
