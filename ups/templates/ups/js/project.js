@@ -1,13 +1,13 @@
 var log_ready = false;
 
-function load_div(div) {
+function logs_to_div(div) {
     if (!log_ready) { $(div).load('/logs/{{ project.id }}/{{ key }}/{{ cmd }}/{{ cron }}/{{ date }}/'); }
 }
 
 function show_log() {
-    setInterval(function() { load_div('.output'); }, 2000);
+    setInterval(function() { logs_to_div('.output'); }, 2000);
     $('.project').hide();
-    load_div('.output');
+    logs_to_div('.output');
 }
 
 function show_loader() {

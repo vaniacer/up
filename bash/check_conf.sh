@@ -6,7 +6,12 @@ function description () { #---------------------| Function description |--------
 
 function body () { #---------------------------------| Main function |--------------------------------------------------
 
-    ssh ${addr} "cat ${wdir}/jboss-bas-*/standalone/configuration/standalone-full.xml" || error=$?
+    ssh ${addr} "
+        echo -e '\nJava options\n'
+        ps axo command | grep ${wdir} | grep [j]ava
+
+        echo -e '\nStandalone-full.xml\n'
+        cat ${wdir}/jboss-bas-*/standalone/configuration/standalone-full.xml" || error=$?
 
 } #---------------------------------------------------------------------------------------------------------------------
 

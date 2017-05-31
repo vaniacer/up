@@ -1,8 +1,8 @@
 <!-- Validation(input_id(if it not submit type), check_srv, check_upd, check_job) -->
 
 <a      onclick="select_all('selected_servers', 'server-body', false)
-                 checker('server_box{{ server.id }}', 'server_body{{ server.id }}');
-                 return Validation('server_info', true, false, false)"
+                 checker('server_box{{ server.id }}', 'server_body{{ server.id }}')
+                 Validation('server_info', true, false, false)"
         title="Show system info: CPU, mem, disk etc."
         href="javascript:;"
         class="Edit">Info</a>
@@ -14,8 +14,8 @@
         class="hidden"/>
 
 <a      onclick="select_all('selected_servers', 'server-body', false)
-                 checker('server_box{{ server.id }}', 'server_body{{ server.id }}');
-                 return Validation('check_conf', true, false, false)"
+                 checker('server_box{{ server.id }}', 'server_body{{ server.id }}')
+                 Validation('check_conf', true, false, false)"
         title="Show conf(standalone-full.xml) of this server."
         href="javascript:;"
         class="Edit">Conf</a>
@@ -27,8 +27,8 @@
         class="hidden"/>
 
 <a      onclick="select_all('selected_servers', 'server-body', false)
-                 checker('server_box{{ server.id }}', 'server_body{{ server.id }}');
-                 return Validation('check_logs', true, false, false)"
+                 checker('server_box{{ server.id }}', 'server_body{{ server.id }}')
+                 Validation('check_logs', true, false, false)"
         title="Check logs from this server."
         href="javascript:;"
         class="Edit">Logs</a>
@@ -40,8 +40,8 @@
         class="hidden"/>
 
 <a      onclick="select_all('selected_servers', 'server-body', false)
-                 checker('server_box{{ server.id }}', 'server_body{{ server.id }}');
-                 return Validation('check_updates', true, false, false)"
+                 checker('server_box{{ server.id }}', 'server_body{{ server.id }}')
+                 Validation('check_updates', true, false, false)"
         title="Check updates on this server."
         href="javascript:;"
         class="Edit">Updates</a>

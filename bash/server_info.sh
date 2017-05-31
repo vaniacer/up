@@ -7,31 +7,31 @@ function description () { #---------------------| Function description |--------
 function body () { #---------------------------------| Main function |--------------------------------------------------
 
     ssh ${addr} "
-        echo '<b>Hostname:</b>' \$(hostname); echo
+        echo -e '\n<b>Hostname:</b>' \$(hostname)
 
-        echo '<b>Interfaces:</b>'
-        ip a | grep 'inet ' | sed '/127.0.0.1/d; s/inet //g; s|/.*$||g'; echo
+        echo -e '\n<b>Interfaces:</b>'
+        ip a | grep 'inet ' | sed '/127.0.0.1/d; s/inet //g; s|/.*$||g'
 
-        echo '<b>Memory:</b>'
-        free -h; echo
+        echo -e '\n<b>Memory:</b>'
+        free -h
 
-        echo '<b>CPU:</b>'
-        lscpu; echo
+        echo -e '\n<b>CPU:</b>'
+        lscpu
 
-        echo '<b>Disk:</b>'
-        df -h; echo; df -ih; echo; lsblk; echo
+        echo -e '\n<b>Disk:</b>'
+        df -h; echo; df -ih; echo; lsblk
 
-        echo '<b>Software:</b>'
+        echo -e '\n<b>Software:</b>'
         uname -a; echo
         [ -e /usr/bin/lsb_release ] && { lsb_release -a; echo; }
         [ -e /usr/bin/java        ] && { java  -version; echo; }
         [ -e /usr/bin/psql        ] && { psql  -V      ; echo; }
         [ -e /usr/sbin/nginx      ] && { nginx -v      ; echo; }
 
-        echo '<b>Logged in Users:</b>'
-        who; echo
+        echo -e '<b>Logged in Users:</b>'
+        who
 
-        echo '<b>Processes:</b>'
+        echo -e '\n<b>Processes:</b>'
         top -b -n1" || error=$?
 
 } #---------------------------------------------------------------------------------------------------------------------
