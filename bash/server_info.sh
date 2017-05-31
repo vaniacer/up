@@ -7,7 +7,7 @@ function description () { #---------------------| Function description |--------
 function body () { #---------------------------------| Main function |--------------------------------------------------
 
     ssh ${addr} "
-        echo \<b\>Hostname:\</b\> \${HOSTNAME}; echo
+        echo \<b\>Hostname:\</b\> \$(hostname); echo
 
         echo \<b\>Interfaces:\</b\>
         ip a | grep 'inet ' | sed '/127.0.0.1/d; s/inet //g; s|/.*$||g'; echo
@@ -19,7 +19,7 @@ function body () { #---------------------------------| Main function |----------
         lscpu; echo
 
         echo \<b\>Disk:\</b\>
-        df -h; echo; df -ih; echo
+        df -h; echo; df -ih; echo; lsblk; echo
 
         echo \<b\>Software:\</b\>
         uname -a; echo
