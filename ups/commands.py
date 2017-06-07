@@ -17,6 +17,7 @@ def command(selected):
 		'check_conf':      {'history': False, 'bash':      'check_conf.sh', 'tag': False, },
 		'check_logs':      {'history': False, 'bash':      'check_logs.sh', 'tag': False, },
 		'cancel_job':      {'history':  True, 'bash':      'cancel_job.sh', 'tag': False, },
+		'tunnel':          {'history': False, 'bash':          'tunnel.sh', 'tag':  True, },
 		# Maintenance |----------------------+-----------------------------+----------------+
 		'stop':            {'history':  True, 'bash':            'stop.sh', 'tag': False, },
 		'start':           {'history':  True, 'bash':           'start.sh', 'tag': False, },
