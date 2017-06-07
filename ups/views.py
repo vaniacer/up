@@ -114,6 +114,8 @@ def logs(request, project_id, log_id, cmd, cron, date):
 	tag, his = command({'command': cmd, 'cron': '', })
 	log = open(conf.LOG_FILE + log_id, 'r').read()
 	pid = open(conf.PID_FILE + log_id, 'r').read()
+	url = request.META['SERVER_NAME']
+
 	try:
 		err = open(conf.ERR_FILE + log_id, 'r').read()
 	except IOError:
@@ -121,7 +123,9 @@ def logs(request, project_id, log_id, cmd, cron, date):
 
 	cdate, cron_id, date = '', '', date.replace('SS', ' ').replace('PP', ':').replace('OO', '.')
 	history = {'date': date, 'user': request.user, 'command': cmd, 'project': current_project}
-	context = {'log': log, 'tag': tag, 'pid': pid, 'cmd': cmd,  'log_id': log_id, 'project': project_id}
+	context = {
+		'log': log.replace('__URL__', url), 'tag': tag, 'pid': pid, 'cmd': cmd,
+		'log_id': log_id, 'project': project_id}
 
 	if err:
 		context['err'] = int(err)
@@ -132,6 +136,7 @@ def logs(request, project_id, log_id, cmd, cron, date):
 		if his:
 			add_event(history, log, context['err'], cron_id, cdate)
 		delete_files([conf.LOG_FILE + log_id, conf.PID_FILE + log_id, conf.ERR_FILE + log_id])
+
 	return render(request, 'ups/output.html', context)
 
 
