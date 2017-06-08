@@ -6,7 +6,7 @@ function description () { #---------------------| Function description |--------
 
 function body () { #---------------------------------| Main function |--------------------------------------------------
 
-    lport=10100
+    lport=42250
     rport=8080
 
     until ! netstat -ln | grep ${lport} > /dev/null; do ((lport++)); done
