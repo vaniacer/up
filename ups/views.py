@@ -96,7 +96,7 @@ def cancel(request, project_id, pid, cmd, log_id):
 	try:
 		err = open(conf.ERR_FILE + log_id, 'r').read()
 		delete_files([conf.ERR_FILE + log_id])
-	except OSError:
+	except IOError:
 		err = 1
 	if his:
 		log = open(conf.LOG_FILE + log_id, 'r').read()
