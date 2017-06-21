@@ -31,7 +31,7 @@
                         type="checkbox"
                         readonly="readonly"
                         name="selected_servers"
-                        value="{{ server.id }}"
+                        value="{{ server.addr }}:{{ server.wdir }}:{{ server.port }}"
                         id="server_box{{ server.id }}"/>
             {% endif %}
         </div>

@@ -47,11 +47,11 @@ def del_job(selected):
 			continue
 
 
-def servers(selected):
-	obj = []
-	for i in selected['servers']:
-		obj.append('%s:%s:%s' % (gor4(S, id=i).addr, gor4(S, id=i).wdir, gor4(S, id=i).port))
-	return ' '.join(obj)
+# def servers(selected):
+# 	obj = []
+# 	for i in selected['servers']:
+# 		obj.append('%s:%s:%s' % (gor4(S, id=i).addr, gor4(S, id=i).wdir, gor4(S, id=i).port))
+# 	return ' '.join(obj)
 
 
 def starter(selected):
@@ -63,7 +63,7 @@ def starter(selected):
 		'-key', selected['key']]
 
 	if selected['servers']:
-		opt.extend(['-server', servers(selected)])
+		opt.extend(['-server', ' '.join(selected['servers'])])
 	if selected['updates']:
 		opt.extend(['-update', ' '.join(selected['updates'])])
 	if selected['cronjbs']:
