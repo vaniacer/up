@@ -48,6 +48,7 @@ class Server(models.Model):
 	addr = models.CharField(max_length=255)
 	wdir = models.CharField(max_length=255)
 	desc = models.TextField(max_length=255)
+	port = models.CharField(max_length=5)
 	proj = models.ForeignKey(Project)
 
 	def __unicode__(self):

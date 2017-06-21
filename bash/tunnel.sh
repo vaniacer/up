@@ -6,8 +6,8 @@ function description () { #---------------------| Function description |--------
 
 function body () { #---------------------------------| Main function |--------------------------------------------------
 
-    lport=42250
-    rport=8080
+    lport=42250     #42250
+    rport=${port}   #8080
 
     until ! netstat -ln | grep ${lport} > /dev/null; do ((lport++)); done
     echo -e "\n<a class=\"btn btn-primary\" href=\"http://__URL__:${lport}/login\">Connect</a>\n"

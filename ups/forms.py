@@ -15,10 +15,11 @@ class ProjectForm(forms.ModelForm):
 class ServerForm(forms.ModelForm):
 	class Meta:
 		model = Server
-		fields = ['name', 'addr', 'wdir', 'desc']
+		fields = ['name', 'addr', 'wdir', 'desc', 'port']
 		labels = {
 			'name': 'Server name', 'desc': 'Server description',
 			'addr': 'SSH address', 'wdir': 'Working directory',
+			'port': 'Server binding port'
 		}
 		widgets = {'desc': forms.Textarea(attrs={'cols': 80})}
 

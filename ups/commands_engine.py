@@ -6,6 +6,8 @@ from .models import History, Job
 from subprocess import Popen
 from base64 import b64encode
 from os import urandom
+from .models import Server as S
+from django.shortcuts import get_object_or_404 as gor4
 
 
 def get_key():
@@ -45,6 +47,13 @@ def del_job(selected):
 			continue
 
 
+def servers(selected):
+	obj = []
+	for i in selected['servers']:
+		obj.append('%s:%s:%s' % (gor4(S, id=i).addr, gor4(S, id=i).wdir, gor4(S, id=i).port))
+	return ' '.join(obj)
+
+
 def starter(selected):
 	"""Выполняет комманду."""
 	opt = [
@@ -54,7 +63,7 @@ def starter(selected):
 		'-key', selected['key']]
 
 	if selected['servers']:
-		opt.extend(['-server', ' '.join(selected['servers'])])
+		opt.extend(['-server', servers(selected)])
 	if selected['updates']:
 		opt.extend(['-update', ' '.join(selected['updates'])])
 	if selected['cronjbs']:

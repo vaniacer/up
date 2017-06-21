@@ -13,6 +13,7 @@ until [ -z ${1} ]; do case ${1} in
     -update | -u) updates=${2};;
     -date   | -d) date=${2};;
     -cron   | -C) cron=${2};;
+    -port   | -P) port=${2};;
     -desc   | -D) desc=${2};;
     -job    | -j) jobs=${2};;
     -cmd    | -c) cmd=${2};;
@@ -38,11 +39,11 @@ function info () { # Print delimiter line with info(${1}) in center.
 }
 
 function addr () {
-    # Server comes like this - jboss@localhost:/var/lib/jboss, split it to:
+    # Server comes like this - jboss@localhost:/var/lib/jboss:8080, split it to:
     #-----------------+-------------------+-------------------------------+
     # Ssh address     | Working directory | And show ${addr} as info      |
     #-----------------+-------------------+-------------------------------+
-    addr=${server%%:*}; wdir=${server##*:}; info "Server - ${addr}"
+    addr=${server%%:*}; port=${server##*:}; wdir=${server#*:}; wdir=${wdir%:*}; info "Server - ${addr}"
     # Check access to server, send 'Server unreachable' if access fail.
     ssh ${addr} "echo > /dev/null" || { error=$?; echo -e "\nServer unreachable."; continue; }
 }
