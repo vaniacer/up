@@ -6,8 +6,8 @@ from .models import History, Job
 from subprocess import Popen
 from base64 import b64encode
 from os import urandom
-from .models import Server as S
-from django.shortcuts import get_object_or_404 as gor4
+# from .models import Server as S
+# from django.shortcuts import get_object_or_404 as gor4
 
 
 def get_key():
