@@ -6,7 +6,7 @@ function description () { #---------------------| Function description |--------
 
 function body () { #---------------------------------| Main function |--------------------------------------------------
 
-    ssh ${addr} [ -d '.utils' ] || mkdir .utils || error=$?
+    ssh ${addr} [ -d '.utils' ] || ssh ${addr} mkdir .utils || error=$?
     scp -r ~/utils/* ${addr}:~/.utils || error=$?
 
 } #---------------------------------------------------------------------------------------------------------------------
