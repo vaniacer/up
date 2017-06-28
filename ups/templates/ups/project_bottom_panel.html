@@ -12,6 +12,10 @@
         <div id="navbar_bottom" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
 
+                {% if "run_command" in pr_view_perms %}
+                    {% include "ups/project_bottom_panel_selected.html" %}
+                {% endif %}
+
                 {% if "add_update" in pr_view_perms or "add_server" in pr_view_perms %}
                     {% include "ups/project_bottom_panel_add.html" %}
                 {% endif %}
@@ -21,6 +25,7 @@
                     {% include "ups/project_bottom_panel_commands.html" %}
                     {% include "ups/project_bottom_panel_date.html"     %}
                 {% endif %}
+
             </ul>
 
             <!-- Buttons by the right side -->

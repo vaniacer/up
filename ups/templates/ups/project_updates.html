@@ -6,7 +6,7 @@
 
 {% for update in updates %}
 
-    <div class="panel panel-default" onclick="checker('update_box{{ update.id }}', 'update_body{{ update.id }}')">
+    <div class="panel panel-default" onclick="select_update('update_box{{ update.id }}', 'update_body{{ update.id }}')">
 
         <div class="panel-heading">
             <h4 class="Name">{{ update }}</h4>

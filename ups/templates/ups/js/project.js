@@ -1,4 +1,6 @@
 var log_ready = false;
+var SS = "Selected servers: ";
+var SU = "Selected updates: ";
 
 function logs_to_div(div) {
     if (!log_ready) { $(div).load('/logs/{{ project.id }}/{{ key }}/{{ cmd }}/{{ cron }}/{{ date }}/'); }
@@ -34,20 +36,60 @@ function run_or_cron(check, uncheck) {
     enable.checked  = true
 }
 
-function checker(box_id, body_id) {
+function select_server(box_id, body_id) {
     var box  = document.getElementById(box_id);
     var body = document.getElementById(body_id);
-    if   ( box.checked == false )
-         { box.checked =  true;  body.style.background = '#dff0d8'; }
-    else { box.checked =  false; body.style.background = ''; }
+    if ( box.checked == false ) {
+        box.checked =  true;  body.style.background = '#dff0d8';
+        SS = SS + box.value + ', ';
+        document.getElementById("SS").innerHTML = SS;
+    }
+    else {
+        box.checked =  false; body.style.background = '';
+        SS = SS.replace(box.value + ",", "");
+        document.getElementById("SS").innerHTML = SS;
+    }
 }
 
-function select_all(box_name, body_name, state) {
+function select_update(box_id, body_id) {
+    var box  = document.getElementById(box_id);
+    var body = document.getElementById(body_id);
+    if ( box.checked == false ) {
+        box.checked =  true;  body.style.background = '#dff0d8';
+        SU = SU + box.value + ', ';
+        document.getElementById("SU").innerHTML = SU;
+    }
+    else {
+        box.checked =  false; body.style.background = '';
+        SU = SU.replace(box.value + ",", "");
+        document.getElementById("SU").innerHTML = SU;
+    }
+}
+
+function select_all_servers(box_name, body_name, state) {
     var boxes  = document.getElementsByName(box_name);
     var bodies = document.getElementsByClassName(body_name);
     var color = ''; if ( state == true ) { var color = '#dff0d8'; }
-    for (i = 0; i < boxes.length;  i++) { boxes[i].checked = state; }
+    SS = 'Selected servers: ';
+    for (i = 0; i < boxes.length;  i++) {
+        boxes[i].checked = state;
+        if ( state == true ) {SS = SS + boxes[i].value + ', ';}
+    }
     for (i = 0; i < bodies.length; i++) { bodies[i].style.background = color; }
+    document.getElementById("SS").innerHTML = SS;
+}
+
+function select_all_updates(box_name, body_name, state) {
+    var boxes  = document.getElementsByName(box_name);
+    var bodies = document.getElementsByClassName(body_name);
+    var color = ''; if ( state == true ) { var color = '#dff0d8'; }
+    SU = 'Selected updates: ';
+    for (i = 0; i < boxes.length;  i++) {
+        boxes[i].checked = state;
+        if ( state == true ) {SU = SU + boxes[i].value + ', ';}
+    }
+    for (i = 0; i < bodies.length; i++) { bodies[i].style.background = color; }
+    document.getElementById("SU").innerHTML = SU;
 }
 
 function setCookie(cname, cvalue) {

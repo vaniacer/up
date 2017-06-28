@@ -4,9 +4,9 @@
     {% if "run_command" in pr_view_perms %}
         {% if updates %}
             <input type="button" class="btn btn-info btn-xs" value="Select All Updates"
-                   onclick="select_all('selected_updates', 'update-body', true)"/>
+                   onclick="select_all_updates('selected_updates', 'update-body', true)"/>
             <input type="button" class="btn btn-info btn-xs" value="Deselect All Updates"
-                   onclick="select_all('selected_updates', 'update-body', false)"/>
+                   onclick="select_all_updates('selected_updates', 'update-body', false)"/>
         {% endif %}
     {% endif %}
     {% if "add_update" in pr_view_perms %}
