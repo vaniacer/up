@@ -73,7 +73,8 @@ function select_all_servers(box_name, body_name, state) {
     SS = 'Selected servers: ';
     for (i = 0; i < boxes.length;  i++) {
         boxes[i].checked = state;
-        if ( state == true ) {SS = SS + boxes[i].value + ', ';}
+        if ( state == true ) { SS = SS + boxes[i].value + ', '; }
+        else { SS = ''; }
     }
     for (i = 0; i < bodies.length; i++) { bodies[i].style.background = color; }
     document.getElementById("SS").innerHTML = SS;
@@ -86,7 +87,8 @@ function select_all_updates(box_name, body_name, state) {
     SU = 'Selected updates: ';
     for (i = 0; i < boxes.length;  i++) {
         boxes[i].checked = state;
-        if ( state == true ) {SU = SU + boxes[i].value + ', ';}
+        if ( state == true ) { SU = SU + boxes[i].value + ', '; }
+        else { SU = ''; }
     }
     for (i = 0; i < bodies.length; i++) { bodies[i].style.background = color; }
     document.getElementById("SU").innerHTML = SU;
