@@ -6,7 +6,8 @@
 
 {% for server in servers %}
 
-    <div class="panel panel-default" onclick="select_server('server_box{{ server.id }}', 'server_body{{ server.id }}')">
+    <div class="panel panel-default"
+         onclick="select_server('server_box{{ server.id }}', 'server_body{{ server.id }}', '{{ server.name }}')">
 
         <div class="panel-heading">
             <h4 class="Name">{{ server.name }}</h4>

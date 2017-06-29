@@ -1,6 +1,9 @@
 var log_ready = false;
 var SS = "Selected servers: ";
 var SU = "Selected updates: ";
+//var SS = "";
+//var SU = "";
+
 
 function logs_to_div(div) {
     if (!log_ready) { $(div).load('/logs/{{ project.id }}/{{ key }}/{{ cmd }}/{{ cron }}/{{ date }}/'); }
@@ -36,32 +39,32 @@ function run_or_cron(check, uncheck) {
     enable.checked  = true
 }
 
-function select_server(box_id, body_id) {
+function select_server(box_id, body_id, server_name) {
     var box  = document.getElementById(box_id);
     var body = document.getElementById(body_id);
     if ( box.checked == false ) {
         box.checked =  true;  body.style.background = '#dff0d8';
-        SS = SS + box.value + ', ';
+        SS = SS + '<a onclick=\"select_server(\'' + box_id + '\', \'' + body_id + '\', \'' + server_name + '\')\">' + server_name + '</a>, ';
         document.getElementById("SS").innerHTML = SS;
     }
     else {
         box.checked =  false; body.style.background = '';
-        SS = SS.replace(box.value + ",", "");
+        SS = SS.replace('<a onclick=\"select_server(\'' + box_id + '\', \'' + body_id + '\', \'' + server_name + '\')\">' + server_name + '</a>, ', "");
         document.getElementById("SS").innerHTML = SS;
     }
 }
 
-function select_update(box_id, body_id) {
+function select_update(box_id, body_id, update_name) {
     var box  = document.getElementById(box_id);
     var body = document.getElementById(body_id);
     if ( box.checked == false ) {
         box.checked =  true;  body.style.background = '#dff0d8';
-        SU = SU + box.value + ', ';
+        SU = SU + '<a onclick=\"select_update(\'' + box_id + '\', \'' + body_id + '\', \'' + update_name + '\')\">' + update_name + '</a>, ';
         document.getElementById("SU").innerHTML = SU;
     }
     else {
         box.checked =  false; body.style.background = '';
-        SU = SU.replace(box.value + ",", "");
+        SU = SU.replace('<a onclick=\"select_update(\'' + box_id + '\', \'' + body_id + '\', \'' + update_name + '\')\">' + update_name + '</a>, ', "");
         document.getElementById("SU").innerHTML = SU;
     }
 }
