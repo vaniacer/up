@@ -44,12 +44,14 @@ function select_server(box_id, body_id, server_name) {
     var body = document.getElementById(body_id);
     if ( box.checked == false ) {
         box.checked =  true;  body.style.background = '#dff0d8';
-        SS = SS + '<a onclick=\"select_server(\'' + box_id + '\', \'' + body_id + '\', \'' + server_name + '\')\">' + server_name + '</a>, ';
+        SS = SS + '<a onclick=\"select_server(\'' + box_id + '\', \'' + body_id + '\', \'' +
+        server_name + '\')\">' + server_name + '</a>, ';
         document.getElementById("SS").innerHTML = SS;
     }
     else {
         box.checked =  false; body.style.background = '';
-        SS = SS.replace('<a onclick=\"select_server(\'' + box_id + '\', \'' + body_id + '\', \'' + server_name + '\')\">' + server_name + '</a>, ', "");
+        SS = SS.replace('<a onclick=\"select_server(\'' + box_id + '\', \'' + body_id + '\', \'' +
+        server_name + '\')\">' + server_name + '</a>, ', "");
         document.getElementById("SS").innerHTML = SS;
     }
 }
@@ -59,12 +61,14 @@ function select_update(box_id, body_id, update_name) {
     var body = document.getElementById(body_id);
     if ( box.checked == false ) {
         box.checked =  true;  body.style.background = '#dff0d8';
-        SU = SU + '<a onclick=\"select_update(\'' + box_id + '\', \'' + body_id + '\', \'' + update_name + '\')\">' + update_name + '</a>, ';
+        SU = SU + '<a onclick=\"select_update(\'' + box_id + '\', \'' + body_id + '\', \'' +
+        update_name + '\')\">' + update_name + '</a>, ';
         document.getElementById("SU").innerHTML = SU;
     }
     else {
         box.checked =  false; body.style.background = '';
-        SU = SU.replace('<a onclick=\"select_update(\'' + box_id + '\', \'' + body_id + '\', \'' + update_name + '\')\">' + update_name + '</a>, ', "");
+        SU = SU.replace('<a onclick=\"select_update(\'' + box_id + '\', \'' + body_id + '\', \'' +
+        update_name + '\')\">' + update_name + '</a>, ', "");
         document.getElementById("SU").innerHTML = SU;
     }
 }
@@ -75,11 +79,13 @@ function select_all_servers(box_name, body_name, state) {
     var color = ''; if ( state == true ) { var color = '#dff0d8'; }
     SS = 'Selected servers: ';
     for (i = 0; i < boxes.length;  i++) {
+        data = boxes[i].dataset;
         boxes[i].checked = state;
-        if ( state == true ) { SS = SS + boxes[i].value + ', '; }
+        bodies[i].style.background = color;
+        if ( state == true ) { SS = SS + '<a onclick=\"select_server(\'' + boxes[i].id + '\', \'' +
+            bodies[i].id + '\', \'' + data.target + '\')\">' + data.target + '</a>, '; }
         else { SS = ''; }
     }
-    for (i = 0; i < bodies.length; i++) { bodies[i].style.background = color; }
     document.getElementById("SS").innerHTML = SS;
 }
 
@@ -89,11 +95,13 @@ function select_all_updates(box_name, body_name, state) {
     var color = ''; if ( state == true ) { var color = '#dff0d8'; }
     SU = 'Selected updates: ';
     for (i = 0; i < boxes.length;  i++) {
+        data = boxes[i].dataset;
         boxes[i].checked = state;
-        if ( state == true ) { SU = SU + boxes[i].value + ', '; }
+        bodies[i].style.background = color;
+        if ( state == true ) { SU = SU + '<a onclick=\"select_update(\'' + boxes[i].id + '\', \'' +
+            bodies[i].id + '\', \'' + data.target + '\')\">' + data.target + '</a>, '; }
         else { SU = ''; }
     }
-    for (i = 0; i < bodies.length; i++) { bodies[i].style.background = color; }
     document.getElementById("SU").innerHTML = SU;
 }
 
