@@ -7,12 +7,13 @@
 
         {% buttons %}
 
-            <input onclick="select_all('selected_jobs', 'job_body', true)"
+            <input onclick="select_all_jobs('selected_jobs', 'job_body', true)"
                    class="btn btn-info btn-xs"
                    value="Select All Jobs"
+
                    type="button"/>
 
-            <input onclick="select_all('selected_jobs', 'job_body', false)"
+            <input onclick="select_all_jobs('selected_jobs', 'job_body', false)"
                    class="btn btn-info btn-xs"
                    value="Deselect All Jobs"
                    type="button"/>
@@ -32,7 +33,7 @@
 {% for job in cronjob %}
 
     <dl class="dl-horizontal job_body" id="job_body{{ job.id }}"
-        onclick="checker('job_box{{ job.id }}', 'job_body{{ job.id }}')">
+        onclick="select_update('job_box{{ job.id }}', 'job_body{{ job.id }}', '{{ job.name }}')">
         <dt>Cron job id</dt><dd>{{ job.cron }}</dd>
         <dt>Job name</dt><dd>{{ job.name }}</dd>
         <dt>Description</dt><dd>{{ job.desc|linebreaks }}</dd>
@@ -46,6 +47,7 @@
                readonly="readonly"
                name="selected_jobs"
                value="{{ job.cron }}"
+               data-target="{{ job.name }}"
                id="job_box{{ job.id }}"/>
     {% endif %}
 

@@ -1,9 +1,7 @@
 var log_ready = false;
 var SS = "Selected servers: ";
 var SU = "Selected updates: ";
-//var SS = "";
-//var SU = "";
-
+var SJ = "Selected jobs: ";
 
 function logs_to_div(div) {
     if (!log_ready) { $(div).load('/logs/{{ project.id }}/{{ key }}/{{ cmd }}/{{ cron }}/{{ date }}/'); }
@@ -73,6 +71,23 @@ function select_update(box_id, body_id, update_name) {
     }
 }
 
+function select_job(box_id, body_id, job_name) {
+    var box  = document.getElementById(box_id);
+    var body = document.getElementById(body_id);
+    if ( box.checked == false ) {
+        box.checked =  true;  body.style.background = '#dff0d8';
+        SJ = SJ + '<a onclick=\"select_job(\'' + box_id + '\', \'' + body_id + '\', \'' +
+        job_name + '\')\">' + job_name + '</a>, ';
+        document.getElementById("SJ").innerHTML = SJ;
+    }
+    else {
+        box.checked =  false; body.style.background = '';
+        SJ = SJ.replace('<a onclick=\"select_job(\'' + box_id + '\', \'' + body_id + '\', \'' +
+        job_name + '\')\">' + job_name + '</a>, ', "");
+        document.getElementById("SJ").innerHTML = SJ;
+    }
+}
+
 function select_all_servers(box_name, body_name, state) {
     var boxes  = document.getElementsByName(box_name);
     var bodies = document.getElementsByClassName(body_name);
@@ -105,6 +120,23 @@ function select_all_updates(box_name, body_name, state) {
     }
     document.getElementById("SU").innerHTML = SU;
     SU = "Selected updates: ";
+}
+
+function select_all_jobs(box_name, body_name, state) {
+    var boxes  = document.getElementsByName(box_name);
+    var bodies = document.getElementsByClassName(body_name);
+    var color = ''; if ( state == true ) { var color = '#dff0d8'; }
+    SJ = 'Selected jobs: ';
+    for (i = 0; i < boxes.length;  i++) {
+        data = boxes[i].dataset;
+        boxes[i].checked = state;
+        bodies[i].style.background = color;
+        if ( state == true ) { SJ = SJ + '<a onclick=\"select_job(\'' + boxes[i].id + '\', \'' +
+            bodies[i].id + '\', \'' + data.target + '\')\">' + data.target + '</a>, '; }
+        else { SJ = ''; }
+    }
+    document.getElementById("SJ").innerHTML = SJ;
+    SJ = "Selected jobs: ";
 }
 
 function setCookie(cname, cvalue) {
