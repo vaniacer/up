@@ -87,6 +87,7 @@ function select_all_servers(box_name, body_name, state) {
         else { SS = ''; }
     }
     document.getElementById("SS").innerHTML = SS;
+    SS = "Selected servers: ";
 }
 
 function select_all_updates(box_name, body_name, state) {
@@ -103,6 +104,7 @@ function select_all_updates(box_name, body_name, state) {
         else { SU = ''; }
     }
     document.getElementById("SU").innerHTML = SU;
+    SU = "Selected updates: ";
 }
 
 function setCookie(cname, cvalue) {
