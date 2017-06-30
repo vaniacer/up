@@ -1,7 +1,7 @@
 <!-- Validation(input_id(if it not submit type), check_srv, check_upd, check_job) -->
 
-<a      onclick="select_all_servers('selected_servers', 'server-body', false)
-                 select_server('server_box{{ server.id }}', 'server_body{{ server.id }}', '{{ server.name }}')
+<a      onclick="select_all('selected_servers', 'server-body', false, 'SS')
+                 selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS')
                  Validation('server_info', true, false, false)"
         title="Show system info: CPU, mem, disk etc."
         href="javascript:;"
@@ -13,8 +13,8 @@
         type="checkbox"
         class="hidden"/>
 
-<a      onclick="select_all_servers('selected_servers', 'server-body', false)
-                 select_server('server_box{{ server.id }}', 'server_body{{ server.id }}', '{{ server.name }}')
+<a      onclick="select_all('selected_servers', 'server-body', false, 'SS')
+                 selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS')
                  Validation('check_conf', true, false, false)"
         title="Show conf(standalone-full.xml) and java options of this server."
         href="javascript:;"
@@ -26,8 +26,8 @@
         type="checkbox"
         class="hidden"/>
 
-<a      onclick="select_all_servers('selected_servers', 'server-body', false)
-                 select_server('server_box{{ server.id }}', 'server_body{{ server.id }}', '{{ server.name }}')
+<a      onclick="select_all('selected_servers', 'server-body', false, 'SS')
+                 selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS')
                  Validation('check_logs', true, false, false)"
         title="Check logs from this server."
         href="javascript:;"
@@ -39,8 +39,8 @@
         type="checkbox"
         class="hidden"/>
 
-<a      onclick="select_all_servers('selected_servers', 'server-body', false)
-                 select_server('server_box{{ server.id }}', 'server_body{{ server.id }}', '{{ server.name }}')
+<a      onclick="select_all('selected_servers', 'server-body', false, 'SS')
+                 selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS')
                  Validation('check_updates', true, false, false)"
         title="Check updates on this server."
         href="javascript:;"
@@ -52,8 +52,8 @@
         type="checkbox"
         class="hidden"/>
 
-<a      onclick="select_all_servers('selected_servers', 'server-body', false)
-                 select_server('server_box{{ server.id }}', 'server_body{{ server.id }}', '{{ server.name }}')
+<a      onclick="select_all('selected_servers', 'server-body', false, 'SS')
+                 selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS')
                  Validation('tunnel', true, false, false)"
         title="Make ssh tunnel to the bind port of this server."
         href="javascript:;"

@@ -1,15 +1,26 @@
 {% load bootstrap3 %}
 
 {% buttons %}
+
     {% if "run_command" in pr_view_perms %}
+
         {% if servers %}
-            <input type="button" class="btn btn-info btn-xs" value="Select All Servers"
-                   onclick="select_all_servers('selected_servers', 'server-body', true)"/>
-            <input type="button" class="btn btn-info btn-xs" value="Deselect All Servers"
-                   onclick="select_all_servers('selected_servers', 'server-body', false)"/>
+            <input type="button"
+                   value="Select All Servers"
+                   class="btn btn-info btn-xs"
+                   onclick="select_all('selected_servers', 'server-body', false, 'SS');
+                            select_all('selected_servers', 'server-body', true,  'SS')"/>
+
+            <input type="button"
+                   class="btn btn-info btn-xs"
+                   value="Deselect All Servers"
+                   onclick="select_all('selected_servers', 'server-body', false, 'SS')"/>
         {% endif %}
+
     {% endif %}
+
     {% if "add_server" in pr_view_perms %}
         <a class="btn btn-success btn-xs" href="{% url 'ups:new_server' project.id %}">Add new server</a>
     {% endif %}
+
 {% endbuttons %}

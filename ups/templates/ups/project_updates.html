@@ -7,7 +7,7 @@
 {% for update in updates %}
 
     <div class="panel panel-default"
-         onclick="select_update('update_box{{ update.id }}', 'update_body{{ update.id }}', '{{ update }}')">
+         onclick="selector('ux{{ update.id }}', 'ub{{ update.id }}', '{{ update }}', 'SU')">
 
         <div class="panel-heading">
             <h4 class="Name">{{ update }}</h4>
@@ -19,7 +19,7 @@
                class="Edit">Download</a>
         </div>
 
-        <div class="panel-body update-body" id="update_body{{ update.id }}">
+        <div class="panel-body update-body" id="ub{{ update.id }}">
             <dl class="dl-horizontal">
                 <!--<dt>File</dt><dd>{{ update.file }}</dd>-->
                 <dt>Size</dt><dd>{{ update.file.size|filesizeformat }}</dd>
@@ -31,10 +31,10 @@
                 <input  class="hidden"
                         type="checkbox"
                         readonly="readonly"
+                        id="ux{{ update.id }}"
                         name="selected_updates"
                         value="{{ update.file }}"
-                        data-target="{{ update }}"
-                        id="update_box{{ update.id }}"/>
+                        data-target="{{ update }}"/>
             {% endif %}
         </div>
 

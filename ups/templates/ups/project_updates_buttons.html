@@ -3,10 +3,17 @@
 {% buttons %}
     {% if "run_command" in pr_view_perms %}
         {% if updates %}
-            <input type="button" class="btn btn-info btn-xs" value="Select All Updates"
-                   onclick="select_all_updates('selected_updates', 'update-body', true)"/>
-            <input type="button" class="btn btn-info btn-xs" value="Deselect All Updates"
-                   onclick="select_all_updates('selected_updates', 'update-body', false)"/>
+            <input type="button"
+                   value="Select All Updates"
+                   class="btn btn-info btn-xs"
+                   onclick="select_all('selected_updates', 'update-body', false, 'SU');
+                            select_all('selected_updates', 'update-body', true,  'SU')"/>
+
+            <input type="button"
+                   class="btn btn-info btn-xs"
+                   value="Deselect All Updates"
+                   onclick="select_all('selected_updates', 'update-body', false, 'SU')"/>
+
         {% endif %}
     {% endif %}
     {% if "add_update" in pr_view_perms %}

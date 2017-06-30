@@ -7,7 +7,7 @@
 {% for server in servers %}
 
     <div class="panel panel-default"
-         onclick="select_server('server_box{{ server.id }}', 'server_body{{ server.id }}', '{{ server.name }}')">
+         onclick="selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS')">
 
         <div class="panel-heading">
             <h4 class="Name">{{ server.name }}</h4>
@@ -19,7 +19,7 @@
             {% endif %}
         </div>
 
-        <div class="panel-body server-body" id="server_body{{ server.id }}">
+        <div class="panel-body server-body" id="sb{{ server.id }}">
             <dl class="dl-horizontal">
                 <dt>Server address</dt><dd>{{ server.addr }}</dd>
                 <dt>Working folder</dt><dd>{{ server.wdir }}</dd>
@@ -32,9 +32,9 @@
                 <input  class="hidden"
                         type="checkbox"
                         readonly="readonly"
+                        id="sx{{ server.id }}"
                         name="selected_servers"
                         data-target="{{ server }}"
-                        id="server_box{{ server.id }}"
                         value="{{ server.addr }}:{{ server.wdir }}:{{ server.port }}"/>
             {% endif %}
         </div>

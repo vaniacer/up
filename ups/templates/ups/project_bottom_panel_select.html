@@ -1,32 +1,50 @@
 <li> <!--Select-->
     <div class="dropup">
-        <button class="btn btn-default dropdown-toggle navbar-btn"
-                type="button" id="dropdown_SELECT"
-                data-toggle="dropdown"
+
+        <button type="button"
+                id="dropdown_SELECT"
                 aria-haspopup="true"
-                aria-expanded="false">Select<span class="caret"></span>
-        </button>
+                aria-expanded="false"
+                data-toggle="dropdown"
+                class="btn btn-default dropdown-toggle navbar-btn">Select<span class="caret"></span></button>
+
         <ul class="dropdown-menu" aria-labelledby="dropdown_SELECT">
 
-            <li><a href="javascript:;" onclick="select_all_servers('selected_servers', 'server-body', false);
-                   select_all_updates('selected_updates', 'update-body', false)">Deselect All</a></li>
-            <li><a href="javascript:;" onclick="select_all('selected_jobs', 'job_body', false)">
-                Deselect All Jobs</a></li>
-            <li><a href="javascript:;" onclick="select_all_servers('selected_servers', 'server-body', false)">
-                Deselect All Servers</a></li>
-            <li><a href="javascript:;" onclick="select_all_updates('selected_updates', 'update-body', false)">
-                Deselect All Updates</a></li>
+            <li><a href="javascript:;"
+                   onclick="select_all('selected_servers', 'server-body', false, 'SS');
+                            select_all('selected_updates', 'update-body', false, 'SU');
+                            select_all('selected_jobs',    'job_body',    false, 'SJ')">Deselect All</a></li>
+
+            <li><a href="javascript:;"
+                   onclick="select_all('selected_jobs',    'job_body',    false, 'SJ')">Deselect All Jobs</a></li>
+
+            <li><a href="javascript:;"
+                   onclick="select_all('selected_servers', 'server-body', false, 'SS')">Deselect All Servers</a></li>
+
+            <li><a href="javascript:;"
+                   onclick="select_all('selected_updates', 'update-body', false, 'SU')">Deselect All Updates</a></li>
 
             <li role="separator" class="divider"></li>
 
-            <li><a href="javascript:;" onclick="select_all_updates('selected_updates', 'update-body', true)">
-                Select All Updates</a></li>
-            <li><a href="javascript:;" onclick="select_all_servers('selected_servers', 'server-body', true)">
-                Select All Servers</a></li>
-            <li><a href="javascript:;" onclick="select_all('selected_jobs', 'job_body', true)">
-                Select All Jobs</a></li>
-            <li><a href="javascript:;" onclick="select_all_servers('selected_servers', 'server-body', true);
-                   select_all_updates('selected_updates', 'update-body', true)">Select All</a></li>
+            <li><a href="javascript:;"
+                   onclick="select_all('selected_updates', 'update-body', false, 'SU');
+                            select_all('selected_updates', 'update-body', true,  'SU')">Select All Updates</a></li>
+
+            <li><a href="javascript:;"
+                   onclick="select_all('selected_servers', 'server-body', false, 'SS');
+                            select_all('selected_servers', 'server-body', true,  'SS')">Select All Servers</a></li>
+
+            <li><a href="javascript:;"
+                   onclick="select_all('selected_jobs',    'job_body',    false, 'SJ')
+                            select_all('selected_jobs',    'job_body',    true,  'SJ')">Select All Jobs</a></li>
+
+            <li><a href="javascript:;"
+                   onclick="select_all('selected_servers', 'server-body', false, 'SS');
+                            select_all('selected_updates', 'update-body', false, 'SU');
+                            select_all('selected_jobs',    'job_body',    false, 'SJ');
+                            select_all('selected_servers', 'server-body', true,  'SS');
+                            select_all('selected_updates', 'update-body', true,  'SU');
+                            select_all('selected_jobs',    'job_body',    true,  'SJ');">Select All</a></li>
         </ul>
     </div>
 </li>

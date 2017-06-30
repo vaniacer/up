@@ -7,22 +7,22 @@
 
         {% buttons %}
 
-            <input onclick="select_all_jobs('selected_jobs', 'job_body', true)"
-                   class="btn btn-info btn-xs"
+            <input type="button"
                    value="Select All Jobs"
-
-                   type="button"/>
-
-            <input onclick="select_all_jobs('selected_jobs', 'job_body', false)"
                    class="btn btn-info btn-xs"
-                   value="Deselect All Jobs"
-                   type="button"/>
+                   onclick="select_all('selected_jobs', 'job_body', false, 'SJ')
+                            select_all('selected_jobs', 'job_body', true,  'SJ')"/>
 
-            <button onclick="return Validation('', false, false, true)"
-                    class="btn btn-danger btn-xs"
-                    name="selected_commands"
+            <input type="button"
+                   value="Deselect All Jobs"
+                   class="btn btn-info btn-xs"
+                   onclick="select_all('selected_jobs', 'job_body', false, 'SJ')"/>
+
+            <button type="submit"
                     value="cancel_job"
-                    type="submit">Cancel job</button>
+                    name="selected_commands"
+                    class="btn btn-danger btn-xs"
+                    onclick="return Validation('', false, false, true)">Cancel job</button>
 
         {% endbuttons %}
 
@@ -32,8 +32,10 @@
 
 {% for job in cronjob %}
 
-    <dl class="dl-horizontal job_body" id="job_body{{ job.id }}"
-        onclick="select_update('job_box{{ job.id }}', 'job_body{{ job.id }}', '{{ job.name }}')">
+    <dl id="jb{{ job.id }}"
+        class="dl-horizontal job_body"
+        onclick="selector('jx{{ job.id }}', 'jb{{ job.id }}', '{{ job.name }}', 'SJ')">
+
         <dt>Cron job id</dt><dd>{{ job.cron }}</dd>
         <dt>Job name</dt><dd>{{ job.name }}</dd>
         <dt>Description</dt><dd>{{ job.desc|linebreaks }}</dd>
@@ -44,11 +46,11 @@
         <!--Hidden checkboxes-->
         <input class="hidden"
                type="checkbox"
+               id="jx{{ job.id }}"
                readonly="readonly"
                name="selected_jobs"
                value="{{ job.cron }}"
-               data-target="{{ job.name }}"
-               id="job_box{{ job.id }}"/>
+               data-target="{{ job.name }}"/>
     {% endif %}
 
     <hr>

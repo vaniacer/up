@@ -1,7 +1,4 @@
 var log_ready = false;
-var SS = "Selected servers: ";
-var SU = "Selected updates: ";
-var SJ = "Selected jobs: ";
 
 function logs_to_div(div) {
     if (!log_ready) { $(div).load('/logs/{{ project.id }}/{{ key }}/{{ cmd }}/{{ cron }}/{{ date }}/'); }
@@ -37,106 +34,57 @@ function run_or_cron(check, uncheck) {
     enable.checked  = true
 }
 
-function select_server(box_id, body_id, server_name) {
+function selector(box_id, body_id, name, obj) {
     var box  = document.getElementById(box_id);
     var body = document.getElementById(body_id);
-    if ( box.checked == false ) {
-        box.checked =  true;  body.style.background = '#dff0d8';
-        SS = SS + '<a onclick=\"select_server(\'' + box_id + '\', \'' + body_id + '\', \'' +
-        server_name + '\')\">' + server_name + '</a>, ';
-        document.getElementById("SS").innerHTML = SS;
+	var div = document.getElementById(obj);
+    var txt = '<a onclick=\"selector(\'' + box_id + '\', \'' + body_id + '\', \''
+        + name + '\', \''+ obj + '\')\">' + name + '</a>, '
+
+    function change(list) {
+        if ( box.checked == false ) {
+            box.checked =  true;  body.style.background = '#dff0d8';
+            window[list] = window[list] + txt;
+            div.innerHTML = window[list];
+        }
+        else {
+            box.checked =  false; body.style.background = '';
+            window[list] = window[list].replace(txt, "");
+
+            if ( window[list] == pref ) { div.innerHTML = ''; }
+            else { div.innerHTML = window[list]; }
+        }
     }
-    else {
-        box.checked =  false; body.style.background = '';
-        SS = SS.replace('<a onclick=\"select_server(\'' + box_id + '\', \'' + body_id + '\', \'' +
-        server_name + '\')\">' + server_name + '</a>, ', "");
-        document.getElementById("SS").innerHTML = SS;
-    }
+
+	if      ( obj == 'SS' ) { pref = 'Selected servers: '; window.slist = window.slist || pref; change('slist'); }
+	else if ( obj == 'SU' ) { pref = 'Selected updates: '; window.ulist = window.ulist || pref; change('ulist'); }
+	else if ( obj == 'SJ' ) { pref = 'Selected jobs: ';    window.jlist = window.jlist || pref; change('jlist'); }
 }
 
-function select_update(box_id, body_id, update_name) {
-    var box  = document.getElementById(box_id);
-    var body = document.getElementById(body_id);
-    if ( box.checked == false ) {
-        box.checked =  true;  body.style.background = '#dff0d8';
-        SU = SU + '<a onclick=\"select_update(\'' + box_id + '\', \'' + body_id + '\', \'' +
-        update_name + '\')\">' + update_name + '</a>, ';
-        document.getElementById("SU").innerHTML = SU;
-    }
-    else {
-        box.checked =  false; body.style.background = '';
-        SU = SU.replace('<a onclick=\"select_update(\'' + box_id + '\', \'' + body_id + '\', \'' +
-        update_name + '\')\">' + update_name + '</a>, ', "");
-        document.getElementById("SU").innerHTML = SU;
-    }
-}
-
-function select_job(box_id, body_id, job_name) {
-    var box  = document.getElementById(box_id);
-    var body = document.getElementById(body_id);
-    if ( box.checked == false ) {
-        box.checked =  true;  body.style.background = '#dff0d8';
-        SJ = SJ + '<a onclick=\"select_job(\'' + box_id + '\', \'' + body_id + '\', \'' +
-        job_name + '\')\">' + job_name + '</a>, ';
-        document.getElementById("SJ").innerHTML = SJ;
-    }
-    else {
-        box.checked =  false; body.style.background = '';
-        SJ = SJ.replace('<a onclick=\"select_job(\'' + box_id + '\', \'' + body_id + '\', \'' +
-        job_name + '\')\">' + job_name + '</a>, ', "");
-        document.getElementById("SJ").innerHTML = SJ;
-    }
-}
-
-function select_all_servers(box_name, body_name, state) {
+function select_all(box_name, body_name, state, obj) {
+    var div = document.getElementById(obj);
     var boxes  = document.getElementsByName(box_name);
     var bodies = document.getElementsByClassName(body_name);
     var color = ''; if ( state == true ) { var color = '#dff0d8'; }
-    SS = 'Selected servers: ';
-    for (i = 0; i < boxes.length;  i++) {
-        data = boxes[i].dataset;
-        boxes[i].checked = state;
-        bodies[i].style.background = color;
-        if ( state == true ) { SS = SS + '<a onclick=\"select_server(\'' + boxes[i].id + '\', \'' +
-            bodies[i].id + '\', \'' + data.target + '\')\">' + data.target + '</a>, '; }
-        else { SS = ''; }
-    }
-    document.getElementById("SS").innerHTML = SS;
-    SS = "Selected servers: ";
-}
 
-function select_all_updates(box_name, body_name, state) {
-    var boxes  = document.getElementsByName(box_name);
-    var bodies = document.getElementsByClassName(body_name);
-    var color = ''; if ( state == true ) { var color = '#dff0d8'; }
-    SU = 'Selected updates: ';
-    for (i = 0; i < boxes.length;  i++) {
-        data = boxes[i].dataset;
-        boxes[i].checked = state;
-        bodies[i].style.background = color;
-        if ( state == true ) { SU = SU + '<a onclick=\"select_update(\'' + boxes[i].id + '\', \'' +
-            bodies[i].id + '\', \'' + data.target + '\')\">' + data.target + '</a>, '; }
-        else { SU = ''; }
-    }
-    document.getElementById("SU").innerHTML = SU;
-    SU = "Selected updates: ";
-}
+    function change(list) {
+        for (i = 0; i < boxes.length;  i++) {
+            data = boxes[i].dataset;
+            boxes[i].checked = state;
+            bodies[i].style.background = color;
+            txt = '<a onclick=\"selector(\'' + boxes[i].id + '\', \'' + bodies[i].id +
+                  '\', \'' + data.target + '\', \''+ obj + '\')\">' + data.target + '</a>, '
+            if ( state == true ) { window[list] = window[list] + txt; }
+            else { window[list] = ''; }
+        }
 
-function select_all_jobs(box_name, body_name, state) {
-    var boxes  = document.getElementsByName(box_name);
-    var bodies = document.getElementsByClassName(body_name);
-    var color = ''; if ( state == true ) { var color = '#dff0d8'; }
-    SJ = 'Selected jobs: ';
-    for (i = 0; i < boxes.length;  i++) {
-        data = boxes[i].dataset;
-        boxes[i].checked = state;
-        bodies[i].style.background = color;
-        if ( state == true ) { SJ = SJ + '<a onclick=\"select_job(\'' + boxes[i].id + '\', \'' +
-            bodies[i].id + '\', \'' + data.target + '\')\">' + data.target + '</a>, '; }
-        else { SJ = ''; }
+        if ( window[list] == pref ) { div.innerHTML = ''; }
+        else { div.innerHTML = window[list]; }
     }
-    document.getElementById("SJ").innerHTML = SJ;
-    SJ = "Selected jobs: ";
+
+    if      ( obj == 'SS' ) { pref = 'Selected servers: '; window.slist = window.slist || pref; change('slist'); }
+	else if ( obj == 'SU' ) { pref = 'Selected updates: '; window.ulist = window.ulist || pref; change('ulist'); }
+	else if ( obj == 'SJ' ) { pref = 'Selected jobs: ';    window.jlist = window.jlist || pref; change('jlist'); }
 }
 
 function setCookie(cname, cvalue) {
