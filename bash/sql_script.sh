@@ -9,7 +9,7 @@ function body () { #---------------------------------| Main function |----------
     for file in ${updates}; { filename=${file##*/}
 
         echo -e "\nCopy script - ${filename}"
-        scp ${file} ${server}/updates/new || error=$?
+        scp ${file} ${addr}:${wdir}/updates/new || error=$?
 
         ssh ${addr} "${wdir}/krupd execsql ${wdir}/updates/new/${filename}" || error=$?
         ssh ${addr} "rm ${wdir}/updates/new/${filename}" || error=$?

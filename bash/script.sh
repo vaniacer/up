@@ -9,7 +9,7 @@ function body () { #---------------------------------| Main function |----------
     for file in ${updates}; { filename=${file##*/}
 
         printf "\nCopy script - ${filename}\n"
-        scp ${file} ${server}/updates/new || error=$?
+        scp ${file} ${addr}:${wdir}/updates/new || error=$?
 
         printf "Run  script - ${filename}\n"
         ssh ${addr} "cd ${wdir}; chmod +x updates/new/${filename}; updates/new/${filename}" || error=$?

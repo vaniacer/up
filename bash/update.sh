@@ -22,7 +22,7 @@ function body () { #---------------------------------| Main function |----------
     ssh ${addr} ${wdir}/krupd bkp sys || error=$?; download; bkp=${name}
 
     echo -e "<b>Copy update - ${updates##*/}.</b>\n"
-    scp ${updates} ${server}/updates/new/ || error=$
+    scp ${updates} ${addr}:${wdir}/updates/new/ || error=$
 
     echo -e "<b>Start dummy page.</b>\n"
     ssh ${addr} '~/.utils/dp.sh --start'  || error=$?
