@@ -38,7 +38,7 @@ function selector(box_id, body_id, name, obj) {
     var box  = document.getElementById(box_id);
     var body = document.getElementById(body_id);
 	var div = document.getElementById(obj);
-    var txt = '<a onclick=\"selector(\'' + box_id + '\', \'' + body_id + '\', \''
+    var txt = '<a href=\"javascript:;\" onclick=\"selector(\'' + box_id + '\', \'' + body_id + '\', \''
         + name + '\', \''+ obj + '\')\">' + name + '</a>, '
 
     function change(list) {
@@ -72,7 +72,7 @@ function select_all(box_name, body_name, state, obj) {
             data = boxes[i].dataset;
             boxes[i].checked = state;
             bodies[i].style.background = color;
-            txt = '<a onclick=\"selector(\'' + boxes[i].id + '\', \'' + bodies[i].id +
+            txt = '<a href=\"javascript:;\" onclick=\"selector(\'' + boxes[i].id + '\', \'' + bodies[i].id +
                   '\', \'' + data.target + '\', \''+ obj + '\')\">' + data.target + '</a>, '
             if ( state == true ) { window[list] = window[list] + txt; }
             else { window[list] = ''; }
