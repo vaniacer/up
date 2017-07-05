@@ -16,6 +16,7 @@ class Project(models.Model):
 	name = models.CharField(max_length=255, unique=True)
 	desc = models.TextField(max_length=255)
 	slug = models.SlugField(max_length=64)
+	user = models.ForeignKey(User)
 
 	class Meta:
 		"""Добавляет доп. разрешения."""
@@ -50,6 +51,7 @@ class Server(models.Model):
 	desc = models.TextField(max_length=255)
 	port = models.CharField(max_length=5)
 	proj = models.ForeignKey(Project)
+	user = models.ForeignKey(User)
 
 	def __unicode__(self):
 		"""Возвращает строковое представление модели."""
@@ -62,6 +64,7 @@ class Update(models.Model):
 	file = models.FileField(upload_to=get_upload_to)
 	desc = models.TextField(max_length=255)
 	proj = models.ForeignKey(Project)
+	user = models.ForeignKey(User)
 
 	def __unicode__(self):
 		"""Возвращает строковое представление модели."""

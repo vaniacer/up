@@ -24,6 +24,7 @@
                 <!--<dt>File</dt><dd>{{ update.file }}</dd>-->
                 <dt>Size</dt><dd>{{ update.file.size|filesizeformat }}</dd>
                 <dt>Description</dt><dd>{{ update.desc|linebreaks }}</dd>
+                <dt>Added by</dt><dd>{{ update.user }}</dd>
                 <dt><small>Date added</small></dt><dd><small>{{ update.date|date:'M d, Y H:i' }}</small></dd>
             </dl>
             {% if "run_command" in pr_view_perms %}

@@ -21,6 +21,8 @@ def new_project(request):
 		form = ProjectForm(request.POST)
 
 		if form.is_valid():
+			project = form.save(commit=False)
+			project.user = request.user
 			form.save()
 			return HttpResponseRedirect(reverse('ups:projects'))
 
@@ -44,6 +46,7 @@ def new_server(request, project_id):
 
 		if form.is_valid():
 			server = form.save(commit=False)
+			server.user = request.user
 			server.proj = project
 			server.save()
 			return HttpResponseRedirect(reverse('ups:project', args=[project_id]))
@@ -68,6 +71,7 @@ def new_update(request, project_id):
 
 		if form.is_valid():
 			update = form.save(commit=False)
+			update.user = request.user
 			update.proj = project
 			update.save()
 			return HttpResponseRedirect(reverse('ups:project', args=[project_id]))
