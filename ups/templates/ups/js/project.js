@@ -62,29 +62,13 @@ function selector(box_id, body_id, name, obj) {
 }
 
 function select_all(box_name, body_name, state, obj) {
-    var div = document.getElementById(obj);
     var boxes  = document.getElementsByName(box_name);
     var bodies = document.getElementsByClassName(body_name);
-    var color = ''; if ( state == true ) { var color = '#dff0d8'; }
 
-    function change(list) {
-        for (i = 0; i < boxes.length;  i++) {
-            data = boxes[i].dataset;
-            boxes[i].checked = state;
-            bodies[i].style.background = color;
-            txt = '<a href=\"javascript:;\" onclick=\"selector(\'' + boxes[i].id + '\', \'' + bodies[i].id +
-                  '\', \'' + data.target + '\', \''+ obj + '\')\">' + data.target + '</a>, '
-            if ( state == true ) { window[list] = window[list] + txt; }
-            else { window[list] = ''; }
-        }
-
-        if ( window[list] == pref ) { div.innerHTML = ''; }
-        else { div.innerHTML = window[list]; }
+    for (i = 0; i < boxes.length;  i++) {
+        data = boxes[i].dataset;
+        if ( boxes[i].checked != state ) { selector(boxes[i].id, bodies[i].id, data.target, obj); }
     }
-
-    if      ( obj == 'SS' ) { pref = 'Selected servers: '; window.slist = window.slist || pref; change('slist'); }
-	else if ( obj == 'SU' ) { pref = 'Selected updates: '; window.ulist = window.ulist || pref; change('ulist'); }
-	else if ( obj == 'SJ' ) { pref = 'Selected jobs: ';    window.jlist = window.jlist || pref; change('jlist'); }
 }
 
 function setCookie(cname, cvalue) {
