@@ -14,7 +14,7 @@
             {% if "edit_update" in pr_view_perms %}
                 <a href="{% url 'ups:edit_update' update.id %}" class="Edit">Edit</a>
             {% endif %}
-            <a onclick="checker('update_box{{ update.id }}', 'update_body{{ update.id }}')"
+            <a onclick="selector('ux{{ update.id }}', 'ub{{ update.id }}', '{{ update }}', 'SU')"
                href="/download_upd/{{ project.id }}/{{ update.id }}"
                class="Edit">Download</a>
         </div>
@@ -42,7 +42,5 @@
     </div> <!-- panel -->
 
 {% empty %}
-
-There are no updates for this project yet.
-
+    There are no updates for this project yet.
 {% endfor %}
