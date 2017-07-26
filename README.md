@@ -3,7 +3,7 @@
 
 It's a ssh\bash wrapper, run ssh\bash commands on your servers from web interface.
 
-Start by pressing an 'Update your servers' button or a 'Projects' link at the top.
+Start by pressing an 'Projects' button or a 'Projects' link at the top.
 Select project by clicking on it. Or create a new one via 'Add new project' link.
 In the project section navigate using tabs: 'Updates & Servers', 'Cron Jobs' and 'History'.
 
@@ -14,10 +14,10 @@ On the 'Cron Jobs' tab you can view cron jobs scheduled for this project.
 You can select them via click or by pressing 'Select All Jobs' button.
 And cancel them by pressing 'Delete' button.
 
-On the 'History' tab you can view history log. Events from cron marked light cyan. 
-Events ended with errors marked red.
+On the 'History' tab you can view history log. Events ended with errors marked red.
 
 'Add' and 'Select' buttons duplicated at the bottom nav bar.
-Available commands are in 'RUN' or 'CRON' menus. If you select command from 'RUN' menu it'l start right now.   
-If you select command from 'CRON' menu, cron job will be created to start on current time + 1 minute(if time not set).
-If you need exact date\time set it in the date\time widget.
+'Copy Update(s) to Server(s)' button starts copy process.
+Selected updates will be copied to the selected servers.
+If you select date and time then the 'Copy Update(s) to Server(s)' button will schedule this job instead of running it right now.
+'View server's log' brings you the system log of the selected server. 
