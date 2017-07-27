@@ -3,7 +3,7 @@
 error=0
 workdir=$(dirname $0)
 cronfile=/var/spool/cron/crontabs/${USER}
-dumpdir=${workdir}/../media/updates/dumps
+dumpdir=${workdir}/../media/dumps
 crondir=${workdir}/../../logs/cron
 rundir=${workdir}/../../logs/run
 #---------| Get opts |------------
