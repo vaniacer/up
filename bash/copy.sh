@@ -13,7 +13,8 @@ function body () { #---------------------------------| Main function |----------
             && { echo -e "File - ${filename} exist, skip."; continue; }
 
         echo -e "Copy file - ${filename}"
-        scp ${file} ${addr}:${wdir}/updates/new/ || error=$?
+#        scp ${file} ${addr}:${wdir}/updates/new/ || error=$?
+        rsync -e "ssh" --progress -lzuogthvr ${file} ${addr}:${wdir}/updates/new/ || error=$?
     }
 } #---------------------------------------------------------------------------------------------------------------------
 

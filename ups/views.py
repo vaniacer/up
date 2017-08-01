@@ -72,7 +72,7 @@ def download_dump(request, project_id, dump):
 	"""Закачка дампов."""
 	current_project = get_object_or_404(Project, id=project_id)
 	check_perm('view_project', current_project, request.user)
-	return download(conf.MEDIA_ROOT + '/updates/dumps/' + str(dump), str(dump))
+	return download(conf.MEDIA_ROOT + '/dumps/' + str(dump), str(dump))
 
 
 @login_required
