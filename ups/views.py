@@ -92,7 +92,6 @@ def cancel(request, project_id, pid, cmd, log_id):
 	Popen(['kill', str(pid)])
 	tag, his = command({'command': cmd, 'cron': '', })
 
-	delete_files([conf.LOG_FILE + log_id, conf.PID_FILE + log_id])
 	try:
 		err = open(conf.ERR_FILE + log_id, 'r').read()
 		delete_files([conf.ERR_FILE + log_id])
@@ -101,7 +100,10 @@ def cancel(request, project_id, pid, cmd, log_id):
 	if his:
 		log = open(conf.LOG_FILE + log_id, 'r').read()
 		history = {'user': request.user, 'project': current_project, 'command': cmd}
-		add_event(history, log + '\nCanceled.', err, '', '')
+		add_event(history, log + '\n\nCanceled.', err, '', '')
+
+	delete_files([conf.LOG_FILE + log_id, conf.PID_FILE + log_id])
+
 	return HttpResponseRedirect('/projects/' + project_id)
 
 

@@ -60,7 +60,7 @@ function download () { # Used in backup_* and get_dump.
 
 . ${workdir}/${cmd} # Load 'run' and 'description' functions from ${cmd}.
 
-function starter  () { # Start run function, save logs to ${rundir} or ${crondir} if started from cron.
+function starter  () { # Start 'run' function, save logs to ${rundir} or ${crondir} if started from cron.
     [ "${cron}" ] && { run &> ${crondir}/${cron}; dat=$(date +'%m.%d.%Y %R')
                        echo -e "\nError: ${error}\nDate: ${dat}" >> ${crondir}/${cron}; } \
                   || { echo $$       > ${rundir}/pid${key}
