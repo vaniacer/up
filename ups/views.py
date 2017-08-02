@@ -44,7 +44,10 @@ def pagination(request, history):
 def delete_files(files):
 	"""Удаляет список файлов."""
 	for f in files:
-		os.remove(f)
+		try:
+			os.remove(f)
+		except OSError:
+			continue
 
 
 def download(file_path, file_name):
@@ -89,20 +92,15 @@ def cancel(request, project_id, pid, cmd, log_id):
 	current_project = get_object_or_404(Project, id=project_id)
 	check_perm('view_project', current_project, request.user)
 
-	Popen(['kill', str(pid)])
+	Popen(['kill', '-9', str(pid)])
 	tag, his = command({'command': cmd, 'cron': '', })
 
-	try:
-		err = open(conf.ERR_FILE + log_id, 'r').read()
-		delete_files([conf.ERR_FILE + log_id])
-	except IOError:
-		err = 1
 	if his:
 		log = open(conf.LOG_FILE + log_id, 'r').read()
 		history = {'user': request.user, 'project': current_project, 'command': cmd}
-		add_event(history, log + '\n\nCanceled.', err, '', '')
+		add_event(history, log + '\n\nCanceled.', 1, '', '')
 
-	delete_files([conf.LOG_FILE + log_id, conf.PID_FILE + log_id])
+	delete_files([conf.LOG_FILE + log_id, conf.PID_FILE + log_id, conf.ERR_FILE + log_id])
 
 	return HttpResponseRedirect('/projects/' + project_id)
 
