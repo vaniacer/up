@@ -98,7 +98,8 @@ def cancel(request, project_id, pid, cmd, log_id):
 	if his:
 		log = open(conf.LOG_FILE + log_id, 'r').read()
 		history = {'user': request.user, 'project': current_project, 'command': cmd}
-		add_event(history, log + '\n\nCanceled.', 1, '', '')
+		text = '\n\n<%s{ Canceled :( }%s>' % ('-' * 51, '-' * 52)
+		add_event(history, log + text, 1, '', '')
 
 	delete_files([conf.LOG_FILE + log_id, conf.PID_FILE + log_id, conf.ERR_FILE + log_id])
 

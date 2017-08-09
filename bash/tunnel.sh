@@ -6,6 +6,7 @@ function description () { #---------------------| Function description |--------
 
 function body () { #---------------------------------| Main function |--------------------------------------------------
 
+    timer=60
     lport=42250     #42250
     rport=${port}   #8080
 
@@ -13,7 +14,7 @@ function body () { #---------------------------------| Main function |----------
     echo -e "\n<a class=\"btn btn-primary\" href=\"http://__URL__:${lport}/application\">Application</a>\n"
     echo -e "\n<a class=\"btn btn-primary\" href=\"http://__URL__:${lport}\">Connect</a>\n"
     echo -e "\n<a class=\"btn btn-primary\" href=\"http://__URL__:${lport}/login\">Login</a>\n"
-    ssh ${addr} -f -L 0.0.0.0:${lport}:127.0.0.1:${rport} sleep 10 || error=$?
+    ssh ${addr} -f -L 0.0.0.0:${lport}:127.0.0.1:${rport} sleep ${timer} || error=$?
 
 } #---------------------------------------------------------------------------------------------------------------------
 
