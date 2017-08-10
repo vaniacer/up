@@ -7,7 +7,7 @@ from django.db import models
 
 def get_upload_to(instance, filename):
 	"""Задаёт путь сохранения пакетов обновлений."""
-	return conf.MEDIA_ROOT + '/updates/%s/%s' % (instance.proj.name, filename)
+	return '%s/updates/%s/%s' % (conf.MEDIA_ROOT, instance.proj.name, filename)
 
 
 class Project(models.Model):

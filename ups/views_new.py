@@ -34,7 +34,6 @@ def new_project(request):
 def new_server(request, project_id):
 	"""Добавляет новый сервер."""
 	project = Project.objects.get(id=project_id)
-
 	check_perm('add_server', project, request.user)
 
 	if request.method != 'POST':
@@ -59,7 +58,6 @@ def new_server(request, project_id):
 def new_update(request, project_id):
 	"""Добавляет новое обновление."""
 	project = Project.objects.get(id=project_id)
-
 	check_perm('add_update', project, request.user)
 
 	if request.method != 'POST':

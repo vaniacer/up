@@ -95,6 +95,7 @@ def edit_update(request, update_id):
 		form = UpdateForm(instance=update)
 	else:
 		# Отправка данных POST; обработать данные.
+		filename = update.file
 		form = UpdateForm(request.POST, request.FILES, instance=update)
 
 		if form.is_valid():
@@ -102,6 +103,8 @@ def edit_update(request, update_id):
 				check_perm('del_update', project, request.user)
 				delete_update(update)
 			elif request.POST.get('ok'):
+				if form.files:
+					os.remove(str(filename))
 				form.save()
 
 			return HttpResponseRedirect(reverse('ups:project', args=[project.id]))
