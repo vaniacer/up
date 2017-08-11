@@ -19,8 +19,15 @@ def delete_project(project):
 	project.delete()
 
 
+def delete_server(request, server):
+	"""Удаляет сервер, записывает событие в историю."""
+	dick = {'project': server.proj, 'user': request.user, 'command': 'Del server'}
+	add_event(dick, 'Удален сервер:\n%s\n\nНазначение:\n%s' % (str(server), server.desc.encode('utf-8')), 0, '', '')
+	server.delete()
+
+
 def delete_update(request, update):
-	"""Удаляет обновление и файлы обновлений."""
+	"""Удаляет обновление и файлы обновлений, записывает событие в историю."""
 	dick = {'project': update.proj, 'user': request.user, 'command': 'Del upd\scr'}
 	add_event(dick, 'Удален файл:\n%s\n\nНазначение:\n%s' % (str(update), update.desc.encode('utf-8')), 0, '', '')
 	os.remove(str(update.file))
@@ -74,7 +81,7 @@ def edit_server(request, server_id):
 		if form.is_valid():
 			if request.POST.get('delete'):
 				check_perm('del_server', project, request.user)
-				server.delete()
+				delete_server(request, server)
 			elif request.POST.get('ok'):
 				form.save()
 
