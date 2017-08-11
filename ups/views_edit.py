@@ -7,6 +7,7 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from .models import Project, Server, Update
 from django.conf import settings as conf
+from .commands_engine import add_event
 from .permissions import check_perm
 import shutil
 import os
@@ -18,8 +19,10 @@ def delete_project(project):
 	project.delete()
 
 
-def delete_update(update):
+def delete_update(request, update):
 	"""Удаляет обновление и файлы обновлений."""
+	dick = {'project': update.proj, 'user': request.user, 'command': 'Del upd\scr'}
+	add_event(dick, 'Удален файл:\n%s\n\nНазначение:\n%s' % (str(update), update.desc.encode('utf-8')), 0, '', '')
 	os.remove(str(update.file))
 	update.delete()
 
@@ -101,7 +104,7 @@ def edit_update(request, update_id):
 		if form.is_valid():
 			if request.POST.get('delete'):
 				check_perm('del_update', project, request.user)
-				delete_update(update)
+				delete_update(request, update)
 			elif request.POST.get('ok'):
 				if form.files:
 					os.remove(str(filename))
