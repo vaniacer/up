@@ -6,7 +6,8 @@ function description () { #---------------------| Function description |--------
 
 function body () { #---------------------------------| Main function |--------------------------------------------------
 
-    ssh ${addr} "cat ${wdir}/jboss-bas-*/standalone/log/server.log" || error=$?
+    ssh ${addr} "cat ${wdir}/jboss-bas-*/standalone/log/server.log \
+    ${wdir}/jboss-bas-*/standalone/log/*$(date +'%Y-%m-%d')" || error=$?
 
 } #---------------------------------------------------------------------------------------------------------------------
 

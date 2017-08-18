@@ -7,7 +7,7 @@ function description () { #---------------------| Function description |--------
 function body () { #---------------------------------| Main function |--------------------------------------------------
 
     ssh ${addr} "${wdir}/krupd bkp db" || error=$?; download
-    ssh ${addr} "rm ${name}" || error=$? # Удаляю файл - ${name}"
+    ssh ${addr} "rm ${name}" || error=$? # Удаляю файл - ${name}, ${name} определяется в download'е"
 
 } #---------------------------------------------------------------------------------------------------------------------
 
