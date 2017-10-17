@@ -1,6 +1,7 @@
 <!-- Validation(input_id(if it not submit type), check_srv, check_upd, check_job) -->
 
-<a      onclick="select_all('selected_servers', 'server-body', false, 'SS');
+<a      onclick="run_or_cron('RUN', 'CRON');
+                 select_all('selected_servers', 'server-body', false, 'SS');
                  selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS');
                  Validation('server_info', true, false, false)"
         title="Show system info: CPU, mem, disk etc."
@@ -13,7 +14,8 @@
         type="checkbox"
         class="hidden"/>
 
-<a      onclick="select_all('selected_servers', 'server-body', false, 'SS');
+<a      onclick="run_or_cron('RUN', 'CRON');
+                 select_all('selected_servers', 'server-body', false, 'SS');
                  selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS');
                  Validation('check_conf', true, false, false)"
         title="Show conf(standalone-full.xml) and java options of this server."
@@ -26,7 +28,8 @@
         type="checkbox"
         class="hidden"/>
 
-<a      onclick="select_all('selected_servers', 'server-body', false, 'SS');
+<a      onclick="run_or_cron('RUN', 'CRON');
+                 select_all('selected_servers', 'server-body', false, 'SS');
                  selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS');
                  Validation('check_logs', true, false, false)"
         title="Check logs from this server."
@@ -39,7 +42,8 @@
         type="checkbox"
         class="hidden"/>
 
-<a      onclick="select_all('selected_servers', 'server-body', false, 'SS');
+<a      onclick="run_or_cron('RUN', 'CRON');
+                 select_all('selected_servers', 'server-body', false, 'SS');
                  selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS');
                  Validation('check_updates', true, false, false)"
         title="Check updates on this server."
@@ -52,7 +56,8 @@
         type="checkbox"
         class="hidden"/>
 
-<a      onclick="select_all('selected_servers', 'server-body', false, 'SS');
+<a      onclick="run_or_cron('RUN', 'CRON');
+                 select_all('selected_servers', 'server-body', false, 'SS');
                  selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS');
                  Validation('tunnel', true, false, false)"
         title="Make ssh tunnel to the bind port of this server."

@@ -6,7 +6,6 @@ function description () { #---------------------| Function description |--------
 
 function body () { #---------------------------------| Main function |--------------------------------------------------
 
-    jport=${port}   #8080
     echo -e "Start dummy page."
     ssh ${addr} "~/.utils/dp.sh --start --jport $port" || error=$?
 
