@@ -6,8 +6,6 @@ from .models import History, Job
 from subprocess import Popen
 from base64 import b64encode
 from os import urandom
-# from .models import Server as S
-# from django.shortcuts import get_object_or_404 as gor4
 
 
 def get_key():
@@ -45,13 +43,6 @@ def del_job(selected):
 			Job.objects.get(cron=i).delete()
 		except ObjectDoesNotExist:
 			continue
-
-
-# def servers(selected):
-# 	obj = []
-# 	for i in selected['servers']:
-# 		obj.append('%s:%s:%s' % (gor4(S, id=i).addr, gor4(S, id=i).wdir, gor4(S, id=i).port))
-# 	return ' '.join(obj)
 
 
 def starter(selected):
