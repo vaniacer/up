@@ -39,7 +39,7 @@ function selector(box_id, body_id, name, obj) {
     var body = document.getElementById(body_id);
 	var div = document.getElementById(obj);
     var txt = '<a href=\"javascript:;\" onclick=\"selector(\'' + box_id + '\', \'' + body_id + '\', \''
-        + name + '\', \''+ obj + '\')\">' + name + '</a>, '
+        + name + '\', \''+ obj + '\')\">' + name + '</a> | '
 
     function change(list) {
         if ( box.checked == false ) {
