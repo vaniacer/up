@@ -53,9 +53,10 @@ function download () { # Used in backup_* and get_dump.
                   || { name=$(tail -n2 ${rundir}/log${key}); }
                        name=${name#*\"}; name=${name//\"./}
 
-    echo  -e "Копирую файл - ${name}" #; scp ${addr}:${name} ${dumpdir} || error=$?
-    rsync -e "ssh" --progress -lzuogthvr ${addr}:${name} ${dumpdir} || error=$?
-    echo  -e "\n<a class='btn btn-primary' href='/download_dump/${prj}/${name//\/*\//}'>Download</a>\n"
+    newname=${addr}_${name//\/*\//}
+    echo  -e "Копирую файл - ${name}"
+    rsync -e ssh   --progress   -lzuogthvr  ${addr}:${name} ${dumpdir}/$newname || error=$?
+    echo  -e "\n<a class='btn btn-primary' href='/download_dump/${prj}/$newname'>Download</a>\n"
 }
 
 . ${workdir}/${cmd} # Load 'run' and 'description' functions from ${cmd}.
