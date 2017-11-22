@@ -3,7 +3,7 @@
 
 {% block header %}
     <br>
-    <h2>Add a new server to project - <a href="{% url 'ups:project' project.id %}">{{ project }}</a></h2>
+    <h2>Add new server to the project - <a href="{% url 'ups:project' project.id %}">{{ project }}</a></h2>
 {% endblock header %}
 
 {% block content %}
@@ -13,7 +13,7 @@
         {% bootstrap_form form %}
 
         {% buttons %}
-            <button class="btn btn-primary" name='submit'>Add server</button>
+            <button class="btn btn-primary" name='submit'>Add Server</button>
             <a class="btn btn-primary" href="{% url 'ups:project' project.id %}">Cancel</a>
         {% endbuttons %}
     </form>

@@ -4,18 +4,18 @@
     {% if "run_command" in pr_view_perms %}
         {% if updates %}
             <input type="button"
-                   value="Select All Updates\Scripts"
+                   value="Select All Updates"
                    class="btn btn-info btn-xs"
                    onclick="select_all('selected_updates', 'update-body', true,  'SU')"/>
 
             <input type="button"
                    class="btn btn-info btn-xs"
-                   value="Deselect All Updates\Scripts"
+                   value="Deselect All Updates"
                    onclick="select_all('selected_updates', 'update-body', false, 'SU')"/>
 
         {% endif %}
     {% endif %}
     {% if "add_update" in pr_view_perms %}
-        <a class="btn btn-success btn-xs" href="{% url 'ups:new_update' project.id %}">Add Update\Script</a>
+        <a class="btn btn-success btn-xs" href="{% url 'ups:new_update' project.id %}">Add Update</a>
     {% endif %}
 {% endbuttons %}

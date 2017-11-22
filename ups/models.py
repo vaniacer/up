@@ -5,9 +5,14 @@ from django.conf import settings as conf
 from django.db import models
 
 
-def get_upload_to(instance, filename):
+def update_upload_to(instance, filename):
 	"""Задаёт путь сохранения пакетов обновлений."""
 	return '%s/updates/%s/%s' % (conf.MEDIA_ROOT, instance.proj.name, filename)
+
+
+def script_upload_to(instance, filename):
+	"""Задаёт путь сохранения пакетов обновлений."""
+	return '%s/scripts/%s/%s' % (conf.MEDIA_ROOT, instance.proj.name, filename)
 
 
 class Project(models.Model):
@@ -23,13 +28,18 @@ class Project(models.Model):
 		permissions = (
 			("view_project", "Can view project"),
 			("edit_project", "Can edit project"),
+			("run_command",  "Can run commands"),
+			("dld_update",   "Can download updates"),
+			("dld_script",   "Can download scripts"),
+			("add_server",   "Can add servers to project"),
+			("add_update",   "Can add updates to project"),
+			("add_script",   "Can add scripts to project"),
 			("edit_server",  "Can edit projects's servers"),
 			("edit_update",  "Can edit projects's updates"),
-			("run_command",  "Can run project's commands"),
-			("add_server",   "Can add server to project"),
-			("add_update",   "Can add update to project"),
+			("edit_script",  "Can edit projects's scripts"),
 			("del_server",   "Can delete project's servers"),
 			("del_update",   "Can delete project's updates"),
+			("del_script",   "Can delete project's scripts"),
 		)
 		get_latest_by = 'date'
 
@@ -61,10 +71,25 @@ class Server(models.Model):
 class Update(models.Model):
 	"""Пакеты обновлений проекта."""
 	date = models.DateTimeField(auto_now_add=True, db_index=True)
-	file = models.FileField(upload_to=get_upload_to)
+	file = models.FileField(upload_to=update_upload_to)
 	desc = models.TextField(max_length=255)
 	proj = models.ForeignKey(Project)
 	user = models.ForeignKey(User)
+
+	def __unicode__(self):
+		"""Возвращает строковое представление модели."""
+		name = self.file.name.split('/')[-1]
+		return name
+
+
+class Script(models.Model):
+	"""BASH/SQL скрипты проекта."""
+	date = models.DateTimeField(auto_now_add=True, db_index=True)
+	file = models.FileField(upload_to=script_upload_to)
+	desc = models.TextField(max_length=255)
+	proj = models.ForeignKey(Project)
+	user = models.ForeignKey(User)
+	body = models.TextField()
 
 	def __unicode__(self):
 		"""Возвращает строковое представление модели."""

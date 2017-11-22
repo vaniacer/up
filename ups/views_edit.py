@@ -1,11 +1,11 @@
 # -*- encoding: utf-8 -*-
 
+from .forms import ProjectForm, ServerForm, UpdateForm, ScriptEditForm
 from django.contrib.auth.decorators import login_required
-from .forms import ProjectForm, ServerForm, UpdateForm
 from django.shortcuts import render, get_object_or_404
+from .models import Project, Server, Update, Script
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from .models import Project, Server, Update
 from django.conf import settings as conf
 from .commands_engine import add_event
 from .permissions import check_perm
@@ -115,9 +115,50 @@ def edit_update(request, update_id):
 			elif request.POST.get('ok'):
 				if form.files:
 					os.remove(str(filename))
+
 				form.save()
 
 			return HttpResponseRedirect(reverse('ups:project', args=[project.id]))
 
 	context = {'update': update, 'project': project, 'form': form}
 	return render(request, 'ups/edit_update.html', context)
+
+
+@login_required
+def edit_script(request, script_id):
+	"""Редактирует существующий скрипт."""
+	script = get_object_or_404(Script, id=script_id)
+	project = script.proj
+
+	check_perm('edit_script', project, request.user)
+
+	print str(script.file)
+	body = open(str(script.file), 'r')
+	script.body = body.read()
+	body.close()
+
+	if request.method != 'POST':
+		# Исходный запрос; форма заполняется данными текущей записи.
+		form = ScriptEditForm(instance=script)
+	else:
+		# Отправка данных POST; обработать данные.
+		filename = script.file
+		form = ScriptEditForm(request.POST, instance=script)
+
+		if form.is_valid():
+			if request.POST.get('delete'):
+				check_perm('del_update', project, request.user)
+				delete_update(request, script)
+			elif request.POST.get('ok'):
+				if form.files:
+					os.remove(str(filename))
+
+				form.save()
+				body = open(str(filename), 'w')
+				body.write(script.body)
+				body.close()
+
+			return HttpResponseRedirect(reverse('ups:project', args=[project.id]))
+
+	context = {'script': script, 'project': project, 'form': form}
+	return render(request, 'ups/edit_script.html', context)

@@ -4,13 +4,13 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
+from .models import Project, Update, Script
 from django.conf import settings as conf
 from .commands import command, cmd_run
 from .commands_engine import add_event
 from .commands_engine import add_job
 from wsgiref.util import FileWrapper
 from .permissions import check_perm
-from .models import Project, Update
 from .cron import get_cron_logs
 from subprocess import Popen
 import mimetypes
@@ -51,7 +51,7 @@ def delete_files(files):
 
 
 def download(file_path, file_name):
-	"""Закачка файлов."""
+	"""Скачать файл."""
 	file_mimetype = mimetypes.guess_type(file_path)
 	file_wrapper = FileWrapper(file(file_path, 'rb'))
 	response = HttpResponse(file_wrapper, content_type=file_mimetype)
@@ -63,11 +63,20 @@ def download(file_path, file_name):
 
 @login_required
 def download_upd(request, project_id, update_id):
-	"""Закачка обновлений."""
+	"""Скачать обновление."""
 	update = get_object_or_404(Update, id=update_id)
 	current_project = get_object_or_404(Project, id=project_id)
-	check_perm('view_project', current_project, request.user)
+	check_perm('dld_update', current_project, request.user)
 	return download(str(update.file), str(update))
+
+
+@login_required
+def download_script(request, project_id, script_id):
+	"""Скачать скрипт."""
+	script = get_object_or_404(Script, id=script_id)
+	current_project = get_object_or_404(Project, id=project_id)
+	check_perm('dld_script', current_project, request.user)
+	return download(str(script.file), str(script))
 
 
 @login_required
@@ -126,7 +135,6 @@ def logs(request, project_id, log_id, cmd, cron, date):
 	history = {'date': date, 'user': request.user, 'command': cmd, 'project': current_project}
 	context = {
 		'log': log.replace('__URL__', url), 'tag': tag, 'pid': pid, 'cmd': cmd,
-		# 'log': log, 'tag': tag, 'pid': pid, 'cmd': cmd,
 		'log_id': log_id, 'project': project_id}
 
 	if err:
@@ -144,7 +152,7 @@ def logs(request, project_id, log_id, cmd, cron, date):
 
 @login_required
 def project(request, project_id):
-	"""Выводит один проект, все его серверы, пакеты обновлений и обрабатывает кнопки действий."""
+	"""Выводит один проект, все его серверы, пакеты обновлений и скрипты, обрабатывает кнопки действий."""
 	current_project = get_object_or_404(Project, id=project_id)
 	check_perm('view_project', current_project, request.user)
 
@@ -152,6 +160,7 @@ def project(request, project_id):
 	servers = current_project.server_set.order_by('name')
 	cronjob = current_project.job_set.order_by('date').reverse()
 	updates = current_project.update_set.order_by('date').reverse()
+	scripts = current_project.script_set.order_by('date').reverse()
 	history = current_project.history_set.order_by('date').reverse()
 	history, hist_fd, hist_bk = pagination(request, history)
 
@@ -159,6 +168,7 @@ def project(request, project_id):
 		'project': current_project,
 		'servers': servers,
 		'updates': updates,
+		'scripts': scripts,
 		'cronjob': cronjob,
 		'history': history,
 		'hist_bk': hist_bk,

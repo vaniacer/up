@@ -30,8 +30,8 @@
         <!-- Nav tabs -->
         <ul class="nav nav-tabs nav-justified" role="tablist">
             <li role="presentation" class="active">
-                <a href="#upser" aria-controls="upser" role="tab" data-toggle="tab">
-                    <h4>Updates & Servers</h4>
+                <a href="#main" aria-controls="main" role="tab" data-toggle="tab">
+                    <h4>Main</h4>
                 </a>
             </li>
             <li role="presentation">
@@ -49,8 +49,12 @@
 
         <!-- Tab panes -->
         <div class="tab-content">
-            <div role="tabpanel" class="tab-pane fade in active" id="upser">
-                {% include "ups/project_servers_updates.html" %}
+            <div role="tabpanel" class="tab-pane fade in active" id="main">
+                <div class="row">
+                    <div class="col-md-4">{% include "ups/project_updates.html" %}</div>
+                    <div class="col-md-4">{% include "ups/project_scripts.html" %}</div>
+                    <div class="col-md-4">{% include "ups/project_servers.html" %}</div>
+                </div>
             </div>
             <div role="tabpanel" class="tab-pane fade" id="cron">
                 {% include "ups/project_cron.html" %}

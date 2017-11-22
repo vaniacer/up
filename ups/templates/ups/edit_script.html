@@ -1,0 +1,29 @@
+{% extends "ups/base.html" %}
+{% load guardian_tags %}
+{% load bootstrap3 %}
+
+{% block header %}
+    <br>
+    <h2>Edit script - {{ script }}</h2>
+{% endblock header %}
+
+{% block content %}
+
+    {% get_obj_perms request.user for project as "edit_script_perms" %}
+
+    <form action="{% url 'ups:edit_script' script.id %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+
+        {% buttons %}
+            <input type="submit" name="ok" value="Save changes" class="btn btn-primary"/>
+            <a class="btn btn-primary" href="{% url 'ups:project' project.id %}">Cancel</a>
+
+            {% if "del_script" in edit_script_perms %}
+                <hr>
+                <input type="submit" name="delete" value="Delete" class="btn btn-danger"/>
+            {% endif %}
+        {% endbuttons %}
+    </form>
+
+{% endblock content %}

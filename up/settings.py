@@ -22,7 +22,7 @@ LOG_FILE = os.path.join(BASE_DIR, '../logs/run/log')
 ERR_FILE = os.path.join(BASE_DIR, '../logs/run/err')
 PID_FILE = os.path.join(BASE_DIR, '../logs/run/pid')
 CRON_DIR = os.path.join(BASE_DIR, '../logs/cron/')
-RUN_DIR = os.path.join(BASE_DIR, '../logs/run/')
+RUN_DIR = os.path.join(BASE_DIR,  '../logs/run/')
 STATIC_ROOT = 'staticfiles'
 STATICFILES_DIRS = (
 	os.path.join(BASE_DIR, 'static'),

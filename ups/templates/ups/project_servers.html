@@ -25,6 +25,7 @@
                 <dt>Working folder</dt><dd>{{ server.wdir }}</dd>
                 <dt>Server bind port</dt><dd>{{ server.port }}</dd>
                 <dt>Description</dt><dd>{{ server.desc|linebreaks|urlize }}</dd>
+                <dt><small>Added by</small></dt><dd><small>{{ server.user }}</small></dd>
                 <dt><small>Date added</small></dt><dd><small>{{ server.date|date:'M d, Y H:i' }}</small></dd>
             </dl>
             {% if "run_command" in pr_view_perms %}

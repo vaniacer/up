@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 from django.contrib.auth.decorators import login_required, permission_required
-from .forms import ProjectForm, ServerForm, UpdateForm
+from .forms import ProjectForm, ServerForm, UpdateForm, ScriptAddForm
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.shortcuts import render
@@ -76,3 +76,27 @@ def new_update(request, project_id):
 
 	context = {'project': project, 'form': form}
 	return render(request, 'ups/new_update.html', context)
+
+
+@login_required
+def new_script(request, project_id):
+	"""Добавляет новый скрипт."""
+	project = Project.objects.get(id=project_id)
+	check_perm('add_script', project, request.user)
+
+	if request.method != 'POST':
+		# Данные не отправлялись; создается пустая форма.
+		form = ScriptAddForm()
+	else:
+		# Отправлены данные POST; обработать данные.
+		form = ScriptAddForm(request.POST, request.FILES)
+
+		if form.is_valid():
+			script = form.save(commit=False)
+			script.user = request.user
+			script.proj = project
+			script.save()
+			return HttpResponseRedirect(reverse('ups:project', args=[project_id]))
+
+	context = {'project': project, 'form': form}
+	return render(request, 'ups/new_script.html', context)

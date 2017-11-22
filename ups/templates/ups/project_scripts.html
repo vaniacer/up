@@ -1,0 +1,49 @@
+{% load bootstrap3 %}
+
+<h3>Scripts</h3>
+
+{% include "ups/project_scripts_buttons.html" %}
+
+{% for script in scripts %}
+
+    <div class="panel panel-default"
+         onclick="selector('ux{{ script.id }}', 'ub{{ script.id }}', '{{ script }}', 'SX')">
+
+        <div class="panel-heading">
+            <h4 class="Name">{{ script }}</h4>
+            {% if "edit_script" in pr_view_perms %}
+                <a href="{% url 'ups:edit_script' script.id %}" class="Edit">Edit</a>
+            {% endif %}
+            {% if "dld_script" in pr_view_perms %}
+                <a onclick="selector('sx{{ script.id }}', 'sb{{ script.id }}', '{{ script }}', 'SX')"
+                   href="/download_script/{{ project.id }}/{{ script.id }}"
+                   class="Edit">Download</a>
+            {% endif %}
+        </div>
+
+        <div class="panel-body script-body" id="ub{{ script.id }}">
+            <dl class="dl-horizontal">
+                <!--<dt>File</dt><dd>{{ script.file }}</dd>-->
+                <!--<dt>Size</dt><dd>{{ script.file.size|filesizeformat }}</dd>-->
+                <dt>Description</dt><dd>{{ script.desc|linebreaks }}</dd>
+                <dt>Preview</dt><dd>{{ script.body|safe|linebreaks|truncatewords:10 }}</dd>
+                <dt><small>Added by</small></dt><dd><small>{{ script.user }}</small></dd>
+                <dt><small>Date added</small></dt><dd><small>{{ script.date|date:'M d, Y H:i' }}</small></dd>
+            </dl>
+            {% if "run_command" in pr_view_perms %}
+                <!--Hidden checkboxes-->
+                <input  class="hidden"
+                        type="checkbox"
+                        readonly="readonly"
+                        id="ux{{ script.id }}"
+                        name="selected_scripts"
+                        value="{{ script.file }}"
+                        data-target="{{ script }}"/>
+            {% endif %}
+        </div>
+
+    </div> <!-- panel -->
+
+{% empty %}
+    There are no scripts for this project yet.
+{% endfor %}

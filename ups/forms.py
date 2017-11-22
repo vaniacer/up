@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 from django import forms
-from .models import Project, Server, Update
+from .models import Project, Server, Update, Script
 
 
 class ProjectForm(forms.ModelForm):
@@ -31,4 +31,25 @@ class UpdateForm(forms.ModelForm):
 		labels = {'file': 'Update file', 'desc': 'Update description'}
 		widgets = {
 			'desc': forms.Textarea(attrs={'cols': 80}),
+		}
+
+
+class ScriptAddForm(forms.ModelForm):
+	class Meta:
+		model = Script
+		fields = ['file', 'desc']
+		labels = {'file': 'Script file', 'desc': 'Script description'}
+		widgets = {
+			'desc': forms.Textarea(attrs={'cols': 80}),
+		}
+
+
+class ScriptEditForm(forms.ModelForm):
+	class Meta:
+		model = Script
+		fields = ['desc', 'body']
+		labels = {'desc': 'Script description', 'body': 'Script body'}
+		widgets = {
+			'desc': forms.Textarea(attrs={'cols': 80}),
+			'body': forms.Textarea(attrs={'cols': 80}),
 		}

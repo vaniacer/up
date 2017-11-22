@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 
-from models import Project, Server, Update, History, Job
+from models import Project, Server, Update, Script, History, Job
 from guardian.admin import GuardedModelAdmin
 from django.contrib import admin
 
@@ -17,5 +17,5 @@ admin.site.register(Project, ProjectAdmin)
 admin.site.register(History)
 admin.site.register(Server)
 admin.site.register(Update)
+admin.site.register(Script)
 admin.site.register(Job)
-

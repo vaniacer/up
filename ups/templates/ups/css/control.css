@@ -34,3 +34,7 @@
 .danger {
     background: #f2dede;
 }
+
+.panel-body dl {
+    margin-left: 0px;
+}

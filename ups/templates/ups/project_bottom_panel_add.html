@@ -9,7 +9,10 @@
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdown_ADD">
             {% if "add_update" in pr_view_perms %}
-                <li><a href="{% url 'ups:new_update' project.id %}">Add Update\Script</a></li>
+                <li><a href="{% url 'ups:new_update' project.id %}">Add Update</a></li>
+            {% endif %}
+            {% if "add_script" in pr_view_perms %}
+                <li><a href="{% url 'ups:new_script' project.id %}">Add Script</a></li>
             {% endif %}
             {% if "add_server" in pr_view_perms %}
                 <li><a href="{% url 'ups:new_server' project.id %}">Add Server</a></li>

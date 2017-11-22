@@ -1,0 +1,21 @@
+{% load bootstrap3 %}
+
+{% buttons %}
+    {% if "run_command" in pr_view_perms %}
+        {% if scripts %}
+            <input type="button"
+                   value="Select All Scripts"
+                   class="btn btn-info btn-xs"
+                   onclick="select_all('selected_scripts', 'script-body', true,  'SX')"/>
+
+            <input type="button"
+                   class="btn btn-info btn-xs"
+                   value="Deselect All Scripts"
+                   onclick="select_all('selected_scripts', 'script-body', false, 'SX')"/>
+
+        {% endif %}
+    {% endif %}
+    {% if "add_script" in pr_view_perms %}
+        <a class="btn btn-success btn-xs" href="{% url 'ups:new_script' project.id %}">Add Script</a>
+    {% endif %}
+{% endbuttons %}

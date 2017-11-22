@@ -1,6 +1,6 @@
 {% load bootstrap3 %}
 
-<h3>Updates\Scripts</h3>
+<h3>Updates</h3>
 
 {% include "ups/project_updates_buttons.html" %}
 
@@ -14,9 +14,11 @@
             {% if "edit_update" in pr_view_perms %}
                 <a href="{% url 'ups:edit_update' update.id %}" class="Edit">Edit</a>
             {% endif %}
-            <a onclick="selector('ux{{ update.id }}', 'ub{{ update.id }}', '{{ update }}', 'SU')"
-               href="/download_upd/{{ project.id }}/{{ update.id }}"
-               class="Edit">Download</a>
+            {% if "dld_update" in pr_view_perms %}
+                <a onclick="selector('ux{{ update.id }}', 'ub{{ update.id }}', '{{ update }}', 'SU')"
+                   href="/download_upd/{{ project.id }}/{{ update.id }}"
+                   class="Edit">Download</a>
+            {% endif %}
         </div>
 
         <div class="panel-body update-body" id="ub{{ update.id }}">
@@ -24,7 +26,7 @@
                 <!--<dt>File</dt><dd>{{ update.file }}</dd>-->
                 <dt>Size</dt><dd>{{ update.file.size|filesizeformat }}</dd>
                 <dt>Description</dt><dd>{{ update.desc|linebreaks }}</dd>
-                <dt>Added by</dt><dd>{{ update.user }}</dd>
+                <dt><small>Added by</small></dt><dd><small>{{ update.user }}</small></dd>
                 <dt><small>Date added</small></dt><dd><small>{{ update.date|date:'M d, Y H:i' }}</small></dd>
             </dl>
             {% if "run_command" in pr_view_perms %}
