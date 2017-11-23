@@ -96,6 +96,15 @@ def new_script(request, project_id):
 			script.user = request.user
 			script.proj = project
 			script.save()
+
+			body = open(str(script.file), 'r')
+			script.body = body.read()
+			body.close()
+			body = open(str(script.file), 'w')
+			body.write(script.body)
+			body.close()
+			script.save()
+
 			return HttpResponseRedirect(reverse('ups:project', args=[project_id]))
 
 	context = {'project': project, 'form': form}

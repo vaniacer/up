@@ -132,7 +132,6 @@ def edit_script(request, script_id):
 
 	check_perm('edit_script', project, request.user)
 
-	print str(script.file)
 	body = open(str(script.file), 'r')
 	script.body = body.read()
 	body.close()

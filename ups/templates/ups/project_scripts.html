@@ -26,7 +26,7 @@
                 <!--<dt>File</dt><dd>{{ script.file }}</dd>-->
                 <!--<dt>Size</dt><dd>{{ script.file.size|filesizeformat }}</dd>-->
                 <dt>Description</dt><dd>{{ script.desc|linebreaks }}</dd>
-                <dt>Preview</dt><dd>{{ script.body|safe|linebreaks|truncatewords:10 }}</dd>
+                <dt>Preview</dt><dd>{{ script.body|truncatewords:5 }}</dd>
                 <dt><small>Added by</small></dt><dd><small>{{ script.user }}</small></dd>
                 <dt><small>Date added</small></dt><dd><small>{{ script.date|date:'M d, Y H:i' }}</small></dd>
             </dl>
