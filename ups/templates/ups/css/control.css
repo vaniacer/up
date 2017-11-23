@@ -34,3 +34,11 @@
 .danger {
     background: #f2dede;
 }
+
+.dl-horizontal dt {
+    width: 110px;
+}
+
+.dl-horizontal dd {
+    margin-left: 120px;
+}
