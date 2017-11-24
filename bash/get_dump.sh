@@ -6,9 +6,11 @@ function description () { #---------------------| Function description |--------
 
 function body () { #---------------------------------| Main function |--------------------------------------------------
 
-    ssh ${addr} "${wdir}/krupd bkp db" || error=$?; download
-    ssh ${addr} "rm ${name}" || error=$? # Удаляю файл - ${name}, ${name} определяется в download'е"
+    ssh $addr "$wdir/krupd bkp db" || error=$?; download
+    # функция download сохраняет имя файла дампа в переменной $name
+    # удаляю файл $name на сервере после скачивания на ups
+    ssh $addr "rm $name" || error=$?
 
 } #---------------------------------------------------------------------------------------------------------------------
 
-function run () { for server in ${servers}; { addr; body; }; info 'Done' ${error}; }
+function run () { for server in $servers; { addr; body; }; info 'Done' $error; }

@@ -6,7 +6,7 @@ function description () { #---------------------| Function description |--------
 
 function body () { #---------------------------------| Main function |--------------------------------------------------
 
-    ssh ${addr} "
+    ssh $addr "
         printf '\n<b>Hostname:</b>\n'
         hostname
 
@@ -37,4 +37,4 @@ function body () { #---------------------------------| Main function |----------
 
 } #---------------------------------------------------------------------------------------------------------------------
 
-function run () { for server in ${servers}; { addr; body; }; info 'Done' ${error}; }
+function run () { for server in $servers; { addr; body; }; info 'Done' $error; }

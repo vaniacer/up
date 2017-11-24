@@ -6,9 +6,9 @@ function description () { #---------------------| Function description |--------
 
 function body () { #---------------------------------| Main function |--------------------------------------------------
 
-    ssh ${addr} ${wdir}/krupd jboss.stop  || error=$?
-    ssh ${addr} ${wdir}/krupd jboss.start || error=$?
+    ssh $addr $wdir/krupd jboss.stop  || error=$?
+    ssh $addr $wdir/krupd jboss.start || error=$?
 
 } #---------------------------------------------------------------------------------------------------------------------
 
-function run () { for server in ${servers}; { addr; body; }; info 'Done' ${error}; }
+function run () { for server in $servers; { addr; body; }; info 'Done' $error; }

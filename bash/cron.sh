@@ -1,10 +1,11 @@
 #!/bin/bash
 
 function description () { #---------------------| Function description |------------------------------------------------
-    echo -e "Set cron job ${run} for server(s):\n${servers// /\\n}\n"; exit 0
+    echo -e "Set cron job $run for server(s):\n${servers// /\\n}\n"; exit 0
 }
 
 function run () { #---------------------------------| Main function |---------------------------------------------------
+
     # Get time
     time=${date#* }; date=${date% *}; hh=${time%:*}; mm=${time#*:}; DD=${date%%.*}; MM=${date#*.}; MM=${MM%.*}
 
@@ -23,4 +24,5 @@ function run () { #---------------------------------| Main function |-----------
     info 'Set cron job'
     ${workdir}/starter.sh -c "$run" -u "$updates" -x "$scripts" -s "$servers" -desc true
     info 'Done' $error
+
 } #---------------------------------------------------------------------------------------------------------------------

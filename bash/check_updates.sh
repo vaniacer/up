@@ -7,15 +7,8 @@ function description () { #---------------------| Function description |--------
 function body () { #---------------------------------| Main function |--------------------------------------------------
 
     echo -e "\nПакеты обновлений:\n"
-    ssh ${addr} "ls ${wdir}/updates/new" || error=$?
+    ssh $addr "ls $wdir/updates/new" || error=$?
 
 } #---------------------------------------------------------------------------------------------------------------------
 
-function run () { for server in ${servers}; { addr; body; }; info 'Done' ${error}; }
-
-# Test function
-#function run () { for server in ${servers}; { addr; for ((i=0; i<10; i++)); { sleep 1
-#
-#    echo ok
-#
-#}; }; }; info 'Done' ${error}
+function run () { for server in $servers; { addr; body; }; info 'Done' $error; }

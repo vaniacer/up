@@ -6,10 +6,11 @@ function description () { #---------------------| Function description |--------
 
 function body () { #---------------------------------| Main function |--------------------------------------------------
 
-    for file in ${updates}; {
-        filename=${file##*/}; echo -e "Delete file - ${filename}."
-        ssh ${addr} "rm ${wdir}/updates/new/${filename}" || error=$?
+    for file in $updates; {
+        filename=${file##*/}; echo -e "Delete file - $filename."
+        ssh $addr "rm $wdir/updates/new/$filename" || error=$?
     }
+
 } #---------------------------------------------------------------------------------------------------------------------
 
-function run () { for server in ${servers}; { addr; body; }; info 'Done' ${error}; }
+function run () { for server in $servers; { addr; body; }; info 'Done' $error; }

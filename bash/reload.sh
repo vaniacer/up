@@ -6,8 +6,8 @@ function description () { #---------------------| Function description |--------
 
 function body () { #---------------------------------| Main function |--------------------------------------------------
 
-    ssh ${addr} ${wdir}/jboss-bas-*/bin/jboss-cli.sh -c command=":reload" || error=$?
+    ssh $addr $wdir/jboss-bas-*/bin/jboss-cli.sh -c command=":reload" || error=$?
 
 } #---------------------------------------------------------------------------------------------------------------------
 
-function run () { for server in ${servers}; { addr; body; }; info 'Done' ${error}; }
+function run () { for server in $servers; { addr; body; }; info 'Done' $error; }

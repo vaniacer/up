@@ -6,13 +6,13 @@ function description () { #---------------------| Function description |--------
 
 function body () { #---------------------------------| Main function |--------------------------------------------------
 
-    ssh ${addr} "
+    ssh $addr "
         echo -e '\nJava options\n'
-        ps axo command | grep ${wdir} | grep [j]ava
+        ps axo command | grep $wdir | grep [j]ava
 
         echo -e '\nStandalone-full.xml\n'
-        cat ${wdir}/jboss-bas-*/standalone/configuration/standalone-full.xml" || error=$?
+        cat $wdir/jboss-bas-*/standalone/configuration/standalone-full.xml" || error=$?
 
 } #---------------------------------------------------------------------------------------------------------------------
 
-function run () { for server in ${servers}; { addr; body; }; info 'Done' ${error}; }
+function run () { for server in $servers; { addr; body; }; info 'Done' $error; }

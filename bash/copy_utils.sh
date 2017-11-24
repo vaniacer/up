@@ -6,10 +6,9 @@ function description () { #---------------------| Function description |--------
 
 function body () { #---------------------------------| Main function |--------------------------------------------------
 
-    ssh ${addr} [ -d '.utils' ] || ssh ${addr} mkdir .utils || error=$?
-#    scp -r ~/utils/* ${addr}:~/.utils || error=$?
-    rsync -e "ssh" --progress -lzuogthvr ~/utils/* ${addr}:~/.utils || error=$?
+    ssh $addr [ -d '.utils' ] || ssh $addr mkdir .utils || error=$?
+    rsync -e "ssh" --progress -lzuogthvr ~/utils/* $addr:~/.utils || error=$?
 
 } #---------------------------------------------------------------------------------------------------------------------
 
-function run () { for server in ${servers}; { addr; body; }; info 'Done' ${error}; }
+function run () { for server in $servers; { addr; body; }; info 'Done' $error; }

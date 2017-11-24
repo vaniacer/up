@@ -6,9 +6,9 @@ function description () { #---------------------| Function description |--------
 
 function body () { #---------------------------------| Main function |--------------------------------------------------
 
-    ssh ${addr} "echo -e \"Delete files:\n$(ls ${wdir}/updates/new)\""
-    ssh ${addr} "rm ${wdir}/updates/new/*" || error=$?
+    ssh $addr "echo -e \"Delete files:\n$(ls $wdir/updates/new)\""
+    ssh $addr "rm $wdir/updates/new/*" || error=$?
 
 } #---------------------------------------------------------------------------------------------------------------------
 
-function run () { for server in ${servers}; { addr; body; }; info 'Done' ${error}; }
+function run () { for server in $servers; { addr; body; }; info 'Done' $error; }

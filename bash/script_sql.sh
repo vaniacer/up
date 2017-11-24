@@ -6,15 +6,15 @@ function description () { #---------------------| Function description |--------
 
 function body () { #---------------------------------| Main function |--------------------------------------------------
 
-    for file in ${scripts}; { filename=${file##*/}
+    for file in $scripts; { filename=${file##*/}
 
-        echo -e "\nCopy script - ${filename}"
-#        scp ${file} ${addr}:${wdir}/updates/new || error=$?
-        rsync -e "ssh" --progress -lzuogthvr ${file} ${addr}:${wdir}/updates/new/ || error=$?
+        echo -e "\nCopy script - $filename"
+        rsync -e "ssh" --progress -lzuogthvr $file $addr:$wdir/updates/new/ || error=$?
 
-        ssh ${addr} "${wdir}/krupd execsql ${wdir}/updates/new/${filename}" || error=$?
-        ssh ${addr} "rm ${wdir}/updates/new/${filename}" || error=$?
+        ssh $addr "$wdir/krupd execsql $wdir/updates/new/$filename" || error=$?
+        ssh $addr "rm $wdir/updates/new/$filename" || error=$?
     }
+
 } #---------------------------------------------------------------------------------------------------------------------
 
-function run () { for server in ${servers}; { addr; body; }; info 'Done' ${error}; }
+function run () { for server in $servers; { addr; body; }; info 'Done' $error; }

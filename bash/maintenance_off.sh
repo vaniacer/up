@@ -7,8 +7,8 @@ function description () { #---------------------| Function description |--------
 function body () { #---------------------------------| Main function |--------------------------------------------------
 
     echo -e "Stop dummy page."
-    ssh ${addr} '~/.utils/dp.sh --stop' || error=$?
+    ssh $addr '~/.utils/dp.sh --stop' || error=$?
 
 } #---------------------------------------------------------------------------------------------------------------------
 
-function run () { for server in ${servers}; { addr; body; }; info 'Done' ${error}; }
+function run () { for server in $servers; { addr; body; }; info 'Done' $error; }
