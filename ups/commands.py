@@ -34,11 +34,11 @@ def command(selected):
 		'backup_full':     {'history':  True, 'bash':     'backup_full.sh', 'tag':  True, },
 		# Main |-----------------------------+-----------------------------+----------------+
 		'copy':            {'history':  True, 'bash':            'copy.sh', 'tag': False, },
-		'script':          {'history':  True, 'bash':          'script.sh', 'tag': False, },
+		'script':          {'history':  True, 'bash':     'script_bash.sh', 'tag': False, },
 		'update':          {'history':  True, 'bash':          'update.sh', 'tag':  True, },
 		'get_dump':        {'history':  True, 'bash':        'get_dump.sh', 'tag':  True, },
 		'copy_utils':      {'history':  True, 'bash':      'copy_utils.sh', 'tag': False, },
-		'sql_script':      {'history':  True, 'bash':      'sql_script.sh', 'tag': False, }, }
+		'sql_script':      {'history':  True, 'bash':      'script_sql.sh', 'tag': False, }, }
 
 	cmd = ''.join(selected['command'])
 	selected['cmdname'] = dick[cmd]['bash']
@@ -62,6 +62,7 @@ def cmd_run(request, current_project, context):
 		'cron': request.POST.get('CRON') or False,
 		'date': request.POST.get('selected_date') or run_date(),
 		'updates': request.POST.getlist('selected_updates'),
+		'scripts': request.POST.getlist('selected_scripts'),
 		'servers': request.POST.getlist('selected_servers'),
 		'cronjbs': request.POST.getlist('selected_jobs'),
 		'command': request.POST.get('selected_commands'),

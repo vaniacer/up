@@ -1,12 +1,12 @@
 #!/bin/bash
 
 function description () { #---------------------| Function description |------------------------------------------------
-    echo -e "Run SQL script(s):\n${updates// /\\n}\n\non Server(s):\n${servers// /\\n}\n"; exit 0
+    echo -e "Run SQL script(s):\n${scripts// /\\n}\n\non Server(s):\n${servers// /\\n}\n"; exit 0
 }
 
 function body () { #---------------------------------| Main function |--------------------------------------------------
 
-    for file in ${updates}; { filename=${file##*/}
+    for file in ${scripts}; { filename=${file##*/}
 
         echo -e "\nCopy script - ${filename}"
 #        scp ${file} ${addr}:${wdir}/updates/new || error=$?

@@ -57,6 +57,8 @@ def starter(selected):
 		opt.extend(['-server', ' '.join(selected['servers'])])
 	if selected['updates']:
 		opt.extend(['-update', ' '.join(selected['updates'])])
+	if selected['scripts']:
+		opt.extend(['-script', ' '.join(selected['scripts'])])
 	if selected['cronjbs']:
 		del_job(selected)
 		opt.extend(['-job', ' '.join(selected['cronjbs'])])

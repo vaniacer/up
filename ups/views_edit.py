@@ -142,10 +142,6 @@ def edit_script(request, script_id):
 
 	check_perm('edit_script', project, request.user)
 
-	body = open(str(script.file), 'r')
-	script.body = body.read()
-	body.close()
-
 	if request.method != 'POST':
 		# Исходный запрос; форма заполняется данными текущей записи.
 		form = ScriptEditForm(instance=script)
@@ -160,8 +156,8 @@ def edit_script(request, script_id):
 				delete_object(request, script)
 			elif request.POST.get('ok'):
 				form.save()
-				body = open(str(filename), 'w')
-				body.write(script.body)
+				body = open(str(filename), 'wb')
+				body.write(script.body.replace('\r\n', '\n'))
 				body.close()
 				edit_object(request, script)
 

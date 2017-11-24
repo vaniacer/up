@@ -1,15 +1,14 @@
 #!/bin/bash
 
 function description () { #---------------------| Function description |------------------------------------------------
-    echo -e "Run script(s):\n${updates// /\\n}\n\non Server(s):\n${servers// /\\n}\n"; exit 0
+    echo -e "Run script(s):\n${scripts// /\\n}\n\non Server(s):\n${servers// /\\n}\n"; exit 0
 }
 
 function body () { #---------------------------------| Main function |--------------------------------------------------
 
-    for file in ${updates}; { filename=${file##*/}
+    for file in ${scripts}; { filename=${file##*/}
 
         printf "\nCopy script - ${filename}\n"
-#        scp ${file} ${addr}:${wdir}/updates/new || error=$?
         rsync -essh --progress -lzuogthvr ${file} ${addr}:${wdir}/updates/new/ || error=$?
 
         printf "Run  script - ${filename}\n"

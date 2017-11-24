@@ -11,6 +11,7 @@ until [ -z ${1} ]; do case ${1} in
 
     -server | -s) servers=${2};;
     -update | -u) updates=${2};;
+    -script | -x) scripts=${2};;
     -date   | -d) date=${2};;
     -cron   | -C) cron=${2};;
     -desc   | -D) desc=${2};;

@@ -97,11 +97,8 @@ def new_script(request, project_id):
 			script.proj = project
 			script.save()
 
-			body = open(str(script.file), 'r')
+			body = open(str(script.file), 'rU')
 			script.body = body.read()
-			body.close()
-			body = open(str(script.file), 'w')
-			body.write(script.body)
 			body.close()
 			script.save()
 
