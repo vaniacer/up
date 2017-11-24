@@ -14,8 +14,9 @@ import os
 
 
 def delete_project(project):
-	"""Удаляет проект и файлы обновлений."""
+	"""Удаляет проект c файлами обновлений и скриптами."""
 	shutil.rmtree(conf.MEDIA_ROOT + '/updates/' + project.name, ignore_errors=True)
+	shutil.rmtree(conf.MEDIA_ROOT + '/scripts/' + project.name, ignore_errors=True)
 	project.delete()
 
 
@@ -26,12 +27,18 @@ def delete_server(request, server):
 	server.delete()
 
 
-def delete_update(request, update):
-	"""Удаляет обновление и файлы обновлений, записывает событие в историю."""
-	dick = {'project': update.proj, 'user': request.user, 'command': 'Del upd\scr'}
-	add_event(dick, 'Удален файл:\n%s\n\nНазначение:\n%s' % (str(update), update.desc.encode('utf-8')), 0, '', '')
-	os.remove(str(update.file))
-	update.delete()
+def delete_object(request, obj):
+	"""Удаляет обновление\скрипт и соотв. файлы, записывает событие в историю."""
+	dick = {'project': obj.proj, 'user': request.user, 'command': 'Del upd\scr'}
+	add_event(dick, 'Удален файл:\n%s\n\nНазначение:\n%s' % (str(obj), obj.desc.encode('utf-8')), 0, '', '')
+	os.remove(str(obj.file))
+	obj.delete()
+
+
+def edit_object(request, obj):
+	"""Записывает событие редактирования в историю."""
+	dick = {'project': obj.proj, 'user': request.user, 'command': 'Edit upd\scr'}
+	add_event(dick, 'Изменен файл:\n%s\n\nНазначение:\n%s' % (str(obj), obj.desc.encode('utf-8')), 0, '', '')
 
 
 @login_required
@@ -111,12 +118,13 @@ def edit_update(request, update_id):
 		if form.is_valid():
 			if request.POST.get('delete'):
 				check_perm('del_update', project, request.user)
-				delete_update(request, update)
+				delete_object(request, update)
 			elif request.POST.get('ok'):
 				if form.files:
 					os.remove(str(filename))
 
 				form.save()
+				edit_object(request, update)
 
 			return HttpResponseRedirect(reverse('ups:project', args=[project.id]))
 
@@ -147,7 +155,7 @@ def edit_script(request, script_id):
 		if form.is_valid():
 			if request.POST.get('delete'):
 				check_perm('del_update', project, request.user)
-				delete_update(request, script)
+				delete_object(request, script)
 			elif request.POST.get('ok'):
 				if form.files:
 					os.remove(str(filename))
@@ -156,6 +164,7 @@ def edit_script(request, script_id):
 				body = open(str(filename), 'w')
 				body.write(script.body)
 				body.close()
+				edit_object(request, script)
 
 			return HttpResponseRedirect(reverse('ups:project', args=[project.id]))
 
