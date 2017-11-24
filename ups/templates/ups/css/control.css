@@ -35,10 +35,26 @@
     background: #f2dede;
 }
 
-.dl-horizontal dt {
+.update-panel dt {
+    width: 80px;
+}
+
+.update-panel dd {
+    margin-left: 90px;
+}
+
+.script-panel dt {
+    width: 80px;
+}
+
+.script-panel dd {
+    margin-left: 90px;
+}
+
+.server-panel dt {
     width: 110px;
 }
 
-.dl-horizontal dd {
+.server-panel dd {
     margin-left: 120px;
 }
