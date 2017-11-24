@@ -92,12 +92,17 @@ function getCookie(cname) {
     return "";
 }
 
-function Validation(box, srv, upd, job) {
+function Validation(box, srv, upd, job, scr) {
 
     if (job) {
         var jobs = document.getElementsByName('selected_jobs');
         for (i = 0; i < jobs.length; i++) { if (jobs[i].checked) { var selected_jobs = true; break; }}
         if  (!selected_jobs) { alert('Job(s) not selected.'); return false; }}
+
+    if (scr) {
+        var updates = document.getElementsByName('selected_scripts');
+        for (i = 0; i < updates.length; i++) { if (updates[i].checked) { var selected_updates = true; break; }}
+        if  (!selected_updates) { alert('Script(s) not selected.'); return false; }}
 
     if (upd) {
         var updates = document.getElementsByName('selected_updates');

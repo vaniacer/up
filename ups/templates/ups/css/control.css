@@ -58,3 +58,8 @@
 .server-panel dd {
     margin-left: 120px;
 }
+
+.roller {
+    overflow-y: auto;
+    height: 600px;
+}

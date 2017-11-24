@@ -121,6 +121,8 @@ def edit_update(request, update_id):
 				delete_object(request, update)
 			elif request.POST.get('ok'):
 				if form.files:
+					# если при редактировании прикладывается новый файл
+					# удаляю старый чтобы не плодить файлы-призроки О_о
 					os.remove(str(filename))
 
 				form.save()
@@ -157,9 +159,6 @@ def edit_script(request, script_id):
 				check_perm('del_update', project, request.user)
 				delete_object(request, script)
 			elif request.POST.get('ok'):
-				if form.files:
-					os.remove(str(filename))
-
 				form.save()
 				body = open(str(filename), 'w')
 				body.write(script.body)

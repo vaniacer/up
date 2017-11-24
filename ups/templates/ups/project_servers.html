@@ -1,9 +1,16 @@
 {% load bootstrap3 %}
 
-<h3>Servers</h3>
+<br>
+<div class="row">
+    <div class="col-md-3">
+        <h3 class="Name">Servers</h3>
+    </div>
+    <div class="col-md-7">
+        {% include "ups/project_servers_buttons.html" %}
+    </div>
+</div>
 
-{% include "ups/project_servers_buttons.html" %}
-
+<div class="roller">
 {% for server in servers %}
 
     <div class="panel panel-default"
@@ -45,3 +52,4 @@
 {% empty %}
     There are no servers for this project yet.
 {% endfor %}
+</div>
