@@ -10,16 +10,16 @@ function run () { #---------------------------------| Main function |-----------
     time=${date#* }; date=${date% *}; hh=${time%:*}; mm=${time#*:}; DD=${date%%.*}; MM=${date#*.}; MM=${MM%.*}
 
     date="$mm $hh $DD $MM *"                              # Cron format date
-    nopt=("${options[@]:6}")                              # Cut cron part from options
+    opts=("${options[@]:6}")                              # Cut cron part from options
     cncl="sed \"/$key/d\" -i $cronfile\n"                 # Command to delete executed cron job
-    cmnd="$workdir/starter.sh -c $run -C $key ${nopt[@]}" # Command to run
+    cmnd="$workdir/starter.sh -c $run -C $key ${opts[@]}" # Command to run
 
     # Set crontab job
     echo -e "$(crontab -l)\n$date $cmnd; $cncl\n" | crontab - || error=$?
 
     # Info
     info 'Set cron job'
-    $workdir/starter.sh -c "$run" "${nopt[@]}" -desc true # Show description of running command
+    $workdir/starter.sh -c "$run" "${opts[@]}" -desc true # Show description of running command
     info 'Done' $error
 
 } #---------------------------------------------------------------------------------------------------------------------
