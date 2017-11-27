@@ -47,11 +47,18 @@ def del_job(selected):
 
 def starter(selected):
 	"""Выполняет комманду."""
-	opt = [
-		conf.BASE_DIR + '/bash/starter.sh',
+	opt = [conf.BASE_DIR + '/bash/starter.sh']
+	if selected['cron']:
+		opt.extend([
+			'-run',  selected['cmdname'],
+			'-date', selected['date'],
+			'-cmd',  'cron.sh'])
+	else:
+		opt.extend(['-cmd', selected['cmdname']])
+
+	opt.extend([
 		'-prj', str(selected['project'].id),
-		'-cmd', selected['cmdname'],
-		'-key', selected['key']]
+		'-key', selected['key']])
 
 	if selected['servers']:
 		opt.extend(['-server', ' '.join(selected['servers'])])
@@ -62,12 +69,5 @@ def starter(selected):
 	if selected['cronjbs']:
 		del_job(selected)
 		opt.extend(['-job', ' '.join(selected['cronjbs'])])
-	if selected['cron']:
-		opt.extend([
-			'-run',  selected['cmdname'],
-			'-date', selected['date'],
-			'-key',  selected['key'],
-			'-id',   selected['key'],
-			'-cmd',  'cron.sh'])
 
 	Popen(opt)

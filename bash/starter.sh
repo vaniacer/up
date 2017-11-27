@@ -1,6 +1,7 @@
 #!/bin/bash
 
 error=0
+options=("$@")
 workdir=$(dirname $0)
 cronfile=/var/spool/cron/crontabs/$USER
 dumpdir=$workdir/../media/dumps
@@ -20,7 +21,6 @@ until [ -z $1 ]; do case $1 in
     -run    | -r) run=$2;;
     -key    | -k) key=$2;;
     -prj    | -p) prj=$2;;
-    -id     | -i) id=$2;;
 
 esac; shift 2; done
 #---------------------------------
