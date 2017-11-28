@@ -38,7 +38,7 @@ class ScriptAddForm(forms.ModelForm):
 	class Meta:
 		model = Script
 		fields = ['file', 'desc']
-		labels = {'file': 'Script file', 'desc': 'Script description'}
+		labels = {'file': 'Script file. SQL scripts MUST have extension \'.sql\'', 'desc': 'Script description'}
 		widgets = {
 			'desc': forms.Textarea(attrs={'cols': 80}),
 		}

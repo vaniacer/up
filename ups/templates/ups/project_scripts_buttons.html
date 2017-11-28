@@ -6,21 +6,34 @@
             <input type="button"
                    value="Select All"
                    class="btn btn-info btn-xs"
+                   title="Select all scripts."
                    onclick="select_all('selected_scripts', 'script-body', true,  'SX')"/>
 
             <input type="button"
-                   class="btn btn-info btn-xs"
                    value="Deselect All"
+                   class="btn btn-info btn-xs"
+                   title="Deselect all scripts."
                    onclick="select_all('selected_scripts', 'script-body', false, 'SX')"/>
 
-            <input class="btn btn-info btn-xs xhide" type="button" value="Hide Info"
+            <input type="button"
+                   value="Hide Info"
+                   title="Hide scripts' info."
+                   class="btn btn-info btn-xs xhide"
                    onclick="$('.script-panel').hide(); $('.xhide').hide(); $('.xshow').show();"/>
 
-            <input class="btn btn-info btn-xs xshow" type="button" value="Show Info"
+            <input type="button"
+                   value="Show Info"
+                   title="Show scripts' info."
+                   class="btn btn-info btn-xs xshow"
                    onclick="$('.script-panel').show(); $('.xshow').hide(); $('.xhide').show();"/>
         {% endif %}
+
     {% endif %}
+
     {% if "add_script" in pr_view_perms %}
-        <a class="btn btn-success btn-xs" href="{% url 'ups:new_script' project.id %}">Add</a>
+        <a title="Add new script."
+           class="btn btn-success btn-xs"
+           href="{% url 'ups:new_script' project.id %}">Add</a>
     {% endif %}
+
 {% endbuttons %}

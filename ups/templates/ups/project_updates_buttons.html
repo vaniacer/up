@@ -5,22 +5,35 @@
         {% if updates %}
             <input type="button"
                    value="Select All"
+                   title="Select all updates."
                    class="btn btn-info btn-xs"
                    onclick="select_all('selected_updates', 'update-body', true,  'SU')"/>
 
             <input type="button"
-                   class="btn btn-info btn-xs"
                    value="Deselect All"
+                   title="Deselect all updates."
+                   class="btn btn-info btn-xs"
                    onclick="select_all('selected_updates', 'update-body', false, 'SU')"/>
 
-            <input class="btn btn-info btn-xs uhide" type="button" value="Hide Info"
+            <input type="button"
+                   value="Hide Info"
+                   title="Hide updates' info."
+                   class="btn btn-info btn-xs uhide"
                    onclick="$('.update-panel').hide(); $('.uhide').hide(); $('.ushow').show();"/>
 
-            <input class="btn btn-info btn-xs ushow" type="button" value="Show Info"
+            <input type="button"
+                   value="Show Info"
+                   title="Show updates' info."
+                   class="btn btn-info btn-xs ushow"
                    onclick="$('.update-panel').show(); $('.ushow').hide(); $('.uhide').show();"/>
         {% endif %}
+
     {% endif %}
+
     {% if "add_update" in pr_view_perms %}
-        <a class="btn btn-success btn-xs" href="{% url 'ups:new_update' project.id %}">Add</a>
+        <a title="Add new update."
+           class="btn btn-success btn-xs"
+           href="{% url 'ups:new_update' project.id %}">Add</a>
     {% endif %}
+
 {% endbuttons %}

@@ -1,30 +1,39 @@
 {% load bootstrap3 %}
 
 {% buttons %}
-
     {% if "run_command" in pr_view_perms %}
-
         {% if servers %}
             <input type="button"
                    value="Select All"
+                   title="Select all servers."
                    class="btn btn-info btn-xs"
                    onclick="select_all('selected_servers', 'server-body', true,  'SS')"/>
 
             <input type="button"
-                   class="btn btn-info btn-xs"
                    value="Deselect All"
+                   class="btn btn-info btn-xs"
+                   title="Deselect all servers."
                    onclick="select_all('selected_servers', 'server-body', false, 'SS')"/>
 
-            <input class="btn btn-info btn-xs shide" type="button" value="Hide Info"
+            <input type="button"
+                   value="Hide Info"
+                   title="Hide servers' info."
+                   class="btn btn-info btn-xs shide"
                    onclick="$('.server-panel').hide(); $('.shide').hide(); $('.sshow').show();"/>
 
-            <input class="btn btn-info btn-xs sshow" type="button" value="Show Info"
+            <input type="button"
+                   value="Show Info"
+                   title="Show servers' info."
+                   class="btn btn-info btn-xs sshow"
                    onclick="$('.server-panel').show(); $('.sshow').hide(); $('.shide').show();"/>
         {% endif %}
 
     {% endif %}
 
     {% if "add_server" in pr_view_perms %}
-        <a class="btn btn-success btn-xs" href="{% url 'ups:new_server' project.id %}">Add</a>
+        <a title="Add new server."
+           class="btn btn-success btn-xs"
+           href="{% url 'ups:new_server' project.id %}">Add</a>
     {% endif %}
+
 {% endbuttons %}
