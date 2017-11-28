@@ -13,6 +13,11 @@
                    value="Deselect All"
                    onclick="select_all('selected_updates', 'update-body', false, 'SU')"/>
 
+            <input class="btn btn-info btn-xs uhide" type="button" value="Hide Info"
+                   onclick="$('.update-panel').hide(); $('.uhide').hide(); $('.ushow').show();"/>
+
+            <input class="btn btn-info btn-xs ushow" type="button" value="Show Info"
+                   onclick="$('.update-panel').show(); $('.ushow').hide(); $('.uhide').show();"/>
         {% endif %}
     {% endif %}
     {% if "add_update" in pr_view_perms %}

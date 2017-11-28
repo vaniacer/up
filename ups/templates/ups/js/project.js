@@ -143,4 +143,9 @@ $(function() {
     }, false);
 });
 
-$(document).ready(function() { $('.loader').hide(); });
+$(document).ready(function() {
+    $('.loader').hide();
+    $('.sshow').hide();
+    $('.xshow').hide();
+    $('.ushow').hide();
+});

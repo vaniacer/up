@@ -5,7 +5,7 @@
     <div class="col-md-3">
         <h3 class="Name">Scripts</h3>
     </div>
-    <div class="col-md-7">
+    <div class="col-md-9">
         {% include "ups/project_scripts_buttons.html" %}
     </div>
 </div>
@@ -25,6 +25,9 @@
                 <a onclick="selector('sx{{ script.id }}', 'sb{{ script.id }}', '{{ script }}', 'SX')"
                    href="/download_script/{{ project.id }}/{{ script.id }}"
                    class="Edit">Download</a>
+            {% endif %}
+            {% if "run_command" in pr_view_perms %}
+                {% include "ups/commands_scripts.html" %}
             {% endif %}
         </div>
 

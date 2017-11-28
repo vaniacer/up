@@ -1,0 +1,28 @@
+<!-- Validation(input_id(if it not submit type), check_srv, check_upd, check_job, check_script) -->
+<a      onclick="run_or_cron('RUN', 'CRON');
+                 select_all('selected_scripts', 'script-body', false, 'SX');
+                 selector('ux{{ script.id }}', 'ub{{ script.id }}', '{{ script }}', 'SX');
+                 Validation('sql_script', true, false, false, true)"
+        title="Run this script as SQL script on selected server(s)."
+        href="javascript:;"
+        class="Edit">SQL</a>
+<input  name="selected_commands"
+        readonly="readonly"
+        value="sql_script"
+        id="sql_script"
+        type="checkbox"
+        class="hidden"/>
+
+<a      onclick="run_or_cron('RUN', 'CRON');
+                 select_all('selected_scripts', 'script-body', false, 'SX');
+                 selector('ux{{ script.id }}', 'ub{{ script.id }}', '{{ script }}', 'SX');
+                 Validation('script', true, false, false, true)"
+        title="Run this script as BASH script on selected server(s)."
+        href="javascript:;"
+        class="Edit">BASH</a>
+<input  name="selected_commands"
+        readonly="readonly"
+        value="script"
+        id="script"
+        type="checkbox"
+        class="hidden"/>

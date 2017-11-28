@@ -14,6 +14,12 @@
                    class="btn btn-info btn-xs"
                    value="Deselect All"
                    onclick="select_all('selected_servers', 'server-body', false, 'SS')"/>
+
+            <input class="btn btn-info btn-xs shide" type="button" value="Hide Info"
+                   onclick="$('.server-panel').hide(); $('.shide').hide(); $('.sshow').show();"/>
+
+            <input class="btn btn-info btn-xs sshow" type="button" value="Show Info"
+                   onclick="$('.server-panel').show(); $('.sshow').hide(); $('.shide').show();"/>
         {% endif %}
 
     {% endif %}
@@ -21,5 +27,4 @@
     {% if "add_server" in pr_view_perms %}
         <a class="btn btn-success btn-xs" href="{% url 'ups:new_server' project.id %}">Add</a>
     {% endif %}
-
 {% endbuttons %}

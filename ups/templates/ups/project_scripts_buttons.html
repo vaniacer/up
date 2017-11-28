@@ -13,6 +13,11 @@
                    value="Deselect All"
                    onclick="select_all('selected_scripts', 'script-body', false, 'SX')"/>
 
+            <input class="btn btn-info btn-xs xhide" type="button" value="Hide Info"
+                   onclick="$('.script-panel').hide(); $('.xhide').hide(); $('.xshow').show();"/>
+
+            <input class="btn btn-info btn-xs xshow" type="button" value="Show Info"
+                   onclick="$('.script-panel').show(); $('.xshow').hide(); $('.xhide').show();"/>
         {% endif %}
     {% endif %}
     {% if "add_script" in pr_view_perms %}
