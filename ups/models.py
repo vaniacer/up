@@ -91,6 +91,9 @@ class Script(models.Model):
 	user = models.ForeignKey(User)
 	body = models.TextField()
 
+	def type(self):
+		return self.file.name.split('.')[-1]
+
 	def __unicode__(self):
 		"""Возвращает строковое представление модели."""
 		name = self.file.name.split('/')[-1]
