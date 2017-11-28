@@ -18,20 +18,7 @@
 
         <div class="panel-heading">
             <h4 class="Name">{{ script }}</h4>
-            {% if "edit_script" in pr_view_perms %}
-                <a href="{% url 'ups:edit_script' script.id %}"
-                   title="Edit this script."
-                   class="Edit">Edit</a>
-            {% endif %}
-            {% if "run_command" in pr_view_perms %}
-                {% include "ups/commands_scripts.html" %}
-            {% endif %}
-            {% if "dld_script" in pr_view_perms %}
-                <a onclick="selector('xx{{ script.id }}', 'xb{{ script.id }}', '{{ script }}', 'SX')"
-                   href="/download_script/{{ project.id }}/{{ script.id }}"
-                   title="Download this script."
-                   class="Edit">Download</a>
-            {% endif %}
+            {% include "ups/commands_scripts.html" %}
         </div>
 
         <div class="panel-body script-body" id="xb{{ script.id }}">

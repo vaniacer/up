@@ -18,14 +18,7 @@
 
         <div class="panel-heading">
             <h4 class="Name">{{ server.name }}</h4>
-            {% if "edit_server" in pr_view_perms %}
-                <a href="{% url 'ups:edit_server' server.id %}"
-                   title="Edit this server's info."
-                   class="Edit">Edit</a>
-            {% endif %}
-            {% if "run_command" in pr_view_perms %}
-                {% include "ups/commands_servers.html" %}
-            {% endif %}
+            {% include "ups/commands_servers.html" %}
         </div>
 
         <div class="panel-body server-body" id="sb{{ server.id }}">

@@ -1,71 +1,80 @@
+<!--Edit button-->
+{% if "edit_server" in pr_view_perms %}
+    <a href="{% url 'ups:edit_server' server.id %}"
+       title="Edit this server's info."
+       class="Edit">Edit</a>
+{% endif %}
+
+<!--Available commands-->
 <!-- Validation(input_id(if it not submit type), check_srv, check_upd, check_job, check_script) -->
+{% if "run_command" in pr_view_perms %}
+    <a      onclick="run_or_cron('RUN', 'CRON');
+                     select_all('selected_servers', 'server-body', false, 'SS');
+                     selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS');
+                     Validation('server_info', true, false, false, false)"
+            title="Show system info: CPU, mem, disk etc."
+            href="javascript:;"
+            class="Edit">Info</a>
+    <input  name="selected_commands"
+            readonly="readonly"
+            value="server_info"
+            id="server_info"
+            type="checkbox"
+            class="hidden"/>
 
-<a      onclick="run_or_cron('RUN', 'CRON');
-                 select_all('selected_servers', 'server-body', false, 'SS');
-                 selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS');
-                 Validation('server_info', true, false, false, false)"
-        title="Show system info: CPU, mem, disk etc."
-        href="javascript:;"
-        class="Edit">Info</a>
-<input  name="selected_commands"
-        readonly="readonly"
-        value="server_info"
-        id="server_info"
-        type="checkbox"
-        class="hidden"/>
+    <a      onclick="run_or_cron('RUN', 'CRON');
+                     select_all('selected_servers', 'server-body', false, 'SS');
+                     selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS');
+                     Validation('check_conf', true, false, false, false)"
+            title="Show conf(standalone-full.xml) and java options of this server."
+            href="javascript:;"
+            class="Edit">Conf</a>
+    <input  name="selected_commands"
+            readonly="readonly"
+            value="check_conf"
+            id="check_conf"
+            type="checkbox"
+            class="hidden"/>
 
-<a      onclick="run_or_cron('RUN', 'CRON');
-                 select_all('selected_servers', 'server-body', false, 'SS');
-                 selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS');
-                 Validation('check_conf', true, false, false, false)"
-        title="Show conf(standalone-full.xml) and java options of this server."
-        href="javascript:;"
-        class="Edit">Conf</a>
-<input  name="selected_commands"
-        readonly="readonly"
-        value="check_conf"
-        id="check_conf"
-        type="checkbox"
-        class="hidden"/>
+    <a      onclick="run_or_cron('RUN', 'CRON');
+                     select_all('selected_servers', 'server-body', false, 'SS');
+                     selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS');
+                     Validation('check_logs', true, false, false, false)"
+            title="Check logs from this server."
+            href="javascript:;"
+            class="Edit">Logs</a>
+    <input  name="selected_commands"
+            readonly="readonly"
+            value="check_logs"
+            id="check_logs"
+            type="checkbox"
+            class="hidden"/>
 
-<a      onclick="run_or_cron('RUN', 'CRON');
-                 select_all('selected_servers', 'server-body', false, 'SS');
-                 selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS');
-                 Validation('check_logs', true, false, false, false)"
-        title="Check logs from this server."
-        href="javascript:;"
-        class="Edit">Logs</a>
-<input  name="selected_commands"
-        readonly="readonly"
-        value="check_logs"
-        id="check_logs"
-        type="checkbox"
-        class="hidden"/>
+    <a      onclick="run_or_cron('RUN', 'CRON');
+                     select_all('selected_servers', 'server-body', false, 'SS');
+                     selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS');
+                     Validation('check_updates', true, false, false, false)"
+            title="Check updates on this server."
+            href="javascript:;"
+            class="Edit">Updates</a>
+    <input  name="selected_commands"
+            value="check_updates"
+            readonly="readonly"
+            id="check_updates"
+            type="checkbox"
+            class="hidden"/>
 
-<a      onclick="run_or_cron('RUN', 'CRON');
-                 select_all('selected_servers', 'server-body', false, 'SS');
-                 selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS');
-                 Validation('check_updates', true, false, false, false)"
-        title="Check updates on this server."
-        href="javascript:;"
-        class="Edit">Updates</a>
-<input  name="selected_commands"
-        value="check_updates"
-        readonly="readonly"
-        id="check_updates"
-        type="checkbox"
-        class="hidden"/>
-
-<a      onclick="run_or_cron('RUN', 'CRON');
-                 select_all('selected_servers', 'server-body', false, 'SS');
-                 selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS');
-                 Validation('tunnel', true, false, false, false)"
-        title="Make ssh tunnel to the bind port of this server."
-        href="javascript:;"
-        class="Edit">Tunnel</a>
-<input  name="selected_commands"
-        readonly="readonly"
-        type="checkbox"
-        class="hidden"
-        value="tunnel"
-        id="tunnel"/>
+    <a      onclick="run_or_cron('RUN', 'CRON');
+                     select_all('selected_servers', 'server-body', false, 'SS');
+                     selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS');
+                     Validation('tunnel', true, false, false, false)"
+            title="Make ssh tunnel to the bind port of this server."
+            href="javascript:;"
+            class="Edit">Tunnel</a>
+    <input  name="selected_commands"
+            readonly="readonly"
+            type="checkbox"
+            class="hidden"
+            value="tunnel"
+            id="tunnel"/>
+{% endif %}

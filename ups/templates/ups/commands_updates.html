@@ -1,0 +1,32 @@
+<!--Edit button-->
+{% if "edit_update" in pr_view_perms %}
+    <a href="{% url 'ups:edit_update' update.id %}"
+       title="Edit this update's info."
+       class="Edit">Edit</a>
+{% endif %}
+
+<!--Copy button-->
+<!-- Validation(input_id(if it not sxbmit type), check_srv, check_upd, check_job, check_script) -->
+{% if "run_command" in pr_view_perms %}
+    <a      onclick="run_or_cron('RUN', 'CRON');
+                     select_all('selected_updates', 'update-body', false, 'SU');
+                     selector('ux{{ update.id }}', 'ub{{ update.id }}', '{{ update }}', 'SX');
+                     Validation('copy', true, true, false, false)"
+            title="Copy this update to selected server(s)."
+            href="javascript:;"
+            class="Edit">Copy</a>
+    <input  name="selected_commands"
+            readonly="readonly"
+            type="checkbox"
+            class="hidden"
+            value="copy"
+            id="copy"/>
+{% endif %}
+
+<!--Download button-->
+{% if "dld_update" in pr_view_perms %}
+    <a onclick="selector('ux{{ update.id }}', 'ub{{ update.id }}', '{{ update }}', 'SU')"
+       href="/download_upd/{{ project.id }}/{{ update.id }}"
+       title="Download this update."
+       class="Edit">Download</a>
+{% endif %}
