@@ -49,12 +49,10 @@
 
         <!-- Tab panes -->
         <div class="tab-content">
-            <div role="tabpanel" class="tab-pane fade in active" id="main">
-                <div class="row">
-                    <div class="col-md-4">{% include "ups/project_updates.html" %}</div>
-                    <div class="col-md-4">{% include "ups/project_scripts.html" %}</div>
-                    <div class="col-md-4">{% include "ups/project_servers.html" %}</div>
-                </div>
+            <div role="tabpanel" class="tab-pane fade in active row" id="main">
+                <div class="col-md-4">{% include "ups/project_updates.html" %}</div>
+                <div class="col-md-4">{% include "ups/project_scripts.html" %}</div>
+                <div class="col-md-4">{% include "ups/project_servers.html" %}</div>
             </div>
             <div role="tabpanel" class="tab-pane fade" id="cron">
                 {% include "ups/project_cron.html" %}
