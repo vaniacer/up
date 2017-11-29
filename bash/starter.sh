@@ -49,8 +49,26 @@ function addr () {
     # Show $addr as info
     info "Server $sopt $addr"
     # Check access to the server, send 'Server unreachable' if fail.
-    ssh $addr "echo > /dev/null" || { error=$?; echo -e "\nServer unreachable."; continue; }
+    #ssh $sopt $addr "echo > /dev/null" || { error=$?; echo -e "\nServer unreachable."; continue; }
 }
+
+# If connecting first time send 'yes' on ssh's request. Expect must be installed on update server.
+function expect_ssh () {
+expect <<EOF
+spawn ssh $1 $2
+expect {
+    "(yes/no)?" { send "yes\n"; expect {
+                        "assword:"  { exit }
+                        "$ "        { send "exit\n" }
+                    }
+                }
+    "$ "        { send "exit\n"; exit }
+    "assword:"  { exit; }
+}
+exit
+EOF
+}
+
 
 # SCP files created in the process to $dumpdir and add a 'download' button to the output log.
 function download () { # Used in backup_* and get_dump.

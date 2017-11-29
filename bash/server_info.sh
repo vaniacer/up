@@ -6,6 +6,8 @@ function description () { #---------------------| Function description |--------
 
 function body () { #---------------------------------| Main function |--------------------------------------------------
 
+    expect_ssh "$sopt" "$addr" > /dev/null
+
     ssh $sopt $addr "
         printf '\n<b>Hostname:</b>\n'
         hostname

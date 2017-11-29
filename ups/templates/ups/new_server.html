@@ -4,6 +4,7 @@
 {% block header %}
     <br>
     <h2>Add new server to the project - <a href="{% url 'ups:project' project.id %}">{{ project }}</a></h2>
+    After adding the server run <i>'info'</i> command on this server to register it in ssh known_hosts.
 {% endblock header %}
 
 {% block content %}
