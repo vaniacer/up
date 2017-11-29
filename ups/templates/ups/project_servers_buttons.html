@@ -19,13 +19,13 @@
                    value="Hide Info"
                    title="Hide servers' info."
                    class="btn btn-info btn-xs shide"
-                   onclick="$('.server-panel').hide(); $('.shide').hide(); $('.sshow').show();"/>
+                   onclick="hide_info('server-info', '.server-panel', '.shide', '.sshow')"/>
 
             <input type="button"
                    value="Show Info"
                    title="Show servers' info."
                    class="btn btn-info btn-xs sshow"
-                   onclick="$('.server-panel').show(); $('.sshow').hide(); $('.shide').show();"/>
+                   onclick="show_info('server-info', '.server-panel', '.sshow', '.shide')"/>
         {% endif %}
 
     {% endif %}

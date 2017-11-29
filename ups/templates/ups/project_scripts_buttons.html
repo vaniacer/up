@@ -19,13 +19,13 @@
                    value="Hide Info"
                    title="Hide scripts' info."
                    class="btn btn-info btn-xs xhide"
-                   onclick="$('.script-panel').hide(); $('.xhide').hide(); $('.xshow').show();"/>
+                   onclick="hide_info('script-info', '.script-panel', '.xhide', '.xshow')"/>
 
             <input type="button"
                    value="Show Info"
                    title="Show scripts' info."
                    class="btn btn-info btn-xs xshow"
-                   onclick="$('.script-panel').show(); $('.xshow').hide(); $('.xhide').show();"/>
+                   onclick="show_info('script-info', '.script-panel', '.xshow', '.xhide')"/>
         {% endif %}
 
     {% endif %}

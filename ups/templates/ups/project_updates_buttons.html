@@ -19,13 +19,13 @@
                    value="Hide Info"
                    title="Hide updates' info."
                    class="btn btn-info btn-xs uhide"
-                   onclick="$('.update-panel').hide(); $('.uhide').hide(); $('.ushow').show();"/>
+                   onclick="hide_info('update-info', '.update-panel', '.uhide', '.ushow')"/>
 
             <input type="button"
                    value="Show Info"
                    title="Show updates' info."
                    class="btn btn-info btn-xs ushow"
-                   onclick="$('.update-panel').show(); $('.ushow').hide(); $('.uhide').show();"/>
+                   onclick="show_info('update-info', '.update-panel', '.ushow', '.uhide')"/>
         {% endif %}
 
     {% endif %}

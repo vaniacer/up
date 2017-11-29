@@ -124,6 +124,16 @@ function restoreScroll() {
     setCookie('scrollmem', 0);
 }
 
+function hide_info(cook, panel, hb, sb) {
+    $(panel).hide(); $(hb).hide(); $(sb).show();
+    setCookie(cook, 1);
+};
+
+function show_info(cook, panel, hb, sb) {
+    $(panel).show(); $(hb).hide(); $(sb).show();
+    setCookie(cook, '');
+};
+
 $(function() {
     // Change tab on load
     var hash = window.location.hash;
@@ -148,4 +158,7 @@ $(document).ready(function() {
     $('.sshow').hide();
     $('.xshow').hide();
     $('.ushow').hide();
+    if (getCookie('update-info')) { $('.update-panel').hide(); $('.uhide').hide(); $('.ushow').show(); }
+    if (getCookie('server-info')) { $('.server-panel').hide(); $('.shide').hide(); $('.sshow').show(); }
+    if (getCookie('script-info')) { $('.script-panel').hide(); $('.xhide').hide(); $('.xshow').show(); }
 });
