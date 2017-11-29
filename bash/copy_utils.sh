@@ -6,8 +6,8 @@ function description () { #---------------------| Function description |--------
 
 function body () { #---------------------------------| Main function |--------------------------------------------------
 
-    ssh $sopt $addr [ -d '.utils' ]   ||  ssh $sopt $addr mkdir .utils || error=$?
-    rsync -e"ssh $sopt" --progress -lzuogthvr ~/utils/* $addr:~/.utils || error=$?
+    ssh $sopt $addr [ -d '.utils' ]   ||   ssh $sopt $addr mkdir .utils || error=$?
+    rsync -e "ssh $sopt" --progress -lzuogthvr ~/utils/* $addr:~/.utils || error=$?
 
 } #---------------------------------------------------------------------------------------------------------------------
 

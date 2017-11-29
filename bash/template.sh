@@ -8,7 +8,7 @@ function description () { #---------------------| Function description |--------
 
 function body () { #---------------------------------| Main function |--------------------------------------------------
 
-    ssh $sopt $addr echo "Put your code here" || error=$?
+    ssh $sopt $addr "Put your code here" || error=$?
 
 } #---------------------------------------------------------------------------------------------------------------------
 

@@ -60,7 +60,7 @@ function download () { # Used in backup_* and get_dump.
 
     newname=${addr}_${name//\/*\//}
     echo  -e "Копирую файл - ${name}"
-    rsync -e ssh   --progress   -lzuogthvr  $addr:$name $dumpdir/$newname || error=$?
+    rsync -e "ssh $sopt" --progress -lzuogthvr $addr:$name $dumpdir/$newname || error=$?
     echo  -e "\n<a class='btn btn-primary' href='/download_dump/$prj/$newname'>Download</a>\n"
 }
 

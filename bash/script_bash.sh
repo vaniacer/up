@@ -10,7 +10,7 @@ function body () { #---------------------------------| Main function |----------
     for file in "${scripts[@]}"; { filename=${file##*/}
 
         printf "\nCopy script - $filename\n"
-        rsync -e"ssh $sopt" --progress -lzuogthvr $file $addr:$wdir/updates/new/ || error=$?
+        rsync -e "ssh $sopt" --progress -lzuogthvr $file $addr:$wdir/updates/new/ || error=$?
 
         printf "\nRun  script - $filename\n"
         ssh $sopt $addr "cd $wdir; chmod +x updates/new/$filename; updates/new/$filename" || error=$?

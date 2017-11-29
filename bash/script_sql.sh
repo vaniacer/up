@@ -9,8 +9,8 @@ function body () { #---------------------------------| Main function |----------
 
     for file in "${scripts[@]}"; { filename=${file##*/}
 
-        echo -e "\nCopy script - $filename"
-        rsync -e"ssh $sopt" --progress -lzuogthvr $file $addr:$wdir/updates/new/ || error=$?
+        echo  -e "\nCopy script - $filename"
+        rsync -e "ssh $sopt" --progress -lzuogthvr $file $addr:$wdir/updates/new/ || error=$?
 
         ssh $sopt $addr "$wdir/krupd execsql $wdir/updates/new/$filename" || error=$?
         ssh $sopt $addr "rm $wdir/updates/new/$filename" || error=$?
