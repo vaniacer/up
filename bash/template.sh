@@ -1,14 +1,15 @@
 #!/bin/bash
 
 function description () { #---------------------| Function description |------------------------------------------------
-    # Put description here. Variables: $servers $updates $scripts $jobs $cmd. Example:
-    echo -e "Copy Update(s):\n${updates// /\\n}\n\nto Server(s):\n${servers// /\\n}\n"; exit 0
+    # Put description here. Variables: "${servers[@]}" $updates $scripts $jobs $cmd. Example:
+    printf "Copy Update(s):\n"; for i in "${updates[@]}"; { echo "$i"; }
+    printf "\nto Server(s):\n"; for i in "${servers[@]}"; { echo "$i"; }
 }
 
 function body () { #---------------------------------| Main function |--------------------------------------------------
 
-    ssh $addr echo "Put your code here" || error=$?
+    ssh $sopt $addr echo "Put your code here" || error=$?
 
 } #---------------------------------------------------------------------------------------------------------------------
 
-function run () { for server in $servers; { addr; body; }; info 'Done' $error; }
+function run () { for server in "${servers[@]}"; { addr; body; }; info 'Done' $error; }

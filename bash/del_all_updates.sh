@@ -1,14 +1,14 @@
 #!/bin/bash
 
 function description () { #---------------------| Function description |------------------------------------------------
-    echo -e "Delete all Updates from Server(s):\n${servers// /\\n}\n"; exit 0
+    printf "Delete all updates from server(s):\n"; for i in "${servers[@]}"; { echo "$i"; }
 }
 
 function body () { #---------------------------------| Main function |--------------------------------------------------
 
-    ssh $addr "echo -e \"Delete files:\n$(ls $wdir/updates/new)\""
-    ssh $addr "rm $wdir/updates/new/*" || error=$?
+    ssh $sopt $addr "echo -e \"Delete files:\n$(ls $wdir/updates/new)\""
+    ssh $sopt $addr "rm $wdir/updates/new/*" || error=$?
 
 } #---------------------------------------------------------------------------------------------------------------------
 
-function run () { for server in $servers; { addr; body; }; info 'Done' $error; }
+function run () { for server in "${servers[@]}"; { addr; body; }; info 'Done' $error; }

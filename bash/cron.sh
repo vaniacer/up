@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function description () { #---------------------| Function description |------------------------------------------------
-    echo -e "Set cron job $run for server(s):\n${servers// /\\n}\n"; exit 0
+    printf "Set cron job $run for server(s):\n"; for i in "${servers[@]}"; { echo "$i"; }
 }
 
 function run () { #---------------------------------| Main function |---------------------------------------------------

@@ -1,12 +1,12 @@
 #!/bin/bash
 
 function description () { #---------------------| Function description |------------------------------------------------
-    echo -e "Show system info from server(s):\n${servers// /\\n}\n"; exit 0
+    printf "Show system info of server(s):\n"; for i in "${servers[@]}"; { echo "$i"; }
 }
 
 function body () { #---------------------------------| Main function |--------------------------------------------------
 
-    ssh $addr "
+    ssh $sopt $addr "
         printf '\n<b>Hostname:</b>\n'
         hostname
 
@@ -37,4 +37,4 @@ function body () { #---------------------------------| Main function |----------
 
 } #---------------------------------------------------------------------------------------------------------------------
 
-function run () { for server in $servers; { addr; body; }; info 'Done' $error; }
+function run () { for server in "${servers[@]}"; { addr; body; }; info 'Done' $error; }

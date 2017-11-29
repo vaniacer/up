@@ -10,19 +10,19 @@ rundir=$workdir/../../logs/run
 #---------| Get opts |------------
 until [ -z $1 ]; do case $1 in
 
-    -server | -s) servers=$2;;
-    -update | -u) updates=$2;;
-    -script | -x) scripts=$2;;
+    -server | -s) servers+=("$2");;
+    -update | -u) updates+=("$2");;
+    -script | -x) scripts+=("$2");;
+    -job    | -j) jobs+=("$2");;
     -date   | -d) date=$2;;
     -cron   | -C) cron=$2;;
     -desc   | -D) desc=$2;;
-    -job    | -j) jobs=$2;;
     -cmd    | -c) cmd=$2;;
     -run    | -r) run=$2;;
     -key    | -k) key=$2;;
     -prj    | -p) prj=$2;;
 
-esac; shift 2; done
+esac; shift 2; done 2> /dev/null
 #---------------------------------
 
 function info () { # Print delimiter line with info($1) in center.
@@ -40,10 +40,14 @@ function info () { # Print delimiter line with info($1) in center.
 
 function addr () {
     # Server comes like this - jboss@localhost:/var/lib/jboss:8080, split it to:
-    #-----------------+-------------------+-----------------------------------+------------------------+
-    # Ssh address     | Bind port         | Working directory                 | And show $addr as info |
-    #-----------------+-------------------+-----------------------------------+------------------------+
-    addr=${server%%:*}; port=${server##*:}; wdir=${server#*:}; wdir=${wdir%:*}; info "Server - $addr"
+    #-----------------+-------------------+-----------------------------------+
+    # Ssh address     | Bind port         | Working directory                 |
+    #-----------------+-------------------+-----------------------------------+
+    addr=${server%%:*}; port=${server##*:}; wdir=${server#*:}; wdir=${wdir%:*}
+    # Cut ssh opts if exist
+    testaddr=($addr); [[ ${#testaddr[*]} -gt 1 ]] && { sopt=${addr% *}; addr=${addr##* }; }
+    # Show $addr as info
+    info "Server $sopt $addr"
     # Check access to the server, send 'Server unreachable' if fail.
     ssh $addr "echo > /dev/null" || { error=$?; echo -e "\nServer unreachable."; continue; }
 }

@@ -1,12 +1,12 @@
 #!/bin/bash
 
 function description () { #---------------------| Function description |------------------------------------------------
-    echo -e "Show conf of server(s):\n${servers// /\\n}\n"; exit 0
+    printf "Show conf of server(s):\n"; for i in "${servers[@]}"; { echo "$i"; }
 }
 
 function body () { #---------------------------------| Main function |--------------------------------------------------
 
-    ssh $addr "
+    ssh $sopt $addr "
         echo -e '\nJava options\n'
         ps axo command | grep $wdir | grep [j]ava
 
@@ -15,4 +15,4 @@ function body () { #---------------------------------| Main function |----------
 
 } #---------------------------------------------------------------------------------------------------------------------
 
-function run () { for server in $servers; { addr; body; }; info 'Done' $error; }
+function run () { for server in "${servers[@]}"; { addr; body; }; info 'Done' $error; }

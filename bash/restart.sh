@@ -1,14 +1,14 @@
 #!/bin/bash
 
 function description () { #---------------------| Function description |------------------------------------------------
-    echo -e "Restart server(s):\n${servers// /\\n}\n"; exit 0
+    printf "Restart server(s):\n"; for i in "${servers[@]}"; { echo "$i"; }
 }
 
 function body () { #---------------------------------| Main function |--------------------------------------------------
 
-    ssh $addr $wdir/krupd jboss.stop  || error=$?
-    ssh $addr $wdir/krupd jboss.start || error=$?
+    ssh $sopt $addr $wdir/krupd jboss.stop  || error=$?
+    ssh $sopt $addr $wdir/krupd jboss.start || error=$?
 
 } #---------------------------------------------------------------------------------------------------------------------
 
-function run () { for server in $servers; { addr; body; }; info 'Done' $error; }
+function run () { for server in "${servers[@]}"; { addr; body; }; info 'Done' $error; }

@@ -36,13 +36,12 @@ def add_job(selected, log, cron):
 		desc=log, )
 
 
-def del_job(selected):
-	"""Удаляет из базы записи о крон жобах."""
-	for i in selected['cronjbs']:
-		try:
-			Job.objects.get(cron=i).delete()
-		except ObjectDoesNotExist:
-			continue
+def del_job(job):
+	"""Удаляет из базы запись о крон жобе."""
+	try:
+		Job.objects.get(cron=job).delete()
+	except ObjectDoesNotExist:
+		pass
 
 
 def starter(selected):
@@ -60,14 +59,14 @@ def starter(selected):
 		'-prj', str(selected['project'].id),
 		'-key', selected['key']])
 
-	if selected['servers']:
-		opt.extend(['-server', ' '.join(selected['servers'])])
-	if selected['updates']:
-		opt.extend(['-update', ' '.join(selected['updates'])])
-	if selected['scripts']:
-		opt.extend(['-script', ' '.join(selected['scripts'])])
-	if selected['cronjbs']:
-		del_job(selected)
-		opt.extend(['-job', ' '.join(selected['cronjbs'])])
-
+	for server in selected['servers']:
+		opt.extend(['-s', str(server)])
+	for update in selected['updates']:
+		opt.extend(['-u', str(update)])
+	for script in selected['scripts']:
+		opt.extend(['-x', str(script)])
+	for cronjb in selected['cronjbs']:
+		opt.extend(['-j', str(cronjb)])
+		del_job(cronjb)
+	# print opt
 	Popen(opt)

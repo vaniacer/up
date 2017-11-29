@@ -1,12 +1,12 @@
 #!/bin/bash
 
 function description () { #---------------------| Function description |------------------------------------------------
-    echo -e "Delete cron job(s):\n${jobs// /\\n}\n"; exit 0
+    printf "Delete cron job(s):\n"; for i in "${jobs[@]}"; { echo "$i"; }
 }
 
 function run () { #---------------------------------| Main function |---------------------------------------------------
     info 'Cancel jobs'
-    for id in $jobs; { rule="/$id/d;"$rule; echo "$id"; }
+    for id in "${jobs[@]}"; { rule="/$id/d;"$rule; echo "$id"; }
     sed "$rule" -i /var/spool/cron/crontabs/$USER || error=$?
     info 'Done' $error
 } #---------------------------------------------------------------------------------------------------------------------

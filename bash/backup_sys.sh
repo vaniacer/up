@@ -1,13 +1,13 @@
 #!/bin/bash
 
 function description () { #---------------------| Function description |------------------------------------------------
-    echo -e "Backup system on server(s):\n${servers// /\\n}\n"; exit 0
+    printf "Backup system on server(s):\n"; for i in "${servers[@]}"; { echo "$i"; }
 }
 
 function body () { #---------------------------------| Main function |--------------------------------------------------
 
-    ssh $addr "$wdir/krupd bkp sys" || error=$?; download
+    ssh $sopt $addr "$wdir/krupd bkp sys" || error=$?; download
 
 } #---------------------------------------------------------------------------------------------------------------------
 
-function run () { for server in $servers; { addr; body; }; info 'Done' $error; }
+function run () { for server in "${servers[@]}"; { addr; body; }; info 'Done' $error; }
