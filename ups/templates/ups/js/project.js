@@ -94,6 +94,11 @@ function getCookie(cname) {
 
 function Validation(box, srv, upd, job, scr) {
 
+    setCookie('scrollmem', window.pageYOffset);
+    setCookie('sroller', $('.sroller').scrollTop());
+    setCookie('xroller', $('.xroller').scrollTop());
+    setCookie('uroller', $('.uroller').scrollTop());
+
     if (job) {
         var jobs = document.getElementsByName('selected_jobs');
         for (i = 0; i < jobs.length; i++) { if (jobs[i].checked) { var selected_jobs = true; break; }}
@@ -114,7 +119,7 @@ function Validation(box, srv, upd, job, scr) {
         for (i = 0; i < servers.length; i++) { if (servers[i].checked) { var selected_servers = true; break; }}
         if  (!selected_servers) { alert('Server(s) not selected.'); return false; }}
 
-    setCookie('scrollmem', window.pageYOffset); show_loader();
+    show_loader();
     if (box) { document.getElementById(box).checked = true; document.getElementById('selector').submit(); }
 }
 
@@ -158,7 +163,11 @@ $(document).ready(function() {
     $('.sshow').hide();
     $('.xshow').hide();
     $('.ushow').hide();
+    $('.sroller').scrollTop(getCookie('sroller'));
+    $('.xroller').scrollTop(getCookie('xroller'));
+    $('.uroller').scrollTop(getCookie('uroller'));
     if (getCookie('update-info')) { $('.update-panel').hide(); $('.uhide').hide(); $('.ushow').show(); }
     if (getCookie('server-info')) { $('.server-panel').hide(); $('.shide').hide(); $('.sshow').show(); }
     if (getCookie('script-info')) { $('.script-panel').hide(); $('.xhide').hide(); $('.xshow').show(); }
+
 });
