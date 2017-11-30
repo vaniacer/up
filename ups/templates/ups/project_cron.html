@@ -17,8 +17,7 @@
                    class="btn btn-info btn-xs"
                    onclick="select_all('selected_jobs', 'job_body', false, 'SJ')"/>
 
-            <button type="submit"
-                    value="cancel_job"
+            <button value="cancel_job"
                     name="selected_commands"
                     class="btn btn-danger btn-xs"
                     onclick="return Validation('', false, false, true)">Cancel job</button>
@@ -46,7 +45,6 @@
         <input class="hidden"
                type="checkbox"
                id="jx{{ job.id }}"
-               readonly="readonly"
                name="selected_jobs"
                value="{{ job.cron }}"
                data-target="{{ job.name }}"/>

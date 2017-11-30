@@ -5,7 +5,6 @@
         href="javascript:;"
         class="danger">Stop</a></li>
 <input  name="selected_commands"
-        readonly="readonly"
         type="checkbox"
         class="hidden"
         value="stop"
@@ -16,7 +15,6 @@
         href="javascript:;"
         class="danger">Start</a></li>
 <input  name="selected_commands"
-        readonly="readonly"
         type="checkbox"
         class="hidden"
         value="start"
@@ -27,7 +25,6 @@
         href="javascript:;"
         class="danger">Restart</a></li>
 <input  name="selected_commands"
-        readonly="readonly"
         type="checkbox"
         value="restart"
         class="hidden"
@@ -38,7 +35,6 @@
         href="javascript:;"
         class="danger">Reload</a></li>
 <input  name="selected_commands"
-        readonly="readonly"
         type="checkbox"
         class="hidden"
         value="reload"
@@ -51,7 +47,6 @@
 <input  name="selected_commands"
         value="maintenance_on"
         id="maintenance_on"
-        readonly="readonly"
         type="checkbox"
         class="hidden"/>
 
@@ -62,7 +57,6 @@
 <input  name="selected_commands"
         value="maintenance_off"
         id="maintenance_off"
-        readonly="readonly"
         type="checkbox"
         class="hidden"/>
 
@@ -77,7 +71,6 @@
 <input  name="selected_commands"
         value="del_sel_updates"
         id="del_sel_updates"
-        readonly="readonly"
         type="checkbox"
         class="hidden"/>
 
@@ -88,7 +81,6 @@
 <input  name="selected_commands"
         value="del_all_updates"
         id="del_all_updates"
-        readonly="readonly"
         type="checkbox"
         class="hidden"/>
 
@@ -100,7 +92,6 @@
         title="System and DB backup via './krupd bkp full'."
         href="javascript:;">Backup full</a></li>
 <input  name="selected_commands"
-        readonly="readonly"
         value="backup_full"
         id="backup_full"
         type="checkbox"
@@ -110,7 +101,6 @@
         title="Database backup via './krupd bkp db'."
         href="javascript:;">Backup base</a></li>
 <input  name="selected_commands"
-        readonly="readonly"
         value="backup_db"
         type="checkbox"
         id="backup_db"
@@ -120,7 +110,6 @@
         title="System backup via './krupd bkp sys'."
         href="javascript:;">Backup system</a></li>
 <input  name="selected_commands"
-        readonly="readonly"
         value="backup_sys"
         id="backup_sys"
         type="checkbox"
@@ -134,7 +123,6 @@
         title="Run selected script(s) on selected server(s). Script(s) have to be loaded(and selected) as updates."
         href="javascript:;">Run BASH script</a></li>
 <input  name="selected_commands"
-        readonly="readonly"
         type="checkbox"
         class="hidden"
         value="script"
@@ -144,7 +132,6 @@
         title="Run SQL script in DB. Script(s) have to be loaded(and selected) as updates."
         href="javascript:;">Run SQL script</a></li>
 <input  name="selected_commands"
-        readonly="readonly"
         value="sql_script"
         type="checkbox"
         id="sql_script"
@@ -154,17 +141,15 @@
         title="Get DB dump from selected server(s)."
         href="javascript:;">Get dump</a></li>
 <input  name="selected_commands"
-        readonly="readonly"
+        value="get_dump"
         type="checkbox"
         class="hidden"
-        value="get_dump"
         id="get_dump"/>
 
 <li><a  onclick="return Validation('copy_utils', true, false, false, false)"
         title="Copy utils folder to selected server(s)."
         href="javascript:;">Copy utils</a></li>
 <input  name="selected_commands"
-        readonly="readonly"
         value="copy_utils"
         id="copy_utils"
         type="checkbox"
@@ -175,7 +160,6 @@
         href="javascript:;"
         class="danger">Update</a></li>
 <input  name="selected_commands"
-        readonly="readonly"
         type="checkbox"
         class="hidden"
         value="update"
@@ -185,7 +169,6 @@
         title="Copy selected update(s) to selected server(s)."
         href="javascript:;">Copy</a></li>
 <input  name="selected_commands"
-        readonly="readonly"
         type="checkbox"
         class="hidden"
         value="copy"

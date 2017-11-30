@@ -11,16 +11,15 @@
 {% block content %}
 
     <p>
-        <big>Update Server helps to keep your servers up to date.</big>
+        <big>Manage your servers through ssh via web interface.</big>
     </p>
     <p>
         Start by pressing an <i>'Projects'</i> button or a <i>'Projects'</i> link at the top.<br>
         Select project by clicking on it. Or create a new one via <i>'Add new project'</i> link.<br>
-        In the project section navigate using tabs: <i>'Updates & Servers'</i>, <i>'Cron Jobs'</i> and <i>'History'</i>.
+        In the project section navigate using tabs: <i>'Main'</i>, <i>'Cron Jobs'</i> and <i>'History'</i>.
     </p>
     <p>
-        On the <i>'Updates & Servers'</i> tab you can view, select and add new Updates & Servers.<br>
-        <i>'Edit'</i> link brings you the edit form for the selected object.
+        On the <i>'Main'</i> tab you can view, select and edit or add new updates, scripts or servers.<br>
     </p>
     <p>
         On the <i>'Cron Jobs'</i> tab you can view cron jobs scheduled for this project.<br>
@@ -32,11 +31,10 @@
     </p>
     <p>
         <i>'Add'</i> and <i>'Select'</i> buttons duplicated at the bottom nav bar.<br>
-        <i>'Copy Update(s) to Server(s)'</i> button starts copy process.<br>
-        Selected updates will be copied to the selected servers.<br>
-        If you select date and time then the 'Copy Update(s) to Server(s)'
-        button will <i>schedule</i> this job instead of running it right now.<br>
-        <i>'View server's log'</i> brings you the system log of the selected server.
+        Available commands are located in <i>'RUN'</i> or <i>'CRON'</i> drop-up menus.<br>
+        If you select command from <i>'RUN'</i> it'll start immediately.<br>
+        Same command but from <i>'CRON'</i> menu will be scheduled to run via cron.<br>
+        Date and time can be set via date\time widget. Have fun!)<br>
     </p>
 
 {% endblock content %}
