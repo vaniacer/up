@@ -159,15 +159,14 @@ $(function() {
 });
 
 $(document).ready(function() {
-    $('.loader').hide();
     $('.sshow').hide();
     $('.xshow').hide();
     $('.ushow').hide();
+    $('.loader').hide();
     $('.sroller').scrollTop(getCookie('sroller'));
     $('.xroller').scrollTop(getCookie('xroller'));
     $('.uroller').scrollTop(getCookie('uroller'));
     if (getCookie('update-info')) { $('.update-panel').hide(); $('.uhide').hide(); $('.ushow').show(); }
     if (getCookie('server-info')) { $('.server-panel').hide(); $('.shide').hide(); $('.sshow').show(); }
     if (getCookie('script-info')) { $('.script-panel').hide(); $('.xhide').hide(); $('.xshow').show(); }
-
 });
