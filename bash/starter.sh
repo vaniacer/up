@@ -41,15 +41,15 @@ function info () { # Print delimiter line with info($1) in center.
 function addr () {
     # Server comes like this - jboss@localhost:/var/lib/jboss:8080, split it to:
     #-----------------+-------------------+-----------------------------------+
-    # Ssh address     | Bind port         | Working directory                 |
+    #    Ssh address  |      Bind port    |        Working directory          |
     #-----------------+-------------------+-----------------------------------+
     addr=${server%%:*}; port=${server##*:}; wdir=${server#*:}; wdir=${wdir%:*}
+
     # Cut ssh opts if exist
     testaddr=($addr); [[ ${#testaddr[*]} -gt 1 ]] && { sopt=${addr% *}; addr=${addr##* }; }
+
     # Show $addr as info
     info "Server $sopt $addr"
-    # Check access to the server, send 'Server unreachable' if fail.
-    #ssh $sopt $addr "echo > /dev/null" || { error=$?; echo -e "\nServer unreachable."; continue; }
 }
 
 # If connecting first time send 'yes' on ssh's request. Expect must be installed on update server.
@@ -69,8 +69,7 @@ exit
 EOF
 }
 
-
-# SCP files created in the process to $dumpdir and add a 'download' button to the output log.
+# Copy files created in the process to $dumpdir and add a 'download' button to the output log.
 function download () { # Used in backup_* and get_dump.
     [[ "$cron" ]] && { name=$(tail -n2 $crondir/$cron)  ; } \
                   || { name=$(tail -n2 $rundir/log$key) ; }

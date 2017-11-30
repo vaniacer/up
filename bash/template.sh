@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function description () { #---------------------| Function description |------------------------------------------------
-    # Put description here. Variables: "${servers[@]}" $updates $scripts $jobs $cmd. Example:
+    # Put description here. Variables: ${servers[@]}, ${updates[@]}, ${scripts[@]}, ${jobs[@]}, $cmd. Example:
     printf "Copy Update(s):\n"; for i in "${updates[@]}"; { echo "$i"; }
     printf "\nto Server(s):\n"; for i in "${servers[@]}"; { echo "$i"; }
 }
