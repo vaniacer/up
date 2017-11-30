@@ -7,7 +7,8 @@ email=marov@krista.ru
 [ -s conf.py ] || { echo -e "Create 'conf.py' from 'conf.py.template'!"; exit 1; }
 
 echo -e "Install libs."
-sudo apt-get install -y libpq-dev python-dev
+sudo apt-get update  -y
+sudo apt-get install -y libpq-dev python-dev rsync expect
 
 echo -e "Add virtual env."
 virtualenv ../env; . ../env/bin/activate
