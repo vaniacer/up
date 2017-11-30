@@ -2,12 +2,8 @@
 
 <br>
 <div class="row">
-    <div class="col-md-3">
-        <h3 class="Name">Scripts</h3>
-    </div>
-    <div class="col-md-9">
-        {% include "ups/project_scripts_buttons.html" %}
-    </div>
+    <div class="col-md-3"><h3 class="Name">Scripts</h3></div>
+    <div class="col-md-9">{% include "ups/project_scripts_buttons.html" %}</div>
 </div>
 
 <div class="roller">
@@ -23,8 +19,6 @@
 
         <div class="panel-body script-body" id="xb{{ script.id }}">
             <dl class="dl-horizontal script-panel">
-                <!--<dt>File</dt><dd>{{ script.file }}</dd>-->
-                <!--<dt>Size</dt><dd>{{ script.file.size|filesizeformat }}</dd>-->
                 <dt>Description</dt><dd>{{ script.desc|linebreaks }}</dd>
                 <dt>Preview</dt><dd>{{ script.body|linebreaks|truncatewords:10 }}</dd>
                 <dt><small>Added by</small></dt><dd><small>{{ script.user }}</small></dd>
