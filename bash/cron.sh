@@ -9,10 +9,11 @@ function run () { #---------------------------------| Main function |-----------
     # Get time
     time=${date#* }; date=${date% *}; hh=${time%:*}; mm=${time#*:}; DD=${date%%.*}; MM=${date#*.}; MM=${MM%.*}
 
-    date="$mm $hh $DD $MM *"                              # Cron format date
-    opts=("${options[@]:6}")                              # Cut cron part from options
-    cncl="sed \"/$key/d\" -i $cronfile\n"                 # Command to delete executed cron job
-    cmnd="$workdir/starter.sh -c $run -C $key ${opts[@]}" # Command to run
+    date="$mm $hh $DD $MM *"                    # Cron format date
+    opts=("${options[@]:6}")                    # Cut cron part from options
+    cncl="sed \"/$key/d\" -i $cronfile\n"       # Command to delete executed cron job
+    cmnd="$workdir/starter.sh -c $run -C $key"  # Command to run
+    for i in "${opts[@]}"; { cmnd+=" \"$i\""; } # Add options with ""
 
     # Set crontab job
     echo -e "$(crontab -l)\n$date $cmnd; $cncl\n" | crontab - || error=$?
