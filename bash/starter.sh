@@ -25,7 +25,9 @@ until [ -z $1 ]; do case $1 in
 esac; shift 2; done 2> /dev/null
 #---------------------------------
 
-function info () { # Print delimiter line with info($1) in center.
+# Used in output log.
+# Print delimiter line with info($1) in center.
+function info () {
     [[ $2 ]]  && { [[ $2 = 0 ]] && F=':) ' || F=':( '; } # Add a smile to info if $2(error code) is set.
     #--------+-------------+--------------+------------+-----------------------+--------------------------------------+
     # Length | Body symbol | Start symbol | End symbol | Center part with info | Calculate number of body symbols     |
@@ -38,8 +40,9 @@ function info () { # Print delimiter line with info($1) in center.
     printf "\n$S$N$C$N$E\n" # Print result.
 }
 
+# Server comes like this - jboss@localhost:/var/lib/jboss:8080
+# This function splits it to: address, working directory and port
 function addr () {
-    # Server comes like this - jboss@localhost:/var/lib/jboss:8080, split it to:
     #-----------------+-------------------+-----------------------------------+
     #    Ssh address  |      Bind port    |        Working directory          |
     #-----------------+-------------------+-----------------------------------+
@@ -52,7 +55,10 @@ function addr () {
     info "Server $sopt $addr"
 }
 
-# If connecting first time send 'yes' on ssh's request. Expect must be installed on update server.
+# If connecting first time send 'yes' on ssh's request.
+# Expect must be installed on update server.
+# $1 - ssh options, $2 - ssh address example:
+# expect_ssh -p22 user@localhost
 function expect_ssh () {
 expect << EOF
 spawn ssh $1 $2
@@ -72,7 +78,8 @@ EOF
 }
 
 # Copy files created in the process to $dumpdir and add a 'download' button to the output log.
-function download () { # Used in backup_* and get_dump.
+# Used in backup_* and get_dump.
+function download () {
     [[ "$cron" ]] && { name=$(tail -n2 $crondir/$cron)  ; } \
                   || { name=$(tail -n2 $rundir/log$key) ; }
                        name=${name#*\"}; name=${name//\"./}
@@ -83,9 +90,11 @@ function download () { # Used in backup_* and get_dump.
     echo  -e "\n<a class='btn btn-primary' href='/download_dump/$prj/$newname'>Download</a>\n"
 }
 
-. $workdir/$cmd # Load 'run' and 'description' functions from $cmd.
+# Load 'run' and 'description' functions from $cmd.
+. $workdir/$cmd
 
-function starter  () { # Start 'run' function, save logs to $rundir or $crondir if started from cron.
+# Start 'run' function, save logs to $rundir or $crondir if started from cron.
+function starter  () {
     [[ "$cron" ]] && { run &> $crondir/$cron; dat=$(date +'%m.%d.%Y %R')
                        echo -e "\nError: ${error}\nDate: $dat" >> $crondir/$cron; } \
                   || { echo $$     > $rundir/pid$key
@@ -94,4 +103,5 @@ function starter  () { # Start 'run' function, save logs to $rundir or $crondir 
     exit $error
 }
 
+# Show description or run command
 [[ "$desc" ]] && description || starter
