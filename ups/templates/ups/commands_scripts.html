@@ -1,3 +1,4 @@
+
 <!--------------------------------------------Edit button----------------------------------------->
 {% if "edit_script" in pr_view_perms %}
     <a href="{% url 'ups:edit_script' script.id %}"
@@ -6,7 +7,7 @@
 {% endif %}
 
 <!-----------------------------------------Available commands------------------------------------->
-<!-- Validation(input_id(if it not sxbmit type), check_srv, check_upd, check_job, check_script) -->
+<!-- Validation(input_id(if it not submit type), check_srv, check_upd, check_job, check_script) -->
 {% if "run_command" in pr_view_perms %}
     {% if script.type == 'sql' %}
         <a      onclick="run_or_cron('RUN', 'CRON');
