@@ -54,7 +54,7 @@ function addr () {
 
 # If connecting first time send 'yes' on ssh's request. Expect must be installed on update server.
 function expect_ssh () {
-expect <<EOF
+expect << EOF
 spawn ssh $1 $2
 expect {
     "(yes/no)?" {
