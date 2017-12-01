@@ -66,19 +66,19 @@ expect {
     "(yes/no)?" {
         send "yes\n"
         expect {
-            "assword:"  { exit }
-            "$ "        { send "exit\n" }
+            "assword:" { exit }
+            "$ "       { send "exit\n" }
         }
     }
-    "assword:"  { exit }
-    "$ "        { send "exit\n" }
+    "assword:" { exit }
+    "$ "       { send "exit\n" }
 }
 exit
 EOF
 }
 
 # Copy files created in the process to $dumpdir and add a 'download' button to the output log.
-# Used in backup_* and get_dump.
+# Used in backup_* and dump_get.
 function download () {
     [[ "$cron" ]] && { name=$(tail -n2 $crondir/$cron)  ; } \
                   || { name=$(tail -n2 $rundir/log$key) ; }
@@ -103,5 +103,5 @@ function starter  () {
     exit $error
 }
 
-# Show description or run command
+# Showing description or running command itself
 [[ "$desc" ]] && description || starter
