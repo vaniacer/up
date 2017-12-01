@@ -28,6 +28,9 @@ def command(selected):
 		# Delete updates |-------------------+-----------------------------+----------------+
 		'del_sel_updates': {'history':  True, 'bash': 'del_sel_updates.sh', 'tag': False, },
 		'del_all_updates': {'history':  True, 'bash': 'del_all_updates.sh', 'tag': False, },
+		# Dumps |----------------------------+-----------------------------+----------------+
+		'get_dump':        {'history':  True, 'bash':        'dump_get.sh', 'tag':  True, },
+		'send_dump':       {'history':  True, 'bash':       'dump_send.sh', 'tag': False, },
 		# Backup |---------------------------+-----------------------------+----------------+
 		'backup_db':       {'history':  True, 'bash':       'backup_db.sh', 'tag':  True, },
 		'backup_sys':      {'history':  True, 'bash':      'backup_sys.sh', 'tag':  True, },
@@ -36,7 +39,6 @@ def command(selected):
 		'copy':            {'history':  True, 'bash':            'copy.sh', 'tag': False, },
 		'script':          {'history':  True, 'bash':     'script_bash.sh', 'tag': False, },
 		'update':          {'history':  True, 'bash':          'update.sh', 'tag':  True, },
-		'get_dump':        {'history':  True, 'bash':        'get_dump.sh', 'tag':  True, },
 		'copy_utils':      {'history':  True, 'bash':      'copy_utils.sh', 'tag': False, },
 		'sql_script':      {'history':  True, 'bash':      'script_sql.sh', 'tag': False, }, }
 

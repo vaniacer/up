@@ -1,11 +1,11 @@
-<!--Edit button-->
+<!--------------------------------------------Edit button----------------------------------------->
 {% if "edit_server" in pr_view_perms %}
     <a href="{% url 'ups:edit_server' server.id %}"
        title="Edit this server's info."
        class="Edit">Edit</a>
 {% endif %}
 
-<!--Available commands-->
+<!-----------------------------------------Available commands------------------------------------->
 <!-- Validation(input_id(if it not submit type), check_srv, check_upd, check_job, check_script) -->
 {% if "run_command" in pr_view_perms %}
     <a      onclick="run_or_cron('RUN', 'CRON');

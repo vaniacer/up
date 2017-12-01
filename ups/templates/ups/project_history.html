@@ -24,7 +24,7 @@
             <dt>Cron name</dt><dd>{{ event.cron }}</dd>
         {% endif %}
         <dt>Event user</dt><dd>{{ event.user }}</dd>
-        <dt>Event logs</dt><dd><tt>{{ event.desc|safe|linebreaks }}</tt></dd>
+        <dt>Event logs</dt><dd class="log"><tt>{{ event.desc|safe }}</tt></dd>
         <dt>Error code</dt><dd>{{ event.exit }}</dd>
     </dl>
 

@@ -84,6 +84,29 @@
         type="checkbox"
         class="hidden"/>
 
+<!-----------------------------------------------DB DUMPS----------------------------------------->
+<!-- Validation(input_id(if it not submit type), check_srv, check_upd, check_job, check_script) -->
+<li role="separator" class="divider"></li>
+
+<li><a  onclick="return Validation('send_dump', true, true, false, false)"
+        title="Copy DB dump to selected server(s)."
+        href="javascript:;"
+        class="danger">Send dump</a></li>
+<input  name="selected_commands"
+        value="send_dump"
+        type="checkbox"
+        class="hidden"
+        id="send_dump"/>
+
+<li><a  onclick="return Validation('get_dump', true, false, false, false)"
+        title="Get DB dump from selected server(s)."
+        href="javascript:;">Get dump</a></li>
+<input  name="selected_commands"
+        value="get_dump"
+        type="checkbox"
+        class="hidden"
+        id="get_dump"/>
+
 <!------------------------------------------------BACKUP------------------------------------------>
 <!-- Validation(input_id(if it not submit type), check_srv, check_upd, check_job, check_script) -->
 <li role="separator" class="divider"></li>
@@ -136,15 +159,6 @@
         type="checkbox"
         id="sql_script"
         class="hidden"/>
-
-<li><a  onclick="return Validation('get_dump', true, false, false, false)"
-        title="Get DB dump from selected server(s)."
-        href="javascript:;">Get dump</a></li>
-<input  name="selected_commands"
-        value="get_dump"
-        type="checkbox"
-        class="hidden"
-        id="get_dump"/>
 
 <li><a  onclick="return Validation('copy_utils', true, false, false, false)"
         title="Copy utils folder to selected server(s)."

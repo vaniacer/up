@@ -68,5 +68,5 @@ def starter(selected):
 	for cronjb in selected['cronjbs']:
 		opt.extend(['-j', str(cronjb)])
 		del_job(cronjb)
-	# print opt
+	print opt
 	Popen(opt)

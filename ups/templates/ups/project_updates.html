@@ -19,6 +19,7 @@
 
         <div class="panel-body update-body" id="ub{{ update.id }}">
             <dl class="dl-horizontal update-panel">
+                <!--<dt>File</dt><dd>{{ update.file }}</dd>-->
                 <dt>Size</dt><dd>{{ update.file.size|filesizeformat }}</dd>
                 <dt>Description</dt><dd>{{ update.desc|linebreaks }}</dd>
                 <dt><small>Added by</small></dt><dd><small>{{ update.user }}</small></dd>
