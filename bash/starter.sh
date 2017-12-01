@@ -57,13 +57,15 @@ function expect_ssh () {
 expect <<EOF
 spawn ssh $1 $2
 expect {
-    "(yes/no)?" { send "yes\n"; expect {
-                        "assword:"  { exit }
-                        "$ "        { send "exit\n" }
-                    }
-                }
-    "$ "        { send "exit\n"; exit }
-    "assword:"  { exit; }
+    "(yes/no)?" {
+        send "yes\n"
+        expect {
+            "assword:"  { exit }
+            "$ "        { send "exit\n" }
+        }
+    }
+    "assword:"  { exit }
+    "$ "        { send "exit\n" }
 }
 exit
 EOF
