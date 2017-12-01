@@ -38,8 +38,8 @@ function selector(box_id, body_id, name, obj) {
     var box  = document.getElementById(box_id);
     var body = document.getElementById(body_id);
 	var div = document.getElementById(obj);
-    var txt = '<a href=\"javascript:;\" onclick=\"selector(\'' + box_id + '\', \'' + body_id + '\', \''
-        + name + '\', \''+ obj + '\')\">' + name + '</a> | '
+    var txt = '<a title=\"Deselect ' + name + '\" href=\"javascript:;\" onclick=\"selector(\''
+        + box_id + '\', \'' + body_id + '\', \'' + name + '\', \''+ obj + '\')\">' + name + '</a> | '
 
     function change(list) {
         if ( box.checked == false ) {

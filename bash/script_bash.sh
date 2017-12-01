@@ -9,14 +9,16 @@ function body () { #---------------------------------| Main function |----------
 
     for file in "${scripts[@]}"; { filename=${file##*/}
 
-        printf "\nCopy script - $filename\n"
-        rsync -e "ssh $sopt" --progress -lzuogthvr $file $addr:$wdir/updates/new/ || error=$?
+        # Copy script to server
+        rsync -e "ssh $sopt" --progress -lzuogthvr $file $addr:$wdir/updates/new/ > /dev/null && {
 
-        printf "\nRun  script - $filename\n"
-        ssh $sopt $addr "cd $wdir; chmod +x updates/new/$filename; updates/new/$filename" || error=$?
+            printf "\nRun  script - $filename\n"
+            ssh $sopt $addr "cd $wdir; chmod +x updates/new/$filename; updates/new/$filename" || error=$?
 
-        printf "\nDelete script - $filename\n"
-        ssh $sopt $addr "rm $wdir/updates/new/$filename" || error=$?
+            # Delete script after execution
+            ssh $sopt $addr "rm $wdir/updates/new/$filename" || error=$?
+
+        } || error=$?
     }
 
 } #---------------------------------------------------------------------------------------------------------------------

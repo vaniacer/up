@@ -9,11 +9,16 @@ function body () { #---------------------------------| Main function |----------
 
     for file in "${scripts[@]}"; { filename=${file##*/}
 
-        echo  -e "\nCopy script - $filename"
-        rsync -e "ssh $sopt" --progress -lzuogthvr $file $addr:$wdir/updates/new/ || error=$?
+        # Copy script to server
+        rsync -e "ssh $sopt" --progress -lzuogthvr $file $addr:$wdir/updates/new/ > /dev/null && {
 
-        ssh $sopt $addr "$wdir/krupd execsql $wdir/updates/new/$filename" || error=$?
-        ssh $sopt $addr "rm $wdir/updates/new/$filename" || error=$?
+            # Run script
+            ssh $sopt $addr "$wdir/krupd execsql $wdir/updates/new/$filename" || error=$?
+
+            # Delete script after execution
+            ssh $sopt $addr "rm $wdir/updates/new/$filename" || error=$?
+
+        } || error=$?
     }
 
 } #---------------------------------------------------------------------------------------------------------------------
