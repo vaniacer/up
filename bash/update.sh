@@ -44,11 +44,11 @@ function body () { #---------------------------------| Main function |----------
         ssh $sopt $addr "rm $wdir/expimp/*;  cp $wdir/updates/update/updates/expimp/* $wdir/expimp" || error=$?
         ssh $sopt $addr "cp $wdir/updates/update/updates/system_params.list.txt $wdir" || error=$?
 
+        echo -e "\n<b>Start jboss.</b>"
+        ssh $sopt $addr $wdir/krupd jboss.start || error=$?
+
         echo -e "\n<b>Export\Import.</b>"
         ssh $sopt $addr "cd $wdir; ./DataCreatorUpdate.sh; ./import_ByUUID_Central.sh" || error=$?
-
-        echo -e "\n<b>Start jboss.</b>"
-        ssh $sopt $addr $wdir/krupd jboss.start || error=$? #; restore
 
         echo -e "<b>Stop dummy page.</b>"
         ssh $sopt $addr '~/.utils/dp.sh --stop' || error=$?
