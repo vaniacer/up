@@ -32,6 +32,7 @@ def add_job(selected, log, cron):
 		proj=selected['project'],
 		user=selected['user'],
 		cdat=selected['date'],
+		perm=False,
 		cron=cron,
 		desc=log, )
 
@@ -40,6 +41,23 @@ def del_job(job):
 	"""Удаляет из базы запись о крон жобе."""
 	try:
 		Job.objects.get(cron=job).delete()
+	except ObjectDoesNotExist:
+		pass
+
+
+def job_opt(selected, cron):
+	"""В зависимости от выбранного действия с кронжобом, удаляет либо меняет job.perm статус."""
+	try:
+		job = Job.objects.get(cron=cron)
+		if selected['command'] == 'cancel_job':
+			job.delete()
+		if selected['command'] == 'permanent_job':
+			job.perm = True
+			job.save()
+		if selected['command'] == 'once_job':
+			job.perm = False
+			job.save()
+			
 	except ObjectDoesNotExist:
 		pass
 
@@ -67,8 +85,8 @@ def starter(selected):
 		opt.extend(['-x', str(script)])
 	for cronjb in selected['cronjbs']:
 		opt.extend(['-j', str(cronjb)])
-		del_job(cronjb)
+		job_opt(selected, cronjb)
 
 	if conf.DEBUG:
-		print opt
+		print opt, selected
 	Popen(opt)

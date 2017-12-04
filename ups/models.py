@@ -103,6 +103,7 @@ class Script(models.Model):
 class Job(models.Model):
 	"""Задания в кроне."""
 	date = models.DateTimeField(auto_now_add=True, db_index=True)
+	perm = models.BooleanField(default=False)
 	name = models.CharField(max_length=255)
 	cron = models.CharField(max_length=255)
 	cdat = models.CharField(max_length=30)

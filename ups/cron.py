@@ -25,4 +25,6 @@ def get_cron_logs():
 			dick = {'project': job.proj, 'user': job.user, 'command': job.name}
 			os.remove(os.path.join(conf.CRON_DIR, filename))
 			add_event(dick, out, int(err), filename, dat)
-			del_job(filename)
+
+			if not job.perm:  # удаляю если задача не постоянная
+				del_job(filename)

@@ -8,18 +8,33 @@
         {% buttons %}
 
             <input type="button"
-                   value="Select All Jobs"
+                   value="Select all jobs"
                    class="btn btn-info btn-xs"
+                   title="Select all cron jobs."
                    onclick="select_all('selected_jobs', 'job_body', true,  'SJ')"/>
 
             <input type="button"
-                   value="Deselect All Jobs"
+                   value="Deselect all jobs"
                    class="btn btn-info btn-xs"
+                   title="Deselect all cron jobs."
                    onclick="select_all('selected_jobs', 'job_body', false, 'SJ')"/>
+
+            <button value="permanent_job"
+                    name="selected_commands"
+                    class="btn btn-danger btn-xs"
+                    title="Make selected cron job(s) permanent."
+                    onclick="return Validation('', false, false, true)">Permanent</button>
+
+            <button value="once_job"
+                    name="selected_commands"
+                    class="btn btn-danger btn-xs"
+                    title="Make selected cron job(s) run once (default)."
+                    onclick="return Validation('', false, false, true)">Run once</button>
 
             <button value="cancel_job"
                     name="selected_commands"
                     class="btn btn-danger btn-xs"
+                    title="Cancel selected cron job(s)."
                     onclick="return Validation('', false, false, true)">Cancel job</button>
 
         {% endbuttons %}
@@ -36,6 +51,7 @@
 
         <dt>Cron job id</dt><dd>{{ job.cron }}</dd>
         <dt>Job name</dt><dd>{{ job.name }}</dd>
+        <dt>Permanent</dt><dd>{{ job.perm }}</dd>
         <dt>Description</dt><dd>{{ job.desc|linebreaks }}</dd>
         <dt><big>Date\Time</big></dt><dd><big>{{ job.cdat }}</big></dd>
     </dl>

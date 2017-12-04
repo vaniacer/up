@@ -16,7 +16,9 @@ def command(selected):
 		'server_info':     {'history': False, 'bash':     'server_info.sh', 'tag':  True, },
 		'check_conf':      {'history': False, 'bash':      'check_conf.sh', 'tag': False, },
 		'check_logs':      {'history': False, 'bash':      'check_logs.sh', 'tag': False, },
-		'cancel_job':      {'history':  True, 'bash':      'cancel_job.sh', 'tag': False, },
+		'cancel_job':      {'history':  True, 'bash':  'cronjob_cancel.sh', 'tag': False, },
+		'permanent_job':   {'history':  True, 'bash':    'cronjob_perm.sh', 'tag': False, },
+		'once_job':        {'history':  True, 'bash':    'cronjob_once.sh', 'tag': False, },
 		'get_logs':        {'history': False, 'bash':        'logs_get.sh', 'tag':  True, },
 		'tunnel':          {'history': False, 'bash':          'tunnel.sh', 'tag':  True, },
 
