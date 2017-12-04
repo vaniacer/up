@@ -6,19 +6,23 @@ function description () { #---------------------| Function description |--------
 
 function body () { #---------------------------------| Main function |--------------------------------------------------
 
-    [[ ${#updates[*]} -gt 1 ]] && { printf "\nMultiple dumps selected, need one.\n"; error=1; } || {
+    filename=${updates##*/}
 
-        filename=${updates##*/}
+    printf "\nCopy dump.\n"
+    rsync -e "ssh $sopt" --progress -lzuogthvr "$updates" $addr:$wdir/updates/new/ && {
 
-        printf "\nCopy dump.\n"
-        rsync -e "ssh $sopt" --progress -lzuogthvr "$updates" $addr:$wdir/updates/new/ && {
+        ssh $sopt $addr "cd $wdir; ./krupd restore db updates/new/$filename" || error=$?
+        ssh $sopt $addr "rm $wdir/updates/new/$filename" || error=$?
 
-            ssh $sopt $addr "cd $wdir; ./krupd restore db updates/new/$filename" || error=$?
-            ssh $sopt $addr "rm $wdir/updates/new/$filename" || error=$?
-
-        } || error=$?
-    }
+    } || error=$?
 
 } #---------------------------------------------------------------------------------------------------------------------
 
-function run () { for server in "${servers[@]}"; { addr; body; }; info 'Done' $error; }
+function run () {
+
+    [[ ${#updates[*]} -gt 1 ]] && { printf "\nMultiple dumps selected, need one.\n"; error=1; } || {
+
+        for server in "${servers[@]}"; { addr; body; }; info 'Done' $error
+
+    }
+}
