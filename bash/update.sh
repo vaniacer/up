@@ -16,7 +16,7 @@ function restore () { # Run system restore if jboss-start ended with errors.
     ssh $sopt $addr $wdir/krupd jboss.start || error=$?
 }
 
-function body () { #---------------------------------| Main function |--------------------------------------------------
+function body-test () { #----------------------------| Main function |--------------------------------------------------
 
     #echo -e "<b>Backup.</b>"
     #ssh $sopt $addr $wdir/krupd bkp db  || error=$?; download
@@ -56,6 +56,12 @@ function body () { #---------------------------------| Main function |----------
     } || error=$?
 
 } #---------------------------------------------------------------------------------------------------------------------
+
+function body () {
+
+    printf "\nUnder construction.\n"
+
+}
 
 function run () {
 

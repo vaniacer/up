@@ -57,7 +57,7 @@ def job_opt(selected, cron):
 		if selected['command'] == 'once_job':
 			job.perm = False
 			job.save()
-			
+
 	except ObjectDoesNotExist:
 		pass
 
