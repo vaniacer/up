@@ -152,12 +152,12 @@ def edit_script(request, script_id):
 
 		if form.is_valid():
 			if request.POST.get('delete'):
-				check_perm('del_update', project, request.user)
+				check_perm('del_script', project, request.user)
 				delete_object(request, script)
 			elif request.POST.get('ok'):
 				form.save()
 				body = open(str(filename), 'wb')
-				body.write(script.body.replace('\r\n', '\n'))
+				body.write(script.body.replace('\r\n', '\n').encode('utf-8'))
 				body.close()
 				edit_object(request, script)
 
