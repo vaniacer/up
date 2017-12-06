@@ -1,0 +1,40 @@
+{% load bootstrap3 %}
+
+<br>
+<div class="row">
+    <div class="col-md-3"><h3 class="Name">Dumps</h3></div>
+    <div class="col-md-9">{% include "ups/project_dumps_buttons.html" %}</div>
+</div>
+
+<div class="roller droller">
+{% for dump in dmplist %}
+
+    <div class="panel panel-default"
+         onclick="selector('dx{{ dump.name }}', 'db{{ dump.name }}', '{{ dump.name }}', 'SD')">
+
+        <div class="panel-heading">
+            <h4 class="Name">{{ dump.name }}</h4>
+            {% include "ups/commands_dumps.html" %}
+        </div>
+
+        <div class="panel-body dump-body" id="db{{ dump.name }}">
+            <dl class="dl-horizontal dump-panel">
+                <dt>Size</dt><dd>{{ dump.size|filesizeformat }}</dd>
+            </dl>
+            {% if "run_command" in pr_view_perms %}
+                <!--Hidden checkboxes-->
+                <input  class="hidden"
+                        type="checkbox"
+                        name="selected_dumps"
+                        id="dx{{ dump.name }}"
+                        value="{{ dump.name }}"
+                        data-target="{{ dump }}"/>
+            {% endif %}
+        </div>
+
+    </div> <!-- panel -->
+
+{% empty %}
+    There are no dumps for this project yet.
+{% endfor %}
+</div>

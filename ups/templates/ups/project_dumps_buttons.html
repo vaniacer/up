@@ -1,0 +1,39 @@
+{% load bootstrap3 %}
+
+{% buttons %}
+    {% if "run_command" in pr_view_perms %}
+        {% if dumps %}
+            <input type="button"
+                   value="Select All"
+                   title="Select all dumps."
+                   class="btn btn-info btn-xs"
+                   onclick="select_all('selected_dumps', 'dump-body', true,  'SD')"/>
+
+            <input type="button"
+                   value="Deselect All"
+                   title="Deselect all dumps."
+                   class="btn btn-info btn-xs"
+                   onclick="select_all('selected_dumps', 'dump-body', false, 'SD')"/>
+
+            <input type="button"
+                   value="Hide Info"
+                   title="Hide dumps' info."
+                   class="btn btn-info btn-xs dhide"
+                   onclick="hide_info('dump-info', '.dump-panel', '.dhide', '.dshow')"/>
+
+            <input type="button"
+                   value="Show Info"
+                   title="Show dumps' info."
+                   class="btn btn-info btn-xs dshow"
+                   onclick="show_info('dump-info', '.dump-panel', '.dshow', '.dhide')"/>
+        {% endif %}
+
+    {% endif %}
+
+    {% if "add_dump" in pr_view_perms %}
+        <a title="Add new dump."
+           class="btn btn-success btn-xs"
+           href="{% url 'ups:new_dump' project.id %}">Add</a>
+    {% endif %}
+
+{% endbuttons %}

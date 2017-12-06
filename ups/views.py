@@ -12,6 +12,7 @@ from .commands_engine import add_job
 from wsgiref.util import FileWrapper
 from .permissions import check_perm
 from .cron import get_cron_logs
+from .dump import get_dumps
 from subprocess import Popen
 import mimetypes
 import os
@@ -84,7 +85,7 @@ def download_dump(request, project_id, dump):
 	"""Закачка дампов."""
 	current_project = get_object_or_404(Project, id=project_id)
 	check_perm('view_project', current_project, request.user)
-	return download(conf.MEDIA_ROOT + '/dumps/' + str(dump), str(dump))
+	return download(conf.MEDIA_ROOT + '/dumps/%s/%s' % (current_project.name, str(dump)), str(dump))
 
 
 @login_required
@@ -162,6 +163,7 @@ def project(request, project_id):
 	updates = current_project.update_set.order_by('date').reverse()
 	scripts = current_project.script_set.order_by('desc')  # .order_by('date').reverse()
 	history = current_project.history_set.order_by('date').reverse()
+	dmplist = get_dumps(current_project.name)
 	history, hist_fd, hist_bk = pagination(request, history)
 
 	context = {
@@ -172,7 +174,8 @@ def project(request, project_id):
 		'cronjob': cronjob,
 		'history': history,
 		'hist_bk': hist_bk,
-		'hist_fd': hist_fd, }
+		'hist_fd': hist_fd,
+		'dmplist': dmplist}
 
 	if request.POST.get('selected_commands'):
 		context = cmd_run(request, current_project, context)

@@ -1,0 +1,8 @@
+
+<!--------------------------------------------Download button------------------------------------->
+{% if "dld_update" in pr_view_perms %}
+    <a onclick="selector('dx{{ dump.name }}', 'db{{ dump.name }}', '{{ dump.name }}', 'SD')"
+       href="/download_dump/{{ project.id }}/{{ dump.name }}"
+       title="Download this dump."
+       class="Edit">Download</a>
+{% endif %}

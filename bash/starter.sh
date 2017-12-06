@@ -20,7 +20,7 @@ until [ -z $1 ]; do case $1 in
     -cmd    | -c) cmd=$2;;
     -run    | -r) run=$2;;
     -key    | -k) key=$2;;
-    -prj    | -p) prj=$2;;
+    -prj    | -p) prj=$2; pname=${prj#*:}; prj=${prj%:*};;
 
 esac; shift 2; done 2> /dev/null
 #---------------------------------
@@ -86,7 +86,8 @@ function download () {
 
     newname=${addr}_${name//\/*\//}
     echo  -e "Копирую файл - ${name}"
-    rsync -e "ssh $sopt" --progress -lzuogthvr $addr:$name $dumpdir/$newname || error=$?
+    [[ -d $dumpdir/$pname ]] || mkdir $dumpdir/$pname
+    rsync -e "ssh $sopt" --progress -lzuogthvr $addr:$name $dumpdir/$pname/$newname || error=$?
     echo  -e "\n<a class='btn btn-primary' href='/download_dump/$prj/$newname'>Download</a>\n"
 }
 

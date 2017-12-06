@@ -74,7 +74,7 @@ def starter(selected):
 		opt.extend(['-cmd', selected['cmdname']])
 
 	opt.extend([
-		'-prj', str(selected['project'].id),
+		'-prj', '%s:%s' % (str(selected['project'].id), str(selected['project'].name)),
 		'-key', selected['key']])
 
 	for server in selected['servers']:

@@ -1,0 +1,25 @@
+<div class="col-md-6">
+
+    <ul class="nav nav-pills nav-justified">
+      <li class="active"><a data-toggle="pill" href="#scripts">Scripts</a></li>
+      <li><a data-toggle="pill" href="#updates">Updates</a></li>
+      <li><a data-toggle="pill" href="#dumps">Dumps</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div id="scripts" class="tab-pane in active">
+            {% include "ups/project_scripts.html" %}
+        </div>
+
+        <div id="updates" class="tab-pane">
+            {% include "ups/project_updates.html" %}
+        </div>
+
+        <div id="dumps" class="tab-pane">
+            {% include "ups/project_dumps.html" %}
+        </div>
+    </div>
+
+</div>
+
+<div class="col-md-6">{% include "ups/project_servers.html" %}</div>
