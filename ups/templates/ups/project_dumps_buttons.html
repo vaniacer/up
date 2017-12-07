@@ -2,7 +2,7 @@
 
 {% buttons %}
     {% if "run_command" in pr_view_perms %}
-        {% if dumps %}
+        {% if dmplist %}
             <input type="button"
                    value="Select All"
                    title="Select all dumps."
@@ -28,12 +28,6 @@
                    onclick="show_info('dump-info', '.dump-panel', '.dshow', '.dhide')"/>
         {% endif %}
 
-    {% endif %}
-
-    {% if "add_dump" in pr_view_perms %}
-        <a title="Add new dump."
-           class="btn btn-success btn-xs"
-           href="{% url 'ups:new_dump' project.id %}">Add</a>
     {% endif %}
 
 {% endbuttons %}

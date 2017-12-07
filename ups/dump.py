@@ -7,6 +7,11 @@ import os
 def get_dumps(pname):
 	"""Создает список дампов."""
 	path = os.path.join(conf.MEDIA_ROOT, 'dumps', pname)
+	try:  # make project subdir
+		os.mkdir(path)
+	except OSError:
+		pass
+
 	dumps = os.listdir(path)
 
 	if dumps:

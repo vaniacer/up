@@ -1,6 +1,6 @@
 
-<!-----------------------------------------------MAINTENANCE-------------------------------------->
-<!-- Validation(input_id(if it not submit type), check_srv, check_upd, check_job, check_script) -->
+<!---------------------------------------MAINTENANCE-------------------------------------->
+<!-- Validation(input_id(if it not submit type), server, update, cronjob, script, dump) -->
 <li><a  onclick="return Validation('stop', true, false, false, false)"
         title="Stop selected server(s)."
         href="javascript:;"
@@ -61,8 +61,8 @@
         type="checkbox"
         class="hidden"/>
 
-<!----------------------------------------------DELETE UPDATES------------------------------------>
-<!-- Validation(input_id(if it not submit type), check_srv, check_upd, check_job, check_script) -->
+<!--------------------------------------DELETE UPDATES------------------------------------>
+<!-- Validation(input_id(if it not submit type), server, update, cronjob, script, dump) -->
 <li role="separator" class="divider danger"></li>
 
 <li><a  onclick="return Validation('del_sel_updates', true, true, false, false)"
@@ -85,11 +85,11 @@
         type="checkbox"
         class="hidden"/>
 
-<!-----------------------------------------------DB DUMPS----------------------------------------->
-<!-- Validation(input_id(if it not submit type), check_srv, check_upd, check_job, check_script) -->
+<!---------------------------------------DB DUMPS----------------------------------------->
+<!-- Validation(input_id(if it not submit type), server, update, cronjob, script, dump) -->
 <li role="separator" class="divider"></li>
 
-<li><a  onclick="return Validation('send_dump', true, true, false, false)"
+<li><a  onclick="return Validation('send_dump', true, false, false, false, true)"
         title="Copy DB dump to selected server(s)."
         href="javascript:;"
         class="danger">Send dump</a></li>
@@ -108,8 +108,8 @@
         class="hidden"
         id="get_dump"/>
 
-<!------------------------------------------------BACKUP------------------------------------------>
-<!-- Validation(input_id(if it not submit type), check_srv, check_upd, check_job, check_script) -->
+<!----------------------------------------BACKUP------------------------------------------>
+<!-- Validation(input_id(if it not submit type), server, update, cronjob, script, dump) -->
 <li role="separator" class="divider"></li>
 
 <li><a  onclick="return Validation('backup_full', true, false, false, false)"
@@ -139,8 +139,8 @@
         type="checkbox"
         class="hidden"/>
 
-<!-------------------------------------------------MAIN------------------------------------------->
-<!-- Validation(input_id(if it not submit type), check_srv, check_upd, check_job, check_script) -->
+<!-----------------------------------------MAIN------------------------------------------->
+<!-- Validation(input_id(if it not submit type), server, update, cronjob, script, dump) -->
 <li role="separator" class="divider"></li>
 
 <li><a  onclick="return Validation('script', true, false, false, true)"

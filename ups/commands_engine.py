@@ -83,6 +83,8 @@ def starter(selected):
 		opt.extend(['-u', str(update)])
 	for script in selected['scripts']:
 		opt.extend(['-x', str(script)])
+	for dump in selected['dumps']:
+		opt.extend(['-m', str(dump)])
 	for cronjb in selected['cronjbs']:
 		opt.extend(['-j', str(cronjb)])
 		job_opt(selected, cronjb)

@@ -6,10 +6,10 @@ function description () { #---------------------| Function description |--------
 
 function body () { #---------------------------------| Main function |--------------------------------------------------
 
-    filename=${updates##*/}
+    filename=$dumps
 
     printf "\nCopy dump.\n"
-    rsync -e "ssh $sopt" --progress -lzuogthvr "$updates" $addr:$wdir/updates/new/ && {
+    rsync -e "ssh $sopt" --progress -lzuogthvr "$dumpdir/$pname/$dumps" $addr:$wdir/updates/new/ && {
 
         ssh $sopt $addr "cd $wdir; ./krupd restore db updates/new/$filename" || error=$?
         ssh $sopt $addr "rm $wdir/updates/new/$filename" || error=$?
@@ -20,7 +20,7 @@ function body () { #---------------------------------| Main function |----------
 
 function run () {
 
-    [[ ${#updates[*]} -gt 1 ]] && { printf "\nMultiple dumps selected, need one.\n"; error=1; } || {
+    [[ ${#dumps[*]} -gt 1 ]] && { printf "\nMultiple dumps selected, need one.\n"; error=1; } || {
 
         for server in "${servers[@]}"; { addr; body; }; info 'Done' $error
 

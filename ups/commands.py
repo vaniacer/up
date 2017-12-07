@@ -67,6 +67,7 @@ def cmd_run(request, current_project, context):
 		'user': request.user,
 		'cron': request.POST.get('CRON') or False,
 		'date': request.POST.get('selected_date') or run_date(),
+		'dumps':   request.POST.getlist('selected_dumps'),
 		'updates': request.POST.getlist('selected_updates'),
 		'scripts': request.POST.getlist('selected_scripts'),
 		'servers': request.POST.getlist('selected_servers'),

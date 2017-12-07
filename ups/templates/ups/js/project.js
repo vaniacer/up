@@ -93,12 +93,13 @@ function getCookie(cname) {
     return "";
 }
 
-function Validation(box, srv, upd, job, scr) {
+function Validation(box, srv, upd, job, scr, dmp) {
 
     setCookie('scrollmem', window.pageYOffset);
     setCookie('sroller', $('.sroller').scrollTop());
     setCookie('xroller', $('.xroller').scrollTop());
     setCookie('uroller', $('.uroller').scrollTop());
+    setCookie('droller', $('.droller').scrollTop());
 
     if (job) {
         var jobs = document.getElementsByName('selected_jobs');
@@ -119,6 +120,11 @@ function Validation(box, srv, upd, job, scr) {
         var servers = document.getElementsByName('selected_servers');
         for (i = 0; i < servers.length; i++) { if (servers[i].checked) { var selected_servers = true; break; }}
         if  (!selected_servers) { alert('Server(s) not selected.'); return false; }}
+
+    if (dmp) {
+        var dumps = document.getElementsByName('selected_dumps');
+        for (i = 0; i < dumps.length; i++) { if (dumps[i].checked) { var selected_dumps = true; break; }}
+        if  (!selected_dumps) { alert('Dump(s) not selected.'); return false; }}
 
     show_loader();
     if (box) { document.getElementById(box).checked = true; document.getElementById('selector').submit(); }
