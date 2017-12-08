@@ -15,6 +15,12 @@ def get_dumps(pname):
 	dumps = os.listdir(path)
 
 	if dumps:
-		dumplist = [{'name': dump, 'size': os.stat(os.path.join(path, dump)).st_size} for dump in dumps]
+
+		i = 0
+		dumplist = []
+
+		for dump in dumps:
+			i += 1
+			dumplist.extend([{'id': i, 'name': dump, 'size': os.stat(os.path.join(path, dump)).st_size}])
 
 		return dumplist

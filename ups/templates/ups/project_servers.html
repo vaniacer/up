@@ -15,10 +15,56 @@
         <div class="panel-heading">
             <h4 class="Name">{{ server.name }}</h4>
             {% include "ups/commands_servers.html" %}
+
+            <!--<button type="button"-->
+                    <!--title="Hide servers' info."-->
+                    <!--class="btn btn-xs shide sh{{ server.id }}"-->
+                    <!--onclick="selector('sx{{ server.id }}',-->
+                                      <!--'sb{{ server.id }}',-->
+                                      <!--'{{ server }}', 'SS');-->
+                             <!--hide_info('si{{ server.id }}',-->
+                                       <!--'.sp{{ server.id }}',-->
+                                       <!--'.sh{{ server.id }}',-->
+                                       <!--'.ss{{ server.id }}')">-->
+                    <!--<span class="glyphicon glyphicon-minus"></span>-->
+            <!--</button>-->
+
+            <!--<button type="button"-->
+                    <!--title="Show servers' info."-->
+                    <!--class="btn btn-xs sshow ss{{ server.id }}"-->
+                    <!--onclick="selector('sx{{ server.id }}',-->
+                                      <!--'sb{{ server.id }}',-->
+                                      <!--'{{ server }}', 'SS');-->
+                             <!--show_info('si{{ server.id }}',-->
+                                       <!--'.sp{{ server.id }}',-->
+                                       <!--'.ss{{ server.id }}',-->
+                                       <!--'.sh{{ server.id }}')">-->
+                    <!--<span class="glyphicon glyphicon-plus"></span>-->
+            <!--</button>-->
+
+            <!--Individual visibility buttons-->
+            <input value="-"
+                   type="button"
+                   title="Hide server info."
+                   class="btn btn-xs shide sh{{ server.id }} right"
+                   onclick="selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS');
+                            hide_info('si{{ server.id }}',
+                                      '.sp{{ server.id }}',
+                                      '.sh{{ server.id }}',
+                                      '.ss{{ server.id }}')"/>
+            <input value="+"
+                   type="button"
+                   title="Show server info."
+                   class="btn btn-xs sshow ss{{ server.id }} right"
+                   onclick="selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS');
+                            show_info('si{{ server.id }}',
+                                      '.sp{{ server.id }}',
+                                      '.ss{{ server.id }}',
+                                      '.sh{{ server.id }}')"/>
         </div>
 
         <div class="panel-body server-body" id="sb{{ server.id }}">
-            <dl class="dl-horizontal server-panel">
+            <dl class="dl-horizontal server-panel sp{{ server.id }}">
                 <dt>Server address</dt><dd>{{ server.addr }}</dd>
                 <dt>Working folder</dt><dd>{{ server.wdir }}</dd>
                 <dt>Server bind port</dt><dd>{{ server.port }}</dd>

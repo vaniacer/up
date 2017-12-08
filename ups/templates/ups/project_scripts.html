@@ -15,10 +15,30 @@
         <div class="panel-heading">
             <h4 class="Name">{{ script }}</h4>
             {% include "ups/commands_scripts.html" %}
+
+            <!--Individual visibility buttons-->
+            <input value="-"
+                   type="button"
+                   title="Hide script info."
+                   class="btn btn-xs xhide xh{{ script.id }} right"
+                   onclick="selector('xx{{ script.id }}', 'xb{{ script.id }}', '{{ script }}', 'SX');
+                            hide_info('xi{{ script.id }}',
+                                      '.xp{{ script.id }}',
+                                      '.xh{{ script.id }}',
+                                      '.xs{{ script.id }}')"/>
+            <input value="+"
+                   type="button"
+                   title="Show script info."
+                   class="btn btn-xs xshow xs{{ script.id }} right"
+                   onclick="selector('xx{{ script.id }}', 'xb{{ script.id }}', '{{ script }}', 'SX');
+                            show_info('xi{{ script.id }}',
+                                      '.xp{{ script.id }}',
+                                      '.xs{{ script.id }}',
+                                      '.xh{{ script.id }}')"/>
         </div>
 
         <div class="panel-body script-body" id="xb{{ script.id }}">
-            <dl class="dl-horizontal script-panel">
+            <dl class="dl-horizontal script-panel xp{{ script.id }}">
                 <dt>Description</dt><dd>{{ script.desc|linebreaks }}</dd>
                 <dt>Preview</dt><dd>{{ script.body|linebreaks|truncatewords:10 }}</dd>
                 <dt><small>Added by</small></dt><dd><small>{{ script.user }}</small></dd>

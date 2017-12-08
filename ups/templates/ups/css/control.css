@@ -35,6 +35,14 @@
     background: #f2dede;
 }
 
+.red {
+    color: #ef3737;
+}
+
+.red:hover {
+    color: #f60f0f;
+}
+
 .update-panel dt {
     width: 80px;
 }
@@ -70,4 +78,8 @@
 .roller {
     overflow-y: auto;
     height: 70%;
+}
+
+.right {
+    float: right;
 }
