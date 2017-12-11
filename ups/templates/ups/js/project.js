@@ -1,4 +1,5 @@
 var log_ready = false;
+var select_color = '#dff0d8';
 
 function logs_to_div(div) {
     if (!log_ready) { $(div).load('/logs/{{ project.id }}/{{ key }}/{{ cmd }}/{{ cron }}/{{ date }}/'); }
@@ -43,7 +44,7 @@ function selector(box_id, body_id, name, obj) {
 
     function change(list) {
         if ( box.checked == false ) {
-            box.checked =  true;  body.style.background = '#dff0d8';
+            box.checked =  true;  body.style.background = select_color;
             window[list] = window[list] + txt;
             div.innerHTML = window[list];
         }
