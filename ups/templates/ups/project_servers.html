@@ -8,8 +8,7 @@
 
 <div class="tab-content">
 
-    <div id="all" class="tab-pane in active">
-        <div class="roller sroller">
+    <div id="all" class="tab-pane in active roller sroller">
             {% for server in servers %}
 
                 {% if '' in server.name %}
@@ -19,11 +18,9 @@
             {% empty %}
                 There are no servers for this project yet.
             {% endfor %}
-        </div>
     </div>
 
-    <div id="prod" class="tab-pane">
-        <div class="roller sroller">
+    <div id="prod" class="tab-pane roller sroller">
             {% for server in servers %}
 
                 {% if 'prod' in server.name %}
@@ -33,11 +30,9 @@
             {% empty %}
                 There are no servers for this project yet.
             {% endfor %}
-        </div>
     </div>
 
-    <div id="test" class="tab-pane">
-        <div class="roller sroller">
+    <div id="test" class="tab-pane roller sroller">
             {% for server in servers %}
 
                 {% if 'test' in server.name %}
@@ -47,7 +42,6 @@
             {% empty %}
                 There are no servers for this project yet.
             {% endfor %}
-        </div>
     </div>
 
 </div>
