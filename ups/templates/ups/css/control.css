@@ -35,6 +35,10 @@
     background: #f2dede;
 }
 
+.selected {
+    background: #dff0d8;
+}
+
 .red {
     color: #ef3737;
 }

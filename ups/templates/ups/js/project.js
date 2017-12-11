@@ -1,5 +1,4 @@
 var log_ready = false;
-var select_color = '#dff0d8';
 
 function logs_to_div(div) {
     if (!log_ready) { $(div).load('/logs/{{ project.id }}/{{ key }}/{{ cmd }}/{{ cron }}/{{ date }}/'); }
@@ -44,13 +43,13 @@ function selector(box_id, body_id, name, obj) {
 
     function change(list) {
         if ( box.checked == false ) {
-            box.checked =  true;  body.style.background = select_color;
+            box.checked =  true; body.classList.add('selected');
             window[list] = window[list] + txt;
             div.innerHTML = window[list];
         }
         else {
-            box.checked =  false; body.style.background = '';
-            window[list] = window[list].replace(txt, "");
+            box.checked =  false; body.classList.remove('selected');
+            window[list] = window[list].replace(txt, '');
 
             if ( window[list] == pref ) { div.innerHTML = ''; }
             else { div.innerHTML = window[list]; }
