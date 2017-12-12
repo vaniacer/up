@@ -1,33 +1,31 @@
 {% load bootstrap3 %}
 
-<br>
+<br><br><br>
 <div class="row">
     <div class="col-md-2"><h3 class="Name">Servers</h3></div>
     <div class="col-md-10">{% include "ups/project_servers_buttons.html" %}</div>
 </div>
 
-<div class="tab-content">
+<!--<div class="tab-content">-->
 
-    <div id="all" class="tab-pane in active">
+    <!--<div id="all" class="tab-pane in active">-->
 
-    </div>
+    <!--</div>-->
 
-    <div id="prod" class="tab-pane">
+    <!--<div id="prod" class="tab-pane">-->
 
-    </div>
+    <!--</div>-->
 
-    <div id="test" class="tab-pane">
+    <!--<div id="test" class="tab-pane">-->
 
-    </div>
+    <!--</div>-->
 
-</div>
+<!--</div>-->
 
 <div class="roller sroller">
     {% for server in servers %}
 
-        {% if '' in server.name %}
-            {% include "ups/project_servers_body.html" %}
-        {% endif %}
+        {% include "ups/project_servers_body.html" %}
 
     {% empty %}
         There are no servers for this project yet.
