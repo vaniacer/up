@@ -8,40 +8,28 @@
 
 <div class="tab-content">
 
-    <div id="all" class="tab-pane in active roller sroller">
-            {% for server in servers %}
+    <div id="all" class="tab-pane in active">
 
-                {% if '' in server.name %}
-                    {% include "ups/project_servers_body.html" %}
-                {% endif %}
-
-            {% empty %}
-                There are no servers for this project yet.
-            {% endfor %}
     </div>
 
-    <div id="prod" class="tab-pane roller sroller">
-            {% for server in servers %}
+    <div id="prod" class="tab-pane">
 
-                {% if 'prod' in server.name %}
-                    {% include "ups/project_servers_body.html" %}
-                {% endif %}
-
-            {% empty %}
-                There are no servers for this project yet.
-            {% endfor %}
     </div>
 
-    <div id="test" class="tab-pane roller sroller">
-            {% for server in servers %}
+    <div id="test" class="tab-pane">
 
-                {% if 'test' in server.name %}
-                    {% include "ups/project_servers_body.html" %}
-                {% endif %}
-
-            {% empty %}
-                There are no servers for this project yet.
-            {% endfor %}
     </div>
 
+</div>
+
+<div class="roller sroller">
+    {% for server in servers %}
+
+        {% if '' in server.name %}
+            {% include "ups/project_servers_body.html" %}
+        {% endif %}
+
+    {% empty %}
+        There are no servers for this project yet.
+    {% endfor %}
 </div>
