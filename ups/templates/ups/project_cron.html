@@ -11,13 +11,13 @@
                    value="Select all jobs"
                    class="btn btn-info btn-xs"
                    title="Select all cron jobs."
-                   onclick="select_all('selected_jobs', 'job_body', true,  'SJ')"/>
+                   onclick="select_all('selected_jobs', 'job-body', true,  'SJ')"/>
 
             <input type="button"
                    value="Deselect all jobs"
                    class="btn btn-info btn-xs"
                    title="Deselect all cron jobs."
-                   onclick="select_all('selected_jobs', 'job_body', false, 'SJ')"/>
+                   onclick="select_all('selected_jobs', 'job-body', false, 'SJ')"/>
 
             <button value="permanent_job"
                     name="selected_commands"
@@ -46,7 +46,7 @@
 {% for job in cronjob %}
 
     <dl id="jb{{ job.id }}"
-        class="dl-horizontal job_body"
+        class="dl-horizontal job-body"
         onclick="selector('jx{{ job.id }}', 'jb{{ job.id }}', '{{ job.name }}', 'SJ')">
 
         <dt>Cron job id</dt><dd>{{ job.cron }}</dd>

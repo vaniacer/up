@@ -26,6 +26,13 @@
                    title="Show dumps' info."
                    class="btn btn-info btn-xs dshow"
                    onclick="show_info('dump-info', '.dump-panel', '.dshow', '.dhide')"/>
+
+            <button value="del_dump"
+                    name="selected_commands"
+                    class="btn btn-danger btn-xs"
+                    title="Delete selected dump(s)."
+                    onclick="return Validation('', false, false, false, false, true)">Delete</button>
+
         {% endif %}
 
     {% endif %}

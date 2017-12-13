@@ -14,13 +14,17 @@
                    onclick="select_all('selected_servers', 'server-body', false, 'SS');
                             select_all('selected_updates', 'update-body', false, 'SU');
                             select_all('selected_scripts', 'script-body', false, 'SX');
-                            select_all('selected_jobs',    'job_body',    false, 'SJ')">Deselect All</a></li>
+                            select_all('selected_dumps',   'dump-body',   false, 'SD');
+                            select_all('selected_jobs',    'job-body',    false, 'SJ')">Deselect All</a></li>
 
             <li><a href="javascript:;"
-                   onclick="select_all('selected_jobs',    'job_body',    false, 'SJ')">Deselect All Jobs</a></li>
+                   onclick="select_all('selected_jobs',    'job-body',    false, 'SJ')">Deselect All Jobs</a></li>
 
             <li><a href="javascript:;"
                    onclick="select_all('selected_scripts', 'script-body', false, 'SX')">Deselect All Scripts</a></li>
+
+            <li><a href="javascript:;"
+                   onclick="select_all('selected_dumps',   'dump-body',   false, 'SD')">Deselect All Dumps</a></li>
 
             <li><a href="javascript:;"
                    onclick="select_all('selected_servers', 'server-body', false, 'SS')">Deselect All Servers</a></li>
@@ -37,16 +41,20 @@
                    onclick="select_all('selected_servers', 'server-body', true,  'SS')">Select All Servers</a></li>
 
             <li><a href="javascript:;"
+                   onclick="select_all('selected_dumps',   'dump-body',   true,  'SD')">Select All Dumps</a></li>
+
+            <li><a href="javascript:;"
                    onclick="select_all('selected_scripts', 'script-body', true,  'SX')">Select All Scripts</a></li>
 
             <li><a href="javascript:;"
-                   onclick="select_all('selected_jobs',    'job_body',    true,  'SJ')">Select All Jobs</a></li>
+                   onclick="select_all('selected_jobs',    'job-body',    true,  'SJ')">Select All Jobs</a></li>
 
             <li><a href="javascript:;"
                    onclick="select_all('selected_servers', 'server-body', true,  'SS');
                             select_all('selected_updates', 'update-body', true,  'SU');
                             select_all('selected_scripts', 'script-body', true,  'SX');
-                            select_all('selected_jobs',    'job_body',    true,  'SJ');">Select All</a></li>
+                            select_all('selected_dumps',   'dump-body',   true,  'SD');
+                            select_all('selected_jobs',    'job-body',    true,  'SJ');">Select All</a></li>
         </ul>
     </div>
 </li>
