@@ -87,3 +87,9 @@
 .right {
     float: right;
 }
+
+.nav>li>a {
+    padding-top: 7px;
+    padding-bottom: 7px;
+
+}

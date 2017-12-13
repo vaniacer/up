@@ -33,19 +33,35 @@
 
 <div class="col-md-6">
 
-    <!--<ul class="nav nav-pills nav-justified">-->
-        <!--<li class="active">-->
-            <!--<a data-toggle="pill" href="#all">All</a>-->
-        <!--</li>-->
+    <div class="row">
+        <div class="col-lg-7">
 
-        <!--<li>-->
-            <!--<a data-toggle="pill" href="#prod">Prod</a>-->
-        <!--</li>-->
+            <div class="btn-group btn-group-justified">
+                <div class="btn-group">
+                    <button name="server_all" value="server_all" class="btn btn-primary">All</button>
+                </div>
+                <div class="btn-group">
+                    <button name="server_prd" value="server_prd" class="btn btn-primary">Prod</button>
+                </div>
+                <div class="btn-group">
+                    <button name="server_tst" value="server_tst" class="btn btn-primary">Test</button>
+                </div>
+            </div>
 
-        <!--<li>-->
-            <!--<a data-toggle="pill" href="#test">Test</a>-->
-        <!--</li>-->
-    <!--</ul>-->
+        </div>
+        <div class="col-lg-5">
+
+            <div class="input-group">
+
+                <span class="input-group-btn">
+                    <button name="server_ctm" value="server_ctm" class="btn btn-primary">Custom</button>
+                </span>
+                <input name="server_ctmv" class="form-control sorterser">
+
+            </div>
+
+        </div>
+    </div>
 
     {% include "ups/project_servers.html" %}
 </div>

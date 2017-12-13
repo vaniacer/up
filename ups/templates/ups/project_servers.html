@@ -1,31 +1,63 @@
 {% load bootstrap3 %}
 
-<br><br><br>
+<br>
 <div class="row">
     <div class="col-md-2"><h3 class="Name">Servers</h3></div>
     <div class="col-md-10">{% include "ups/project_servers_buttons.html" %}</div>
 </div>
 
-<!--<div class="tab-content">-->
-
-    <!--<div id="all" class="tab-pane in active">-->
-
-    <!--</div>-->
-
-    <!--<div id="prod" class="tab-pane">-->
-
-    <!--</div>-->
-
-    <!--<div id="test" class="tab-pane">-->
-
-    <!--</div>-->
-
-<!--</div>-->
-
 <div class="roller sroller">
     {% for server in servers %}
 
-        {% include "ups/project_servers_body.html" %}
+        <div class="panel panel-default"
+             onclick="selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS')">
+
+            <div class="panel-heading">
+                <h4 class="Name">{{ server.name }}</h4>
+                {% include "ups/commands_servers.html" %}
+
+                <!--Individual visibility buttons-->
+                <input value="-"
+                       type="button"
+                       title="Hide server info."
+                       class="btn btn-xs shide sh{{ server.id }} right"
+                       onclick="selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS');
+                                hide_info('si{{ server.id }}',
+                                          '.sp{{ server.id }}',
+                                          '.sh{{ server.id }}',
+                                          '.ss{{ server.id }}')"/>
+                <input value="+"
+                       type="button"
+                       title="Show server info."
+                       class="btn btn-xs sshow ss{{ server.id }} right"
+                       onclick="selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS');
+                                show_info('si{{ server.id }}',
+                                          '.sp{{ server.id }}',
+                                          '.ss{{ server.id }}',
+                                          '.sh{{ server.id }}')"/>
+            </div>
+
+            <div class="panel-body server-body" id="sb{{ server.id }}">
+                <dl class="dl-horizontal server-panel sp{{ server.id }}">
+                    <dt>Server address</dt><dd>{{ server.addr }}</dd>
+                    <dt>Working folder</dt><dd>{{ server.wdir }}</dd>
+                    <dt>Server bind port</dt><dd>{{ server.port }}</dd>
+                    <dt>Description</dt><dd>{{ server.desc|linebreaks|urlize }}</dd>
+                    <dt><small>Added by</small></dt><dd><small>{{ server.user }}</small></dd>
+                    <dt><small>Date added</small></dt><dd><small>{{ server.date|date:'M d, Y H:i' }}</small></dd>
+                </dl>
+                {% if "run_command" in pr_view_perms %}
+                    <!--Hidden checkboxes-->
+                    <input  class="hidden"
+                            type="checkbox"
+                            id="sx{{ server.id }}"
+                            name="selected_servers"
+                            data-target="{{ server }}"
+                            value="{{ server.addr }}:{{ server.wdir }}:{{ server.port }}"/>
+                {% endif %}
+            </div>
+
+        </div> <!-- panel -->
 
     {% empty %}
         There are no servers for this project yet.

@@ -158,7 +158,15 @@ def project(request, project_id):
 	check_perm('view_project', current_project, request.user)
 
 	get_cron_logs()
-	servers = current_project.server_set.order_by('name')
+	if request.POST.get('server_prd'):
+		servers = current_project.server_set.filter(name__icontains='prod').order_by('name')
+	elif request.POST.get('server_tst'):
+		servers = current_project.server_set.filter(name__icontains='test').order_by('name')
+	elif request.POST.get('server_ctm'):
+		name = request.POST.get('server_ctmv')
+		servers = current_project.server_set.filter(name__icontains=name).order_by('name')
+	else:
+		servers = current_project.server_set.order_by('name')
 	cronjob = current_project.job_set.order_by('date').reverse()
 	updates = current_project.update_set.order_by('date').reverse()
 	scripts = current_project.script_set.order_by('desc')  # .order_by('date').reverse()
