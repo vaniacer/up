@@ -162,7 +162,7 @@ def project(request, project_id):
 		servers = current_project.server_set.filter(name__icontains='prod').order_by('name')
 	elif request.POST.get('server_tst'):
 		servers = current_project.server_set.filter(name__icontains='test').order_by('name')
-	elif request.POST.get('server_ctm'):
+	elif request.POST.get('server_ctmv'):
 		name = request.POST.get('server_ctmv')
 		servers = current_project.server_set.filter(name__icontains=name).order_by('name')
 	else:
