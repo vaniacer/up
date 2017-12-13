@@ -1,6 +1,7 @@
 {% load bootstrap3 %}
 
 {% buttons %}
+
     {% if "run_command" in pr_view_perms %}
         {% if dmplist %}
             <input type="button"
@@ -27,26 +28,21 @@
                    class="btn btn-info btn-xs dshow"
                    onclick="show_info('dump-info', '.dump-panel', '.dshow', '.dhide')"/>
 
-        {% endif %}
-
-<!-----------------------------------------Get button------------------------------------->
-<!-- Validation(input_id(if it not submit type), server, update, cronjob, script, dump) -->
-            <input value="Get"
-                   type="button"
-                   class="btn btn-success btn-xs"
-                   title="Get DB dump from selected server(s)."
-                   onclick="return Validation('get_dump', true, false, false, false, false)"/>
-    {% endif %}
-
 <!---------------------------------------Delete button------------------------------------>
-    {% if "run_command" in pr_view_perms %}
-        {% if dmplist %}
+<!-- Validation(input_id(if it not submit type), server, update, cronjob, script, dump) -->
             <input type="button"
                    value="Delete"
                    class="btn btn-danger btn-xs"
                    title="Delete selected dump(s)."
                    onclick="return Validation('del_dump', false, false, false, false, true)"/>
         {% endif %}
+
+<!-----------------------------------------Get button------------------------------------->
+            <input value="Get"
+                   type="button"
+                   class="btn btn-success btn-xs"
+                   title="Get DB dump from selected server(s)."
+                   onclick="return Validation('get_dump', true, false, false, false, false)"/>
     {% endif %}
 
 {% endbuttons %}
