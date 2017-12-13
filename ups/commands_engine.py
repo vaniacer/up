@@ -90,5 +90,5 @@ def starter(selected):
 		job_opt(selected, cronjb)
 
 	if conf.DEBUG:
-		print opt, selected
+		print '\n', opt, '\n\n', selected, '\n'
 	Popen(opt)
