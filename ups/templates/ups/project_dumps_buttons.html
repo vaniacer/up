@@ -27,15 +27,26 @@
                    class="btn btn-info btn-xs dshow"
                    onclick="show_info('dump-info', '.dump-panel', '.dshow', '.dhide')"/>
 
-<!---------------------------------------Delete button------------------------------------>
-<!-- Validation(input_id(if it not submit type), server, update, cronjob, script, dump) -->
-            <!--<button value="del_dump"-->
-                    <!--name="selected_commands"-->
-                    <!--class="btn btn-danger btn-xs"-->
-                    <!--title="Delete selected dump(s)."-->
-                    <!--onclick="return Validation('', false, false, false, false, true)">Delete</button>-->
         {% endif %}
 
+<!-----------------------------------------Get button------------------------------------->
+<!-- Validation(input_id(if it not submit type), server, update, cronjob, script, dump) -->
+            <input value="Get"
+                   type="button"
+                   class="btn btn-success btn-xs"
+                   title="Get DB dump from selected server(s)."
+                   onclick="return Validation('get_dump', true, false, false, false, false)"/>
+    {% endif %}
+
+<!---------------------------------------Delete button------------------------------------>
+    {% if "run_command" in pr_view_perms %}
+        {% if dmplist %}
+            <input type="button"
+                   value="Delete"
+                   class="btn btn-danger btn-xs"
+                   title="Delete selected dump(s)."
+                   onclick="return Validation('del_dump', false, false, false, false, true)"/>
+        {% endif %}
     {% endif %}
 
 {% endbuttons %}
