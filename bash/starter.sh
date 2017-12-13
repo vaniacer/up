@@ -85,11 +85,16 @@ function download () {
                   || { name=$(tail -n2 $rundir/log$key) ; }
                        name=${name#*\"}; name=${name//\"./}
 
-    newname=${addr}_${name//\/*\//}
-    echo  -e "Копирую файл - ${name}"
-    [[ -d $dumpdir/$pname ]] || mkdir $dumpdir/$pname
-    rsync -e "ssh $sopt" --progress -lzuogthvr $addr:$name $dumpdir/$pname/$newname || error=$?
-    echo  -e "\n<a class='btn btn-primary' href='/download_dump/$prj/$newname'>Download</a>\n"
+    ssh $sopt $addr [[ -f "$name" ]] && {
+
+        newname=${addr}_${name//\/*\//}
+        echo  -e "Копирую файл - ${name}"
+        [[ -d $dumpdir/$pname ]] || mkdir $dumpdir/$pname
+
+        rsync -e "ssh $sopt" --progress -lzuogthvr $addr:$name $dumpdir/$pname/$newname || error=$?
+        echo  -e "\n<a class='btn btn-primary' href='/download_dump/$prj/$newname'>Download</a>\n"
+
+    } || { echo "File not found."; error=1; name=; }
 }
 
 # Load 'run' and 'description' functions from $cmd.
