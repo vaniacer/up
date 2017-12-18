@@ -159,14 +159,15 @@ def project(request, project_id):
 
 	get_cron_logs()
 	if request.POST.get('server_prd'):
-		servers = current_project.server_set.filter(name__icontains='prod').order_by('name')
+		servers_filter = 'prod'
 	elif request.POST.get('server_tst'):
-		servers = current_project.server_set.filter(name__icontains='test').order_by('name')
+		servers_filter = 'test'
 	elif request.POST.get('server_ctmv'):
-		name = request.POST.get('server_ctmv')
-		servers = current_project.server_set.filter(name__icontains=name).order_by('name')
+		servers_filter = request.POST.get('server_ctmv')
 	else:
-		servers = current_project.server_set.order_by('name')
+		servers_filter = ''
+
+	servers = current_project.server_set.filter(name__icontains=servers_filter).order_by('name')
 	cronjob = current_project.job_set.order_by('date').reverse()
 	updates = current_project.update_set.order_by('date').reverse()
 	scripts = current_project.script_set.order_by('desc')  # .order_by('date').reverse()
