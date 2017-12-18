@@ -168,10 +168,10 @@ def project(request, project_id):
 		servers_filter = ''
 
 	servers = current_project.server_set.filter(name__icontains=servers_filter).order_by('name')
-	cronjob = current_project.job_set.order_by('date').reverse()
-	updates = current_project.update_set.order_by('date').reverse()
-	scripts = current_project.script_set.order_by('desc')  # .order_by('date').reverse()
 	history = current_project.history_set.order_by('date').reverse()
+	updates = current_project.update_set.order_by('date').reverse()
+	cronjob = current_project.job_set.order_by('date').reverse()
+	scripts = current_project.script_set.order_by('desc')
 	dmplist = get_dumps(current_project.name)
 	history, hist_fd, hist_bk = pagination(request, history)
 
