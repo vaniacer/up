@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 from django import forms
-from .models import Project, Server, Update, Script
+from .models import Project, Server, Update, Script, Main
 
 
 class ProjectForm(forms.ModelForm):
@@ -53,3 +53,14 @@ class ScriptEditForm(forms.ModelForm):
 			'desc': forms.Textarea(attrs={'cols': 80}),
 			'body': forms.Textarea(attrs={'cols': 80}),
 		}
+
+
+class MainForm(forms.ModelForm):
+	class Meta:
+		model = Main
+		fields = ['server_ctm']
+		labels = {'server_ctm': ''}
+
+	def __init__(self, *args, **kwargs):
+		super(MainForm, self).__init__(*args, **kwargs)
+		self.fields['server_ctm'].required = False

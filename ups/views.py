@@ -16,7 +16,7 @@ from .dump import get_dumps
 from subprocess import Popen
 import mimetypes
 import os
-
+from .forms import MainForm
 
 def index(request):
 	"""Домашняя страница приложения update server."""
@@ -157,16 +157,21 @@ def project(request, project_id):
 	current_project = get_object_or_404(Project, id=project_id)
 	check_perm('view_project', current_project, request.user)
 
+	servers_filter = ''
+	print request.POST
+
 	get_cron_logs()
-	if request.POST.get('server_prd'):
+	if request.POST.get('server_all'):
+		servers_filter = ''
+	elif request.POST.get('server_prd'):
 		servers_filter = 'prod'
 	elif request.POST.get('server_tst'):
 		servers_filter = 'test'
-	elif request.POST.get('server_ctmv'):
-		servers_filter = request.POST.get('server_ctmv')
-	else:
-		servers_filter = ''
+	elif request.POST.get('server_ctm'):
+		print request.POST.get('server_ctm')
+		servers_filter = request.POST.get('server_ctm')
 
+	serfltr = MainForm(initial={'server_ctm': servers_filter})
 	servers = current_project.server_set.filter(name__icontains=servers_filter).order_by('name')
 	history = current_project.history_set.order_by('date').reverse()
 	updates = current_project.update_set.order_by('date').reverse()
@@ -184,7 +189,8 @@ def project(request, project_id):
 		'history': history,
 		'hist_bk': hist_bk,
 		'hist_fd': hist_fd,
-		'dmplist': dmplist}
+		'dmplist': dmplist,
+		'serfltr': serfltr, }
 
 	if request.POST.get('selected_commands'):
 		context = cmd_run(request, current_project, context)
