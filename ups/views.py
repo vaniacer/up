@@ -12,11 +12,12 @@ from .commands_engine import add_job
 from wsgiref.util import FileWrapper
 from .permissions import check_perm
 from .cron import get_cron_logs
-from .dump import get_dumps
 from subprocess import Popen
+from .forms import MainForm
+from .dump import get_dumps
 import mimetypes
 import os
-from .forms import MainForm
+
 
 def index(request):
 	"""Домашняя страница приложения update server."""
@@ -168,14 +169,13 @@ def project(request, project_id):
 	elif request.POST.get('server_tst'):
 		servers_filter = 'test'
 	elif request.POST.get('server_ctm'):
-		print request.POST.get('server_ctm')
 		servers_filter = request.POST.get('server_ctm')
 
-	serfltr = MainForm(initial={'server_ctm': servers_filter})
 	servers = current_project.server_set.filter(name__icontains=servers_filter).order_by('name')
 	history = current_project.history_set.order_by('date').reverse()
 	updates = current_project.update_set.order_by('date').reverse()
 	cronjob = current_project.job_set.order_by('date').reverse()
+	serfltr = MainForm(initial={'server_ctm': servers_filter})
 	scripts = current_project.script_set.order_by('desc')
 	dmplist = get_dumps(current_project.name)
 	history, hist_fd, hist_bk = pagination(request, history)
