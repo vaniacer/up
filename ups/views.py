@@ -161,13 +161,7 @@ def project(request, project_id):
 	get_cron_logs()
 
 	servers_filter = ''
-	if request.POST.get('server_all'):
-		servers_filter = ''
-	elif request.POST.get('server_prd'):
-		servers_filter = 'prod'
-	elif request.POST.get('server_tst'):
-		servers_filter = 'test'
-	elif request.POST.get('server_ctm'):
+	if request.POST.get('server_ctm'):
 		servers_filter = request.POST.get('server_ctm')
 
 	servers = current_project.server_set.filter(name__icontains=servers_filter).order_by('name')
