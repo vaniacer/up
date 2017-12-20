@@ -50,6 +50,7 @@
         <div class="col-sm-7">
 
             <div class="btn-group btn-group-justified">
+
                 <div class="btn-group">
                     <button onclick="$('#id_server_ctm').val('');" class="btn btn-primary">All</button>
                 </div>
@@ -61,16 +62,14 @@
                 </div>
                 <div class="btn-group">
                     <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                    List <span class="caret"></span></button>
+                    Select <span class="caret"></span></button>
                     <ul class="dropdown-menu" role="menu">
                         {% for S in servers %}
-                            <li>
-                                <a href="javascript:;"
-                                   onclick="$('#id_server_ctm').val('{{S}}');$('#selector').submit()">{{S}}</a>
-                             </li>
+                            <li><a href="javascript:;" onclick="select_server('{{S}}')">{{S}}</a></li>
                         {% endfor %}
                     </ul>
                 </div>
+
             </div>
 
         </div>

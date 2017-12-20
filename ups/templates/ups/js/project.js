@@ -130,6 +130,11 @@ function Validation(box, srv, upd, job, scr, dmp) {
     if (box) { document.getElementById(box).checked = true; document.getElementById('selector').submit(); }
 }
 
+function select_server(server) {
+    document.getElementById('id_server_ctm').value = server;
+    document.getElementById('selector').submit();
+}
+
 function restoreScroll() {
     var scroll = getCookie('scrollmem');
     if (scroll > 0) { $('html,body').scrollTop(scroll); };

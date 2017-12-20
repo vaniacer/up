@@ -7,7 +7,7 @@
 </div>
 
 <div class="roller sroller">
-    {% for server in servers %}
+    {% for server in srvfilt %}
 
         <div class="panel panel-default"
              onclick="selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS')">
