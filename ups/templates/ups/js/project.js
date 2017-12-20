@@ -133,6 +133,7 @@ function Validation(box, srv, upd, job, scr, dmp) {
 function select_server(server) {
     document.getElementById('id_server_ctm').value = server;
     document.getElementById('selector').submit();
+//    setCookie('serfil', server)
 }
 
 function restoreScroll() {
@@ -180,6 +181,7 @@ $(document).ready(function() {
     $('.xroller').scrollTop(getCookie('xroller'));
     $('.uroller').scrollTop(getCookie('uroller'));
     $('.droller').scrollTop(getCookie('droller'));
+//    if (getCookie('serfil')) { server = getCookie('serfil'); select_server(server); }
     if (getCookie('update-info')) { $('.update-panel').hide(); $('.uhide').hide(); $('.ushow').show(); }
     if (getCookie('server-info')) { $('.server-panel').hide(); $('.shide').hide(); $('.sshow').show(); }
     if (getCookie('script-info')) { $('.script-panel').hide(); $('.xhide').hide(); $('.xshow').show(); }
