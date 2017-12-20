@@ -36,6 +36,17 @@
 <div class="col-md-6">
 
     <div class="row">
+        <div class="col-sm-5">
+
+            <div class="input-group">
+
+                <span class="input-group-btn">
+                    <button class="btn btn-primary">Filter by</button>
+                </span>{% bootstrap_form serfltr %}
+
+            </div>
+
+        </div>
         <div class="col-sm-7">
 
             <div class="btn-group btn-group-justified">
@@ -48,17 +59,6 @@
                 <div class="btn-group">
                     <button name="server_tst" value="server_tst" class="btn btn-primary">Test</button>
                 </div>
-            </div>
-
-        </div>
-        <div class="col-sm-5">
-
-            <div class="input-group">
-
-                <span class="input-group-btn">
-                    <button class="btn btn-primary">Custom</button>
-                </span>{% bootstrap_form serfltr %}
-
             </div>
 
         </div>
