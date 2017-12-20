@@ -158,10 +158,9 @@ def project(request, project_id):
 	current_project = get_object_or_404(Project, id=project_id)
 	check_perm('view_project', current_project, request.user)
 
-	servers_filter = ''
-	print request.POST
-
 	get_cron_logs()
+
+	servers_filter = ''
 	if request.POST.get('server_all'):
 		servers_filter = ''
 	elif request.POST.get('server_prd'):
