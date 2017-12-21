@@ -17,11 +17,6 @@
                 title="Run this SQL script on selected server(s)."
                 href="javascript:;"
                 class="Edit">Run</a>
-        <input  name="selected_commands"
-                value="sql_script"
-                id="sql_script"
-                type="checkbox"
-                class="hidden"/>
     {%else%}
         <a      onclick="run_or_cron('RUN', 'CRON');
                          select_all('selected_scripts', 'script-body', false, 'SX');
@@ -30,11 +25,6 @@
                 title="Run this BASH script on selected server(s)."
                 href="javascript:;"
                 class="Edit">Run</a>
-        <input  name="selected_commands"
-                value="script"
-                id="script"
-                type="checkbox"
-                class="hidden"/>
     {%endif%}
 {%endif%}
 

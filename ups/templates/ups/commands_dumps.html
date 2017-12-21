@@ -1,26 +1,19 @@
 
 <!--------------------------------------------Download button----------------------------->
 {% if "dld_update" in pr_view_perms %}
-    <a onclick="selector('dx{{ dump.name }}', 'db{{ dump.name }}', '{{ dump.name }}', 'SD')"
+    <a onclick="selector('dx{{ dump.id }}', 'db{{ dump.id }}', '{{ dump.name }}', 'SD')"
        href="/download_dump/{{ project.id }}/{{ dump.name }}"
        title="Download this dump."
        class="Edit">Download</a>
-
 {% endif %}
-
 <!---------------------------------------------Delete button------------------------------>
 <!-- Validation(input_id(if it not submit type), server, update, cronjob, script, dump) -->
 {% if "run_command" in pr_view_perms %}
     <a      onclick="run_or_cron('RUN', 'CRON');
                      select_all('selected_dumps', 'dump-body', false, 'SD');
-                     selector('dx{{ dump.name }}', 'db{{ dump.name }}', '{{ dump.name }}', 'SD');
+                     selector('dx{{ dump.id }}', 'db{{ dump.id }}', '{{ dump.name }}', 'SD');
                      Validation('del_dump', false, false, false, false, true)"
             title="Delete this dump."
             href="javascript:;"
             class="Edit red">Delete</a>
-    <input  name="selected_commands"
-            value="del_dump"
-            type="checkbox"
-            class="hidden"
-            id="del_dump"/>
 {% endif %}
