@@ -25,7 +25,7 @@
     {% get_obj_perms request.user for project as "pr_view_perms" %}
 
     <form method='GET' action="{% url 'ups:project' project.id %}" id="selector">
-        {% csrf_token %}
+        <!--{% csrf_token %}-->
 
         <!-- Nav tabs -->
         <ul class="nav nav-tabs nav-justified" role="tablist">

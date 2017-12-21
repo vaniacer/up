@@ -10,21 +10,21 @@
 <!-- Validation(input_id(if it not submit type), check_srv, check_upd, check_job, check_script) -->
 {% if "run_command" in pr_view_perms %}
     {% if script.type == 'sql' %}
-        <a      onclick="run_or_cron('RUN', 'CRON');
-                         select_all('selected_scripts', 'script-body', false, 'SX');
-                         selector('xx{{ script.id }}', 'xb{{ script.id }}', '{{ script }}', 'SX');
-                         Validation('sql_script', true, false, false, true)"
-                title="Run this SQL script on selected server(s)."
-                href="javascript:;"
-                class="Edit">Run</a>
+        <a onclick="run_or_cron('RUN', 'CRON');
+                    select_all('selected_scripts', 'script-body', false, 'SX');
+                    selector('xx{{ script.id }}', 'xb{{ script.id }}', '{{ script }}', 'SX');
+                    Validation('sql_script', true, false, false, true)"
+           title="Run this SQL script on selected server(s)."
+           href="javascript:;"
+           class="Edit">Run</a>
     {%else%}
-        <a      onclick="run_or_cron('RUN', 'CRON');
-                         select_all('selected_scripts', 'script-body', false, 'SX');
-                         selector('xx{{ script.id }}', 'xb{{ script.id }}', '{{ script }}', 'SX');
-                         Validation('script', true, false, false, true)"
-                title="Run this BASH script on selected server(s)."
-                href="javascript:;"
-                class="Edit">Run</a>
+        <a onclick="run_or_cron('RUN', 'CRON');
+                    select_all('selected_scripts', 'script-body', false, 'SX');
+                    selector('xx{{ script.id }}', 'xb{{ script.id }}', '{{ script }}', 'SX');
+                    Validation('script', true, false, false, true)"
+           title="Run this BASH script on selected server(s)."
+           href="javascript:;"
+           class="Edit">Run</a>
     {%endif%}
 {%endif%}
 
