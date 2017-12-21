@@ -139,6 +139,10 @@ def logs(request, project_id, log_id, cmd, cron, date):
 		'log': log.replace('__URL__', url), 'tag': tag, 'pid': pid, 'cmd': cmd,
 		'log_id': log_id, 'project': project_id}
 
+	if request.GET.get('server_ctm'):
+		servers_filter = request.GET.get('server_ctm')
+		context.update({'serfltr': servers_filter})
+
 	if err:
 		context['err'] = int(err)
 		if cron == 'True':

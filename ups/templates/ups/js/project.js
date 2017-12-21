@@ -1,7 +1,10 @@
 var log_ready = false;
 
 function logs_to_div(div) {
-    if (!log_ready) { $(div).load('/logs/{{ project.id }}/{{ key }}/{{ cmd }}/{{ cron }}/{{ date }}/'); }
+    if (!log_ready) {
+        var serfilter = $('#id_server_ctm').val();
+        $(div).load('/logs/{{ project.id }}/{{ key }}/{{ cmd }}/{{ cron }}/{{ date }}/?server_ctm=' + serfilter);
+    }
 }
 
 function show_log() {
