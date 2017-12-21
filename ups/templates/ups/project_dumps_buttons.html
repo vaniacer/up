@@ -30,19 +30,17 @@
 
 <!---------------------------------------Delete button------------------------------------>
 <!-- Validation(input_id(if it not submit type), server, update, cronjob, script, dump) -->
-            <input type="button"
-                   value="Delete"
-                   class="btn btn-danger btn-xs"
-                   title="Delete selected dump(s)."
-                   onclick="return Validation('del_dump', false, false, false, false, true)"/>
+            <a onclick="return Validation('del_dump', false, false, false, false, true)"
+               title="Delete selected dump(s)."
+               class="btn btn-danger btn-xs"
+               href="javascript:;">Delete</a>
         {% endif %}
 
 <!-----------------------------------------Get button------------------------------------->
-            <input value="Get"
-                   type="button"
-                   class="btn btn-success btn-xs"
-                   title="Get DB dump from selected server(s)."
-                   onclick="return Validation('get_dump', true, false, false, false, false)"/>
+            <a onclick="return Validation('get_dump', true, false, false, false, false)"
+               title="Get DB dump from selected server(s)."
+               class="btn btn-success btn-xs"
+               href="javascript:;">Get</a>
     {% endif %}
 
 {% endbuttons %}
