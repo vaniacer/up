@@ -66,14 +66,14 @@ def cmd_run(request, current_project, context):
 	selected = {
 		'key':  get_key(),
 		'user': request.user,
-		'cron': request.POST.get('CRON') or False,
-		'date': request.POST.get('selected_date') or run_date(),
-		'dumps':   request.POST.getlist('selected_dumps'),
-		'updates': request.POST.getlist('selected_updates'),
-		'scripts': request.POST.getlist('selected_scripts'),
-		'servers': request.POST.getlist('selected_servers'),
-		'cronjbs': request.POST.getlist('selected_jobs'),
-		'command': request.POST.get('selected_commands'),
+		'cron': request.GET.get('CRON') or False,
+		'date': request.GET.get('selected_date') or run_date(),
+		'dumps':   request.GET.getlist('selected_dumps'),
+		'updates': request.GET.getlist('selected_updates'),
+		'scripts': request.GET.getlist('selected_scripts'),
+		'servers': request.GET.getlist('selected_servers'),
+		'cronjbs': request.GET.getlist('selected_jobs'),
+		'command': request.GET.get('selected_commands'),
 		'project': current_project, }
 
 	con = {

@@ -161,8 +161,8 @@ def project(request, project_id):
 	get_cron_logs()
 
 	servers_filter = ''
-	if request.POST.get('server_ctm'):
-		servers_filter = request.POST.get('server_ctm')
+	if request.GET.get('server_ctm'):
+		servers_filter = request.GET.get('server_ctm')
 	servers = current_project.server_set.order_by('name')
 	srvfilt = servers.filter(name__icontains=servers_filter)
 	serfltr = SerfltrForm(initial={'server_ctm': servers_filter})
@@ -188,6 +188,6 @@ def project(request, project_id):
 		'dmplist': dmplist,
 		'serfltr': serfltr, }
 
-	if request.POST.get('selected_commands'):
+	if request.GET.get('selected_commands'):
 		context = cmd_run(request, current_project, context)
 	return render(request, 'ups/project.html', context)
