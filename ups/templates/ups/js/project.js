@@ -2,8 +2,9 @@ var log_ready = false;
 
 function logs_to_div(div) {
     if (!log_ready) {
-        var serfilter = $('#id_server_ctm').val();
-        $(div).load('/logs/{{ project.id }}/{{ key }}/{{ cmd }}/{{ cron }}/{{ date }}/?server_ctm=' + serfilter);
+        var SF = $('#id_server_ctm').val();
+        var SFR = SF.replace(/ /g, '+')
+        $(div).load('/logs/{{ project.id }}/{{ key }}/{{ cmd }}/{{ cron }}/{{ date }}/?server_ctm=' + SFR);
     }
 }
 
