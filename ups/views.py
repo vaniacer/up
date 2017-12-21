@@ -192,6 +192,6 @@ def project(request, project_id):
 		'dmplist': dmplist,
 		'serfltr': serfltr, }
 
-	if request.GET.get('selected_commands'):
+	if request.GET.get('selected_command'):
 		context = cmd_run(request, current_project, context)
 	return render(request, 'ups/project.html', context)

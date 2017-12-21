@@ -97,7 +97,7 @@ function getCookie(cname) {
     return "";
 }
 
-function Validation(box, srv, upd, job, scr, dmp) {
+function Validation(cmd, srv, upd, job, scr, dmp) {
 
     setCookie('scrollmem', window.pageYOffset);
     setCookie('sroller', $('.sroller').scrollTop());
@@ -131,12 +131,13 @@ function Validation(box, srv, upd, job, scr, dmp) {
         if  (!selected_dumps) { alert('Dump(s) not selected.'); return false; }}
 
     show_loader();
-    if (box) { document.getElementById(box).checked = true; document.getElementById('selector').submit(); }
+    if (cmd) { $('#selected_command').val(cmd); document.getElementById('selector').submit(); }
 }
 
 function select_server(server) {
-    document.getElementById('id_server_ctm').value = server;
-    document.getElementById('selector').submit();
+    $('#id_server_ctm').val(server);
+    $('#selected_command').val('');
+    $('#selector').submit();
 }
 
 function restoreScroll() {

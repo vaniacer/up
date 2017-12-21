@@ -4,63 +4,29 @@
 <li><a  onclick="return Validation('server_info', true, false, false, false)"
         title="Show system info: CPU, mem, disk etc."
         href="javascript:;">Summary server info</a></li>
-<input  name="selected_commands"
-        value="server_info"
-        id="server_info"
-        type="checkbox"
-        class="hidden"/>
+
 
 <li><a  onclick="return Validation('check_updates', true, false, false, false)"
         title="Check updates on selected server(s)."
         href="javascript:;">Check updates</a>
-<input  name="selected_commands"
-        value="check_updates"
-        id="check_updates"
-        type="checkbox"
-        class="hidden"/></li>
 
 <li><a  onclick="return Validation('check_conf', true, false, false, false)"
         title="Show conf(standalone-full.xml) and java options of selected server(s)."
         href="javascript:;">Check conf</a>
-<input  name="selected_commands"
-        value="check_conf"
-        id="check_conf"
-        type="checkbox"
-        class="hidden"/></li>
 
 <li><a  onclick="return Validation('check_logs', true, false, false, false)"
         title="Check logs on selected server(s)."
         href="javascript:;">Check logs</a>
-<input  name="selected_commands"
-        value="check_logs"
-        id="check_logs"
-        type="checkbox"
-        class="hidden"/></li>
 
 <li><a  onclick="return Validation('get_logs', true, false, false, false)"
         title="Check logs on selected server(s)."
         href="javascript:;">Get all logs</a>
-<input  name="selected_commands"
-        value="get_logs"
-        id="get_logs"
-        type="checkbox"
-        class="hidden"/></li>
 
 <li><a  onclick="return Validation('cancel_job', false, false, true, false)"
         title="Delete selected job(s)."
         href="javascript:;"
         class="danger">Cancel job</a>
-<input  name="selected_commands"
-        value="cancel_job"
-        id="cancel_job"
-        type="checkbox"
-        class="hidden"/></li>
 
 <li><a  onclick="return Validation('tunnel', true, false, false, false)"
         title="Make ssh tunnel to the bind port of selected server(s)."
         href="javascript:;">Tunnel</a></li>
-<input  name="selected_commands"
-        type="checkbox"
-        class="hidden"
-        value="tunnel"
-        id="tunnel"/>

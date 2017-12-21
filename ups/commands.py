@@ -73,7 +73,7 @@ def cmd_run(request, current_project, context):
 		'scripts': request.GET.getlist('selected_scripts'),
 		'servers': request.GET.getlist('selected_servers'),
 		'cronjbs': request.GET.getlist('selected_jobs'),
-		'command': request.GET.get('selected_commands'),
+		'command': request.GET.get('selected_command'),
 		'project': current_project, }
 
 	con = {

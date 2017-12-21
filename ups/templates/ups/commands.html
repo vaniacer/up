@@ -5,61 +5,31 @@
         title="Stop selected server(s)."
         href="javascript:;"
         class="danger">Stop</a></li>
-<input  name="selected_commands"
-        type="checkbox"
-        class="hidden"
-        value="stop"
-        id="stop"/>
 
 <li><a  onclick="return Validation('start', true, false, false, false)"
         title="Start selected server(s)."
         href="javascript:;"
         class="danger">Start</a></li>
-<input  name="selected_commands"
-        type="checkbox"
-        class="hidden"
-        value="start"
-        id="start"/>
 
 <li><a  onclick="return Validation('restart', true, false, false, false)"
         title="Restart selected server(s)."
         href="javascript:;"
         class="danger">Restart</a></li>
-<input  name="selected_commands"
-        type="checkbox"
-        value="restart"
-        class="hidden"
-        id="restart"/>
 
 <li><a  onclick="return Validation('reload', true, false, false, false)"
         title="Reload config on selected server(s)."
         href="javascript:;"
         class="danger">Reload</a></li>
-<input  name="selected_commands"
-        type="checkbox"
-        class="hidden"
-        value="reload"
-        id="reload"/>
 
 <li><a  onclick="return Validation('maintenance_on', true, false, false, false)"
         title="Show 'Maintenance' page on selected server(s)."
         href="javascript:;"
         class="danger">Maintenance ON</a></li>
-<input  name="selected_commands"
-        value="maintenance_on"
-        id="maintenance_on"
-        type="checkbox"
-        class="hidden"/>
 
 <li><a  onclick="return Validation('maintenance_off', true, false, false, false)"
         title="Hide 'Maintenance' page on selected server(s)."
         href="javascript:;"
         class="danger">Maintenance OFF</a></li>
-<input  name="selected_commands"
-        value="maintenance_off"
-        id="maintenance_off"
-        type="checkbox"
-        class="hidden"/>
 
 <!--------------------------------------DELETE UPDATES------------------------------------>
 <!-- Validation(input_id(if it not submit type), server, update, cronjob, script, dump) -->
@@ -69,21 +39,11 @@
         title="Delete selected update(s) from selected server(s)."
         href="javascript:;"
         class="danger">Delete selected updates</a></li>
-<input  name="selected_commands"
-        value="del_sel_updates"
-        id="del_sel_updates"
-        type="checkbox"
-        class="hidden"/>
 
 <li><a  onclick="return Validation('del_all_updates', true, false, false, false)"
         title="Delete all updates from selected server(s)."
         href="javascript:;"
         class="danger">Delete all updates</a></li>
-<input  name="selected_commands"
-        value="del_all_updates"
-        id="del_all_updates"
-        type="checkbox"
-        class="hidden"/>
 
 <!---------------------------------------DB DUMPS----------------------------------------->
 <!-- Validation(input_id(if it not submit type), server, update, cronjob, script, dump) -->
@@ -93,29 +53,14 @@
         title="Copy DB dump to selected server(s)."
         href="javascript:;"
         class="danger">Send dump</a></li>
-<input  name="selected_commands"
-        value="send_dump"
-        type="checkbox"
-        class="hidden"
-        id="send_dump"/>
 
 <li><a  onclick="return Validation('get_dump', true, false, false, false, false)"
         title="Get DB dump from selected server(s)."
         href="javascript:;">Get dump</a></li>
-<input  name="selected_commands"
-        value="get_dump"
-        type="checkbox"
-        class="hidden"
-        id="get_dump"/>
 
 <li><a  onclick="return Validation('del_dump', false, false, false, false, true)"
         title="Delete selected dump(s)."
         href="javascript:;">Del dump</a></li>
-<input  name="selected_commands"
-        value="del_dump"
-        type="checkbox"
-        class="hidden"
-        id="del_dump"/>
 
 <!----------------------------------------BACKUP------------------------------------------>
 <!-- Validation(input_id(if it not submit type), server, update, cronjob, script, dump) -->
@@ -124,29 +69,14 @@
 <li><a  onclick="return Validation('backup_full', true, false, false, false)"
         title="System and DB backup via './krupd bkp full'."
         href="javascript:;">Backup full</a></li>
-<input  name="selected_commands"
-        value="backup_full"
-        id="backup_full"
-        type="checkbox"
-        class="hidden"/>
 
 <li><a  onclick="return Validation('backup_db', true, false, false, false)"
         title="Database backup via './krupd bkp db'."
         href="javascript:;">Backup base</a></li>
-<input  name="selected_commands"
-        value="backup_db"
-        type="checkbox"
-        id="backup_db"
-        class="hidden"/>
 
 <li><a  onclick="return Validation('backup_sys', true, false, false, false)"
         title="System backup via './krupd bkp sys'."
         href="javascript:;">Backup system</a></li>
-<input  name="selected_commands"
-        value="backup_sys"
-        id="backup_sys"
-        type="checkbox"
-        class="hidden"/>
 
 <!-----------------------------------------MAIN------------------------------------------->
 <!-- Validation(input_id(if it not submit type), server, update, cronjob, script, dump) -->
@@ -155,45 +85,21 @@
 <li><a  onclick="return Validation('script', true, false, false, true)"
         title="Run selected script(s) on selected server(s). Script(s) have to be loaded(and selected) as updates."
         href="javascript:;">Run BASH script</a></li>
-<input  name="selected_commands"
-        type="checkbox"
-        class="hidden"
-        value="script"
-        id="script"/>
 
 <li><a  onclick="return Validation('sql_script', true, false, false, true)"
         title="Run SQL script in DB. Script(s) have to be loaded(and selected) as updates."
         href="javascript:;">Run SQL script</a></li>
-<input  name="selected_commands"
-        value="sql_script"
-        type="checkbox"
-        id="sql_script"
-        class="hidden"/>
 
 <li><a  onclick="return Validation('copy_utils', true, false, false, false)"
         title="Copy utils folder to selected server(s)."
         href="javascript:;">Copy utils</a></li>
-<input  name="selected_commands"
-        value="copy_utils"
-        id="copy_utils"
-        type="checkbox"
-        class="hidden"/>
 
 <li><a  onclick="return Validation('update', true, true, false, false)"
         title="Update selected server(s)."
         href="javascript:;"
         class="danger">Update</a></li>
-<input  name="selected_commands"
-        type="checkbox"
-        class="hidden"
-        value="update"
-        id="update"/>
 
 <li><a  onclick="return Validation('copy', true, true, false, false)"
         title="Copy selected update(s) to selected server(s)."
         href="javascript:;">Copy</a></li>
-<input  name="selected_commands"
-        type="checkbox"
-        class="hidden"
-        value="copy"
-        id="copy"/>
+
