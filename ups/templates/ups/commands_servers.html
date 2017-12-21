@@ -9,7 +9,7 @@
 <!-----------------------------------------Available commands------------------------------------->
 <!-- Validation(input_id(if it not submit type), check_srv, check_upd, check_job, check_script) -->
 {% if "run_command" in pr_view_perms %}
-    <a onclick="run_or_cron('RUN', 'CRON');
+    <a onclick="run_or_cron('RUN');
                 select_all('selected_servers', 'server-body', false, 'SS');
                 selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS');
                 Validation('server_info', true, false, false, false)"
@@ -17,7 +17,7 @@
        href="javascript:;"
        class="Edit">Info</a>
 
-    <a onclick="run_or_cron('RUN', 'CRON');
+    <a onclick="run_or_cron('RUN');
                 select_all('selected_servers', 'server-body', false, 'SS');
                 selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS');
                 Validation('check_conf', true, false, false, false)"
@@ -25,7 +25,7 @@
        href="javascript:;"
        class="Edit">Conf</a>
 
-    <a onclick="run_or_cron('RUN', 'CRON');
+    <a onclick="run_or_cron('RUN');
                 select_all('selected_servers', 'server-body', false, 'SS');
                 selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS');
                 Validation('check_logs', true, false, false, false)"
@@ -33,7 +33,7 @@
        href="javascript:;"
        class="Edit">Logs</a>
 
-    <a onclick="run_or_cron('RUN', 'CRON');
+    <a onclick="run_or_cron('RUN');
                 select_all('selected_servers', 'server-body', false, 'SS');
                 selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS');
                 Validation('check_updates', true, false, false, false)"
@@ -41,7 +41,7 @@
        href="javascript:;"
        class="Edit">Updates</a>
 
-    <a onclick="run_or_cron('RUN', 'CRON');
+    <a onclick="run_or_cron('RUN');
                 select_all('selected_servers', 'server-body', false, 'SS');
                 selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS');
                 Validation('tunnel', true, false, false, false)"

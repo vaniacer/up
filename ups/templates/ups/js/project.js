@@ -31,11 +31,8 @@ function go_down() {
     document.documentElement.scrollTop = jump; // For IE and Firefox
 }
 
-function run_or_cron(check, uncheck) {
-    var enable  = document.getElementById(check);
-    var disable = document.getElementById(uncheck);
-    disable.checked = false
-    enable.checked  = true
+function run_or_cron(type) {
+    $('#run_type').val(type);
 }
 
 function selector(box_id, body_id, name, obj) {

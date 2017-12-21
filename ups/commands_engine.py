@@ -65,7 +65,8 @@ def job_opt(selected, cron):
 def starter(selected):
 	"""Выполняет комманду."""
 	opt = [conf.BASE_DIR + '/bash/starter.sh']
-	if selected['cron']:
+	print selected['rtype']
+	if selected['rtype'] == 'CRON':
 		opt.extend([
 			'-run',  selected['cmdname'],
 			'-date', selected['date'],

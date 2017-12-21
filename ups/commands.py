@@ -64,10 +64,10 @@ def cmd_run(request, current_project, context):
 	check_perm('run_command', current_project, request.user)
 
 	selected = {
-		'key':  get_key(),
-		'user': request.user,
-		'cron': request.GET.get('CRON') or False,
-		'date': request.GET.get('selected_date') or run_date(),
+		'key':     get_key(),
+		'user':    request.user,
+		'date':    request.GET.get('selected_date') or run_date(),
+		'rtype':   request.GET.get('run_type'),
 		'dumps':   request.GET.getlist('selected_dumps'),
 		'updates': request.GET.getlist('selected_updates'),
 		'scripts': request.GET.getlist('selected_scripts'),
@@ -77,11 +77,11 @@ def cmd_run(request, current_project, context):
 		'project': current_project, }
 
 	con = {
-		'date': selected['date'].replace(' ', 'SS').replace(':', 'PP').replace('.', 'OO'),
-		'cmd':  selected['command'],
-		'cron': selected['cron'],
-		'key':  selected['key'],
-		'log':  'true', }
+		'date':  selected['date'].replace(' ', 'SS').replace(':', 'PP').replace('.', 'OO'),
+		'cmd':   selected['command'],
+		'rtype': selected['rtype'],
+		'key':   selected['key'],
+		'log':   'true', }
 
 	context.update(con)
 	command(selected)

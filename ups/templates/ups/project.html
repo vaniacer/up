@@ -27,6 +27,7 @@
     <form method='GET' action="{% url 'ups:project' project.id %}" id="selector">
         <!--{% csrf_token %}-->
 
+        <input name="run_type" id="run_type" class="hidden"/>
         <input name="selected_command" id="selected_command" class="hidden"/>
 
         <!-- Nav tabs -->

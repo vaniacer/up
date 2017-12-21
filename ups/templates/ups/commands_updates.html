@@ -9,7 +9,7 @@
 <!---------------------------------------------Copy button---------------------------------------->
 <!-- Validation(input_id(if it not submit type), check_srv, check_upd, check_job, check_script) -->
 {% if "run_command" in pr_view_perms %}
-    <a onclick="run_or_cron('RUN', 'CRON');
+    <a onclick="run_or_cron('RUN');
                 select_all('selected_updates', 'update-body', false, 'SU');
                 selector('ux{{ update.id }}', 'ub{{ update.id }}', '{{ update }}', 'SX');
                 Validation('copy', true, true, false, false)"
