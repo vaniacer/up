@@ -12,8 +12,8 @@ from .commands_engine import add_job
 from wsgiref.util import FileWrapper
 from .permissions import check_perm
 from .cron import get_cron_logs
+from .forms import SerfltrForm
 from subprocess import Popen
-from .forms import MainForm
 from .dump import get_dumps
 import mimetypes
 import os
@@ -165,7 +165,7 @@ def project(request, project_id):
 		servers_filter = request.POST.get('server_ctm')
 	servers = current_project.server_set.order_by('name')
 	srvfilt = servers.filter(name__icontains=servers_filter)
-	serfltr = MainForm(initial={'server_ctm': servers_filter})
+	serfltr = SerfltrForm(initial={'server_ctm': servers_filter})
 
 	history = current_project.history_set.order_by('date').reverse()
 	updates = current_project.update_set.order_by('date').reverse()

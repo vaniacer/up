@@ -52,11 +52,6 @@ class Project(models.Model):
 		return {'project_slug': self.slug}
 
 
-class Main(models.Model):
-	"""Фильтр серверов проекта."""
-	server_ctm = models.CharField(max_length=255)
-
-
 class Server(models.Model):
 	"""Серверы проекта."""
 	date = models.DateTimeField(auto_now_add=True, db_index=True)
