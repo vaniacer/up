@@ -1,5 +1,5 @@
 # Update Server
-![screeenshot](https://user-images.githubusercontent.com/18072680/33430573-101e9c5c-d5e2-11e7-9095-692a1fa32279.png)
+![screeenshot](https://user-images.githubusercontent.com/18072680/34246662-92d25fa8-e640-11e7-889f-0249a3bfbf8c.png)
 
 Manage your servers through ssh via web interface.
 Start by pressing an 'Projects' button or a 'Projects' link at the top.
