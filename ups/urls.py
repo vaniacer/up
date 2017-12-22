@@ -38,7 +38,7 @@ urlpatterns = [
 	url(r'^download_dump/(?P<project_id>\d+)/(?P<dump>.+)$', views.download_dump, name='download_dump'),
 	# Вывод логов.
 	url(
-		r'^logs/(?P<project_id>\w+)/(?P<log_id>\w+)/(?P<cmd>\w+)/(?P<cron>\w+)/(?P<date>\w+)/$',
+		r'^logs/(?P<project_id>\w+)/(?P<log_id>\w+)/(?P<cmd>\w+)/(?P<rtype>\w+)/(?P<date>\w+)/$',
 		views.logs,
 		name='logs'),
 ]

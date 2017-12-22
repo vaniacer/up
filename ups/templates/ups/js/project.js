@@ -4,7 +4,7 @@ function logs_to_div(div) {
     if (!log_ready) {
         var SF = $('#id_server_ctm').val();
         var SFR = SF.replace(/ /g, '+')
-        $(div).load('/logs/{{ project.id }}/{{ key }}/{{ cmd }}/{{ cron }}/{{ date }}/?server_ctm=' + SFR);
+        $(div).load('/logs/{{project.id}}/{{key}}/{{cmd}}/{{rtype}}/{{date}}/?server_ctm=' + SFR);
     }
 }
 

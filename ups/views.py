@@ -118,7 +118,7 @@ def cancel(request, project_id, pid, cmd, log_id):
 
 
 @login_required
-def logs(request, project_id, log_id, cmd, cron, date):
+def logs(request, project_id, log_id, cmd, rtype, date):
 	"""Выводит лог выполняющейся комманды."""
 	current_project = get_object_or_404(Project, id=project_id)
 	check_perm('view_project', current_project, request.user)
@@ -145,7 +145,7 @@ def logs(request, project_id, log_id, cmd, cron, date):
 
 	if err:
 		context['err'] = int(err)
-		if cron == 'True':
+		if rtype == 'CRON':
 			add_job(history, log, log_id)
 			cdate, cron_id = date, log_id
 			history['command'] = 'Set cron job - %s' % cmd.lower()
