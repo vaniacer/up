@@ -19,23 +19,26 @@
                    title="Deselect all cron jobs."
                    onclick="select_all('selected_jobs', 'job-body', false, 'SJ')"/>
 
-            <button value="permanent_job"
-                    name="selected_commands"
-                    class="btn btn-danger btn-xs"
-                    title="Make selected cron job(s) permanent."
-                    onclick="return Validation('', false, false, true)">Permanent</button>
+            <a href="javascript:;"
+               name="selected_commands"
+               class="btn btn-danger btn-xs"
+               title="Make selected cron job(s) permanent."
+               onclick="run_or_cron('RUN');
+                        return Validation('permanent_job', false, false, true, false)">Permanent</a>
 
-            <button value="once_job"
-                    name="selected_commands"
-                    class="btn btn-danger btn-xs"
-                    title="Make selected cron job(s) run once (default)."
-                    onclick="return Validation('', false, false, true)">Run once</button>
+            <a href="javascript:;"
+               name="selected_commands"
+               class="btn btn-danger btn-xs"
+               title="Make selected cron job(s) run once (default)."
+               onclick="run_or_cron('RUN');
+                        return Validation('once_job', false, false, true, false)">Run once</a>
 
-            <button value="cancel_job"
-                    name="selected_commands"
-                    class="btn btn-danger btn-xs"
-                    title="Cancel selected cron job(s)."
-                    onclick="return Validation('', false, false, true)">Cancel job</button>
+            <a href="javascript:;"
+               name="selected_commands"
+               class="btn btn-danger btn-xs"
+               title="Cancel selected cron job(s)."
+               onclick="run_or_cron('RUN');
+                        return Validation('cancel_job', false, false, true, false)">Cancel job</a>
 
         {% endbuttons %}
 
