@@ -20,9 +20,9 @@
         <dl class="dl-horizontal">
             <dt>Error code</dt><dd>{{ err }}</dd>
             {% if err > 0 %}
-                <dt><br><a class="btn btn-danger"  href="/projects/{{project}}/?server_ctm={{serfltr}}">OK</a></dt>
+                <dt><br><a class="btn btn-danger"  href="/projects/{{project}}/?servers={{serfltr}}">OK</a></dt>
             {% else %}
-                <dt><br><a class="btn btn-success" href="/projects/{{project}}/?server_ctm={{serfltr}}">OK</a></dt>
+                <dt><br><a class="btn btn-success" href="/projects/{{project}}/?servers={{serfltr}}">OK</a></dt>
             {% endif %}
         </dl>
     {% else %}

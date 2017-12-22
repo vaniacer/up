@@ -139,9 +139,8 @@ def logs(request, project_id, log_id, cmd, rtype, date):
 		'log': log.replace('__URL__', url), 'tag': tag, 'pid': pid, 'cmd': cmd,
 		'log_id': log_id, 'project': project_id}
 
-	if request.GET.get('servers'):
-		servers_filter = request.GET.get('servers')
-		context.update({'serfltr': servers_filter})
+	servers_filter = request.GET.get('servers') or ''
+	context.update({'serfltr': servers_filter})
 
 	if err:
 		context['err'] = int(err)
