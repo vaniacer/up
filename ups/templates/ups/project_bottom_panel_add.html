@@ -18,14 +18,9 @@
                 <li><a href="{% url 'ups:new_script' project.id %}">Add Script</a></li>
             {% endif %}
             {% if "run_command" in pr_view_perms %}
-                <li><a  onclick="return Validation('get_dump', true, false, false, false, false)"
-                        title="Get DB dump from selected server(s)."
-                        href="javascript:;">Get dump</a>
-                <input  name="selected_commands"
-                        value="get_dump"
-                        type="checkbox"
-                        class="hidden"
-                        id="get_dump"/></li>
+                <li><a onclick="return Validation('get_dump', true, false, false, false, false)"
+                       title="Get DB dump from selected server(s)."
+                       href="javascript:;">Get dump</a></li>
             {% endif %}
         </ul>
     </div>
