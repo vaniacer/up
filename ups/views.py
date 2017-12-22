@@ -164,11 +164,9 @@ def project(request, project_id):
 
 	get_cron_logs()
 
-	servers_filter = ''
-	if request.GET.get('servers'):
-		servers_filter = request.GET.get('servers')
+	servers_filter = request.GET.get('servers') or ''
 	servers = current_project.server_set.order_by('name')
-	srvfilt = servers.filter(name__icontains=servers_filter)
+	srvfilt = servers.filter(name__iregex=servers_filter)
 	serfltr = SerfltrForm(initial={'servers': servers_filter})
 
 	history = current_project.history_set.order_by('date').reverse()
