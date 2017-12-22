@@ -103,6 +103,8 @@ def cancel(request, project_id, pid, cmd, log_id):
 	current_project = get_object_or_404(Project, id=project_id)
 	check_perm('view_project', current_project, request.user)
 
+	servers_filter = request.GET.get('servers') or ''
+
 	Popen(['kill', '-9', str(pid)])
 	tag, his = command({'command': cmd, 'cron': '', })
 
@@ -114,7 +116,7 @@ def cancel(request, project_id, pid, cmd, log_id):
 
 	delete_files([conf.LOG_FILE + log_id, conf.PID_FILE + log_id, conf.ERR_FILE + log_id])
 
-	return HttpResponseRedirect('/projects/' + project_id)
+	return HttpResponseRedirect('/projects/%s/?servers=%s' % (project_id, servers_filter))
 
 
 @login_required
