@@ -2,7 +2,7 @@
 
 from django.core.exceptions import ObjectDoesNotExist
 from django.conf import settings as conf
-from .models import History, Job
+from .models import History, Job, Server, Update, Script
 from subprocess import Popen
 from base64 import b64encode
 from os import urandom
@@ -78,14 +78,21 @@ def starter(selected):
 		'-prj', '%s:%s' % (str(selected['project'].id), str(selected['project'].name)),
 		'-key', selected['key']])
 
-	for server in selected['servers']:
-		opt.extend(['-s', str(server)])
-	for update in selected['updates']:
-		opt.extend(['-u', str(update)])
-	for script in selected['scripts']:
-		opt.extend(['-x', str(script)])
+	for ID in selected['servers']:
+		server = Server.objects.get(id=ID)
+		opt.extend(['-s', '%s:%s:%s' % (server.addr, server.wdir, server.port)])
+
+	for ID in selected['updates']:
+		update = Update.objects.get(id=ID)
+		opt.extend(['-u', str(update.file)])
+
+	for ID in selected['scripts']:
+		script = Script.objects.get(id=ID)
+		opt.extend(['-x', str(script.file)])
+
 	for dump in selected['dumps']:
 		opt.extend(['-m', str(dump)])
+
 	for cronjb in selected['cronjbs']:
 		opt.extend(['-j', str(cronjb)])
 		job_opt(selected, cronjb)
