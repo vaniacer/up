@@ -145,12 +145,14 @@ function restoreScroll() {
 
 function hide_info(cook, panel, hb, sb) {
     $(panel).hide(); $(hb).hide(); $(sb).show();
-    setCookie(cook, 1);
+    document.getElementById(cook).checked = false
+//    setCookie(cook, 1);
 };
 
 function show_info(cook, panel, hb, sb) {
     $(panel).show(); $(hb).hide(); $(sb).show();
-    setCookie(cook, '');
+    document.getElementById(cook).checked = true
+//    setCookie(cook, '');
 };
 
 $(function() {
@@ -173,10 +175,6 @@ $(function() {
 });
 
 $(document).ready(function() {
-    $('.sshow').hide();
-    $('.xshow').hide();
-    $('.ushow').hide();
-    $('.dshow').hide();
     $('.loader').hide();
     $('.sroller').scrollTop(getCookie('sroller'));
     $('.xroller').scrollTop(getCookie('xroller'));
@@ -187,8 +185,21 @@ $(document).ready(function() {
     select_all('selected_scripts', 'script-body', false, 'SX');
     select_all('selected_dumps',   'dump-body',   false, 'SD');
     select_all('selected_jobs',    'job-body',    false, 'SJ');
-    if ( getCookie('update-info') ) { $('.update-panel').hide(); $('.uhide').hide(); $('.ushow').show(); }
-    if ( getCookie('server-info') ) { $('.server-panel').hide(); $('.shide').hide(); $('.sshow').show(); }
-    if ( getCookie('script-info') ) { $('.script-panel').hide(); $('.xhide').hide(); $('.xshow').show(); }
-    if ( getCookie('dump-info')   ) { $('.dump-panel').hide();   $('.dhide').hide(); $('.dshow').show(); }
+
+    if (document.getElementById('id_server_info').checked) {
+           show_info('id_server_info', '.server-panel', '.sshow', '.shide'); }
+    else { hide_info('id_server_info', '.server-panel', '.shide', '.sshow'); }
+
+    if (document.getElementById('id_script_info').checked) {
+           show_info('id_script_info', '.script-panel', '.xshow', '.xhide'); }
+    else { hide_info('id_script_info', '.script-panel', '.xhide', '.xshow'); }
+
+    if (document.getElementById('id_update_info').checked) {
+           show_info('id_update_info', '.update-panel', '.ushow', '.uhide'); }
+    else { hide_info('id_update_info', '.update-panel', '.uhide', '.ushow'); }
+
+    if (document.getElementById('id_dbdump_info').checked) {
+           show_info('id_dbdump_info', '.dbdump-panel', '.dshow', '.dhide'); }
+    else { hide_info('id_dbdump_info', '.dbdump-panel', '.dhide', '.dshow'); }
+
 });

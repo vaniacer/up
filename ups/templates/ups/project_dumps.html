@@ -38,7 +38,7 @@
         </div>
 
         <div class="panel-body dump-body" id="db{{ dump.id }}">
-            <dl class="dl-horizontal dump-panel dp{{ dump.id }}">
+            <dl class="dl-horizontal dbdump-panel dp{{ dump.id }}">
                 <dt>Size</dt><dd>{{ dump.size|filesizeformat }}</dd>
             </dl>
             {% if "run_command" in pr_view_perms %}

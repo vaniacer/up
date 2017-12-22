@@ -57,3 +57,10 @@ class ScriptEditForm(forms.ModelForm):
 
 class SerfltrForm(forms.Form):
 	servers = forms.CharField(label='', required=False)
+
+
+class HideForm(forms.Form):
+	server_info = forms.BooleanField(label='', required=False)
+	script_info = forms.BooleanField(label='', required=False)
+	update_info = forms.BooleanField(label='', required=False)
+	dbdump_info = forms.BooleanField(label='', required=False)

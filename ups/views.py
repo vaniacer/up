@@ -12,7 +12,7 @@ from .commands_engine import add_job
 from wsgiref.util import FileWrapper
 from .permissions import check_perm
 from .cron import get_cron_logs
-from .forms import SerfltrForm
+from .forms import SerfltrForm, HideForm
 from subprocess import Popen
 from .dump import get_dumps
 import mimetypes
@@ -169,6 +169,11 @@ def project(request, project_id):
 	servers = current_project.server_set.order_by('name')
 	srvfilt = servers.filter(name__iregex=servers_filter)
 	serfltr = SerfltrForm(initial={'servers': servers_filter})
+	hidefrm = HideForm(initial={
+		'server_info': request.GET.get('server_info') or '',
+		'script_info': request.GET.get('script_info') or '',
+		'update_info': request.GET.get('update_info') or '',
+		'dbdump_info': request.GET.get('dbdump_info') or '', })
 
 	history = current_project.history_set.order_by('date').reverse()
 	updates = current_project.update_set.order_by('date').reverse()
@@ -179,6 +184,7 @@ def project(request, project_id):
 	history, hist_fd, hist_bk = pagination(request, history)
 
 	context = {
+
 		'project': current_project,
 		'servers': servers,
 		'srvfilt': srvfilt,
@@ -189,7 +195,8 @@ def project(request, project_id):
 		'hist_bk': hist_bk,
 		'hist_fd': hist_fd,
 		'dmplist': dmplist,
-		'serfltr': serfltr, }
+		'serfltr': serfltr,
+		'hidefrm': hidefrm, }
 
 	if request.GET.get('selected_command'):
 		context = cmd_run(request, current_project, context)
