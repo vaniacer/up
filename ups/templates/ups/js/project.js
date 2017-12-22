@@ -182,6 +182,11 @@ $(document).ready(function() {
     $('.xroller').scrollTop(getCookie('xroller'));
     $('.uroller').scrollTop(getCookie('uroller'));
     $('.droller').scrollTop(getCookie('droller'));
+    select_all('selected_servers', 'server-body', false, 'SS');
+    select_all('selected_updates', 'update-body', false, 'SU');
+    select_all('selected_scripts', 'script-body', false, 'SX');
+    select_all('selected_dumps',   'dump-body',   false, 'SD');
+    select_all('selected_jobs',    'job-body',    false, 'SJ');
     if ( getCookie('update-info') ) { $('.update-panel').hide(); $('.uhide').hide(); $('.ushow').show(); }
     if ( getCookie('server-info') ) { $('.server-panel').hide(); $('.shide').hide(); $('.sshow').show(); }
     if ( getCookie('script-info') ) { $('.script-panel').hide(); $('.xhide').hide(); $('.xshow').show(); }
