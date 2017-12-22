@@ -139,8 +139,8 @@ def logs(request, project_id, log_id, cmd, rtype, date):
 		'log': log.replace('__URL__', url), 'tag': tag, 'pid': pid, 'cmd': cmd,
 		'log_id': log_id, 'project': project_id}
 
-	if request.GET.get('server_ctm'):
-		servers_filter = request.GET.get('server_ctm')
+	if request.GET.get('servers'):
+		servers_filter = request.GET.get('servers')
 		context.update({'serfltr': servers_filter})
 
 	if err:
@@ -165,11 +165,11 @@ def project(request, project_id):
 	get_cron_logs()
 
 	servers_filter = ''
-	if request.GET.get('server_ctm'):
-		servers_filter = request.GET.get('server_ctm')
+	if request.GET.get('servers'):
+		servers_filter = request.GET.get('servers')
 	servers = current_project.server_set.order_by('name')
 	srvfilt = servers.filter(name__icontains=servers_filter)
-	serfltr = SerfltrForm(initial={'server_ctm': servers_filter})
+	serfltr = SerfltrForm(initial={'servers': servers_filter})
 
 	history = current_project.history_set.order_by('date').reverse()
 	updates = current_project.update_set.order_by('date').reverse()

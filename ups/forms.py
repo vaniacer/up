@@ -56,4 +56,4 @@ class ScriptEditForm(forms.ModelForm):
 
 
 class SerfltrForm(forms.Form):
-	server_ctm = forms.CharField(label='', required=False)
+	servers = forms.CharField(label='', required=False)

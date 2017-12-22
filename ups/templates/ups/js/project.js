@@ -2,9 +2,9 @@ var log_ready = false;
 
 function logs_to_div(div) {
     if (!log_ready) {
-        var SF = $('#id_server_ctm').val();
+        var SF = $('#id_servers').val();
         var SFR = SF.replace(/ /g, '+')
-        $(div).load('/logs/{{project.id}}/{{key}}/{{cmd}}/{{rtype}}/{{date}}/?server_ctm=' + SFR);
+        $(div).load('/logs/{{project.id}}/{{key}}/{{cmd}}/{{rtype}}/{{date}}/?servers=' + SFR);
     }
 }
 
@@ -132,8 +132,8 @@ function Validation(cmd, srv, upd, job, scr, dmp) {
 }
 
 function select_server(server) {
-    $('#id_server_ctm').val(server);
     $('#selected_command').val('');
+    $('#id_servers').val(server);
     $('#selector').submit();
 }
 

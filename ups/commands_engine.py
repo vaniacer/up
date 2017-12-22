@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 
+from .models import History, Job, Server, Update, Script
 from django.core.exceptions import ObjectDoesNotExist
 from django.conf import settings as conf
-from .models import History, Job, Server, Update, Script
 from subprocess import Popen
 from base64 import b64encode
 from os import urandom
