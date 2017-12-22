@@ -1,6 +1,6 @@
 
 <!---------------------------------------MAINTENANCE-------------------------------------->
-<!-- Validation(input_id(if it not submit type), server, update, cronjob, script, dump) -->
+<!--------------------- Validation('cmd_name', server, update, cronjob, script, dump) ---->
 <li><a  onclick="return Validation('stop', true, false, false, false)"
         title="Stop selected server(s)."
         href="javascript:;"
@@ -32,7 +32,7 @@
         class="danger">Maintenance OFF</a></li>
 
 <!--------------------------------------DELETE UPDATES------------------------------------>
-<!-- Validation(input_id(if it not submit type), server, update, cronjob, script, dump) -->
+<!--------------------- Validation('cmd_name', server, update, cronjob, script, dump) ---->
 <li role="separator" class="divider danger"></li>
 
 <li><a  onclick="return Validation('del_sel_updates', true, true, false, false)"
@@ -46,7 +46,7 @@
         class="danger">Delete all updates</a></li>
 
 <!---------------------------------------DB DUMPS----------------------------------------->
-<!-- Validation(input_id(if it not submit type), server, update, cronjob, script, dump) -->
+<!--------------------- Validation('cmd_name', server, update, cronjob, script, dump) ---->
 <li role="separator" class="divider"></li>
 
 <li><a  onclick="return Validation('send_dump', true, false, false, false, true)"
@@ -63,7 +63,7 @@
         href="javascript:;">Del dump</a></li>
 
 <!----------------------------------------BACKUP------------------------------------------>
-<!-- Validation(input_id(if it not submit type), server, update, cronjob, script, dump) -->
+<!--------------------- Validation('cmd_name', server, update, cronjob, script, dump) ---->
 <li role="separator" class="divider"></li>
 
 <li><a  onclick="return Validation('backup_full', true, false, false, false)"
@@ -79,7 +79,7 @@
         href="javascript:;">Backup system</a></li>
 
 <!-----------------------------------------MAIN------------------------------------------->
-<!-- Validation(input_id(if it not submit type), server, update, cronjob, script, dump) -->
+<!--------------------- Validation('cmd_name', server, update, cronjob, script, dump) ---->
 <li role="separator" class="divider"></li>
 
 <li><a  onclick="return Validation('script', true, false, false, true)"
