@@ -176,6 +176,8 @@ $(function() {
 
 $(document).ready(function() {
     $('.loader').hide();
+    $('#run_type').val('')
+    $('#selected_command').val('')
     $('.sroller').scrollTop(getCookie('sroller'));
     $('.xroller').scrollTop(getCookie('xroller'));
     $('.uroller').scrollTop(getCookie('uroller'));

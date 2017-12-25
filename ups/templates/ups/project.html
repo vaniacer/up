@@ -28,9 +28,11 @@
         <!--{% csrf_token %}-->
 
         {% if "run_command" in pr_view_perms %}
-            {% bootstrap_form hidefrm %}
-            <input name="run_type"         id="run_type"         class="hidden"/>
-            <input name="selected_command" id="selected_command" class="hidden"/>
+            <div class="hidden">
+                {% bootstrap_form hidefrm %}
+                <input name="run_type"         id="run_type"/>
+                <input name="selected_command" id="selected_command"/>
+            </div>
         {% endif %}
 
         <!-- Nav tabs -->
