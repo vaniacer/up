@@ -4,7 +4,7 @@ function logs_to_div(div) {
     if (!log_ready) {
         var SF = $('#id_servers').val();
         var SFR = SF.replace(/ /g, '+')
-        alert('{{request.build_absolute_uri}}')
+//        alert('{{request.build_absolute_uri}}')
         $(div).load('/logs/{{project.id}}/{{key}}/{{cmd}}/{{rtype}}/{{date}}/?servers=' + SFR);
     }
 }
