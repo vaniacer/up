@@ -125,6 +125,8 @@ def logs(request, project_id, log_id, cmd, rtype, date):
 	current_project = get_object_or_404(Project, id=project_id)
 	check_perm('view_project', current_project, request.user)
 
+	# data = request.GET
+
 	tag, his = command({'command': cmd, 'cron': '', })
 	log = open(conf.LOG_FILE + log_id, 'r').read()
 	pid = open(conf.PID_FILE + log_id, 'r').read()
@@ -163,17 +165,14 @@ def project(request, project_id):
 	current_project = get_object_or_404(Project, id=project_id)
 	check_perm('view_project', current_project, request.user)
 
+	data = request.GET
 	get_cron_logs()
 
-	servers_filter = request.GET.get('servers', '')
+	servers_filter = data.get('servers', '')
 	servers = current_project.server_set.order_by('name')
 	srvfilt = servers.filter(name__iregex=servers_filter)
-	serfltr = SerfltrForm(initial={'servers': servers_filter})
-	hidefrm = HideForm(initial={
-		'server_info': request.GET.get('server_info'),
-		'script_info': request.GET.get('script_info'),
-		'update_info': request.GET.get('update_info'),
-		'dbdump_info': request.GET.get('dbdump_info'), })
+	serfltr = SerfltrForm(initial=data)
+	hidefrm = HideForm(initial=data)
 
 	history = current_project.history_set.order_by('date').reverse()
 	updates = current_project.update_set.order_by('date').reverse()
@@ -197,6 +196,6 @@ def project(request, project_id):
 		'serfltr': serfltr,
 		'hidefrm': hidefrm, }
 
-	if request.GET.get('selected_command'):
+	if data.get('selected_command'):
 		context = cmd_run(request, current_project, context)
 	return render(request, 'ups/project.html', context)
