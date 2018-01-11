@@ -6,18 +6,18 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 from .models import Project, Update, Script
 from django.conf import settings as conf
+from .forms import SerfltrForm, HideForm
 from .commands import command, cmd_run
 from .commands_engine import add_event
 from .commands_engine import add_job
 from wsgiref.util import FileWrapper
 from .permissions import check_perm
 from .cron import get_cron_logs
-from .forms import SerfltrForm, HideForm
+from operator import itemgetter
 from subprocess import Popen
 from .dump import get_dumps
 import mimetypes
 import os
-from operator import itemgetter
 
 
 def index(request):
@@ -175,11 +175,11 @@ def project(request, project_id):
 	serfltr = SerfltrForm(initial=data)
 	hidefrm = HideForm(initial=data)
 
+	dmplist = sorted(get_dumps(current_project.name), key=itemgetter('date'), reverse=True)
 	history = current_project.history_set.order_by('date').reverse()
 	updates = current_project.update_set.order_by('date').reverse()
 	cronjob = current_project.job_set.order_by('date').reverse()
 	scripts = current_project.script_set.order_by('desc')
-	dmplist = sorted(get_dumps(current_project.name), key=itemgetter('date'), reverse=True)
 
 	history, hist_fd, hist_bk = pagination(request, history)
 
