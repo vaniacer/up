@@ -110,5 +110,5 @@ function starter  () {
     exit $error
 }
 
-# Showing description or running command itself
+# Show description or run command itself
 [[ "$desc" ]] && description || starter

@@ -17,6 +17,7 @@ from subprocess import Popen
 from .dump import get_dumps
 import mimetypes
 import os
+from operator import itemgetter
 
 
 def index(request):
@@ -178,7 +179,7 @@ def project(request, project_id):
 	updates = current_project.update_set.order_by('date').reverse()
 	cronjob = current_project.job_set.order_by('date').reverse()
 	scripts = current_project.script_set.order_by('desc')
-	dmplist = get_dumps(current_project.name)
+	dmplist = sorted(get_dumps(current_project.name), key=itemgetter('date'), reverse=True)
 
 	history, hist_fd, hist_bk = pagination(request, history)
 

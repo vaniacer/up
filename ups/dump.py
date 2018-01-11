@@ -1,6 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 from django.conf import settings as conf
+from time import localtime, strftime
 import os
 
 
@@ -21,6 +22,13 @@ def get_dumps(pname):
 
 		for dump in dumps:
 			i += 1
-			dumplist.extend([{'id': i, 'name': dump, 'size': os.stat(os.path.join(path, dump)).st_size}])
+			filename = os.path.join(path, dump)
+
+			dumplist.extend([{
+				'id': i,
+				'name': dump,
+				'size': os.stat(filename).st_size,
+				'date': strftime("%b %d, %Y %H:%M", localtime(os.path.getctime(filename))),
+			}])
 
 		return dumplist
