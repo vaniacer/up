@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
-from django import forms
 from .models import Project, Server, Update, Script
+from django import forms
 
 
 class ProjectForm(forms.ModelForm):
@@ -9,7 +9,6 @@ class ProjectForm(forms.ModelForm):
 		model = Project
 		fields = ['name', 'desc']
 		labels = {'name': 'Project name', 'desc': 'Project description'}
-		widgets = {'desc': forms.Textarea(attrs={'cols': 80})}
 
 
 class ServerForm(forms.ModelForm):
@@ -21,7 +20,6 @@ class ServerForm(forms.ModelForm):
 			'addr': 'SSH address', 'wdir': 'Working directory',
 			'port': 'Server binding port'
 		}
-		widgets = {'desc': forms.Textarea(attrs={'cols': 80})}
 
 
 class UpdateForm(forms.ModelForm):
@@ -29,9 +27,6 @@ class UpdateForm(forms.ModelForm):
 		model = Update
 		fields = ['file', 'desc']
 		labels = {'file': 'Update file', 'desc': 'Update description'}
-		widgets = {
-			'desc': forms.Textarea(attrs={'cols': 80}),
-		}
 
 
 class ScriptAddForm(forms.ModelForm):
@@ -39,9 +34,16 @@ class ScriptAddForm(forms.ModelForm):
 		model = Script
 		fields = ['file', 'desc']
 		labels = {'file': 'Script file. SQL scripts MUST have extension \'.sql\'', 'desc': 'Script description'}
-		widgets = {
-			'desc': forms.Textarea(attrs={'cols': 80}),
-		}
+
+
+class ScriptCreateForm(forms.ModelForm):
+	class Meta:
+		model = Script
+		fields = ['flnm', 'desc', 'body']
+		labels = {
+			'flnm': 'File name. Script file. SQL scripts MUST have extension \'.sql\'',
+			'desc': 'Script description',
+			'body': 'Script body'}
 
 
 class ScriptEditForm(forms.ModelForm):
@@ -49,10 +51,6 @@ class ScriptEditForm(forms.ModelForm):
 		model = Script
 		fields = ['desc', 'body']
 		labels = {'desc': 'Script description', 'body': 'Script body'}
-		widgets = {
-			'desc': forms.Textarea(attrs={'cols': 80}),
-			'body': forms.Textarea(attrs={'cols': 80}),
-		}
 
 
 class SerfltrForm(forms.Form):

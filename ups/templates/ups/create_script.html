@@ -1,0 +1,24 @@
+{% extends "ups/base.html" %}
+{% load guardian_tags %}
+{% load bootstrap3 %}
+
+{% block header %}
+    <br>
+    <h2>Create new script</h2>
+{% endblock header %}
+
+{% block content %}
+
+    {% get_obj_perms request.user for project as "edit_script_perms" %}
+
+    <form action="{% url 'ups:create_script' project.id %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+
+        {% buttons %}
+            <input type="submit" name="ok" value="Save script" class="btn btn-primary"/>
+            <a class="btn btn-primary" href="{% url 'ups:project' project.id %}">Cancel</a>
+        {% endbuttons %}
+    </form>
+
+{% endblock content %}

@@ -31,6 +31,9 @@
     {% endif %}
 
     {% if "add_script" in pr_view_perms %}
+        <a title="Create new script."
+           class="btn btn-success btn-xs"
+           href="{% url 'ups:create_script' project.id %}">New</a>
         <a title="Add new script."
            class="btn btn-success btn-xs"
            href="{% url 'ups:new_script' project.id %}">Add</a>

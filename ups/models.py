@@ -87,6 +87,7 @@ class Script(models.Model):
 	date = models.DateTimeField(auto_now_add=True, db_index=True)
 	file = models.FileField(upload_to=script_upload_to)
 	desc = models.TextField(max_length=255)
+	flnm = models.CharField(max_length=255)
 	proj = models.ForeignKey(Project)
 	user = models.ForeignKey(User)
 	body = models.TextField()

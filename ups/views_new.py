@@ -1,12 +1,13 @@
 # -*- encoding: utf-8 -*-
 
+from .forms import ProjectForm, ServerForm, UpdateForm, ScriptAddForm, ScriptCreateForm
 from django.contrib.auth.decorators import login_required, permission_required
-from .forms import ProjectForm, ServerForm, UpdateForm, ScriptAddForm
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.shortcuts import render
 from .permissions import check_perm
 from .models import Project
+from django.conf import settings as conf
 
 
 # @login_required
@@ -106,3 +107,33 @@ def new_script(request, project_id):
 
 	context = {'project': project, 'form': form}
 	return render(request, 'ups/new_script.html', context)
+
+
+@login_required
+def create_script(request, project_id):
+	"""Создает новый скрипт."""
+	project = Project.objects.get(id=project_id)
+	check_perm('add_script', project, request.user)
+
+	if request.method != 'POST':
+		# Данные не отправлялись; создается пустая форма.
+		form = ScriptCreateForm()
+	else:
+		# Отправлены данные POST; обработать данные.
+		form = ScriptCreateForm(request.POST)
+
+		if form.is_valid():
+			script = form.save(commit=False)
+			script.file = '%s/scripts/%s/%s' % (conf.MEDIA_ROOT, project.name, script.flnm)
+			script.user = request.user
+			script.proj = project
+
+			body = open(str(script.file), 'wb')
+			body.write(script.body.replace('\r\n', '\n').encode('utf-8'))
+			body.close()
+			script.save()
+
+			return HttpResponseRedirect(reverse('ups:project', args=[project_id]))
+
+	context = {'project': project, 'form': form}
+	return render(request, 'ups/create_script.html', context)

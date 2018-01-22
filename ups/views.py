@@ -187,6 +187,7 @@ def project(request, project_id):
 		'project': current_project,
 		'servers': servers,
 		'srvfilt': srvfilt,
+		'serfltr': serfltr,
 		'updates': updates,
 		'scripts': scripts,
 		'cronjob': cronjob,
@@ -194,7 +195,6 @@ def project(request, project_id):
 		'hist_bk': hist_bk,
 		'hist_fd': hist_fd,
 		'dmplist': dmplist,
-		'serfltr': serfltr,
 		'hidefrm': hidefrm, }
 
 	if data.get('selected_command'):
