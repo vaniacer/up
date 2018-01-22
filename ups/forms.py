@@ -41,7 +41,7 @@ class ScriptCreateForm(forms.ModelForm):
 		model = Script
 		fields = ['flnm', 'desc', 'body']
 		labels = {
-			'flnm': 'File name. Script file. SQL scripts MUST have extension \'.sql\'',
+			'flnm': 'File name. SQL scripts MUST have extension \'.sql\'',
 			'desc': 'Script description',
 			'body': 'Script body'}
 
