@@ -10,6 +10,9 @@ echo -e "Install libs."
 sudo apt-get update  -y
 sudo apt-get install -y libpq-dev python-dev rsync expect
 
+echo -e "Add current user to crontab group to (un)set cron jobs."
+sudo adduser $USER crontab
+
 echo -e "Add virtual env."
 virtualenv ../env; . ../env/bin/activate
 
