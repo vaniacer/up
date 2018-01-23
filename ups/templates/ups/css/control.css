@@ -11,6 +11,10 @@
     maxlength: 5;
 }
 
+.date-input {
+    width: 200px;
+}
+
 .Name {
     display: inline;
 }

@@ -1,17 +1,15 @@
 <!--New date\time picker-->
+{% load bootstrap3 %}
+
 <li>
     <div class="input-group date navbar-btn date-input" id="datetimepicker" title="Enter cron job date\time.">
-        <input id="selected_date"
-               class="form-control"
-               name="selected_date"/>
+        {% bootstrap_form datetime %}
+        <!--<input id="selected_date"-->
+               <!--class="form-control"-->
+               <!--name="selected_date"/>-->
         <span class="input-group-addon">
             <span class="glyphicon glyphicon-calendar"></span>
             <span class="glyphicon glyphicon-time"></span>
         </span>
     </div>
 </li>
-<script type="text/javascript">
-    $(function () {
-        $('#datetimepicker').datetimepicker({ locale: 'ru' });
-    });
-</script>

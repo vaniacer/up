@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 from .models import Project, Update, Script
 from django.conf import settings as conf
-from .forms import SerfltrForm, HideForm
+from .forms import SerfltrForm, HideForm, DateTimeForm
 from .commands import command, cmd_run
 from .commands_engine import add_event
 from .commands_engine import add_job
@@ -175,6 +175,7 @@ def project(request, project_id):
 	serfltr = SerfltrForm(initial=data)
 	hidefrm = HideForm(initial=data)
 
+	datetime = DateTimeForm()
 	dmplist = sorted(get_dumps(current_project.name) or '', key=itemgetter('date'), reverse=True)
 	history = current_project.history_set.order_by('date').reverse()
 	updates = current_project.update_set.order_by('date').reverse()
@@ -185,6 +186,7 @@ def project(request, project_id):
 
 	context = {
 		'project': current_project,
+		'datetime': datetime,
 		'servers': servers,
 		'srvfilt': srvfilt,
 		'serfltr': serfltr,
