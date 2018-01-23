@@ -34,7 +34,7 @@ class ScriptAddForm(forms.ModelForm):
 	class Meta:
 		model = Script
 		fields = ['file', 'desc']
-		labels = {'file': 'Script file. SQL scripts MUST have extension \'.sql\'', 'desc': 'Script description'}
+		labels = {'file': 'Script file. SQL scripts MUST have an extension \'.sql\'', 'desc': 'Script description'}
 
 
 class ScriptCreateForm(forms.ModelForm):
@@ -42,7 +42,7 @@ class ScriptCreateForm(forms.ModelForm):
 		model = Script
 		fields = ['flnm', 'desc', 'body']
 		labels = {
-			'flnm': 'File name. SQL scripts MUST have extension \'.sql\'',
+			'flnm': 'File name. SQL scripts MUST have an extension \'.sql\'',
 			'desc': 'Script description',
 			'body': 'Script body'}
 
@@ -59,8 +59,8 @@ class SerfltrForm(forms.Form):
 
 
 class DateTimeForm(forms.Form):
-	date = datetime.datetime.now()
-	datetime = forms.DateTimeField(label='', required=False, initial=date.strftime("%d.%m.%Y %H:%M"))
+	date = forms.DateField(label='', widget=forms.DateInput(attrs={'type': 'date'}))
+	time = forms.TimeField(label='', widget=forms.TimeInput(attrs={'type': 'time'}))
 
 
 class HideForm(forms.Form):
