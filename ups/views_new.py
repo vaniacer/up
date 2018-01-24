@@ -2,12 +2,12 @@
 
 from .forms import ProjectForm, ServerForm, UpdateForm, ScriptAddForm, ScriptCreateForm
 from django.contrib.auth.decorators import login_required, permission_required
+from django.core.files.base import ContentFile
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.shortcuts import render
 from .permissions import check_perm
 from .models import Project
-from django.conf import settings as conf
 
 
 # @login_required
@@ -124,13 +124,11 @@ def create_script(request, project_id):
 
 		if form.is_valid():
 			script = form.save(commit=False)
-			script.file = '%s/scripts/%s/%s' % (conf.MEDIA_ROOT, project.name, script.flnm)
+			new_file = ContentFile(script.body.replace('\r\n', '\n').encode('utf-8'))
+			new_file.name = script.flnm
 			script.user = request.user
+			script.file = new_file
 			script.proj = project
-
-			body = open(str(script.file), 'wb')
-			body.write(script.body.replace('\r\n', '\n').encode('utf-8'))
-			body.close()
 			script.save()
 
 			return HttpResponseRedirect(reverse('ups:project', args=[project_id]))
