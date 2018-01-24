@@ -1,15 +1,12 @@
 <!--New date\time picker-->
-{% load bootstrap3 %}
-<!--{% bootstrap_form datetime %}-->
-<!--&lt;!&ndash;{{datetime}}&ndash;&gt;-->
 <li>
     <div class="input-group date navbar-btn date-input" id="datetimepicker" title="Enter cron job date\time.">
-        {% bootstrap_form datetime %}
-        <!--<input id="selected_date"-->
-               <!--class="form-control"-->
-               <!--name="selected_date"/>-->
+        <input type="date" name="selected_date" class="form-control">
         <span class="input-group-addon">
             <span class="glyphicon glyphicon-calendar"></span>
+        </span>
+        <input type="time" name="selected_time" class="form-control">
+        <span class="input-group-addon">
             <span class="glyphicon glyphicon-time"></span>
         </span>
     </div>

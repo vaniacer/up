@@ -2,7 +2,6 @@
 
 from .models import Project, Server, Update, Script
 from django import forms
-import datetime
 
 
 class ProjectForm(forms.ModelForm):
@@ -56,11 +55,6 @@ class ScriptEditForm(forms.ModelForm):
 
 class SerfltrForm(forms.Form):
 	servers = forms.CharField(label='', required=False)
-
-
-class DateTimeForm(forms.Form):
-	date = forms.DateField(label='', widget=forms.DateInput(attrs={'type': 'date'}))
-	time = forms.TimeField(label='', widget=forms.TimeInput(attrs={'type': 'time'}))
 
 
 class HideForm(forms.Form):
