@@ -138,7 +138,7 @@ def logs(request, project_id, log_id, cmd, rtype, date):
 	except IOError:
 		err = ''
 
-	cdate, cron_id, date = '', '', date.replace('SS', ' ').replace('PP', ':').replace('OO', '.')
+	cdate, cron_id, date = '', '', date.replace('SS', ' ').replace('PP', ':').replace('OO', '-')
 	history = {'date': date, 'user': request.user, 'command': cmd, 'project': current_project}
 	context = {
 		'log': log.replace('__URL__', url), 'tag': tag, 'pid': pid, 'cmd': cmd,

@@ -56,17 +56,24 @@ def command(selected):
 def run_date():
 	"""Если не указана дата, возвращает текущую дату + 1 минута."""
 	date = datetime.datetime.now() + datetime.timedelta(minutes=1)
-	return date.strftime("%d.%m.%Y %H:%M")
+	return date.strftime("%Y-%m-%d %H:%M")
 
 
 def cmd_run(request, current_project, context):
 	"""Запускает выбранную команду."""
 	check_perm('run_command', current_project, request.user)
 
+	data = request.GET
+	print data
+	date = ''
+
+	if data['selected_date']:
+		date = '%s %s' % (request.GET.get('selected_date'), request.GET.get('selected_time'))
+
 	selected = {
 		'key':     get_key(),
 		'user':    request.user,
-		'date':    request.GET.get('selected_date') or run_date(),
+		'date':    date or run_date(),
 		'rtype':   request.GET.get('run_type'),
 		'dumps':   request.GET.getlist('selected_dumps'),
 		'updates': request.GET.getlist('selected_updates'),
@@ -77,7 +84,7 @@ def cmd_run(request, current_project, context):
 		'project': current_project, }
 
 	con = {
-		'date':  selected['date'].replace(' ', 'SS').replace(':', 'PP').replace('.', 'OO'),
+		'date':  selected['date'].replace(' ', 'SS').replace(':', 'PP').replace('-', 'OO'),
 		'cmd':   selected['command'],
 		'rtype': selected['rtype'],
 		'key':   selected['key'],
