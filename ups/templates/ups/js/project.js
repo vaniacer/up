@@ -147,13 +147,11 @@ function restoreScroll() {
 function hide_info(cook, panel, hb, sb) {
     $(panel).hide(); $(hb).hide(); $(sb).show();
     document.getElementById(cook).checked = false
-//    setCookie(cook, 1);
 };
 
 function show_info(cook, panel, hb, sb) {
     $(panel).show(); $(hb).hide(); $(sb).show();
     document.getElementById(cook).checked = true
-//    setCookie(cook, '');
 };
 
 $(function() {

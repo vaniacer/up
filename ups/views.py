@@ -18,6 +18,7 @@ from subprocess import Popen
 from .dump import get_dumps
 import mimetypes
 import os
+# from django.http import FileResponse
 
 
 def index(request):
@@ -158,6 +159,7 @@ def logs(request, project_id, log_id, cmd, rtype, date):
 		delete_files([conf.LOG_FILE + log_id, conf.PID_FILE + log_id, conf.ERR_FILE + log_id])
 
 	return render(request, 'ups/output.html', context)
+	# return FileResponse(open(conf.LOG_FILE + log_id, 'rb'), content_type='text')
 
 
 @login_required
@@ -199,4 +201,5 @@ def project(request, project_id):
 
 	if data.get('selected_command'):
 		context = cmd_run(data, current_project, request.user, context)
+
 	return render(request, 'ups/project.html', context)
