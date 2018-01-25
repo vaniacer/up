@@ -198,5 +198,5 @@ def project(request, project_id):
 		'hidefrm': hidefrm, }
 
 	if data.get('selected_command'):
-		context = cmd_run(request, current_project, context)
+		context = cmd_run(data, current_project, request.user, context)
 	return render(request, 'ups/project.html', context)

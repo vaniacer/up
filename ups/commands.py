@@ -59,27 +59,27 @@ def run_date():
 	return date.strftime("%Y-%m-%d %H:%M")
 
 
-def cmd_run(request, current_project, context):
+def cmd_run(data, current_project, user, context):
 	"""Запускает выбранную команду."""
-	check_perm('run_command', current_project, request.user)
+	check_perm('run_command', current_project, user)
 
-	data = request.GET
+	key = get_key()
 	date = run_date()
 
 	if data['selected_date'] and data['selected_time']:
-		date = '%s %s' % (request.GET.get('selected_date'), request.GET.get('selected_time'))
+		date = '%s %s' % (data['selected_date'], data['selected_time'])
 
 	selected = {
-		'key':     get_key(),
-		'user':    request.user,
+		'key':     key,
 		'date':    date,
-		'rtype':   request.GET.get('run_type'),
-		'dumps':   request.GET.getlist('selected_dumps'),
-		'updates': request.GET.getlist('selected_updates'),
-		'scripts': request.GET.getlist('selected_scripts'),
-		'servers': request.GET.getlist('selected_servers'),
-		'cronjbs': request.GET.getlist('selected_jobs'),
-		'command': request.GET.get('selected_command'),
+		'user':    user,
+		'rtype':   data['run_type'],
+		'dumps':   data.getlist('selected_dumps'),
+		'updates': data.getlist('selected_updates'),
+		'scripts': data.getlist('selected_scripts'),
+		'servers': data.getlist('selected_servers'),
+		'cronjbs': data.getlist('selected_jobs'),
+		'command': data['selected_command'],
 		'project': current_project, }
 
 	con = {
