@@ -159,7 +159,7 @@ def logs(request, project_id, log_id, cmd, rtype, date):
 		delete_files([conf.LOG_FILE + log_id, conf.PID_FILE + log_id, conf.ERR_FILE + log_id])
 
 	return render(request, 'ups/output.html', context)
-	# return FileResponse(open(conf.LOG_FILE + log_id, 'rb'), content_type='text')
+	# return FileResponse(open(conf.LOG_FILE + log_id, 'r'), content_type='text')
 
 
 @login_required
