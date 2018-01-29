@@ -76,11 +76,11 @@ function select_all(box_name, body_name, state, obj) {
 
 function setCookie(cname, cvalue) {
     var d = new Date();
-    document.cookie = cname + "=" + cvalue;
+    document.cookie = cname + '=' + cvalue;
 }
 
 function getCookie(cname) {
-    var name = cname + "=";
+    var name = cname + '=';
     var ca = document.cookie.split(';');
     for(var i = 0; i < ca.length; i++) {
         var c = ca[i];
@@ -91,7 +91,7 @@ function getCookie(cname) {
             return c.substring(name.length, c.length);
         }
     }
-    return "";
+    return '';
 }
 
 function Validation(cmd, srv, upd, job, scr, dmp) {

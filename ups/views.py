@@ -147,8 +147,7 @@ def logs(request, project_id, log_id, cmd, rtype, date):
 		'date': date,
 		'command': cmd,
 		'user': request.user,
-		'project': current_project,
-	}
+		'project': current_project, }
 
 	context = {
 		'log': log.replace('__URL__', url),
@@ -157,8 +156,7 @@ def logs(request, project_id, log_id, cmd, rtype, date):
 		'log_id':  log_id,
 		'tag': tag,
 		'pid': pid,
-		'cmd': cmd,
-	}
+		'cmd': cmd, }
 
 	if err:
 		context['err'] = int(err)
