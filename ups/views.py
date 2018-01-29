@@ -127,7 +127,7 @@ def logs(request, project_id, log_id, cmd, rtype, date):
 	current_project = get_object_or_404(Project, id=project_id)
 	check_perm('view_project', current_project, request.user)
 
-	# data = request.GET
+	data = request.GET
 
 	tag, his = command({'command': cmd, 'cron': '', })
 	log = open(conf.LOG_FILE + log_id, 'r').read()
@@ -139,14 +139,26 @@ def logs(request, project_id, log_id, cmd, rtype, date):
 	except IOError:
 		err = ''
 
-	cdate, cron_id, date = '', '', date.replace('SS', ' ').replace('PP', ':').replace('OO', '-')
-	history = {'date': date, 'user': request.user, 'command': cmd, 'project': current_project}
-	context = {
-		'log': log.replace('__URL__', url), 'tag': tag, 'pid': pid, 'cmd': cmd,
-		'log_id': log_id, 'project': project_id}
+	cdate = ''
+	cron_id = ''
+	date = date.replace('SS', ' ').replace('PP', ':').replace('OO', '-')
 
-	servers_filter = request.GET.get('servers', '')
-	context.update({'serfltr': servers_filter})
+	history = {
+		'date': date,
+		'command': cmd,
+		'user': request.user,
+		'project': current_project,
+	}
+
+	context = {
+		'log': log.replace('__URL__', url),
+		'serfltr': data['servers'],
+		'project': project_id,
+		'log_id':  log_id,
+		'tag': tag,
+		'pid': pid,
+		'cmd': cmd,
+	}
 
 	if err:
 		context['err'] = int(err)
