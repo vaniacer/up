@@ -9,6 +9,13 @@
         </div>
     </div>
 
+{% endblock header %}
+
+{% block content %}
+
+    <div class="output"></div>
+    <div class="output_bottom">{% include "ups/output_bottom_panel.html" %}</div>
+
     <script type="text/javascript">
 
         var log_ready = false;
@@ -27,12 +34,5 @@
         show_log('.output');
 
     </script>
-
-{% endblock header %}
-
-{% block content %}
-
-    <div class="output"></div>
-    <div class="output_bottom">{% include "ups/output_bottom_panel.html" %}</div>
 
 {% endblock content %}

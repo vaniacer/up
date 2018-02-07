@@ -135,7 +135,8 @@ def command_log(request):
 		'key':     data['logid'],
 		'cmd':     data['cmd'],
 		'rtype':   'RUN', }
-	print context
+
+	print '\ntest1\n'
 	return render(request, 'ups/command_log.html', context)
 
 
@@ -186,6 +187,7 @@ def logs(request, project_id, log_id, cmd, rtype):
 			add_event(history, log, context['err'], cron_id, cdate)
 		delete_files([conf.LOG_FILE + log_id, conf.PID_FILE + log_id, conf.ERR_FILE + log_id])
 
+	print '\ntest2\n'
 	return render(request, 'ups/output.html', context)
 	# return FileResponse(open(conf.LOG_FILE + log_id, 'r'), content_type='text')
 

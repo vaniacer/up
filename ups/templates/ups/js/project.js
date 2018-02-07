@@ -1,5 +1,4 @@
 function show_loader() {
-    $('.output_bottom').show();
     $('.project').hide();
     $('.loader').show();
 }
