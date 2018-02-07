@@ -26,8 +26,13 @@
             }
         }
 
+        <!--function show_log(id) {-->
+            <!--setInterval(function() { logs_to_div(id); }, 2000);-->
+            <!--logs_to_div(id);-->
+        <!--}-->
+
         function show_log(id) {
-            setInterval(function() { logs_to_div(id); }, 2000);
+            setInterval(logs_to_div(id), 2000);
             logs_to_div(id);
         }
 
