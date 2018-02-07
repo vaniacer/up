@@ -45,7 +45,8 @@ def command(selected):
 		'script':          {'history':  True, 'bash':     'script_bash.sh', 'tag': False, },
 		'update':          {'history':  True, 'bash':          'update.sh', 'tag':  True, },
 		'copy_utils':      {'history':  True, 'bash':      'copy_utils.sh', 'tag': False, },
-		'sql_script':      {'history':  True, 'bash':      'script_sql.sh', 'tag': False, }, }
+		'sql_script':      {'history':  True, 'bash':      'script_sql.sh', 'tag': False, },
+	}
 
 	cmd = ''.join(selected['command'])
 	selected['cmdname'] = dick[cmd]['bash']
@@ -80,17 +81,16 @@ def cmd_run(data, current_project, user):
 		'servers': data.getlist('selected_servers'),
 		'cronjbs': data.getlist('selected_jobs'),
 		'command': data['selected_command'],
-		'project': current_project, }
+		'project': current_project,
+	}
 
-	# con = {
-	# 	# 'date':  selected['date'].replace(' ', 'SS').replace(':', 'PP').replace('-', 'OO'),
-	# 	'cmd':   selected['command'],
-	# 	'rtype': selected['rtype'],
-	# 	'key':   selected['key'],
-	# 	'log':   'true', }
-
-	# context.update(con)
 	command(selected)
 	starter(selected)
-	url = '/command_log/?cmd=%s&prid=%s&logid=%s&servers=%s' % (data['selected_command'], current_project.id, key, data.get('servers', ''))
+	url = '/command_log/?cmd=%s&prid=%s&logid=%s&servers=%s' % (
+		data['selected_command'],
+		current_project.id,
+		key,
+		data.get('servers', '')
+	)
+
 	return url

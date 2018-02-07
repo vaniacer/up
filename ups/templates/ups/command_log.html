@@ -1,22 +1,21 @@
 {% extends "ups/base.html" %}
-{% load guardian_tags %}
-{% load bootstrap3 %}
-
 {% block header %}
-{% endblock header %}
 
-{% block content %}
+    <br>
 
-    {% get_obj_perms request.user for project as "pr_view_perms" %}
+    <div class="row">
+        <div class="col-md-2">
+            <h4 class="Name">{{cmd}}</h4>
+        </div>
+    </div>
+
     <script type="text/javascript">
 
         var log_ready = false;
 
         function logs_to_div(id) {
             if (!log_ready) {
-                var div = document.getElementById(id);
-                <!--$('#' + id).load('/logs/{{project.id}}/{{key}}/{{cmd}}/{{rtype}}/?servers={{serfltr}}');-->
-                div.innerHTML='<object type="text/html" data="/logs/{{project.id}}/{{key}}/{{cmd}}/{{rtype}}/?servers={{serfltr}}" ></object>'
+                $(id).load('/logs/{{project.id}}/{{key}}/{{cmd}}/{{rtype}}/?servers={{serfltr}}');
             }
         }
 
@@ -25,11 +24,15 @@
             logs_to_div(id);
         }
 
-        show_log('output');
+        show_log('.output');
 
     </script>
 
-    <div id="output"></div>
+{% endblock header %}
+
+{% block content %}
+
+    <div class="output"></div>
     <div class="output_bottom">{% include "ups/output_bottom_panel.html" %}</div>
 
 {% endblock content %}

@@ -1,7 +1,7 @@
 <script type="text/javascript">
 
     var err = {{err}};
-    if (err >= 0) { log_ready = true; }
+    if (err >= 0) { log_ready = true; alert('gfgf'); }
     var body = document.getElementById('output_log');
     if (err > 0) { body.style.background = '#f2dede'; }
 
@@ -10,15 +10,15 @@
 <div id="output_log">
     <dl class="dl-horizontal">
         {% if tag %}
-            <dt>Event logs</dt><dd class="log"><tt>{{ log|safe }}</tt></dd>
+            <dt>Event logs</dt><dd class="log"><tt>{{log|safe}}</tt></dd>
         {% else %}
-            <dt>Event logs</dt><dd class="log"><tt>{{ log }}</tt></dd>
+            <dt>Event logs</dt><dd class="log"><tt>{{log}}</tt></dd>
         {% endif %}
     </dl>
 
     {% if err >= 0 %}
         <dl class="dl-horizontal">
-            <dt>Error code</dt><dd>{{ err }}</dd>
+            <dt>Error code</dt><dd>{{err}}</dd>
             {% if err > 0 %}
                 <dt><br><a class="btn btn-danger"  href="/projects/{{project}}/?servers={{serfltr}}">OK</a></dt>
             {% else %}

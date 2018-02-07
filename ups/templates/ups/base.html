@@ -1,4 +1,6 @@
 {% load bootstrap3 %}
+{% bootstrap_javascript %}
+{% bootstrap_css %}
 
 <html lang="en">
 
@@ -9,7 +11,6 @@
 
         <title>Update Server</title>
 
-        {% bootstrap_css %}
         <style type="text/css">
             {% include "ups/css/loader.css"  %}
             {% include "ups/css/control.css" %}
@@ -68,10 +69,10 @@
                     {% block content %}{% endblock content %}
                 </div>
 
-                <!--<div class="loader"></div>-->
-                <!--<script type="text/javascript">-->
-                    <!--$('.loader').hide();-->
-                <!--</script>-->
+                <div class="loader"></div>
+                <script type="text/javascript">
+                    $('.loader').hide();
+                </script>
 
             </div> <!-- /container -->
 
