@@ -6,6 +6,11 @@
 
     {% get_obj_perms request.user for project as "pr_view_perms" %}
 
+    {% bootstrap_javascript %}
+    <script type="text/javascript">
+        {% include "ups/js/project.js" %}
+    </script>
+
     <br>
 
     <div class="row">

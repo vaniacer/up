@@ -15,10 +15,6 @@
             {% include "ups/css/control.css" %}
         </style>
 
-        {% bootstrap_javascript %}
-        <script type="text/javascript">
-            {% include "ups/js/project.js" %}
-        </script>
     </head>
 
     <body>
@@ -72,14 +68,11 @@
                     {% block content %}{% endblock content %}
                 </div>
 
-                <div class="loader"></div>
-                {% if log %}
-                    <div class="output"></div>
-                    <script type="text/javascript">show_log();</script>
-                    <div class="output_bottom">{% include "ups/output_bottom_panel.html" %}</div>
-                {% else %}
-                    <script type="text/javascript">restoreScroll();</script>
-                {% endif %}
+                <!--<div class="loader"></div>-->
+                <!--<script type="text/javascript">-->
+                    <!--$('.loader').hide();-->
+                <!--</script>-->
+
             </div> <!-- /container -->
 
         </div> <!-- /whole_page -->

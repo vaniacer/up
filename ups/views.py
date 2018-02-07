@@ -17,6 +17,7 @@ from operator import itemgetter
 from subprocess import Popen
 from .dump import get_dumps
 import mimetypes
+import datetime
 import os
 # from django.http import FileResponse
 
@@ -122,7 +123,24 @@ def cancel(request, project_id, pid, cmd, log_id):
 
 
 @login_required
-def logs(request, project_id, log_id, cmd, rtype, date):
+def command_log(request):
+	"""Выводит лог выполняющейся комманды."""
+	data = request.GET
+	current_project = get_object_or_404(Project, id=data['prid'])
+	check_perm('view_project', current_project, request.user)
+
+	context = {
+		'serfltr': data['servers'],
+		'project': current_project,
+		'key':     data['logid'],
+		'cmd':     data['cmd'],
+		'rtype':   'RUN', }
+	print context
+	return render(request, 'ups/command_log.html', context)
+
+
+@login_required
+def logs(request, project_id, log_id, cmd, rtype):
 	"""Выводит лог выполняющейся комманды."""
 	current_project = get_object_or_404(Project, id=project_id)
 	check_perm('view_project', current_project, request.user)
@@ -141,7 +159,7 @@ def logs(request, project_id, log_id, cmd, rtype, date):
 
 	cdate = ''
 	cron_id = ''
-	date = date.replace('SS', ' ').replace('PP', ':').replace('OO', '-')
+	date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
 
 	history = {
 		'date': date,
@@ -210,6 +228,7 @@ def project(request, project_id):
 		'hidefrm': hidefrm, }
 
 	if data.get('selected_command'):
-		context = cmd_run(data, current_project, request.user, context)
+		url = cmd_run(data, current_project, request.user)
+		return HttpResponseRedirect(url)
 
 	return render(request, 'ups/project.html', context)

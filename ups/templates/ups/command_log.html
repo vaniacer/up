@@ -1,0 +1,35 @@
+{% extends "ups/base.html" %}
+{% load guardian_tags %}
+{% load bootstrap3 %}
+
+{% block header %}
+{% endblock header %}
+
+{% block content %}
+
+    {% get_obj_perms request.user for project as "pr_view_perms" %}
+    <script type="text/javascript">
+
+        var log_ready = false;
+
+        function logs_to_div(id) {
+            if (!log_ready) {
+                var div = document.getElementById(id);
+                <!--$('#' + id).load('/logs/{{project.id}}/{{key}}/{{cmd}}/{{rtype}}/?servers={{serfltr}}');-->
+                div.innerHTML='<object type="text/html" data="/logs/{{project.id}}/{{key}}/{{cmd}}/{{rtype}}/?servers={{serfltr}}" ></object>'
+            }
+        }
+
+        function show_log(id) {
+            setInterval(function() { logs_to_div(id); }, 2000);
+            logs_to_div(id);
+        }
+
+        show_log('output');
+
+    </script>
+
+    <div id="output"></div>
+    <div class="output_bottom">{% include "ups/output_bottom_panel.html" %}</div>
+
+{% endblock content %}

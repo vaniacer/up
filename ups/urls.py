@@ -38,9 +38,11 @@ urlpatterns = [
 	url(r'^download_upd/(?P<project_id>\d+)/(?P<update_id>\d+)$', views.download_upd, name='download_upd'),
 	# Скачать dump.
 	url(r'^download_dump/(?P<project_id>\d+)/(?P<dump>.+)$', views.download_dump, name='download_dump'),
+	# Страница логов.
+	url(r'^command_log/$', views.command_log, name='command_log'),
 	# Вывод логов.
 	url(
-		r'^logs/(?P<project_id>\w+)/(?P<log_id>\w+)/(?P<cmd>\w+)/(?P<rtype>\w+)/(?P<date>\w+)/$',
+		r'^logs/(?P<project_id>\w+)/(?P<log_id>\w+)/(?P<cmd>\w+)/(?P<rtype>\w+)/$',
 		views.logs,
 		name='logs'),
 ]

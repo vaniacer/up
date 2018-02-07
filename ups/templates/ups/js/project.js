@@ -1,19 +1,3 @@
-var log_ready = false;
-
-function logs_to_div(div) {
-    if (!log_ready) {
-        var SF = $('#id_servers').val();
-        var SFR = SF.replace(/ /g, '+')
-        $(div).load('/logs/{{project.id}}/{{key}}/{{cmd}}/{{rtype}}/{{date}}/?servers=' + SFR);
-    }
-}
-
-function show_log() {
-    setInterval(function() { logs_to_div('.output'); }, 2000);
-    $('.project').hide();
-    logs_to_div('.output');
-}
-
 function show_loader() {
     $('.output_bottom').show();
     $('.project').hide();
@@ -173,7 +157,7 @@ $(function() {
 });
 
 $(document).ready(function() {
-    $('.loader').hide();
+    restoreScroll();
     $('#run_type').val('')
     $('#selected_command').val('')
     $('.sroller').scrollTop(getCookie('sroller'));
@@ -201,5 +185,4 @@ $(document).ready(function() {
     if (document.getElementById('id_dbdump_info').checked) {
            show_info('id_dbdump_info', '.dbdump-panel', '.dshow', '.dhide'); }
     else { hide_info('id_dbdump_info', '.dbdump-panel', '.dhide', '.dshow'); }
-
 });

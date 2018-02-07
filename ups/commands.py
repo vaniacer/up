@@ -59,7 +59,7 @@ def run_date():
 	return date.strftime("%Y-%m-%d %H:%M")
 
 
-def cmd_run(data, current_project, user, context):
+def cmd_run(data, current_project, user):
 	"""Запускает выбранную команду."""
 	check_perm('run_command', current_project, user)
 
@@ -82,14 +82,15 @@ def cmd_run(data, current_project, user, context):
 		'command': data['selected_command'],
 		'project': current_project, }
 
-	con = {
-		'date':  selected['date'].replace(' ', 'SS').replace(':', 'PP').replace('-', 'OO'),
-		'cmd':   selected['command'],
-		'rtype': selected['rtype'],
-		'key':   selected['key'],
-		'log':   'true', }
+	# con = {
+	# 	# 'date':  selected['date'].replace(' ', 'SS').replace(':', 'PP').replace('-', 'OO'),
+	# 	'cmd':   selected['command'],
+	# 	'rtype': selected['rtype'],
+	# 	'key':   selected['key'],
+	# 	'log':   'true', }
 
-	context.update(con)
+	# context.update(con)
 	command(selected)
 	starter(selected)
-	return context
+	url = '/command_log/?cmd=%s&prid=%s&logid=%s&servers=%s' % (data['selected_command'], current_project.id, key, data.get('servers', ''))
+	return url
