@@ -2,9 +2,7 @@
 
 {% block header %}
 
-    <br>
-
-    <div class="row">
+    <br><div class="row">
         <div class="col-md-2">
             <h4 class="Name">{{cmd}}</h4>
         </div>
@@ -14,13 +12,46 @@
 
 {% block content %}
 
-    <div class="output"></div>
+    <div class="output">
+
+        <div id="output_log">
+            <dl class="dl-horizontal">
+                {% if tag %}
+                    <dt>Event logs</dt><dd class="log"><tt>{{log|safe}}</tt></dd>
+                {% else %}
+                    <dt>Event logs</dt><dd class="log"><tt>{{log}}</tt></dd>
+                {% endif %}
+            </dl>
+
+            {% if err >= 0 %}
+                <dl class="dl-horizontal">
+                    <dt>Error code</dt><dd>{{err}}</dd>
+                    {% if err > 0 %}
+                        <dt><br><a class="btn btn-danger"  href="{{back}}">OK</a></dt>
+                    {% else %}
+                        <dt><br><a class="btn btn-success" href="{{back}}">OK</a></dt>
+                    {% endif %}
+                </dl>
+            {% else %}
+                <dl class="dl-horizontal">
+                    <dd><div class="small_loader"></div></dd>
+                    <dt><br><br><a class="btn btn-primary" href="{{cancel}}">Cancel</a></dt>
+                </dl>
+            {% endif %}
+        </div>
+
+        <br><br><br>
+        <br><br><br>
+
+    </div>
+
     <div class="output_bottom">{% include "ups/output_bottom_panel.html" %}</div>
 
     <script type="text/javascript">
 
-        function logs_to_div(id) { $(id).load('/logs/?{{url}}'); }
-        var intervalID = setInterval(logs_to_div('.output'), 2000);
+        document.getElementById('output_log').style.background = '{{color}}';
+        if ('{{err}}') { clearInterval(logtimer); }
+        else           { var logtimer = setInterval(document.location.reload(true), 3000); }
 
     </script>
 

@@ -129,25 +129,6 @@ def command_log(request):
 	current_project = get_object_or_404(Project, id=data['prid'])
 	check_perm('view_project', current_project, request.user)
 
-	context = {
-		'project': current_project,
-		'serfltr': data['servers'],
-		'rtype':   data['rtype'],
-		'key':     data['logid'],
-		'cmd':     data['cmd'],
-		'url':     request.META['QUERY_STRING']
-	}
-
-	return render(request, 'ups/command_log.html', context)
-
-
-@login_required
-def logs(request):
-	"""Выводит лог выполняющейся комманды."""
-	data = request.GET
-	current_project = get_object_or_404(Project, id=data['prid'])
-	check_perm('view_project', current_project, request.user)
-
 	tag, his = command({'command': data['cmd'], 'cron': '', })
 	log = open(conf.LOG_FILE + data['logid'], 'r').read()
 	pid = open(conf.PID_FILE + data['logid'], 'r').read()
@@ -163,24 +144,30 @@ def logs(request):
 	date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
 
 	history = {
-		'date': date,
+		'date':    date,
 		'command': data['cmd'],
-		'user': request.user,
+		'user':    request.user,
 		'project': current_project,
 	}
 
 	context = {
-		'log': log.replace('__URL__', url),
-		'serfltr': data['servers'],
-		'project': data['prid'],
+		'cancel':  '/cancel/%s/%s/%s/%s/?servers=%s' % (data['prid'], pid, data['cmd'], data['logid'], data['servers']),
+		'back':    '/projects/%s/?servers=%s' % (data['prid'], data['servers']),
+		'log':     log.replace('__URL__', url),
+		'project': current_project,
 		'log_id':  data['logid'],
-		'cmd': data['cmd'],
-		'tag': tag,
-		'pid': pid,
+		'rtype':   data['rtype'],
+		'key':     data['logid'],
+		'cmd':     data['cmd'],
+		'tag':     tag,
+		'pid':     pid,
+		'color':   '',
 	}
 
 	if err:
 		context['err'] = int(err)
+		if context['err'] > 0:
+			context['color'] = '#f2dede'
 		if data['rtype'] == 'CRON':
 			add_job(history, log, data['logid'])
 			cdate, cron_id = date, data['logid']
@@ -189,7 +176,7 @@ def logs(request):
 			add_event(history, log, context['err'], cron_id, cdate)
 		delete_files([conf.LOG_FILE + data['logid'], conf.PID_FILE + data['logid'], conf.ERR_FILE + data['logid']])
 
-	return render(request, 'ups/output.html', context)
+	return render(request, 'ups/command_log.html', context)
 
 
 @login_required

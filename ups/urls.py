@@ -40,6 +40,4 @@ urlpatterns = [
 	url(r'^download_dump/(?P<project_id>\d+)/(?P<dump>.+)$', views.download_dump, name='download_dump'),
 	# Страница логов.
 	url(r'^command_log/$', views.command_log, name='command_log'),
-	# Вывод логов.
-	url(r'^logs/$', views.logs, name='logs'),
 ]
