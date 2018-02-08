@@ -9,13 +9,6 @@
         </div>
     </div>
 
-    <div class="hidden">
-        <input id="id_server_info"/>
-        <input id="id_script_info"/>
-        <input id="id_update_info"/>
-        <input id="id_dbdump_info"/>
-    </div>
-
 {% endblock header %}
 {% block content %}
 
@@ -41,7 +34,8 @@
                     <dt><br><br><a class="btn btn-primary" href="{{cancel}}">Cancel</a></dt>
                 </dl>
                 <script type="text/javascript">
-                    setTimeout(document.location.reload(true), 2000);
+                    window.setTimeout(function(){location.reload();}, 2000);
+                    <!--location.reload();-->
                 </script>
             {% endif %}
         </div>
