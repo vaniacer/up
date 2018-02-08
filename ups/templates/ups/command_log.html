@@ -1,11 +1,19 @@
 {% extends "ups/base.html" %}
 
+
 {% block header %}
 
     <br><div class="row">
-        <div class="col-md-2">
+        <div class="col-md-4">
             <h4 class="Name">{{cmd}}</h4>
         </div>
+    </div>
+
+    <div class="hidden">
+        <input id="id_server_info"/>
+        <input id="id_script_info"/>
+        <input id="id_update_info"/>
+        <input id="id_dbdump_info"/>
     </div>
 
 {% endblock header %}
@@ -32,6 +40,9 @@
                     <dd><div class="small_loader"></div></dd>
                     <dt><br><br><a class="btn btn-primary" href="{{cancel}}">Cancel</a></dt>
                 </dl>
+                <script type="text/javascript">
+                    setTimeout(document.location.reload(true), 2000);
+                </script>
             {% endif %}
         </div>
 
@@ -43,11 +54,7 @@
     <div class="output_bottom">{% include "ups/output_bottom_panel.html" %}</div>
 
     <script type="text/javascript">
-
         document.getElementById('output_log').style.background = '{{color}}';
-        if ('{{err}}') { clearInterval(logtimer); }
-        else           { var logtimer = setInterval(document.location.reload(true), 5000); }
-
     </script>
 
 {% endblock content %}
