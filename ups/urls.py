@@ -41,8 +41,5 @@ urlpatterns = [
 	# Страница логов.
 	url(r'^command_log/$', views.command_log, name='command_log'),
 	# Вывод логов.
-	url(
-		r'^logs/(?P<project_id>\w+)/(?P<log_id>\w+)/(?P<cmd>\w+)/(?P<rtype>\w+)/$',
-		views.logs,
-		name='logs'),
+	url(r'^logs/$', views.logs, name='logs'),
 ]

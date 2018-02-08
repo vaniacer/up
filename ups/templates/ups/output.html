@@ -1,7 +1,7 @@
 <script type="text/javascript">
 
     var err = {{err}};
-    if (err >= 0) { log_ready = true; }
+    if (err >= 0) { clearInterval(intervalID); }
     var body = document.getElementById('output_log');
     if (err > 0) { body.style.background = '#f2dede'; }
 

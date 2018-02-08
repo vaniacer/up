@@ -1,5 +1,4 @@
 {% load bootstrap3 %}
-{% bootstrap_javascript %}
 
 <html lang="en">
 
@@ -15,6 +14,11 @@
             {% include "ups/css/loader.css"  %}
             {% include "ups/css/control.css" %}
         </style>
+
+        {% bootstrap_javascript %}
+        <script type="text/javascript">
+            {% include "ups/js/project.js" %}
+        </script>
 
     </head>
 

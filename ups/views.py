@@ -124,37 +124,37 @@ def cancel(request, project_id, pid, cmd, log_id):
 
 @login_required
 def command_log(request):
-	"""Выводит лог выполняющейся комманды."""
+	"""Выводит страницу логов выполняющейся комманды."""
 	data = request.GET
 	current_project = get_object_or_404(Project, id=data['prid'])
 	check_perm('view_project', current_project, request.user)
 
 	context = {
-		'serfltr': data['servers'],
 		'project': current_project,
+		'serfltr': data['servers'],
+		'rtype':   data['rtype'],
 		'key':     data['logid'],
 		'cmd':     data['cmd'],
-		'rtype':   'RUN', }
+		'url':     request.META['QUERY_STRING']
+	}
 
-	print '\ntest1\n'
 	return render(request, 'ups/command_log.html', context)
 
 
 @login_required
-def logs(request, project_id, log_id, cmd, rtype):
+def logs(request):
 	"""Выводит лог выполняющейся комманды."""
-	current_project = get_object_or_404(Project, id=project_id)
+	data = request.GET
+	current_project = get_object_or_404(Project, id=data['prid'])
 	check_perm('view_project', current_project, request.user)
 
-	data = request.GET
-
-	tag, his = command({'command': cmd, 'cron': '', })
-	log = open(conf.LOG_FILE + log_id, 'r').read()
-	pid = open(conf.PID_FILE + log_id, 'r').read()
+	tag, his = command({'command': data['cmd'], 'cron': '', })
+	log = open(conf.LOG_FILE + data['logid'], 'r').read()
+	pid = open(conf.PID_FILE + data['logid'], 'r').read()
 	url = request.META['SERVER_NAME']
 
 	try:
-		err = open(conf.ERR_FILE + log_id, 'r').read()
+		err = open(conf.ERR_FILE + data['logid'], 'r').read()
 	except IOError:
 		err = ''
 
@@ -164,32 +164,32 @@ def logs(request, project_id, log_id, cmd, rtype):
 
 	history = {
 		'date': date,
-		'command': cmd,
+		'command': data['cmd'],
 		'user': request.user,
-		'project': current_project, }
+		'project': current_project,
+	}
 
 	context = {
 		'log': log.replace('__URL__', url),
 		'serfltr': data['servers'],
-		'project': project_id,
-		'log_id':  log_id,
+		'project': data['prid'],
+		'log_id':  data['logid'],
+		'cmd': data['cmd'],
 		'tag': tag,
 		'pid': pid,
-		'cmd': cmd, }
+	}
 
 	if err:
 		context['err'] = int(err)
-		if rtype == 'CRON':
-			add_job(history, log, log_id)
-			cdate, cron_id = date, log_id
-			history['command'] = 'Set cron job - %s' % cmd.lower()
+		if data['rtype'] == 'CRON':
+			add_job(history, log, data['logid'])
+			cdate, cron_id = date, data['logid']
+			history['command'] = 'Set cron job - %s' % data['cmd'].lower()
 		if his:
 			add_event(history, log, context['err'], cron_id, cdate)
-		delete_files([conf.LOG_FILE + log_id, conf.PID_FILE + log_id, conf.ERR_FILE + log_id])
+		delete_files([conf.LOG_FILE + data['logid'], conf.PID_FILE + data['logid'], conf.ERR_FILE + data['logid']])
 
-	print '\ntest2\n'
 	return render(request, 'ups/output.html', context)
-	# return FileResponse(open(conf.LOG_FILE + log_id, 'r'), content_type='text')
 
 
 @login_required

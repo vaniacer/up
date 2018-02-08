@@ -1,4 +1,5 @@
 {% extends "ups/base.html" %}
+
 {% block header %}
 
     <br>
@@ -18,25 +19,8 @@
 
     <script type="text/javascript">
 
-        var log_ready = false;
-
-        function logs_to_div(id) {
-            if (!log_ready) {
-                $(id).load('/logs/{{project.id}}/{{key}}/{{cmd}}/{{rtype}}/?servers={{serfltr}}');
-            }
-        }
-
-        <!--function show_log(id) {-->
-            <!--setInterval(function() { logs_to_div(id); }, 2000);-->
-            <!--logs_to_div(id);-->
-        <!--}-->
-
-        function show_log(id) {
-            setInterval(logs_to_div(id), 2000);
-            logs_to_div(id);
-        }
-
-        show_log('.output');
+        function logs_to_div(id) { $(id).load('/logs/?{{url}}'); }
+        var intervalID = setInterval(logs_to_div('.output'), 2000);
 
     </script>
 

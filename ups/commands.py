@@ -86,8 +86,9 @@ def cmd_run(data, current_project, user):
 
 	command(selected)
 	starter(selected)
-	url = '/command_log/?cmd=%s&prid=%s&logid=%s&servers=%s' % (
+	url = '/command_log/?cmd=%s&rtype=%s&prid=%s&logid=%s&servers=%s' % (
 		data['selected_command'],
+		data['run_type'],
 		current_project.id,
 		key,
 		data.get('servers', '')
