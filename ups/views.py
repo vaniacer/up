@@ -155,6 +155,7 @@ def command_log(request):
 		'back':    '/projects/%s/?servers=%s' % (data['prid'], data['servers']),
 		'log':     log.replace('__URL__', url),
 		'project': current_project,
+		'ok': 'btn-success',
 		'log_id':  data['logid'],
 		'rtype':   data['rtype'],
 		'key':     data['logid'],
@@ -168,6 +169,7 @@ def command_log(request):
 		context['err'] = int(err)
 		if context['err'] > 0:
 			context['color'] = '#f2dede'
+			context['ok'] = 'btn-danger'
 		if data['rtype'] == 'CRON':
 			add_job(history, log, data['logid'])
 			cdate, cron_id = date, data['logid']

@@ -9,7 +9,6 @@
     </div>
 
 {% endblock header %}
-
 {% block content %}
 
     <div class="output">
@@ -26,11 +25,7 @@
             {% if err >= 0 %}
                 <dl class="dl-horizontal">
                     <dt>Error code</dt><dd>{{err}}</dd>
-                    {% if err > 0 %}
-                        <dt><br><a class="btn btn-danger"  href="{{back}}">OK</a></dt>
-                    {% else %}
-                        <dt><br><a class="btn btn-success" href="{{back}}">OK</a></dt>
-                    {% endif %}
+                    <dt><br><a class="btn {{ok}}"  href="{{back}}">OK</a></dt>
                 </dl>
             {% else %}
                 <dl class="dl-horizontal">
@@ -51,7 +46,7 @@
 
         document.getElementById('output_log').style.background = '{{color}}';
         if ('{{err}}') { clearInterval(logtimer); }
-        else           { var logtimer = setInterval(document.location.reload(true), 3000); }
+        else           { var logtimer = setInterval(document.location.reload(true), 5000); }
 
     </script>
 
