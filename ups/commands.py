@@ -34,7 +34,7 @@ def command(selected):
 		'del_all_updates': {'history':  True, 'bash': 'del_all_updates.sh', 'tag': False, },
 		# Dumps           +------------------+-----------------------------+----------------+
 		'get_dump':        {'history':  True, 'bash':        'dump_get.sh', 'tag':  True, },
-		'send_dump':       {'history':  True, 'bash':       'dump_send.sh', 'tag': False, },
+		'send_dump':       {'history':  True, 'bash':       'dump_send.sh', 'tag':  True, },
 		'del_dump':        {'history':  True, 'bash':        'dump_del.sh', 'tag': False, },
 		# Backup          +------------------+-----------------------------+----------------+
 		'backup_db':       {'history':  True, 'bash':       'backup_db.sh', 'tag':  True, },

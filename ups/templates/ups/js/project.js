@@ -95,7 +95,7 @@ function Validation(cmd, srv, upd, job, scr, dmp, dgr) {
 
     if (dgr) {
         var sure = confirm(
-            'You are trying to run command:\n\t'
+            '\nYou are trying to run command:\n\t'
                 + cmd +
             '\n\nOn server(s): '
                 + server_names +
