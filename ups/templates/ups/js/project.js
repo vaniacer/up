@@ -58,33 +58,7 @@ function select_all(box_name, body_name, state, obj) {
     }
 }
 
-function setCookie(cname, cvalue) {
-    var d = new Date();
-    document.cookie = cname + '=' + cvalue;
-}
-
-function getCookie(cname) {
-    var name = cname + '=';
-    var ca = document.cookie.split(';');
-    for(var i = 0; i < ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) == ' ') {
-            c = c.substring(1);
-        }
-        if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length);
-        }
-    }
-    return '';
-}
-
 function Validation(cmd, srv, upd, job, scr, dmp) {
-
-    setCookie('scrollmem', window.pageYOffset);
-    setCookie('sroller', $('.sroller').scrollTop());
-    setCookie('xroller', $('.xroller').scrollTop());
-    setCookie('uroller', $('.uroller').scrollTop());
-    setCookie('droller', $('.droller').scrollTop());
 
     if (job) {
         var jobs = document.getElementsByName('selected_jobs');
@@ -121,20 +95,14 @@ function select_server(server) {
     $('#selector').submit();
 }
 
-function restoreScroll() {
-    var scroll = getCookie('scrollmem');
-    if (scroll > 0) { $('html,body').scrollTop(scroll); };
-    setCookie('scrollmem', 0);
-}
-
-function hide_info(cook, panel, hb, sb) {
+function hide_info(id, panel, hb, sb) {
     $(panel).hide(); $(hb).hide(); $(sb).show();
-    document.getElementById(cook).checked = false
+    document.getElementById(id).checked = false
 };
 
-function show_info(cook, panel, hb, sb) {
+function show_info(id, panel, hb, sb) {
     $(panel).show(); $(hb).hide(); $(sb).show();
-    document.getElementById(cook).checked = true
+    document.getElementById(id).checked = true
 };
 
 $(function() {
@@ -157,13 +125,8 @@ $(function() {
 });
 
 $(document).ready(function() {
-    restoreScroll();
     $('#run_type').val('')
     $('#selected_command').val('')
-    $('.sroller').scrollTop(getCookie('sroller'));
-    $('.xroller').scrollTop(getCookie('xroller'));
-    $('.uroller').scrollTop(getCookie('uroller'));
-    $('.droller').scrollTop(getCookie('droller'));
     select_all('selected_servers', 'server-body', false, 'SS');
     select_all('selected_updates', 'update-body', false, 'SU');
     select_all('selected_scripts', 'script-body', false, 'SX');
