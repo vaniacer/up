@@ -1,8 +1,8 @@
 #!/bin/bash
 
 function description () { #---------------------| Function description |------------------------------------------------
-    printf "Update server(s):\n"; for i in "${servers[@]}"; { echo "$i"; }
-    printf   "with update(s):\n"; for i in "${updates[@]}"; { echo "$i"; }
+    printf "\nUpdate server(s):\n"; for i in "${servers[@]}"; { echo "$i"; }
+    printf   "\nwith update(s):\n"; for i in "${updates[@]}"; { echo "$i"; }
 }
 
 function restore () { # Run system restore if jboss-start ended with errors.
@@ -24,7 +24,7 @@ function body-test () { #----------------------------| Main function |----------
 
     filename=${updates##*/}
 
-    echo -e "<b>Copy update - $filename.</b>\n"
+    echo -e "\n<b>Copy update - $filename.</b>\n"
     rsync -e"ssh $sopt" --progress -lzuogthvr $updates $addr:$wdir/updates/new/ && {
 
         echo -e "<b>Start dummy page.</b>\n"

@@ -1,8 +1,8 @@
 #!/bin/bash
 
 function description () { #---------------------| Function description |------------------------------------------------
-    printf "Run BASH script(s):\n"; for i in "${scripts[@]}"; { echo "$i"; }
-    printf     "\non Server(s):\n"; for i in "${servers[@]}"; { echo "$i"; }
+    printf "\nRun BASH script(s):\n"; for i in "${scripts[@]}"; { echo "$i"; }
+    printf       "\non Server(s):\n"; for i in "${servers[@]}"; { echo "$i"; }
 }
 
 function body () { #---------------------------------| Main function |--------------------------------------------------
@@ -13,7 +13,7 @@ function body () { #---------------------------------| Main function |----------
         [[ ${updates[@]} ]] && {
             rsync -e "ssh $sopt" --progress -lzuogthvr ${updates[@]} $addr:$wdir/updates/new && {
                 for U in ${updates[@]}; { opt+=" updates/new/${U##*/}"; }
-            } || { error=$?; echo -e "File copy error."; return $error; }
+            } || { error=$?; echo -e "\nFile copy error."; return $error; }
         }
 
         # Copy script to server

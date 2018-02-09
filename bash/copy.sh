@@ -1,8 +1,8 @@
 #!/bin/bash
 
 function description () { #---------------------| Function description |------------------------------------------------
-    printf "Copy Update(s):\n"; for i in "${updates[@]}"; { echo "$i"; }
-    printf "\nto Server(s):\n"; for i in "${servers[@]}"; { echo "$i"; }
+    printf "\nCopy Update(s):\n"; for i in "${updates[@]}"; { echo "$i"; }
+    printf "\nto Server(s):\n";   for i in "${servers[@]}"; { echo "$i"; }
 }
 
 function body () { #---------------------------------| Main function |--------------------------------------------------

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function description () { #---------------------| Function description |------------------------------------------------
-    printf "Copy utils folder to server(s):\n"; for i in "${servers[@]}"; { echo "$i"; }
+    printf "\nCopy utils folder to server(s):\n"; for i in "${servers[@]}"; { echo "$i"; }
 }
 
 function body () { #---------------------------------| Main function |--------------------------------------------------
