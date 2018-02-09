@@ -31,7 +31,7 @@ urlpatterns = [
 	# Страница для редактирования скрипта
 	url(r'^edit_script/(?P<script_id>\d+)/$', views_edit.edit_script, name='edit_script'),
 	# Отмена команды.
-	url(r'^cancel/(?P<project_id>\d+)/(?P<pid>\d+)/(?P<cmd>\w+)/(?P<log_id>\w+)/$', views.cancel, name='cancel'),
+	url(r'^cancel/$', views.cancel, name='cancel'),
 	# Скачать файл скрипта.
 	url(r'^download_script/(?P<project_id>\d+)/(?P<script_id>\d+)$', views.download_script, name='download_script'),
 	# Скачать файл обновления.

@@ -101,25 +101,24 @@ def projects(request):
 
 
 @login_required
-def cancel(request, project_id, pid, cmd, log_id):
-	"""Отмена команды."""
-	current_project = get_object_or_404(Project, id=project_id)
+def cancel(request):
+	"""Отмена выполняющейся команды."""
+	data = request.GET
+	current_project = get_object_or_404(Project, id=data['prid'])
 	check_perm('view_project', current_project, request.user)
 
-	servers_filter = request.GET.get('servers', '')
-
-	Popen(['kill', '-9', str(pid)])
-	tag, his = command({'command': cmd, 'cron': '', })
+	Popen(['kill', '-9', data['pid']])
+	tag, his = command({'command': data['cmd'], 'cron': '', })
 
 	if his:
-		log = open(conf.LOG_FILE + log_id, 'r').read()
-		history = {'user': request.user, 'project': current_project, 'command': cmd}
+		log = open(conf.LOG_FILE + data['logid'], 'r').read()
+		history = {'user': request.user, 'project': current_project, 'command': data['cmd']}
 		text = '\n\n<%s{ Canceled :( }%s>' % ('-' * 51, '-' * 52)
 		add_event(history, log + text, 1, '', '')
 
-	delete_files([conf.LOG_FILE + log_id, conf.PID_FILE + log_id, conf.ERR_FILE + log_id])
+	delete_files([conf.LOG_FILE + data['logid'], conf.PID_FILE + data['logid'], conf.ERR_FILE + data['logid']])
 
-	return HttpResponseRedirect('/projects/%s/?servers=%s' % (project_id, servers_filter))
+	return HttpResponseRedirect('/projects/%s/?servers=%s' % itemgetter('prid', 'servers')(data))
 
 
 @login_required
@@ -133,7 +132,9 @@ def command_log(request):
 	log = open(conf.LOG_FILE + data['logid'], 'r').read()
 	pid = open(conf.PID_FILE + data['logid'], 'r').read()
 	url = request.META['SERVER_NAME']
+	qst = request.META['QUERY_STRING']
 
+	print qst
 	try:
 		err = open(conf.ERR_FILE + data['logid'], 'r').read()
 	except IOError:
@@ -151,8 +152,8 @@ def command_log(request):
 	}
 
 	context = {
-		'cancel':  '/cancel/%s/%s/%s/%s/?servers=%s' % (data['prid'], pid, data['cmd'], data['logid'], data['servers']),
-		'back':    '/projects/%s/?servers=%s' % (data['prid'], data['servers']),
+		'cancel':  '/cancel/?pid=%s&%s' % (pid, qst),
+		'back':    '/projects/%s/?%s' % itemgetter('prid', 'servers')(data),
 		'log':     log.replace('__URL__', url),
 		'project': current_project,
 		'ok':      'btn-success',
