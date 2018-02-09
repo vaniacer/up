@@ -1,105 +1,105 @@
 
-<!---------------------------------------MAINTENANCE-------------------------------------->
-<!--------------------- Validation('cmd_name', server, update, cronjob, script, dump) ---->
-<li><a  onclick="return Validation('stop', true, false, false, false)"
+<!-----------------------------------------------MAINTENANCE-------------------------------------->
+<!--------------------- Validation('cmd_name', server, update, cronjob, script, dump, danger) ---->
+<li><a  onclick="return Validation('stop', true, false, false, false, false, true)"
         title="Stop selected server(s)."
         href="javascript:;"
         class="danger">Stop</a></li>
 
-<li><a  onclick="return Validation('start', true, false, false, false)"
+<li><a  onclick="return Validation('start', true, false, false, false, false, true)"
         title="Start selected server(s)."
         href="javascript:;"
         class="danger">Start</a></li>
 
-<li><a  onclick="return Validation('restart', true, false, false, false)"
+<li><a  onclick="return Validation('restart', true, false, false, false, false, true)"
         title="Restart selected server(s)."
         href="javascript:;"
         class="danger">Restart</a></li>
 
-<li><a  onclick="return Validation('reload', true, false, false, false)"
+<li><a  onclick="return Validation('reload', true, false, false, false, false, true)"
         title="Reload config on selected server(s)."
         href="javascript:;"
         class="danger">Reload</a></li>
 
-<li><a  onclick="return Validation('maintenance_on', true, false, false, false)"
+<li><a  onclick="return Validation('maintenance_on', true, false, false, false, false, true)"
         title="Show 'Maintenance' page on selected server(s)."
         href="javascript:;"
         class="danger">Maintenance ON</a></li>
 
-<li><a  onclick="return Validation('maintenance_off', true, false, false, false)"
+<li><a  onclick="return Validation('maintenance_off', true, false, false, false, false, true)"
         title="Hide 'Maintenance' page on selected server(s)."
         href="javascript:;"
         class="danger">Maintenance OFF</a></li>
 
-<!--------------------------------------DELETE UPDATES------------------------------------>
-<!--------------------- Validation('cmd_name', server, update, cronjob, script, dump) ---->
+<!----------------------------------------------DELETE UPDATES------------------------------------>
+<!--------------------- Validation('cmd_name', server, update, cronjob, script, dump, danger) ---->
 <li role="separator" class="divider danger"></li>
 
-<li><a  onclick="return Validation('del_sel_updates', true, true, false, false)"
+<li><a  onclick="return Validation('del_sel_updates', true, true, false, false, false, true)"
         title="Delete selected update(s) from selected server(s)."
         href="javascript:;"
         class="danger">Delete selected updates</a></li>
 
-<li><a  onclick="return Validation('del_all_updates', true, false, false, false)"
+<li><a  onclick="return Validation('del_all_updates', true, false, false, false, false, true)"
         title="Delete all updates from selected server(s)."
         href="javascript:;"
         class="danger">Delete all updates</a></li>
 
-<!---------------------------------------DB DUMPS----------------------------------------->
-<!--------------------- Validation('cmd_name', server, update, cronjob, script, dump) ---->
+<!-----------------------------------------------DB DUMPS----------------------------------------->
+<!--------------------- Validation('cmd_name', server, update, cronjob, script, dump, danger) ---->
 <li role="separator" class="divider"></li>
 
-<li><a  onclick="return Validation('send_dump', true, false, false, false, true)"
+<li><a  onclick="return Validation('send_dump', true, false, false, false, true, true)"
         title="Copy DB dump to selected server(s)."
         href="javascript:;"
         class="danger">Send dump</a></li>
 
-<li><a  onclick="return Validation('get_dump', true, false, false, false, false)"
+<li><a  onclick="return Validation('get_dump', true, false, false, false, false, false)"
         title="Get DB dump from selected server(s)."
         href="javascript:;">Get dump</a></li>
 
-<li><a  onclick="return Validation('del_dump', false, false, false, false, true)"
+<li><a  onclick="return Validation('del_dump', false, false, false, false, true, false)"
         title="Delete selected dump(s)."
         href="javascript:;">Del dump</a></li>
 
-<!----------------------------------------BACKUP------------------------------------------>
-<!--------------------- Validation('cmd_name', server, update, cronjob, script, dump) ---->
+<!------------------------------------------------BACKUP------------------------------------------>
+<!--------------------- Validation('cmd_name', server, update, cronjob, script, dump, danger) ---->
 <li role="separator" class="divider"></li>
 
-<li><a  onclick="return Validation('backup_full', true, false, false, false)"
+<li><a  onclick="return Validation('backup_full', true, false, false, false, false, false)"
         title="System and DB backup via './krupd bkp full'."
         href="javascript:;">Backup full</a></li>
 
-<li><a  onclick="return Validation('backup_db', true, false, false, false)"
+<li><a  onclick="return Validation('backup_db', true, false, false, false, false, false)"
         title="Database backup via './krupd bkp db'."
         href="javascript:;">Backup base</a></li>
 
-<li><a  onclick="return Validation('backup_sys', true, false, false, false)"
+<li><a  onclick="return Validation('backup_sys', true, false, false, false, false, false)"
         title="System backup via './krupd bkp sys'."
         href="javascript:;">Backup system</a></li>
 
-<!-----------------------------------------MAIN------------------------------------------->
-<!--------------------- Validation('cmd_name', server, update, cronjob, script, dump) ---->
+<!-------------------------------------------------MAIN------------------------------------------->
+<!--------------------- Validation('cmd_name', server, update, cronjob, script, dump, danger) ---->
 <li role="separator" class="divider"></li>
 
-<li><a  onclick="return Validation('script', true, false, false, true)"
+<li><a  onclick="return Validation('script', true, false, false, true, false, false)"
         title="Run selected script(s) on selected server(s). Script(s) have to be loaded(and selected) as updates."
         href="javascript:;">Run BASH script</a></li>
 
-<li><a  onclick="return Validation('sql_script', true, false, false, true)"
+<li><a  onclick="return Validation('sql_script', true, false, false, true, false, false)"
         title="Run SQL script in DB. Script(s) have to be loaded(and selected) as updates."
         href="javascript:;">Run SQL script</a></li>
 
-<li><a  onclick="return Validation('copy_utils', true, false, false, false)"
+<li><a  onclick="return Validation('copy_utils', true, false, false, false, false, false)"
         title="Copy utils folder to selected server(s)."
         href="javascript:;">Copy utils</a></li>
 
-<li><a  onclick="return Validation('update', true, true, false, false)"
+<li><a  onclick="return Validation('update', true, true, false, false, false, false)"
         title="Update selected server(s)."
         href="javascript:;"
         class="danger">Update</a></li>
 
-<li><a  onclick="return Validation('copy', true, true, false, false)"
+<li><a  onclick="return Validation('copy', true, true, false, false, false, false)"
         title="Copy selected update(s) to selected server(s)."
         href="javascript:;">Copy</a></li>
 

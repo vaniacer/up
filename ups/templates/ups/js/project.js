@@ -58,7 +58,9 @@ function select_all(box_name, body_name, state, obj) {
     }
 }
 
-function Validation(cmd, srv, upd, job, scr, dmp) {
+function Validation(cmd, srv, upd, job, scr, dmp, dgr) {
+
+    var server_names = '';
 
     if (job) {
         var jobs = document.getElementsByName('selected_jobs');
@@ -75,15 +77,32 @@ function Validation(cmd, srv, upd, job, scr, dmp) {
         for (i = 0; i < updates.length; i++) { if (updates[i].checked) { var selected_updates = true; break; }}
         if  (!selected_updates) { alert('Update(s) not selected.'); return false; }}
 
-    if (srv) {
-        var servers = document.getElementsByName('selected_servers');
-        for (i = 0; i < servers.length; i++) { if (servers[i].checked) { var selected_servers = true; break; }}
-        if  (!selected_servers) { alert('Server(s) not selected.'); return false; }}
-
     if (dmp) {
         var dumps = document.getElementsByName('selected_dumps');
         for (i = 0; i < dumps.length; i++) { if (dumps[i].checked) { var selected_dumps = true; break; }}
         if  (!selected_dumps) { alert('Dump(s) not selected.'); return false; }}
+
+    if (srv) {
+        var servers = document.getElementsByName('selected_servers');
+        for (i = 0; i < servers.length; i++) {
+            data = servers[i].dataset;
+            if (servers[i].checked) {
+                var selected_servers = true;
+                server_names = '\n\t' + data.target + server_names;
+            }
+        }
+        if  (!selected_servers) { alert('Server(s) not selected.'); return false; }}
+
+    if (dgr) {
+        var sure = confirm(
+            'You are trying to run command:\n\t'
+                + cmd +
+            '\n\nOn server(s): '
+                + server_names +
+            '\n\nAre you sure?'
+        );
+        if (! sure) { return false; }
+    }
 
     show_loader();
     if (cmd) { $('#selected_command').val(cmd); document.getElementById('selector').submit(); }
