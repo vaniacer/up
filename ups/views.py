@@ -134,6 +134,7 @@ def command_log(request):
 
 	try:
 		log = open(conf.LOG_FILE + data['logid'], 'r').read()
+		pid = open(conf.PID_FILE + data['logid'], 'r').read()
 	except IOError:
 		return HttpResponseRedirect('/projects/%s/?servers=%s' % itemgetter('prid', 'servers')(data))
 
@@ -141,8 +142,6 @@ def command_log(request):
 		err = open(conf.ERR_FILE + data['logid'], 'r').read()
 	except IOError:
 		err = ''
-
-	pid = open(conf.PID_FILE + data['logid'], 'r').read()
 
 	cdate = ''
 	cron_id = ''
