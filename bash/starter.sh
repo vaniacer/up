@@ -26,6 +26,24 @@ until [ -z $1 ]; do case $1 in
 esac; shift 2; done 2> /dev/null
 #---------------------------------
 
+# Warning with countdown timer
+function warning () {
+    attention=(
+       '     _  _____ _____ _____ _   _ _____ ___ ___  _   _ _ \n'
+        "   / \|_   _|_   _| ____| \ | |_   _|_ _/ _ \| \ | | |\n"
+        "  / _ \ | |   | | |  _| |  \| | | |  | | | | |  \| | |\n"
+        " / ___ \| |   | | | |___| |\  | | |  | | |_| | |\  |_|\n"
+        "/_/   \_\_|   |_| |_____|_| \_| |_| |___\___/|_| \_(_)\n")
+
+    echo -e "<b>${attention[@]}</b>\n"
+    printf "$1"
+
+    printf "If it's not what you wished to do you've got <b>$2</b> seconds to cancel this!\n"
+    printf "Final countdown...\n"
+    for i in $(seq $2); { sleep 1; echo $i; }
+    printf "Ok, i warned you!)\n"
+}
+
 # Used in output log.
 # Print delimiter line with info($1) in center.
 function info () {
