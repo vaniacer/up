@@ -155,7 +155,7 @@ def command_log(request):
 		'back':    '/projects/%s/?servers=%s' % (data['prid'], data['servers']),
 		'log':     log.replace('__URL__', url),
 		'project': current_project,
-		'ok': 'btn-success',
+		'ok':      'btn-success',
 		'log_id':  data['logid'],
 		'rtype':   data['rtype'],
 		'key':     data['logid'],
@@ -216,7 +216,8 @@ def project(request, project_id):
 		'hist_bk': hist_bk,
 		'hist_fd': hist_fd,
 		'dmplist': dmplist,
-		'hidefrm': hidefrm, }
+		'hidefrm': hidefrm,
+	}
 
 	if data.get('selected_command'):
 		url = cmd_run(data, current_project, request.user)

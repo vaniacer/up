@@ -1,3 +1,4 @@
+
 function show_loader() {
     $('.project').hide();
     $('.loader').show();
