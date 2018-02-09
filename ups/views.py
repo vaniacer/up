@@ -19,7 +19,6 @@ from .dump import get_dumps
 import mimetypes
 import datetime
 import os
-# from django.http import FileResponse
 
 
 def index(request):
