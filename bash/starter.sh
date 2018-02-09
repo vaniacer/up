@@ -26,7 +26,7 @@ until [ -z $1 ]; do case $1 in
 esac; shift 2; done 2> /dev/null
 #---------------------------------
 
-# Warning with countdown timer
+# Warning with countdown timer. Options: $1 - message, $2 - timeout in sec.
 function warning () {
     attention=(
        '     _  _____ _____ _____ _   _ _____ ___ ___  _   _ _ \n'
