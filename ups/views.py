@@ -129,16 +129,20 @@ def command_log(request):
 	check_perm('view_project', current_project, request.user)
 
 	tag, his = command({'command': data['cmd'], 'cron': '', })
-	log = open(conf.LOG_FILE + data['logid'], 'r').read()
-	pid = open(conf.PID_FILE + data['logid'], 'r').read()
-	url = request.META['SERVER_NAME']
 	qst = request.META['QUERY_STRING']
+	url = request.META['SERVER_NAME']
 
-	print qst
+	try:
+		log = open(conf.LOG_FILE + data['logid'], 'r').read()
+	except IOError:
+		return HttpResponseRedirect('/projects/%s/?servers=%s' % itemgetter('prid', 'servers')(data))
+
 	try:
 		err = open(conf.ERR_FILE + data['logid'], 'r').read()
 	except IOError:
 		err = ''
+
+	pid = open(conf.PID_FILE + data['logid'], 'r').read()
 
 	cdate = ''
 	cron_id = ''
@@ -152,8 +156,8 @@ def command_log(request):
 	}
 
 	context = {
-		'cancel':  '/cancel/?pid=%s&%s' % (pid, qst),
 		'back':    '/projects/%s/?%s' % itemgetter('prid', 'servers')(data),
+		'cancel':  '/cancel/?pid=%s&%s' % (pid, qst),
 		'log':     log.replace('__URL__', url),
 		'project': current_project,
 		'ok':      'btn-success',
