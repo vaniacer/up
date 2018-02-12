@@ -4,10 +4,10 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
+from .commands import command, cmd_run, info
 from .models import Project, Update, Script
 from django.conf import settings as conf
 from .forms import SerfltrForm, HideForm
-from .commands import command, cmd_run
 from .commands_engine import add_event
 from .commands_engine import add_job
 from wsgiref.util import FileWrapper
@@ -117,7 +117,7 @@ def cancel(request):
 
 	delete_files([conf.LOG_FILE + data['logid'], conf.PID_FILE + data['logid'], conf.ERR_FILE + data['logid']])
 
-	return HttpResponseRedirect('/projects/%s/?servers=%s' % itemgetter('prid', 'servers')(data))
+	return HttpResponseRedirect('/projects/%s/?servers=%s%s' % (data['prid'], data['servers'], info(data)))
 
 
 @login_required
@@ -154,8 +154,8 @@ def command_log(request):
 	}
 
 	context = {
-		'back':    '/projects/%s/?servers=%s' % itemgetter('prid', 'servers')(data),
-		'cancel':  '/cancel/?pid=%s&%s' % (pid, qst),
+		'back':    '/projects/%s/?servers=%s%s' % (data['prid'], data['servers'], info(data)),
+		'cancel':  '/cancel/?pid=%s&%s%s' % (pid, qst, info(data)),
 		'log':     log.replace('__URL__', url),
 		'project': current_project,
 		'ok':      'btn-success',

@@ -54,6 +54,19 @@ def command(selected):
 	return dick[cmd]['tag'], selected['history']
 
 
+def info(data):
+	url = ''
+	if data.get('server_info'):
+		url += '&server_info=on'
+	if data.get('script_info'):
+		url += '&script_info=on'
+	if data.get('update_info'):
+		url += '&update_info=on'
+	if data.get('dbdump_info'):
+		url += '&dbdump_info=on'
+	return url
+
+
 def run_date():
 	"""Если не указана дата, возвращает текущую дату + 1 минута."""
 	date = datetime.datetime.now() + datetime.timedelta(minutes=1)
@@ -86,12 +99,14 @@ def cmd_run(data, current_project, user):
 
 	command(selected)
 	starter(selected)
-	url = '/command_log/?cmd=%s&rtype=%s&prid=%s&logid=%s&servers=%s' % (
+
+	url = '/command_log/?cmd=%s&rtype=%s&prid=%s&logid=%s&servers=%s%s' % (
 		data['selected_command'],
 		data['run_type'],
 		current_project.id,
 		key,
-		data.get('servers', '')
+		data.get('servers', ''),
+		info(data),
 	)
 
 	return url
