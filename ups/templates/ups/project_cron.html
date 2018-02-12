@@ -24,22 +24,22 @@
                class="btn btn-danger btn-xs"
                title="Make selected cron job(s) permanent."
                onclick="run_or_cron('RUN');
-                        return Validation('permanent_job', false, false, true, false)">Permanent</a>
-                        <!---- Validation('cmd_name', server, update, cronjob, script, dump) ---->
+                        return Validation('permanent_job', false, false, true, false, true)">Permanent</a>
+                        <!---- Validation('cmd_name', server, update, cronjob, script, dump, danger) ---->
             <a href="javascript:;"
                name="selected_commands"
                class="btn btn-danger btn-xs"
                title="Make selected cron job(s) run once (default)."
                onclick="run_or_cron('RUN');
-                        return Validation('once_job', false, false, true, false)">Run once</a>
-                        <!---- Validation('cmd_name', server, update, cronjob, script, dump) ---->
+                        return Validation('once_job', false, false, true, false, true)">Run once</a>
+                        <!---- Validation('cmd_name', server, update, cronjob, script, dump, danger) ---->
             <a href="javascript:;"
                name="selected_commands"
                class="btn btn-danger btn-xs"
                title="Cancel selected cron job(s)."
                onclick="run_or_cron('RUN');
-                        return Validation('cancel_job', false, false, true, false)">Cancel job</a>
-                        <!---- Validation('cmd_name', server, update, cronjob, script, dump) ---->
+                        return Validation('cancel_job', false, false, true, false, true)">Cancel job</a>
+                        <!---- Validation('cmd_name', server, update, cronjob, script, dump, danger) ---->
         {% endbuttons %}
 
     {% endif %}
