@@ -135,7 +135,7 @@ def command_log(request):
 		log = open(conf.LOG_FILE + data['logid'], 'r').read()
 		pid = open(conf.PID_FILE + data['logid'], 'r').read()
 	except IOError:
-		return HttpResponseRedirect('/projects/%s/?servers=%s' % itemgetter('prid', 'servers')(data))
+		return HttpResponseRedirect('/projects/%s/?servers=%s%s' % (data['prid'], data['servers'], info(data)))
 
 	try:
 		err = open(conf.ERR_FILE + data['logid'], 'r').read()
