@@ -117,7 +117,7 @@ def cancel(request):
 
 	delete_files([conf.LOG_FILE + data['logid'], conf.PID_FILE + data['logid'], conf.ERR_FILE + data['logid']])
 
-	return HttpResponseRedirect('/projects/%s/?servers=%s%s' % (data['prid'], data['servers'], info(data)))
+	return HttpResponseRedirect('/projects/%s/?%s' % (data['prid'], info(data)))
 
 
 @login_required
@@ -135,7 +135,7 @@ def command_log(request):
 		log = open(conf.LOG_FILE + data['logid'], 'r').read()
 		pid = open(conf.PID_FILE + data['logid'], 'r').read()
 	except IOError:
-		return HttpResponseRedirect('/projects/%s/?servers=%s%s' % (data['prid'], data['servers'], info(data)))
+		return HttpResponseRedirect('/projects/%s/?%s' % (data['prid'], info(data)))
 
 	try:
 		err = open(conf.ERR_FILE + data['logid'], 'r').read()
@@ -154,8 +154,8 @@ def command_log(request):
 	}
 
 	context = {
-		'back':    '/projects/%s/?servers=%s%s' % (data['prid'], data['servers'], info(data)),
-		'cancel':  '/cancel/?pid=%s&%s%s' % (pid, qst, info(data)),
+		'back':    '/projects/%s/?%s' % (data['prid'], info(data)),
+		'cancel':  '/cancel/?pid=%s&%s' % (pid, qst),
 		'log':     log.replace('__URL__', url),
 		'project': current_project,
 		'ok':      'btn-success',

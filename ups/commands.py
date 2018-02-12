@@ -64,6 +64,8 @@ def info(data):
 		url += '&update_info=on'
 	if data.get('dbdump_info'):
 		url += '&dbdump_info=on'
+	if data.get('servers'):
+		url += '&servers=%s' % data.get('servers')
 	return url
 
 
@@ -100,12 +102,11 @@ def cmd_run(data, current_project, user):
 	command(selected)
 	starter(selected)
 
-	url = '/command_log/?cmd=%s&rtype=%s&prid=%s&logid=%s&servers=%s%s' % (
+	url = '/command_log/?cmd=%s&rtype=%s&prid=%s&logid=%s%s' % (
 		data['selected_command'],
 		data['run_type'],
 		current_project.id,
 		key,
-		data.get('servers', ''),
 		info(data),
 	)
 
