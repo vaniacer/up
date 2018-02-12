@@ -10,7 +10,7 @@
     border-radius: 50%;
     border: 20px solid #f3f3f3;     /* Light grey */
     border-top: 20px solid #3498db; /* Blue */
-    animation: spin 2s linear infinite;
+    animation: spin 2.45s linear infinite;
 }
 
 .small_loader {
@@ -24,7 +24,7 @@
     border-radius: 50%;
     border: 10px solid #f3f3f3;     /* Light grey */
     border-top: 10px solid #3498db; /* Blue */
-    animation: spin 2s linear infinite;
+    animation: spin 2.45s linear infinite;
 }
 
 @keyframes spin {
