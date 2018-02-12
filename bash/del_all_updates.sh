@@ -6,7 +6,7 @@ function description () { #---------------------| Function description |--------
 
 function body () { #---------------------------------| Main function |--------------------------------------------------
 
-    ssh $sopt $addr "echo -e \"Delete files:\n$(ls $wdir/updates/new)\""
+    ssh $sopt $addr "echo -e \"\nDelete files:\n$(ls $wdir/updates/new)\""
     ssh $sopt $addr "rm $wdir/updates/new/*" || error=$?
 
 } #---------------------------------------------------------------------------------------------------------------------

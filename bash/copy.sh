@@ -7,6 +7,7 @@ function description () { #---------------------| Function description |--------
 
 function body () { #---------------------------------| Main function |--------------------------------------------------
 
+    printf "\n"
     rsync -e "ssh $sopt" --progress -lzuogthvr "${updates[@]}" $addr:$wdir/updates/new/ || error=$?
 
 } #---------------------------------------------------------------------------------------------------------------------
