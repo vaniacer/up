@@ -154,7 +154,7 @@ def command_log(request):
 	}
 
 	context = {
-		'back':    '/projects/%s/?%s' % itemgetter('prid', 'servers')(data),
+		'back':    '/projects/%s/?servers=%s' % itemgetter('prid', 'servers')(data),
 		'cancel':  '/cancel/?pid=%s&%s' % (pid, qst),
 		'log':     log.replace('__URL__', url),
 		'project': current_project,
