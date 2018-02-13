@@ -20,7 +20,7 @@ function body () { #---------------------------------| Main function |----------
 
             # Save result to make it downloadable
             [[ -d $dumpdir/$pname ]] || mkdir $dumpdir/$pname
-            cat >> $dumpdir/$pname/sql_$key.txt <<< $result
+            cat >> $dumpdir/$pname/sql_$key.txt <<< "$result"
 
             # Delete script after execution
             ssh $sopt $addr "rm $wdir/updates/new/$filename" || error=$?
