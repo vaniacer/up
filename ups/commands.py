@@ -45,7 +45,7 @@ def command(selected):
 		'script':          {'history':  True, 'bash':     'script_bash.sh', 'tag': False, },
 		'update':          {'history':  True, 'bash':          'update.sh', 'tag':  True, },
 		'copy_utils':      {'history':  True, 'bash':      'copy_utils.sh', 'tag': False, },
-		'sql_script':      {'history':  True, 'bash':      'script_sql.sh', 'tag': False, },
+		'sql_script':      {'history':  True, 'bash':      'script_sql.sh', 'tag':  True, },
 	}
 
 	cmd = ''.join(selected['command'])
