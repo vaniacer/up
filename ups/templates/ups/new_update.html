@@ -8,13 +8,13 @@
 
 {% block content %}
 
-    <form action="{% url 'ups:new_update' project.id %}" method="post" enctype="multipart/form-data">
+    <form action="{% url 'ups:new_update' project.id %}?{{info}}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {% bootstrap_form form %}
 
         {% buttons %}
             <button class="btn btn-primary" name='submit'>Add Update</button>
-            <a class="btn btn-primary" href="{% url 'ups:project' project.id %}">Cancel</a>
+            <a class="btn btn-primary" href="{% url 'ups:project' project.id %}?{{info}}">Cancel</a>
         {% endbuttons %}
     </form>
 

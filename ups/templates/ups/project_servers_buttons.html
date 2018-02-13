@@ -19,13 +19,14 @@
                    value="Hide Info"
                    title="Hide servers' info."
                    class="btn btn-info btn-xs shide"
-                   onclick="hide_info('id_server_info', '.server-panel', '.shide', '.sshow')"/>
+                   onclick="hide_info('id_server_info', '.server-panel', '.shide', '.sshow'); $('#selector').submit()"/>
 
             <input type="button"
                    value="Show Info"
                    title="Show servers' info."
                    class="btn btn-info btn-xs sshow"
-                   onclick="show_info('id_server_info', '.server-panel', '.sshow', '.shide')"/>
+                   onclick="show_info('id_server_info', '.server-panel', '.sshow', '.shide'); $('#selector').submit()"/>
+
         {% endif %}
 
     {% endif %}
@@ -33,7 +34,7 @@
     {% if "add_server" in pr_view_perms %}
         <a title="Add new server."
            class="btn btn-success btn-xs"
-           href="{% url 'ups:new_server' project.id %}">Add</a>
+           href="{% url 'ups:new_server' project.id %}?{{info}}">Add</a>
     {% endif %}
 
 {% endbuttons %}

@@ -8,6 +8,7 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import render
 from .permissions import check_perm
 from .models import Project
+from .commands import info
 
 
 # @login_required
@@ -36,6 +37,7 @@ def new_server(request, project_id):
 	"""Добавляет новый сервер."""
 	project = Project.objects.get(id=project_id)
 	check_perm('add_server', project, request.user)
+	data = request.GET
 
 	if request.method != 'POST':
 		# Данные не отправлялись; создается пустая форма.
@@ -49,9 +51,9 @@ def new_server(request, project_id):
 			server.user = request.user
 			server.proj = project
 			server.save()
-			return HttpResponseRedirect(reverse('ups:project', args=[project_id]))
+			return HttpResponseRedirect('/projects/%s/?%s' % (project.id, info(data)))
 
-	context = {'project': project, 'form': form}
+	context = {'project': project, 'form': form, 'info': info(data)}
 	return render(request, 'ups/new_server.html', context)
 
 
@@ -60,6 +62,7 @@ def new_update(request, project_id):
 	"""Добавляет новое обновление."""
 	project = Project.objects.get(id=project_id)
 	check_perm('add_update', project, request.user)
+	data = request.GET
 
 	if request.method != 'POST':
 		# Данные не отправлялись; создается пустая форма.
@@ -73,9 +76,9 @@ def new_update(request, project_id):
 			update.user = request.user
 			update.proj = project
 			update.save()
-			return HttpResponseRedirect(reverse('ups:project', args=[project_id]))
+			return HttpResponseRedirect('/projects/%s/?%s' % (project.id, info(data)))
 
-	context = {'project': project, 'form': form}
+	context = {'project': project, 'form': form, 'info': info(data)}
 	return render(request, 'ups/new_update.html', context)
 
 
@@ -84,6 +87,7 @@ def new_script(request, project_id):
 	"""Добавляет новый скрипт."""
 	project = Project.objects.get(id=project_id)
 	check_perm('add_script', project, request.user)
+	data = request.GET
 
 	if request.method != 'POST':
 		# Данные не отправлялись; создается пустая форма.
@@ -103,9 +107,9 @@ def new_script(request, project_id):
 			body.close()
 			script.save()
 
-			return HttpResponseRedirect(reverse('ups:project', args=[project_id]))
+			return HttpResponseRedirect('/projects/%s/?%s' % (project.id, info(data)))
 
-	context = {'project': project, 'form': form}
+	context = {'project': project, 'form': form, 'info': info(data)}
 	return render(request, 'ups/new_script.html', context)
 
 
@@ -114,6 +118,7 @@ def create_script(request, project_id):
 	"""Создает новый скрипт."""
 	project = Project.objects.get(id=project_id)
 	check_perm('add_script', project, request.user)
+	data = request.GET
 
 	if request.method != 'POST':
 		# Данные не отправлялись; создается пустая форма.
@@ -131,7 +136,7 @@ def create_script(request, project_id):
 			script.proj = project
 			script.save()
 
-			return HttpResponseRedirect(reverse('ups:project', args=[project_id]))
+			return HttpResponseRedirect('/projects/%s/?%s' % (project.id, info(data)))
 
-	context = {'project': project, 'form': form}
+	context = {'project': project, 'form': form, 'info': info(data)}
 	return render(request, 'ups/create_script.html', context)

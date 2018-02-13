@@ -220,6 +220,7 @@ def project(request, project_id):
 		'hist_fd': hist_fd,
 		'dmplist': dmplist,
 		'hidefrm': hidefrm,
+		'info': info(data),
 	}
 
 	if data.get('selected_command'):

@@ -20,13 +20,13 @@
                    value="Hide Info"
                    title="Hide dumps' info."
                    class="btn btn-info btn-xs dhide"
-                   onclick="hide_info('id_dbdump_info', '.dbdump-panel', '.dhide', '.dshow')"/>
+                   onclick="hide_info('id_dbdump_info', '.dbdump-panel', '.dhide', '.dshow'); $('#selector').submit()"/>
 
             <input type="button"
                    value="Show Info"
                    title="Show dumps' info."
                    class="btn btn-info btn-xs dshow"
-                   onclick="show_info('id_dbdump_info', '.dbdump-panel', '.dshow', '.dhide')"/>
+                   onclick="show_info('id_dbdump_info', '.dbdump-panel', '.dshow', '.dhide'); $('#selector').submit()"/>
 
 <!---------------------------------------Delete button----------------------------------------->
 <!---------------------------- Validation('cmd_name', server, update, cronjob, script, dump) -->

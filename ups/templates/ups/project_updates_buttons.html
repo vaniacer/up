@@ -19,13 +19,13 @@
                    value="Hide Info"
                    title="Hide updates' info."
                    class="btn btn-info btn-xs uhide"
-                   onclick="hide_info('id_update_info', '.update-panel', '.uhide', '.ushow')"/>
+                   onclick="hide_info('id_update_info', '.update-panel', '.uhide', '.ushow'); $('#selector').submit()"/>
 
             <input type="button"
                    value="Show Info"
                    title="Show updates' info."
                    class="btn btn-info btn-xs ushow"
-                   onclick="show_info('id_update_info', '.update-panel', '.ushow', '.uhide')"/>
+                   onclick="show_info('id_update_info', '.update-panel', '.ushow', '.uhide'); $('#selector').submit()"/>
         {% endif %}
 
     {% endif %}
@@ -33,7 +33,7 @@
     {% if "add_update" in pr_view_perms %}
         <a title="Add new update."
            class="btn btn-success btn-xs"
-           href="{% url 'ups:new_update' project.id %}">Add</a>
+           href="{% url 'ups:new_update' project.id %}?{{info}}">Add</a>
     {% endif %}
 
 {% endbuttons %}

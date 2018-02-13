@@ -11,13 +11,13 @@
 
     {% get_obj_perms request.user for project as "edit_update_perms" %}
 
-    <form action="{% url 'ups:edit_update' update.id %}" method="post" enctype="multipart/form-data">
+    <form action="{% url 'ups:edit_update' update.id %}?{{info}}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {% bootstrap_form form %}
 
         {% buttons %}
             <input type="submit" name="ok" value="Save changes" class="btn btn-primary"/>
-            <a class="btn btn-primary" href="{% url 'ups:project' project.id %}">Cancel</a>
+            <a class="btn btn-primary" href="{% url 'ups:project' project.id %}?{{info}}">Cancel</a>
 
             {% if "del_update" in edit_update_perms %}
                 <hr>

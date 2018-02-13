@@ -9,6 +9,7 @@ from django.core.urlresolvers import reverse
 from django.conf import settings as conf
 from .commands_engine import add_event
 from .permissions import check_perm
+from .commands import info
 import shutil
 import os
 
@@ -46,6 +47,7 @@ def edit_project(request, project_id):
 	"""Редактирует существующий проект."""
 	# project = Project.objects.get(id=project_id)
 	project = get_object_or_404(Project, id=project_id)
+	data = request.GET
 
 	check_perm('edit_project', project, request.user)
 
@@ -63,9 +65,9 @@ def edit_project(request, project_id):
 			elif request.POST.get('ok'):
 				form.save()
 
-			return HttpResponseRedirect(reverse('ups:project', args=[project.id]))
+			return HttpResponseRedirect('/projects/%s/?%s' % (project.id, info(data)))
 
-	context = {'project': project, 'form': form}
+	context = {'project': project, 'form': form, 'info': info(data)}
 	return render(request, 'ups/edit_project.html', context)
 
 
@@ -75,6 +77,7 @@ def edit_server(request, server_id):
 	# server = Server.objects.get(id=server_id)
 	server = get_object_or_404(Server, id=server_id)
 	project = server.proj
+	data = request.GET
 
 	check_perm('edit_server', project, request.user)
 
@@ -92,9 +95,9 @@ def edit_server(request, server_id):
 			elif request.POST.get('ok'):
 				form.save()
 
-			return HttpResponseRedirect(reverse('ups:project', args=[project.id]))
+			return HttpResponseRedirect('/projects/%s/?%s' % (project.id, info(data)))
 
-	context = {'server': server, 'project': project, 'form': form}
+	context = {'server': server, 'project': project, 'form': form, 'info': info(data)}
 	return render(request, 'ups/edit_server.html', context)
 
 
@@ -104,6 +107,7 @@ def edit_update(request, update_id):
 	# update = Update.objects.get(id=update_id)
 	update = get_object_or_404(Update, id=update_id)
 	project = update.proj
+	data = request.GET
 
 	check_perm('edit_update', project, request.user)
 
@@ -128,9 +132,9 @@ def edit_update(request, update_id):
 				form.save()
 				edit_object(request, update)
 
-			return HttpResponseRedirect(reverse('ups:project', args=[project.id]))
+			return HttpResponseRedirect('/projects/%s/?%s' % (project.id, info(data)))
 
-	context = {'update': update, 'project': project, 'form': form}
+	context = {'update': update, 'project': project, 'form': form, 'info': info(data)}
 	return render(request, 'ups/edit_update.html', context)
 
 
@@ -139,6 +143,7 @@ def edit_script(request, script_id):
 	"""Редактирует существующий скрипт."""
 	script = get_object_or_404(Script, id=script_id)
 	project = script.proj
+	data = request.GET
 
 	check_perm('edit_script', project, request.user)
 
@@ -161,7 +166,7 @@ def edit_script(request, script_id):
 				body.close()
 				edit_object(request, script)
 
-			return HttpResponseRedirect(reverse('ups:project', args=[project.id]))
+			return HttpResponseRedirect('/projects/%s/?%s' % (project.id, info(data)))
 
-	context = {'script': script, 'project': project, 'form': form}
+	context = {'script': script, 'project': project, 'form': form, 'info': info(data)}
 	return render(request, 'ups/edit_script.html', context)

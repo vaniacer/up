@@ -1,7 +1,7 @@
 
 <!--------------------------------------------Edit button----------------------------------------->
 {% if "edit_script" in pr_view_perms %}
-    <a href="{% url 'ups:edit_script' script.id %}"
+    <a href="{% url 'ups:edit_script' script.id %}?{{info}}"
        title="Edit this script."
        class="Edit">Edit</a>
 {% endif %}

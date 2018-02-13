@@ -11,7 +11,7 @@
         <div class="col-md-2">
             <h2 class="Name">{{ project }}</h2>
             {% if "edit_project" in pr_view_perms %}
-                <a href="{% url 'ups:edit_project' project.id %}" class="Edit">Edit</a>
+                <a href="{% url 'ups:edit_project' project.id %}?{{info}}" class="Edit">Edit</a>
             {% endif %}
         </div>
         <div class="col-md-6"><h5>{{ project.desc|linebreaks }}</h5></div>
