@@ -199,7 +199,7 @@ def project(request, project_id):
 	serfltr = SerfltrForm(initial=data)
 	hidefrm = HideForm(initial=data)
 
-	dmplist = sorted(get_dumps(current_project.name) or '', key=itemgetter('date'), reverse=False)
+	dmplist = sorted(get_dumps(current_project.name) or '', key=itemgetter('date'), reverse=True)
 	history = current_project.history_set.order_by('date').reverse()
 	updates = current_project.update_set.order_by('date').reverse()
 	cronjob = current_project.job_set.order_by('date').reverse()
