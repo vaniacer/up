@@ -7,8 +7,11 @@ function description () { #---------------------| Function description |--------
 
 function body () { #---------------------------------| Main function |--------------------------------------------------
 
+    check_updates_folder
+
     for file in "${scripts[@]}"; { filename=${file##*/}
 
+        printf "\n"
         # If updates where selected copy them too and add as options to the script
         [[ ${updates[@]} ]] && {
             rsync -e "ssh $sopt" --progress -lzuogthvr ${updates[@]} $addr:$wdir/updates/new && {
