@@ -28,6 +28,7 @@ esac; shift 2; done 2> /dev/null
 
 # Checks existence of updates/new folder in workdir, creates if not
 function check_updates_folder () {
+    printf "\n"
     ssh $sopt $addr "[[ -d $wdir/updates/new ]] || mkdir -p $wdir/updates/new" || error=$?
 }
 
