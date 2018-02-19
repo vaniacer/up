@@ -1,8 +1,8 @@
 #!/bin/bash
 
 function description () { #---------------------| Function description |------------------------------------------------
-    printf "\nRun SQL script(s):\n"; for i in "${scripts[@]}"; { echo "$i"; }
-    printf      "\non Server(s):\n"; for i in "${servers[@]}"; { echo "$i"; }
+    printf "\nRun SQL script(s):\n"; for i in "${scripts[@]}"; { echo "${i##*/}"; }
+    printf      "\non Server(s):\n"; for i in "${servers[@]}"; { echo "${i%%:*}"; }
 }
 
 function body () { #---------------------------------| Main function |--------------------------------------------------

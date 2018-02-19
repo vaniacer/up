@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function description () { #---------------------| Function description |------------------------------------------------
-    echo -e "\nMake ssh tunnel to server's port."; exit 0
+    printf "\nMake ssh tunnel to server's port."
 }
 
 function body () { #---------------------------------| Main function |--------------------------------------------------

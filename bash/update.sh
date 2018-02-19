@@ -1,8 +1,8 @@
 #!/bin/bash
 
 function description () { #---------------------| Function description |------------------------------------------------
-    printf "\nUpdate server(s):\n"; for i in "${servers[@]}"; { echo "$i"; }
-    printf   "\nwith update(s):\n"; for i in "${updates[@]}"; { echo "$i"; }
+    printf "\nUpdate server(s):\n"; for i in "${servers[@]}"; { echo "${i%%:*}"; }
+    printf   "\nwith update(s):\n"; for i in "${updates[@]}"; { echo "${i##*/}"; }
 }
 
 function restore () { # Run system restore if jboss-start ended with errors.

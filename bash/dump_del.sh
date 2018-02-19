@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function description () { #---------------------| Function description |------------------------------------------------
-    printf "\nDelete selected dump(s):\n"; for i in "${dumps[@]}"; { echo "$i"; }
+    printf "\nDelete selected dump(s):\n"; for i in "${dumps[@]}"; { echo "${i##*/}"; }
 }
 
 function run () { #----------------------------------| Main function |--------------------------------------------------
