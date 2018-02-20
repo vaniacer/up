@@ -1,3 +1,10 @@
+function color(body_id, ec, cron) {
+    var body = document.getElementById(body_id);
+    if (ec > 0) { body.style.background = '#f2dede'; }
+    if (cron )  { body.style.background = '#e1f9f6'; }
+    if (cron == 'False') { body.style.background = ''; }
+    if (cron == 'True' ) { body.style.background = '#e1f9f6'; }
+}
 
 function show_loader() {
     $('.project').hide();

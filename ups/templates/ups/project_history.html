@@ -2,33 +2,25 @@
 
 <br>
 
-<script type="text/javascript">
-    function color(body_id, ec, cron) {
-        var body = document.getElementById(body_id);
-        if (cron)   { body.style.background = '#e1f9f6'; }
-        if (ec > 0) { body.style.background = '#f2dede'; }
-    }
-</script>
-
 {% if history %}
     {% include "ups/project_history_paginator.html" %}
 {% endif %}
 
 {% for event in history %}
 
-    <dl class="dl-horizontal" id="event{{ event.id }}">
-        <dt>Event name</dt><dd>{{ event.name }}</dd>
-        <dt>Event date</dt><dd>{{ event.date|date:'M d, Y H:i' }}</dd>
+    <dl class="dl-horizontal" id="event{{event.id}}">
+        <dt>Event name</dt><dd>{{event.name}}</dd>
+        <dt>Event date</dt><dd>{{event.date|date:'M d, Y H:i'}}</dd>
         {% if event.cron %}
-            <dt>Cron date</dt><dd>{{ event.cdat }}</dd>
-            <dt>Cron name</dt><dd>{{ event.cron }}</dd>
+            <dt>Cron date</dt><dd>{{event.cdat}}</dd>
+            <dt>Cron name</dt><dd>{{event.cron}}</dd>
         {% endif %}
-        <dt>Event user</dt><dd>{{ event.user }}</dd>
-        <dt>Event logs</dt><dd class="log"><tt>{{ event.desc|safe }}</tt></dd>
-        <dt>Error code</dt><dd>{{ event.exit }}</dd>
+        <dt>Event user</dt><dd>{{event.user}}</dd>
+        <dt>Event logs</dt><dd class="log"><tt>{{event.desc|safe}}</tt></dd>
+        <dt>Error code</dt><dd>{{event.exit}}</dd>
     </dl>
 
-    <style onload="color('event{{ event.id }}', '{{ event.exit }}', '{{ event.cron }}')"></style>
+    <style onload="color('event{{event.id}}', '{{event.exit}}', '{{event.cron}}')"></style>
 
     <hr>
 

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function description () { #---------------------| Function description |------------------------------------------------
-    printf "\nSet cron job $run for server(s):\n"; for i in "${servers[@]}"; { echo "${i%%:*}"; }
+    printf "\nSet cron job $run for server(s):\n"; for i in "${servers[@]}"; { printf "${i%%:*}"; }
 }
 
 function run () { #---------------------------------| Main function |---------------------------------------------------
@@ -19,8 +19,8 @@ function run () { #---------------------------------| Main function |-----------
     echo -e "$(crontab -l)\n$date $cmnd; $cncl\n" | crontab - || error=$?
 
     # Info
-    info 'Set cron job'
+    info 'Setting cron job'
     $workdir/starter.sh -c "$run" "${opts[@]}" -desc true # Show description of running command
-    info 'Done' $error
+    info 'Cron job is set' $error
 
 } #---------------------------------------------------------------------------------------------------------------------

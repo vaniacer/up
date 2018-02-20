@@ -7,7 +7,7 @@ function description () { #---------------------| Function description |--------
 function run () { #---------------------------------| Main function |---------------------------------------------------
     info 'Set jobs permanent'
     for id in "${jobs[@]}"; {
-        rule="s|;.*$id.*$||g;/.*$id/ s| [0-9][0-9] [0-9][0-9] \*| \* \* \*|g;"$rule; echo "$id"
+        rule="s|;.*$id.*$||g;/.*$id/ s| [0-9][0-9] [0-9][0-9] \*| \* \* \*|g;"$rule; printf "\n$id"
     }
     sed "$rule" -i /var/spool/cron/crontabs/$USER || error=$?
     info 'Done' $error
