@@ -14,6 +14,7 @@ function body () { #---------------------------------| Main function |----------
     echo -e "\n<a class=\"btn btn-primary\" href=\"http://__URL__:$lport/application\">Application</a>\n"
     echo -e "\n<a class=\"btn btn-primary\" href=\"http://__URL__:$lport\">Connect</a>\n"
     echo -e "\n<a class=\"btn btn-primary\" href=\"http://__URL__:$lport/login\">Login</a>\n"
+    printf "\n"
     ssh $sopt $addr -f -L 0.0.0.0:$lport:127.0.0.1:$rport sleep $timer || error=$?
 
 } #---------------------------------------------------------------------------------------------------------------------
