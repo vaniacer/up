@@ -20,14 +20,14 @@ function body () { #---------------------------------| Main function |----------
 
             # Save result to make it downloadable
             [[ -d $dumpdir/$pname ]] || mkdir $dumpdir/$pname
-            cat >> $dumpdir/$pname/sql_$key.txt <<< "$result"
+            cat >> $dumpdir/$pname/${filename}_$key.log <<< "$result"
 
             # Delete script after execution
             ssh $sopt $addr "rm $wdir/updates/new/$filename" || error=$?
 
         } || error=$?
     }
-    printf "\n\n<a class='btn btn-primary' href='/download_dump/$prj/sql_$key.txt'>Download</a>\n"
+    printf "\n\n<a class='btn btn-primary' href='/download_dump/$prj/${filename}_$key.log'>Download</a>\n"
 } #---------------------------------------------------------------------------------------------------------------------
 
 function run () { for server in "${servers[@]}"; { addr; body; }; info 'Done' $error; }
