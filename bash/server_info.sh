@@ -8,6 +8,7 @@ function body () { #---------------------------------| Main function |----------
 
     expect_ssh "$sopt" "$addr" > /dev/null
 
+    printf "\n"
     ssh $sopt $addr "
         printf '\n<b>Hostname:</b>\n'
         hostname
