@@ -7,7 +7,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Update Server</title>
+        <!--<title>Update Server</title>-->
 
         {% bootstrap_css %}
         <style type="text/css">
@@ -39,13 +39,13 @@
                         <ul class="nav navbar-nav">
                             <li><a href="{% url 'ups:projects' %}">Projects</a></li>
                             {% if project %}
-                                <li><a href="{% url 'ups:project' project.id %}">{{ project }}</a></li>
+                                <li><a href="{% url 'ups:project' project.id %}">{{project}}</a></li>
                             {% endif %}
                         </ul>
 
                         <ul class="nav navbar-nav navbar-right">
                             {% if user.is_authenticated %}
-                                <li><a>Hello, {{ user.username }}.</a></li>
+                                <li><a>Hello, {{user.username}}.</a></li>
                                 <li><a href="{% url 'users:logout' %}">log out</a></li>
                             {% else %}
                                 <li><a href="{% url 'users:register' %}">register</a></li>
