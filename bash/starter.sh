@@ -82,12 +82,14 @@ function addr () {
 }
 
 # If connecting first time send 'yes' on ssh's request.
-# Expect must be installed on update server.
-# $1 - ssh options, $2 - ssh address example:
-# expect_ssh -p22 user@localhost
-function expect_ssh () {
+# Expect must be installed on server. Options:
+#   $1 - ssh address with options(if needed)
+#
+# Usage example:
+#   ssh_yes "-p22 user@localhost"
+function ssh_yes () {
 expect << EOF
-spawn ssh $1 $2
+spawn ssh $1
 expect {
     "(yes/no)?" {
         send "yes\n"
