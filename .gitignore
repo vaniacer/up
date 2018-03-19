@@ -3,3 +3,4 @@ db.sqlite3
 media
 media/*
 ups/migrations/0*
+.idea/*
