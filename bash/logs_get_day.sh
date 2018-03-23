@@ -7,14 +7,13 @@ function description () { #---------------------| Function description |--------
 function body () { #---------------------------------| Main function |--------------------------------------------------
 
     printf "\n"
-    mydate=`date +'%Y-%m-%d'`
     ssh $sopt $addr "
-        zip -jy $wdir/updates/daylogs.zip $wdir/jboss-bas-*/standalone/log/{*$mydate*,server.log} > /dev/null" && {
-
-        echo -e "\nСоздан архив \"$wdir/updates/daylogs.zip\"."; download
-        ssh $sopt $addr "rm $wdir/updates/daylogs.zip" || error=$?
-
-    } || error=$?
+        find    $wdir/jboss-bas-*/standalone/log -type f -daystart -ctime 0 | xargs \
+        zip -jy $wdir/updates/daylogs.zip '{}'> /dev/null
+        " && {
+            echo -e "\nСоздан архив \"$wdir/updates/daylogs.zip\"."; download
+            ssh $sopt $addr "rm $wdir/updates/daylogs.zip" || error=$?
+        } || error=$?
 
 } #---------------------------------------------------------------------------------------------------------------------
 
