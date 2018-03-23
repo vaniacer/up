@@ -8,7 +8,7 @@ dumpdir=$workdir/../media/dumps
 crondir=$workdir/../../logs/cron
 rundir=$workdir/../../logs/run
 #---------| Get opts |------------
-until [ -z $1 ]; do case $1 in
+until [[ -z $1 ]]; do case $1 in
 
     -server | -s) servers+=("$2");;
     -update | -u) updates+=("$2");;
@@ -115,11 +115,15 @@ function download () {
     ssh $sopt $addr [[ -f "$name" ]] && {
 
         newname=${addr}_${name//\/*\//}
-        echo  -e "Копирую файл - ${name}"
-        [[ -d $dumpdir/$pname ]] || mkdir $dumpdir/$pname
+        [[ -d $dumpdir/$1 ]] || mkdir $dumpdir/$1
 
-        rsync -e "ssh $sopt" --progress -lzuogthvr $addr:$name $dumpdir/$pname/$newname || error=$?
-        echo  -e "\n<a class='btn btn-primary' href='/download_dump/$prj/$newname'>Download</a>\n"
+        echo  -e "Копирую файл - ${name}"
+        rsync -e "ssh $sopt" --progress -lzuogthvr $addr:$name $dumpdir/$1/$newname || error=$?
+        case $1 in
+            $pname) printf "\n<a class='btn btn-primary' href='/download_dump/$prj/$newname'>Download</a>\n";;
+                '') printf "\nFile will be stored until tomorrow, please download it if you need this file!"
+                    printf "\n<a class='btn btn-primary' href='/dumps/$newname'>Download</a>\n";;
+        esac
 
     } || { echo "File not found."; error=1; name=; }
 }

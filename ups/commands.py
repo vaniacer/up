@@ -20,7 +20,8 @@ def command(selected):
 		'cancel_job':      {'history':  True, 'bash':  'cronjob_cancel.sh', 'tag': False, },
 		'permanent_job':   {'history':  True, 'bash':    'cronjob_perm.sh', 'tag': False, },
 		'once_job':        {'history':  True, 'bash':    'cronjob_once.sh', 'tag': False, },
-		'get_logs':        {'history': False, 'bash':        'logs_get.sh', 'tag':  True, },
+		'get_logs_all':    {'history': False, 'bash':    'logs_get_all.sh', 'tag':  True, },
+		'get_logs_day':    {'history': False, 'bash':    'logs_get_day.sh', 'tag':  True, },
 		'tunnel':          {'history': False, 'bash':          'tunnel.sh', 'tag':  True, },
 		# Maintenance     +------------------+-----------------------------+----------------+
 		'stop':            {'history':  True, 'bash':            'stop.sh', 'tag': False, },

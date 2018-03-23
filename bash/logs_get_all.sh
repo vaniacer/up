@@ -6,6 +6,7 @@ function description () { #---------------------| Function description |--------
 
 function body () { #---------------------------------| Main function |--------------------------------------------------
 
+    printf "\n"
     ssh $sopt $addr "zip -jy $wdir/updates/allogs.zip $wdir/jboss-bas-*/standalone/log/* > /dev/null" && {
 
         echo -e "\nСоздан архив \"$wdir/updates/allogs.zip\"."; download

@@ -7,10 +7,14 @@ function description () { #---------------------| Function description |--------
 function body () { #---------------------------------| Main function |--------------------------------------------------
 
     printf "\n"
-    ssh $sopt $addr "$wdir/krupd bkp db" || error=$?; download "$pname"
-    # функция download сохраняет имя файла дампа в переменной $name
-    # удаляю файл $name на сервере после скачивания на ups
-    [[ $name ]] && ssh $sopt $addr "rm $name"
+    mydate=`date +'%Y-%m-%d'`
+    ssh $sopt $addr "
+        zip -jy $wdir/updates/daylogs.zip $wdir/jboss-bas-*/standalone/log/{*$mydate*,server.log} > /dev/null" && {
+
+        echo -e "\nСоздан архив \"$wdir/updates/daylogs.zip\"."; download
+        ssh $sopt $addr "rm $wdir/updates/daylogs.zip" || error=$?
+
+    } || error=$?
 
 } #---------------------------------------------------------------------------------------------------------------------
 
