@@ -121,7 +121,7 @@ function download () {
         rsync -e "ssh $sopt" --progress -lzuogthvr $addr:$name $dumpdir/$1/$newname || error=$?
         case $1 in
             $pname) printf "\n<a class='btn btn-primary' href='/download_dump/$prj/$newname'>Download</a>\n";;
-                '') printf "\nFile will be stored until tomorrow, please download it if you need this file!"
+                '') printf "\n<b>File will be stored until tomorrow, please download it if you need this file!</b>"
                     printf "\n<a class='btn btn-primary' href='/dumps/$newname'>Download</a>\n";;
         esac
 
