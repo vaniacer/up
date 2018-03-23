@@ -5,7 +5,7 @@ function description () { #---------------------| Function description |--------
     printf      "\non Server(s):\n"; for i in "${servers[@]}"; { echo "${i%%:*}"; }
 }
 
-function body () { #---------------------------------| Main function |--------------------------------------------------
+function body () { #--------------------------------| Main function |---------------------------------------------------
 
     for file in "${scripts[@]}"; { filename=${file##*/}
 

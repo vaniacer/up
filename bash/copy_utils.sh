@@ -4,7 +4,7 @@ function description () { #---------------------| Function description |--------
     printf "\nCopy utils folder to server(s):\n"; for i in "${servers[@]}"; { echo "${i%%:*}"; }
 }
 
-function body () { #---------------------------------| Main function |--------------------------------------------------
+function body () { #--------------------------------| Main function |---------------------------------------------------
 
     printf "\n"
     rsync -e "ssh $sopt" --progress -lzghr ~/utils/* $addr:~/.utils || error=$?

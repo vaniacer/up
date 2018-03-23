@@ -4,7 +4,7 @@ function description () { #---------------------| Function description |--------
     printf "\nBackup database on server(s):\n"; for i in "${servers[@]}"; { echo "${i%%:*}"; }
 }
 
-function body () { #---------------------------------| Main function |--------------------------------------------------
+function body () { #--------------------------------| Main function |---------------------------------------------------
 
     ssh $sopt $addr "$wdir/krupd bkp db" || error=$?; download
 

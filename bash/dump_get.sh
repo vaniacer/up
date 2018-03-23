@@ -4,7 +4,7 @@ function description () { #---------------------| Function description |--------
     printf "\nGet DB dump from server(s):\n"; for i in "${servers[@]}"; { echo "${i%%:*}"; }
 }
 
-function body () { #---------------------------------| Main function |--------------------------------------------------
+function body () { #--------------------------------| Main function |---------------------------------------------------
 
     printf "\n"
     ssh $sopt $addr "$wdir/krupd bkp db" || error=$?; download "$pname"

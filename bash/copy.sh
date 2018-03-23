@@ -5,7 +5,7 @@ function description () { #---------------------| Function description |--------
     printf "\nto Server(s):\n";   for i in "${servers[@]}"; { echo "${i##*/}"; }
 }
 
-function body () { #---------------------------------| Main function |--------------------------------------------------
+function body () { #--------------------------------| Main function |---------------------------------------------------
 
     printf "\n"
     rsync -e "ssh $sopt" --progress -lzuogthvr "${updates[@]}" $addr:$wdir/updates/new/ || error=$?

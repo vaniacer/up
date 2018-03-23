@@ -4,7 +4,7 @@ function description () { #---------------------| Function description |--------
     printf "\nShow conf of server(s):\n"; for i in "${servers[@]}"; { echo "${i%%:*}"; }
 }
 
-function body () { #---------------------------------| Main function |--------------------------------------------------
+function body () { #--------------------------------| Main function |---------------------------------------------------
 
     ssh $sopt $addr "
         echo -e '\nJava options\n'

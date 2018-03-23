@@ -4,7 +4,7 @@ function description () { #---------------------| Function description |--------
     printf "\nStart server(s):\n"; for i in "${servers[@]}"; { echo "${i%%:*}"; }
 }
 
-function body () { #---------------------------------| Main function |--------------------------------------------------
+function body () { #--------------------------------| Main function |---------------------------------------------------
 
     printf "\n"
     ssh $sopt $addr $wdir/krupd jboss.start || error=$?

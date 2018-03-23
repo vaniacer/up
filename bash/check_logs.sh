@@ -4,7 +4,7 @@ function description () { #---------------------| Function description |--------
     printf "\nShow logs of server(s):\n"; for i in "${servers[@]}"; { echo "${i%%:*}"; }
 }
 
-function body () { #---------------------------------| Main function |--------------------------------------------------
+function body () { #--------------------------------| Main function |---------------------------------------------------
 
     printf "\n"
     ssh $sopt $addr  "ls $wdir/jboss-bas-*/standalone/log | grep $(date +'%Y-%m-%d')" \

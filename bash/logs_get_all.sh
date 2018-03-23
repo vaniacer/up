@@ -4,10 +4,11 @@ function description () { #---------------------| Function description |--------
     printf "\nGet DB dump from server(s):\n"; for i in "${servers[@]}"; { echo "${i%%:*}"; }
 }
 
-function body () { #---------------------------------| Main function |--------------------------------------------------
+function body () { #--------------------------------| Main function |---------------------------------------------------
+
+    arhive="$wdir/updates/allogs.zip"
 
     printf "\n"
-    arhive="$wdir/updates/allogs.zip"
     ssh $sopt $addr "zip -jy $arhive $wdir/jboss-bas-*/standalone/log/* > /dev/null" && {
 
         echo -e "\nСоздан архив \"$arhive\"."; download

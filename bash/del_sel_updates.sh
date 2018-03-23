@@ -5,7 +5,7 @@ function description () { #---------------------| Function description |--------
     printf "\nfrom Server(s):\n";   for i in "${servers[@]}"; { echo "${i%%:*}"; }
 }
 
-function body () { #---------------------------------| Main function |--------------------------------------------------
+function body () { #--------------------------------| Main function |---------------------------------------------------
 
     for file in "${updates[@]}"; {
         filename=${file##*/}; echo -e "\nDelete file - $filename."

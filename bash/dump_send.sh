@@ -4,7 +4,7 @@ function description () { #---------------------| Function description |--------
     printf "\nCopy DB dump $updates to server(s):\n"; for i in "${servers[@]}"; { echo "${i%%:*}"; }
 }
 
-function body () { #---------------------------------| Main function |--------------------------------------------------
+function body () { #--------------------------------| Main function |---------------------------------------------------
 
     filename=$dumps
     warning "You are sending dump - <b>$filename</b>\nto server - <b>$addr</b>\n\n" 30

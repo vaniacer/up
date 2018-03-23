@@ -4,7 +4,7 @@ function description () { #---------------------| Function description |--------
     printf "\nMake ssh tunnel to server's port."
 }
 
-function body () { #---------------------------------| Main function |--------------------------------------------------
+function body () { #--------------------------------| Main function |---------------------------------------------------
 
     timer=60
     lport=42250     #42250

@@ -4,7 +4,7 @@ function description () { #---------------------| Function description |--------
     printf "\nStop dummy page on server(s):\n"; for i in "${servers[@]}"; { echo "${i%%:*}"; }
 }
 
-function body () { #---------------------------------| Main function |--------------------------------------------------
+function body () { #--------------------------------| Main function |---------------------------------------------------
 
     echo -e "\nStop dummy page."
     ssh $sopt $addr '~/.utils/dp.sh --stop' || error=$?

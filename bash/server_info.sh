@@ -4,7 +4,7 @@ function description () { #---------------------| Function description |--------
     printf "\nShow system info of server(s):\n"; for i in "${servers[@]}"; { echo "${i%%:*}"; }
 }
 
-function body () { #---------------------------------| Main function |--------------------------------------------------
+function body () { #--------------------------------| Main function |---------------------------------------------------
 
     ssh_yes "$sopt $addr" > /dev/null
 
