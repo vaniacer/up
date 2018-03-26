@@ -103,12 +103,14 @@ def cmd_run(data, current_project, user):
 	command(selected)
 	starter(selected)
 
-	url = '/command_log/?cmd=%s&rtype=%s&prid=%s&logid=%s%s' % (
+	url = '/command_log/?cmd=%s&rtype=%s&prid=%s&logid=%s&timedate=%s%s' % (
 		data['selected_command'],
 		data['run_type'],
 		current_project.id,
 		key,
+		date,
 		info(data),
+
 	)
 
 	return url

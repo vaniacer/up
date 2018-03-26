@@ -144,7 +144,10 @@ def command_log(request):
 
 	cdate = ''
 	cron_id = ''
-	date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
+	if data['timedate']:
+		date = data['timedate']
+	else:
+		date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
 
 	history = {
 		'date':    date,
