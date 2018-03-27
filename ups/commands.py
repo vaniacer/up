@@ -1,7 +1,6 @@
 # -*- encoding: utf-8 -*-
 
-from .commands_engine import get_key
-from .commands_engine import starter
+from .commands_engine import get_key, starter, add_event, add_job
 from .permissions import check_perm
 import datetime
 
@@ -82,6 +81,7 @@ def cmd_run(data, current_project, user):
 
 	key = get_key()
 	date = run_date()
+	hid, cid = '', ''
 
 	if data['selected_date'] and data['selected_time']:
 		date = '%s %s' % (data['selected_date'], data['selected_time'])
@@ -100,17 +100,22 @@ def cmd_run(data, current_project, user):
 		'project': current_project,
 	}
 
-	command(selected)
+	tag, his = command(selected)
 	starter(selected)
+	if his:
+		hid = add_event(selected, '_empty_', 0, '', date)
+	if data['run_type'] == 'CRON':
+		cid = add_job(selected, '_empty_', key)
 
-	url = '/command_log/?cmd=%s&rtype=%s&prid=%s&logid=%s&timedate=%s%s' % (
+	url = '/command_log/?cmd=%s&rtype=%s&prid=%s&logid=%s&hid=%s&cid=%s&timedate=%s%s' % (
 		data['selected_command'],
 		data['run_type'],
 		current_project.id,
 		key,
+		hid,
+		cid,
 		date,
 		info(data),
-
 	)
 
 	return url

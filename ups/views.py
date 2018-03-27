@@ -3,9 +3,9 @@
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
+from .models import Project, Update, Script, History, Job
 from django.shortcuts import render, get_object_or_404
 from .commands import command, cmd_run, info
-from .models import Project, Update, Script
 from django.conf import settings as conf
 from .forms import SerfltrForm, HideForm
 from .commands_engine import add_event
@@ -144,17 +144,17 @@ def command_log(request):
 
 	cdate = ''
 	cron_id = ''
-	if data['timedate']:
-		date = data['timedate']
-	else:
-		date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
+	# if data['timedate']:
+	# 	date = data['timedate']
+	# else:
+	# 	date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
 
-	history = {
-		'date':    date,
-		'command': data['cmd'],
-		'user':    request.user,
-		'project': current_project,
-	}
+	# history = {
+	# 	'date':    date,
+	# 	'command': data['cmd'],
+	# 	'user':    request.user,
+	# 	'project': current_project,
+	# }
 
 	context = {
 		'back':    '/projects/%s/?%s' % (data['prid'], info(data)),
@@ -177,11 +177,19 @@ def command_log(request):
 			context['color'] = '#f2dede'
 			context['ok'] = 'btn-danger'
 		if data['rtype'] == 'CRON':
-			add_job(history, log, data['logid'])
-			cdate, cron_id = date, data['logid']
-			history['command'] = 'Set cron job - %s' % data['cmd'].lower()
+			job = get_object_or_404(Job, id=data['cid'])
+			if job.desc == '_empty_':
+				job.desc = log
+				job.save()
+		# 	add_job(history, log, data['logid'])
+		# 	cdate, cron_id = date, data['logid']
+		# 	history['command'] = 'Set cron job - %s' % data['cmd'].lower()
 		if his:
-			add_event(history, log, context['err'], cron_id, cdate)
+			history = get_object_or_404(History, id=data['hid'])
+			if history.desc == '_empty_':
+				history.exit = int(err)
+				history.desc = log
+				history.save()
 		delete_files([conf.LOG_FILE + data['logid'], conf.PID_FILE + data['logid'], conf.ERR_FILE + data['logid']])
 
 	return render(request, 'ups/command_log.html', context)

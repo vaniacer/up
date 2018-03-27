@@ -15,26 +15,30 @@ def get_key():
 
 def add_event(selected, log, err, cron, date):
 	"""Создает событие в истории."""
-	History.objects.create(
+	histobj = History.objects.create(
 		name=selected['command'].capitalize().replace('_', ' '),
 		proj=selected['project'],
 		user=selected['user'],
 		cron=cron,
 		cdat=date,
 		desc=log,
-		exit=err, )
+		exit=err,
+	)
+	return histobj.id
 
 
 def add_job(selected, log, cron):
 	"""Создает запись о крон жобе."""
-	Job.objects.create(
+	jobobj = Job.objects.create(
 		name=selected['command'].capitalize().replace('_', ' '),
 		proj=selected['project'],
 		user=selected['user'],
 		cdat=selected['date'],
 		perm=False,
 		cron=cron,
-		desc=log, )
+		desc=log,
+	)
+	return jobobj.id
 
 
 def del_job(job):
