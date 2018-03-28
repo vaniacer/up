@@ -9,7 +9,6 @@ from .commands import command, cmd_run, info
 from django.conf import settings as conf
 from .forms import SerfltrForm, HideForm
 from .commands_engine import add_event
-from .commands_engine import add_job
 from wsgiref.util import FileWrapper
 from .permissions import check_perm
 from .cron import get_cron_logs
@@ -17,7 +16,6 @@ from operator import itemgetter
 from subprocess import Popen
 from .dump import get_dumps
 import mimetypes
-import datetime
 import os
 
 
@@ -126,8 +124,9 @@ def command_log(request):
 	data = request.GET
 	current_project = get_object_or_404(Project, id=data['prid'])
 	check_perm('view_project', current_project, request.user)
+	check_perm('run_command',  current_project, request.user)
 
-	tag, his = command({'command': data['cmd'], 'cron': '', })
+	tag, his = command({'command': data['cmd']})
 	qst = request.META['QUERY_STRING']
 	url = request.META['SERVER_NAME']
 
@@ -141,20 +140,6 @@ def command_log(request):
 		err = open(conf.ERR_FILE + data['logid'], 'r').read()
 	except IOError:
 		err = ''
-
-	cdate = ''
-	cron_id = ''
-	# if data['timedate']:
-	# 	date = data['timedate']
-	# else:
-	# 	date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
-
-	# history = {
-	# 	'date':    date,
-	# 	'command': data['cmd'],
-	# 	'user':    request.user,
-	# 	'project': current_project,
-	# }
 
 	context = {
 		'back':    '/projects/%s/?%s' % (data['prid'], info(data)),
@@ -181,9 +166,6 @@ def command_log(request):
 			if job.desc == '_empty_':
 				job.desc = log
 				job.save()
-		# 	add_job(history, log, data['logid'])
-		# 	cdate, cron_id = date, data['logid']
-		# 	history['command'] = 'Set cron job - %s' % data['cmd'].lower()
 		if his:
 			history = get_object_or_404(History, id=data['hid'])
 			if history.desc == '_empty_':

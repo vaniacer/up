@@ -1,9 +1,9 @@
 function color(body_id, ec, cron) {
     var body = document.getElementById(body_id);
-    if (ec > 0) { body.style.background = '#f2dede'; }
-    if (cron )  { body.style.background = '#e1f9f6'; }
-    if (cron == 'False') { body.style.background = ''; }
-    if (cron == 'True' ) { body.style.background = '#e1f9f6'; }
+    if (cron  ) { body.classList.add('cron');   }
+    if (ec > 0) { body.classList.add('danger'); }
+    else if (cron == 'False') { body.classList.remove('cron'); }
+    else if (cron == 'True' ) { body.classList.add('cron');    }
 }
 
 function show_loader() {
@@ -27,20 +27,20 @@ function run_or_cron(type) {
 }
 
 function selector(box_id, body_id, name, obj) {
-    var box  = document.getElementById(box_id);
     var body = document.getElementById(body_id);
+    var box  = document.getElementById(box_id);
 	var div = document.getElementById(obj);
     var txt = '<a title=\"Deselect ' + name + '\" href=\"javascript:;\" onclick=\"selector(\''
         + box_id + '\', \'' + body_id + '\', \'' + name + '\', \''+ obj + '\')\">' + name + '</a> | '
 
     function change(list) {
         if ( box.checked == false ) {
-            box.checked =  true; body.classList.add('selected');
+            box.checked = true; body.classList.add('selected');
             window[list] = window[list] + txt;
             div.innerHTML = window[list];
         }
         else {
-            box.checked =  false; body.classList.remove('selected');
+            box.checked = false; body.classList.remove('selected');
             window[list] = window[list].replace(txt, '');
 
             if ( window[list] == pref ) { div.innerHTML = ''; }

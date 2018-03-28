@@ -40,7 +40,14 @@
 }
 
 .selected {
-    background: #dff0d8;
+    background:   #dff0d8;
+    border-color: #dff0d8;
+    border-style: solid;
+    border-width: thick;
+}
+
+.cron {
+    background: #e1f9f6;
 }
 
 .red {

@@ -42,10 +42,10 @@ def command(selected):
 		'backup_full':     {'history':  True, 'bash':     'backup_full.sh', 'tag':  True, },
 		# Main            +------------------+-----------------------------+----------------+
 		'copy':            {'history':  True, 'bash':            'copy.sh', 'tag': False, },
-		'script':          {'history':  True, 'bash':     'script_bash.sh', 'tag': False, },
 		'update':          {'history':  True, 'bash':          'update.sh', 'tag':  True, },
 		'copy_utils':      {'history':  True, 'bash':      'copy_utils.sh', 'tag': False, },
 		'sql_script':      {'history':  True, 'bash':      'script_sql.sh', 'tag':  True, },
+		'bash_script':     {'history':  True, 'bash':     'script_bash.sh', 'tag': False, },
 	}
 
 	cmd = ''.join(selected['command'])
@@ -75,13 +75,13 @@ def run_date():
 	return date.strftime("%Y-%m-%d %H:%M")
 
 
-def cmd_run(data, current_project, user):
+def cmd_run(data, project, user):
 	"""Запускает выбранную команду."""
-	check_perm('run_command', current_project, user)
+	check_perm('run_command', project, user)
 
 	key = get_key()
 	date = run_date()
-	hid, cid = '', ''
+	hid, cid, crn = '', '', ''
 
 	if data['selected_date'] and data['selected_time']:
 		date = '%s %s' % (data['selected_date'], data['selected_time'])
@@ -90,32 +90,34 @@ def cmd_run(data, current_project, user):
 		'key':     key,
 		'date':    date,
 		'user':    user,
+		'project': project,
 		'rtype':   data['run_type'],
+		'command': data['selected_command'],
+		'cronjbs': data.getlist('selected_jobs'),
 		'dumps':   data.getlist('selected_dumps'),
 		'updates': data.getlist('selected_updates'),
 		'scripts': data.getlist('selected_scripts'),
 		'servers': data.getlist('selected_servers'),
-		'cronjbs': data.getlist('selected_jobs'),
-		'command': data['selected_command'],
-		'project': current_project,
 	}
 
 	tag, his = command(selected)
 	starter(selected)
-	if his:
-		hid = add_event(selected, '_empty_', 0, '', date)
 	if data['run_type'] == 'CRON':
+		crn = key
 		cid = add_job(selected, '_empty_', key)
+		selected['command'] = 'Set cron job - %s' % data['selected_command'].lower()
+	if his:
+		hid = add_event(selected, '_empty_', 0, crn, date)
 
-	url = '/command_log/?cmd=%s&rtype=%s&prid=%s&logid=%s&hid=%s&cid=%s&timedate=%s%s' % (
+	url = '/command_log/?cmd=%s&rtype=%s&prid=%s%s&timedate=%s&logid=%s&hid=%s&cid=%s' % (
 		data['selected_command'],
-		data['run_type'],
-		current_project.id,
+		selected['rtype'],
+		project.id,
+		info(data),
+		date,
 		key,
 		hid,
 		cid,
-		date,
-		info(data),
 	)
 
 	return url

@@ -12,7 +12,7 @@
     {% if script.type == 'sql' %}
         <a onclick="run_or_cron('RUN');
                     select_all('selected_scripts', 'script-body', false, 'SX');
-                    selector('xx{{ script.id }}', 'xb{{ script.id }}', '{{ script }}', 'SX');
+                    selector('xx{{script.id}}', 'xb{{script.id}}', '{{script}}', 'SX');
                     Validation('sql_script', true, false, false, true)"
            title="Run this SQL script on selected server(s)."
            href="javascript:;"
@@ -20,8 +20,8 @@
     {%else%}
         <a onclick="run_or_cron('RUN');
                     select_all('selected_scripts', 'script-body', false, 'SX');
-                    selector('xx{{ script.id }}', 'xb{{ script.id }}', '{{ script }}', 'SX');
-                    Validation('script', true, false, false, true)"
+                    selector('xx{{script.id}}', 'xb{{script.id}}', '{{script}}', 'SX');
+                    Validation('bash_script', true, false, false, true)"
            title="Run this BASH script on selected server(s)."
            href="javascript:;"
            class="Edit">Run</a>
@@ -30,8 +30,8 @@
 
 <!--------------------------------------------Download button------------------------------------->
 {% if "dld_script" in pr_view_perms %}
-    <a onclick="selector('xx{{ script.id }}', 'xb{{ script.id }}', '{{ script }}', 'SX')"
-       href="/download_script/{{ project.id }}/{{ script.id }}"
+    <a onclick="selector('xx{{script.id}}', 'xb{{script.id}}', '{{script}}', 'SX')"
+       href="/download_script/{{project.id}}/{{script.id}}"
        title="Download this script."
        class="Edit">Download</a>
 {% endif %}

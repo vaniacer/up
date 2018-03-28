@@ -23,7 +23,9 @@ function body () { #--------------------------------| Main function |-----------
         rsync -e "ssh $sopt" --progress -lzuogthvr $file $addr:$wdir/updates/new/ > /dev/null && {
 
             printf "\nRun  script - $filename\n"
-            ssh $sopt $addr "cd $wdir; chmod +x updates/new/$filename; updates/new/$filename $opt" || error=$?
+            ssh $sopt $addr "cd $wdir; chmod +x updates/new/$filename; updates/new/$filename $opt" || {
+                error=$?; printf "\nScript ended with error: $error\n"
+            }
 
             # Delete script after execution
             ssh $sopt $addr "rm $wdir/updates/new/$filename" || error=$?
