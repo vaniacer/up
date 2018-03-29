@@ -23,14 +23,14 @@ def delete_project(project):
 
 def delete_server(request, server):
 	"""Удаляет сервер, записывает событие в историю."""
-	dick = {'project': server.proj, 'user': request.user, 'command': 'Del server'}
+	dick = {'project': server.proj, 'user': request.user, 'name': 'Del server'}
 	add_event(dick, 'Удален сервер:\n%s\n\nНазначение:\n%s' % (str(server), server.desc.encode('utf-8')), 0, '', '')
 	server.delete()
 
 
 def delete_object(request, obj):
 	"""Удаляет обновление\скрипт и соотв. файлы, записывает событие в историю."""
-	dick = {'project': obj.proj, 'user': request.user, 'command': 'Del upd\scr'}
+	dick = {'project': obj.proj, 'user': request.user, 'name': 'Del upd\scr'}
 	add_event(dick, 'Удален файл:\n%s\n\nНазначение:\n%s' % (str(obj), obj.desc.encode('utf-8')), 0, '', '')
 	os.remove(str(obj.file))
 	obj.delete()
@@ -38,7 +38,7 @@ def delete_object(request, obj):
 
 def edit_object(request, obj):
 	"""Записывает событие редактирования в историю."""
-	dick = {'project': obj.proj, 'user': request.user, 'command': 'Edit upd\scr'}
+	dick = {'project': obj.proj, 'user': request.user, 'name': 'Edit upd\scr'}
 	add_event(dick, 'Изменен файл:\n%s\n\nНазначение:\n%s' % (str(obj), obj.desc.encode('utf-8')), 0, '', '')
 
 
