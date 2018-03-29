@@ -109,7 +109,7 @@ def cmd_run(data, project, user):
 		selected['cid'] = add_job(selected, '_empty_', key)
 		selected['name'] = 'Set cron job - %s' % selected['command'].lower()
 	if his:
-		selected['hid'] = add_event(selected, '_empty_', 0, crn, date)
+		selected['hid'] = add_event(selected, 'Working...', '', crn, date)
 	starter(selected)
 
 	url = '/command_log/?cmd=%s&rtype=%s&hid=%s&cid=%s&prid=%s%s&timedate=%s&logid=%s' % (

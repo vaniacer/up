@@ -28,22 +28,23 @@ until [[ -z $1 ]]; do case $1 in
 
 esac; shift 2; done 2> /dev/null
 #---------------------------------
-# Get DB configuration from conf.py
-raw=`grep 'db.* =' $workdir/../conf.py`
-raw=${raw//\'/}
-raw=${raw//=/}
-data=( $raw )
-
-declare -A dbconf # Create named array
-
-for ((i=0; i<${#data[*]}; i+=2)); do # loop through data
-    key_value=( ${data[@]:$i:2} )    # get key_value pairs
-    # assign  key___________________value pairs to named array
-    dbconf["${key_value[0]}"]=${key_value[1]}
-done
 
 # Write logs to DB
 function make_history () {
+    # Get DB configuration from conf.py
+    raw=`grep 'db.* =' $workdir/../conf.py`
+    raw=${raw//\'/}
+    raw=${raw//=/}
+    data=( $raw )
+
+    declare -A dbconf # Create named array
+
+    for ((i=0; i<${#data[*]}; i+=2)); do # loop through data
+        key_value=( ${data[@]:$i:2} )    # get key_value pairs
+        # assign  key___________________value pairs to named array
+        dbconf["${key_value[0]}"]=${key_value[1]}
+    done
+
     [[ $cid ]] && \
     job_update="UPDATE ups_job SET \"desc\" = '`cat $rundir/log$key`' WHERE id = $cid AND proj_id = $prj;"
     PGPASSWORD=${dbconf[dbpass]} psql \
@@ -53,8 +54,6 @@ function make_history () {
             -d ${dbconf[dbname]} \
             -c "UPDATE ups_history SET \"desc\" = '`cat $rundir/log$key`', exit = `cat $rundir/err$key`
                 WHERE id = $hid AND proj_id = $prj;$job_update"
-
-    sleep 2; rm $rundir/*$key
 }
 
 # Checks existence of updates/new folder in workdir, creates if not
@@ -169,7 +168,8 @@ function starter  () {
                   || { echo $$     > $rundir/pid$key
                        run        &> $rundir/log$key
                        echo $error > $rundir/err$key
-                       make_history; }
+                       [[ $hid ]] && make_history
+                       sleep   2; rm $rundir/*$key; }
     exit $error
 }
 
