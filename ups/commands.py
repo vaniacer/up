@@ -113,7 +113,7 @@ def cmd_run(data, project, user):
 	starter(selected)
 
 	url = '/command_log/?cmd=%s&rtype=%s&hid=%s&cid=%s&prid=%s%s&timedate=%s&logid=%s' % (
-		data['selected_command'],
+		selected['command'],
 		selected['rtype'],
 		selected['hid'],
 		selected['cid'],
