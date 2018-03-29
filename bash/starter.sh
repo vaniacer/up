@@ -7,6 +7,7 @@ cronfile=/var/spool/cron/crontabs/$USER
 dumpdir=$workdir/../media/dumps
 crondir=$workdir/../../logs/cron
 rundir=$workdir/../../logs/run
+
 #---------| Get opts |------------
 until [[ -z $1 ]]; do case $1 in
 

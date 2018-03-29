@@ -1,7 +1,10 @@
 function color(body_id, ec, cron) {
     var body = document.getElementById(body_id);
     if (cron  ) { body.classList.add('cron');   }
-    if (ec > 0) { body.classList.add('danger'); }
+    if (ec > 0) {
+        body.classList.remove('cron');
+        body.classList.add('danger');
+    }
     else if (cron == 'False') { body.classList.remove('cron'); }
     else if (cron == 'True' ) { body.classList.add('cron');    }
 }
