@@ -3,12 +3,11 @@
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
-from .models import Project, Update, Script, History, Job
 from django.shortcuts import render, get_object_or_404
+from .models import Project, Update, Script, History
 from .commands import command, cmd_run, info
 from django.conf import settings as conf
 from .forms import SerfltrForm, HideForm
-from .commands_engine import add_event
 from wsgiref.util import FileWrapper
 from .permissions import check_perm
 from .cron import get_cron_logs
@@ -105,13 +104,15 @@ def cancel(request):
 	check_perm('view_project', current_project, request.user)
 
 	Popen(['kill', '-9', data['pid']])
-	tag, his = command({'command': data['cmd'], 'cron': '', })
+	tag, his = command({'command': data['cmd']})
 
 	if his:
+		history = get_object_or_404(History, id=data['hid'])
 		log = open(conf.LOG_FILE + data['logid'], 'r').read()
-		history = {'user': request.user, 'project': current_project, 'command': data['cmd']}
 		text = '\n\n<%s{ Canceled :( }%s>' % ('-' * 51, '-' * 52)
-		add_event(history, log + text, 1, '', '')
+		history.desc = log + text
+		history.exit = 1
+		history.save()
 
 	delete_files([conf.LOG_FILE + data['logid'], conf.PID_FILE + data['logid'], conf.ERR_FILE + data['logid']])
 
