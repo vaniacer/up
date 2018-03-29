@@ -7,6 +7,7 @@ function description () { #---------------------| Function description |--------
 
 function body () { #--------------------------------| Main function |---------------------------------------------------
 
+    printf "\n"
     for file in "${updates[@]}"; {
         filename=${file##*/}; echo -e "\nDelete file - $filename."
         ssh $sopt $addr "rm $wdir/updates/new/$filename" || error=$?

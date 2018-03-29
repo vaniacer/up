@@ -6,7 +6,7 @@ function description () { #---------------------| Function description |--------
 
 function body () { #--------------------------------| Main function |---------------------------------------------------
 
-    echo -e "\nStop dummy page."
+    printf "\nStop dummy page."
     ssh $sopt $addr '~/.utils/dp.sh --stop' || error=$?
 
 } #---------------------------------------------------------------------------------------------------------------------

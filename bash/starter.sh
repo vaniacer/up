@@ -46,13 +46,13 @@ function make_history () {
     done
 
     [[ $cid ]] && \
-    job_update="UPDATE ups_job SET \"desc\" = '`cat $rundir/log$key`' WHERE id = $cid AND proj_id = $prj;"
+    job_update="UPDATE ups_job SET \"desc\" = \$$`cat $rundir/log$key`\$$ WHERE id = $cid AND proj_id = $prj;"
     PGPASSWORD=${dbconf[dbpass]} psql \
             -U ${dbconf[dbuser]} \
             -h ${dbconf[dbhost]} \
             -p ${dbconf[dbport]} \
             -d ${dbconf[dbname]} \
-            -c "UPDATE ups_history SET \"desc\" = '`cat $rundir/log$key`', exit = `cat $rundir/err$key`
+            -c "UPDATE ups_history SET \"desc\" = \$$`cat $rundir/log$key`\$$, exit = `cat $rundir/err$key`
                 WHERE id = $hid AND proj_id = $prj;$job_update"
 }
 

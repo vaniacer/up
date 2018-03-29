@@ -7,9 +7,9 @@ function description () { #---------------------| Function description |--------
 
 function body () { #--------------------------------| Main function |---------------------------------------------------
 
+    printf "\n"
     for file in "${scripts[@]}"; { filename=${file##*/}
 
-        printf "\n"
         # Copy script to server
         rsync -e "ssh $sopt" --progress -lzuogthvr $file $addr:$wdir/updates/new/ > /dev/null && {
 
