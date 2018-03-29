@@ -36,8 +36,14 @@ def delete_object(request, obj):
 	obj.delete()
 
 
-def edit_object(request, obj):
-	"""Записывает событие редактирования в историю."""
+def edit_server_log(request, server):
+	"""Записывает событие редактирования сервера в историю."""
+	dick = {'project': server.proj, 'user': request.user, 'name': 'Edit server'}
+	add_event(dick, 'Изменен cервер:\n%s\n\nНазначение:\n%s' % (str(server), server.desc.encode('utf-8')), 0, '', '')
+	
+	
+def edit_object_log(request, obj):
+	"""Записывает событие редактирования обновлений\скриптов в историю."""
 	dick = {'project': obj.proj, 'user': request.user, 'name': 'Edit upd\scr'}
 	add_event(dick, 'Изменен файл:\n%s\n\nНазначение:\n%s' % (str(obj), obj.desc.encode('utf-8')), 0, '', '')
 
@@ -94,6 +100,7 @@ def edit_server(request, server_id):
 				delete_server(request, server)
 			elif request.POST.get('ok'):
 				form.save()
+				edit_server_log(request, server)
 
 			return HttpResponseRedirect('/projects/%s/?%s' % (project.id, info(data)))
 
@@ -130,7 +137,7 @@ def edit_update(request, update_id):
 					os.remove(str(filename))
 
 				form.save()
-				edit_object(request, update)
+				edit_object_log(request, update)
 
 			return HttpResponseRedirect('/projects/%s/?%s' % (project.id, info(data)))
 
@@ -164,7 +171,7 @@ def edit_script(request, script_id):
 				body = open(str(filename), 'wb')
 				body.write(script.body.replace('\r\n', '\n').encode('utf-8'))
 				body.close()
-				edit_object(request, script)
+				edit_object_log(request, script)
 
 			return HttpResponseRedirect('/projects/%s/?%s' % (project.id, info(data)))
 
