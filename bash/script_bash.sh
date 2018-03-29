@@ -24,7 +24,7 @@ function body () { #--------------------------------| Main function |-----------
 
             printf "\nRun  script - $filename\n"
             ssh $sopt $addr "cd $wdir; chmod +x updates/new/$filename; updates/new/$filename $opt" || {
-                error=$?; printf "\nScript ended with error: $error\n"
+                error=$?; printf "\n<b>Script ended with error: $error</b>\n"
             }
 
             # Delete script after execution

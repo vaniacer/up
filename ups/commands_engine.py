@@ -16,7 +16,7 @@ def get_key():
 def add_event(selected, log, err, cron, date):
 	"""Создает событие в истории."""
 	histobj = History.objects.create(
-		name=selected['command'].capitalize().replace('_', ' '),
+		name=selected['name'].capitalize().replace('_', ' '),
 		proj=selected['project'],
 		user=selected['user'],
 		cron=cron,
@@ -77,6 +77,12 @@ def starter(selected):
 			'-cmd',  'cron.sh'])
 	else:
 		opt.extend(['-cmd', selected['cmdname']])
+
+	if selected['hid']:
+		opt.extend(['-hid', str(selected['hid'])])
+
+	if selected['cid']:
+		opt.extend(['-cid', str(selected['cid'])])
 
 	opt.extend([
 		'-prj', '%s:%s' % (str(selected['project'].id), str(selected['project'].name)),

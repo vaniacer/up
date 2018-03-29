@@ -45,7 +45,7 @@ def command(selected):
 		'update':          {'history':  True, 'bash':          'update.sh', 'tag':  True, },
 		'copy_utils':      {'history':  True, 'bash':      'copy_utils.sh', 'tag': False, },
 		'sql_script':      {'history':  True, 'bash':      'script_sql.sh', 'tag':  True, },
-		'bash_script':     {'history':  True, 'bash':     'script_bash.sh', 'tag': False, },
+		'bash_script':     {'history':  True, 'bash':     'script_bash.sh', 'tag':  True, },
 	}
 
 	cmd = ''.join(selected['command'])
@@ -79,19 +79,22 @@ def cmd_run(data, project, user):
 	"""Запускает выбранную команду."""
 	check_perm('run_command', project, user)
 
+	crn = ''
 	key = get_key()
 	date = run_date()
-	hid, cid, crn = '', '', ''
 
 	if data['selected_date'] and data['selected_time']:
 		date = '%s %s' % (data['selected_date'], data['selected_time'])
 
 	selected = {
+		'hid':     '',
+		'cid':     '',
 		'key':     key,
 		'date':    date,
 		'user':    user,
 		'project': project,
 		'rtype':   data['run_type'],
+		'name':    data['selected_command'],
 		'command': data['selected_command'],
 		'cronjbs': data.getlist('selected_jobs'),
 		'dumps':   data.getlist('selected_dumps'),
@@ -101,23 +104,23 @@ def cmd_run(data, project, user):
 	}
 
 	tag, his = command(selected)
-	starter(selected)
 	if data['run_type'] == 'CRON':
 		crn = key
-		cid = add_job(selected, '_empty_', key)
-		selected['command'] = 'Set cron job - %s' % data['selected_command'].lower()
+		selected['cid'] = add_job(selected, '_empty_', key)
+		selected['name'] = 'Set cron job - %s' % selected['command'].lower()
 	if his:
-		hid = add_event(selected, '_empty_', 0, crn, date)
+		selected['hid'] = add_event(selected, '_empty_', 0, crn, date)
+	starter(selected)
 
-	url = '/command_log/?cmd=%s&rtype=%s&prid=%s%s&timedate=%s&logid=%s&hid=%s&cid=%s' % (
+	url = '/command_log/?cmd=%s&rtype=%s&hid=%s&cid=%s&prid=%s%s&timedate=%s&logid=%s' % (
 		data['selected_command'],
 		selected['rtype'],
+		selected['hid'],
+		selected['cid'],
 		project.id,
 		info(data),
 		date,
 		key,
-		hid,
-		cid,
 	)
 
 	return url

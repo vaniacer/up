@@ -10,21 +10,52 @@ rundir=$workdir/../../logs/run
 #---------| Get opts |------------
 until [[ -z $1 ]]; do case $1 in
 
-    -server | -s) servers+=("$2");;
-    -update | -u) updates+=("$2");;
-    -script | -x) scripts+=("$2");;
-    -dump   | -m) dumps+=("$2");;
-    -job    | -j) jobs+=("$2");;
-    -date   | -d) date=$2;;
-    -cron   | -C) cron=$2;;
-    -desc   | -D) desc=$2;;
-    -cmd    | -c) cmd=$2;;
-    -run    | -r) run=$2;;
-    -key    | -k) key=$2;;
-    -prj    | -p) prj=$2; pname=${prj#*:}; prj=${prj%:*};;
+    -server | -s) servers+=("$2");; # List of servers
+    -update | -u) updates+=("$2");; # List of update files
+    -script | -x) scripts+=("$2");; # List of script files
+    -dump   | -m) dumps+=("$2");;   # List of dump files
+    -job    | -j) jobs+=("$2");;    # List of cron job ids
+    -date   | -d) date=$2;;         # Cron job date
+    -cron   | -C) cron=$2;;         # Set if running from cron
+    -desc   | -D) desc=$2;;         # Show description instead of run
+    -cmd    | -c) cmd=$2;;          # Command function to run
+    -run    | -r) run=$2;;          # Command function to run from cron
+    -key    | -k) key=$2;;          # Cron unique key
+    -hid    | -h) hid=$2;;          # History id
+    -cid    | -H) cid=$2;;          # Cronjob id
+    -prj    | -p) prj=$2            # Project name and id
+                  pname=${prj#*:}; prj=${prj%:*};;
 
 esac; shift 2; done 2> /dev/null
 #---------------------------------
+# Get DB configuration from conf.py
+raw=`grep 'db.* =' $workdir/../conf.py`
+raw=${raw//\'/}
+raw=${raw//=/}
+data=( $raw )
+
+declare -A dbconf # Create named array
+
+for ((i=0; i<${#data[*]}; i+=2)); do # loop through data
+    key_value=( ${data[@]:$i:2} )    # get key_value pairs
+    # assign  key___________________value pairs to named array
+    dbconf["${key_value[0]}"]=${key_value[1]}
+done
+
+# Write logs to DB
+function make_history () {
+    [[ $cid ]] && \
+    job_update="UPDATE ups_job SET \"desc\" = '`cat $rundir/log$key`' WHERE id = $cid AND proj_id = $prj;"
+    PGPASSWORD=${dbconf[dbpass]} psql \
+            -U ${dbconf[dbuser]} \
+            -h ${dbconf[dbhost]} \
+            -p ${dbconf[dbport]} \
+            -d ${dbconf[dbname]} \
+            -c "UPDATE ups_history SET \"desc\" = '`cat $rundir/log$key`', exit = `cat $rundir/err$key`
+                WHERE id = $hid AND proj_id = $prj;$job_update"
+
+    sleep 2; rm $rundir/*$key
+}
 
 # Checks existence of updates/new folder in workdir, creates if not
 function check_updates_folder () {
@@ -137,7 +168,8 @@ function starter  () {
                        echo -e "\nError: ${error}\nDate: $dat" >> $crondir/$cron; } \
                   || { echo $$     > $rundir/pid$key
                        run        &> $rundir/log$key
-                       echo $error > $rundir/err$key; }
+                       echo $error > $rundir/err$key
+                       make_history; }
     exit $error
 }
 

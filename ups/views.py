@@ -161,18 +161,6 @@ def command_log(request):
 		if context['err'] > 0:
 			context['color'] = '#f2dede'
 			context['ok'] = 'btn-danger'
-		if data['rtype'] == 'CRON':
-			job = get_object_or_404(Job, id=data['cid'])
-			if job.desc == '_empty_':
-				job.desc = log
-				job.save()
-		if his:
-			history = get_object_or_404(History, id=data['hid'])
-			if history.desc == '_empty_':
-				history.exit = int(err)
-				history.desc = log
-				history.save()
-		delete_files([conf.LOG_FILE + data['logid'], conf.PID_FILE + data['logid'], conf.ERR_FILE + data['logid']])
 
 	return render(request, 'ups/command_log.html', context)
 

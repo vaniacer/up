@@ -22,7 +22,7 @@ def get_cron_logs():
 			dat = ' '.join(out[-1].split()[1:])
 			out = ''.join(out[:-2])
 
-			dick = {'project': job.proj, 'user': job.user, 'command': job.name}
+			dick = {'project': job.proj, 'user': job.user, 'name': job.name}
 			os.remove(os.path.join(conf.CRON_DIR, filename))
 			add_event(dick, out, int(err), filename, dat)
 
