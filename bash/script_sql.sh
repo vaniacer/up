@@ -7,6 +7,8 @@ function description () { #---------------------| Function description |--------
 
 function body () { #--------------------------------| Main function |---------------------------------------------------
 
+    check_updates_folder
+
     printf "\n"
     for file in "${scripts[@]}"; { filename=${file##*/}
 

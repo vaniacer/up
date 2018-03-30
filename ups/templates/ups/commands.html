@@ -82,12 +82,16 @@
 <!--------------------- Validation('cmd_name', server, update, cronjob, script, dump, danger) ---->
 <li role="separator" class="divider"></li>
 
+<li><a  onclick="return Validation('yml_script', true, false, false, true, false, false)"
+        title="Run selected YAML playbook(s) on selected server(s)."
+        href="javascript:;">Run YAML script</a></li>
+
 <li><a  onclick="return Validation('bash_script', true, false, false, true, false, false)"
-        title="Run selected script(s) on selected server(s). Script(s) have to be loaded(and selected) as updates."
+        title="Run selected BASH script(s) on selected server(s)."
         href="javascript:;">Run BASH script</a></li>
 
 <li><a  onclick="return Validation('sql_script', true, false, false, true, false, false)"
-        title="Run SQL script in DB. Script(s) have to be loaded(and selected) as updates."
+        title="Run selected SQL script(s) on selected server(s)."
         href="javascript:;">Run SQL script</a></li>
 
 <li><a  onclick="return Validation('copy_utils', true, false, false, false, false, false)"

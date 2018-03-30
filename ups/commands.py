@@ -44,6 +44,7 @@ def command(selected):
 		'copy':            {'history':  True, 'bash':            'copy.sh', 'tag': False, },
 		'update':          {'history':  True, 'bash':          'update.sh', 'tag':  True, },
 		'copy_utils':      {'history':  True, 'bash':      'copy_utils.sh', 'tag': False, },
+		'yml_script':      {'history':  True, 'bash':      'script_yml.sh', 'tag': False, },
 		'sql_script':      {'history':  True, 'bash':      'script_sql.sh', 'tag':  True, },
 		'bash_script':     {'history':  True, 'bash':     'script_bash.sh', 'tag':  True, },
 	}
