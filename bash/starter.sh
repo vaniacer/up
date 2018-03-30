@@ -1,12 +1,14 @@
 #!/bin/bash
 
-error=0
-options=("$@")
-workdir=$(dirname $0)
-cronfile=/var/spool/cron/crontabs/$USER
-dumpdir=$workdir/../media/dumps
-crondir=$workdir/../../logs/cron
-rundir=$workdir/../../logs/run
+error=0                                 # Error
+width=120                               # Terminal width
+options=("$@")                          # Save all options in an array, needed for cron
+workdir=$(dirname $0)                   # Work dir
+cronfile=/var/spool/cron/crontabs/$USER # UpS user's crontab file
+dumpdir=$workdir/../media/dumps         # Folder to store dumps
+crondir=$workdir/../../logs/cron        # Folder to store cronjob logs
+rundir=$workdir/../../logs/run          # Folder to store running tasks logs
+stty cols $width                        # Set terminal width
 
 #---------| Get opts |------------
 until [[ -z $1 ]]; do case $1 in
@@ -90,7 +92,7 @@ function info () {
     #--------+-------------+--------------+------------+-----------------------+--------------------------------------+
     # Length | Body symbol | Start symbol | End symbol | Center part with info | Calculate number of body symbols     |
     #--------+-------------+--------------+------------+-----------------------+--------------------------------------+
-    L=120    ; B='-'       ; S='<'        ; E='>'      ; C="{ $1 $F}"          ; b=$[(${L}-${#C}-${#S}-${#E})/2]
+    L=$width ; B='-'       ; S='<'        ; E='>'      ; C="{ $1 $F}"          ; b=$[(${L}-${#C}-${#S}-${#E})/2]
     #-------------------------------+--------------------------------+------------------------------------------------+
     # Make line segment.            | Calculate current length.      | Add one ${B} if current length less then ${L}. |
     #-------------------------------+--------------------------------+------------------------------------------------+
