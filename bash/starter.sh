@@ -24,8 +24,9 @@ until [[ -z $1 ]]; do case $1 in
     -key    | -k) key=$2;;          # Cron unique key
     -hid    | -h) hid=$2;;          # History id
     -cid    | -H) cid=$2;;          # Cronjob id
-    -prj    | -p) prj=$2            # Project name and id
-                  pname=${prj#*:}; prj=${prj%:*};;
+    -prj    | -p) prj=$2            # Project id:name
+                  pname=${prj#*:}   # Project name
+                  prj=${prj%:*};;   # Project id
 
 esac; shift 2; done 2> /dev/null
 #---------------------------------
