@@ -19,3 +19,6 @@ Available commands are located in 'RUN' or 'CRON' drop-up menus.
 If you select command from 'RUN' it'll start immediately.
 Same command but from 'CRON' menu will be scheduled to run via cron.
 Date and time can be set via date\time widget. Have fun!)
+
+![screeenshot](https://user-images.githubusercontent.com/18072680/38140894-a37b1722-343e-11e8-8ec4-b9f1a5028934.png)
+Available commands.
