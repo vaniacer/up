@@ -5,32 +5,52 @@
         title="Show system info: CPU, mem, disk etc."
         href="javascript:;">Summary server info</a></li>
 
-
 <li><a  onclick="return Validation('check_updates', true, false, false, false, false, false)"
         title="Check updates on selected server(s)."
-        href="javascript:;">Check updates</a>
-
-<li><a  onclick="return Validation('check_conf', true, false, false, false, false, false)"
-        title="Show conf(standalone-full.xml) and java options of selected server(s)."
-        href="javascript:;">Check conf</a>
-
-<li><a  onclick="return Validation('check_logs', true, false, false, false, false, false)"
-        title="Check logs on selected server(s)."
-        href="javascript:;">Check logs</a>
-
-<li><a  onclick="return Validation('get_logs_all', true, false, false, false, false, false)"
-        title="Get all logs from selected server(s)."
-        href="javascript:;">Get all logs</a>
+        href="javascript:;">Check updates</a></li>
 
 <li><a  onclick="return Validation('get_logs_day', true, false, false, false, false, false)"
         title="Get day logs from selected server(s)."
-        href="javascript:;">Get day logs</a>
+        href="javascript:;">Get day logs</a></li>
 
-<li><a  onclick="return Validation('cancel_job', false, false, true, false, false, true)"
-        title="Delete selected job(s)."
-        href="javascript:;"
-        class="danger">Cancel job</a>
+<li><a  onclick="return Validation('get_logs_all', true, false, false, false, false, false)"
+        title="Get all logs from selected server(s)."
+        href="javascript:;">Get all logs</a></li>
+
+<li><a  onclick="return Validation('check_logs', true, false, false, false, false, false)"
+        title="Check logs on selected server(s)."
+        href="javascript:;">Check logs</a></li>
+
+<li><a  onclick="return Validation('check_conf', true, false, false, false, false, false)"
+        title="Show conf(standalone-full.xml) and java options of selected server(s)."
+        href="javascript:;">Check conf</a></li>
 
 <li><a  onclick="return Validation('tunnel', true, false, false, false, false, false)"
         title="Make ssh tunnel to the bind port of selected server(s)."
         href="javascript:;">Tunnel</a></li>
+
+<!--Cron-->
+<li class="dropdown-submenu">
+    <a tabindex="-1" href="#">Cron</a>
+    <ul class="dropdown-menu">
+        <li><a  onclick="return Validation('cancel_job', false, false, true, false, false, true)"
+                title="Delete selected job(s)."
+                href="javascript:;"
+                class="danger">Cancel job</a></li>
+
+        <li><a  onclick="return Validation('once_job', false, false, true, false, false, true)"
+                title="Make selected cron job(s) run once (default)."
+                href="javascript:;"
+                class="danger">Run once job</a></li>
+
+        <li><a  onclick="return Validation('permanent_job', false, false, true, false, false, true)"
+                title="Make selected cron job(s) permanent."
+                href="javascript:;"
+                class="danger">Permanent job</a></li>
+
+        <li><a  onclick="return Validation('change_date', false, false, true, false, false, true)"
+                title="Change selected cron job(s) run date\time."
+                href="javascript:;"
+                class="danger">Change job date</a></li>
+    </ul>
+</li>

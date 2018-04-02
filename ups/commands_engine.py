@@ -53,11 +53,14 @@ def job_opt(selected, cron):
 	"""В зависимости от выбранного действия с кронжобом, удаляет либо меняет job.perm статус."""
 	try:
 		job = Job.objects.get(cron=cron)
-		if selected['command'] == 'cancel_job':
-			job.delete()
 		if selected['command'] == 'permanent_job':
 			job.perm = True
 			job.save()
+		if selected['command'] == 'change_date':
+			job.cdat = selected['date']
+			job.save()
+		if selected['command'] == 'cancel_job':
+			job.delete()
 		if selected['command'] == 'once_job':
 			job.perm = False
 			job.save()
@@ -73,20 +76,19 @@ def starter(selected):
 	if selected['rtype'] == 'CRON':
 		opt.extend([
 			'-run',  selected['cmdname'],
-			'-date', selected['date'],
 			'-cmd',  'cron.sh'])
 	else:
 		opt.extend(['-cmd', selected['cmdname']])
+
+	opt.extend([
+		'-prj', '%s:%s' % (str(selected['project'].id), str(selected['project'].name)),
+		'-key', selected['key'], '-date', selected['date'], ])
 
 	if selected['hid']:
 		opt.extend(['-hid', str(selected['hid'])])
 
 	if selected['cid']:
 		opt.extend(['-cid', str(selected['cid'])])
-
-	opt.extend([
-		'-prj', '%s:%s' % (str(selected['project'].id), str(selected['project'].name)),
-		'-key', selected['key']])
 
 	for ID in selected['servers']:
 		server = Server.objects.get(id=ID)
@@ -109,4 +111,5 @@ def starter(selected):
 
 	if conf.DEBUG:
 		print '\n', opt, '\n\n', selected, '\n'
+
 	Popen(opt)

@@ -16,12 +16,14 @@ def command(selected):
 		'server_info':     {'history': False, 'bash':     'server_info.sh', 'tag':  True, },
 		'check_conf':      {'history': False, 'bash':      'check_conf.sh', 'tag': False, },
 		'check_logs':      {'history': False, 'bash':      'check_logs.sh', 'tag': False, },
-		'cancel_job':      {'history':  True, 'bash':  'cronjob_cancel.sh', 'tag': False, },
-		'permanent_job':   {'history':  True, 'bash':    'cronjob_perm.sh', 'tag': False, },
-		'once_job':        {'history':  True, 'bash':    'cronjob_once.sh', 'tag': False, },
 		'get_logs_all':    {'history': False, 'bash':    'logs_get_all.sh', 'tag':  True, },
 		'get_logs_day':    {'history': False, 'bash':    'logs_get_day.sh', 'tag':  True, },
 		'tunnel':          {'history': False, 'bash':          'tunnel.sh', 'tag':  True, },
+		# Cron submenu    +------------------+-----------------------------+----------------+
+		'once_job':        {'history':  True, 'bash':    'cronjob_once.sh', 'tag': False, },
+		'cancel_job':      {'history':  True, 'bash':  'cronjob_cancel.sh', 'tag': False, },
+		'change_date':     {'history':  True, 'bash':    'cronjob_date.sh', 'tag': False, },
+		'permanent_job':   {'history':  True, 'bash':    'cronjob_perm.sh', 'tag': False, },
 		# Maintenance     +------------------+-----------------------------+----------------+
 		'stop':            {'history':  True, 'bash':            'stop.sh', 'tag': False, },
 		'start':           {'history':  True, 'bash':           'start.sh', 'tag': False, },
@@ -107,7 +109,7 @@ def cmd_run(data, project, user):
 	tag, his = command(selected)
 	if data['run_type'] == 'CRON':
 		crn = key
-		selected['cid'] = add_job(selected, '_empty_', key)
+		selected['cid'] = add_job(selected, 'Working...', key)
 		selected['name'] = 'Set cron job - %s' % selected['command'].lower()
 	if his:
 		selected['hid'] = add_event(selected, 'Working...', '', crn, date)

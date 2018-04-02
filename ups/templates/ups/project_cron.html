@@ -36,6 +36,13 @@
             <a href="javascript:;"
                name="selected_commands"
                class="btn btn-danger btn-xs"
+               title="Change selected cron job(s) run date\time."
+               onclick="run_or_cron('RUN');
+                        return Validation('change_date', false, false, true, false, false, true)">Change date</a>
+                        <!---- Validation('cmd_name',   server, update, cronjob, script, dump, danger) ---->
+            <a href="javascript:;"
+               name="selected_commands"
+               class="btn btn-danger btn-xs"
                title="Cancel selected cron job(s)."
                onclick="run_or_cron('RUN');
                         return Validation('cancel_job', false, false, true, false, false, true)">Cancel job</a>
