@@ -73,16 +73,17 @@ def starter(selected):
 	"""Выполняет комманду."""
 	opt = [conf.BASE_DIR + '/bash/starter.sh']
 
+	opt.extend([
+		'-prj', '%s:%s' % (str(selected['project'].id), str(selected['project'].name)),
+		'-date', selected['date'],
+		'-key', selected['key'], ])
+
 	if selected['rtype'] == 'CRON':
 		opt.extend([
 			'-run',  selected['cmdname'],
 			'-cmd',  'cron.sh'])
 	else:
 		opt.extend(['-cmd', selected['cmdname']])
-
-	opt.extend([
-		'-prj', '%s:%s' % (str(selected['project'].id), str(selected['project'].name)),
-		'-key', selected['key'], '-date', selected['date'], ])
 
 	if selected['hid']:
 		opt.extend(['-hid', str(selected['hid'])])

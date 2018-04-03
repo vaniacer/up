@@ -19,11 +19,11 @@ until [[ -z $1 ]]; do case $1 in
     -dump   | -m) dumps+=("$2");;   # List of dump files
     -job    | -j) jobs+=("$2");;    # List of cron job ids
     -date   | -d) date=$2;;         # Cron job date
-    -cron   | -C) cron=$2;;         # Set if running from cron
+    -cron   | -C) cron=$2;;         # Cron id set if running from cron
     -desc   | -D) desc=$2;;         # Show description instead of run
     -cmd    | -c) cmd=$2;;          # Command function to run
     -run    | -r) run=$2;;          # Command function to run from cron
-    -key    | -k) key=$2;;          # Cron unique key
+    -key    | -k) key=$2;;          # Unique key
     -hid    | -h) hid=$2;;          # History id
     -cid    | -H) cid=$2;;          # Cronjob id
     -prj    | -p) prj=$2            # Project id:name

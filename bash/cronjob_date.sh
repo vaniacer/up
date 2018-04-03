@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function description () { #---------------------| Function description |------------------------------------------------
-    printf "\nChange jobs date\time:\n"; for i in "${jobs[@]}"; { echo "$i"; }
+    printf "\nChange jobs date\time:\n"; for i in "${jobs[@]//\'/}"; { echo "$i"; }
 }
 
 function run () { #---------------------------------| Main function |---------------------------------------------------

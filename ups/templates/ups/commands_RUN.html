@@ -28,29 +28,3 @@
 <li><a  onclick="return Validation('tunnel', true, false, false, false, false, false)"
         title="Make ssh tunnel to the bind port of selected server(s)."
         href="javascript:;">Tunnel</a></li>
-
-<!--Cron-->
-<li class="dropdown-submenu">
-    <a tabindex="-1" href="#">Cron</a>
-    <ul class="dropdown-menu">
-        <li><a  onclick="return Validation('cancel_job', false, false, true, false, false, true)"
-                title="Delete selected job(s)."
-                href="javascript:;"
-                class="danger">Cancel job</a></li>
-
-        <li><a  onclick="return Validation('once_job', false, false, true, false, false, true)"
-                title="Make selected cron job(s) run once (default)."
-                href="javascript:;"
-                class="danger">Run once job</a></li>
-
-        <li><a  onclick="return Validation('permanent_job', false, false, true, false, false, true)"
-                title="Make selected cron job(s) permanent."
-                href="javascript:;"
-                class="danger">Permanent job</a></li>
-
-        <li><a  onclick="return Validation('change_date', false, false, true, false, false, true)"
-                title="Change selected cron job(s) run date\time."
-                href="javascript:;"
-                class="danger">Change job date</a></li>
-    </ul>
-</li>

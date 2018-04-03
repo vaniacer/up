@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function description () { #---------------------| Function description |------------------------------------------------
-    printf "\nStart server(s):\n"; for i in "${servers[@]}"; { echo "${i%%:*}"; }
+    printf "\nStart server(s):\n"; for i in "${servers[@]//\'/}"; { echo "${i%%:*}"; }
 }
 
 function body () { #--------------------------------| Main function |---------------------------------------------------

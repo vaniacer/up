@@ -107,6 +107,7 @@ def cmd_run(data, project, user):
 	}
 
 	tag, his = command(selected)
+
 	if data['run_type'] == 'CRON':
 		crn = key
 		selected['cid'] = add_job(selected, 'Working...', key)

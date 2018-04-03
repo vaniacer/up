@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function description () { #---------------------| Function description |------------------------------------------------
-    printf "\nMake permanent cron job(s):\n"; for i in "${jobs[@]}"; { echo "$i"; }
+    printf "\nMake permanent cron job(s):\n"; for i in "${jobs[@]//\'/}"; { echo "$i"; }
 }
 
 function run () { #---------------------------------| Main function |---------------------------------------------------

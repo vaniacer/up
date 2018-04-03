@@ -1,8 +1,8 @@
 #!/bin/bash
 
 function description () { #---------------------| Function description |------------------------------------------------
-    printf "\nDelete Update(s):\n"; for i in "${updates[@]}"; { echo "${i##*/}"; }
-    printf "\nfrom Server(s):\n";   for i in "${servers[@]}"; { echo "${i%%:*}"; }
+    printf "\nDelete Update(s):\n"; for i in "${updates[@]//\'/}"; { echo "${i##*/}"; }
+    printf "\nfrom Server(s):\n";   for i in "${servers[@]//\'/}"; { echo "${i%%:*}"; }
 }
 
 function body () { #--------------------------------| Main function |---------------------------------------------------
