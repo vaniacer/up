@@ -10,12 +10,12 @@ function run () { #---------------------------------| Main function |-----------
     date="$mm $hh $DD $MM" # Cron format date
 
     info 'Change job(s) date and time'
-    for id in "${jobs[@]}"; {
-        job="`grep "\-C $id" /var/spool/cron/crontabs/$USER`"
+    for id in ${jobs[@]}; {
+        job="`grep "\-C $id" $cronfile`"
         job=( ${job//'*'/'\*'} )
-        rule="s|${job[@]}|$date ${job[@]:4}|g;"$rule; printf "\n$id"
+        sed="s|${job[@]}|$date ${job[@]:4}|g;"$sed; printf "\n$id"
     }
 
-    sed "$rule" -i /var/spool/cron/crontabs/$USER || error=$?
+    sed "$sed" -i $cronfile || error=$?
     info 'Done' $error
 } #---------------------------------------------------------------------------------------------------------------------
