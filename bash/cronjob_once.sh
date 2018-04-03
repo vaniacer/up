@@ -7,9 +7,9 @@ function description () { #---------------------| Function description |--------
 function run () { #---------------------------------| Main function |---------------------------------------------------
     info 'Set jobs to run once'
     for id in "${jobs[@]}"; {
-        rule="s|^.*$id.*$|&; sed \"/$id/d\" -i /var/spool/cron/crontabs/$USER|g;"$rule; printf "\n$id"
+        sed="s|^.*$id.*$|&; sed \"/$id/d\" -i $cronfile|g;"$sed; printf "\n$id"
     }
 
-    sed "$rule" -i /var/spool/cron/crontabs/$USER || error=$?
+    sed "$sed" -i $cronfile || error=$?
     info 'Done' $error
 } #---------------------------------------------------------------------------------------------------------------------

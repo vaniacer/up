@@ -11,14 +11,14 @@ function run () { #---------------------------------| Main function |-----------
 
     date="$mm $hh $DD $MM *"                      # Cron format date
     cncl="sed '/$key/d' -i '$cronfile'\n"         # Command to delete executed cron job
-    cmnd="$workdir/starter.sh -c $run -C $key"  # Command to run
+    cmnd="$workdir/starter.sh -c $run -C $key"    # Command to run
 
-    for ((i=0; i<${#options[*]}; i+=2)); do       # loop through options
-        key_value=( ${options[@]:$i:2} )          # get key_value pairs
+    for ((i=0; i<${#options[*]}; i+=2)); do       # Loop through options
+        key_value=( ${options[@]:$i:2} )          # Get key_value pairs
         case ${key_value[0]} in                   #
             -run|-cmd|-date|-hid|-cid) continue;; # Drop unnecessary options
         esac                                      #
-        # assign  key__________________value pairs to cron command, wrap values with ''
+        # Assign  key__________________value pairs of options to command, wrap values with ''
         cmnd+=" ${key_value[0]} '${key_value[1]}'"
     done
 
