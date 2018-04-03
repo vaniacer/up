@@ -11,7 +11,7 @@ function run () { #---------------------------------| Main function |-----------
 
     date="$mm $hh $DD $MM *"                      # Cron format date
     cncl="sed '/$key/d' -i '$cronfile'\n"         # Command to delete executed cron job
-    cmnd="$workdir/starter.sh -c $run -C $key"    # Command to run
+    cmnd="$workdir/starter.sh -c $run -C $key"  # Command to run
 
     for ((i=0; i<${#options[*]}; i+=2)); do       # loop through options
         key_value=( ${options[@]:$i:2} )          # get key_value pairs
