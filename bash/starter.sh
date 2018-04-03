@@ -33,6 +33,9 @@ until [[ -z $1 ]]; do case $1 in
 esac; shift 2; done 2> /dev/null
 #---------------------------------
 
+# Print line, usage: line - 10 | line -= 20 | line "Hello World!" 20
+line () { printf %.s"$1" $(seq $2); }
+
 # Write logs to DB
 function make_history () {
     # Get DB configuration from conf.py

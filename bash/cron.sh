@@ -23,9 +23,11 @@ function run () { #---------------------------------| Main function |-----------
     done
 
     # Set crontab job
-    echo -e "$(crontab -l)\n$date $cmnd; $cncl\n" | crontab - || error=$?
-    # This variant leaves unnecessary empty strings after job execution
-    # printf "$date $cmnd; $cncl\n" >> "$cronfile" || error=$?
+    # echo -e "$(crontab -l)\n$date $cmnd; $cncl\n" | crontab - || error=$?
+    # printf "$date $cmnd; $cncl" >> "$cronfile" || error=$?
+    JS="#`line '=' 28`| job $key start |`line '=' 28`"
+    JE="#`line '=' 28`|  job $key end  |`line '=' 28`"
+    printf "$JS\n$date $cmnd; $cncl$JE\n" >> "$cronfile" || error=$?
 
     # Info
     info 'Setting cron job'
