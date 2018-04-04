@@ -50,6 +50,10 @@ class ScriptCreateForm(forms.ModelForm):
 			'desc': 'Script description',
 			'body': 'Script body',
 		}
+		widgets = {
+			'body': forms.Textarea(attrs={'style': 'height: 50%;font-family: "Lucida Console", Monaco, monospace;'}),
+			'desc': forms.Textarea(attrs={'style': 'height: 7%;'})
+		}
 
 
 class ScriptEditForm(forms.ModelForm):
@@ -57,6 +61,10 @@ class ScriptEditForm(forms.ModelForm):
 		model = Script
 		fields = ['desc', 'body']
 		labels = {'desc': 'Script description', 'body': 'Script body'}
+		widgets = {
+			'body': forms.Textarea(attrs={'style': 'height: 50%;font-family: "Lucida Console", Monaco, monospace;'}),
+			'desc': forms.Textarea(attrs={'style': 'height: 7%;'})
+		}
 
 
 class SerfltrForm(forms.Form):
