@@ -1,5 +1,13 @@
 <!--New date\time picker-->
 <li>
+    <input title="Schedule command to run from cron."
+           class="btn btn-default navbar-btn"
+           onclick="run_or_cron('')"
+           id="CRON_BUTTON"
+           type="button"
+           value="CRON"/>
+</li>
+<li>
     <div class="input-group date navbar-btn date-input" id="datetimepicker">
         <input type="date" name="selected_date" class="form-control" title="Enter cron job date.">
         <span class="input-group-addon">

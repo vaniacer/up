@@ -110,6 +110,8 @@ def cmd_run(data, project, user):
 
 	if data['run_type'] == 'CRON':
 		crn = key
+		if not his:
+			return '/projects/%s/?%s' % (project.id, info(data))
 		selected['cid'] = add_job(selected, 'Working...', key)
 		selected['name'] = 'Set cron job - %s' % selected['command'].lower()
 	if his:

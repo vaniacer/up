@@ -26,7 +26,27 @@ function go_down() {
 }
 
 function run_or_cron(type) {
-    $('#run_type').val(type);
+    var cron_button = document.getElementById('CRON_BUTTON');
+    var run_type = document.getElementById('run_type');
+    var current_run_type = run_type.value;
+
+    function color_button(cron) {
+        if (cron == 'CRON') {
+            cron_button.classList.remove('btn-default');
+            cron_button.classList.add('btn-danger');
+        } else {
+            cron_button.classList.add('btn-default');
+            cron_button.classList.remove('btn-danger');
+        }
+    }
+
+    if (type) {
+        run_type.value = type;
+    } else {
+        if (current_run_type == '')     { run_type.value = 'CRON'; color_button('CRON'); }
+        if (current_run_type == 'RUN')  { run_type.value = 'CRON'; color_button('CRON'); }
+        if (current_run_type == 'CRON') { run_type.value = 'RUN';  color_button('RUN');  }
+    }
 }
 
 function selector(box_id, body_id, name, obj) {

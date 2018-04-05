@@ -3,6 +3,96 @@
 {% buttons %}
     {% if "run_command" in pr_view_perms %}
         {% if servers %}
+            <div class="btn-group">
+                <button type="button" class="btn btn-info btn-xs dropdown-toggle" data-toggle="dropdown">Commands
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a onclick="return Validation('server_info', true, false, false, false, false, false)"
+                           title="Show system info: CPU, mem, disk etc."
+                           href="javascript:;">Summary server info</a></li>
+
+                    <li><a onclick="return Validation('get_logs_day', true, false, false, false, false, false)"
+                           title="Get day logs from selected server(s)."
+                           href="javascript:;">Get day logs</a></li>
+
+                    <li><a onclick="return Validation('get_logs_all', true, false, false, false, false, false)"
+                           title="Get all logs from selected server(s)."
+                           href="javascript:;">Get all logs</a></li>
+
+                    <li><a onclick="return Validation('check_logs', true, false, false, false, false, false)"
+                           title="Check logs on selected server(s)."
+                           href="javascript:;">Check logs</a></li>
+
+                    <li><a onclick="return Validation('check_conf', true, false, false, false, false, false)"
+                           title="Show conf(standalone-full.xml) and java options of selected server(s)."
+                           href="javascript:;">Check conf</a></li>
+
+                    <li><a onclick="return Validation('tunnel', true, false, false, false, false, false)"
+                           title="Make ssh tunnel to the bind port of selected server(s)."
+                           href="javascript:;">Tunnel</a></li>
+
+                    <li class="divider"></li>
+
+                    <li><a onclick="return Validation('stop', true, false, false, false, false, true)"
+                           title="Stop selected server(s)."
+                           href="javascript:;"
+                           class="danger">Stop</a></li>
+
+                    <li><a onclick="return Validation('start', true, false, false, false, false, true)"
+                           title="Start selected server(s)."
+                           href="javascript:;"
+                           class="danger">Start</a></li>
+
+                    <li><a onclick="return Validation('restart', true, false, false, false, false, true)"
+                           title="Restart selected server(s)."
+                           href="javascript:;"
+                           class="danger">Restart</a></li>
+
+                    <li><a onclick="return Validation('reload', true, false, false, false, false, true)"
+                           title="Reload config on selected server(s)."
+                           href="javascript:;"
+                           class="danger">Reload</a></li>
+
+                    <li class="divider"></li>
+
+                    <li><a onclick="return Validation('maintenance_on', true, false, false, false, false, true)"
+                           title="Show 'Maintenance' page on selected server(s)."
+                           href="javascript:;"
+                           class="danger">Maintenance ON</a></li>
+
+                    <li><a onclick="return Validation('maintenance_off', true, false, false, false, false, true)"
+                           title="Hide 'Maintenance' page on selected server(s)."
+                           href="javascript:;"
+                           class="danger">Maintenance OFF</a></li>
+
+                    <li class="divider"></li>
+
+                    <li><a onclick="return Validation('backup_full', true, false, false, false, false, false)"
+                           title="System and DB backup via './krupd bkp full'."
+                           href="javascript:;">Backup full</a></li>
+
+                    <li><a onclick="return Validation('backup_db', true, false, false, false, false, false)"
+                           title="Database backup via './krupd bkp db'."
+                           href="javascript:;">Backup base</a></li>
+
+                    <li><a onclick="return Validation('backup_sys', true, false, false, false, false, false)"
+                           title="System backup via './krupd bkp sys'."
+                           href="javascript:;">Backup system</a></li>
+
+                    <li class="divider"></li>
+
+                    <li><a onclick="return Validation('copy_utils', true, false, false, false, false, false)"
+                           title="Copy utils folder to selected server(s)."
+                           href="javascript:;">Copy utils</a></li>
+
+                    <li class="divider"></li>
+
+                    <li><a title="Add new server."
+                           href="{% url 'ups:new_server' project.id %}?{{info}}">Add server</a></li>
+                </ul>
+            </div>
+
             <input type="button"
                    value="Select All"
                    title="Select all servers."

@@ -10,22 +10,25 @@
         </div>
 
         <div id="navbar_bottom" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
 
-                {% if "add_update" in pr_view_perms or "add_server" in pr_view_perms %}
+            <ul class="nav navbar-nav col-md-2">
+                {% if "add_script" in pr_view_perms or "add_update" in pr_view_perms or "add_server" in pr_view_perms %}
                     {% include "ups/project_bottom_panel_add.html" %}
                 {% endif %}
-
                 {% if "run_command" in pr_view_perms %}
                     {% include "ups/project_bottom_panel_select.html"   %}
-                    {% include "ups/project_bottom_panel_commands.html" %}
-                    {% include "ups/project_bottom_panel_date.html"     %}
                 {% endif %}
-
+            </ul>
+            <ul class="nav navbar-nav col-md-5">
+                {% if "run_command" in pr_view_perms %}
+                    {% include "ups/project_bottom_panel_cron.html"     %}
+                {% endif %}
             </ul>
 
             <!-- Buttons by the right side -->
-            {% include "ups/project_bottom_panel_right.html" %}
+            <ul class="nav navbar-nav col-md-5">
+                {% include "ups/project_bottom_panel_right.html" %}
+            </ul>
 
         </div><!--/.nav-collapse -->
     </div>

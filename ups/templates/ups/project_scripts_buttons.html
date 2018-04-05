@@ -3,6 +3,33 @@
 {% buttons %}
     {% if "run_command" in pr_view_perms %}
         {% if scripts %}
+            <div class="btn-group">
+                <button type="button" class="btn btn-info btn-xs dropdown-toggle" data-toggle="dropdown">Commands
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a  onclick="return Validation('yml_script', true, false, false, true, false, false)"
+                            title="Run selected YAML playbook(s) on selected server(s)."
+                            href="javascript:;">Run YAML script</a></li>
+
+                    <li><a  onclick="return Validation('bash_script', true, false, false, true, false, false)"
+                            title="Run selected BASH script(s) on selected server(s)."
+                            href="javascript:;">Run BASH script</a></li>
+
+                    <li><a  onclick="return Validation('sql_script', true, false, false, true, false, false)"
+                            title="Run selected SQL script(s) on selected server(s)."
+                            href="javascript:;">Run SQL script</a></li>
+
+                    <li class="divider"></li>
+
+                    <li><a title="Create new script."
+                           href="{% url 'ups:create_script' project.id %}?{{info}}">Create new script</a></li>
+
+                    <li><a title="Add new script from file."
+                           href="{% url 'ups:new_script' project.id %}?{{info}}">Add script from file</a></li>
+                </ul>
+            </div>
+
             <input type="button"
                    value="Select All"
                    class="btn btn-info btn-xs"
@@ -34,7 +61,7 @@
         <a title="Create new script."
            class="btn btn-success btn-xs"
            href="{% url 'ups:create_script' project.id %}?{{info}}">New</a>
-        <a title="Add new script."
+        <a title="Add new script from file."
            class="btn btn-success btn-xs"
            href="{% url 'ups:new_script' project.id %}?{{info}}">Add</a>
     {% endif %}

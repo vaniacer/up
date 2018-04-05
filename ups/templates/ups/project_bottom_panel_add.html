@@ -9,13 +9,18 @@
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdown_ADD">
             {% if "add_update" in pr_view_perms %}
-                <li><a href="{% url 'ups:new_update' project.id %}?{{info}}">Add Update</a></li>
+                <li><a title="Add new updete file."
+                       href="{% url 'ups:new_update' project.id %}?{{info}}">Add Update</a></li>
             {% endif %}
             {% if "add_server" in pr_view_perms %}
-                <li><a href="{% url 'ups:new_server' project.id %}?{{info}}">Add Server</a></li>
+                <li><a title="Add new server."
+                       href="{% url 'ups:new_server' project.id %}?{{info}}">Add Server</a></li>
             {% endif %}
             {% if "add_script" in pr_view_perms %}
-                <li><a href="{% url 'ups:new_script' project.id %}?{{info}}">Add Script</a></li>
+                <li><a title="Add new script from file."
+                       href="{% url 'ups:new_script' project.id %}?{{info}}">Add Script</a></li>
+                <li><a title="Create new script."
+                       href="{% url 'ups:create_script' project.id %}?{{info}}">New script</a></li>
             {% endif %}
             {% if "run_command" in pr_view_perms %}
                 <li><a onclick="return Validation('get_dump', true, false, false, false, false)"
