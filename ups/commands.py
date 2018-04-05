@@ -16,9 +16,10 @@ def command(selected):
 		'server_info':     {'history': False, 'bash':     'server_info.sh', 'tag':  True, },
 		'check_conf':      {'history': False, 'bash':      'check_conf.sh', 'tag': False, },
 		'check_logs':      {'history': False, 'bash':      'check_logs.sh', 'tag': False, },
-		'get_logs_all':    {'history': False, 'bash':    'logs_get_all.sh', 'tag':  True, },
-		'get_logs_day':    {'history': False, 'bash':    'logs_get_day.sh', 'tag':  True, },
 		'tunnel':          {'history': False, 'bash':          'tunnel.sh', 'tag':  True, },
+		# Logs            +------------------+-----------------------------+----------------+
+		'get_logs_all':    {'history':  True, 'bash':    'logs_get_all.sh', 'tag':  True, },
+		'get_logs_day':    {'history':  True, 'bash':    'logs_get_day.sh', 'tag':  True, },
 		# Cron submenu    +------------------+-----------------------------+----------------+
 		'once_job':        {'history':  True, 'bash':    'cronjob_once.sh', 'tag': False, },
 		'cancel_job':      {'history':  True, 'bash':  'cronjob_cancel.sh', 'tag': False, },

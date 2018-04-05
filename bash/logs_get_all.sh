@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function description () { #---------------------| Function description |------------------------------------------------
-    printf "\nGet DB dump from server(s):\n"; for i in "${servers[@]//\'/}"; { echo "${i%%:*}"; }
+    printf "\nGet all logs from server(s):\n"; for i in "${servers[@]//\'/}"; { echo "${i%%:*}"; }
 }
 
 function body () { #--------------------------------| Main function |---------------------------------------------------
