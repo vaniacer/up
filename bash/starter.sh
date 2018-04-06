@@ -177,8 +177,8 @@ function starter  () {
                        echo $error > $rundir/err$key
                        [[ $hid ]] && make_history
                        sleep 2.5; rm $rundir/*$key; }
-    exit $error
 }
 
 # Show description or run command itself
-[[ "$desc" ]] && description || starter
+[[ $desc ]] && description || starter
+exit $error

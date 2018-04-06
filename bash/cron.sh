@@ -31,7 +31,7 @@ function run () { #---------------------------------| Main function |-----------
 
     # Info
     info 'Setting cron job'
-    $cmnd -desc true # Show description of running command
+    $cmnd -desc true || error=$? # Show description of running command
     info 'Cron job is set' $error
 
 } #---------------------------------------------------------------------------------------------------------------------
