@@ -10,24 +10,21 @@
 <!--------------------- Validation('cmd_name', server, update, cronjob, script, dump) ------------>
 {% if "run_command" in pr_view_perms %}
     {% if script.type == 'sql' %}
-        <a onclick="run_or_cron('RUN');
-                    select_all('selected_scripts', 'script-body', false, 'SX');
+        <a onclick="select_all('selected_scripts', 'script-body', false, 'SX');
                     selector('xx{{script.id}}', 'xb{{script.id}}', '{{script}}', 'SX');
                     Validation('sql_script', true, false, false, true)"
            title="Run this SQL script on selected server(s)."
            href="javascript:;"
            class="Edit">Run</a>
     {%elif script.type == 'yml'%}
-        <a onclick="run_or_cron('RUN');
-                    select_all('selected_scripts', 'script-body', false, 'SX');
+        <a onclick="select_all('selected_scripts', 'script-body', false, 'SX');
                     selector('xx{{script.id}}', 'xb{{script.id}}', '{{script}}', 'SX');
                     Validation('yml_script', true, false, false, true)"
            title="Run this YAML playbook on selected server(s)."
            href="javascript:;"
            class="Edit">Run</a>
     {%else%}
-        <a onclick="run_or_cron('RUN');
-                    select_all('selected_scripts', 'script-body', false, 'SX');
+        <a onclick="select_all('selected_scripts', 'script-body', false, 'SX');
                     selector('xx{{script.id}}', 'xb{{script.id}}', '{{script}}', 'SX');
                     Validation('bash_script', true, false, false, true)"
            title="Run this BASH script on selected server(s)."

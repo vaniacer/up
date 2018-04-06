@@ -7,7 +7,8 @@ function description () { #---------------------| Function description |--------
 function run () { #---------------------------------| Main function |---------------------------------------------------
     info 'Set jobs permanent'
     for id in "${jobs[@]}"; {
-        sed="s|;.*$id.*$||g;/.*$id/ s| [0-9][0-9] [0-9][0-9] \*| \* \* \*|g;"$sed; printf "\n$id"
+        sed="s|;.*$id.*$||g;/.*$id/ s| [0-9][0-9] [0-9][0-9] \*| \* \* \*|g;"$sed
+        printf "\n$id"
     }
 
     sed "$sed" -i $cronfile || error=$?

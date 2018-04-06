@@ -9,8 +9,7 @@
 <!---------------------------------------------Copy button---------------------------------------->
 <!--------------------- Validation('cmd_name', server, update, cronjob, script, dump) ------------>
 {% if "run_command" in pr_view_perms %}
-    <a onclick="run_or_cron('RUN');
-                select_all('selected_updates', 'update-body', false, 'SU');
+    <a onclick="select_all('selected_updates', 'update-body', false, 'SU');
                 selector('ux{{ update.id }}', 'ub{{ update.id }}', '{{ update }}', 'SX');
                 Validation('copy', true, true, false, false)"
        title="Copy this update to selected server(s)."

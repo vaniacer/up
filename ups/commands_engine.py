@@ -55,7 +55,7 @@ def job_opt(selected, cron):
 	try:
 		job = Job.objects.get(cron=cron)
 		if selected['command'] == 'permanent_job':
-			job.cdat = 'Every day %s' % job.cdat.split()[-1]
+			job.cdat = 'Everyday %s' % job.cdat.split()[-1]
 			job.perm = True
 			job.save()
 		if selected['command'] == 'change_date':
