@@ -12,6 +12,11 @@
                            title="Show system info: CPU, mem, disk etc."
                            href="javascript:;">Summary server info</a></li>
 
+                    <li><a onclick="run_or_cron('RUN');
+                                    return Validation('check_updates', true, false, false, false, false, false)"
+                           title="Check updates on selected server(s)."
+                           href="javascript:;">Check updates</a></li>
+
                     <li><a onclick="return Validation('get_logs_day', true, false, false, false, false, false)"
                            title="Get day logs from selected server(s)."
                            href="javascript:;">Get day logs</a></li>
