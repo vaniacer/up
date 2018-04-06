@@ -6,6 +6,7 @@ from django.conf import settings as conf
 from subprocess import Popen
 from base64 import b64encode
 from os import urandom
+import datetime
 
 
 def get_key():
@@ -54,6 +55,7 @@ def job_opt(selected, cron):
 	try:
 		job = Job.objects.get(cron=cron)
 		if selected['command'] == 'permanent_job':
+			job.cdat = 'Every day %s' % job.cdat.split()[-1]
 			job.perm = True
 			job.save()
 		if selected['command'] == 'change_date':
@@ -62,6 +64,7 @@ def job_opt(selected, cron):
 		if selected['command'] == 'cancel_job':
 			job.delete()
 		if selected['command'] == 'once_job':
+			job.cdat = '%s %s' % (datetime.datetime.now().strftime("%Y-%m-%d"), job.cdat.split()[-1])
 			job.perm = False
 			job.save()
 
