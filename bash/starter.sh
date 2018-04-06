@@ -8,7 +8,6 @@ cronfile=/var/spool/cron/crontabs/$USER # UpS user's crontab file
 dumpdir=$workdir/../media/dumps         # Folder to store dumps
 crondir=$workdir/../../logs/cron        # Folder to store cronjob logs
 rundir=$workdir/../../logs/run          # Folder to store running tasks logs
-stty cols $width                        # Set terminal width
 
 #---------| Get opts |------------
 until [[ -z $1 ]]; do case $1 in
@@ -170,6 +169,7 @@ function download () {
 
 # Start 'run' function, save logs to $rundir or $crondir if started from cron.
 function starter  () {
+    stty cols $width # Set terminal width
     [[ "$cron" ]] && { run &> $crondir/$cron; dat=$(date +'%m.%d.%Y %R')
                        echo -e "\nError: ${error}\nDate: $dat" >> $crondir/$cron; } \
                   || { echo $$     > $rundir/pid$key
@@ -180,5 +180,5 @@ function starter  () {
 }
 
 # Show description or run command itself
-[[ $desc ]] && description || starter
+[[ "$desc" ]] && description || starter
 exit $error
