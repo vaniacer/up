@@ -37,6 +37,10 @@ line () { printf %.s"$1" $(seq $2); }
 
 # Write logs to DB
 function make_history () {
+
+    LOG=`cat $rundir/log$key`
+    ERR=`cat $rundir/err$key`
+
     # Get DB configuration from conf.py
     raw=`grep 'db.* =' $workdir/../conf.py`
     raw=${raw//\'/}
@@ -52,13 +56,13 @@ function make_history () {
     done
 
     [[ $cid ]] && \
-    job_update="UPDATE ups_job SET \"desc\" = \$$`cat $rundir/log$key`\$$ WHERE id = $cid AND proj_id = $prj;"
+    job_update="UPDATE ups_job SET \"desc\" = \$$ $LOG \$$ WHERE id = $cid AND proj_id = $prj;"
     PGPASSWORD=${dbconf[dbpass]} psql \
             -U ${dbconf[dbuser]} \
             -h ${dbconf[dbhost]} \
             -p ${dbconf[dbport]} \
             -d ${dbconf[dbname]} \
-            -c "UPDATE ups_history SET \"desc\" = \$$`cat $rundir/log$key`\$$, exit = `cat $rundir/err$key`
+            -c "UPDATE ups_history SET \"desc\" = \$$ $LOG \$$, exit = \$$ $ERR \$$
                 WHERE id = $hid AND proj_id = $prj;$job_update"
 }
 
