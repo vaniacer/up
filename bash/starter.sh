@@ -39,7 +39,6 @@ line () { printf %.s"$1" $(seq $2); }
 function make_history () {
 
     LOG=`cat $rundir/log$key`
-    ERR=`cat $rundir/err$key`
 
     # Get DB configuration from conf.py
     raw=`grep 'db.* =' $workdir/../conf.py`
@@ -62,7 +61,7 @@ function make_history () {
             -h ${dbconf[dbhost]} \
             -p ${dbconf[dbport]} \
             -d ${dbconf[dbname]} \
-            -c "UPDATE ups_history SET \"desc\" = \$$ $LOG \$$, exit = \$$ $ERR \$$
+            -c "UPDATE ups_history SET \"desc\" = \$$ $LOG \$$, exit = \$$ $error \$$
                 WHERE id = $hid AND proj_id = $prj;$job_update"
 }
 

@@ -36,33 +36,38 @@
         {% endif %}
 
         <!-- Nav tabs -->
-        <ul class="nav nav-tabs nav-justified" role="tablist">
-            <li role="presentation" class="active">
-                <a href="#main" aria-controls="main" role="tab" data-toggle="tab"><h4>Main</h4></a>
-            </li>
-            <li role="presentation">
-                <a href="#cron" aria-controls="cron" role="tab" data-toggle="tab"><h4>Cron Jobs</h4></a>
-            </li>
-            <li role="presentation">
-                <a href="#history" aria-controls="history" role="tab" data-toggle="tab"><h4>History</h4></a>
-            </li>
-        </ul>
+        {% if "run_command" in pr_view_perms %}
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+                <li role="presentation" class="active">
+                    <a href="#main" aria-controls="main" role="tab" data-toggle="tab"><h4>Main</h4></a>
+                </li>
 
-        <!-- Tab panes -->
-        <div class="tab-content">
-            <div role="tabpanel" class="tab-pane fade in active row" id="main">
-                {% include "ups/project_main.html" %}
+                <li role="presentation">
+                    <a href="#cron" aria-controls="cron" role="tab" data-toggle="tab"><h4>Cron Jobs</h4></a>
+                </li>
+
+                <li role="presentation">
+                    <a href="#history" aria-controls="history" role="tab" data-toggle="tab"><h4>History</h4></a>
+                </li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane fade in active row" id="main">
+                    {% include "ups/project_main.html" %}
+                </div>
+
+                <div role="tabpanel" class="tab-pane fade" id="cron">
+                    {% include "ups/project_cron.html" %}
+                </div>
+
+                <div role="tabpanel" class="tab-pane fade" id="history">
+                    {% include "ups/project_history.html" %}
+                </div>
             </div>
-
-            <div role="tabpanel" class="tab-pane fade" id="cron">
-                {% include "ups/project_cron.html" %}
-            </div>
-
-            <div role="tabpanel" class="tab-pane fade" id="history">
-                {% include "ups/project_history.html" %}
-            </div>
-        </div>
-
+        {% else %}
+            {% include "ups/project_main.html" %}
+        {% endif %}
         {% include "ups/project_bottom_panel.html" %}
 
     </form>
