@@ -8,7 +8,8 @@
                     <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" role="menu">
-                    <li><a onclick="return Validation('server_info', true, false, false, false, false, false)"
+                    <li><a onclick="run_or_cron('RUN');
+                                    return Validation('server_info', true, false, false, false, false, false)"
                            title="Show system info: CPU, mem, disk etc."
                            href="javascript:;">Summary server info</a></li>
 
@@ -17,23 +18,28 @@
                            title="Check updates on selected server(s)."
                            href="javascript:;">Check updates</a></li>
 
-                    <li><a onclick="return Validation('get_logs_day', true, false, false, false, false, false)"
+                    <li><a onclick="run_or_cron('RUN');
+                                    return Validation('get_logs_day', true, false, false, false, false, false)"
                            title="Get day logs from selected server(s)."
                            href="javascript:;">Get day logs</a></li>
 
-                    <li><a onclick="return Validation('get_logs_all', true, false, false, false, false, false)"
+                    <li><a onclick="run_or_cron('RUN');
+                                    return Validation('get_logs_all', true, false, false, false, false, false)"
                            title="Get all logs from selected server(s)."
                            href="javascript:;">Get all logs</a></li>
 
-                    <li><a onclick="return Validation('check_logs', true, false, false, false, false, false)"
+                    <li><a onclick="run_or_cron('RUN');
+                                    return Validation('check_logs', true, false, false, false, false, false)"
                            title="Check logs on selected server(s)."
                            href="javascript:;">Check logs</a></li>
 
-                    <li><a onclick="return Validation('check_conf', true, false, false, false, false, false)"
+                    <li><a onclick="run_or_cron('RUN');
+                                    return Validation('check_conf', true, false, false, false, false, false)"
                            title="Show conf(standalone-full.xml) and java options of selected server(s)."
                            href="javascript:;">Check conf</a></li>
 
-                    <li><a onclick="return Validation('tunnel', true, false, false, false, false, false)"
+                    <li><a onclick="run_or_cron('RUN');
+                                    return Validation('tunnel', true, false, false, false, false, false)"
                            title="Make ssh tunnel to the bind port of selected server(s)."
                            href="javascript:;">Tunnel</a></li>
 
