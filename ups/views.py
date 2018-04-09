@@ -182,12 +182,8 @@ def project(request, project_id):
 	hidefrm = HideForm(initial=data)
 
 	dmplist = sorted(get_dumps(current_project.name) or '', key=itemgetter('date'), reverse=True)
-	history = current_project.history_set.order_by('date').reverse()
 	updates = current_project.update_set.order_by('date').reverse()
-	cronjob = current_project.job_set.order_by('date').reverse()
 	scripts = current_project.script_set.order_by('desc')
-
-	history, hist_fd, hist_bk = pagination(request, history)
 
 	context = {
 		'project': current_project,
@@ -202,13 +198,16 @@ def project(request, project_id):
 	}
 
 	if check_permission('run_command', current_project, request.user):
+		history = current_project.history_set.order_by('date').reverse()
+		cronjob = current_project.job_set.order_by('date').reverse()
+		history, hist_fd, hist_bk = pagination(request, history)
 		context['cronjob'] = cronjob
 		context['history'] = history
 		context['hist_bk'] = hist_bk
 		context['hist_fd'] = hist_fd
 
-	if data.get('selected_command'):
-		url = cmd_run(data, current_project, request.user)
-		return HttpResponseRedirect(url)
+		if data.get('selected_command'):
+			url = cmd_run(data, current_project, request.user)
+			return HttpResponseRedirect(url)
 
 	return render(request, 'ups/project.html', context)
