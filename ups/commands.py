@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 from .commands_engine import get_key, starter, add_event, add_job
-from .permissions import check_perm
+from .permissions import check_perm_or404
 import datetime
 
 
@@ -81,7 +81,7 @@ def run_date():
 
 def cmd_run(data, project, user):
 	"""Запускает выбранную команду."""
-	check_perm('run_command', project, user)
+	check_perm_or404('run_command', project, user)
 
 	crn = ''
 	key = get_key()

@@ -1,6 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from .permissions import check_perm_or404, check_permission
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
@@ -9,7 +10,6 @@ from .commands import command, cmd_run, info
 from django.conf import settings as conf
 from .forms import SerfltrForm, HideForm
 from wsgiref.util import FileWrapper
-from .permissions import check_perm
 from .cron import get_cron_logs
 from operator import itemgetter
 from subprocess import Popen
@@ -67,7 +67,7 @@ def download_upd(request, project_id, update_id):
 	"""Скачать обновление."""
 	update = get_object_or_404(Update, id=update_id)
 	current_project = get_object_or_404(Project, id=project_id)
-	check_perm('dld_update', current_project, request.user)
+	check_perm_or404('dld_update', current_project, request.user)
 	return download(str(update.file), str(update))
 
 
@@ -76,7 +76,7 @@ def download_script(request, project_id, script_id):
 	"""Скачать скрипт."""
 	script = get_object_or_404(Script, id=script_id)
 	current_project = get_object_or_404(Project, id=project_id)
-	check_perm('dld_script', current_project, request.user)
+	check_perm_or404('dld_script', current_project, request.user)
 	return download(str(script.file), str(script))
 
 
@@ -84,7 +84,7 @@ def download_script(request, project_id, script_id):
 def download_dump(request, project_id, dump):
 	"""Закачка дампов."""
 	current_project = get_object_or_404(Project, id=project_id)
-	check_perm('view_project', current_project, request.user)
+	check_perm_or404('view_project', current_project, request.user)
 	return download(conf.MEDIA_ROOT + '/dumps/%s/%s' % (current_project.name, str(dump)), str(dump))
 
 
@@ -101,7 +101,7 @@ def cancel(request):
 	"""Отмена выполняющейся команды."""
 	data = request.GET
 	current_project = get_object_or_404(Project, id=data['prid'])
-	check_perm('view_project', current_project, request.user)
+	check_perm_or404('view_project', current_project, request.user)
 
 	Popen(['kill', '-9', data['pid']])
 	tag, his = command({'command': data['cmd']})
@@ -124,8 +124,8 @@ def command_log(request):
 	"""Выводит страницу логов выполняющейся комманды."""
 	data = request.GET
 	current_project = get_object_or_404(Project, id=data['prid'])
-	check_perm('view_project', current_project, request.user)
-	check_perm('run_command',  current_project, request.user)
+	check_perm_or404('view_project', current_project, request.user)
+	check_perm_or404('run_command', current_project, request.user)
 
 	tag, his = command({'command': data['cmd']})
 	qst = request.META['QUERY_STRING']
@@ -170,7 +170,7 @@ def command_log(request):
 def project(request, project_id):
 	"""Выводит один проект, все его серверы, пакеты обновлений и скрипты, обрабатывает кнопки действий."""
 	current_project = get_object_or_404(Project, id=project_id)
-	check_perm('view_project', current_project, request.user)
+	check_perm_or404('view_project', current_project, request.user)
 
 	data = request.GET
 	get_cron_logs()
@@ -196,14 +196,16 @@ def project(request, project_id):
 		'serfltr': serfltr,
 		'updates': updates,
 		'scripts': scripts,
-		'cronjob': cronjob,
-		'history': history,
-		'hist_bk': hist_bk,
-		'hist_fd': hist_fd,
 		'dmplist': dmplist,
 		'hidefrm': hidefrm,
 		'info': info(data),
 	}
+
+	if check_permission('run_command', current_project, request.user):
+		context['cronjob'] = cronjob
+		context['history'] = history
+		context['hist_bk'] = hist_bk
+		context['hist_fd'] = hist_fd
 
 	if data.get('selected_command'):
 		url = cmd_run(data, current_project, request.user)

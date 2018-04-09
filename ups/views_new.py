@@ -6,7 +6,7 @@ from django.core.files.base import ContentFile
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.shortcuts import render
-from .permissions import check_perm
+from .permissions import check_perm_or404
 from .models import Project
 from .commands import info
 
@@ -36,7 +36,7 @@ def new_project(request):
 def new_server(request, project_id):
 	"""Добавляет новый сервер."""
 	project = Project.objects.get(id=project_id)
-	check_perm('add_server', project, request.user)
+	check_perm_or404('add_server', project, request.user)
 	data = request.GET
 
 	if request.method != 'POST':
@@ -61,7 +61,7 @@ def new_server(request, project_id):
 def new_update(request, project_id):
 	"""Добавляет новое обновление."""
 	project = Project.objects.get(id=project_id)
-	check_perm('add_update', project, request.user)
+	check_perm_or404('add_update', project, request.user)
 	data = request.GET
 
 	if request.method != 'POST':
@@ -86,7 +86,7 @@ def new_update(request, project_id):
 def new_script(request, project_id):
 	"""Добавляет новый скрипт."""
 	project = Project.objects.get(id=project_id)
-	check_perm('add_script', project, request.user)
+	check_perm_or404('add_script', project, request.user)
 	data = request.GET
 
 	if request.method != 'POST':
@@ -117,7 +117,7 @@ def new_script(request, project_id):
 def create_script(request, project_id):
 	"""Создает новый скрипт."""
 	project = Project.objects.get(id=project_id)
-	check_perm('add_script', project, request.user)
+	check_perm_or404('add_script', project, request.user)
 	data = request.GET
 
 	if request.method != 'POST':

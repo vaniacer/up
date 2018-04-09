@@ -8,7 +8,7 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.conf import settings as conf
 from .commands_engine import add_event
-from .permissions import check_perm
+from .permissions import check_perm_or404
 from .commands import info
 import shutil
 import os
@@ -55,7 +55,7 @@ def edit_project(request, project_id):
 	project = get_object_or_404(Project, id=project_id)
 	data = request.GET
 
-	check_perm('edit_project', project, request.user)
+	check_perm_or404('edit_project', project, request.user)
 
 	if request.method != 'POST':
 		# Исходный запрос; форма заполняется данными текущей записи.
@@ -85,7 +85,7 @@ def edit_server(request, server_id):
 	project = server.proj
 	data = request.GET
 
-	check_perm('edit_server', project, request.user)
+	check_perm_or404('edit_server', project, request.user)
 
 	if request.method != 'POST':
 		# Исходный запрос; форма заполняется данными текущей записи.
@@ -96,7 +96,7 @@ def edit_server(request, server_id):
 
 		if form.is_valid():
 			if request.POST.get('delete'):
-				check_perm('del_server', project, request.user)
+				check_perm_or404('del_server', project, request.user)
 				delete_server(request, server)
 			elif request.POST.get('ok'):
 				form.save()
@@ -116,7 +116,7 @@ def edit_update(request, update_id):
 	project = update.proj
 	data = request.GET
 
-	check_perm('edit_update', project, request.user)
+	check_perm_or404('edit_update', project, request.user)
 
 	if request.method != 'POST':
 		# Исходный запрос; форма заполняется данными текущей записи.
@@ -128,7 +128,7 @@ def edit_update(request, update_id):
 
 		if form.is_valid():
 			if request.POST.get('delete'):
-				check_perm('del_update', project, request.user)
+				check_perm_or404('del_update', project, request.user)
 				delete_object(request, update)
 			elif request.POST.get('ok'):
 				if form.files:
@@ -152,7 +152,7 @@ def edit_script(request, script_id):
 	project = script.proj
 	data = request.GET
 
-	check_perm('edit_script', project, request.user)
+	check_perm_or404('edit_script', project, request.user)
 
 	if request.method != 'POST':
 		# Исходный запрос; форма заполняется данными текущей записи.
@@ -164,7 +164,7 @@ def edit_script(request, script_id):
 
 		if form.is_valid():
 			if request.POST.get('delete'):
-				check_perm('del_script', project, request.user)
+				check_perm_or404('del_script', project, request.user)
 				delete_object(request, script)
 			elif request.POST.get('ok'):
 				form.save()
