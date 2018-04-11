@@ -58,7 +58,6 @@ function show_or_hide(id, panel, button, set) {
     function show_info() {
         status.checked = true;
         button.value = 'Hide Info';
-        button.title = 'Hide script info.';
         for (i = 0; i < panels.length;  i++) {
             panels[i].classList.remove('hidden');
         }
@@ -67,7 +66,6 @@ function show_or_hide(id, panel, button, set) {
     function hide_info() {
         status.checked = false;
         button.value = 'Show Info';
-        button.title = 'Show script info.';
         for (i = 0; i < panels.length;  i++) {
             panels[i].classList.add('hidden');
         }
