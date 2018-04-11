@@ -1,70 +1,97 @@
 {% load bootstrap3 %}
 
-{% buttons %}
+<div class="row">
 
-    {% if "run_command" in pr_view_perms %}
-        {% if dmplist %}
-            <div class="btn-group">
-                <button type="button" class="btn btn-info btn-xs dropdown-toggle" data-toggle="dropdown">Commands
-                    <span class="caret"></span>
+    <div class="col-sm-5"> <!--Dumps filter-->
+
+        <div class="input-group">
+            <div class="input-group-btn">
+                <button class="btn btn-info btn-sm" tabindex="-1">Filter</button>
+                <!-- Dropdown using dropdown-toggle class -->
+                <button type="button" class="btn btn-info btn-sm dropdown-toggle"
+                    data-toggle="dropdown" tabindex="-1">
+                    List <span class="caret"></span><!-- caret -->
+                    <span class="sr-only">Toggle Dropdown</span>
                 </button>
+                <!-- Dropdown list items -->
                 <ul class="dropdown-menu" role="menu">
+                    <li><a href="javascript:;" onclick="filter_by('id_dumps', '')">All</a></li>
+                    <li><a href="javascript:;" onclick="filter_by('id_dumps', '{%now "d-m-Y"%}')">Current date</a></li>
 
-                    <li><a onclick="return Validation('send_dump', true, false, false, false, true, true)"
-                           title="Copy DB dump to selected server(s)."
-                           href="javascript:;"
-                           class="danger">Send dump</a></li>
+                    <li class="divider"></li>
 
-                    <li><a onclick="return Validation('get_dump', true, false, false, false, false, false)"
-                           title="Get DB dump from selected server(s)."
-                           href="javascript:;">Get dump</a></li>
-
-                    <li><a onclick="return Validation('del_dump', false, false, false, false, true, false)"
-                           title="Delete selected dump(s)."
-                           href="javascript:;">Del dump</a></li>
+                    {% for DMP in dmplist %}
+                        <li><a href="javascript:;" onclick="filter_by('id_dumps', '{{DMP.name}}')">{{DMP.name}}</a></li>
+                    {% endfor %}
                 </ul>
             </div>
+            {% bootstrap_form dmplist_filter size="small" %}
+        </div>
 
-            <input type="button"
-                   value="Select All"
-                   title="Select all dumps."
-                   class="btn btn-info btn-xs"
-                   onclick="select_all('selected_dumps', 'dump-body', true,  'SD')"/>
+    </div> <!--Dumps filter end-->
 
-            <input type="button"
-                   value="Deselect All"
-                   title="Deselect all dumps."
-                   class="btn btn-info btn-xs"
-                   onclick="select_all('selected_dumps', 'dump-body', false, 'SD')"/>
+    <div class="col-sm-7">
 
-            <input type="button"
-                   value="Hide Info"
-                   title="Hide dumps' info."
-                   class="btn btn-info btn-xs dhide"
-                   onclick="hide_info('id_dbdump_info', '.dbdump-panel', '.dhide', '.dshow'); $('#selector').submit()"/>
+        {% if "run_command" in pr_view_perms %}
+            {% if dmplist %}
 
-            <input type="button"
-                   value="Show Info"
-                   title="Show dumps' info."
-                   class="btn btn-info btn-xs dshow"
-                   onclick="show_info('id_dbdump_info', '.dbdump-panel', '.dshow', '.dhide'); $('#selector').submit()"/>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown">Commands
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
 
-<!---------------------------------------Delete button----------------------------------------->
-<!---------------------------- Validation('cmd_name', server, update, cronjob, script, dump) -->
-            <a onclick="run_or_cron('RUN');
-                        return Validation('del_dump', false, false, false, false, true)"
-               title="Delete selected dump(s)."
-               class="btn btn-danger btn-xs"
-               href="javascript:;">Delete</a>
-        {% endif %}
+                        <li><a title="Select all dumps."
+                               onclick="select_all('selected_dumps', 'dump-body', true,  'SD')"
+                               href="javascript:;">Select All</a></li>
 
-<!-----------------------------------------Get button------------------------------------------>
-<!---------------------------- Validation('cmd_name', server, update, cronjob, script, dump) -->
-            <a onclick="run_or_cron('RUN');
-                        return Validation('get_dump', true, false, false, false, false)"
-               title="Get DB dump from selected server(s)."
-               class="btn btn-success btn-xs"
-               href="javascript:;">Get</a>
-    {% endif %}
+                        <li><a title="Deselect all dumps."
+                               onclick="select_all('selected_dumps', 'dump-body', false, 'SD')"
+                               href="javascript:;">Deselect All</a></li>
 
-{% endbuttons %}
+                        <li class="divider"></li>
+                        
+                        <li><a onclick="return Validation('send_dump', true, false, false, false, true, true)"
+                               title="Copy DB dump to selected server(s)."
+                               href="javascript:;"
+                               class="danger">Send dump</a></li>
+
+                        <li><a onclick="return Validation('get_dump', true, false, false, false, false, false)"
+                               title="Get DB dump from selected server(s)."
+                               href="javascript:;">Get dump</a></li>
+
+                        <li><a onclick="return Validation('del_dump', false, false, false, false, true, false)"
+                               title="Delete selected dump(s)."
+                               href="javascript:;">Del dump</a></li>
+                    </ul>
+                </div>
+
+                <div class="btn-group">
+                    <input id="dshow"
+                           type="button"
+                           value="Show Info"
+                           title="Show dumps info."
+                           class="btn btn-info btn-sm"
+                           onclick="show_or_hide('id_dbdump_info', 'dbdump-panel', 'dshow')"/>
+                </div>
+
+                <div class="btn-group">
+                    <a onclick="run_or_cron('RUN');
+                                return Validation('del_dump', false, false, false, false, true)"
+                       title="Delete selected dump(s)."
+                       class="btn btn-danger btn-sm"
+                       href="javascript:;">Delete</a>
+                </div>
+            {% endif %} <!---| If can run |--->
+
+            <div class="btn-group">
+                <a onclick="run_or_cron('RUN');
+                            return Validation('get_dump', true, false, false, false, false)"
+                   title="Get DB dump from selected server(s)."
+                   class="btn btn-success btn-sm"
+                   href="javascript:;">Get</a>
+            </div>
+        {% endif %} <!---| If dumps exists |--->
+
+    </div>
+</div>

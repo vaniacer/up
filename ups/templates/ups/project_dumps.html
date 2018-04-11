@@ -1,13 +1,13 @@
 {% load bootstrap3 %}
 
 <br>
-<div class="row">
-    <div class="col-md-2"><h3 class="Name">Dumps</h3></div>
-    <div class="col-md-10">{% include "ups/project_dumps_buttons.html" %}</div>
-</div>
+
+{% buttons %}
+    {% include "ups/project_dumps_buttons.html" %}
+{% endbuttons %}
 
 <div class="roller droller">
-{% for dump in dmplist %}
+{% for dump in dmplist_filtered %}
 
     <div class="panel panel-default"
          onclick="selector('dx{{dump.id}}', 'db{{dump.id}}', '{{dump.name}}', 'SD')">
@@ -15,26 +15,6 @@
         <div class="panel-heading">
             <h4 class="Name">{{dump.name}}</h4>
             {% include "ups/commands_dumps.html" %}
-            
-            <!--Individual visibility buttons-->
-            <input value="-"
-                   type="button"
-                   title="Hide dump info."
-                   class="btn btn-xs dhide dh{{dump.id}} right"
-                   onclick="selector('dx{{dump.id}}', 'db{{dump.id}}', '{{dump.name}}', 'SD');
-                            hide_info('di{{dump.id}}',
-                                      '.dp{{dump.id}}',
-                                      '.dh{{dump.id}}',
-                                      '.ds{{dump.id}}')"/>
-            <input value="+"
-                   type="button"
-                   title="Show dump info."
-                   class="btn btn-xs dshow ds{{dump.id}} right"
-                   onclick="selector('dx{{dump.id}}', 'db{{dump.id}}', '{{dump.name}}', 'SD');
-                            show_info('di{{dump.id}}',
-                                      '.dp{{dump.id}}',
-                                      '.ds{{dump.id}}',
-                                      '.dh{{dump.id}}')"/>
         </div>
 
         <div class="panel-body dump-body" id="db{{dump.id}}">

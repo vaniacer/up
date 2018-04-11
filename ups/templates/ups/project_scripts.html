@@ -1,13 +1,13 @@
 {% load bootstrap3 %}
 
 <br>
-<div class="row">
-    <div class="col-md-2"><h3 class="Name">Scripts</h3></div>
-    <div class="col-md-10">{% include "ups/project_scripts_buttons.html" %}</div>
-</div>
+
+{% buttons %}
+    {% include "ups/project_scripts_buttons.html" %}
+{% endbuttons %}
 
 <div class="roller xroller">
-{% for script in scripts %}
+{% for script in scripts_filtered %}
 
     <div class="panel panel-default"
          onclick="selector('xx{{script.id}}', 'xb{{script.id}}', '{{script}}', 'SX')">
@@ -15,26 +15,6 @@
         <div class="panel-heading">
             <h4 class="Name" title="{{script.desc}}">{{script}} </h4>
             {% include "ups/commands_scripts.html" %}
-
-            <!--Individual visibility buttons-->
-            <input value="-"
-                   type="button"
-                   title="Hide script info."
-                   class="btn btn-xs xhide xh{{script.id}} right"
-                   onclick="selector('xx{{script.id}}', 'xb{{script.id}}', '{{script}}', 'SX');
-                            hide_info('xi{{script.id}}',
-                                      '.xp{{script.id}}',
-                                      '.xh{{script.id}}',
-                                      '.xs{{script.id}}')"/>
-            <input value="+"
-                   type="button"
-                   title="Show script info."
-                   class="btn btn-xs xshow xs{{script.id}} right"
-                   onclick="selector('xx{{script.id}}', 'xb{{script.id}}', '{{script}}', 'SX');
-                            show_info('xi{{script.id}}',
-                                      '.xp{{script.id}}',
-                                      '.xs{{script.id}}',
-                                      '.xh{{script.id}}')"/>
         </div>
 
         <div class="panel-body script-body" id="xb{{script.id}}">

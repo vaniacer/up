@@ -67,12 +67,24 @@ class ScriptEditForm(forms.ModelForm):
 		}
 
 
-class SerfltrForm(forms.Form):
-	servers = forms.CharField(label='', required=False)
-
-
-class HideForm(forms.Form):
+class HideInfoForm(forms.Form):
 	server_info = forms.BooleanField(label='', required=False)
 	script_info = forms.BooleanField(label='', required=False)
 	update_info = forms.BooleanField(label='', required=False)
 	dbdump_info = forms.BooleanField(label='', required=False)
+
+
+class ServersFilterForm(forms.Form):
+	servers = forms.CharField(label='', required=False)
+
+
+class ScriptsFilterForm(forms.Form):
+	scripts = forms.CharField(label='', required=False)
+
+
+class UpdatesFilterForm(forms.Form):
+	updates = forms.CharField(label='', required=False)
+
+
+class DumpsFilterForm(forms.Form):
+	dumps = forms.CharField(label='', required=False)

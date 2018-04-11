@@ -49,6 +49,53 @@ function run_or_cron(type) {
     }
 }
 
+//show_info('id_script_info', '.script-panel', '.xshow', '.xhide'); $('#selector').submit()"
+//function hide_info(id, panel, hb, sb) {
+//    $(panel).hide(); $(hb).hide(); $(sb).show();
+//    document.getElementById(id).checked = false
+//};
+//
+//function show_info(id, panel, hb, sb) {
+//    $(panel).show(); $(hb).hide(); $(sb).show();
+//    document.getElementById(id).checked = true
+//};
+
+function show_or_hide(id, panel, button, set) {
+
+    var status = document.getElementById(id);
+    var button = document.getElementById(button);
+    var panels = document.getElementsByClassName(panel);
+    var buttons = document.getElementsByClassName(button);
+
+    function show_info() {
+        status.checked = true;
+        button.value = 'Hide Info';
+        button.title = 'Hide script info.';
+        for (i = 0; i < panels.length;  i++) {
+            panels[i].classList.remove('hidden');
+        }
+    }
+
+    function hide_info() {
+        status.checked = false;
+        button.value = 'Show Info';
+        button.title = 'Show script info.';
+        for (i = 0; i < panels.length;  i++) {
+            panels[i].classList.add('hidden');
+        }
+    }
+
+    if (set == 'show') { show_info(); }
+    if (set == 'hide') { hide_info(); }
+    if (!set) {
+        if (status.checked) {
+            hide_info();
+        } else {
+            show_info();
+        }
+    }
+}
+
 function selector(box_id, body_id, name, obj) {
     var body = document.getElementById(body_id);
     var box  = document.getElementById(box_id);
@@ -138,21 +185,11 @@ function Validation(cmd, srv, upd, job, scr, dmp, dgr) {
     if (cmd) { $('#selected_command').val(cmd); document.getElementById('selector').submit(); }
 }
 
-function select_server(server) {
-    $('#selected_command').val('');
-    $('#id_servers').val(server);
-    $('#selector').submit();
+function filter_by(id, value) {
+    document.getElementById('selected_command').value = '';
+    document.getElementById(id).value = value;
+    document.getElementById('selector').submit();
 }
-
-function hide_info(id, panel, hb, sb) {
-    $(panel).hide(); $(hb).hide(); $(sb).show();
-    document.getElementById(id).checked = false
-};
-
-function show_info(id, panel, hb, sb) {
-    $(panel).show(); $(hb).hide(); $(sb).show();
-    document.getElementById(id).checked = true
-};
 
 $(function() {
     // Change tab on load
@@ -183,18 +220,18 @@ $(document).ready(function() {
     select_all('selected_jobs',    'job-body',    false, 'SJ');
 
     if (document.getElementById('id_server_info').checked) {
-           show_info('id_server_info', '.server-panel', '.sshow', '.shide'); }
-    else { hide_info('id_server_info', '.server-panel', '.shide', '.sshow'); }
+           show_or_hide('id_server_info', 'server-panel', 'sshow', 'show'); }
+    else { show_or_hide('id_server_info', 'server-panel', 'sshow', 'hide'); }
 
     if (document.getElementById('id_script_info').checked) {
-           show_info('id_script_info', '.script-panel', '.xshow', '.xhide'); }
-    else { hide_info('id_script_info', '.script-panel', '.xhide', '.xshow'); }
+           show_or_hide('id_script_info', 'script-panel', 'xshow', 'show'); }
+    else { show_or_hide('id_script_info', 'script-panel', 'xshow', 'hide'); }
 
     if (document.getElementById('id_update_info').checked) {
-           show_info('id_update_info', '.update-panel', '.ushow', '.uhide'); }
-    else { hide_info('id_update_info', '.update-panel', '.uhide', '.ushow'); }
+           show_or_hide('id_update_info', 'update-panel', 'ushow', 'show'); }
+    else { show_or_hide('id_update_info', 'update-panel', 'ushow', 'hide'); }
 
     if (document.getElementById('id_dbdump_info').checked) {
-           show_info('id_dbdump_info', '.dbdump-panel', '.dshow', '.dhide'); }
-    else { hide_info('id_dbdump_info', '.dbdump-panel', '.dhide', '.dshow'); }
+           show_or_hide('id_dbdump_info', 'dbdump-panel', 'dshow', 'show'); }
+    else { show_or_hide('id_dbdump_info', 'dbdump-panel', 'dshow', 'hide'); }
 });

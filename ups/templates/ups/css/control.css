@@ -3,6 +3,10 @@
     font-size: small;
 }
 
+.scr_filter {
+    height: 50px;
+}
+
 .port {
     display: inline;
     font-size: small;

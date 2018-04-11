@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 
+from .forms import ServersFilterForm, ScriptsFilterForm, HideInfoForm, UpdatesFilterForm, DumpsFilterForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .permissions import check_perm_or404, check_permission
 from django.http import HttpResponse, HttpResponseRedirect
@@ -8,7 +9,6 @@ from django.shortcuts import render, get_object_or_404
 from .models import Project, Update, Script, History
 from .commands import command, cmd_run, info
 from django.conf import settings as conf
-from .forms import SerfltrForm, HideForm
 from wsgiref.util import FileWrapper
 from .cron import get_cron_logs
 from operator import itemgetter
@@ -16,6 +16,7 @@ from subprocess import Popen
 from .dump import get_dumps
 import mimetypes
 import os
+import re
 
 
 def index(request):
@@ -177,24 +178,42 @@ def project(request, project_id):
 
 	servers_filter = data.get('servers', '')
 	servers = current_project.server_set.order_by('name')
-	srvfilt = servers.filter(name__iregex=servers_filter)
-	serfltr = SerfltrForm(initial=data)
-	hidefrm = HideForm(initial=data)
+	servers_filtered = servers.filter(name__iregex=servers_filter)
+	servers_filter_form = ServersFilterForm(initial=data)
 
-	dmplist = sorted(get_dumps(current_project.name) or '', key=itemgetter('date'), reverse=True)
-	updates = current_project.update_set.order_by('date').reverse()
+	scripts_filter = data.get('scripts', '')
 	scripts = current_project.script_set.order_by('desc')
+	scripts_filtered = scripts.filter(file__iregex=scripts_filter)
+	scripts_filter_form = ScriptsFilterForm(initial=data)
+
+	updates_filter = data.get('updates', '')
+	updates = current_project.update_set.order_by('date').reverse()
+	updates_filtered = updates.filter(file__iregex=updates_filter)
+	updates_filter_form = UpdatesFilterForm(initial=data)
+
+	dmplist_filter = data.get('dumps', '')
+	dmplist = sorted(get_dumps(current_project.name) or '', key=itemgetter('date'), reverse=True)
+	dmplist_filtered = [dump for dump in dmplist if re.search(dmplist_filter, dump['name'], re.IGNORECASE)]
+	dmplist_filter_form = DumpsFilterForm(initial=data)
+
+	hide_info_form = HideInfoForm(initial=data)
 
 	context = {
-		'project': current_project,
-		'servers': servers,
-		'srvfilt': srvfilt,
-		'serfltr': serfltr,
-		'updates': updates,
-		'scripts': scripts,
-		'dmplist': dmplist,
-		'hidefrm': hidefrm,
 		'info': info(data),
+		'updates': updates,
+		'dmplist': dmplist,
+		'scripts': scripts,
+		'servers': servers,
+		'project': current_project,
+		'hide_info_form': hide_info_form,
+		'servers_filtered': servers_filtered,
+		'servers_filter': servers_filter_form,
+		'scripts_filtered': scripts_filtered,
+		'scripts_filter': scripts_filter_form,
+		'updates_filtered': updates_filtered,
+		'updates_filter': updates_filter_form,
+		'dmplist_filtered': dmplist_filtered,
+		'dmplist_filter': dmplist_filter_form,
 	}
 
 	if check_permission('run_command', current_project, request.user):

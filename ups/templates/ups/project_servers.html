@@ -1,13 +1,13 @@
 {% load bootstrap3 %}
 
 <br>
-<div class="row">
-    <div class="col-md-2"><h3 class="Name">Servers</h3></div>
-    <div class="col-md-10">{% include "ups/project_servers_buttons.html" %}</div>
-</div>
+
+{% buttons %}
+    {% include "ups/project_servers_buttons.html" %}
+{% endbuttons %}
 
 <div class="roller sroller">
-    {% for server in srvfilt %}
+    {% for server in servers_filtered %}
 
         <div class="panel panel-default"
              onclick="selector('sx{{server.id}}', 'sb{{server.id}}', '{{server}}', 'SS')">
@@ -15,26 +15,6 @@
             <div class="panel-heading">
                 <h4 class="Name" title="{{server.desc}}">{{server.name}}</h4>
                 {% include "ups/commands_servers.html" %}
-
-                <!--Individual visibility buttons-->
-                <input value="-"
-                       type="button"
-                       title="Hide server info."
-                       class="btn btn-xs shide sh{{server.id}} right"
-                       onclick="selector('sx{{server.id}}', 'sb{{server.id}}', '{{server}}', 'SS');
-                                hide_info('si{{server.id}}',
-                                          '.sp{{server.id}}',
-                                          '.sh{{server.id}}',
-                                          '.ss{{server.id}}')"/>
-                <input value="+"
-                       type="button"
-                       title="Show server info."
-                       class="btn btn-xs sshow ss{{server.id}} right"
-                       onclick="selector('sx{{server.id}}', 'sb{{server.id}}', '{{server}}', 'SS');
-                                show_info('si{{server.id}}',
-                                          '.sp{{server.id}}',
-                                          '.ss{{server.id}}',
-                                          '.sh{{server.id}}')"/>
             </div>
 
             <div class="panel-body server-body" id="sb{{server.id}}">

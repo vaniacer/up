@@ -70,6 +70,12 @@ def info(data):
 		url += '&dbdump_info=on'
 	if data.get('servers'):
 		url += '&servers=%s' % data.get('servers')
+	if data.get('scripts'):
+		url += '&scripts=%s' % data.get('scripts')
+	if data.get('updates'):
+		url += '&updates=%s' % data.get('updates')
+	if data.get('dumps'):
+		url += '&dumps=%s' % data.get('dumps')
 	return url
 
 
