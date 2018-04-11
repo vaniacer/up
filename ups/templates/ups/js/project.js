@@ -49,23 +49,11 @@ function run_or_cron(type) {
     }
 }
 
-//show_info('id_script_info', '.script-panel', '.xshow', '.xhide'); $('#selector').submit()"
-//function hide_info(id, panel, hb, sb) {
-//    $(panel).hide(); $(hb).hide(); $(sb).show();
-//    document.getElementById(id).checked = false
-//};
-//
-//function show_info(id, panel, hb, sb) {
-//    $(panel).show(); $(hb).hide(); $(sb).show();
-//    document.getElementById(id).checked = true
-//};
-
 function show_or_hide(id, panel, button, set) {
 
     var status = document.getElementById(id);
     var button = document.getElementById(button);
     var panels = document.getElementsByClassName(panel);
-    var buttons = document.getElementsByClassName(button);
 
     function show_info() {
         status.checked = true;
@@ -182,7 +170,10 @@ function Validation(cmd, srv, upd, job, scr, dmp, dgr) {
     }
 
     show_loader();
-    if (cmd) { $('#selected_command').val(cmd); document.getElementById('selector').submit(); }
+    if (cmd) {
+        document.getElementById('selected_command').value = cmd;
+        document.getElementById('selector').submit();
+    }
 }
 
 function filter_by(id, value) {
@@ -211,14 +202,6 @@ $(function() {
 });
 
 $(document).ready(function() {
-    $('#run_type').val('')
-    $('#selected_command').val('')
-    select_all('selected_servers', 'server-body', false, 'SS');
-    select_all('selected_updates', 'update-body', false, 'SU');
-    select_all('selected_scripts', 'script-body', false, 'SX');
-    select_all('selected_dumps',   'dump-body',   false, 'SD');
-    select_all('selected_jobs',    'job-body',    false, 'SJ');
-
     if (document.getElementById('id_server_info').checked) {
            show_or_hide('id_server_info', 'server-panel', 'sshow', 'show'); }
     else { show_or_hide('id_server_info', 'server-panel', 'sshow', 'hide'); }
