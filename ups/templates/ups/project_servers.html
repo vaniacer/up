@@ -9,8 +9,7 @@
 <div class="roller">
     {% for server in servers_filtered %}
 
-        <div class="panel panel-default"
-             onclick="selector('sx{{server.id}}', 'sb{{server.id}}', '{{server}}', 'SS')">
+        <div class="panel panel-default" onclick="selector('sx{{server.id}}', 'sb{{server.id}}', '{{server}}', 'SS')">
 
             <div class="panel-heading">
                 <h4 class="Name" title="{{server.desc}}">{{server.name}}</h4>
@@ -37,7 +36,7 @@
                 {% endif %}
             </div>
 
-        </div> <!-- panel -->
+        </div>
 
     {% empty %}
         There are no servers for this project yet.

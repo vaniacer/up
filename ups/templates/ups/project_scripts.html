@@ -7,38 +7,37 @@
 {% endbuttons %}
 
 <div class="roller">
-{% for script in scripts_filtered %}
+    {% for script in scripts_filtered %}
 
-    <div class="panel panel-default"
-         onclick="selector('xx{{script.id}}', 'xb{{script.id}}', '{{script}}', 'SX')">
+        <div class="panel panel-default" onclick="selector('xx{{script.id}}', 'xb{{script.id}}', '{{script}}', 'SX')">
 
-        <div class="panel-heading">
-            <h4 class="Name" title="{{script.desc}}">{{script}} </h4>
-            {% include "ups/commands_scripts.html" %}
+            <div class="panel-heading">
+                <h4 class="Name" title="{{script.desc}}">{{script}} </h4>
+                {% include "ups/commands_scripts.html" %}
+            </div>
+
+            <div class="panel-body script-body" id="xb{{script.id}}">
+                <dl class="dl-horizontal script-panel xp{{script.id}}">
+                    <dt>Description</dt><dd>{{script.desc|linebreaks}}</dd>
+                    <dt>Preview</dt><dd>{{script.body|linebreaks|truncatewords:20}}</dd>
+                    <dt><small>Added by</small></dt><dd><small>{{script.user}}</small></dd>
+                    <dt><small>Date added</small></dt><dd><small>{{script.date|date:'M d, Y H:i'}}</small></dd>
+                </dl>
+
+                {% if "run_command" in pr_view_perms %}
+                    <!--Hidden checkboxes-->
+                    <input class="hidden"
+                           type="checkbox"
+                           id="xx{{script.id}}"
+                           name="selected_scripts"
+                           value="{{script.id}}"
+                           data-target="{{script}}"/>
+                {% endif %}
+            </div>
+
         </div>
 
-        <div class="panel-body script-body" id="xb{{script.id}}">
-            <dl class="dl-horizontal script-panel xp{{script.id}}">
-                <dt>Description</dt><dd>{{script.desc|linebreaks}}</dd>
-                <dt>Preview</dt><dd>{{script.body|linebreaks|truncatewords:20}}</dd>
-                <dt><small>Added by</small></dt><dd><small>{{script.user}}</small></dd>
-                <dt><small>Date added</small></dt><dd><small>{{script.date|date:'M d, Y H:i'}}</small></dd>
-            </dl>
-
-            {% if "run_command" in pr_view_perms %}
-                <!--Hidden checkboxes-->
-                <input class="hidden"
-                       type="checkbox"
-                       id="xx{{script.id}}"
-                       name="selected_scripts"
-                       value="{{script.id}}"
-                       data-target="{{script}}"/>
-            {% endif %}
-        </div>
-
-    </div> <!-- panel -->
-
-{% empty %}
-    There are no scripts for this project yet.
-{% endfor %}
+    {% empty %}
+        There are no scripts for this project yet.
+    {% endfor %}
 </div>
