@@ -27,6 +27,7 @@ def command(selected):
 		'permanent_job':   {'history':  True, 'bash':    'cronjob_perm.sh', 'tag': False, },
 		# Maintenance     +------------------+-----------------------------+----------------+
 		'stop':            {'history':  True, 'bash':            'stop.sh', 'tag': False, },
+		'kill':            {'history':  True, 'bash':            'kill.sh', 'tag': False, },
 		'start':           {'history':  True, 'bash':           'start.sh', 'tag': False, },
 		'reload':          {'history':  True, 'bash':          'reload.sh', 'tag': False, },
 		'restart':         {'history':  True, 'bash':         'restart.sh', 'tag': False, },
