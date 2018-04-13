@@ -16,12 +16,12 @@
                     {% include "ups/project_bottom_panel_add.html" %}
                 {% endif %}
                 {% if "run_command" in pr_view_perms %}
-                    {% include "ups/project_bottom_panel_select.html"   %}
+                    {% include "ups/project_bottom_panel_select.html" %}
                 {% endif %}
             </ul>
             <ul class="nav navbar-nav col-md-5">
                 {% if "run_command" in pr_view_perms %}
-                    {% include "ups/project_bottom_panel_cron.html"     %}
+                    {% include "ups/project_bottom_panel_cron.html" %}
                 {% endif %}
             </ul>
 
@@ -33,7 +33,3 @@
         </div><!--/.nav-collapse -->
     </div>
 </nav>
-
-<!--Hidden checkboxes-->
-<input type="checkbox" class="hidden" name="RUN"  id="RUN"/>
-<input type="checkbox" class="hidden" name="CRON" id="CRON" value="True"/>

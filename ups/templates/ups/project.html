@@ -3,26 +3,22 @@
 {% load bootstrap3 %}
 
 {% block header %}
-
-    {% get_obj_perms request.user for project as "pr_view_perms" %}
-    <br>
-
     <title>UpS: {{project}}</title>
-    <div class="row">
-        <div class="col-md-2">
-            <h2 class="Name">{{project}}</h2>
-            {% if "edit_project" in pr_view_perms %}
-                <a href="{% url 'ups:edit_project' project.id %}?{{info}}" class="Edit">Edit</a>
-            {% endif %}
-        </div>
-        <div class="col-md-6"><h5>{{project.desc|linebreaks}}</h5></div>
-    </div>
-
 {% endblock header %}
 
 {% block content %}
 
     {% get_obj_perms request.user for project as "pr_view_perms" %}
+
+    <div class="col-md-2">
+        <h2 class="Name">{{project}}</h2>
+        {% if "edit_project" in pr_view_perms %}
+            <a href="{% url 'ups:edit_project' project.id %}?{{info}}" class="Edit">Edit</a>
+        {% endif %}
+    </div>
+    <div class="col-md-2">
+        <h5>{{project.desc|linebreaks}}</h5>
+    </div>
 
     <form method='GET' action="{% url 'ups:project' project.id %}" id="selector">
         <!--{% csrf_token %}-->
@@ -36,41 +32,67 @@
         {% endif %}
 
         <!-- Nav tabs -->
-        {% if "run_command" in pr_view_perms %}
-            <ul class="nav nav-tabs nav-justified" role="tablist">
-                <li role="presentation" class="active">
-                    <a href="#main" aria-controls="main" role="tab" data-toggle="tab"><h4>Main</h4></a>
-                </li>
+        <ul class="nav nav-tabs nav-justified" role="tablist">
 
-                <li role="presentation">
-                    <a href="#cron" aria-controls="cron" role="tab" data-toggle="tab"><h4>Cron Jobs</h4></a>
-                </li>
+            <li role="presentation" class="active">
+                <a href="#scripts" aria-controls="scripts" role="tab" data-toggle="tab"
+                   onclick="show_or_hide('', 'servers_tab', '', 'show')">Scripts</a>
+            </li>
 
-                <li role="presentation">
-                    <a href="#history" aria-controls="history" role="tab" data-toggle="tab"><h4>History</h4></a>
-                </li>
-            </ul>
+            <li role="presentation">
+                <a href="#updates" aria-controls="updates" role="tab" data-toggle="tab"
+                   onclick="show_or_hide('', 'servers_tab', '', 'show')">Updates</a>
+            </li>
 
-            <!-- Tab panes -->
-            <div class="tab-content">
-                <div role="tabpanel" class="tab-pane fade in active row" id="main">
-                    {% include "ups/project_main.html" %}
-                </div>
+            <li role="presentation">
+                <a href="#dumps" aria-controls="dumps" role="tab" data-toggle="tab"
+                   onclick="show_or_hide('', 'servers_tab', '', 'show')">Dumps</a>
+            </li>
 
-                <div role="tabpanel" class="tab-pane fade" id="cron">
-                    {% include "ups/project_cron.html" %}
-                </div>
+            <li role="presentation">
+                <a href="#cron" aria-controls="cron" role="tab" data-toggle="tab"
+                   onclick="show_or_hide('', 'servers_tab', '', 'hide')">Cron Jobs</a>
+            </li>
 
-                <div role="tabpanel" class="tab-pane fade" id="history">
-                    {% include "ups/project_history.html" %}
+            <li role="presentation">
+                <a href="#history" aria-controls="history" role="tab" data-toggle="tab"
+                   onclick="show_or_hide('', 'servers_tab', '', 'hide')">History</a>
+            </li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane in active" id="scripts" >
+                <div class="col-md-6">
+                    {% include "ups/project_scripts.html" %}
                 </div>
             </div>
-        {% else %}
-            {% include "ups/project_main.html" %}
-        {% endif %}
+
+            <div role="tabpanel" class="tab-pane" id="updates">
+                <div class="col-md-6">
+                    {% include "ups/project_updates.html" %}
+                </div>
+            </div>
+
+            <div role="tabpanel" class="tab-pane" id="dumps">
+                <div class="col-md-6">
+                    {% include "ups/project_dumps.html" %}
+                </div>
+            </div>
+
+            <div role="tabpanel" class="tab-pane" id="cron">
+                {% include "ups/project_cron.html" %}
+            </div>
+
+            <div role="tabpanel" class="tab-pane" id="history">
+                {% include "ups/project_history.html" %}
+            </div>
+        </div>
+
+        <div class="col-md-6 servers_tab">
+            {% include "ups/project_servers.html" %}
+        </div>
+
         {% include "ups/project_bottom_panel.html" %}
-
     </form>
-
-<br><br>
 {% endblock content %}

@@ -56,16 +56,16 @@ function show_or_hide(id, panel, button, set) {
     var panels = document.getElementsByClassName(panel);
 
     function show_info() {
-        status.checked = true;
-        button.value = 'Info On';
+        if (status) { status.checked = true; }
+        if (button) { button.value = 'Info On'; }
         for (i = 0; i < panels.length;  i++) {
             panels[i].classList.remove('hidden');
         }
     }
 
     function hide_info() {
-        status.checked = false;
-        button.value = 'Info Off';
+        if (status) { status.checked = false; }
+        if (button) { button.value = 'Info Off'; }
         for (i = 0; i < panels.length;  i++) {
             panels[i].classList.add('hidden');
         }
