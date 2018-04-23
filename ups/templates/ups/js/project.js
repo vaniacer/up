@@ -185,18 +185,29 @@ $(function() {
     var hash = window.location.hash;
     hash && $('ul.nav a[href="' + hash + '"]').tab('show');
 
+    function servers(hash) {
+        show_or_hide('', 'servers_tab', '', 'hide');
+        if (hash == '#scripts' || hash == '#updates' || hash == '#dumps' || hash == '') {
+            show_or_hide('', 'servers_tab', '', 'show');
+        }
+    }
+
     $('.nav-tabs a').click(function (e) {
         $(this).tab('show');
-        var scrollmem = $('body').scrollTop();
         window.location.hash = this.hash;
-        $('html,body').scrollTop(scrollmem);
+        servers(hash);
+        go_up();
     });
 
     // Change tab on hashchange
     window.addEventListener('hashchange', function() {
         var changedHash = window.location.hash;
         changedHash && $('ul.nav a[href="' + changedHash + '"]').tab('show');
+        servers(changedHash);
+        go_up();
     }, false);
+
+    servers(hash);
 });
 
 $(document).ready(function() {
