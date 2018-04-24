@@ -187,6 +187,7 @@ $(function() {
 
     function servers(hash) {
         show_or_hide('', 'servers_tab', '', 'hide');
+        document.getElementById('id_tab').value = hash.replace('#', '');
         if (hash == '#scripts' || hash == '#updates' || hash == '#dumps' || hash == '') {
             show_or_hide('', 'servers_tab', '', 'show');
         }

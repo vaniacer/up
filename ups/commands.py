@@ -77,6 +77,8 @@ def info(data):
 		url += '&updates=%s' % data.get('updates')
 	if data.get('dumps'):
 		url += '&dumps=%s' % data.get('dumps')
+	if data.get('tab'):
+		url += '#%s' % data.get('tab')
 	return url
 
 
@@ -126,15 +128,16 @@ def cmd_run(data, project, user):
 		selected['hid'] = add_event(selected, 'Working...', '', crn, date)
 	starter(selected)
 
-	url = '/command_log/?cmd=%s&rtype=%s&hid=%s&cid=%s&prid=%s%s&timedate=%s&logid=%s' % (
+	url = '/command_log/?cmd=%s&rtype=%s&hid=%s&cid=%s&tab=%s&prid=%s&timedate=%s&logid=%s%s' % (
 		selected['command'],
 		selected['rtype'],
 		selected['hid'],
 		selected['cid'],
+		data.get('tab'),
 		project.id,
-		info(data),
 		date,
 		key,
+		info(data),
 	)
 
 	return url
