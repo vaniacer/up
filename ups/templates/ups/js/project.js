@@ -183,10 +183,10 @@ function filter_by(id, value) {
 $(function() {
 
     function servers(hash) {
-        show_or_hide('_O_', 'servers_tab', '_O_', 'hide');
+        show_or_hide('dummy', 'servers_tab', 'dummy', 'hide');
         document.getElementById('id_tab').value = hash.replace('#', '');
         if (hash == '#scripts' || hash == '#updates' || hash == '#dumps' || hash == '') {
-            show_or_hide('_O_', 'servers_tab', '_O_', 'show');
+            show_or_hide('dummy', 'servers_tab', 'dummy', 'show');
         }
     }
 
