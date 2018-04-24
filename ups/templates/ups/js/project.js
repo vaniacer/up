@@ -181,18 +181,22 @@ function filter_by(id, value) {
 }
 
 $(function() {
-    // Change tab on load
-    var hash = window.location.hash;
-    hash && $('ul.nav a[href="' + hash + '"]').tab('show');
 
     function servers(hash) {
-        show_or_hide('', 'servers_tab', '', 'hide');
+        show_or_hide('_O_', 'servers_tab', '_O_', 'hide');
         document.getElementById('id_tab').value = hash.replace('#', '');
         if (hash == '#scripts' || hash == '#updates' || hash == '#dumps' || hash == '') {
-            show_or_hide('', 'servers_tab', '', 'show');
+            show_or_hide('_O_', 'servers_tab', '_O_', 'show');
         }
     }
 
+    // Change tab on load
+    var hash = window.location.hash;
+    var tabs = document.getElementById('id_tab').value;
+    if (tabs) { hash = '#' + tabs; }
+    hash && $('ul.nav a[href="' + hash + '"]').tab('show');
+
+    // Change tab on click
     $('.nav-tabs a').click(function (e) {
         $(this).tab('show');
         window.location.hash = this.hash;
