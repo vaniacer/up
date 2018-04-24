@@ -24,6 +24,9 @@
                     {% for SRV in servers %}
                         <li><a href="javascript:;" onclick="filter_by('id_servers', '{{SRV}}')">{{SRV}}</a></li>
                     {% endfor %}
+
+                    <li><br><br><br></li>
+
                 </ul>
             </div>
             {% bootstrap_form servers_filter size="small" %}
@@ -152,10 +155,8 @@
                                href="{% url 'ups:new_server' project.id %}?{{info}}">Add server</a></li>
                     {% endif %}
 
-                    <li class="divider"></li>
-                    <li class="divider"></li>
-                    <li class="divider"></li>
-                    <li class="divider"></li>
+                    <li><br><br><br></li>
+
                 </ul>
             </div>
 

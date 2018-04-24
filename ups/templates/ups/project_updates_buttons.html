@@ -25,6 +25,9 @@
                     {% for UPD in updates %}
                         <li><a href="javascript:;" onclick="filter_by('id_updates', '{{UPD}}')">{{UPD}}</a></li>
                     {% endfor %}
+
+                    <li><br><br><br></li>
+
                 </ul>
             </div>
             {% bootstrap_form updates_filter size="small" %}
@@ -77,6 +80,8 @@
                             <li><a title="Add new update file."
                                    href="{% url 'ups:new_update' project.id %}?{{info}}">Add new update</a></li>
                         {% endif %}
+
+                        <li><br><br><br></li>
 
                     </ul>
                 </div>
