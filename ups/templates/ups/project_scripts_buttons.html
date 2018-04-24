@@ -64,13 +64,16 @@
                                title="Run selected SQL script(s) on selected server(s)."
                                href="javascript:;">Run SQL script</a></li>
 
-                        <li class="divider"></li>
+                        {% if "add_script" in pr_view_perms %}
+                            <li class="divider"></li>
 
-                        <li><a title="Create new script."
-                               href="{% url 'ups:create_script' project.id %}?{{info}}">Create new script</a></li>
+                            <li><a title="Create new script."
+                                   href="{% url 'ups:create_script' project.id %}?{{info}}">Create new script</a></li>
 
-                        <li><a title="Add new script from file."
-                               href="{% url 'ups:new_script' project.id %}?{{info}}">Add script from file</a></li>
+                            <li><a title="Add new script from file."
+                                   href="{% url 'ups:new_script' project.id %}?{{info}}">Add script from file</a></li>
+                        {% endif %}
+
                     </ul>
                 </div>
 

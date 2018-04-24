@@ -71,10 +71,13 @@
                                href="javascript:;"
                                class="danger">Delete selected updates</a></li>
 
-                        <li class="divider"></li>
+                        {% if "add_update" in pr_view_perms %}
+                            <li class="divider"></li>
 
-                        <li><a title="Add new update file."
-                               href="{% url 'ups:new_update' project.id %}?{{info}}">Add new update</a></li>
+                            <li><a title="Add new update file."
+                                   href="{% url 'ups:new_update' project.id %}?{{info}}">Add new update</a></li>
+                        {% endif %}
+
                     </ul>
                 </div>
 
