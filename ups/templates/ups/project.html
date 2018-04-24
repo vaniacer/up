@@ -10,6 +10,14 @@
 
     {% get_obj_perms request.user for project as "pr_view_perms" %}
 
+    <div id="SU"></div> <!-- Selected updates list -->
+    <div id="SS"></div> <!-- Selected servers list -->
+    <div id="SX"></div> <!-- Selected scripts list -->
+    <div id="SJ"></div> <!-- Selected crnjobs list -->
+    <div id="SD"></div> <!-- Selected dumps   list -->
+
+    <br>
+
     <div class="col-md-2">
         <h2 class="Name">{{project}}</h2>
         {% if "edit_project" in pr_view_perms %}
