@@ -10,7 +10,7 @@ function run () { #---------------------------------| Main function |-----------
 
     info 'Set jobs to run once'
     for id in "${jobs[@]}"; {
-        sed="s|^.*$id.*$|&; sed '/$id/d' -i '$cronfile'|g;/.*$id/ s|\* \* \*|$DD $MM \*|g;"$sed
+        sed="s|^.*-C $id.*$|&; sed '/$id/d' -i '$cronfile'|g;/.*$id/ s|\* \* \*|$DD $MM \*|g;"$sed
         printf "\n$id"
     }
 
