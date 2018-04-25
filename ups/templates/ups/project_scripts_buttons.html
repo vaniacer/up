@@ -2,7 +2,7 @@
 
 <div class="row">
 
-    <div class="col-sm-6"> <!--| Script filter |-->
+    <div class="col-sm-6"> <!---| Script filter |--->
 
         <div class="input-group">
             <div class="input-group-btn">
@@ -33,9 +33,9 @@
             {% bootstrap_form scripts_filter size="small" %}
         </div>
 
-    </div> <!----------------| Script filter end |-->
+    </div> <!-----------------| Script filter end |--->
 
-    <div class="col-sm-6"> <!--| Script commands |-->
+    <div class="col-sm-6"> <!---| Script commands |--->
 
         {% if scripts %}
 
@@ -102,14 +102,12 @@
                 <a title="Add new script from file."
                    class="btn btn-success btn-sm"
                    href="{% url 'ups:new_script' project.id %}?{{info}}">Add</a>
-            <!--</div>-->
-            <!--<div class="btn-group">-->
                 <a title="Create new script."
                    class="btn btn-success btn-sm"
                    href="{% url 'ups:create_script' project.id %}?{{info}}">New</a>
             </div>
         {% endif %}
 
-    </div> <!--| Script commands end |-->
+    </div> <!---| Script commands end |--->
 
 </div>
