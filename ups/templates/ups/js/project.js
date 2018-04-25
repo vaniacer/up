@@ -175,7 +175,6 @@ function Validation(cmd, srv, upd, job, scr, dmp, dgr) {
 }
 
 function filter_by(id, value) {
-    document.getElementById('selected_command').value = '';
     document.getElementById(id).value = value;
     document.getElementById('selector').submit();
 }

@@ -37,8 +37,10 @@
 
     <div class="col-sm-6">
 
-        {% if "run_command" in pr_view_perms %}
-            {% if scripts %}
+        {% if scripts %}
+
+            {% if "run_command" in pr_view_perms %}
+
                 <div class="btn-group">
                     <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown">
                         Commands <span class="caret"></span>
@@ -82,15 +84,16 @@
                     </ul>
                 </div>
 
-                <div class="btn-group">
-                    <input id="xshow"
-                           type="button"
-                           value="Info Off"
-                           title="Show\Hide scripts info."
-                           class="btn btn-info btn-sm"
-                           onclick="show_or_hide('id_script_info', 'script-panel', 'xshow')"/>
-                </div>
             {% endif %}
+
+            <div class="btn-group">
+                <input id="xshow"
+                       type="button"
+                       value="Info Off"
+                       title="Show\Hide scripts info."
+                       class="btn btn-info btn-sm"
+                       onclick="show_or_hide('id_script_info', 'script-panel', 'xshow')"/>
+            </div>
 
         {% endif %}
 

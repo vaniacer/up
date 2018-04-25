@@ -35,8 +35,10 @@
 
     <div class="col-sm-6">
 
-        {% if "run_command" in pr_view_perms %}
-            {% if dmplist %}
+
+        {% if dmplist %}
+
+            {% if "run_command" in pr_view_perms %}
 
                 <div class="btn-group">
                     <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown">Commands
@@ -72,6 +74,8 @@
                     </ul>
                 </div>
 
+            {% endif %} <!---| If can run |--->
+
                 <div class="btn-group">
                     <input id="dshow"
                            type="button"
@@ -81,6 +85,8 @@
                            onclick="show_or_hide('id_dbdump_info', 'dbdump-panel', 'dshow')"/>
                 </div>
 
+            {% if "run_command" in pr_view_perms %}
+
                 <div class="btn-group">
                     <a onclick="run_or_cron('RUN');
                                 return Validation('del_dump', false, false, false, false, true)"
@@ -88,15 +94,17 @@
                        class="btn btn-danger btn-sm"
                        href="javascript:;">Del</a>
                 </div>
-            {% endif %} <!---| If can run |--->
 
-            <div class="btn-group">
-                <a onclick="run_or_cron('RUN');
-                            return Validation('get_dump', true, false, false, false, false)"
-                   title="Get DB dump from selected server(s)."
-                   class="btn btn-success btn-sm"
-                   href="javascript:;">Get</a>
-            </div>
+                <div class="btn-group">
+                    <a onclick="run_or_cron('RUN');
+                                return Validation('get_dump', true, false, false, false, false)"
+                       title="Get DB dump from selected server(s)."
+                       class="btn btn-success btn-sm"
+                       href="javascript:;">Get</a>
+                </div>
+
+            {% endif %} <!---| If can run2 |--->
+
         {% endif %} <!---| If dumps exists |--->
 
     </div>

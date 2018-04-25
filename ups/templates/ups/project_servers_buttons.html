@@ -36,8 +36,10 @@
 
     <div class="col-sm-6">
 
-    {% if "run_command" in pr_view_perms %}
-        {% if servers %}
+    {% if servers %}
+
+        {% if "run_command" in pr_view_perms %}
+
             <div class="btn-group">
                 <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown">Commands
                     <span class="caret"></span>
@@ -160,16 +162,16 @@
                 </ul>
             </div>
 
-            <div class="btn-group">
-                <input id="sshow"
-                       type="button"
-                       value="Info Off"
-                       title="Show\Hide servers info."
-                       class="btn btn-info btn-sm"
-                       onclick="show_or_hide('id_server_info', 'server-panel', 'sshow')"/>
-            </div>
-
         {% endif %}
+
+        <div class="btn-group">
+            <input id="sshow"
+                   type="button"
+                   value="Info Off"
+                   title="Show\Hide servers info."
+                   class="btn btn-info btn-sm"
+                   onclick="show_or_hide('id_server_info', 'server-panel', 'sshow')"/>
+        </div>
 
     {% endif %}
 
