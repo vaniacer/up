@@ -175,11 +175,14 @@ function Validation(cmd, srv, upd, job, scr, dmp, dgr) {
 }
 
 function filter_by(id, value) {
+    document.getElementById('selected_command').value = '';
     document.getElementById(id).value = value;
     document.getElementById('selector').submit();
 }
 
 $(function() {
+
+    document.getElementById('selected_command').value = '';
 
     function servers(hash) {
         show_or_hide('dummy', 'servers_tab', 'dummy', 'hide');
