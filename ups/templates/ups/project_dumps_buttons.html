@@ -2,7 +2,7 @@
 
 <div class="row">
 
-    <div class="col-sm-5"> <!--Dumps filter-->
+    <div class="col-sm-6"> <!--Dumps filter-->
 
         <div class="input-group">
             <div class="input-group-btn">
@@ -33,7 +33,7 @@
 
     </div> <!--Dumps filter end-->
 
-    <div class="col-sm-7">
+    <div class="col-sm-6">
 
         {% if "run_command" in pr_view_perms %}
             {% if dmplist %}
@@ -86,7 +86,7 @@
                                 return Validation('del_dump', false, false, false, false, true)"
                        title="Delete selected dump(s)."
                        class="btn btn-danger btn-sm"
-                       href="javascript:;">Delete</a>
+                       href="javascript:;">Del</a>
                 </div>
             {% endif %} <!---| If can run |--->
 
