@@ -35,7 +35,11 @@ class ScriptAddForm(forms.ModelForm):
 		fields = ['file', 'desc']
 		labels = {
 			'file':
-			'Script file. SQL scripts MUST have an extension \'.sql\'. YAML playbooks MUST have an extension \'.yml\'.',
+			'Script file.'
+			' SQL scripts MUST have an extension \'.sql\'.'
+			' YAML playbooks MUST have an extension \'.yml\'.'
+			' Bash scripts MUST have an extension \'.sh\'.'
+			' Python scripts MUST have an extension \'.py\'.',
 			'desc': 'Script description',
 		}
 
@@ -46,7 +50,11 @@ class ScriptCreateForm(forms.ModelForm):
 		fields = ['flnm', 'desc', 'body']
 		labels = {
 			'flnm':
-			'File name. SQL scripts MUST have an extension \'.sql\'. YAML playbooks MUST have an extension \'.yml\'.',
+			'File name.'
+			' SQL scripts MUST have an extension \'.sql\'.'
+			' YAML playbooks MUST have an extension \'.yml\'.'
+			' Bash scripts MUST have an extension \'.sh\'.'
+			' Python scripts MUST have an extension \'.py\'.',
 			'desc': 'Script description',
 			'body': 'Script body',
 		}
