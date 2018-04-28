@@ -16,22 +16,29 @@
            title="Run this SQL script on selected server(s)."
            href="javascript:;"
            class="Edit">Run</a>
-    {%elif script.type == 'yml'%}
+    {% elif script.type == 'yml' %}
         <a onclick="select_all('selected_scripts', 'script-body', false, 'SX');
                     selector('xx{{script.id}}', 'xb{{script.id}}', '{{script}}', 'SX');
                     Validation('yml_script', true, false, false, true)"
            title="Run this YAML playbook on selected server(s)."
            href="javascript:;"
            class="Edit">Run</a>
-    {%else%}
+    {% elif script.type == 'py' %}
+        <a onclick="select_all('selected_scripts', 'script-body', false, 'SX');
+                    selector('xx{{script.id}}', 'xb{{script.id}}', '{{script}}', 'SX');
+                    Validation('py_script', true, false, false, true)"
+           title="Run this python script on selected server(s)."
+           href="javascript:;"
+           class="Edit">Run</a>
+    {% else %}
         <a onclick="select_all('selected_scripts', 'script-body', false, 'SX');
                     selector('xx{{script.id}}', 'xb{{script.id}}', '{{script}}', 'SX');
                     Validation('bash_script', true, false, false, true)"
            title="Run this BASH script on selected server(s)."
            href="javascript:;"
            class="Edit">Run</a>
-    {%endif%}
-{%endif%}
+    {% endif %}
+{% endif %}
 
 <!--------------------------------------------Download button------------------------------------->
 {% if "dld_script" in pr_view_perms %}

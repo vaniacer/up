@@ -51,6 +51,7 @@ def command(selected):
 		'yml_script':      {'history':  True, 'bash':      'script_yml.sh', 'tag': False, },
 		'sql_script':      {'history':  True, 'bash':      'script_sql.sh', 'tag':  True, },
 		'bash_script':     {'history':  True, 'bash':     'script_bash.sh', 'tag':  True, },
+		'py_script':       {'history':  True, 'bash':   'script_python.sh', 'tag':  True, },
 	}
 
 	cmd = ''.join(selected['command'])

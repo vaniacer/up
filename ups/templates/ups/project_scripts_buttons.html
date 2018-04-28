@@ -19,6 +19,7 @@
                     <li><a href="javascript:;" onclick="filter_by('id_scripts', '.sql')">SQL </a></li>
                     <li><a href="javascript:;" onclick="filter_by('id_scripts', '.yml')">YAML</a></li>
                     <li><a href="javascript:;" onclick="filter_by('id_scripts', '.sh')" >BASH</a></li>
+                    <li><a href="javascript:;" onclick="filter_by('id_scripts', '.py')" >Python</a></li>
 
                     <li class="divider"></li>
 
@@ -56,6 +57,10 @@
                                href="javascript:;">Deselect All</a></li>
 
                         <li class="divider"></li>
+
+                        <li><a onclick="return Validation('py_script', true, false, false, true, false, false)"
+                               title="Run selected python script(s) on selected server(s)."
+                               href="javascript:;">Run Python script</a></li>
 
                         <li><a onclick="return Validation('yml_script', true, false, false, true, false, false)"
                                title="Run selected YAML playbook(s) on selected server(s)."
