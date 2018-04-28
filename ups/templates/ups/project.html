@@ -3,74 +3,127 @@
 {% load bootstrap3 %}
 
 {% block header %}
-
-    {% get_obj_perms request.user for project as "pr_view_perms" %}
-    <br>
-
     <title>UpS: {{project}}</title>
-    <div class="row">
-        <div class="col-md-2">
-            <h2 class="Name">{{project}}</h2>
-            {% if "edit_project" in pr_view_perms %}
-                <a href="{% url 'ups:edit_project' project.id %}?{{info}}" class="Edit">Edit</a>
-            {% endif %}
-        </div>
-        <div class="col-md-6"><h5>{{project.desc|linebreaks}}</h5></div>
-    </div>
-
 {% endblock header %}
 
 {% block content %}
 
     {% get_obj_perms request.user for project as "pr_view_perms" %}
 
+    <div id="SU"></div> <!-- Selected updates list -->
+    <div id="SS"></div> <!-- Selected servers list -->
+    <div id="SX"></div> <!-- Selected scripts list -->
+    <div id="SJ"></div> <!-- Selected crnjobs list -->
+    <div id="SD"></div> <!-- Selected dumps   list -->
+
+    <br>
+
+    <div class="col-md-2">
+        <h2 class="Name">{{project}}</h2>
+        {% if "edit_project" in pr_view_perms %}
+            <a href="{% url 'ups:edit_project' project.id %}?{{info}}" class="Edit">Edit</a>
+        {% endif %}
+    </div>
+    <div class="col-md-2">
+        <h5>{{project.desc|linebreaks}}</h5>
+    </div>
+
     <form method='GET' action="{% url 'ups:project' project.id %}" id="selector">
         <!--{% csrf_token %}-->
 
-        {% if "run_command" in pr_view_perms %}
-            <div class="hidden">
-                {% bootstrap_form hidefrm %}
-                <input name="run_type"         id="run_type"/>
-                <input name="selected_command" id="selected_command"/>
-            </div>
-        {% endif %}
+        <div class="hidden">
+            {% bootstrap_form hide_info_form %}
+            <input name="dummy"            id="dummy"/>
+            <input name="run_type"         id="run_type"/>
+            <input name="selected_command" id="selected_command"/>
+        </div>
 
         <!-- Nav tabs -->
-        {% if "run_command" in pr_view_perms %}
-            <ul class="nav nav-tabs nav-justified" role="tablist">
-                <li role="presentation" class="active">
-                    <a href="#main" aria-controls="main" role="tab" data-toggle="tab"><h4>Main</h4></a>
+        <ul class="nav nav-tabs nav-justified" role="tablist">
+
+            <li role="presentation" class="active">
+                <a title="Projects scripts and servers"
+                   href="#scripts" aria-controls="scripts" role="tab" data-toggle="tab"
+                   onclick="show_or_hide('dummy', 'servers_tab', 'dummy', 'show')">Scripts</a>
+            </li>
+
+            <li role="presentation">
+                <a title="Projects updates and servers"
+                   href="#updates" aria-controls="updates" role="tab" data-toggle="tab"
+                   onclick="show_or_hide('dummy', 'servers_tab', 'dummy', 'show')">Updates</a>
+            </li>
+
+            <li role="presentation">
+                <a title="Projects dumps and servers"
+                   href="#dumps" aria-controls="dumps" role="tab" data-toggle="tab"
+                   onclick="show_or_hide('dummy', 'servers_tab', 'dummy', 'show')">Dumps</a>
+            </li>
+
+            {% if "run_command" in pr_view_perms %}
+                <li role="presentation">
+                    <a title="Projects cron jobs"
+                       href="#cron" aria-controls="cron" role="tab" data-toggle="tab"
+                       onclick="show_or_hide('dummy', 'servers_tab', 'dummy', 'hide')">Cron Jobs</a>
                 </li>
 
                 <li role="presentation">
-                    <a href="#cron" aria-controls="cron" role="tab" data-toggle="tab"><h4>Cron Jobs</h4></a>
+                    <a title="Projects history log"
+                       href="#history" aria-controls="history" role="tab" data-toggle="tab"
+                       onclick="show_or_hide('dummy', 'servers_tab', 'dummy', 'hide')">History</a>
                 </li>
+            {% endif %}
 
-                <li role="presentation">
-                    <a href="#history" aria-controls="history" role="tab" data-toggle="tab"><h4>History</h4></a>
-                </li>
-            </ul>
+        </ul>
 
-            <!-- Tab panes -->
-            <div class="tab-content">
-                <div role="tabpanel" class="tab-pane fade in active row" id="main">
-                    {% include "ups/project_main.html" %}
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane in active" id="scripts" >
+                <div class="col-md-6">
+                    <div class="col-md-12">
+                        <h4 class="right">Scripts</h4>
+                    </div>
+                    {% include "ups/project_scripts.html" %}
                 </div>
+            </div>
 
-                <div role="tabpanel" class="tab-pane fade" id="cron">
+            <div role="tabpanel" class="tab-pane" id="updates">
+                <div class="col-md-6">
+                    <div class="col-md-12">
+                        <h4 class="right">Updates</h4>
+                    </div>
+                    {% include "ups/project_updates.html" %}
+                </div>
+            </div>
+
+            <div role="tabpanel" class="tab-pane" id="dumps">
+                <div class="col-md-6">
+                    <div class="col-md-12 right">
+                        <h4 class="right">Dumps</h4>
+                    </div>
+                    {% include "ups/project_dumps.html" %}
+                </div>
+            </div>
+
+            {% if "run_command" in pr_view_perms %}
+                <div role="tabpanel" class="tab-pane" id="cron">
                     {% include "ups/project_cron.html" %}
                 </div>
 
-                <div role="tabpanel" class="tab-pane fade" id="history">
+                <div role="tabpanel" class="tab-pane" id="history">
                     {% include "ups/project_history.html" %}
                 </div>
-            </div>
-        {% else %}
-            {% include "ups/project_main.html" %}
-        {% endif %}
-        {% include "ups/project_bottom_panel.html" %}
+            {% endif %}
 
+        </div>
+
+        <div class="col-md-6 servers_tab">
+            <div class="col-md-12">
+                <h4>Servers</h4>
+            </div>
+            {% include "ups/project_servers.html" %}
+        </div>
+
+        {% include "ups/project_bottom_panel.html" %}
     </form>
 
-<br><br>
 {% endblock content %}

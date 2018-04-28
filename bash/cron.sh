@@ -28,8 +28,6 @@ function run () { #---------------------------------| Main function |-----------
     printf "$JS\n$date $cmnd; $cncl$JE\n" >> "$cronfile" || error=$?
 
     # Info
-    info 'Setting cron job'
-    $cmnd -desc true   ||   error=$? # Show description of running command
-    info 'Cron job is set' $error
+    $cmnd -desc true || error=$? # Show description of running command
 
 } #---------------------------------------------------------------------------------------------------------------------

@@ -49,6 +49,39 @@ function run_or_cron(type) {
     }
 }
 
+function show_or_hide(id, panel, button, set) {
+
+    var status = document.getElementById(id);
+    var button = document.getElementById(button);
+    var panels = document.getElementsByClassName(panel);
+
+    function show_info() {
+        if (status) { status.checked = true; }
+        if (button) { button.value = 'Info On'; }
+        for (i = 0; i < panels.length;  i++) {
+            panels[i].classList.remove('hidden');
+        }
+    }
+
+    function hide_info() {
+        if (status) { status.checked = false; }
+        if (button) { button.value = 'Info Off'; }
+        for (i = 0; i < panels.length;  i++) {
+            panels[i].classList.add('hidden');
+        }
+    }
+
+    if (set == 'show') { show_info(); }
+    if (set == 'hide') { hide_info(); }
+    if (!set) {
+        if (status.checked) {
+            hide_info();
+        } else {
+            show_info();
+        }
+    }
+}
+
 function selector(box_id, body_id, name, obj) {
     var body = document.getElementById(body_id);
     var box  = document.getElementById(box_id);
@@ -135,66 +168,69 @@ function Validation(cmd, srv, upd, job, scr, dmp, dgr) {
     }
 
     show_loader();
-    if (cmd) { $('#selected_command').val(cmd); document.getElementById('selector').submit(); }
+    if (cmd) {
+        document.getElementById('selected_command').value = cmd;
+        document.getElementById('selector').submit();
+    }
 }
 
-function select_server(server) {
-    $('#selected_command').val('');
-    $('#id_servers').val(server);
-    $('#selector').submit();
+function filter_by(id, value) {
+    document.getElementById('selected_command').value = '';
+    document.getElementById(id).value = value;
+    document.getElementById('selector').submit();
 }
-
-function hide_info(id, panel, hb, sb) {
-    $(panel).hide(); $(hb).hide(); $(sb).show();
-    document.getElementById(id).checked = false
-};
-
-function show_info(id, panel, hb, sb) {
-    $(panel).show(); $(hb).hide(); $(sb).show();
-    document.getElementById(id).checked = true
-};
 
 $(function() {
+
+    document.getElementById('selected_command').value = '';
+
+    function servers(hash) {
+        show_or_hide('dummy', 'servers_tab', 'dummy', 'hide');
+        document.getElementById('id_tab').value = hash.replace('#', '');
+        if (hash == '#scripts' || hash == '#updates' || hash == '#dumps' || hash == '') {
+            show_or_hide('dummy', 'servers_tab', 'dummy', 'show');
+        }
+    }
+
     // Change tab on load
     var hash = window.location.hash;
+    var tabs = document.getElementById('id_tab').value;
+    if (tabs) { hash = '#' + tabs; }
     hash && $('ul.nav a[href="' + hash + '"]').tab('show');
 
+    // Change tab on click
     $('.nav-tabs a').click(function (e) {
         $(this).tab('show');
-        var scrollmem = $('body').scrollTop();
         window.location.hash = this.hash;
-        $('html,body').scrollTop(scrollmem);
+        servers(hash);
+        go_up();
     });
 
     // Change tab on hashchange
     window.addEventListener('hashchange', function() {
         var changedHash = window.location.hash;
         changedHash && $('ul.nav a[href="' + changedHash + '"]').tab('show');
+        servers(changedHash);
+        go_up();
     }, false);
+
+    servers(hash);
 });
 
 $(document).ready(function() {
-    $('#run_type').val('')
-    $('#selected_command').val('')
-    select_all('selected_servers', 'server-body', false, 'SS');
-    select_all('selected_updates', 'update-body', false, 'SU');
-    select_all('selected_scripts', 'script-body', false, 'SX');
-    select_all('selected_dumps',   'dump-body',   false, 'SD');
-    select_all('selected_jobs',    'job-body',    false, 'SJ');
-
     if (document.getElementById('id_server_info').checked) {
-           show_info('id_server_info', '.server-panel', '.sshow', '.shide'); }
-    else { hide_info('id_server_info', '.server-panel', '.shide', '.sshow'); }
+           show_or_hide('id_server_info', 'server-panel', 'sshow', 'show'); }
+    else { show_or_hide('id_server_info', 'server-panel', 'sshow', 'hide'); }
 
     if (document.getElementById('id_script_info').checked) {
-           show_info('id_script_info', '.script-panel', '.xshow', '.xhide'); }
-    else { hide_info('id_script_info', '.script-panel', '.xhide', '.xshow'); }
+           show_or_hide('id_script_info', 'script-panel', 'xshow', 'show'); }
+    else { show_or_hide('id_script_info', 'script-panel', 'xshow', 'hide'); }
 
     if (document.getElementById('id_update_info').checked) {
-           show_info('id_update_info', '.update-panel', '.ushow', '.uhide'); }
-    else { hide_info('id_update_info', '.update-panel', '.uhide', '.ushow'); }
+           show_or_hide('id_update_info', 'update-panel', 'ushow', 'show'); }
+    else { show_or_hide('id_update_info', 'update-panel', 'ushow', 'hide'); }
 
     if (document.getElementById('id_dbdump_info').checked) {
-           show_info('id_dbdump_info', '.dbdump-panel', '.dshow', '.dhide'); }
-    else { hide_info('id_dbdump_info', '.dbdump-panel', '.dhide', '.dshow'); }
+           show_or_hide('id_dbdump_info', 'dbdump-panel', 'dshow', 'show'); }
+    else { show_or_hide('id_dbdump_info', 'dbdump-panel', 'dshow', 'hide'); }
 });

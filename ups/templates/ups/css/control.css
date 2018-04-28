@@ -3,18 +3,6 @@
     font-size: small;
 }
 
-.port {
-    display: inline;
-    font-size: small;
-    height: 30px;
-    width: 52px;
-    maxlength: 5;
-}
-
-.date-input {
-    width: 200px;
-}
-
 .Name {
     display: inline;
 }
@@ -25,14 +13,6 @@
 
 .log {
      white-space: pre-wrap;
-}
-
-.divider-vertical {
-    border-left: 1px solid gray;
-    float: left right;
-    margin: 10 15px;
-    height: 30px;
-    opacity: 0.5;
 }
 
 .danger {
@@ -92,14 +72,8 @@
 
 .roller {
     overflow-y: auto;
-    height: 70%;
 }
 
 .right {
     float: right;
-}
-
-.nav-pills>li>a {
-    padding-top: 7px;
-    padding-bottom: 7px;
 }

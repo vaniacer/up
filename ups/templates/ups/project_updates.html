@@ -1,63 +1,45 @@
 {% load bootstrap3 %}
 
 <br>
-<div class="row">
-    <div class="col-md-2"><h3 class="Name">Updates</h3></div>
-    <div class="col-md-10">{% include "ups/project_updates_buttons.html" %}</div>
-</div>
 
-<div class="roller uroller">
-{% for update in updates %}
+{% buttons %}
+    {% include "ups/project_updates_buttons.html" %}
+{% endbuttons %}
 
-    <div class="panel panel-default"
-         onclick="selector('ux{{update.id}}', 'ub{{update.id}}', '{{update}}', 'SU')">
+<div class="roller">
+    {% for update in updates_filtered %}
 
-        <div class="panel-heading">
-            <h4 class="Name" title="{{update.desc}}">{{update}}</h4>
-            {% include "ups/commands_updates.html" %}
+        <div class="panel panel-default" onclick="selector('ux{{update.id}}', 'ub{{update.id}}', '{{update}}', 'SU')">
 
-            <!--Individual visibility buttons-->
-            <input value="-"
-                   type="button"
-                   title="Hide update info."
-                   class="btn btn-xs uhide uh{{update.id}} right"
-                   onclick="selector('ux{{update.id}}', 'ub{{update.id}}', '{{update}}', 'SU');
-                            hide_info('ui{{update.id}}',
-                                      '.up{{update.id}}',
-                                      '.uh{{update.id}}',
-                                      '.us{{update.id}}')"/>
-            <input value="+"
-                   type="button"
-                   title="Show update info."
-                   class="btn btn-xs ushow us{{update.id}} right"
-                   onclick="selector('ux{{update.id}}', 'ub{{update.id}}', '{{update}}', 'SU');
-                            show_info('ui{{update.id}}',
-                                      '.up{{update.id}}',
-                                      '.us{{update.id}}',
-                                      '.uh{{update.id}}')"/>
+            <div class="panel-heading">
+                <h4 class="Name" title="{{update.desc}}">{{update}}</h4>
+                {% include "ups/commands_updates.html" %}
+            </div>
+
+            <div class="panel-body update-body" id="ub{{update.id}}">
+                <dl class="dl-horizontal update-panel up{{update.id}}">
+                    <dt>Size</dt><dd>{{update.file.size|filesizeformat}}</dd>
+                    <dt>Description</dt><dd>{{update.desc|linebreaks}}</dd>
+                    <dt><small>Added by</small></dt><dd><small>{{update.user}}</small></dd>
+                    <dt><small>Date added</small></dt><dd><small>{{update.date|date:'M d, Y H:i'}}</small></dd>
+                </dl>
+                {% if "run_command" in pr_view_perms %}
+                    <!--Hidden checkboxes-->
+                    <input class="hidden"
+                           type="checkbox"
+                           id="ux{{update.id}}"
+                           value="{{update.id}}"
+                           name="selected_updates"
+                           data-target="{{update}}"/>
+                {% endif %}
+            </div>
+
         </div>
 
-        <div class="panel-body update-body" id="ub{{update.id}}">
-            <dl class="dl-horizontal update-panel up{{update.id}}">
-                <dt>Size</dt><dd>{{update.file.size|filesizeformat}}</dd>
-                <dt>Description</dt><dd>{{update.desc|linebreaks}}</dd>
-                <dt><small>Added by</small></dt><dd><small>{{update.user}}</small></dd>
-                <dt><small>Date added</small></dt><dd><small>{{update.date|date:'M d, Y H:i'}}</small></dd>
-            </dl>
-            {% if "run_command" in pr_view_perms %}
-                <!--Hidden checkboxes-->
-                <input class="hidden"
-                       type="checkbox"
-                       id="ux{{update.id}}"
-                       name="selected_updates"
-                       value="{{update.id}}"
-                       data-target="{{update}}"/>
-            {% endif %}
-        </div>
+    {% empty %}
+        There are no updates for this project yet.
+    {% endfor %}
 
-    </div> <!-- panel -->
+    <br><br>
 
-{% empty %}
-    There are no updates for this project yet.
-{% endfor %}
 </div>

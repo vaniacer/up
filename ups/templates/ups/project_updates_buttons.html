@@ -1,71 +1,114 @@
 {% load bootstrap3 %}
 
-{% buttons %}
-    {% if "run_command" in pr_view_perms %}
-        {% if updates %}
-            <div class="btn-group">
-                <button type="button" class="btn btn-info btn-xs dropdown-toggle" data-toggle="dropdown">Commands
-                    <span class="caret"></span>
+<div class="row">
+
+    <div class="col-sm-6"> <!---| Updates filter |--->
+
+        <div class="input-group">
+            <div class="input-group-btn">
+                <button class="btn btn-info btn-sm" tabindex="-1">Filter</button>
+                <!-- Dropdown using dropdown-toggle class -->
+                <button type="button" class="btn btn-info btn-sm dropdown-toggle"
+                    data-toggle="dropdown" tabindex="-1">
+                    List <span class="caret"></span><!-- caret -->
+                    <span class="sr-only">Toggle Dropdown</span>
                 </button>
+                <!-- Dropdown list items -->
                 <ul class="dropdown-menu" role="menu">
-
-                    <li><a onclick="return Validation('copy', true, true, false, false, false, false)"
-                           title="Copy selected update(s) to selected server(s)."
-                           href="javascript:;">Copy</a></li>
-
-                    <li><a onclick="return Validation('update', true, true, false, false, false, false)"
-                           title="Update selected server(s)."
-                           href="javascript:;"
-                           class="danger">Update</a></li>
-
-                    <li><a onclick="return Validation('del_all_updates', true, false, false, false, false, true)"
-                           title="Delete all updates from selected server(s)."
-                           href="javascript:;"
-                           class="danger">Delete all updates</a></li>
-
-                    <li><a onclick="return Validation('del_sel_updates', true, true, false, false, false, true)"
-                           title="Delete selected update(s) from selected server(s)."
-                           href="javascript:;"
-                           class="danger">Delete selected updates</a></li>
+                    <li><a href="javascript:;" onclick="filter_by('id_updates', '')">All </a></li>
+                    <li>
+                        <a href="javascript:;" onclick="filter_by('id_updates', '{%now 'd-m-Y'%}')">Current date</a>
+                    </li>
 
                     <li class="divider"></li>
 
-                    <li><a title="Add new update file."
-                           href="{% url 'ups:new_update' project.id %}?{{info}}">Add new update</a></li>
+                    {% for UPD in updates %}
+                        <li><a href="javascript:;" onclick="filter_by('id_updates', '{{UPD}}')">{{UPD}}</a></li>
+                    {% endfor %}
+
+                    <li><br><br><br></li>
+
                 </ul>
             </div>
+            {% bootstrap_form updates_filter size="small" %}
+        </div>
 
-            <input type="button"
-                   value="Select All"
-                   title="Select all updates."
-                   class="btn btn-info btn-xs"
-                   onclick="select_all('selected_updates', 'update-body', true,  'SU')"/>
+    </div> <!-----------------| Updates filter end |--->
 
-            <input type="button"
-                   value="Deselect All"
-                   title="Deselect all updates."
-                   class="btn btn-info btn-xs"
-                   onclick="select_all('selected_updates', 'update-body', false, 'SU')"/>
+    <div class="col-sm-6"> <!---| Updates commands |--->
 
-            <input type="button"
-                   value="Hide Info"
-                   title="Hide updates' info."
-                   class="btn btn-info btn-xs uhide"
-                   onclick="hide_info('id_update_info', '.update-panel', '.uhide', '.ushow'); $('#selector').submit()"/>
+        {% if updates %}
 
-            <input type="button"
-                   value="Show Info"
-                   title="Show updates' info."
-                   class="btn btn-info btn-xs ushow"
-                   onclick="show_info('id_update_info', '.update-panel', '.ushow', '.uhide'); $('#selector').submit()"/>
+            {% if "run_command" in pr_view_perms %}
+
+                <div class="btn-group">
+                    <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown">Commands
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+
+                        <li><a title="Select all updates."
+                               onclick="select_all('selected_updates', 'update-body', true,  'SU')"
+                               href="javascript:;">Select All</a></li>
+
+                        <li><a title="Deselect all updates."
+                               onclick="select_all('selected_updates', 'update-body', false, 'SU')"
+                               href="javascript:;">Deselect All</a></li>
+
+                        <li class="divider"></li>
+
+                        <li><a onclick="return Validation('copy', true, true, false, false, false, false)"
+                               title="Copy selected update(s) to selected server(s)."
+                               href="javascript:;">Copy</a></li>
+
+                        <li><a onclick="return Validation('update', true, true, false, false, false, false)"
+                               title="Update selected server(s)."
+                               href="javascript:;"
+                               class="danger">Update</a></li>
+
+                        <li><a onclick="return Validation('del_all_updates', true, false, false, false, false, true)"
+                               title="Delete all updates from selected server(s)."
+                               href="javascript:;"
+                               class="danger">Delete all updates</a></li>
+
+                        <li><a onclick="return Validation('del_sel_updates', true, true, false, false, false, true)"
+                               title="Delete selected update(s) from selected server(s)."
+                               href="javascript:;"
+                               class="danger">Delete selected updates</a></li>
+
+                        {% if "add_update" in pr_view_perms %}
+                            <li class="divider"></li>
+
+                            <li><a title="Add new update file."
+                                   href="{% url 'ups:new_update' project.id %}?{{info}}">Add new update</a></li>
+                        {% endif %}
+
+                        <li><br><br><br></li>
+
+                    </ul>
+                </div>
+
+            {% endif %} <!---| If can run |--->
+
+            <div class="btn-group">
+                <input id="ushow"
+                       type="button"
+                       value="Info Off"
+                       title="Show\Hide updates info."
+                       class="btn btn-info btn-sm"
+                       onclick="show_or_hide('id_update_info', 'update-panel', 'ushow')"/>
+            </div>
+
+        {% endif %} <!---| If updates exists |--->
+
+        {% if "add_update" in pr_view_perms %}
+            <div class="btn-group">
+                <a title="Add new update."
+                   class="btn btn-success btn-sm"
+                   href="{% url 'ups:new_update' project.id %}?{{info}}">Add</a>
+            </div>
         {% endif %}
 
-    {% endif %}
+    </div> <!---| Updates commands end |--->
 
-    {% if "add_update" in pr_view_perms %}
-        <a title="Add new update."
-           class="btn btn-success btn-xs"
-           href="{% url 'ups:new_update' project.id %}?{{info}}">Add</a>
-    {% endif %}
-
-{% endbuttons %}
+</div>

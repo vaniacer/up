@@ -1,61 +1,43 @@
 {% load bootstrap3 %}
 
 <br>
-<div class="row">
-    <div class="col-md-2"><h3 class="Name">Dumps</h3></div>
-    <div class="col-md-10">{% include "ups/project_dumps_buttons.html" %}</div>
-</div>
 
-<div class="roller droller">
-{% for dump in dmplist %}
+{% buttons %}
+    {% include "ups/project_dumps_buttons.html" %}
+{% endbuttons %}
 
-    <div class="panel panel-default"
-         onclick="selector('dx{{dump.id}}', 'db{{dump.id}}', '{{dump.name}}', 'SD')">
+<div class="roller">
+    {% for dump in dmplist_filtered %}
 
-        <div class="panel-heading">
-            <h4 class="Name">{{dump.name}}</h4>
-            {% include "ups/commands_dumps.html" %}
-            
-            <!--Individual visibility buttons-->
-            <input value="-"
-                   type="button"
-                   title="Hide dump info."
-                   class="btn btn-xs dhide dh{{dump.id}} right"
-                   onclick="selector('dx{{dump.id}}', 'db{{dump.id}}', '{{dump.name}}', 'SD');
-                            hide_info('di{{dump.id}}',
-                                      '.dp{{dump.id}}',
-                                      '.dh{{dump.id}}',
-                                      '.ds{{dump.id}}')"/>
-            <input value="+"
-                   type="button"
-                   title="Show dump info."
-                   class="btn btn-xs dshow ds{{dump.id}} right"
-                   onclick="selector('dx{{dump.id}}', 'db{{dump.id}}', '{{dump.name}}', 'SD');
-                            show_info('di{{dump.id}}',
-                                      '.dp{{dump.id}}',
-                                      '.ds{{dump.id}}',
-                                      '.dh{{dump.id}}')"/>
+        <div class="panel panel-default" onclick="selector('dx{{dump.id}}', 'db{{dump.id}}', '{{dump.name}}', 'SD')">
+
+            <div class="panel-heading">
+                <h4 class="Name">{{dump.name}}</h4>
+                {% include "ups/commands_dumps.html" %}
+            </div>
+
+            <div class="panel-body dump-body" id="db{{dump.id}}">
+                <dl class="dl-horizontal dbdump-panel dp{{dump.id}}">
+                    <dt>Size</dt><dd>{{dump.size|filesizeformat}}</dd>
+                    <dt><small>Date added</small></dt><dd><small>{{dump.date|date:'M d, Y H:i'}}</small></dd>
+                </dl>
+                {% if "run_command" in pr_view_perms %}
+                    <!--Hidden checkboxes-->
+                    <input  class="hidden"
+                            type="checkbox"
+                            id="dx{{dump.id}}"
+                            name="selected_dumps"
+                            value="{{dump.name}}"
+                            data-target="{{dump.name}}"/>
+                {% endif %}
+            </div>
+
         </div>
 
-        <div class="panel-body dump-body" id="db{{dump.id}}">
-            <dl class="dl-horizontal dbdump-panel dp{{dump.id}}">
-                <dt>Size</dt><dd>{{dump.size|filesizeformat}}</dd>
-                <dt><small>Date added</small></dt><dd><small>{{dump.date|date:'M d, Y H:i'}}</small></dd>
-            </dl>
-            {% if "run_command" in pr_view_perms %}
-                <!--Hidden checkboxes-->
-                <input  class="hidden"
-                        type="checkbox"
-                        id="dx{{dump.id}}"
-                        name="selected_dumps"
-                        value="{{dump.name}}"
-                        data-target="{{dump.name}}"/>
-            {% endif %}
-        </div>
+    {% empty %}
+        There are no dumps for this project yet.
+    {% endfor %}
 
-    </div> <!-- panel -->
+    <br><br>
 
-{% empty %}
-    There are no dumps for this project yet.
-{% endfor %}
 </div>

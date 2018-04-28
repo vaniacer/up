@@ -27,6 +27,7 @@ def command(selected):
 		'permanent_job':   {'history':  True, 'bash':    'cronjob_perm.sh', 'tag': False, },
 		# Maintenance     +------------------+-----------------------------+----------------+
 		'stop':            {'history':  True, 'bash':            'stop.sh', 'tag': False, },
+		'kill':            {'history':  True, 'bash':            'kill.sh', 'tag': False, },
 		'start':           {'history':  True, 'bash':           'start.sh', 'tag': False, },
 		'reload':          {'history':  True, 'bash':          'reload.sh', 'tag': False, },
 		'restart':         {'history':  True, 'bash':         'restart.sh', 'tag': False, },
@@ -70,6 +71,14 @@ def info(data):
 		url += '&dbdump_info=on'
 	if data.get('servers'):
 		url += '&servers=%s' % data.get('servers')
+	if data.get('scripts'):
+		url += '&scripts=%s' % data.get('scripts')
+	if data.get('updates'):
+		url += '&updates=%s' % data.get('updates')
+	if data.get('dumps'):
+		url += '&dumps=%s' % data.get('dumps')
+	if data.get('tab'):
+		url += '#%s' % data.get('tab')
 	return url
 
 
@@ -119,15 +128,16 @@ def cmd_run(data, project, user):
 		selected['hid'] = add_event(selected, 'Working...', '', crn, date)
 	starter(selected)
 
-	url = '/command_log/?cmd=%s&rtype=%s&hid=%s&cid=%s&prid=%s%s&timedate=%s&logid=%s' % (
+	url = '/command_log/?cmd=%s&rtype=%s&hid=%s&cid=%s&tab=%s&prid=%s&timedate=%s&logid=%s%s' % (
 		selected['command'],
 		selected['rtype'],
 		selected['hid'],
 		selected['cid'],
+		data.get('tab'),
 		project.id,
-		info(data),
 		date,
 		key,
+		info(data),
 	)
 
 	return url

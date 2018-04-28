@@ -1,69 +1,113 @@
 {% load bootstrap3 %}
 
-{% buttons %}
-    {% if "run_command" in pr_view_perms %}
-        {% if scripts %}
-            <div class="btn-group">
-                <button type="button" class="btn btn-info btn-xs dropdown-toggle" data-toggle="dropdown">Commands
-                    <span class="caret"></span>
+<div class="row">
+
+    <div class="col-sm-6"> <!---| Script filter |--->
+
+        <div class="input-group">
+            <div class="input-group-btn">
+                <button class="btn btn-info btn-sm" tabindex="-1">Filter</button>
+                <!-- Dropdown using dropdown-toggle class -->
+                <button type="button" class="btn btn-info btn-sm dropdown-toggle"
+                    data-toggle="dropdown" tabindex="-1">
+                    List <span class="caret"></span><!-- caret -->
+                    <span class="sr-only">Toggle Dropdown</span>
                 </button>
+                <!-- Dropdown list items -->
                 <ul class="dropdown-menu" role="menu">
-                    <li><a onclick="return Validation('yml_script', true, false, false, true, false, false)"
-                           title="Run selected YAML playbook(s) on selected server(s)."
-                           href="javascript:;">Run YAML script</a></li>
-
-                    <li><a onclick="return Validation('bash_script', true, false, false, true, false, false)"
-                           title="Run selected BASH script(s) on selected server(s)."
-                           href="javascript:;">Run BASH script</a></li>
-
-                    <li><a onclick="return Validation('sql_script', true, false, false, true, false, false)"
-                           title="Run selected SQL script(s) on selected server(s)."
-                           href="javascript:;">Run SQL script</a></li>
+                    <li><a href="javascript:;" onclick="filter_by('id_scripts', '')"    >All </a></li>
+                    <li><a href="javascript:;" onclick="filter_by('id_scripts', '.sql')">SQL </a></li>
+                    <li><a href="javascript:;" onclick="filter_by('id_scripts', '.yml')">YAML</a></li>
+                    <li><a href="javascript:;" onclick="filter_by('id_scripts', '.sh')" >BASH</a></li>
 
                     <li class="divider"></li>
 
-                    <li><a title="Create new script."
-                           href="{% url 'ups:create_script' project.id %}?{{info}}">Create new script</a></li>
+                    {% for SCR in scripts %}
+                        <li><a href="javascript:;" onclick="filter_by('id_scripts', '{{SCR}}')">{{SCR}}</a></li>
+                    {% endfor %}
 
-                    <li><a title="Add new script from file."
-                           href="{% url 'ups:new_script' project.id %}?{{info}}">Add script from file</a></li>
+                    <li><br><br><br></li>
+
                 </ul>
             </div>
+            {% bootstrap_form scripts_filter size="small" %}
+        </div>
 
-            <input type="button"
-                   value="Select All"
-                   class="btn btn-info btn-xs"
-                   title="Select all scripts."
-                   onclick="select_all('selected_scripts', 'script-body', true,  'SX')"/>
+    </div> <!-----------------| Script filter end |--->
 
-            <input type="button"
-                   value="Deselect All"
-                   class="btn btn-info btn-xs"
-                   title="Deselect all scripts."
-                   onclick="select_all('selected_scripts', 'script-body', false, 'SX')"/>
+    <div class="col-sm-6"> <!---| Script commands |--->
 
-            <input type="button"
-                   value="Hide Info"
-                   title="Hide scripts' info."
-                   class="btn btn-info btn-xs xhide"
-                   onclick="hide_info('id_script_info', '.script-panel', '.xhide', '.xshow'); $('#selector').submit()"/>
+        {% if scripts %}
 
-            <input type="button"
-                   value="Show Info"
-                   title="Show scripts' info."
-                   class="btn btn-info btn-xs xshow"
-                   onclick="show_info('id_script_info', '.script-panel', '.xshow', '.xhide'); $('#selector').submit()"/>
+            {% if "run_command" in pr_view_perms %}
+
+                <div class="btn-group">
+                    <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown">
+                        Commands <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+
+                        <li><a title="Select all scripts."
+                               onclick="select_all('selected_scripts', 'script-body', true,  'SX')"
+                               href="javascript:;">Select All</a></li>
+
+                        <li><a title="Deselect all scripts."
+                               onclick="select_all('selected_scripts', 'script-body', false, 'SX')"
+                               href="javascript:;">Deselect All</a></li>
+
+                        <li class="divider"></li>
+
+                        <li><a onclick="return Validation('yml_script', true, false, false, true, false, false)"
+                               title="Run selected YAML playbook(s) on selected server(s)."
+                               href="javascript:;">Run YAML script</a></li>
+
+                        <li><a onclick="return Validation('bash_script', true, false, false, true, false, false)"
+                               title="Run selected BASH script(s) on selected server(s)."
+                               href="javascript:;">Run BASH script</a></li>
+
+                        <li><a onclick="return Validation('sql_script', true, false, false, true, false, false)"
+                               title="Run selected SQL script(s) on selected server(s)."
+                               href="javascript:;">Run SQL script</a></li>
+
+                        {% if "add_script" in pr_view_perms %}
+                            <li class="divider"></li>
+
+                            <li><a title="Create new script."
+                                   href="{% url 'ups:create_script' project.id %}?{{info}}">Create new script</a></li>
+
+                            <li><a title="Add new script from file."
+                                   href="{% url 'ups:new_script' project.id %}?{{info}}">Add script from file</a></li>
+                        {% endif %}
+
+                        <li><br><br><br></li>
+
+                    </ul>
+                </div>
+
+            {% endif %} <!---| If can run |--->
+
+            <div class="btn-group">
+                <input id="xshow"
+                       type="button"
+                       value="Info Off"
+                       title="Show\Hide scripts info."
+                       class="btn btn-info btn-sm"
+                       onclick="show_or_hide('id_script_info', 'script-panel', 'xshow')"/>
+            </div>
+
+        {% endif %} <!---| If scripts exists |--->
+
+        {% if "add_script" in pr_view_perms %}
+            <div class="btn-group">
+                <a title="Add new script from file."
+                   class="btn btn-success btn-sm"
+                   href="{% url 'ups:new_script' project.id %}?{{info}}">Add</a>
+                <a title="Create new script."
+                   class="btn btn-success btn-sm"
+                   href="{% url 'ups:create_script' project.id %}?{{info}}">New</a>
+            </div>
         {% endif %}
 
-    {% endif %}
+    </div> <!---| Script commands end |--->
 
-    {% if "add_script" in pr_view_perms %}
-        <a title="Create new script."
-           class="btn btn-success btn-xs"
-           href="{% url 'ups:create_script' project.id %}?{{info}}">New</a>
-        <a title="Add new script from file."
-           class="btn btn-success btn-xs"
-           href="{% url 'ups:new_script' project.id %}?{{info}}">Add</a>
-    {% endif %}
-
-{% endbuttons %}
+</div>
