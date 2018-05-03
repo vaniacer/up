@@ -14,6 +14,14 @@
             <div class="panel-heading">
                 <h4 class="Name" title="{{server.desc}}">{{server.name}}</h4>
                 {% include "ups/commands_servers.html" %}
+                <!--Individual visibility buttons-->
+                <input value="+"
+                       type="button"
+                       id="sh{{server.id}}"
+                       class="btn btn-xs sshow right"
+                       title="Show\Hide this server info."
+                       onclick="selector('sx{{server.id}}', 'sb{{server.id}}', '{{server}}', 'SS');
+                                show_or_hide_this('sh{{server.id}}', 'sp{{server.id}}')"/>
             </div>
 
             <div class="panel-body server-body" id="sb{{server.id}}">

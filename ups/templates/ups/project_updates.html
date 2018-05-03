@@ -14,6 +14,14 @@
             <div class="panel-heading">
                 <h4 class="Name" title="{{update.desc}}">{{update}}</h4>
                 {% include "ups/commands_updates.html" %}
+                <!--Individual visibility buttons-->
+                <input value="+"
+                       type="button"
+                       id="uh{{update.id}}"
+                       class="btn btn-xs ushow right"
+                       title="Show\Hide this update info."
+                       onclick="selector('ux{{update.id}}', 'ub{{update.id}}', '{{update}}', 'SU');
+                                show_or_hide_this('uh{{update.id}}', 'up{{update.id}}')"/>
             </div>
 
             <div class="panel-body update-body" id="ub{{update.id}}">

@@ -14,6 +14,14 @@
             <div class="panel-heading">
                 <h4 class="Name" title="{{script.desc}}">{{script}} </h4>
                 {% include "ups/commands_scripts.html" %}
+                <!--Individual visibility buttons-->
+                <input value="+"
+                       type="button"
+                       id="xh{{script.id}}"
+                       class="btn btn-xs xshow right"
+                       title="Show\Hide this script info."
+                       onclick="selector('xx{{script.id}}', 'xb{{script.id}}', '{{script}}', 'SX');
+                                show_or_hide_this('xh{{script.id}}', 'xp{{script.id}}')"/>
             </div>
 
             <div class="panel-body script-body" id="xb{{script.id}}">

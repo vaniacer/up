@@ -49,26 +49,46 @@ function run_or_cron(type) {
     }
 }
 
-function show_or_hide(id, panel, button, set) {
-
-    var status = document.getElementById(id);
-    var button = document.getElementById(button);
+function show_or_hide_this(id, panel) {
+    var button = document.getElementById(id);
     var panels = document.getElementsByClassName(panel);
 
     function show_info() {
-        if (status) { status.checked = true; }
-        if (button) { button.value = 'Info On'; }
+        button.value = '-';
         for (i = 0; i < panels.length;  i++) {
             panels[i].classList.remove('hidden');
         }
     }
 
     function hide_info() {
-        if (status) { status.checked = false; }
-        if (button) { button.value = 'Info Off'; }
+        button.value = '+';
         for (i = 0; i < panels.length;  i++) {
             panels[i].classList.add('hidden');
         }
+    }
+
+    if (button.value == '+') { show_info(); } else { hide_info(); }
+}
+
+function show_or_hide_all(id, panel, button, set) {
+
+    var pluses = document.getElementsByClassName(button);
+    var panels = document.getElementsByClassName(panel);
+    var button = document.getElementById(button);
+    var status = document.getElementById(id);
+
+    function show_info() {
+        if (status) { status.checked = true; }
+        if (button) { button.value = 'Info On'; }
+        for (i = 0; i < pluses.length; i++) { pluses[i].value = '-'; }
+        for (i = 0; i < panels.length; i++) { panels[i].classList.remove('hidden'); }
+    }
+
+    function hide_info() {
+        if (status) { status.checked = false; }
+        if (button) { button.value = 'Info Off'; }
+        for (i = 0; i < pluses.length; i++) { pluses[i].value = '+'; }
+        for (i = 0; i < panels.length; i++) { panels[i].classList.add('hidden'); }
     }
 
     if (set == 'show') { show_info(); }
@@ -185,10 +205,10 @@ $(function() {
     document.getElementById('selected_command').value = '';
 
     function servers(hash) {
-        show_or_hide('dummy', 'servers_tab', 'dummy', 'hide');
+        show_or_hide_all('dummy', 'servers_tab', 'dummy', 'hide');
         document.getElementById('id_tab').value = hash.replace('#', '');
         if (hash == '#scripts' || hash == '#updates' || hash == '#dumps' || hash == '') {
-            show_or_hide('dummy', 'servers_tab', 'dummy', 'show');
+            show_or_hide_all('dummy', 'servers_tab', 'dummy', 'show');
         }
     }
 
@@ -219,18 +239,18 @@ $(function() {
 
 $(document).ready(function() {
     if (document.getElementById('id_server_info').checked) {
-           show_or_hide('id_server_info', 'server-panel', 'sshow', 'show'); }
-    else { show_or_hide('id_server_info', 'server-panel', 'sshow', 'hide'); }
+           show_or_hide_all('id_server_info', 'server-panel', 'sshow', 'show'); }
+    else { show_or_hide_all('id_server_info', 'server-panel', 'sshow', 'hide'); }
 
     if (document.getElementById('id_script_info').checked) {
-           show_or_hide('id_script_info', 'script-panel', 'xshow', 'show'); }
-    else { show_or_hide('id_script_info', 'script-panel', 'xshow', 'hide'); }
+           show_or_hide_all('id_script_info', 'script-panel', 'xshow', 'show'); }
+    else { show_or_hide_all('id_script_info', 'script-panel', 'xshow', 'hide'); }
 
     if (document.getElementById('id_update_info').checked) {
-           show_or_hide('id_update_info', 'update-panel', 'ushow', 'show'); }
-    else { show_or_hide('id_update_info', 'update-panel', 'ushow', 'hide'); }
+           show_or_hide_all('id_update_info', 'update-panel', 'ushow', 'show'); }
+    else { show_or_hide_all('id_update_info', 'update-panel', 'ushow', 'hide'); }
 
     if (document.getElementById('id_dbdump_info').checked) {
-           show_or_hide('id_dbdump_info', 'dbdump-panel', 'dshow', 'show'); }
-    else { show_or_hide('id_dbdump_info', 'dbdump-panel', 'dshow', 'hide'); }
+           show_or_hide_all('id_dbdump_info', 'dbdump-panel', 'dshow', 'show'); }
+    else { show_or_hide_all('id_dbdump_info', 'dbdump-panel', 'dshow', 'hide'); }
 });

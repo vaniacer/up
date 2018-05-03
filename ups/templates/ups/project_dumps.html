@@ -14,6 +14,14 @@
             <div class="panel-heading">
                 <h4 class="Name">{{dump.name}}</h4>
                 {% include "ups/commands_dumps.html" %}
+                <!--Individual visibility buttons-->
+                <input value="+"
+                       type="button"
+                       id="dh{{dump.id}}"
+                       class="btn btn-xs dshow right"
+                       title="Show\Hide this dump info."
+                       onclick="selector('dx{{dump.id}}', 'db{{dump.id}}', '{{dump.name}}', 'SD');
+                                show_or_hide_this('dh{{dump.id}}', 'dp{{dump.id}}')"/>
             </div>
 
             <div class="panel-body dump-body" id="db{{dump.id}}">
