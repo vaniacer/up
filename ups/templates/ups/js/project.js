@@ -202,21 +202,22 @@ function filter_by(id, value) {
 
 $(function() {
 
-    document.getElementById('selected_command').value = '';
+    var selected_command = document.getElementById('selected_command');
+    if (selected_command) { selected_command.value = ''; }
+
+    // Change tab on load
+    var hash = window.location.hash;
+    var tabs = document.getElementById('id_tab');
+    if (tabs) { if (tabs.value) { hash = '#' + tabs.value; } }
+    hash && $('ul.nav a[href="' + hash + '"]').tab('show');
 
     function servers(hash) {
         show_or_hide_all('dummy', 'servers_tab', 'dummy', 'hide');
-        document.getElementById('id_tab').value = hash.replace('#', '');
+        if (tabs) {tabs.value = hash.replace('#', '');}
         if (hash == '#scripts' || hash == '#updates' || hash == '#dumps' || hash == '') {
             show_or_hide_all('dummy', 'servers_tab', 'dummy', 'show');
         }
     }
-
-    // Change tab on load
-    var hash = window.location.hash;
-    var tabs = document.getElementById('id_tab').value;
-    if (tabs) { hash = '#' + tabs; }
-    hash && $('ul.nav a[href="' + hash + '"]').tab('show');
 
     // Change tab on click
     $('.nav-tabs a').click(function (e) {
