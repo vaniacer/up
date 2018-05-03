@@ -18,13 +18,13 @@
 
     <br>
 
-    <div class="col-md-2">
+    <div class="col-sm-2">
         <h2 class="Name">{{project}}</h2>
         {% if "edit_project" in pr_view_perms %}
             <a href="{% url 'ups:edit_project' project.id %}?{{info}}" class="Edit">Edit</a>
         {% endif %}
     </div>
-    <div class="col-md-2">
+    <div class="col-sm-2">
         <h5>{{project.desc|linebreaks}}</h5>
     </div>
 
@@ -78,8 +78,8 @@
         <!-- Tab panes -->
         <div class="tab-content">
             <div role="tabpanel" class="tab-pane in active" id="scripts" >
-                <div class="col-md-6">
-                    <div class="col-md-12">
+                <div class="col-sm-6">
+                    <div class="col-sm-12">
                         <h4 class="right">Scripts</h4>
                     </div>
                     {% include "ups/project_scripts.html" %}
@@ -87,8 +87,8 @@
             </div>
 
             <div role="tabpanel" class="tab-pane" id="updates">
-                <div class="col-md-6">
-                    <div class="col-md-12">
+                <div class="col-sm-6">
+                    <div class="col-sm-12">
                         <h4 class="right">Updates</h4>
                     </div>
                     {% include "ups/project_updates.html" %}
@@ -96,8 +96,8 @@
             </div>
 
             <div role="tabpanel" class="tab-pane" id="dumps">
-                <div class="col-md-6">
-                    <div class="col-md-12 right">
+                <div class="col-sm-6">
+                    <div class="col-sm-12 right">
                         <h4 class="right">Dumps</h4>
                     </div>
                     {% include "ups/project_dumps.html" %}
@@ -116,8 +116,8 @@
 
         </div>
 
-        <div class="col-md-6 servers_tab">
-            <div class="col-md-12">
+        <div class="col-sm-6 servers_tab">
+            <div class="col-sm-12">
                 <h4>Servers</h4>
             </div>
             {% include "ups/project_servers.html" %}
