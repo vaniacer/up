@@ -220,7 +220,7 @@ $(function() {
     }
 
     // Change tab on click
-    $('.nav-tabs a').click(function (e) {
+    $('.nav-tabs a').click(function() {
         $(this).tab('show');
         window.location.hash = this.hash;
         servers(hash);
