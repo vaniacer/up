@@ -44,32 +44,32 @@
             <li role="presentation" class="active">
                 <a title="Projects scripts and servers"
                    href="#scripts" aria-controls="scripts" role="tab" data-toggle="tab"
-                   onclick="show_or_hide('dummy', 'servers_tab', 'dummy', 'show')">Scripts</a>
+                   onclick="show_or_hide_all('dummy', 'servers_tab', 'dummy', 'show')">Scripts</a>
             </li>
 
             <li role="presentation">
                 <a title="Projects updates and servers"
                    href="#updates" aria-controls="updates" role="tab" data-toggle="tab"
-                   onclick="show_or_hide('dummy', 'servers_tab', 'dummy', 'show')">Updates</a>
+                   onclick="show_or_hide_all('dummy', 'servers_tab', 'dummy', 'show')">Updates</a>
             </li>
 
             <li role="presentation">
                 <a title="Projects dumps and servers"
                    href="#dumps" aria-controls="dumps" role="tab" data-toggle="tab"
-                   onclick="show_or_hide('dummy', 'servers_tab', 'dummy', 'show')">Dumps</a>
+                   onclick="show_or_hide_all('dummy', 'servers_tab', 'dummy', 'show')">Dumps</a>
             </li>
 
             {% if "run_command" in pr_view_perms %}
                 <li role="presentation">
                     <a title="Projects cron jobs"
                        href="#cron" aria-controls="cron" role="tab" data-toggle="tab"
-                       onclick="show_or_hide('dummy', 'servers_tab', 'dummy', 'hide')">Cron Jobs</a>
+                       onclick="show_or_hide_all('dummy', 'servers_tab', 'dummy', 'hide')">Cron Jobs</a>
                 </li>
 
                 <li role="presentation">
                     <a title="Projects history log"
                        href="#history" aria-controls="history" role="tab" data-toggle="tab"
-                       onclick="show_or_hide('dummy', 'servers_tab', 'dummy', 'hide')">History</a>
+                       onclick="show_or_hide_all('dummy', 'servers_tab', 'dummy', 'hide')">History</a>
                 </li>
             {% endif %}
 
