@@ -27,9 +27,13 @@
                    data-target="{{job.name}}"/>
         {% endif %}
 
-        <hr>
+        {% if job.perm %}
+            <script type="text/javascript">
+                color('jb{{job.id}}', 0, '{{job.perm}}');
+            </script>
+        {% endif %}
 
-        <style onload="color('jb{{job.id}}', 0, '{{job.perm}}')"></style>
+        <hr>
 
     {% empty %}
         There are no cron jobs for this project yet.

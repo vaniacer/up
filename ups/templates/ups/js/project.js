@@ -239,6 +239,7 @@ $(function() {
 });
 
 $(document).ready(function() {
+
     if (document.getElementById('id_server_info').checked) {
            show_or_hide_all('id_server_info', 'server-panel', 'sshow', 'show'); }
     else { show_or_hide_all('id_server_info', 'server-panel', 'sshow', 'hide'); }
