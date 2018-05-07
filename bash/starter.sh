@@ -108,11 +108,10 @@ function info () {
 # Server comes like this - jboss@localhost:/var/lib/jboss:8080
 # This function splits it to: address, working directory and port
 function addr () {
-    sopt=
-    #-----------------+-------------------+-----------------------------------+
-    #    Ssh address  |      Bind port    |        Working directory          |
-    #-----------------+-------------------+-----------------------------------+
-    addr=${server%%:*}; port=${server##*:}; wdir=${server#*:}; wdir=${wdir%:*}
+    #-----------------+-------------------+-----------------------------------+------------------+
+    #    Ssh address  |      Bind port    |        Working directory          | SSH option clear |
+    #-----------------+-------------------+-----------------------------------+------------------+
+    addr=${server%%:*}; port=${server##*:}; wdir=${server#*:}; wdir=${wdir%:*}; sopt=
 
     # Cut ssh opts if exist
     testaddr=($addr); [[ ${#testaddr[*]} -gt 1 ]] && { sopt=${addr% *}; addr=${addr##* }; }
