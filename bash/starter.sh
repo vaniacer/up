@@ -108,6 +108,7 @@ function info () {
 # Server comes like this - jboss@localhost:/var/lib/jboss:8080
 # This function splits it to: address, working directory and port
 function addr () {
+    sopt=
     #-----------------+-------------------+-----------------------------------+
     #    Ssh address  |      Bind port    |        Working directory          |
     #-----------------+-------------------+-----------------------------------+
