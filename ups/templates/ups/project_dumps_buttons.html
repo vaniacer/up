@@ -2,7 +2,7 @@
 
 <div class="row">
 
-    <div class="col-sm-6"> <!---| Dumps filter |--->
+    <div class="col-sm-7"> <!---| Dumps filter |--->
 
         <div class="input-group">
             <div class="input-group-btn">
@@ -20,6 +20,12 @@
 
                     <li class="divider"></li>
 
+                    {% for SRV in servers_filtered %}
+                        <li><a href="javascript:;" onclick="filter_by('id_dumps', '{{SRV.addr}}')">{{SRV.addr}}</a></li>
+                    {% endfor %}
+
+                    <li class="divider"></li>
+
                     {% for DMP in dmplist %}
                         <li><a href="javascript:;" onclick="filter_by('id_dumps', '{{DMP.name}}')">{{DMP.name}}</a></li>
                     {% endfor %}
@@ -33,7 +39,7 @@
 
     </div> <!-----------------| Dumps filter end |--->
 
-    <div class="col-sm-6"> <!---| Dumps commands |--->
+    <div class="col-sm-5"> <!---| Dumps commands |--->
 
         {% if dmplist %}
 

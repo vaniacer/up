@@ -38,37 +38,17 @@
     color: #f60f0f;
 }
 
-.update-panel dt {
-    width: 80px;
-}
+.update-panel dt { width: 80px; }
+.update-panel dd { margin-left: 90px; }
 
-.update-panel dd {
-    margin-left: 90px;
-}
+.dbdump-panel dt { width: 70px; }
+.dbdump-panel dd { margin-left: 80px; }
 
-.dump-panel dt {
-    width: 80px;
-}
+.script-panel dt { width: 80px; }
+.script-panel dd { margin-left: 90px; }
 
-.dump-panel dd {
-    margin-left: 90px;
-}
-
-.script-panel dt {
-    width: 80px;
-}
-
-.script-panel dd {
-    margin-left: 90px;
-}
-
-.server-panel dt {
-    width: 110px;
-}
-
-.server-panel dd {
-    margin-left: 120px;
-}
+.server-panel dt { width: 110px; }
+.server-panel dd { margin-left: 120px; }
 
 .roller {
     overflow-y: auto;
