@@ -8,13 +8,13 @@ import datetime
 commandick = {
 
 	# Cron submenu }----------------------------------------------------------------------------------------------------
-	'cancel_job': {
-		'name': 'cancel_job',                     # Command name id
+	'cancel_job': {                               # Internal command name id
 		'section': 'cron',                        # Section in which command will be placed
+		'class': '',                              # Class assigned to a command button(for example 'danger')
 		'title': 'Cancel selected cron job(s).',  # Pop up help message
-		'class': '',                              # Class assigned to a button(for example 'danger')
-		'menu': 'Cancel job',                     # Menu name of the command
 		'bash': 'cronjob_cancel.sh',              # Bash script that this command will start
+		'name': 'cancel_job',                     # Web command name id(key)
+		'menu': 'Cancel job',                     # Menu name of the command
 		'srv': 'false',                           # Check if some server selected
 		'upd': 'false',                           # Check if some update selected
 		'job': 'true',                            # Check if some cron job selected
@@ -23,7 +23,7 @@ commandick = {
 		'dgr': 'false',                           # Will show confirmation window
 		'run': "run_or_cron('RUN');",             # If set to "run_or_cron('RUN');" then command will be run only
 		'history': True,                          # Save or not command log to history
-		'tag': False,                             # Show or not html tags in command's log
+		'tag': False,                             # Show or not html tags in command log
 	},
 
 	'change_date': {
@@ -299,7 +299,6 @@ commandick = {
 		'tag':  True, },
 
 	# Server section }--------------------------------------------------------------------------------------------------
-
 	'server_info': {
 		'name': 'server_info',
 		'section': 'server',
@@ -316,6 +315,59 @@ commandick = {
 		'run': "run_or_cron('RUN');",
 		'history': False,
 		'tag':  True,
+	},
+
+	'check_conf': {
+		'name': 'check_conf',
+		'section': 'server',
+		'title': 'Show conf(standalone-full.xml) and java options of selected server(s).',
+		'class': '',
+		'menu': 'Check conf',
+		'bash': 'check_conf.sh',
+		'srv': 'true',
+		'upd': 'false',
+		'job': 'false',
+		'scr': 'false',
+		'dmp': 'false',
+		'dgr': 'false',
+		'run': "run_or_cron('RUN');",
+		'history': False,
+		'tag': False, },
+
+	'tunnel': {
+		'name': 'tunnel',
+		'section': 'server',
+		'title': 'Make ssh tunnel to the bind port of selected server(s).',
+		'class': '',
+		'menu': 'Tunnel',
+		'bash': 'tunnel.sh',
+		'srv': 'true',
+		'upd': 'false',
+		'job': 'false',
+		'scr': 'false',
+		'dmp': 'false',
+		'dgr': 'false',
+		'run': "run_or_cron('RUN');",
+		'history': False,
+		'tag': True,
+	},
+
+	'copy_utils': {
+		'name': 'copy_utils',
+		'section': 'server',
+		'title': 'Copy utils folder to selected server(s).',
+		'class': '',
+		'menu': 'Copy utils',
+		'bash': 'copy_utils.sh',
+		'srv': 'true',
+		'upd': 'false',
+		'job': 'false',
+		'scr': 'false',
+		'dmp': 'false',
+		'dgr': 'false',
+		'run': '',
+		'history': True,
+		'tag': False,
 	},
 
 	# Logs
@@ -371,41 +423,6 @@ commandick = {
 		'run': "run_or_cron('RUN');",
 		'history': False,
 		'tag': False,
-	},
-
-	'check_conf': {
-		'name': 'check_conf',
-		'section': 'server',
-		'title': 'Show conf(standalone-full.xml) and java options of selected server(s).',
-		'class': '',
-		'menu': 'Check conf',
-		'bash': 'check_conf.sh',
-		'srv': 'true',
-		'upd': 'false',
-		'job': 'false',
-		'scr': 'false',
-		'dmp': 'false',
-		'dgr': 'false',
-		'run': "run_or_cron('RUN');",
-		'history': False,
-		'tag': False, },
-
-	'tunnel': {
-		'name': 'tunnel',
-		'section': 'server',
-		'title': 'Make ssh tunnel to the bind port of selected server(s).',
-		'class': '',
-		'menu': 'Tunnel',
-		'bash': 'tunnel.sh',
-		'srv': 'true',
-		'upd': 'false',
-		'job': 'false',
-		'scr': 'false',
-		'dmp': 'false',
-		'dgr': 'false',
-		'run': "run_or_cron('RUN');",
-		'history': False,
-		'tag': True,
 	},
 
 	# Maintenance
@@ -535,29 +552,12 @@ commandick = {
 		'tag': False,
 	},
 
-	'copy_utils': {
-		'name': 'copy_utils',
-		'section': 'server',
-		'title': 'Copy utils folder to selected server(s).',
-		'class': '',
-		'menu': 'Copy utils',
-		'bash': 'copy_utils.sh',
-		'srv': 'true',
-		'upd': 'false',
-		'job': 'false',
-		'scr': 'false',
-		'dmp': 'false',
-		'dgr': 'false',
-		'run': '',
-		'history': True,
-		'tag': False,
-	},
-
 	# Backup
 	'backup_db': {
 		'name': 'backup_db',
 		'section': 'server',
-		'title': 'Database backup via "./krupd bkp db".',
+		'title': 'Database backup via "./krupd bkp db". \
+Files will be stored on the server(s) and downloaded to UpS.',
 		'class': '',
 		'menu': 'Backup base',
 		'bash': 'backup_db.sh',
@@ -575,7 +575,8 @@ commandick = {
 	'backup_sys': {
 		'name': 'backup_sys',
 		'section': 'server',
-		'title': 'System backup via "./krupd bkp sys".',
+		'title': 'System backup via "./krupd bkp sys". \
+Files will be stored on the server(s) and downloaded to UpS.',
 		'class': '',
 		'menu': 'Backup system',
 		'bash': 'backup_sys.sh',
@@ -593,7 +594,8 @@ commandick = {
 	'backup_full': {
 		'name': 'backup_full',
 		'section': 'server',
-		'title': 'System and DB backup via "./krupd bkp full".',
+		'title': 'System and DB backup via "./krupd bkp full". \
+Files will be stored on the server(s) and downloaded to UpS.',
 		'class': '',
 		'menu': 'Backup full',
 		'bash': 'backup_full.sh',

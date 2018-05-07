@@ -29,7 +29,7 @@
     </div>
 
     <form method='GET' action="{% url 'ups:project' project.id %}" id="selector">
-        <!--{% csrf_token %}-->
+        {% csrf_token %}
 
         <div class="hidden">
             {% bootstrap_form hide_info_form %}
