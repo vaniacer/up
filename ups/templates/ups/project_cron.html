@@ -2,86 +2,39 @@
 
 <br>
 
-{% if cronjob %}
-    {% if "run_command" in pr_view_perms %}
+<div class="roller">
 
-        {% buttons %}
+    {% for job in cronjob %}
 
-            <input type="button"
-                   value="Select all jobs"
-                   class="btn btn-info btn-xs"
-                   title="Select all cron jobs."
-                   onclick="select_all('selected_jobs', 'job-body', true,  'SJ')"/>
+        <dl id="jb{{job.id}}"
+            class="dl-horizontal job-body"
+            onclick="selector('jx{{job.id}}', 'jb{{job.id}}', '{{job.name}}', 'SJ')">
 
-            <input type="button"
-                   value="Deselect all jobs"
-                   class="btn btn-info btn-xs"
-                   title="Deselect all cron jobs."
-                   onclick="select_all('selected_jobs', 'job-body', false, 'SJ')"/>
+            <dt>Cron job id</dt><dd>{{job.cron}}</dd>
+            <dt>Job name</dt><dd>{{job.name}}</dd>
+            <dt>Permanent</dt><dd>{{job.perm}}</dd>
+            <dt>Description</dt><dd>{{job.desc|linebreaks}}</dd>
+            <dt><big>Date\Time</big></dt><dd><big>{{job.cdat}}</big></dd>
+        </dl>
 
-            <a href="javascript:;"
-               name="selected_commands"
-               class="btn btn-danger btn-xs"
-               title="Make selected cron job(s) permanent."
-               onclick="run_or_cron('RUN');
-                        return Validation('permanent_job', false, false, true, false, false, true)">Permanent</a>
-                        <!---- Validation('cmd_name', server, update, cronjob, script, dump, danger) ---->
-            <a href="javascript:;"
-               name="selected_commands"
-               class="btn btn-danger btn-xs"
-               title="Make selected cron job(s) run once (default)."
-               onclick="run_or_cron('RUN');
-                        return Validation('once_job', false, false, true, false, false, true)">Run once</a>
-                        <!---- Validation('cmd_name', server, update, cronjob, script, dump, danger) ---->
-            <a href="javascript:;"
-               name="selected_commands"
-               class="btn btn-danger btn-xs"
-               title="Change selected cron job(s) run date\time."
-               onclick="run_or_cron('RUN');
-                        return Validation('change_date', false, false, true, false, false, true)">Change date</a>
-                        <!---- Validation('cmd_name',   server, update, cronjob, script, dump, danger) ---->
-            <a href="javascript:;"
-               name="selected_commands"
-               class="btn btn-danger btn-xs"
-               title="Cancel selected cron job(s)."
-               onclick="run_or_cron('RUN');
-                        return Validation('cancel_job', false, false, true, false, false, true)">Cancel job</a>
-                        <!---- Validation('cmd_name', server, update, cronjob, script, dump, danger) ---->
-        {% endbuttons %}
+        {% if "run_command" in pr_view_perms %}
+            <!--Hidden checkboxes-->
+            <input class="hidden"
+                   type="checkbox"
+                   id="jx{{job.id}}"
+                   name="selected_jobs"
+                   value="{{job.cron}}"
+                   data-target="{{job.name}}"/>
+        {% endif %}
 
-    {% endif %}
+        <hr>
 
-{% endif %}
+        <style onload="color('jb{{job.id}}', 0, '{{job.perm}}')"></style>
 
-{% for job in cronjob %}
+    {% empty %}
+        There are no cron jobs for this project yet.
+    {% endfor %}
 
-    <dl id="jb{{job.id}}"
-        class="dl-horizontal job-body"
-        onclick="selector('jx{{job.id}}', 'jb{{job.id}}', '{{job.name}}', 'SJ')">
+    <br>
 
-        <dt>Cron job id</dt><dd>{{job.cron}}</dd>
-        <dt>Job name</dt><dd>{{job.name}}</dd>
-        <dt>Permanent</dt><dd>{{job.perm}}</dd>
-        <dt>Description</dt><dd>{{job.desc|linebreaks}}</dd>
-        <dt><big>Date\Time</big></dt><dd><big>{{job.cdat}}</big></dd>
-    </dl>
-
-    <style onload="color('jb{{job.id}}', 0, '{{job.perm}}')"></style>
-
-    {% if "run_command" in pr_view_perms %}
-        <!--Hidden checkboxes-->
-        <input class="hidden"
-               type="checkbox"
-               id="jx{{job.id}}"
-               name="selected_jobs"
-               value="{{job.cron}}"
-               data-target="{{job.name}}"/>
-    {% endif %}
-
-    <hr>
-
-{% empty %}
-    There are no cron jobs for this project yet.
-{% endfor %}
-
-<br>
+</div>

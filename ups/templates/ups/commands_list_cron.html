@@ -1,0 +1,29 @@
+<div class="roller">
+
+    <table class="table small">
+
+        <tr><td>Cron commands</td></tr>
+
+        <tr><td>
+            <a href="javascript:;"
+               title="Select all cron jobs."
+               onclick="select_all('selected_jobs', 'job-body', true,  'SJ')">Select all jobs</a>
+        </td></tr>
+
+        <tr><td>
+            <a href="javascript:;"
+               title="Deselect all cron jobs."
+               onclick="select_all('selected_jobs', 'job-body', false, 'SJ')">Deselect all jobs</a>
+        </td></tr>
+
+        {% for command in commands %}
+
+            {% if command.section == "cron" %}
+                {% include "ups/commands_table.html" %}
+            {% endif %}
+
+        {% endfor %}
+
+    </table>
+
+</div>
