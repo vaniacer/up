@@ -55,8 +55,9 @@ class Project(models.Model):
 class Server(models.Model):
 	"""Серверы проекта."""
 	date = models.DateTimeField(auto_now_add=True, db_index=True)
+	opts = models.CharField(max_length=255, blank=True)  # SSH options
+	addr = models.CharField(max_length=255)              # SSH address
 	name = models.CharField(max_length=255)
-	addr = models.CharField(max_length=255)
 	wdir = models.CharField(max_length=255)
 	desc = models.TextField(max_length=255)
 	port = models.CharField(max_length=5)

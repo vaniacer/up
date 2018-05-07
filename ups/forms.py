@@ -14,10 +14,11 @@ class ProjectForm(forms.ModelForm):
 class ServerForm(forms.ModelForm):
 	class Meta:
 		model = Server
-		fields = ['name', 'addr', 'wdir', 'desc', 'port']
+		fields = ['name', 'addr', 'opts', 'wdir', 'desc', 'port']
 		labels = {
 			'name': 'Server name', 'desc': 'Server description',
 			'addr': 'SSH address', 'wdir': 'Working directory',
+			'opts': 'SSH options',
 			'port': 'Server binding port'
 		}
 

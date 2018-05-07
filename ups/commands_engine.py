@@ -96,7 +96,7 @@ def starter(selected):
 
 	for ID in selected['servers']:
 		server = Server.objects.get(id=ID)
-		opt.extend(['-s', '%s:%s:%s' % (server.addr, server.wdir, server.port)])
+		opt.extend(['-s', '%s:%s:%s' % (' '.join([server.opts, server.addr]), server.wdir, server.port)])
 
 	for ID in selected['updates']:
 		update = Update.objects.get(id=ID)
