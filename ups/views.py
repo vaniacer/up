@@ -196,7 +196,7 @@ def project(request, project_id):
 	dmplist_filtered = [dump for dump in dmplist if re.search(dmplist_filter, dump['name'], re.IGNORECASE)]
 	dmplist_filter_form = DumpsFilterForm(initial=data)
 
-	commanddlist = sorted(commandick.itervalues(), key=itemgetter('menu'))
+	commandsorted = sorted(commandick.itervalues(), key=itemgetter('menu'))
 	hide_info_form = HideInfoForm(initial=data)
 
 	context = {
@@ -205,7 +205,7 @@ def project(request, project_id):
 		'dmplist': dmplist,
 		'scripts': scripts,
 		'servers': servers,
-		'commands': commanddlist,
+		'commands': commandsorted,
 		'project': current_project,
 		'hide_info_form': hide_info_form,
 		'servers_filtered': servers_filtered,
