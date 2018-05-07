@@ -4,6 +4,18 @@
 
         <tr><td>Updates commands</td></tr>
 
+        <tr><td>
+            <a href="javascript:;"
+               title="Select all updates."
+               onclick="select_all('selected_updates', 'update-body', true,  'SU')">Select all updates</a>
+        </td></tr>
+
+        <tr><td>
+            <a href="javascript:;"
+               title="Deselect all updates."
+               onclick="select_all('selected_updates', 'update-body', false, 'SU')">Deselect all updates</a>
+        </td></tr>
+
         {% for command in commands %}
 
             {% if command.section == "update" %}

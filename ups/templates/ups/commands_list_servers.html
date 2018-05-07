@@ -1,5 +1,17 @@
 <tr><td>Servers commands</td></tr>
 
+<tr><td>
+    <a href="javascript:;"
+       title="Select all servers."
+       onclick="select_all('selected_servers', 'server-body', true,  'SS')">Select all servers</a>
+</td></tr>
+
+<tr><td>
+    <a href="javascript:;"
+       title="Deselect all servers."
+       onclick="select_all('selected_servers', 'server-body', false, 'SS')">Deselect all servers</a>
+</td></tr>
+
 {% for command in commands %}
 
     {% if command.section == "server" %}

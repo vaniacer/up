@@ -4,6 +4,18 @@
 
         <tr><td>Scripts commands</td></tr>
 
+        <tr><td>
+            <a href="javascript:;"
+               title="Select all scripts."
+               onclick="select_all('selected_scripts', 'script-body', true,  'SX')">Select all scripts</a>
+        </td></tr>
+
+        <tr><td>
+            <a href="javascript:;"
+               title="Deselect all scripts."
+               onclick="select_all('selected_scripts', 'script-body', false, 'SX')">Deselect all scripts</a>
+        </td></tr>
+
         {% for command in commands %}
             {% if command.section == "script" %}
                 {% include "ups/commands_table.html" %}

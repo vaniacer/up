@@ -4,6 +4,18 @@
 
         <tr><td>Dumps commands</td></tr>
 
+        <tr><td>
+            <a href="javascript:;"
+               title="Select all dumps."
+               onclick="select_all('selected_dumps', 'dump-body', true, 'SD')">Select all dumps</a>
+        </td></tr>
+
+        <tr><td>
+            <a href="javascript:;"
+               title="Deselect all dumps."
+               onclick="select_all('selected_dumps', 'dump-body', false, 'SD')">Deselect all dumps</a>
+        </td></tr>
+        
         {% for command in commands %}
 
             {% if command.section == "dump" %}
