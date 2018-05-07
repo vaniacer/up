@@ -9,21 +9,21 @@ commandick = {
 
 	# Cron submenu }----------------------------------------------------------------------------------------------------
 	'cancel_job': {
-		'name': 'cancel_job',
-		'section': 'cron',
-		'title': 'Cancel selected cron job(s).',
-		'class': '',
-		'menu': 'Cancel job',
-		'bash': 'cronjob_cancel.sh',
-		'srv': 'false',
-		'upd': 'false',
-		'job': 'true',
-		'scr': 'false',
-		'dmp': 'false',
-		'dgr': 'false',
-		'run': "run_or_cron('RUN');",
-		'history': True,
-		'tag': False,
+		'name': 'cancel_job',                     # Command name id
+		'section': 'cron',                        # Section in which command will be placed
+		'title': 'Cancel selected cron job(s).',  # Pop up help message
+		'class': '',                              # Class assigned to a button(for example 'danger')
+		'menu': 'Cancel job',                     # Menu name of the command
+		'bash': 'cronjob_cancel.sh',              # Bash script that this command will start
+		'srv': 'false',                           # Check if some server selected
+		'upd': 'false',                           # Check if some update selected
+		'job': 'true',                            # Check if some cron job selected
+		'scr': 'false',                           # Check if some script selected
+		'dmp': 'false',                           # Check if some dump selected
+		'dgr': 'false',                           # Will show confirmation window
+		'run': "run_or_cron('RUN');",             # If set to "run_or_cron('RUN');" then command will be run only
+		'history': True,                          # Save or not command log to history
+		'tag': False,                             # Show or not html tags in command's log
 	},
 
 	'change_date': {
@@ -158,7 +158,7 @@ commandick = {
 		'name': 'update',
 		'section': 'update',
 		'title': 'Update selected server(s).',
-		'class': '',
+		'class': 'danger',
 		'menu': 'Update',
 		'bash': 'update.sh',
 		'srv': 'true',
@@ -166,7 +166,7 @@ commandick = {
 		'job': 'false',
 		'scr': 'false',
 		'dmp': 'false',
-		'dgr': 'false',
+		'dgr': 'true',
 		'run': '',
 		'history': True,
 		'tag':  True,
@@ -305,7 +305,7 @@ commandick = {
 		'section': 'server',
 		'title': 'Show system info: CPU, mem, disk etc.',
 		'class': '',
-		'menu': 'System info',
+		'menu': 'Info',
 		'bash': 'server_info.sh',
 		'srv': 'true',
 		'upd': 'false',
