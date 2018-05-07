@@ -6,7 +6,7 @@
     {% include "ups/project_servers_buttons.html" %}
 {% endbuttons %}
 
-<div class="roller">
+<div class="sroller">
     {% for server in servers_filtered %}
 
         <div class="panel panel-default" onclick="selector('sx{{server.id}}', 'sb{{server.id}}', '{{server}}', 'SS')">

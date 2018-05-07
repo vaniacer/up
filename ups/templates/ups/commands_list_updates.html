@@ -1,0 +1,19 @@
+<div class="roller">
+
+    <table class="table medium">
+
+        <tr><td>Updates commands</td></tr>
+
+        {% for command in commands %}
+
+            {% if command.section == "update" %}
+                {% include "ups/commands_table.html" %}
+            {% endif %}
+
+        {% endfor %}
+
+        {% include "ups/commands_list_servers.html" %}
+
+    </table>
+
+</div>

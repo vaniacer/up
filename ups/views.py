@@ -5,9 +5,9 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .permissions import check_perm_or404, check_permission
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
+from .commands import command, cmd_run, info, commandick
 from django.shortcuts import render, get_object_or_404
 from .models import Project, Update, Script, History
-from .commands import command, cmd_run, info
 from django.conf import settings as conf
 from wsgiref.util import FileWrapper
 from .cron import get_cron_logs
@@ -196,6 +196,7 @@ def project(request, project_id):
 	dmplist_filtered = [dump for dump in dmplist if re.search(dmplist_filter, dump['name'], re.IGNORECASE)]
 	dmplist_filter_form = DumpsFilterForm(initial=data)
 
+	commanddlist = sorted(commandick.itervalues())
 	hide_info_form = HideInfoForm(initial=data)
 
 	context = {
@@ -204,6 +205,7 @@ def project(request, project_id):
 		'dmplist': dmplist,
 		'scripts': scripts,
 		'servers': servers,
+		'commands': commanddlist,
 		'project': current_project,
 		'hide_info_form': hide_info_form,
 		'servers_filtered': servers_filtered,

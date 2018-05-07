@@ -1,0 +1,17 @@
+<div class="croller">
+
+    <table class="table medium">
+
+        <tr><td>Scripts commands</td></tr>
+
+        {% for command in commands %}
+            {% if command.section == "script" %}
+                {% include "ups/commands_table.html" %}
+            {% endif %}
+        {% endfor %}
+
+        {% include "ups/commands_list_servers.html" %}
+
+    </table>
+
+</div>

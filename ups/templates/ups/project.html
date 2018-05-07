@@ -77,17 +77,28 @@
 
         <!-- Tab panes -->
         <div class="tab-content">
-            <div role="tabpanel" class="tab-pane in active" id="scripts" >
-                <div class="col-sm-6">
+            <div role="tabpanel" class="tab-pane in active" id="scripts">
+
+                <div class="col-sm-2">
+                    {% include "ups/commands_list_scripts.html" %}
+                </div>
+
+                <div class="col-sm-5">
                     <div class="col-sm-12">
                         <h4 class="right">Scripts</h4>
                     </div>
                     {% include "ups/project_scripts.html" %}
                 </div>
+
             </div>
 
             <div role="tabpanel" class="tab-pane" id="updates">
-                <div class="col-sm-6">
+
+                <div class="col-sm-2">
+                    {% include "ups/commands_list_updates.html" %}
+                </div>
+
+                <div class="col-sm-5">
                     <div class="col-sm-12">
                         <h4 class="right">Updates</h4>
                     </div>
@@ -96,7 +107,12 @@
             </div>
 
             <div role="tabpanel" class="tab-pane" id="dumps">
-                <div class="col-sm-6">
+
+                <div class="col-sm-2">
+                    {% include "ups/commands_list_dumps.html" %}
+                </div>
+
+                <div class="col-sm-5">
                     <div class="col-sm-12 right">
                         <h4 class="right">Dumps</h4>
                     </div>
@@ -116,7 +132,7 @@
 
         </div>
 
-        <div class="col-sm-6 servers_tab">
+        <div class="col-sm-5 servers_tab">
             <div class="col-sm-12">
                 <h4>Servers</h4>
             </div>

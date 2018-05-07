@@ -37,44 +37,6 @@
 
         {% if dmplist %}
 
-            {% if "run_command" in pr_view_perms %}
-
-                <div class="btn-group">
-                    <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown">Commands
-                        <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu" role="menu">
-
-                        <li><a title="Select all dumps."
-                               onclick="select_all('selected_dumps', 'dump-body', true,  'SD')"
-                               href="javascript:;">Select All</a></li>
-
-                        <li><a title="Deselect all dumps."
-                               onclick="select_all('selected_dumps', 'dump-body', false, 'SD')"
-                               href="javascript:;">Deselect All</a></li>
-
-                        <li class="divider"></li>
-                        
-                        <li><a onclick="return Validation('send_dump', true, false, false, false, true, true)"
-                               title="Copy DB dump to selected server(s)."
-                               href="javascript:;"
-                               class="danger">Send dump</a></li>
-
-                        <li><a onclick="return Validation('get_dump', true, false, false, false, false, false)"
-                               title="Get DB dump from selected server(s)."
-                               href="javascript:;">Get dump</a></li>
-
-                        <li><a onclick="return Validation('del_dump', false, false, false, false, true, false)"
-                               title="Delete selected dump(s)."
-                               href="javascript:;">Del dump</a></li>
-
-                        <li><br><br><br></li>
-
-                    </ul>
-                </div>
-
-            {% endif %} <!---| If can run |--->
-
                 <div class="btn-group">
                     <input id="dshow"
                            type="button"

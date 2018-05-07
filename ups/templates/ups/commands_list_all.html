@@ -1,0 +1,40 @@
+<tr><td>Scripts commands</td></tr>
+
+{% for command in commands %}
+    {% if command.section == "script" %}
+        {% include "ups/commands_table.html" %}
+    {% endif %}
+{% endfor %}
+
+<tr><td>Servers commands</td></tr>
+
+{% for command in commands %}
+
+    {% if command.section == "server" %}
+        {% include "ups/commands_table.html" %}
+    {% endif %}
+
+{% endfor %}
+
+<tr><td>Updates commands</td></tr>
+
+{% for command in commands %}
+
+    {% if command.section == "update" %}
+        {% include "ups/commands_table.html" %}
+    {% endif %}
+
+{% endfor %}
+
+<tr><td>Dumps commands</td></tr>
+
+{% for command in commands %}
+
+    {% if command.section == "dump" %}
+        {% include "ups/commands_table.html" %}
+    {% endif %}
+
+{% endfor %}
+
+<tr><td></td></tr>
+<tr><td></td></tr>

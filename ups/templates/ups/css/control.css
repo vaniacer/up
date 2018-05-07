@@ -70,8 +70,16 @@
     margin-left: 120px;
 }
 
-.roller {
-    overflow-y: auto;
+.croller {
+    overflow-y: 80%;
+}
+
+.xroller {
+    overflow-y: 80%;
+}
+
+.sroller {
+    overflow-y: 80%;
 }
 
 .right {
