@@ -95,8 +95,11 @@ def starter(selected):
 		opt.extend(['-cid', str(selected['cid'])])
 
 	for ID in selected['servers']:
-		server = Server.objects.get(id=ID)
-		opt.extend(['-s', '%s:%s:%s' % (' '.join([server.opts, server.addr]), server.wdir, server.port)])
+		srv = Server.objects.get(id=ID)
+		adr = srv.addr
+		if srv.opts:
+			adr = ' '.join([srv.opts, srv.addr])
+		opt.extend(['-s', '%s:%s:%s' % (adr, srv.wdir, srv.port)])
 
 	for ID in selected['updates']:
 		update = Update.objects.get(id=ID)

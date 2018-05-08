@@ -117,7 +117,8 @@ function addr () {
     testaddr=($addr); [[ ${#testaddr[*]} -gt 1 ]] && { sopt=${addr% *}; addr=${addr##* }; }
 
     # Show $addr as info
-    info "Server $sopt $addr"
+    [[ $sopt ]] && mess="Server $sopt $addr" || mess="Server $addr"
+    info "$mess"
 }
 
 # If connecting first time send 'yes' on ssh's request.
