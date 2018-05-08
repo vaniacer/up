@@ -339,7 +339,7 @@ commandick = {
 		'section': 'server',
 		'title': 'Make ssh tunnel to the bind port of selected server(s).',
 		'class': '',
-		'menu': 'Tunnel',
+		'menu': 'Create tunnel',
 		'bash': 'tunnel.sh',
 		'srv': 'true',
 		'upd': 'false',
