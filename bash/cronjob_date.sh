@@ -12,8 +12,10 @@ function run () { #---------------------------------| Main function |-----------
     info 'Change job(s) date and time'
     for id in ${jobs[@]}; {
         job="`grep "\-C $id" $cronfile`"
-        job=( ${job//'*'/'\*'} )
-        sed="s|${job[@]}|$date ${job[@]:4}|g;"$sed; printf "\n$id"
+        job="${job//'*'/'\*'}"
+        job="${job//-/'\-'}"
+        cut=( $job )
+        sed="s|^.*-C $id.*$|$date ${cut[@]:4}|g;$sed"; printf "\n$id"
     }
 
     sed "$sed" -i $cronfile || error=$?
