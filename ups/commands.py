@@ -9,7 +9,7 @@ commandick = {
 
 	# Cron submenu }----------------------------------------------------------------------------------------------------
 	'cancel_job': {                               # Internal command name id
-		'position': 10,                           # Position in commands list
+		'position': 10,                           # Position in commands list(dick sorted by position)
 		'section': 'cron',                        # Section in which command will be placed
 		'class': '',                              # Class assigned to a command button(for example 'danger')
 		'title': 'Cancel selected cron job(s).',  # Pop up help message
@@ -185,9 +185,9 @@ commandick = {
 		'name': 'update',
 		'position': 30,
 		'section': 'update',
-		'title': 'Update selected server(s).',
+		'title': 'Update selected server(s) with selected update file.',
 		'class': 'danger',
-		'menu': 'Make Update',
+		'menu': 'Start Update',
 		'bash': 'update.sh',
 		'srv': 'true',
 		'upd': 'true',
