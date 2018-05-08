@@ -14,20 +14,22 @@ function run () { #---------------------------------| Main function |-----------
     cmnd="$workdir/starter.sh -c $run -C $key"    # Command to run
 
     for ((i=0; i<${#options[*]}; i+=2)); do       # Loop through options
-        key_value=( ${options[@]:$i:2} )          # Get key_value pairs
-        case ${key_value[0]} in                   #
+        name=${options[$i]}                       # Get opt name
+        value="${options[($i+1)]}"                # Get opt value
+        case $name in                             #
             -run|-cmd|-date|-hid|-cid) continue;; # Drop unnecessary options
         esac                                      #
-        # Assign  key__________________value pairs of options to command, wrap values with ''
-        cmnd+=" ${key_value[0]} '${key_value[1]}'"
+        # Create     name   value pairs of options for cron and description
+        opt_cron+=" $name '$value'" # this string goes to crontab file, wrap values with ''
+        opt_desc+=( $name "$value") # this array used in description, values without ''
     done
 
     # Set crontab job
     JS="#`line '=' 28`| job $key start |`line '=' 28`"
     JE="#`line '=' 28`|  job $key end  |`line '=' 28`"
-    printf "$JS\n$date $cmnd; $cncl$JE\n" >> "$cronfile" || error=$?
+    printf "$JS\n$date $cmnd $opt_cron; $cncl$JE\n" >> "$cronfile" || error=$?
 
     # Info
-    $cmnd -desc true || error=$? # Show description of running command
+    $cmnd "${opt_desc[@]}" -desc true || error=$? # Show description of command
 
 } #---------------------------------------------------------------------------------------------------------------------
