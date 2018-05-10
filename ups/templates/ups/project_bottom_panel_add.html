@@ -18,9 +18,9 @@
             {% endif %}
             {% if "add_script" in pr_view_perms %}
                 <li><a title="Add new script from file."
-                       href="{% url 'ups:new_script' project.id %}?{{info}}">Add Script</a></li>
+                       href="{% url 'ups:add_script' project.id %}?{{info}}">Add Script</a></li>
                 <li><a title="Create new script."
-                       href="{% url 'ups:create_script' project.id %}?{{info}}">New script</a></li>
+                       href="{% url 'ups:new_script' project.id %}?{{info}}">New script</a></li>
             {% endif %}
             {% if "run_command" in pr_view_perms %}
                 <li><a onclick="return Validation('get_dump', true, false, false, false, false)"

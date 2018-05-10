@@ -55,10 +55,10 @@
             <div class="btn-group">
                 <a title="Add new script from file."
                    class="btn btn-success btn-sm"
-                   href="{% url 'ups:new_script' project.id %}?{{info}}">Add</a>
+                   href="{% url 'ups:add_script' project.id %}?{{info}}">Add</a>
                 <a title="Create new script."
                    class="btn btn-success btn-sm"
-                   href="{% url 'ups:create_script' project.id %}?{{info}}">New</a>
+                   href="{% url 'ups:new_script' project.id %}?{{info}}">New</a>
             </div>
         {% endif %}
 

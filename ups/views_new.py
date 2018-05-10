@@ -83,7 +83,7 @@ def new_update(request, project_id):
 
 
 @login_required
-def new_script(request, project_id):
+def add_script(request, project_id):
 	"""Добавляет новый скрипт."""
 	project = Project.objects.get(id=project_id)
 	check_perm_or404('add_script', project, request.user)
@@ -114,7 +114,7 @@ def new_script(request, project_id):
 
 
 @login_required
-def create_script(request, project_id):
+def new_script(request, project_id):
 	"""Создает новый скрипт."""
 	project = Project.objects.get(id=project_id)
 	check_perm_or404('add_script', project, request.user)

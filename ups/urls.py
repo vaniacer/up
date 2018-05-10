@@ -36,11 +36,11 @@ urlpatterns = [
 	url(r'^download_upd/(?P<project_id>\d+)/(?P<update_id>\d+)$', views.download_upd, name='download_upd'),
 
 	# Страница для добавления нового скрипта
+	url(r'^add_script/(?P<project_id>\d+)/$', views_new.add_script, name='add_script'),
+	# Страница для создания скрипта
 	url(r'^new_script/(?P<project_id>\d+)/$', views_new.new_script, name='new_script'),
 	# Страница для редактирования скрипта
 	url(r'^edit_script/(?P<script_id>\d+)/$', views_edit.edit_script, name='edit_script'),
-	# Страница для создания скрипта
-	url(r'^create_script/(?P<project_id>\d+)/$', views_new.create_script, name='create_script'),
 	# Скачать файл скрипта.
 	url(r'^download_script/(?P<project_id>\d+)/(?P<script_id>\d+)$', views.download_script, name='download_script'),
 
