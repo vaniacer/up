@@ -33,19 +33,19 @@
                     <dt><small>Added by</small></dt><dd><small>{{script.user}}</small></dd>
                     <dt><small>Date added</small></dt><dd><small>{{script.date|date:'M d, Y H:i'}}</small></dd>
                 </dl>
-
-                {% if "run_command" in pr_view_perms %}
-                    <!--Hidden checkboxes-->
-                    <input class="hidden"
-                           type="checkbox"
-                           id="xx{{script.id}}"
-                           value="{{script.id}}"
-                           name="selected_scripts"
-                           data-target="{{script}}"/>
-                {% endif %}
             </div>
 
         </div>
+
+        {% if "run_command" in pr_view_perms %}
+        <!--Hidden checkboxes-->
+        <input class="hidden"
+               type="checkbox"
+               id="xx{{script.id}}"
+               value="{{script.id}}"
+               name="selected_scripts"
+               data-target="{{script}}"/>
+        {% endif %}
 
     {% empty %}
         There are no scripts for this project yet.

@@ -38,18 +38,19 @@
                     <dt><small>Added by</small></dt><dd><small>{{server.user}}</small></dd>
                     <dt><small>Date added</small></dt><dd><small>{{server.date|date:'M d, Y H:i'}}</small></dd>
                 </dl>
-                {% if "run_command" in pr_view_perms %}
-                    <!--Hidden checkboxes-->
-                    <input class="hidden"
-                           type="checkbox"
-                           id="sx{{server.id}}"
-                           value="{{server.id}}"
-                           name="selected_servers"
-                           data-target="{{server}}"/>
-                {% endif %}
             </div>
 
         </div>
+
+        {% if "run_command" in pr_view_perms %}
+            <!--Hidden checkboxes-->
+            <input class="hidden"
+                   type="checkbox"
+                   id="sx{{server.id}}"
+                   value="{{server.id}}"
+                   name="selected_servers"
+                   data-target="{{server}}"/>
+        {% endif %}
 
     {% empty %}
         There are no servers for this project yet.

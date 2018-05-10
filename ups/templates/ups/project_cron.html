@@ -17,6 +17,14 @@
             <dt><big>Date\Time</big></dt><dd><big>{{job.cdat}}</big></dd>
         </dl>
 
+        <hr>
+
+        {% if job.perm %}
+            <script type="text/javascript">
+                color('jb{{job.id}}', 0, '{{job.perm}}');
+            </script>
+        {% endif %}
+
         {% if "run_command" in pr_view_perms %}
             <!--Hidden checkboxes-->
             <input class="hidden"
@@ -26,14 +34,6 @@
                    value="{{job.cron}}"
                    data-target="{{job.name}}"/>
         {% endif %}
-
-        {% if job.perm %}
-            <script type="text/javascript">
-                color('jb{{job.id}}', 0, '{{job.perm}}');
-            </script>
-        {% endif %}
-
-        <hr>
 
     {% empty %}
         There are no cron jobs for this project yet.

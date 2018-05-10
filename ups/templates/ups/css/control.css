@@ -38,13 +38,20 @@
 }
 
 .col-sm-2, .col-sm-5, .col-sm-10 {
-    padding-right: 4;
-    padding-left:  4;
+    padding-right: 5px;
+    padding-left:  5px;
 }
 
 .panel {
-    margin-bottom: 10;
+    margin-bottom: 10px;
 }
+
+.panel-body {
+    padding-top:    5px;
+    padding-bottom: 5px;
+}
+
+.panel-body dl { margin-bottom: 0px; }
 
 .update-panel dt { width: 80px; }
 .update-panel dd { margin-left: 90px; }
@@ -57,6 +64,7 @@
 
 .server-panel dt { width: 110px; }
 .server-panel dd { margin-left: 120px; }
+
 
 .roller {
     overflow-y: auto;
