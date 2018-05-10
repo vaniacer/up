@@ -14,7 +14,7 @@
              onclick="selector('dx{{dump.id}}', 'db{{dump.id}}', '{{dump.name}}', 'SD')">
 
             <div class="panel-heading">
-                <h4 class="Name" title="{{dump.name}} {{dump.size|filesizeformat}}">{{dump.name|truncatechars:31}}</h4>
+                <h4 class="Name" title="{{dump.name}} {{dump.size|filesizeformat}}">{{dump.name|truncatechars:35}}</h4>
                 {% include "ups/commands_dumps.html" %}
                 <!--Individual visibility buttons-->
                 <input value="+"
@@ -29,7 +29,7 @@
             <div class="panel-body">
                 <dl class="dl-horizontal dbdump-panel dp{{dump.id}}">
                     <dt>Size</dt><dd>{{dump.size|filesizeformat}}</dd>
-                    <dt>Name</dt><dd>{{dump.name|truncatechars:47}}</dd>
+                    <dt>Name</dt><dd>{{dump.name|truncatechars:50}}</dd>
                     <dt><small>Date added</small></dt><dd><small>{{dump.date|date:'M d, Y H:i'}}</small></dd>
                 </dl>
             </div>
