@@ -38,6 +38,20 @@
     color: #f60f0f;
 }
 
+.col-sm-2 {
+    padding-right: 4;
+    padding-left:  4;
+}
+
+.col-sm-5 {
+    padding-right: 4;
+    padding-left:  4;
+}
+
+.panel {
+    margin-bottom: 10;
+}
+
 .update-panel dt { width: 80px; }
 .update-panel dd { margin-left: 90px; }
 
