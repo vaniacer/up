@@ -9,7 +9,9 @@
 <div class="roller">
     {% for update in updates_filtered %}
 
-        <div class="panel panel-default" onclick="selector('ux{{update.id}}', 'ub{{update.id}}', '{{update}}', 'SU')">
+        <div id="ub{{update.id}}"
+             class="panel panel-default update-body"
+             onclick="selector('ux{{update.id}}', 'ub{{update.id}}', '{{update}}', 'SU')">
 
             <div class="panel-heading">
                 <h4 class="Name" title="{{update.desc}} {{update.file.size|filesizeformat}}">{{update}}</h4>
@@ -24,7 +26,7 @@
                                 show_or_hide_this('uh{{update.id}}', 'up{{update.id}}')"/>
             </div>
 
-            <div class="panel-body update-body" id="ub{{update.id}}">
+            <div class="panel-body">
                 <dl class="dl-horizontal update-panel up{{update.id}}">
                     <dt>Size</dt><dd>{{update.file.size|filesizeformat}}</dd>
                     <dt>Description</dt><dd>{{update.desc|linebreaks}}</dd>

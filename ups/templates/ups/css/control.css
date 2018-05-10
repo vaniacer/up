@@ -20,8 +20,7 @@
 }
 
 .selected {
-    background:   #dff0d8;
-    border-color: #dff0d8;
+    border-color: green;
     border-style: solid;
     border-width: thick;
 }
@@ -38,12 +37,7 @@
     color: #f60f0f;
 }
 
-.col-sm-2 {
-    padding-right: 4;
-    padding-left:  4;
-}
-
-.col-sm-5 {
+.col-sm-2, .col-sm-5, .col-sm-10 {
     padding-right: 4;
     padding-left:  4;
 }
