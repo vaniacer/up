@@ -10,13 +10,14 @@ function run () { #---------------------------------| Main function |-----------
     time=${date#* }; date=${date% *}; hh=${time%:*}; mm=${time#*:}; DD=${date##*-}; MM=${date#*-}; MM=${MM%-*}
     date="$mm $hh $DD $MM" # Cron format date
 
-    info 'Change job(s) run date and time'
+    info 'Change job(s) run date and time'; printf "\n"
+
     for id in ${jobs[@]}; {
         job="`grep "\-C $id" $cronfile`"
         job="${job//'*'/'\*'}"
         job="${job//-/'\-'}"
         cut=( $job )
-        sed="s|^.*-C $id.*$|$date ${cut[@]:4}|g;$sed"; printf "$id"
+        sed="s|^.*-C $id.*$|$date ${cut[@]:4}|g;$sed"; printf "$id\n"
     }
 
     sed "$sed" -i $cronfile || error=$?

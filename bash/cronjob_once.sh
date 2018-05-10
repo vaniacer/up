@@ -9,10 +9,11 @@ function run () { #---------------------------------| Main function |-----------
     # Get time
     date=${date% *}; DD=${date##*-}; MM=${date#*-}; MM=${MM%-*}
 
-    info 'Set job(s) to run once'
+    info 'Set job(s) to run once'; printf "\n"
+
     for id in "${jobs[@]}"; {
         sed="s|^.*-C $id.*$|&; sed '/$id/d' -i '$cronfile'|g;/.*$id/ s|\* \* \*|$DD $MM \*|g;"$sed
-        printf "$id"
+        printf "$id\n"
     }
 
     sed "$sed" -i $cronfile || error=$?
