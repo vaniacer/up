@@ -9,7 +9,6 @@ function body () { #--------------------------------| Main function |-----------
 
     check_updates_folder
 
-    printf "\n"
     for file in "${scripts[@]}"; { filename=${file##*/}
 
         # If updates where selected copy them too and add as options to the script

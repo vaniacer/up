@@ -5,10 +5,11 @@ function description () { #---------------------| Function description |--------
 }
 
 function run () { #---------------------------------| Main function |---------------------------------------------------
+
     # Get time
     date=${date% *}; DD=${date##*-}; MM=${date#*-}; MM=${MM%-*}
 
-    info 'Set jobs to run once'
+    info 'Make job(s) to run once'
     for id in "${jobs[@]}"; {
         sed="s|^.*-C $id.*$|&; sed '/$id/d' -i '$cronfile'|g;/.*$id/ s|\* \* \*|$DD $MM \*|g;"$sed
         printf "\n$id"
@@ -16,4 +17,5 @@ function run () { #---------------------------------| Main function |-----------
 
     sed "$sed" -i $cronfile || error=$?
     info 'Done' $error
+
 } #---------------------------------------------------------------------------------------------------------------------

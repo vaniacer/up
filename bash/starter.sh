@@ -73,16 +73,18 @@ function check_updates_folder () {
 
 # Warning with countdown timer. Options: $1 - message, $2 - timeout in sec.
 function warning () {
-    attention=(
-        '    _  _____ _____ _____ _   _ _____ ___ ___  _   _ _ '
-        '   / \|_   _|_   _| ____| \ | |_   _|_ _/ _ \| \ | | |'
-        '  / _ \ | |   | | |  _| |  \| | | |  | | | | |  \| | |'
-        ' / ___ \| |   | | | |___| |\  | | |  | | |_| | |\  |_|'
-        '/_/   \_\_|   |_| |_____|_| \_| |_| |___\___/|_| \_(_)'
-        '                                                      ')
 
-    for i in "${attention[@]}"; { info "$i"; }
-    printf "\n\n$1"
+    attention=(
+        '   _________________________________________________    '
+        '  / __        ___    ____  _   _ ___ _   _  ____ _  \   '
+        ' /  \ \      / / \  |  _ \| \ | |_ _| \ | |/ ___| |  \  '
+        '/    \ \ /\ / / _ \ | |_) |  \| || ||  \| | |  _| |   \ '
+        '\     \ V  V / ___ \|  _ <| |\  || || |\  | |_| |_|   / '
+        ' \     \_/\_/_/   \_\_| \_\_| \_|___|_| \_|\____(_)  /  '
+        '  \_________________________________________________/   ')
+
+    for i in "${attention[@]}"; { printf "`line " " 32`$i\n"; }
+    printf "\n$1"
 
     printf "If it's not what you wished to do, you've got $2 seconds to cancel this!\n"
     printf "Final countdown...\n"
@@ -102,7 +104,7 @@ function info () {
     # Make line segment.            | Calculate current length.      | Add one ${B} if current length less then ${L}. |
     #-------------------------------+--------------------------------+------------------------------------------------+
     N=$(printf %.s$B $(seq $b))     ; l=$[${#S}+${#C}+${#E}+${#N}*2] ; [[ $l -lt $L ]] && C+=$B
-    printf "\n$S$N$C$N$E" # Print result.
+    printf "\n$S$N$C$N$E\n" # Print result.
 }
 
 # Server comes like this - jboss@localhost:/var/lib/jboss:8080

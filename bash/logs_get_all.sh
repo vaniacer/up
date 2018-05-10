@@ -8,7 +8,6 @@ function body () { #--------------------------------| Main function |-----------
 
     arhive="$wdir/updates/allogs.zip"
 
-    printf "\n"
     ssh $sopt $addr "zip -jy $arhive $wdir/jboss-bas-*/standalone/log/* > /dev/null" && {
 
         echo -e "\nСоздан архив \"$arhive\"."; download

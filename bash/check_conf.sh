@@ -6,7 +6,6 @@ function description () { #---------------------| Function description |--------
 
 function body () { #--------------------------------| Main function |---------------------------------------------------
 
-    printf "\n"
     ssh $sopt $addr "
         printf '\nJava options\n'
         ps axo command | grep $wdir | grep [j]ava

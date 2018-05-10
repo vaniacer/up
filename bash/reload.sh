@@ -6,7 +6,6 @@ function description () { #---------------------| Function description |--------
 
 function body () { #--------------------------------| Main function |---------------------------------------------------
 
-    printf "\n"
     ssh $sopt $addr $wdir/jboss-bas-*/bin/jboss-cli.sh -c command=":reload" || error=$?
 
 } #---------------------------------------------------------------------------------------------------------------------

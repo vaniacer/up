@@ -11,7 +11,6 @@ function body () { #--------------------------------| Main function |-----------
     rport=${port}   #8080
 
     until ! netstat -ln | grep $lport > /dev/null; do ((lport++)); done
-    printf "\n"
     printf "\n<a class=\"btn btn-primary\" href=\"http://__URL__:$lport/application\">Application</a>\n"
     printf "\n<a class=\"btn btn-primary\" href=\"http://__URL__:$lport\">Connect</a>\n"
     printf "\n<a class=\"btn btn-primary\" href=\"http://__URL__:$lport/login\">Login</a>\n"

@@ -10,7 +10,6 @@ function body () { #--------------------------------| Main function |-----------
     inv="${servers[*]//:*:*/,}"
     inv=${inv// /}
 
-    printf "\n"
     for playbook in "${scripts[@]}"; {
 
         ansible-playbook $playbook -i $inv --vault-password-file ~/vault.txt --syntax-check || { error=$?; break; }

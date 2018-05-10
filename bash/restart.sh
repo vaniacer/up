@@ -6,7 +6,6 @@ function description () { #---------------------| Function description |--------
 
 function body () { #--------------------------------| Main function |---------------------------------------------------
 
-    printf "\n"
     ssh $sopt $addr $wdir/krupd jboss.stop  || error=$?
     ssh $sopt $addr $wdir/krupd jboss.start || error=$?
 

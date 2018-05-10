@@ -6,7 +6,6 @@ function description () { #---------------------| Function description |--------
 
 function body () { #--------------------------------| Main function |---------------------------------------------------
 
-    printf "\n"
     arhive="$wdir/updates/daylogs.zip"
     ssh $sopt $addr "
         find $wdir/jboss-bas-*/standalone/log -type f -daystart -ctime 0 | xargs zip -jy $arhive > /dev/null" && {

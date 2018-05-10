@@ -6,7 +6,6 @@ function description () { #---------------------| Function description |--------
 
 function body () { #--------------------------------| Main function |---------------------------------------------------
 
-    printf "\n"
     ssh_yes "$sopt $addr" > /dev/null
 
     ssh $sopt $addr "

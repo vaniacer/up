@@ -6,7 +6,6 @@ function description () { #---------------------| Function description |--------
 
 function body () { #--------------------------------| Main function |---------------------------------------------------
 
-    printf "\n"
     ssh $sopt $addr "cat $wdir/jboss-bas-*/standalone/log/server.log" || error=$?
 
 } #---------------------------------------------------------------------------------------------------------------------
