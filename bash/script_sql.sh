@@ -28,8 +28,10 @@ function body () { #--------------------------------| Main function |-----------
 
         } || error=$?
     }
+
     printf "\n<b>Log file will be stored until tomorrow, please download it if you need this file!</b>"
     printf "\n<a class='btn btn-primary' href='/dumps/${filename}_$key.log'>Download</a>\n"
+
 } #---------------------------------------------------------------------------------------------------------------------
 
 function run () { for server in "${servers[@]}"; { addr; body; }; info 'Done' $error; }
