@@ -7,7 +7,7 @@ function description () { #---------------------| Function description |--------
 function run () { #---------------------------------| Main function |---------------------------------------------------
 
     info 'Cancel job(s)'
-    for id in "${jobs[@]}"; { rule="/$id/d;"$rule; printf "\n$id"; }
+    for id in "${jobs[@]}"; { rule="/$id/d;"$rule; printf "$id"; }
     sed "$rule" -i /var/spool/cron/crontabs/$USER || error=$?
     info 'Done' $error
 

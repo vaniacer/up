@@ -21,7 +21,7 @@ function body () { #--------------------------------| Main function |-----------
         # Copy script to server
         rsync -e "ssh $sopt" --progress -lzuogthvr $file $addr:$wdir/updates/new/ > /dev/null && {
 
-            printf "\nRun  script - $filename\n"
+            printf "Run  script - $filename\n"
             ssh $sopt $addr "cd $wdir; bash updates/new/$filename $opt" || {
                 error=$?; printf "\n<b>Script ended with error: $error</b>\n"
             }

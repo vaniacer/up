@@ -16,7 +16,7 @@ function run () { #---------------------------------| Main function |-----------
         job="${job//'*'/'\*'}"
         job="${job//-/'\-'}"
         cut=( $job )
-        sed="s|^.*-C $id.*$|$date ${cut[@]:4}|g;$sed"; printf "\n$id"
+        sed="s|^.*-C $id.*$|$date ${cut[@]:4}|g;$sed"; printf "$id"
     }
 
     sed "$sed" -i $cronfile || error=$?
