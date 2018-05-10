@@ -12,7 +12,7 @@
         <div class="panel panel-default" onclick="selector('dx{{dump.id}}', 'db{{dump.id}}', '{{dump.name}}', 'SD')">
 
             <div class="panel-heading">
-                <h4 class="Name" title="{{dump.name}}">{{dump.name|truncatechars:31}}</h4>
+                <h4 class="Name" title="{{dump.name}} {{dump.size|filesizeformat}}">{{dump.name|truncatechars:31}}</h4>
                 {% include "ups/commands_dumps.html" %}
                 <!--Individual visibility buttons-->
                 <input value="+"
