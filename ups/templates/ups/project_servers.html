@@ -14,8 +14,9 @@
              onclick="selector('sx{{server.id}}', 'sb{{server.id}}', '{{server}}', 'SS')">
 
             <div class="panel-heading">
-                <h4 class="Name" title="{{server.desc}}">{{server.name}}</h4>
+                <h5 class="Name" title="{{server.desc}}">{{server.name}}</h5>
                 {% include "ups/commands_servers.html" %}
+
                 <!--Individual visibility buttons-->
                 <input value="+"
                        type="button"

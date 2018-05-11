@@ -14,8 +14,9 @@
              onclick="selector('xx{{script.id}}', 'xb{{script.id}}', '{{script}}', 'SX')">
 
             <div class="panel-heading">
-                <h4 class="Name" title="{{script.desc}}">{{script}} </h4>
+                <h5 class="Name" title="{{script.desc}}">{{script}} </h5>
                 {% include "ups/commands_scripts.html" %}
+
                 <!--Individual visibility buttons-->
                 <input value="+"
                        type="button"
@@ -38,13 +39,13 @@
         </div>
 
         {% if "run_command" in pr_view_perms %}
-        <!--Hidden checkboxes-->
-        <input class="hidden"
-               type="checkbox"
-               id="xx{{script.id}}"
-               value="{{script.id}}"
-               name="selected_scripts"
-               data-target="{{script}}"/>
+            <!--Hidden checkboxes-->
+            <input class="hidden"
+                   type="checkbox"
+                   id="xx{{script.id}}"
+                   value="{{script.id}}"
+                   name="selected_scripts"
+                   data-target="{{script}}"/>
         {% endif %}
 
     {% empty %}

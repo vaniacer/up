@@ -6,14 +6,3 @@
        title="Download this dump."
        class="Edit">Download</a>
 {% endif %}
-<!-----------------------------------------------------Delete button------------------------------>
-<!--------------------- Validation('cmd_name', server, update, cronjob, script, dump, danger) ---->
-{% if "run_command" in pr_view_perms %}
-    <a onclick="run_or_cron('RUN');
-                select_all('selected_dumps', 'dump-body', false, 'SD');
-                selector('dx{{ dump.id }}', 'db{{ dump.id }}', '{{ dump.name }}', 'SD');
-                Validation('del_dump', false, false, false, false, true, false)"
-       title="Delete this dump."
-       href="javascript:;"
-       class="Edit red">Delete</a>
-{% endif %}
