@@ -67,6 +67,16 @@
 .server-panel dt { width: 110px; }
 .server-panel dd { margin-left: 120px; }
 
+.commands_table, th, td {
+    border-top:    1px solid lightgrey;
+    border-bottom: 1px solid lightgrey;
+    width: 90%;
+    font-size: small;
+}
+
+th, td {
+    padding: 3px;
+}
 
 .roller {
     overflow-y: auto;
