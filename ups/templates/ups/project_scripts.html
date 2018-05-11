@@ -29,10 +29,10 @@
 
             <div class="panel-body">
                 <dl class="dl-horizontal script-panel xp{{script.id}}">
-                    <dt>Description</dt><dd>{{script.desc|linebreaks}}</dd>
-                    <dt>Preview</dt><dd>{{script.body|linebreaks|truncatewords:30}}</dd>
-                    <dt><small>Added by</small></dt><dd><small>{{script.user}}</small></dd>
-                    <dt><small>Date added</small></dt><dd><small>{{script.date|date:'M d, Y H:i'}}</small></dd>
+                    <dt>       Description</dt><dd>{{script.desc|linebreaks}}</dd>
+                    <dt>           Preview</dt><dd><samp>{{script.body|linebreaks|truncatewords:30}}</samp></dd>
+                    <dt class="small">User</dt><dd class="small">{{script.user}}</dd>
+                    <dt class="small">Date</dt><dd class="small">{{script.date|date:'M d, Y H:i'}}</dd>
                 </dl>
             </div>
 

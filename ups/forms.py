@@ -18,7 +18,7 @@ class ServerForm(forms.ModelForm):
 		labels = {
 			'name': 'Server name', 'desc': 'Server description',
 			'addr': 'SSH address', 'wdir': 'Working directory',
-			'opts': 'SSH options',
+			'opts': 'SSH options(not required)',
 			'port': 'Server binding port'
 		}
 

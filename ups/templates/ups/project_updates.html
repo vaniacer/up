@@ -29,10 +29,10 @@
 
             <div class="panel-body">
                 <dl class="dl-horizontal update-panel up{{update.id}}">
-                    <dt>Size</dt><dd>{{update.file.size|filesizeformat}}</dd>
-                    <dt>Description</dt><dd>{{update.desc|linebreaks}}</dd>
-                    <dt><small>Added by</small></dt><dd><small>{{update.user}}</small></dd>
-                    <dt><small>Date added</small></dt><dd><small>{{update.date|date:'M d, Y H:i'}}</small></dd>
+                    <dt>       Description</dt><dd>{{update.desc|linebreaks}}</dd>
+                    <dt>              Size</dt><dd>{{update.file.size|filesizeformat}}</dd>
+                    <dt class="small">User</dt><dd class="small">{{update.user}}</dd>
+                    <dt class="small">Date</dt><dd class="small">{{update.date|date:'M d, Y H:i'}}</dd>
                 </dl>
             </div>
 

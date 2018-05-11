@@ -58,8 +58,8 @@
 .update-panel dt { width: 80px; }
 .update-panel dd { margin-left: 90px; }
 
-.dbdump-panel dt { width: 70px; }
-.dbdump-panel dd { margin-left: 80px; }
+.dbdump-panel dt { width: 40px; }
+.dbdump-panel dd { margin-left: 50px; }
 
 .script-panel dt { width: 80px; }
 .script-panel dd { margin-left: 90px; }

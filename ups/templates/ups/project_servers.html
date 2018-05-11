@@ -29,15 +29,15 @@
 
             <div class="panel-body">
                 <dl class="dl-horizontal server-panel sp{{server.id}}">
-                    <dt>SSH address</dt><dd>{{server.addr}}</dd>
+                    <dt>       SSH address</dt><dd>{{server.addr}}</dd>
                     {% if server.opts %}
-                        <dt>SSH options</dt><dd>{{server.opts}}</dd>
+                        <dt>   SSH options</dt><dd>{{server.opts}}</dd>
                     {% endif %}
-                    <dt>Working folder</dt><dd>{{server.wdir}}</dd>
-                    <dt>Server bind port</dt><dd>{{server.port}}</dd>
-                    <dt>Description</dt><dd>{{server.desc|linebreaks|urlize}}</dd>
-                    <dt><small>Added by</small></dt><dd><small>{{server.user}}</small></dd>
-                    <dt><small>Date added</small></dt><dd><small>{{server.date|date:'M d, Y H:i'}}</small></dd>
+                    <dt>    Working folder</dt><dd>{{server.wdir}}</dd>
+                    <dt>  Server bind port</dt><dd>{{server.port}}</dd>
+                    <dt>       Description</dt><dd>{{server.desc|linebreaks|urlize}}</dd>
+                    <dt class="small">User</dt><dd class="small">{{server.user}}</dd>
+                    <dt class="small">Date</dt><dd class="small">{{server.date|date:'M d, Y H:i'}}</dd>
                 </dl>
             </div>
 
