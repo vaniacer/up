@@ -14,14 +14,7 @@
              onclick="selector('dx{{dump.id}}', 'db{{dump.id}}', '{{dump.name}}', 'SD')">
 
             <div class="panel-heading">
-                {% if dump.name|length > 40 %}
-                    <h6 class="Name"
-                        title="{{dump.name}} {{dump.size|filesizeformat}}">{{dump.name|truncatechars:60}}</h6>
-                {% else %}
-                    <h5 class="Name"
-                        title="{{dump.name}} {{dump.size|filesizeformat}}">{{dump.name|truncatechars:40}}</h5>
-                {% endif %}
-
+                <h5 class="Name" title="{{dump.name}} {{dump.size|filesizeformat}}">{{dump.name|truncatechars:45}}</h5>
                 {% include "ups/commands_dumps.html" %}
 
                 <!--Individual visibility buttons-->
