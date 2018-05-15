@@ -72,24 +72,23 @@ class Server(models.Model):
 class Update(models.Model):
 	"""Пакеты обновлений проекта."""
 	date = models.DateTimeField(auto_now_add=True, db_index=True)
-	file = models.FileField(upload_to=update_upload_to)
-	flnm = models.CharField(max_length=255)
+	file = models.FileField(upload_to=update_upload_to)  # Full file path
+	flnm = models.CharField(max_length=255)              # Filename only
 	desc = models.TextField(max_length=255)
 	proj = models.ForeignKey(Project)
 	user = models.ForeignKey(User)
 
 	def __unicode__(self):
 		"""Возвращает строковое представление модели."""
-		name = self.file.name.split('/')[-1]
-		return name
+		return self.file.name.split('/')[-1]
 
 
 class Script(models.Model):
 	"""BASH/SQL скрипты проекта."""
 	date = models.DateTimeField(auto_now_add=True, db_index=True)
-	file = models.FileField(upload_to=script_upload_to)
+	file = models.FileField(upload_to=script_upload_to)  # Full file path
+	flnm = models.CharField(max_length=255)              # Filename only
 	desc = models.TextField(max_length=255)
-	flnm = models.CharField(max_length=255)
 	proj = models.ForeignKey(Project)
 	user = models.ForeignKey(User)
 	body = models.TextField()
@@ -99,8 +98,7 @@ class Script(models.Model):
 
 	def __unicode__(self):
 		"""Возвращает строковое представление модели."""
-		name = self.file.name.split('/')[-1]
-		return name
+		return self.file.name.split('/')[-1]
 
 
 class Job(models.Model):
