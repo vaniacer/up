@@ -14,7 +14,8 @@
 
         {% buttons %}
             <button class="btn btn-primary" name='submit'>Add Script</button>
-            <a class="btn btn-primary" href="{% url 'ups:project' project.id %}?{{info}}">Cancel</a>
+            <!--<a class="btn btn-primary" href="{% url 'ups:project' project.id %}?{{info}}">Cancel</a>-->
+            <a class="btn btn-primary" onclick="window.history.back();">Cancel</a>
         {% endbuttons %}
     </form>
 

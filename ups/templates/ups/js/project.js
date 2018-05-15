@@ -240,19 +240,21 @@ $(function() {
 
 $(document).ready(function() {
 
-    if (document.getElementById('id_server_info').checked) {
-           show_or_hide_all('id_server_info', 'server-panel', 'sshow', 'show'); }
-    else { show_or_hide_all('id_server_info', 'server-panel', 'sshow', 'hide'); }
+    if (document.getElementById('id_server_info')) {
+        if (document.getElementById('id_server_info').checked) {
+               show_or_hide_all('id_server_info', 'server-panel', 'sshow', 'show'); }
+        else { show_or_hide_all('id_server_info', 'server-panel', 'sshow', 'hide'); }
 
-    if (document.getElementById('id_script_info').checked) {
-           show_or_hide_all('id_script_info', 'script-panel', 'xshow', 'show'); }
-    else { show_or_hide_all('id_script_info', 'script-panel', 'xshow', 'hide'); }
+        if (document.getElementById('id_script_info').checked) {
+               show_or_hide_all('id_script_info', 'script-panel', 'xshow', 'show'); }
+        else { show_or_hide_all('id_script_info', 'script-panel', 'xshow', 'hide'); }
 
-    if (document.getElementById('id_update_info').checked) {
-           show_or_hide_all('id_update_info', 'update-panel', 'ushow', 'show'); }
-    else { show_or_hide_all('id_update_info', 'update-panel', 'ushow', 'hide'); }
+        if (document.getElementById('id_update_info').checked) {
+               show_or_hide_all('id_update_info', 'update-panel', 'ushow', 'show'); }
+        else { show_or_hide_all('id_update_info', 'update-panel', 'ushow', 'hide'); }
 
-    if (document.getElementById('id_dbdump_info').checked) {
-           show_or_hide_all('id_dbdump_info', 'dbdump-panel', 'dshow', 'show'); }
-    else { show_or_hide_all('id_dbdump_info', 'dbdump-panel', 'dshow', 'hide'); }
+        if (document.getElementById('id_dbdump_info').checked) {
+               show_or_hide_all('id_dbdump_info', 'dbdump-panel', 'dshow', 'show'); }
+        else { show_or_hide_all('id_dbdump_info', 'dbdump-panel', 'dshow', 'hide'); }
+    }
 });
