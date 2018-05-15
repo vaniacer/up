@@ -73,6 +73,7 @@ def new_update(request, project_id):
 
 		if form.is_valid():
 			update = form.save(commit=False)
+			update.flnm = update.file.name.split('/')[-1]
 			update.user = request.user
 			update.proj = project
 			update.save()
@@ -103,6 +104,7 @@ def add_script(request, project_id):
 			script.save()
 
 			body = open(str(script.file), 'rU')
+			script.flnm = script.file.name.split('/')[-1]
 			script.body = body.read()
 			body.close()
 			script.save()

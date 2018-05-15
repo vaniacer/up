@@ -183,12 +183,12 @@ def project(request, project_id):
 
 	scripts_filter = data.get('scripts', '')
 	scripts = current_project.script_set.order_by('desc')
-	scripts_filtered = scripts.filter(file__iregex=scripts_filter)
+	scripts_filtered = scripts.filter(flnm__iregex=scripts_filter)
 	scripts_filter_form = ScriptsFilterForm(initial=data)
 
 	updates_filter = data.get('updates', '')
 	updates = current_project.update_set.order_by('date').reverse()
-	updates_filtered = updates.filter(file__iregex=updates_filter)
+	updates_filtered = updates.filter(flnm__iregex=updates_filter)
 	updates_filter_form = UpdatesFilterForm(initial=data)
 
 	dmplist_filter = data.get('dumps', '')
