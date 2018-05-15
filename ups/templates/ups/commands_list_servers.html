@@ -1,16 +1,14 @@
 <tr><th>Servers commands</th></tr>
 
-<tr><td>
-    <a href="javascript:;"
-       title="Select all servers."
-       onclick="select_all('selected_servers', 'server-body', true,  'SS')">Select all servers</a>
-</td></tr>
+<tr>
+    <td title="Select all servers."
+        onclick="select_all('selected_servers', 'server-body', true,  'SS')">Select all servers</td>
+</tr>
 
-<tr><td>
-    <a href="javascript:;"
-       title="Deselect all servers."
-       onclick="select_all('selected_servers', 'server-body', false, 'SS')">Deselect all servers</a>
-</td></tr>
+<tr>
+    <td title="Deselect all servers."
+        onclick="select_all('selected_servers', 'server-body', false, 'SS')">Deselect all servers</td>
+</tr>
 
 {% for command in commands %}
 
