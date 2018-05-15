@@ -21,7 +21,7 @@
 }
 
 .danger {
-    background: #f2dede;
+    background: MistyRose;
 }
 
 .right {
@@ -35,15 +35,7 @@
 }
 
 .cron {
-    background: #e1f9f6;
-}
-
-.red {
-    color: #ef3737;
-}
-
-.red:hover {
-    color: #f60f0f;
+    background: AliceBlue; /* Lavender; LightCyan; Also good */
 }
 
 .col-sm-2, .col-sm-5, .col-sm-10 {
@@ -56,6 +48,10 @@
     margin-bottom: 10px;
 }
 
+.panel-default:hover {
+    border-color: darkgrey;
+}
+
 .panel-body, .panel-heading {
     padding-left:   8px;
     padding-right:  5px;
@@ -63,11 +59,7 @@
     padding-bottom: 5px;
 }
 
-.panel-default:hover {
-    border-color: darkgrey;
-}
-
-.panel-body dl { margin-bottom: 0px; }
+.panel-body   dl { margin-bottom: 0px; }
 
 .update-panel dt { width: 80px; }
 .update-panel dd { margin-left: 90px; }
@@ -90,10 +82,10 @@
     width: 90%;
 }
 
-td {
-    color: SteelBlue;
-}
-
 td:hover {
     background: lightgrey;
+}
+
+td {
+    color: SteelBlue;
 }
