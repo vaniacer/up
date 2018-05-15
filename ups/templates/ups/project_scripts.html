@@ -14,7 +14,7 @@
              onclick="selector('xx{{script.id}}', 'xb{{script.id}}', '{{script}}', 'SX')">
 
             <div class="panel-heading">
-                <h4 class="Name" title="{{script.desc}}">{{script}}</h4>
+                <h4 class="Name" title="{{script.desc}}">{{script|truncatechars:50}}</h4>
                 {% include "ups/commands_scripts.html" %}
 
                 <!--Individual visibility buttons-->

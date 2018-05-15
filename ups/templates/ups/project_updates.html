@@ -14,7 +14,8 @@
              onclick="selector('ux{{update.id}}', 'ub{{update.id}}', '{{update}}', 'SU')">
 
             <div class="panel-heading">
-                <h4 class="Name" title="{{update.desc}} {{update.file.size|filesizeformat}}">{{update}}</h4>
+                <h4 class="Name"
+                    title="{{update.desc}} {{update.file.size|filesizeformat}}">{{update|truncatechars:50}}</h4>
                 {% include "ups/commands_updates.html" %}
 
                 <!--Individual visibility buttons-->
