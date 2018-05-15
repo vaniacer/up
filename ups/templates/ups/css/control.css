@@ -49,7 +49,7 @@
 }
 
 .panel-default:hover {
-    border-color: darkgrey;
+    border-color: DarkGrey;
 }
 
 .panel-body, .panel-heading {
@@ -75,15 +75,15 @@
 
 /*-------------{ Tables }-----------------*/
 .commands_table, th, td {
-    border-top:    1px solid lightgrey;
-    border-bottom: 1px solid lightgrey;
+    border-top:    1px solid LightGrey;
+    border-bottom: 1px solid LightGrey;
     font-size: small;
     padding: 3px;
     width: 90%;
 }
 
 td:hover {
-    background: lightgrey;
+    background: LightGrey;
 }
 
 td {
