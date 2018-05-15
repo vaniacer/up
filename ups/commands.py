@@ -14,14 +14,14 @@ commandick = {
 		'class': '',                              # Class assigned to a command button(for example 'danger')
 		'title': 'Cancel selected cron job(s).',  # Pop up help message
 		'bash': 'cronjob_cancel.sh',              # Bash script that this command will start
-		'name': 'cancel_job',                     # Web command name id(key)
+		'name': 'cancel_job',                     # Web command name id(Internal command name id)
 		'menu': 'Cancel job',                     # Menu name of the command
-		'srv': 'false',                           # Check if some server selected
-		'upd': 'false',                           # Check if some update selected
-		'job': 'true',                            # Check if some cron job selected
-		'scr': 'false',                           # Check if some script selected
-		'dmp': 'false',                           # Check if some dump selected
-		'dgr': 'false',                           # Will show confirmation window
+		'srv': 'false',                           # Check if some servers selected
+		'upd': 'false',                           # Check if some updates selected
+		'job': 'true',                            # Check if some cron jobs selected
+		'scr': 'false',                           # Check if some scripts selected
+		'dmp': 'false',                           # Check if some dumps selected
+		'dgr': 'false',                           # If true will show confirmation window
 		'run': "run_or_cron('RUN');",             # If set to "run_or_cron('RUN');" then command will be run only
 		'history': True,                          # Save or not command log to history
 		'tag': False,                             # Show or not html tags in command log
