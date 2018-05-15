@@ -3,7 +3,7 @@
 {% if "edit_server" in pr_view_perms %}
     <a href="{% url 'ups:edit_server' server.id %}?{{info}}"
        title="Edit this server's info."
-       class="Edit">Edit</a>
+       class="small">Edit</a>
 {% endif %}
 
 <!-----------------------------------------Available commands------------------------------------->
@@ -15,7 +15,7 @@
                 Validation('server_info', true, false, false, false)"
        title="Show system info: CPU, mem, disk etc."
        href="javascript:;"
-       class="Edit">Info</a>
+       class="small">Info</a>
 
     <a onclick="run_or_cron('RUN');
                 select_all('selected_servers', 'server-body', false, 'SS');
@@ -23,7 +23,7 @@
                 Validation('check_conf', true, false, false, false)"
        title="Show conf(standalone-full.xml) and java options of this server."
        href="javascript:;"
-       class="Edit">Conf</a>
+       class="small">Conf</a>
 
     <a onclick="run_or_cron('RUN');
                 select_all('selected_servers', 'server-body', false, 'SS');
@@ -31,7 +31,7 @@
                 Validation('check_logs', true, false, false, false)"
        title="Check logs from this server."
        href="javascript:;"
-       class="Edit">Logs</a>
+       class="small">Logs</a>
 
     <a onclick="run_or_cron('RUN');
                 select_all('selected_servers', 'server-body', false, 'SS');
@@ -39,7 +39,7 @@
                 Validation('check_updates', true, false, false, false)"
        title="Check updates on this server."
        href="javascript:;"
-       class="Edit">Updates</a>
+       class="small">Updates</a>
 
     <a onclick="run_or_cron('RUN');
                 select_all('selected_servers', 'server-body', false, 'SS');
@@ -47,5 +47,5 @@
                 Validation('tunnel', true, false, false, false)"
        title="Make ssh tunnel to the bind port of this server."
        href="javascript:;"
-       class="Edit">Tunnel</a>
+       class="small">Tunnel</a>
 {% endif %}

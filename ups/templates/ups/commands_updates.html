@@ -3,7 +3,7 @@
 {% if "edit_update" in pr_view_perms %}
     <a href="{% url 'ups:edit_update' update.id %}?{{info}}"
        title="Edit this update's info."
-       class="Edit">Edit</a>
+       class="small">Edit</a>
 {% endif %}
 
 <!---------------------------------------------Copy button---------------------------------------->
@@ -14,7 +14,7 @@
                 Validation('copy', true, true, false, false)"
        title="Copy this update to selected server(s)."
        href="javascript:;"
-       class="Edit">Copy</a>
+       class="small">Copy</a>
 {% endif %}
 
 <!--------------------------------------------Download button------------------------------------->
@@ -22,5 +22,5 @@
     <a onclick="selector('ux{{ update.id }}', 'ub{{ update.id }}', '{{ update }}', 'SU')"
        href="/download_upd/{{ project.id }}/{{ update.id }}"
        title="Download this update."
-       class="Edit">Download</a>
+       class="small">Download</a>
 {% endif %}

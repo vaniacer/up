@@ -17,7 +17,7 @@
     <div id="SD"></div> <!-- Selected dbdumps list -->
 
     <div class="col-sm-2">
-        <h2 class="Name">{{project}}</h2>
+        <h2 class="inline">{{project}}</h2>
         {% if "edit_project" in pr_view_perms %}
             <a href="{% url 'ups:edit_project' project.id %}?{{info}}" class="Edit">Edit</a>
         {% endif %}

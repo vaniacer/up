@@ -1,15 +1,10 @@
-.Edit {
+.inline {
     display: inline;
-    font-size: small;
 }
 
 .roller {
     overflow-y: auto;
     height: 80%;
-}
-
-.Name {
-    display: inline;
 }
 
 .output {
@@ -20,10 +15,6 @@
      white-space: pre-wrap;
 }
 
-.danger {
-    background: MistyRose;
-}
-
 .right {
     float: right;
 }
@@ -32,6 +23,10 @@
     border-color: green;
     border-style: solid;
     border-width: thick;
+}
+
+.danger {
+    background: MistyRose;
 }
 
 .cron {
