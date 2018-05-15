@@ -17,8 +17,8 @@
 
         {% buttons %}
             <input type="submit" name="ok" value="Save changes" class="btn btn-primary"/>
-            <!--<a class="btn btn-primary" href="{% url 'ups:project' project.id %}?{{info}}">Cancel</a>-->
-            <a class="btn btn-primary" onclick="window.history.back();">Cancel</a>
+            <a class="btn btn-primary" href="{% url 'ups:project' project.id %}?{{info}}">Cancel</a>
+            <!--<a class="btn btn-primary" onclick="window.history.back();">Cancel</a>-->
 
             {% if "del_server" in edit_server_perms %}
                 <hr>

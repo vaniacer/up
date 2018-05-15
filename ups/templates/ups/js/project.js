@@ -240,6 +240,7 @@ $(function() {
 
 $(document).ready(function() {
 
+    go_up();
     if (document.getElementById('id_server_info')) {
         if (document.getElementById('id_server_info').checked) {
                show_or_hide_all('id_server_info', 'server-panel', 'sshow', 'show'); }
