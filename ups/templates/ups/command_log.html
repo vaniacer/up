@@ -1,6 +1,5 @@
 {% extends "ups/base.html" %}
 
-
 {% block header %}
 
     <br><div class="row">
@@ -51,7 +50,10 @@
     <div class="output_bottom">{% include "ups/output_bottom_panel.html" %}</div>
 
     <script type="text/javascript">
-        document.getElementById('output_log').style.background = '{{color}}';
+        $(document).ready(function() {
+            document.getElementById('output_log').style.background = '{{color}}';
+            go_down();
+        });
     </script>
 
 {% endblock content %}
