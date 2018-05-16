@@ -19,10 +19,9 @@
                 {% include "ups/commands_dumps.html" %}
 
                 <!--Individual visibility buttons-->
-                <input value="+"
-                       type="button"
+                <input type="checkbox"
                        id="dh{{dump.id}}"
-                       class="btn btn-xs dshow right"
+                       class="dshow right"
                        title="Show\Hide this dump info."
                        onclick="selector('dx{{dump.id}}', 'db{{dump.id}}', '{{dump.name}}', 'SD');
                                 show_or_hide_this('dh{{dump.id}}', 'dp{{dump.id}}')"/>

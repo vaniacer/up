@@ -19,10 +19,9 @@
                 {% include "ups/commands_updates.html" %}
 
                 <!--Individual visibility buttons-->
-                <input value="+"
-                       type="button"
+                <input type="checkbox"
+                       class="ushow right"
                        id="uh{{update.id}}"
-                       class="btn btn-xs ushow right"
                        title="Show\Hide this update info."
                        onclick="selector('ux{{update.id}}', 'ub{{update.id}}', '{{update}}', 'SU');
                                 show_or_hide_this('uh{{update.id}}', 'up{{update.id}}')"/>

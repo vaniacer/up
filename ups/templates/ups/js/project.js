@@ -54,20 +54,18 @@ function show_or_hide_this(id, panel) {
     var panels = document.getElementsByClassName(panel);
 
     function show_info() {
-        button.value = '-';
         for (i = 0; i < panels.length;  i++) {
             panels[i].classList.remove('hidden');
         }
     }
 
     function hide_info() {
-        button.value = '+';
         for (i = 0; i < panels.length;  i++) {
             panels[i].classList.add('hidden');
         }
     }
 
-    if (button.value == '+') { show_info(); } else { hide_info(); }
+    if (button.checked) { show_info(); } else { hide_info(); }
 }
 
 function show_or_hide_all(id, panel, button, set) {
@@ -80,14 +78,14 @@ function show_or_hide_all(id, panel, button, set) {
     function show_info() {
         if (status) { status.checked = true; }
         if (button) { button.value = 'Info On'; }
-        for (i = 0; i < pluses.length; i++) { pluses[i].value = '-'; }
+        for (i = 0; i < pluses.length; i++) { pluses[i].checked = true; }
         for (i = 0; i < panels.length; i++) { panels[i].classList.remove('hidden'); }
     }
 
     function hide_info() {
         if (status) { status.checked = false; }
         if (button) { button.value = 'Info Off'; }
-        for (i = 0; i < pluses.length; i++) { pluses[i].value = '+'; }
+        for (i = 0; i < pluses.length; i++) { pluses[i].checked = false; }
         for (i = 0; i < panels.length; i++) { panels[i].classList.add('hidden'); }
     }
 
