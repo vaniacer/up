@@ -2,7 +2,7 @@
 ![screeenshot](https://user-images.githubusercontent.com/18072680/40045786-e6889bb6-5833-11e8-9a64-45ca5aaacbbe.png)
 
 <p>
-    <b>Manage your servers through ssh via web interface.</b>
+    <h4>Manage your servers through ssh via web interface.</h4>
 </p>
 <p>
     Start by pressing an <i>'Projects'</i> button or a <i>'Projects'</i> link at the top.<br>
@@ -23,13 +23,13 @@
 <p>
     On the <i>'Cron Jobs'</i> tab you can view cron jobs scheduled for this project.<br>
     You can select them via click or by pressing <i>'Select All Jobs'</i> button.<br>
-    Cancel them by pressing <i>'Cancel job'</i> button. Set job(s) to be permanent(run everyday)<br>
-    via <i>'Permanent'</i> button or set back to run once via <i>'Run once' button.</i><br>
+    Cancel them by pressing <i>'Cancel job'</i> button. Set job(s) to run everyday<br>
+    via <i>'Run everyday'</i> button or set back to run once via <i>'Run once' button.</i><br>
     And change run date via <i>'Change date'</i> button.
 </p>
 <p>
     On the <i>'History'</i> tab you can view history log. Events ended with errors marked red.<br>
-    Events run in cron marked light-green.
+    Events run in cron marked light-blue.
 </p>
 <p>
     <i>'Add'</i> and <i>'Select'</i> buttons duplicated at the bottom nav bar.<br>
@@ -37,7 +37,7 @@
     <i>'Scripts commands'</i><br>
     <i>'Servers commands'</i><br>
     <i>'Updates commands'</i><br>
-    'Dumps commands'</i><br>
+    <i>'Dumps commands'</i><br>
 </p>
 <p>
     If you activate the <i>'CRON'</i> switch-button(turns red) commands will be scheduled to run via cron.<br>
