@@ -28,7 +28,7 @@
             </div>
 
             <div class="panel-body">
-                <dl class="dl-horizontal update-panel up{{update.id}}">
+                <dl class="dl-horizontal update-panel" id="up{{update.id}}">
                     <dt>       Description</dt><dd>{{update.desc|linebreaks}}</dd>
                     <dt>              Size</dt><dd>{{update.file.size|filesizeformat}}</dd>
                     <dt class="small">User</dt><dd class="small">{{update.user}}</dd>

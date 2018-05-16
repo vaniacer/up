@@ -27,7 +27,7 @@
             </div>
 
             <div class="panel-body">
-                <dl class="dl-horizontal server-panel sp{{server.id}}">
+                <dl class="dl-horizontal server-panel" id="sp{{server.id}}">
                     <dt>       SSH address</dt><dd>{{server.addr}}</dd>
                     {% if server.opts %}
                         <dt>   SSH options</dt><dd>{{server.opts}}</dd>

@@ -49,23 +49,11 @@ function run_or_cron(type) {
     }
 }
 
-function show_or_hide_this(id, panel) {
-    var button = document.getElementById(id);
-    var panels = document.getElementsByClassName(panel);
+function show_or_hide_this(box_id, panel_id) {
+    var box = document.getElementById(box_id);
+    var panel = document.getElementById(panel_id);
 
-    function show_info() {
-        for (i = 0; i < panels.length;  i++) {
-            panels[i].classList.remove('hidden');
-        }
-    }
-
-    function hide_info() {
-        for (i = 0; i < panels.length;  i++) {
-            panels[i].classList.add('hidden');
-        }
-    }
-
-    if (button.checked) { show_info(); } else { hide_info(); }
+    if (box.checked) { panel.classList.remove('hidden'); } else { panel.classList.add('hidden'); }
 }
 
 function show_or_hide_all(id, panel, button, set) {

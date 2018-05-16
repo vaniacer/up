@@ -28,7 +28,7 @@
             </div>
 
             <div class="panel-body">
-                <dl class="dl-horizontal dbdump-panel dp{{dump.id}}">
+                <dl class="dl-horizontal dbdump-panel" id="dp{{dump.id}}">
                     <dt>              Name</dt><dd>{{dump.name|truncatechars:50}}</dd>
                     <dt>              Size</dt><dd>{{dump.size|filesizeformat}}</dd>
                     <dt class="small">Date</dt><dd class="small">{{dump.date|date:'M d, Y H:i'}}</dd>
