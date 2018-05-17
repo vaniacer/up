@@ -1,8 +1,8 @@
 # Update Server
-![screeenshot](https://user-images.githubusercontent.com/18072680/40045786-e6889bb6-5833-11e8-9a64-45ca5aaacbbe.png)
+![screenshot](https://user-images.githubusercontent.com/18072680/40045786-e6889bb6-5833-11e8-9a64-45ca5aaacbbe.png)
 
 <p>
-    <h4>Manage your servers through ssh via web interface.</h4>
+    <h4>Manage your servers through ssh via web interface.</>
 </p>
 <p>
     Start by pressing an <i>'Projects'</i> button or a <i>'Projects'</i> link at the top.<br>
