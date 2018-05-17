@@ -10,11 +10,13 @@
 
     {% get_obj_perms request.user for project as "pr_view_perms" %}
 
-    <div id="SU"></div> <!-- Selected updates list -->
-    <div id="SS"></div> <!-- Selected servers list -->
-    <div id="SX"></div> <!-- Selected scripts list -->
-    <div id="SJ"></div> <!-- Selected crnjobs list -->
-    <div id="SD"></div> <!-- Selected dbdumps list -->
+    <p>
+        <div id="SU"></div> <!-- Selected updates list -->
+        <div id="SS"></div> <!-- Selected servers list -->
+        <div id="SX"></div> <!-- Selected scripts list -->
+        <div id="SJ"></div> <!-- Selected crnjobs list -->
+        <div id="SD"></div> <!-- Selected dbdumps list -->
+    </p>
 
     <div class="col-sm-2">
         <h2 class="inline" title="{{project.desc}}">{{project}}</h2>
