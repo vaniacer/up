@@ -1,10 +1,6 @@
 {% load bootstrap3 %}
 
-<div class="col-sm-12"><h4 class="right">Updates</h4></div>
-
-{% buttons %}
-    {% include "ups/project_updates_buttons.html" %}
-{% endbuttons %}
+{% include "ups/project_updates_buttons.html" %}
 
 <div class="roller">
     {% for update in updates_filtered %}

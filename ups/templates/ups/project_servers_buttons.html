@@ -2,24 +2,39 @@
 
 <div class="row">
 
-    <div class="col-sm-7"> <!---| Server filter |--->
+    <div class="col-sm-2"><a class="btn btn-primary btn-sm disabled">Servers</a></div>
+    <div class="col-sm-10">
 
         <div class="input-group">
+
             <div class="input-group-btn">
-                <button class="btn btn-info btn-sm" tabindex="-1">Filter</button>
+
+                {% if "add_server" in pr_view_perms %}
+                    <a title="Add new server."
+                       class="btn btn-success btn-sm"
+                       href="{% url 'ups:new_server' project.id %}?{{info}}">Add</a>
+                {% endif %}
+
+                <input id="sshow"
+                       type="button"
+                       value="Info Off"
+                       title="Show\Hide servers info."
+                       class="btn btn-info btn-sm"
+                       onclick="show_or_hide_all('id_server_info', 'server-panel', 'sshow')"/>
+
+                <!-- Hidden submit button -->
+                <button class="hidden">submit</button>
+
                 <!-- Dropdown using dropdown-toggle class -->
-                <button type="button"
-                        data-toggle="dropdown"
-                        class="btn btn-info btn-sm dropdown-toggle"
-                        tabindex="-1">List <span class="caret"></span><!-- caret -->
-                                           <span class="sr-only">Toggle Dropdown</span></button>
+                <button data-toggle="dropdown"
+                        class="btn btn-info btn-sm dropdown-toggle">Filter <span class="caret"></span></button>
                 <!-- Dropdown list items -->
                 <ul class="dropdown-menu" role="menu">
-                    <li><a href="javascript:;" onclick="filter_by('id_servers', '')"         >All </a></li>
-                    <li><a href="javascript:;" onclick="filter_by('id_servers', 'dev|дев')"  >Dev</a></li>
-                    <li><a href="javascript:;" onclick="filter_by('id_servers', 'test|тест')">Test</a></li>
-                    <li><a href="javascript:;" onclick="filter_by('id_servers', 'prod|прод')">Prod</a></li>
-                    <li><a href="javascript:;" onclick="filter_by('id_servers', 'demo|демо')">Demo</a></li>
+                    <li><a href="javascript:;" onclick="filter_by('id_servers', '')"              >All </a></li>
+                    <li><a href="javascript:;" onclick="filter_by('id_servers', 'dev|дев|разраб')">Dev</a></li>
+                    <li><a href="javascript:;" onclick="filter_by('id_servers', 'test|тест')"     >Test</a></li>
+                    <li><a href="javascript:;" onclick="filter_by('id_servers', 'prod|прод')"     >Prod</a></li>
+                    <li><a href="javascript:;" onclick="filter_by('id_servers', 'demo|демо')"     >Demo</a></li>
 
                     <li class="divider"></li>
 
@@ -32,35 +47,10 @@
 
             </div>
 
-            {% bootstrap_form servers_filter size="small" %}
+            {% bootstrap_form servers_filter size="sm" %}
 
         </div>
 
-    </div> <!-----------------| Server filter end |--->
-
-    <div class="col-sm-5"> <!---| Server commands |--->
-
-        {% if servers %}
-
-            <div class="btn-group">
-                <input id="sshow"
-                       type="button"
-                       value="Info Off"
-                       title="Show\Hide servers info."
-                       class="btn btn-info btn-sm"
-                       onclick="show_or_hide_all('id_server_info', 'server-panel', 'sshow')"/>
-            </div>
-
-        {% endif %} <!---| If servers exists |--->
-
-        {% if "add_server" in pr_view_perms %}
-            <div class="btn-group">
-                <a title="Add new server."
-                   class="btn btn-success btn-sm"
-                   href="{% url 'ups:new_server' project.id %}?{{info}}">Add</a>
-            </div>
-        {% endif %}
-
-    </div> <!---| Server commands end |--->
+    </div>
 
 </div>

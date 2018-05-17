@@ -2,17 +2,35 @@
 
 <div class="row">
 
-    <div class="col-sm-7"> <!---| Dumps filter |--->
+    <div class="col-sm-10">
 
         <div class="input-group">
+
             <div class="input-group-btn">
-                <button class="btn btn-info btn-sm" tabindex="-1">Filter</button>
+
+                {% if "run_command" in pr_view_perms %}
+                    <a onclick="run_or_cron('RUN');
+                                return Validation('get_dump', true, false, false, false, false)"
+                       title="Get DB dump from selected server(s)."
+                       class="btn btn-success btn-sm"
+                       href="javascript:;">Get</a>
+                {% endif %}
+
+                <div class="btn-group">
+                    <input id="dshow"
+                           type="button"
+                           value="Info Off"
+                           title="Show\Hide dumps info."
+                           class="btn btn-info btn-sm"
+                           onclick="show_or_hide_all('id_dbdump_info', 'dbdump-panel', 'dshow')"/>
+                </div>
+
+                <!-- Hidden submit button -->
+                <button class="hidden">submit</button>
+
                 <!-- Dropdown using dropdown-toggle class -->
-                <button type="button"
-                        data-toggle="dropdown"
-                        class="btn btn-info btn-sm dropdown-toggle"
-                        tabindex="-1">List <span class="caret"></span><!-- caret -->
-                                           <span class="sr-only">Toggle Dropdown</span></button>
+                <button data-toggle="dropdown"
+                        class="btn btn-info btn-sm dropdown-toggle">Filter <span class="caret"></span></button>
                 <!-- Dropdown list items -->
                 <ul class="dropdown-menu" role="menu">
                     <li><a href="javascript:;" onclick="filter_by('id_dumps', '')">All</a></li>
@@ -36,36 +54,10 @@
 
                 </ul>
             </div>
-            {% bootstrap_form dmplist_filter size="small" %}
+            {% bootstrap_form dmplist_filter size="sm" %}
         </div>
 
-    </div> <!-----------------| Dumps filter end |--->
-
-    <div class="col-sm-5"> <!---| Dumps commands |--->
-
-        {% if dmplist %}
-
-                <div class="btn-group">
-                    <input id="dshow"
-                           type="button"
-                           value="Info Off"
-                           title="Show\Hide dumps info."
-                           class="btn btn-info btn-sm"
-                           onclick="show_or_hide_all('id_dbdump_info', 'dbdump-panel', 'dshow')"/>
-                </div>
-
-        {% endif %} <!---| If dumps exists |--->
-
-        {% if "run_command" in pr_view_perms %}
-            <div class="btn-group">
-                <a onclick="run_or_cron('RUN');
-                            return Validation('get_dump', true, false, false, false, false)"
-                   title="Get DB dump from selected server(s)."
-                   class="btn btn-success btn-sm"
-                   href="javascript:;">Get</a>
-            </div>
-        {% endif %} <!--------| If can run |--->
-
-    </div> <!---------| Dumps commands end |--->
+    </div>
+    <div class="col-sm-2"><a class="btn btn-primary btn-sm disabled right">Dumps</a></div>
 
 </div>

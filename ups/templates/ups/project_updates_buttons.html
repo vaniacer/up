@@ -2,17 +2,31 @@
 
 <div class="row">
 
-    <div class="col-sm-7"> <!---| Updates filter |--->
+    <div class="col-sm-10">
 
         <div class="input-group">
+
             <div class="input-group-btn">
-                <button class="btn btn-info btn-sm" tabindex="-1">Filter</button>
+
+                {% if "add_update" in pr_view_perms %}
+                    <a title="Add new update."
+                       class="btn btn-success btn-sm"
+                       href="{% url 'ups:new_update' project.id %}?{{info}}">Add</a>
+                {% endif %}
+
+                <input id="ushow"
+                       type="button"
+                       value="Info Off"
+                       title="Show\Hide updates info."
+                       class="btn btn-info btn-sm"
+                       onclick="show_or_hide_all('id_update_info', 'update-panel', 'ushow')"/>
+
+                <!-- Hidden submit button -->
+                <button class="hidden">submit</button>
+
                 <!-- Dropdown using dropdown-toggle class -->
-                <button type="button"
-                        data-toggle="dropdown"
-                        class="btn btn-info btn-sm dropdown-toggle"
-                        tabindex="-1">List <span class="caret"></span><!-- caret -->
-                                           <span class="sr-only">Toggle Dropdown</span></button>
+                <button data-toggle="dropdown"
+                        class="btn btn-info btn-sm dropdown-toggle">Filter <span class="caret"></span></button>
                 <!-- Dropdown list items -->
                 <ul class="dropdown-menu" role="menu">
                     <li><a href="javascript:;" onclick="filter_by('id_updates', '')">All </a></li>
@@ -29,35 +43,14 @@
                     <li><br><br><br></li>
 
                 </ul>
+
             </div>
-            {% bootstrap_form updates_filter size="small" %}
+
+            {% bootstrap_form updates_filter size="sm" %}
+
         </div>
 
-    </div> <!-----------------| Updates filter end |--->
-
-    <div class="col-sm-5"> <!---| Updates commands |--->
-
-        {% if updates %}
-
-            <div class="btn-group">
-                <input id="ushow"
-                       type="button"
-                       value="Info Off"
-                       title="Show\Hide updates info."
-                       class="btn btn-info btn-sm"
-                       onclick="show_or_hide_all('id_update_info', 'update-panel', 'ushow')"/>
-            </div>
-
-        {% endif %} <!---| If updates exists |--->
-
-        {% if "add_update" in pr_view_perms %}
-            <div class="btn-group">
-                <a title="Add new update."
-                   class="btn btn-success btn-sm"
-                   href="{% url 'ups:new_update' project.id %}?{{info}}">Add</a>
-            </div>
-        {% endif %}
-
-    </div> <!---| Updates commands end |--->
+    </div>
+    <div class="col-sm-2"><a class="btn btn-primary btn-sm disabled right">Updates</a></div>
 
 </div>
