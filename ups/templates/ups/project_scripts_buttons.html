@@ -2,57 +2,59 @@
 
 <div class="row">
 
-    <div class="col-sm-10">
+    <div class="input-group">
 
-        <div class="input-group">
+        <div class="input-group-btn">
 
-            <div class="input-group-btn">
+            <!--Scripts label-->
+            <a class="btn btn-primary btn-sm disabled">Scripts</a>
 
-                {% if "add_script" in pr_view_perms %}
-                    <a title="Upload new script."
-                       class="btn btn-success btn-sm"
-                       href="{% url 'ups:add_script' project.id %}?{{info}}">Add</a>
-                    <a title="Create new script."
-                       class="btn btn-success btn-sm"
-                       href="{% url 'ups:new_script' project.id %}?{{info}}">New</a>
-                {% endif %}
+            <!--Add\create new script buttons-->
+            {% if "add_script" in pr_view_perms %}
+                <a title="Upload new script."
+                   class="btn btn-success btn-sm"
+                   href="{% url 'ups:add_script' project.id %}?{{info}}">Add</a>
+                <a title="Create new script."
+                   class="btn btn-success btn-sm"
+                   href="{% url 'ups:new_script' project.id %}?{{info}}">New</a>
+            {% endif %}
 
-                <input id="xshow"
-                       type="button"
-                       value="Info Off"
-                       class="btn btn-info btn-sm"
-                       title="Show\Hide scripts info."
-                       onclick="show_or_hide_all('id_script_info', 'script-panel', 'xshow')"/>
+            <!--Info visibility button-->
+            <input id="xshow"
+                   type="button"
+                   value="Info Off"
+                   class="btn btn-info btn-sm"
+                   title="Show\Hide scripts info."
+                   onclick="show_or_hide_all('id_script_info', 'script-panel', 'xshow')"/>
 
-                <!-- Hidden submit button -->
-                <button class="hidden">submit</button>
+            <!-- Hidden submit button -->
+            <button class="hidden">submit</button>
 
-                <!-- Dropdown using dropdown-toggle class -->
-                <button data-toggle="dropdown"
-                        class="btn btn-info btn-sm dropdown-toggle">Filter <span class="caret"></span></button>
-                <ul class="dropdown-menu" role="menu">
-                    <li><a href="javascript:;" onclick="filter_by('id_scripts', '')"    >All </a></li>
-                    <li><a href="javascript:;" onclick="filter_by('id_scripts', '.sql')">SQL </a></li>
-                    <li><a href="javascript:;" onclick="filter_by('id_scripts', '.yml')">YAML</a></li>
-                    <li><a href="javascript:;" onclick="filter_by('id_scripts', '.sh')" >BASH</a></li>
-                    <li><a href="javascript:;" onclick="filter_by('id_scripts', '.py')" >Python</a></li>
+            <!-- Dropdown using dropdown-toggle class -->
+            <button data-toggle="dropdown"
+                    class="btn btn-info btn-sm dropdown-toggle">Filter <span class="caret"></span></button>
 
-                    <li class="divider"></li>
+            <!-- Dropdown list items -->
+            <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                <li><a href="javascript:;" onclick="filter_by('id_scripts', '')"    >All </a></li>
+                <li><a href="javascript:;" onclick="filter_by('id_scripts', '.sql')">SQL </a></li>
+                <li><a href="javascript:;" onclick="filter_by('id_scripts', '.yml')">YAML</a></li>
+                <li><a href="javascript:;" onclick="filter_by('id_scripts', '.sh')" >BASH</a></li>
+                <li><a href="javascript:;" onclick="filter_by('id_scripts', '.py')" >Python</a></li>
 
-                    {% for SCR in scripts %}
-                        <li><a href="javascript:;" onclick="filter_by('id_scripts', '{{SCR}}')">{{SCR}}</a></li>
-                    {% endfor %}
+                <li class="divider"></li>
 
-                    <li><br><br><br></li>
-                </ul>
+                {% for SCR in scripts %}
+                    <li><a href="javascript:;" onclick="filter_by('id_scripts', '{{SCR}}')">{{SCR}}</a></li>
+                {% endfor %}
 
-            </div>
-
-            {% bootstrap_form scripts_filter size="sm" %}
+                <li><br><br><br></li>
+            </ul>
 
         </div>
 
+        {% bootstrap_form scripts_filter size="sm" %}
+
     </div>
-    <div class="col-sm-2"><a class="btn btn-primary btn-sm disabled right">Scripts</a></div>
 
 </div>

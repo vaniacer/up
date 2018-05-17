@@ -2,62 +2,65 @@
 
 <div class="row">
 
-    <div class="col-sm-10">
+    <div class="input-group">
 
-        <div class="input-group">
+        <div class="input-group-btn">
 
-            <div class="input-group-btn">
+            <!--Dumps label-->
+            <a class="btn btn-primary btn-sm disabled">Dumps</a>
 
-                {% if "run_command" in pr_view_perms %}
-                    <a onclick="run_or_cron('RUN');
-                                return Validation('get_dump', true, false, false, false, false)"
-                       title="Get DB dump from selected server(s)."
-                       class="btn btn-success btn-sm"
-                       href="javascript:;">Get</a>
-                {% endif %}
+            <!--Add new dump button-->
+            {% if "run_command" in pr_view_perms %}
+                <a onclick="run_or_cron('RUN');
+                            return Validation('get_dump', true, false, false, false, false)"
+                   title="Get DB dump from selected server(s)."
+                   class="btn btn-success btn-sm"
+                   href="javascript:;">Get</a>
+            {% endif %}
 
-                <div class="btn-group">
-                    <input id="dshow"
-                           type="button"
-                           value="Info Off"
-                           title="Show\Hide dumps info."
-                           class="btn btn-info btn-sm"
-                           onclick="show_or_hide_all('id_dbdump_info', 'dbdump-panel', 'dshow')"/>
-                </div>
-
-                <!-- Hidden submit button -->
-                <button class="hidden">submit</button>
-
-                <!-- Dropdown using dropdown-toggle class -->
-                <button data-toggle="dropdown"
-                        class="btn btn-info btn-sm dropdown-toggle">Filter <span class="caret"></span></button>
-                <!-- Dropdown list items -->
-                <ul class="dropdown-menu" role="menu">
-                    <li><a href="javascript:;" onclick="filter_by('id_dumps', '')">All</a></li>
-                    <li><a href="javascript:;"
-                           onclick="filter_by('id_dumps',
-                            '{%now 'd-m-Y'%}|{%now 'd.m.Y'%}|{%now 'Y.m.d'%}|{%now 'Y-m-d'%}')">Current date</a></li>
-
-                    <li class="divider"></li>
-
-                    {% for SRV in servers %}
-                        <li><a href="javascript:;" onclick="filter_by('id_dumps', '{{SRV.addr}}')">{{SRV.addr}}</a></li>
-                    {% endfor %}
-
-                    <li class="divider"></li>
-
-                    {% for DMP in dmplist %}
-                        <li><a href="javascript:;" onclick="filter_by('id_dumps', '{{DMP.name}}')">{{DMP.name}}</a></li>
-                    {% endfor %}
-
-                    <li><br><br><br></li>
-
-                </ul>
+            <!--Info visibility button-->
+            <div class="btn-group">
+                <input id="dshow"
+                       type="button"
+                       value="Info Off"
+                       title="Show\Hide dumps info."
+                       class="btn btn-info btn-sm"
+                       onclick="show_or_hide_all('id_dbdump_info', 'dbdump-panel', 'dshow')"/>
             </div>
-            {% bootstrap_form dmplist_filter size="sm" %}
+
+            <!-- Hidden submit button -->
+            <button class="hidden">submit</button>
+
+            <!-- Dropdown using dropdown-toggle class -->
+            <button data-toggle="dropdown"
+                    class="btn btn-info btn-sm dropdown-toggle">Filter <span class="caret"></span></button>
+
+            <!-- Dropdown list items -->
+            <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                <li><a href="javascript:;" onclick="filter_by('id_dumps', '')">All</a></li>
+                <li><a href="javascript:;"
+                       onclick="filter_by('id_dumps',
+                        '{%now 'd-m-Y'%}|{%now 'd.m.Y'%}|{%now 'Y.m.d'%}|{%now 'Y-m-d'%}')">Current date</a></li>
+
+                <li class="divider"></li>
+
+                {% for SRV in servers %}
+                    <li><a href="javascript:;" onclick="filter_by('id_dumps', '{{SRV.addr}}')">{{SRV.addr}}</a></li>
+                {% endfor %}
+
+                <li class="divider"></li>
+
+                {% for DMP in dmplist %}
+                    <li><a href="javascript:;" onclick="filter_by('id_dumps', '{{DMP.name}}')">{{DMP.name}}</a></li>
+                {% endfor %}
+
+                <li><br><br><br></li>
+            </ul>
+
         </div>
 
+        {% bootstrap_form dmplist_filter size="sm" %}
+
     </div>
-    <div class="col-sm-2"><a class="btn btn-primary btn-sm disabled right">Dumps</a></div>
 
 </div>
