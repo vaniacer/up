@@ -30,6 +30,10 @@
     padding: 10px 10px 5px 10px;
 }
 
+.disabled {
+    font-weight: bold;
+}
+
 .roller {
     overflow-y: auto;
     height: 80%;
