@@ -92,13 +92,10 @@
 
 td {
     padding: 3px 3px 3px 15px;
+    color: SteelBlue;
 }
 
 td:hover {
     cursor: pointer;
     background: LightGrey;
-}
-
-td {
-    color: SteelBlue;
 }
