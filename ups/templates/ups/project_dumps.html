@@ -13,14 +13,6 @@
                 <h4 class="inline"
                     title="{{dump.name}} {{dump.size|filesizeformat}}">{{dump.name|truncatechars:50}}</h4>
                 {% include "ups/commands_dumps.html" %}
-
-                <!--Individual visibility check boxes-->
-                <span id="dh{{dump.id}}"
-                      title="Show\Hide this dump info."
-                      class="glyphicon glyphicon-menu-down dshow right"
-                      onclick="selector('dx{{dump.id}}', 'db{{dump.id}}', '{{dump.name}}', 'SD');
-                               show_or_hide_this('dh{{dump.id}}', 'dp{{dump.id}}')">
-                </span>
             </div>
 
             <div class="panel-body">
@@ -29,6 +21,13 @@
                     <dt>              Size</dt><dd>{{dump.size|filesizeformat}}</dd>
                     <dt class="small">Date</dt><dd class="small">{{dump.date|date:'M d, Y H:i'}}</dd>
                 </dl>
+                <!--Individual visibility check boxes-->
+                <span id="dh{{dump.id}}"
+                      title="Show\Hide this dump info."
+                      class="glyphicon glyphicon-menu-down dshow right"
+                      onclick="selector('dx{{dump.id}}', 'db{{dump.id}}', '{{dump.name}}', 'SD');
+                               show_or_hide_this('dh{{dump.id}}', 'dp{{dump.id}}')">
+                </span>
             </div>
 
         </div>

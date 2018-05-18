@@ -42,9 +42,9 @@
 
 /*---{ Individual info on\off buttons }---*/
 .glyphicon-menu-down, .glyphicon-menu-up {
-    padding: 6px 3px 3px 3px;
-    font-size:  10px;
     color: SteelBlue;
+    font-size: 10px;
+
 }
 
 .glyphicon-menu-down:hover, .glyphicon-menu-up:hover {
@@ -73,10 +73,7 @@
 }
 
 .panel-body, .panel-heading {
-    padding-left:   8px;
-    padding-right:  5px;
-    padding-top:    4px;
-    padding-bottom: 2px;
+    padding: 0px 2px 2px 2px;
 }
 
 .panel-body   dl { margin-bottom: 0px; }

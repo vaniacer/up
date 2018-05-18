@@ -12,14 +12,6 @@
             <div class="panel-heading">
                 <h4 class="inline" title="{{script.desc}}">{{script|truncatechars:50}}</h4>
                 {% include "ups/commands_scripts.html" %}
-
-                <!--Individual visibility buttons-->
-                <span id="xh{{script.id}}"
-                      title="Show\Hide this script info."
-                      class="glyphicon glyphicon-menu-down xshow right"
-                      onclick="selector('xx{{script.id}}', 'xb{{script.id}}', '{{script}}', 'SX');
-                               show_or_hide_this('xh{{script.id}}', 'xp{{script.id}}')">
-                </span>
             </div>
 
             <div class="panel-body">
@@ -29,6 +21,13 @@
                     <dt class="small">User</dt><dd class="small">{{script.user}}</dd>
                     <dt class="small">Date</dt><dd class="small">{{script.date|date:'M d, Y H:i'}}</dd>
                 </dl>
+                <!--Individual visibility buttons-->
+                <span id="xh{{script.id}}"
+                      title="Show\Hide this script info."
+                      class="glyphicon glyphicon-menu-down xshow right"
+                      onclick="selector('xx{{script.id}}', 'xb{{script.id}}', '{{script}}', 'SX');
+                               show_or_hide_this('xh{{script.id}}', 'xp{{script.id}}')">
+                </span>
             </div>
 
         </div>

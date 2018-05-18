@@ -13,14 +13,6 @@
                 <h4 class="inline"
                     title="{{update.desc}} {{update.file.size|filesizeformat}}">{{update|truncatechars:50}}</h4>
                 {% include "ups/commands_updates.html" %}
-
-                <!--Individual visibility check boxes-->
-                <span id="uh{{update.id}}"
-                      title="Show\Hide this update info."
-                      class="glyphicon glyphicon-menu-down ushow right"
-                      onclick="selector('ux{{update.id}}', 'ub{{update.id}}', '{{update}}', 'SU');
-                               show_or_hide_this('uh{{update.id}}', 'up{{update.id}}')">
-                </span>
             </div>
 
             <div class="panel-body">
@@ -30,6 +22,13 @@
                     <dt class="small">User</dt><dd class="small">{{update.user}}</dd>
                     <dt class="small">Date</dt><dd class="small">{{update.date|date:'M d, Y H:i'}}</dd>
                 </dl>
+                <!--Individual visibility check boxes-->
+                <span id="uh{{update.id}}"
+                      title="Show\Hide this update info."
+                      class="glyphicon glyphicon-menu-down ushow right"
+                      onclick="selector('ux{{update.id}}', 'ub{{update.id}}', '{{update}}', 'SU');
+                               show_or_hide_this('uh{{update.id}}', 'up{{update.id}}')">
+                </span>
             </div>
 
         </div>
