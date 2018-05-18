@@ -76,16 +76,16 @@
 .panel-body    { padding: 0px 2px 2px 5px; }
 .panel-body dl { margin:  5px; }
 
-.update-panel dt { width: 80px; }
+.update-panel dt { width:       80px; }
 .update-panel dd { margin-left: 90px; }
 
-.dbdump-panel dt { width: 40px; }
+.dbdump-panel dt { width:       40px; }
 .dbdump-panel dd { margin-left: 50px; }
 
-.script-panel dt { width: 80px; }
+.script-panel dt { width:       80px; }
 .script-panel dd { margin-left: 90px; }
 
-.server-panel dt { width: 110px; }
+.server-panel dt { width:       110px; }
 .server-panel dd { margin-left: 120px; }
 
 /*-------------{ Tables }-----------------*/
