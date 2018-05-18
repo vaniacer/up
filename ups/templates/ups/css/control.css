@@ -72,11 +72,9 @@
     border-color: DarkGrey;
 }
 
-.panel-body, .panel-heading {
-    padding: 0px 2px 2px 2px;
-}
-
-.panel-body   dl { margin-bottom: 0px; }
+.panel-heading { padding: 2px 2px 2px 5px; }
+.panel-body    { padding: 0px 2px 2px 5px; }
+.panel-body dl { margin:  5px; }
 
 .update-panel dt { width: 80px; }
 .update-panel dd { margin-left: 90px; }
