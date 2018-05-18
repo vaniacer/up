@@ -49,16 +49,28 @@ function run_or_cron(type) {
     }
 }
 
-function show_or_hide_this(box_id, panel_id) {
-    var box = document.getElementById(box_id);
-    var panel = document.getElementById(panel_id);
+function show_or_hide_this(btn_id, pnl_id) {
+    var btn = document.getElementById(btn_id);
+    var pnl = document.getElementById(pnl_id);
 
-    if (box.checked) { panel.classList.remove('hidden'); } else { panel.classList.add('hidden'); }
+    function show_info() {
+        btn.classList.remove('glyphicon-menu-down');
+        btn.classList.add('glyphicon-menu-up');
+        pnl.classList.remove('hidden');
+    }
+
+    function hide_info() {
+        btn.classList.remove('glyphicon-menu-up');
+        btn.classList.add('glyphicon-menu-down');
+        pnl.classList.add('hidden');
+    }
+
+    if (btn.classList.contains('glyphicon-menu-down')) { show_info(); } else { hide_info(); }
 }
 
 function show_or_hide_all(id, panel, button, set) {
 
-    var cboxes = document.getElementsByClassName(button);
+    var pluses = document.getElementsByClassName(button);
     var panels = document.getElementsByClassName(panel);
     var button = document.getElementById(button);
     var status = document.getElementById(id);
@@ -66,15 +78,21 @@ function show_or_hide_all(id, panel, button, set) {
     function show_info() {
         if (status) { status.checked = true; }
         if (button) { button.value = 'Info On'; }
-        for (i = 0; i < cboxes.length; i++) { cboxes[i].checked = true; }
         for (i = 0; i < panels.length; i++) { panels[i].classList.remove('hidden'); }
+        for (i = 0; i < pluses.length; i++) {
+            pluses[i].classList.add('glyphicon-menu-up');
+            pluses[i].classList.remove('glyphicon-menu-down');
+        }
     }
 
     function hide_info() {
         if (status) { status.checked = false; }
         if (button) { button.value = 'Info Off'; }
-        for (i = 0; i < cboxes.length; i++) { cboxes[i].checked = false; }
         for (i = 0; i < panels.length; i++) { panels[i].classList.add('hidden'); }
+        for (i = 0; i < pluses.length; i++) {
+            pluses[i].classList.add('glyphicon-menu-down');
+            pluses[i].classList.remove('glyphicon-menu-up');
+        }
     }
 
     if (set == 'show') { show_info(); }
@@ -87,6 +105,45 @@ function show_or_hide_all(id, panel, button, set) {
         }
     }
 }
+
+//function show_or_hide_this(box_id, panel_id) {
+//    var box = document.getElementById(box_id);
+//    var panel = document.getElementById(panel_id);
+//
+//    if (box.checked) { panel.classList.remove('hidden'); } else { panel.classList.add('hidden'); }
+//}
+//
+//function show_or_hide_all(id, panel, button, set) {
+//
+//    var cboxes = document.getElementsByClassName(button);
+//    var panels = document.getElementsByClassName(panel);
+//    var button = document.getElementById(button);
+//    var status = document.getElementById(id);
+//
+//    function show_info() {
+//        if (status) { status.checked = true; }
+//        if (button) { button.value = 'Info On'; }
+//        for (i = 0; i < cboxes.length; i++) { cboxes[i].checked = true; }
+//        for (i = 0; i < panels.length; i++) { panels[i].classList.remove('hidden'); }
+//    }
+//
+//    function hide_info() {
+//        if (status) { status.checked = false; }
+//        if (button) { button.value = 'Info Off'; }
+//        for (i = 0; i < cboxes.length; i++) { cboxes[i].checked = false; }
+//        for (i = 0; i < panels.length; i++) { panels[i].classList.add('hidden'); }
+//    }
+//
+//    if (set == 'show') { show_info(); }
+//    if (set == 'hide') { hide_info(); }
+//    if (!set) {
+//        if (status.checked) {
+//            hide_info();
+//        } else {
+//            show_info();
+//        }
+//    }
+//}
 
 function selector(box_id, body_id, name, obj) {
     var body = document.getElementById(body_id);

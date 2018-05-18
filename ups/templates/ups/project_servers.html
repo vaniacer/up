@@ -14,12 +14,12 @@
                 {% include "ups/commands_servers.html" %}
 
                 <!--Individual visibility check boxes-->
-                <input type="checkbox"
-                       class="sshow right"
-                       id="sh{{server.id}}"
-                       title="Show\Hide this server info."
-                       onclick="selector('sx{{server.id}}', 'sb{{server.id}}', '{{server}}', 'SS');
-                                show_or_hide_this('sh{{server.id}}', 'sp{{server.id}}')"/>
+                <span id="sh{{server.id}}"
+                      title="Show\Hide this server info."
+                      class="glyphicon glyphicon-menu-down sshow right"
+                      onclick="selector('sx{{server.id}}', 'sb{{server.id}}', '{{server}}', 'SS');
+                               show_or_hide_this('sh{{server.id}}', 'sp{{server.id}}')">
+                </span>
             </div>
 
             <div class="panel-body">

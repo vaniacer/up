@@ -15,12 +15,12 @@
                 {% include "ups/commands_dumps.html" %}
 
                 <!--Individual visibility check boxes-->
-                <input type="checkbox"
-                       id="dh{{dump.id}}"
-                       class="dshow right"
-                       title="Show\Hide this dump info."
-                       onclick="selector('dx{{dump.id}}', 'db{{dump.id}}', '{{dump.name}}', 'SD');
-                                show_or_hide_this('dh{{dump.id}}', 'dp{{dump.id}}')"/>
+                <span id="dh{{dump.id}}"
+                      title="Show\Hide this dump info."
+                      class="glyphicon glyphicon-menu-down dshow right"
+                      onclick="selector('dx{{dump.id}}', 'db{{dump.id}}', '{{dump.name}}', 'SD');
+                               show_or_hide_this('dh{{dump.id}}', 'dp{{dump.id}}')">
+                </span>
             </div>
 
             <div class="panel-body">

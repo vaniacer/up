@@ -15,12 +15,12 @@
                 {% include "ups/commands_updates.html" %}
 
                 <!--Individual visibility check boxes-->
-                <input type="checkbox"
-                       class="ushow right"
-                       id="uh{{update.id}}"
-                       title="Show\Hide this update info."
-                       onclick="selector('ux{{update.id}}', 'ub{{update.id}}', '{{update}}', 'SU');
-                                show_or_hide_this('uh{{update.id}}', 'up{{update.id}}')"/>
+                <span id="uh{{update.id}}"
+                      title="Show\Hide this update info."
+                      class="glyphicon glyphicon-menu-down ushow right"
+                      onclick="selector('ux{{update.id}}', 'ub{{update.id}}', '{{update}}', 'SU');
+                               show_or_hide_this('uh{{update.id}}', 'up{{update.id}}')">
+                </span>
             </div>
 
             <div class="panel-body">
