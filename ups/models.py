@@ -94,10 +94,11 @@ class Script(models.Model):
 	body = models.TextField()
 
 	def type(self):
+		"""Возвращает расширение файла."""
 		return self.file.name.split('.')[-1]
 
 	def __unicode__(self):
-		"""Возвращает строковое представление модели."""
+		"""Возвращает строковое представление модели(имя файла)."""
 		return self.file.name.split('/')[-1]
 
 
@@ -129,6 +130,7 @@ class History(models.Model):
 	desc = models.TextField()
 
 	class Meta:
+		"""Название множественного числа объектов."""
 		verbose_name_plural = 'events'
 
 	def __unicode__(self):
