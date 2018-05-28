@@ -1,7 +1,8 @@
 
 <!--------------------------------------------Edit button----------------------------------------->
 {% if "edit_update" in pr_view_perms %}
-    <a href="{% url 'ups:edit_update' update.id %}?{{info}}"
+    <a onclick="selector('ux{{ update.id }}', 'ub{{ update.id }}', '{{ update }}', 'SX')"
+       href="{% url 'ups:edit_update' update.id %}?{{info}}"
        title="Edit this update's info."
        class="small">Edit</a>
 {% endif %}

@@ -1,7 +1,8 @@
 
 <!--------------------------------------------Edit button----------------------------------------->
 {% if "edit_server" in pr_view_perms %}
-    <a href="{% url 'ups:edit_server' server.id %}?{{info}}"
+    <a onclick="selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS');"
+       href="{% url 'ups:edit_server' server.id %}?{{info}}"
        title="Edit this server's info."
        class="small">Edit</a>
 {% endif %}
