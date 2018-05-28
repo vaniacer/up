@@ -182,7 +182,7 @@ function starter  () {
                        run        &> $rundir/log$key
                        echo $error > $rundir/err$key
                        [[ $hid ]] && make_history
-                       sleep 2.5; rm $rundir/*$key; }
+                       sleep 3;   rm $rundir/*$key; }
 }
 
 # Show description or run command itself
