@@ -1,7 +1,7 @@
 #!/bin/bash
 
 error=0                                 # Error
-width=120                               # Terminal width
+width=110                               # Output width
 options=("$@")                          # Save all options in an array, needed for cron
 workdir=$(dirname $0)                   # Work dir
 cronfile=/var/spool/cron/crontabs/$USER # UpS user's crontab file
