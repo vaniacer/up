@@ -691,17 +691,17 @@ def cmd_run(data, project, user):
 	check_perm_or404('run_command', project, user)
 
 	crn = ''
-	key = get_key()
+	logid = ''
+	# key = get_key()
 	date = run_date()
 
 	if data['selected_date'] and data['selected_time']:
 		date = '%s %s' % (data['selected_date'], data['selected_time'])
 
-
 	selected = {
 		'hid':     '',
-		'cid':     '',
-		'key':     key,
+		# 'cid':     '',
+		# 'key':     key,
 		'date':    date,
 		'user':    user,
 		'project': project,
@@ -712,31 +712,36 @@ def cmd_run(data, project, user):
 		'dumps':   data.getlist('selected_dumps'),
 		'updates': data.getlist('selected_updates'),
 		'scripts': data.getlist('selected_scripts'),
-		'servers': data.getlist('selected_servers'),
+		# 'servers': data.getlist('selected_servers'),
 	}
 
 	tag, his = command(selected)
 
-	if data['run_type'] == 'CRON':
-		crn = key
-		if not his:
-			return '/projects/%s/?%s' % (project.id, info(data))
-		selected['cid'] = add_job(selected, 'Working...', key)
-		selected['name'] = 'Set cron job - %s' % selected['command'].lower()
-	if his:
-		selected['hid'] = add_event(selected, 'Working...', '', crn, date)
-	starter(selected)
+	for server in data.getlist('selected_servers'):
 
-	url = '/command_log/?cmd=%s&rtype=%s&hid=%s&cid=%s&tab=%s&prid=%s&timedate=%s&logid=%s%s' % (
+		key = get_key()
+		selected['key'] = key
+		selected['servers'] = [server, ]
+		logid = logid + '&logid=%s' % key
+
+		if data['run_type'] == 'CRON':
+			crn = key
+			if not his:
+				return '/projects/%s/?%s' % (project.id, info(data))
+			selected['cid'] = add_job(selected, 'Working...', key)
+			selected['name'] = 'Set cron job - %s' % selected['command'].lower()
+		if his:
+			selected['hid'] = add_event(selected, 'Working...', '', crn, key, date)
+		starter(selected)
+
+	url = '/command_log/?cmd=%s&rtype=%s&tab=%s&prid=%s%s%s&timedate=%s' % (
 		selected['command'],
 		selected['rtype'],
-		selected['hid'],
-		selected['cid'],
 		data.get('tab'),
 		project.id,
-		date,
-		key,
 		info(data),
+		logid,
+		date,
 	)
 
 	return url

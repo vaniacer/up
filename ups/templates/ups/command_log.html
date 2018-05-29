@@ -19,26 +19,32 @@
     <div class="output">
 
         <div id="output_log">
-            <dl class="dl-horizontal">
-                {% if tag %}
-                    <dt>Event logs</dt><dd class="log"><tt>{{log|safe}}</tt></dd>
-                {% else %}
-                    <dt>Event logs</dt><dd class="log"><tt>{{log}}</tt></dd>
-                {% endif %}
-            </dl>
 
-            {% if err >= 0 %}
+            {% for log in logs %}
+
                 <dl class="dl-horizontal">
-                    <dt>Error code</dt><dd>{{err}}</dd>
-                    <dt><br><a class="btn {{ok}}"  href="{{back}}">OK</a></dt>
+                    {% if tag %}
+                        <dt>Event logs</dt><dd class="log"><tt>{{log.log|safe}}</tt></dd>
+                    {% else %}
+                        <dt>Event logs</dt><dd class="log"><tt>{{log.log}}</tt></dd>
+                    {% endif %}
                 </dl>
+
+                {% if log.err >= 0 %}
+                    <dl class="dl-horizontal"><dt>Error code</dt><dd>{{log.err}}</dd></dl>
+                {% else %}
+                    <dl class="dl-horizontal"><dd><div class="small_loader"></div></dd></dl>
+                {% endif %}
+
+            {% endfor %}
+
+            {% if log.end %}
+                <dt><br><a class="btn {{ok}}"  href="{{back}}">OK</a></dt>
             {% else %}
                 <meta http-equiv="refresh" content="1">
-                <dl class="dl-horizontal">
-                    <dd><div class="small_loader"></div></dd>
-                    <dt><br><br><a class="btn btn-primary" href="{{cancel}}">Cancel</a></dt>
-                </dl>
+                <dt><br><br><a class="btn btn-primary" href="{{cancel}}">Cancel</a></dt>
             {% endif %}
+
         </div>
 
         <br><br><br>

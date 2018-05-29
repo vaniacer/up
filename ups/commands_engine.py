@@ -14,13 +14,14 @@ def get_key():
 	return str(b64encode(urandom(6), 'dfsDFAsfsf'))
 
 
-def add_event(selected, log, err, cron, date):
+def add_event(selected, log, err, cron, uniq, date):
 	"""Создает событие в истории."""
 	histobj = History.objects.create(
 		name=selected['name'].capitalize().replace('_', ' '),
 		proj=selected['project'],
 		user=selected['user'],
 		cron=cron,
+		uniq=uniq,
 		cdat=date,
 		desc=log,
 		exit=err,
@@ -91,8 +92,8 @@ def starter(selected):
 	if selected['hid']:
 		opt.extend(['-hid', str(selected['hid'])])
 
-	if selected['cid']:
-		opt.extend(['-cid', str(selected['cid'])])
+	# if selected['cid']:
+	# 	opt.extend(['-cid', str(selected['cid'])])
 
 	for ID in selected['servers']:
 		srv = Server.objects.get(id=ID)

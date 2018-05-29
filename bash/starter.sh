@@ -54,21 +54,21 @@ function make_history () {
         dbconf["${key_value[0]}"]=${key_value[1]}
     done
 
-    [[ $cid ]] && \
-    job_update="UPDATE ups_job SET \"desc\" = \$$ $LOG \$$ WHERE id = $cid AND proj_id = $prj;"
+    [[ $cron ]] && \
+    job_update="UPDATE ups_job SET \"desc\" = \$$ $LOG \$$ WHERE cron = '$cron' AND proj_id = $prj;"
     PGPASSWORD=${dbconf[dbpass]} psql \
             -U ${dbconf[dbuser]} \
             -h ${dbconf[dbhost]} \
             -p ${dbconf[dbport]} \
             -d ${dbconf[dbname]} \
             -c "UPDATE ups_history SET \"desc\" = \$$ $LOG \$$, exit = \$$ $error \$$
-                WHERE id = $hid AND proj_id = $prj;$job_update"
+                WHERE uniq = '$key' AND proj_id = $prj;$job_update"
 }
 
 # Checks existence of updates/new folder in workdir, creates if not
-function check_updates_folder () {
-    printf "\n"
-    ssh $sopt $addr "[[ -d $wdir/updates/new ]] || mkdir -p $wdir/updates/new" || error=$?
+function create_tmp_folder () {
+    tmp_folder=$wdir/updates/new/$key
+    ssh $sopt $addr "[[ -d $tmp_folder ]] || mkdir -p $tmp_folder" || error=$?
 }
 
 # Warning with countdown timer. Options: $1 - message, $2 - timeout in sec.

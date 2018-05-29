@@ -132,37 +132,47 @@ def command_log(request):
 	qst = request.META['QUERY_STRING']
 	url = request.META['SERVER_NAME']
 
-	try:
-		log = open(conf.LOG_FILE + data['logid'], 'r').read()
-		pid = open(conf.PID_FILE + data['logid'], 'r').read()
-	except IOError:
-		return HttpResponseRedirect('/projects/%s/?%s' % (data['prid'], info(data)))
-
-	try:
-		err = open(conf.ERR_FILE + data['logid'], 'r').read()
-	except IOError:
-		err = ''
-
 	context = {
 		'back':    '/projects/%s/?%s' % (data['prid'], info(data)),
-		'cancel':  '/cancel/?pid=%s&%s' % (pid, qst),
-		'log':     log.replace('__URL__', url),
+		'cancel':  '/cancel/?%s' % qst,
 		'project': current_project,
 		'ok':      'btn-success',
-		'log_id':  data['logid'],
 		'rtype':   data['rtype'],
-		'key':     data['logid'],
 		'cmd':     data['cmd'],
 		'tag':     tag,
-		'pid':     pid,
+		'logs':    [],
 		'color':   '',
 	}
 
-	if err:
-		context['err'] = int(err)
-		if context['err'] > 0:
-			context['color'] = '#f2dede'
-			context['ok'] = 'btn-danger'
+	logids = data.getlist('logid')
+
+	for logid in logids:
+
+		end = 0
+
+		try:
+			log = open(conf.LOG_FILE + logid, 'r').read()
+			pid = open(conf.PID_FILE + logid, 'r').read()
+		except IOError:
+			log = ''
+			pid = ''
+			# pass
+			# return HttpResponseRedirect('/projects/%s/?%s' % (data['prid'], info(data)))
+
+		try:
+			err = open(conf.ERR_FILE + logid, 'r').read()
+		except IOError:
+			err = ''
+
+		if err:
+			err = int(err)
+			end = 1
+			if err > 0:
+				context['ok'] = 'btn-danger'
+			# 	context['color'] = '#f2dede'
+
+		context['logs'].extend([{'log': log.replace('__URL__', url), 'err': err, 'end': end}])
+		context['cancel'] = context['cancel'] + '&pid=%s' % pid
 
 	return render(request, 'ups/command_log.html', context)
 
