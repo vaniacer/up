@@ -697,6 +697,7 @@ def cmd_run(data, project, user):
 	if data['selected_date'] and data['selected_time']:
 		date = '%s %s' % (data['selected_date'], data['selected_time'])
 
+
 	selected = {
 		'hid':     '',
 		'cid':     '',
