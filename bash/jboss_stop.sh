@@ -1,13 +1,14 @@
 #!/bin/bash
 
 function description () { #---------------------| Function description |------------------------------------------------
-    printf "\nStart server(s):\n"; for i in "${servers[@]//\'/}"; { echo "${i%%:*}"; }
+    addr > /dev/null
+    printf "\nStop jboss on server:\n$addr"
 }
 
 function body () { #--------------------------------| Main function |---------------------------------------------------
 
-    ssh $sopt $addr $wdir/krupd jboss.start || error=$?
+    ssh $sopt $addr $wdir/krupd jboss.stop || error=$?
 
 } #---------------------------------------------------------------------------------------------------------------------
 
-function run () { for server in "${servers[@]}"; { addr; body; }; info 'Done' $error; }
+function run () { addr; body; info 'Done' $error; }

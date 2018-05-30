@@ -1,7 +1,8 @@
 #!/bin/bash
 
 function description () { #---------------------| Function description |------------------------------------------------
-    printf "\nCopy DB dump $updates to server(s):\n"; for i in "${servers[@]//\'/}"; { echo "${i%%:*}"; }
+    addr > /dev/null
+    printf "\nCopy DB dump $updates to server:\n$addr"
 }
 
 function body () { #--------------------------------| Main function |---------------------------------------------------
@@ -27,7 +28,7 @@ function run () {
 
     [[ ${#dumps[*]} -gt 1 ]] && { printf "\nMultiple dumps selected, need one.\n"; error=1; } || {
 
-        for server in "${servers[@]}"; { addr; body; }; info 'Done' $error
+        addr; body; info 'Done' $error
 
     }
 }

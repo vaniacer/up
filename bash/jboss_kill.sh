@@ -1,13 +1,14 @@
 #!/bin/bash
 
 function description () { #---------------------| Function description |------------------------------------------------
-    printf "\nReload config on server(s):\n"; for i in "${servers[@]//\'/}"; { echo "${i%%:*}"; }
+    addr > /dev/null
+    printf "\nKill jboss on server:\n$addr"
 }
 
 function body () { #--------------------------------| Main function |---------------------------------------------------
 
-    ssh $sopt $addr $wdir/jboss-bas-*/bin/jboss-cli.sh -c command=":reload" || error=$?
+    ssh $sopt $addr $wdir/krupd jboss.kill || error=$?
 
 } #---------------------------------------------------------------------------------------------------------------------
 
-function run () { for server in "${servers[@]}"; { addr; body; }; info 'Done' $error; }
+function run () { addr; body; info 'Done' $error; }

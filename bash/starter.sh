@@ -12,11 +12,11 @@ rundir=$workdir/../../logs/run          # Folder to store running tasks logs
 #---------| Get opts |------------
 until [[ -z $1 ]]; do case $1 in
 
-    -server | -s) servers+=("$2");; # List of servers
     -update | -u) updates+=("$2");; # List of update files
     -script | -x) scripts+=("$2");; # List of script files
     -dump   | -m) dumps+=("$2");;   # List of dump files
     -job    | -j) jobs+=("$2");;    # List of cron job ids
+    -server | -s) server="$2";;     # List of servers
     -date   | -d) date=$2;;         # Cron job date
     -cron   | -C) cron=$2;;         # Cron id set if running from cron
     -desc   | -D) desc=$2;;         # Show description instead of run

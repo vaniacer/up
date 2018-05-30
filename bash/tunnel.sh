@@ -18,4 +18,4 @@ function body () { #--------------------------------| Main function |-----------
 
 } #---------------------------------------------------------------------------------------------------------------------
 
-function run () { for server in "${servers[@]}"; { addr; body; }; info 'Done' $error; }
+function run () { addr; body; info 'Done' $error; }

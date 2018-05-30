@@ -1,7 +1,8 @@
 #!/bin/bash
 
 function description () { #---------------------| Function description |------------------------------------------------
-    printf "\nShow logs of server(s):\n"; for i in "${servers[@]//\'/}"; { echo "${i%%:*}"; }
+    addr > /dev/null
+    printf "\nShow logs of server:\n$addr"
 }
 
 function body () { #--------------------------------| Main function |---------------------------------------------------
@@ -10,4 +11,4 @@ function body () { #--------------------------------| Main function |-----------
 
 } #---------------------------------------------------------------------------------------------------------------------
 
-function run () { for server in "${servers[@]}"; { addr; body; }; info 'Done' $error; }
+function run () { addr; body; info 'Done' $error; }

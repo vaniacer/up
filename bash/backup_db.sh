@@ -1,13 +1,16 @@
 #!/bin/bash
 
 function description () { #---------------------| Function description |------------------------------------------------
-    printf "\nBackup database on server(s):\n"; for i in "${servers[@]//\'/}"; { echo "${i%%:*}"; }
+    addr > /dev/null
+    printf "\nBackup database on server:\n$addr"
 }
 
-function body () { #--------------------------------| Main function |---------------------------------------------------
+function run () { #--------------------------------| Main function |---------------------------------------------------
+
+    addr # Get server address and print it in log
 
     ssh $sopt $addr "$wdir/krupd bkp db" || error=$?; download
 
-} #---------------------------------------------------------------------------------------------------------------------
+    info 'Done' $error
 
-function run () { for server in "${servers[@]}"; { addr; body; }; info 'Done' $error; }
+} #---------------------------------------------------------------------------------------------------------------------

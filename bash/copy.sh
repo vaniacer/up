@@ -1,8 +1,9 @@
 #!/bin/bash
 
 function description () { #---------------------| Function description |------------------------------------------------
+    addr > /dev/null
     printf "\nCopy Update(s):\n"; for i in "${updates[@]//\'/}"; { echo "${i%%:*}"; }
-    printf "\nto Server(s):\n";   for i in "${servers[@]//\'/}"; { echo "${i##*/}"; }
+    printf      "\nto Server:\n$addr"
 }
 
 function body () { #--------------------------------| Main function |---------------------------------------------------
@@ -11,4 +12,4 @@ function body () { #--------------------------------| Main function |-----------
 
 } #---------------------------------------------------------------------------------------------------------------------
 
-function run () { for server in "${servers[@]}"; { addr; body; }; info 'Done' $error; }
+function run () { addr; body; info 'Done' $error; }

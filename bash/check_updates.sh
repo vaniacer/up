@@ -1,14 +1,17 @@
 #!/bin/bash
 
 function description () { #---------------------| Function description |------------------------------------------------
-    printf "\nShow updates of server(s):\n"; for i in "${servers[@]//\'/}"; { echo "${i%%:*}"; }
+    addr > /dev/null
+    printf "\nShow updates of server:\n$addr"
 }
 
-function body () { #--------------------------------| Main function |---------------------------------------------------
+function run () { #--------------------------------| Main function |---------------------------------------------------
+
+    addr # Get server address and print it in log
 
     printf "\nПакеты обновлений:\n"
     ssh $sopt $addr "ls $wdir/updates/new" || error=$?
 
-} #---------------------------------------------------------------------------------------------------------------------
+    info 'Done' $error
 
-function run () { for server in "${servers[@]}"; { addr; body; }; info 'Done' $error; }
+} #---------------------------------------------------------------------------------------------------------------------

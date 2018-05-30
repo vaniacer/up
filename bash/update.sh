@@ -1,8 +1,11 @@
 #!/bin/bash
 
 function description () { #---------------------| Function description |------------------------------------------------
-    printf "\nUpdate server(s):\n"; for i in "${servers[@]//\'/}"; { echo "${i%%:*}"; }
-    printf   "\nwith update(s):\n"; for i in "${updates[@]//\'/}"; { echo "${i##*/}"; }
+    update=${updates[0]//\'/}
+    update=${update##*/}
+    addr > /dev/null
+    printf "\nUpdate server:\n$addr"
+    printf   "\nwith update:\n$update"
 }
 
 function restore () { # Run system restore if jboss-start ended with errors.
@@ -65,9 +68,9 @@ function body () {
 
 function run () {
 
-    [[ ${#updates[*]} -gt 1 ]] && { printf "\nMultiple dumps selected, need one.\n"; error=1; } || {
+    [[ ${#updates[*]} -gt 1 ]] && { printf "\nMultiple files selected, need one.\n"; error=1; } || {
 
-        for server in "${servers[@]}"; { addr; body; }; info 'Done' $error
+        addr; body; info 'Done' $error
 
     }
 }
