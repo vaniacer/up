@@ -16,7 +16,7 @@ def get_key():
 
 def add_event(selected, log, err, cron, uniq, date):
 	"""Создает событие в истории."""
-	histobj = History.objects.create(
+	History.objects.create(
 		name=selected['name'].capitalize().replace('_', ' '),
 		proj=selected['project'],
 		user=selected['user'],
@@ -26,12 +26,11 @@ def add_event(selected, log, err, cron, uniq, date):
 		desc=log,
 		exit=err,
 	)
-	return histobj.id
 
 
 def add_job(selected, log, cron):
 	"""Создает запись о крон жобе."""
-	jobobj = Job.objects.create(
+	Job.objects.create(
 		name=selected['command'].capitalize().replace('_', ' '),
 		proj=selected['project'],
 		user=selected['user'],
@@ -40,7 +39,6 @@ def add_job(selected, log, cron):
 		cron=cron,
 		desc=log,
 	)
-	return jobobj.id
 
 
 def del_job(job):
@@ -92,8 +90,8 @@ def starter(selected):
 	if selected['hid']:
 		opt.extend(['-hid', str(selected['hid'])])
 
-	# if selected['cid']:
-	# 	opt.extend(['-cid', str(selected['cid'])])
+	if selected['cid']:
+		opt.extend(['-cid', str(selected['cid'])])
 
 	for ID in selected['servers']:
 		srv = Server.objects.get(id=ID)

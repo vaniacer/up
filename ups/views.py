@@ -134,7 +134,7 @@ def command_log(request):
 	check_perm_or404('view_project', current_project, request.user)
 	check_perm_or404('run_command', current_project, request.user)
 
-	tag, his = command({'command': data['cmd']})
+	tag, his, job = command({'command': data['cmd']})
 	qst = request.META['QUERY_STRING']
 	url = request.META['SERVER_NAME']
 
@@ -143,7 +143,6 @@ def command_log(request):
 		'cancel':  '/cancel/?%s' % qst,
 		'project': current_project,
 		'ok':      'btn-success',
-		'rtype':   data['rtype'],
 		'cmd':     data['cmd'],
 		'tag':     tag,
 		'logs':    [],

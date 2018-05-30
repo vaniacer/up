@@ -24,7 +24,8 @@ commandick = {
 		'dgr': 'false',                           # If true will show confirmation window
 		'run': "run_or_cron('RUN');",             # If set to "run_or_cron('RUN');" then command will be run only
 		'history': True,                          # Save or not command log to history
-		'tag': False,                             # Show or not html tags in command log
+		'tag':     False,                         # Show or not html tags in command log
+		'cron':    True,                         # This command is for cronjobs
 	},
 
 	'change_date': {
@@ -43,7 +44,8 @@ commandick = {
 		'dgr': 'false',
 		'run': "run_or_cron('RUN');",
 		'history': True,
-		'tag': False,
+		'tag':     False,
+		'cron':    True,
 	},
 
 	'permanent_job':   {
@@ -62,7 +64,8 @@ commandick = {
 		'dgr': 'false',
 		'run': "run_or_cron('RUN');",
 		'history': True,
-		'tag': False,
+		'tag':     False,
+		'cron':    True,
 	},
 
 	'once_job': {
@@ -81,7 +84,8 @@ commandick = {
 		'dgr': 'false',
 		'run': "run_or_cron('RUN');",
 		'history': True,
-		'tag': False,
+		'tag':     False,
+		'cron':    True,
 	},
 
 	# Dumps section }---------------------------------------------------------------------------------------------------
@@ -101,7 +105,8 @@ commandick = {
 		'dgr': 'false',
 		'run': '',
 		'history': True,
-		'tag':  True,
+		'tag':     True,
+		'cron':    False,
 	},
 
 	'del_dump': {
@@ -120,7 +125,8 @@ commandick = {
 		'dgr': 'false',
 		'run': '',
 		'history': True,
-		'tag': False,
+		'tag':     False,
+		'cron':     False,
 	},
 
 	'send_dump': {
@@ -139,7 +145,8 @@ commandick = {
 		'dgr': 'true',
 		'run': '',
 		'history': True,
-		'tag':  True,
+		'tag':     True,
+		'cron':    False,
 	},
 
 	# Updates section }-------------------------------------------------------------------------------------------------
@@ -159,7 +166,8 @@ commandick = {
 		'dgr': 'false',
 		'run': '',
 		'history': True,
-		'tag': False,
+		'tag':     False,
+		'cron':    False,
 	},
 
 	'check_updates': {
@@ -178,7 +186,8 @@ commandick = {
 		'dgr': 'false',
 		'run': "run_or_cron('RUN');",
 		'history': False,
-		'tag': False,
+		'tag':     False,
+		'cron':    False,
 	},
 
 	'update': {
@@ -197,7 +206,8 @@ commandick = {
 		'dgr': 'true',
 		'run': '',
 		'history': True,
-		'tag': True,
+		'tag':     True,
+		'cron':    False,
 	},
 
 	'del_sel_updates': {
@@ -216,7 +226,8 @@ commandick = {
 		'dgr': 'false',
 		'run': '',
 		'history': True,
-		'tag': False,
+		'tag':     False,
+		'cron':    False,
 	},
 
 	'del_all_updates': {
@@ -235,7 +246,8 @@ commandick = {
 		'dgr': 'false',
 		'run': '',
 		'history': True,
-		'tag': False,
+		'tag':     False,
+		'cron':    False,
 	},
 
 	# Script section }--------------------------------------------------------------------------------------------------
@@ -255,7 +267,9 @@ commandick = {
 		'dgr': 'false',
 		'run': '',
 		'history': True,
-		'tag': True, },
+		'tag':     True,
+		'cron':    False,
+	},
 
 	# Server section }--------------------------------------------------------------------------------------------------
 
@@ -277,6 +291,7 @@ commandick = {
 		'run': '',
 		'history': True,
 		'tag': False,
+		'cron': False,
 	},
 
 	'maintenance_off': {
@@ -295,7 +310,8 @@ commandick = {
 		'dgr': 'true',
 		'run': '',
 		'history': True,
-		'tag': False,
+		'tag':     False,
+		'cron':    False,
 	},
 
 	# Jboss
@@ -315,7 +331,8 @@ commandick = {
 		'dgr': 'true',
 		'run': '',
 		'history': True,
-		'tag': False,
+		'tag':     False,
+		'cron':    False,
 	},
 
 	'restart': {
@@ -334,7 +351,8 @@ commandick = {
 		'dgr': 'true',
 		'run': '',
 		'history': True,
-		'tag': False,
+		'tag':     False,
+		'cron':    False,
 	},
 
 	'start': {
@@ -353,7 +371,8 @@ commandick = {
 		'dgr': 'true',
 		'run': '',
 		'history': True,
-		'tag': False,
+		'tag':     False,
+		'cron':    False,
 	},
 
 	'stop': {
@@ -372,7 +391,8 @@ commandick = {
 		'dgr': 'true',
 		'run': '',
 		'history': True,
-		'tag': False,
+		'tag':     False,
+		'cron':    False,
 	},
 
 	'kill': {
@@ -391,7 +411,8 @@ commandick = {
 		'dgr': 'true',
 		'run': '',
 		'history': True,
-		'tag': False,
+		'tag':     False,
+		'cron':    False,
 	},
 
 	'server_info': {
@@ -410,7 +431,8 @@ commandick = {
 		'dgr': 'false',
 		'run': "run_or_cron('RUN');",
 		'history': False,
-		'tag':  True,
+		'tag':     True,
+		'cron':    False,
 	},
 
 	'check_conf': {
@@ -429,7 +451,8 @@ commandick = {
 		'dgr': 'false',
 		'run': "run_or_cron('RUN');",
 		'history': False,
-		'tag': False,
+		'tag':     False,
+		'cron':    False,
 	},
 
 	# Logs
@@ -449,7 +472,8 @@ commandick = {
 		'dgr': 'false',
 		'run': "run_or_cron('RUN');",
 		'history': False,
-		'tag': False,
+		'tag':     False,
+		'cron':    False,
 	},
 
 
@@ -469,7 +493,8 @@ commandick = {
 		'dgr': 'false',
 		'run': '',
 		'history': True,
-		'tag': True,
+		'tag':     True,
+		'cron':    False,
 	},
 
 	'get_logs_all': {
@@ -488,7 +513,8 @@ commandick = {
 		'dgr': 'false',
 		'run': '',
 		'history': True,
-		'tag': True,
+		'tag':     True,
+		'cron':    False,
 	},
 
 	# Backup
@@ -509,7 +535,8 @@ Files will be stored on the server(s) and downloaded to UpS.',
 		'dgr': 'false',
 		'run': '',
 		'history': True,
-		'tag':  True,
+		'tag':     True,
+		'cron':    False,
 	},
 
 	'backup_sys': {
@@ -529,7 +556,8 @@ Files will be stored on the server(s) and downloaded to UpS.',
 		'dgr': 'false',
 		'run': '',
 		'history': True,
-		'tag':  True,
+		'tag':     True,
+		'cron':    False,
 	},
 
 	'backup_full': {
@@ -549,7 +577,8 @@ Files will be stored on the server(s) and downloaded to UpS.',
 		'dgr': 'false',
 		'run': '',
 		'history': True,
-		'tag':  True,
+		'tag':     True,
+		'cron':    False,
 	},
 
 	'copy_utils': {
@@ -568,7 +597,8 @@ Files will be stored on the server(s) and downloaded to UpS.',
 		'dgr': 'false',
 		'run': '',
 		'history': True,
-		'tag': False,
+		'tag':     False,
+		'cron':    False,
 	},
 
 	'tunnel': {
@@ -587,7 +617,8 @@ Files will be stored on the server(s) and downloaded to UpS.',
 		'dgr': 'false',
 		'run': "run_or_cron('RUN');",
 		'history': False,
-		'tag': True,
+		'tag':     True,
+		'cron':    False,
 	},
 }
 
@@ -597,7 +628,7 @@ def command(selected):
 	cmd = ''.join(selected['command'])
 	selected['cmdname'] = commandick[cmd]['bash']
 	selected['history'] = commandick[cmd]['history']
-	return commandick[cmd]['tag'], selected['history']
+	return commandick[cmd]['tag'], selected['history'], commandick[cmd]['cron']
 
 
 def info(data):
@@ -635,7 +666,6 @@ def cmd_run(data, project, user):
 
 	crn = ''
 	logid = ''
-	# key = get_key()
 	date = run_date()
 
 	if data['selected_date'] and data['selected_time']:
@@ -643,8 +673,7 @@ def cmd_run(data, project, user):
 
 	selected = {
 		'hid':     '',
-		# 'cid':     '',
-		# 'key':     key,
+		'cid':     '',
 		'date':    date,
 		'user':    user,
 		'project': project,
@@ -655,10 +684,18 @@ def cmd_run(data, project, user):
 		'dumps':   data.getlist('selected_dumps'),
 		'updates': data.getlist('selected_updates'),
 		'scripts': data.getlist('selected_scripts'),
-		# 'servers': data.getlist('selected_servers'),
 	}
 
-	tag, his = command(selected)
+	tag, his, job = command(selected)
+
+	if job:
+		key = get_key()
+		selected['hid'] = key
+		selected['key'] = key
+		selected['servers'] = []
+		logid = logid + '&logid=%s' % key
+		add_event(selected, 'Working...', '', key, key, date)
+		starter(selected)
 
 	for server in data.getlist('selected_servers'):
 
@@ -671,15 +708,16 @@ def cmd_run(data, project, user):
 			crn = key
 			if not his:
 				return '/projects/%s/?%s' % (project.id, info(data))
-			selected['cid'] = add_job(selected, 'Working...', key)
+			add_job(selected, 'Working...', key)
+			selected['cid'] = key
 			selected['name'] = 'Set cron job - %s' % selected['command'].lower()
 		if his:
-			selected['hid'] = add_event(selected, 'Working...', '', crn, key, date)
+			selected['hid'] = key
+			add_event(selected, 'Working...', '', crn, key, date)
 		starter(selected)
 
-	url = '/command_log/?cmd=%s&rtype=%s&tab=%s&prid=%s%s%s&timedate=%s' % (
+	url = '/command_log/?cmd=%s&tab=%s&prid=%s%s%s&timedate=%s' % (
 		selected['command'],
-		selected['rtype'],
 		data.get('tab'),
 		project.id,
 		info(data),

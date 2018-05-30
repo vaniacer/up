@@ -54,8 +54,8 @@ function make_history () {
         dbconf["${key_value[0]}"]=${key_value[1]}
     done
 
-    [[ $cron ]] && \
-    job_update="UPDATE ups_job SET \"desc\" = \$$ $LOG \$$ WHERE cron = '$cron' AND proj_id = $prj;"
+    [[ $cid ]] && \
+    job_update="UPDATE ups_job SET \"desc\" = \$$ $LOG \$$ WHERE cron = '$cid' AND proj_id = $prj;"
     PGPASSWORD=${dbconf[dbpass]} psql \
             -U ${dbconf[dbuser]} \
             -h ${dbconf[dbhost]} \
