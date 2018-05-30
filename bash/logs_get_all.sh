@@ -6,7 +6,9 @@ function description () { #---------------------| Function description |--------
 
 function body () { #--------------------------------| Main function |---------------------------------------------------
 
-    arhive="$wdir/updates/allogs.zip"
+    create_tmp_folder # Creates tmp folder tmp_folder=$wdir/updates/new/$key
+
+    arhive="$tmp_folder/allogs.zip"
 
     ssh $sopt $addr "zip -jy $arhive $wdir/jboss-bas-*/standalone/log/* > /dev/null" && {
 
@@ -14,6 +16,9 @@ function body () { #--------------------------------| Main function |-----------
         ssh $sopt $addr "rm $arhive" || error=$?
 
     } || error=$?
+
+    # Delete tmp folder after execution
+    ssh $sopt $addr "rm -r $tmp_folder" || error=$?
 
 } #---------------------------------------------------------------------------------------------------------------------
 
