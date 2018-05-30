@@ -55,7 +55,6 @@ def edit_object_log(request, obj):
 @login_required
 def edit_project(request, project_id):
 	"""Редактирует существующий проект."""
-	# project = Project.objects.get(id=project_id)
 	project = get_object_or_404(Project, id=project_id)
 	data = request.GET
 
@@ -84,7 +83,6 @@ def edit_project(request, project_id):
 @login_required
 def edit_server(request, server_id):
 	"""Редактирует существующий сервер."""
-	# server = Server.objects.get(id=server_id)
 	server = get_object_or_404(Server, id=server_id)
 	project = server.proj
 	data = request.GET
@@ -115,7 +113,6 @@ def edit_server(request, server_id):
 @login_required
 def edit_update(request, update_id):
 	"""Редактирует существующий пакет обновлений."""
-	# update = Update.objects.get(id=update_id)
 	update = get_object_or_404(Update, id=update_id)
 	project = update.proj
 	data = request.GET

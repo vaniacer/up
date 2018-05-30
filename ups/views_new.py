@@ -5,8 +5,8 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.core.files.base import ContentFile
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from django.shortcuts import render
 from .permissions import check_perm_or404
+from django.shortcuts import render
 from .models import Project
 from .commands import info
 
