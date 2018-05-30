@@ -10,35 +10,12 @@
 <!-----------------------------------------Available commands------------------------------------->
 <!--------------------- Validation('cmd_name', server, update, cronjob, script, dump) ------------>
 {% if "run_command" in pr_view_perms %}
-    {% if script.type == 'sql' %}
-        <a onclick="select_all('selected_scripts', 'script-body', false, 'SX');
-                    selector('xx{{script.id}}', 'xb{{script.id}}', '{{script}}', 'SX');
-                    Validation('sql_script', true, false, false, true)"
-           title="Run this SQL script on selected server(s)."
-           href="javascript:;"
-           class="small">Run</a>
-    {% elif script.type == 'yml' %}
-        <a onclick="select_all('selected_scripts', 'script-body', false, 'SX');
-                    selector('xx{{script.id}}', 'xb{{script.id}}', '{{script}}', 'SX');
-                    Validation('yml_script', true, false, false, true)"
-           title="Run this YAML playbook on selected server(s)."
-           href="javascript:;"
-           class="small">Run</a>
-    {% elif script.type == 'py' %}
-        <a onclick="select_all('selected_scripts', 'script-body', false, 'SX');
-                    selector('xx{{script.id}}', 'xb{{script.id}}', '{{script}}', 'SX');
-                    Validation('py_script', true, false, false, true)"
-           title="Run this python script on selected server(s)."
-           href="javascript:;"
-           class="small">Run</a>
-    {% else %}
-        <a onclick="select_all('selected_scripts', 'script-body', false, 'SX');
-                    selector('xx{{script.id}}', 'xb{{script.id}}', '{{script}}', 'SX');
-                    Validation('bash_script', true, false, false, true)"
-           title="Run this BASH script on selected server(s)."
-           href="javascript:;"
-           class="small">Run</a>
-    {% endif %}
+    <a onclick="select_all('selected_scripts', 'script-body', false, 'SX');
+                selector('xx{{script.id}}', 'xb{{script.id}}', '{{script}}', 'SX');
+                Validation('run_script', true, false, false, true)"
+       title="Run this script on selected server(s)."
+       href="javascript:;"
+       class="small">Run</a>
 {% endif %}
 
 <!--------------------------------------------Download button------------------------------------->
