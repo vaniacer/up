@@ -7,13 +7,15 @@ function description () { #---------------------| Function description |--------
 
 function body () { #--------------------------------| Main function |---------------------------------------------------
 
-    inv="${servers[*]//:*:*/,}"
-    inv=${inv// /}
+    for server in "${servers[@]}"; { addr > /dev/null; }
+    [[ $sopt ]] && extra="--ssh-extra-args=$sopt"
 
     for playbook in "${scripts[@]}"; {
 
-        ansible-playbook $playbook -i $inv --vault-password-file ~/vault.txt --syntax-check || { error=$?; break; }
-        ansible-playbook $playbook -i $inv --vault-password-file ~/vault.txt || error=$?
+        ansible-playbook $playbook -i "$addr", "$extra" --vault-password-file ~/vault.txt --syntax-check \
+            || { error=$?; break; }
+
+        ansible-playbook $playbook -i "$addr", "$extra" --vault-password-file ~/vault.txt || error=$?
     }
 
 } #---------------------------------------------------------------------------------------------------------------------
