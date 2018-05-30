@@ -103,19 +103,25 @@ def cancel(request):
 	data = request.GET
 	current_project = get_object_or_404(Project, id=data['prid'])
 	check_perm_or404('view_project', current_project, request.user)
+	logids = data.getlist('logid')
 
-	Popen(['kill', '-9', data['pid']])
+	Popen(['kill', '-9', ' '.join(logids)])
 	tag, his = command({'command': data['cmd']})
 
-	if his:
-		history = get_object_or_404(History, id=data['hid'])
-		log = open(conf.LOG_FILE + data['logid'], 'r').read()
-		text = '\n\n<%s{ Canceled :( }%s>' % ('-' * 51, '-' * 52)
-		history.desc = log + text
-		history.exit = 1
-		history.save()
+	for logid in logids:
 
-	delete_files([conf.LOG_FILE + data['logid'], conf.PID_FILE + data['logid'], conf.ERR_FILE + data['logid']])
+		if his:
+			history = get_object_or_404(History, uniq=logid)
+			try:
+				log = open(conf.LOG_FILE + logid, 'r').read()
+			except IOError:
+				log = ''
+			text = '\n\n<%s{ Canceled :( }%s>' % ('-' * 46, '-' * 47)
+			history.desc = log + text
+			history.exit = 1
+			history.save()
+
+		delete_files([conf.LOG_FILE + logid, conf.PID_FILE + logid, conf.ERR_FILE + logid])
 
 	return HttpResponseRedirect('/projects/%s/?%s' % (data['prid'], info(data)))
 
@@ -150,14 +156,19 @@ def command_log(request):
 	for logid in logids:
 
 		final[logid] = False
-		event = History.objects.get(uniq=logid)
+		try:
+			event = History.objects.get(uniq=logid)
+		except:
+			pass
 
 		try:
 			err = int(event.exit)
+			final[logid] = True
 			log = event.desc
 			pid = ''
-			final[logid] = True
-		except ValueError:
+			if err > 0:
+				context['ok'] = 'btn-danger'
+		except:
 			try:
 				log = open(conf.LOG_FILE + logid, 'r').read()
 				pid = open(conf.PID_FILE + logid, 'r').read()
@@ -167,6 +178,7 @@ def command_log(request):
 
 			try:
 				err = int(open(conf.ERR_FILE + logid, 'r').read())
+				final[logid] = True
 			except IOError:
 				err = 999
 

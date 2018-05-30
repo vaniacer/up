@@ -7,15 +7,15 @@ function description () { #---------------------| Function description |--------
 
 function body () { #--------------------------------| Main function |---------------------------------------------------
 
-    check_updates_folder
+    create_tmp_folder # Creates tmp folder tmp_folder=$tmp_folder/$key
 
     for file in "${scripts[@]}"; { filename=${file##*/}
 
         # Copy script to server
-        rsync -e "ssh $sopt" --progress -lzuogthvr $file $addr:$wdir/updates/new/ > /dev/null && {
+        rsync -e "ssh $sopt" --progress -lzuogthvr $file $addr:$tmp_folder/ > /dev/null && {
 
             # Run script
-            result=`ssh $sopt $addr "$wdir/krupd execsql $wdir/updates/new/$filename"` || error=$?
+            result=`ssh $sopt $addr "$wdir/krupd execsql $tmp_folder/$filename"` || error=$?
 
             # Show result
             printf "$result\n"
@@ -23,11 +23,11 @@ function body () { #--------------------------------| Main function |-----------
             # Save result to make it downloadable
             cat >> $dumpdir/${filename}_$key.log <<< "$result"
 
-            # Delete script after execution
-            ssh $sopt $addr "rm $wdir/updates/new/$filename" || error=$?
-
         } || error=$?
     }
+
+    # Delete tmp folder after execution
+    ssh $sopt $addr "rm -r $tmp_folder" || error=$?
 
     printf "\n<b>Log file will be stored until tomorrow, please download it if you need this file!</b>"
     printf "\n<a class='btn btn-primary' href='/dumps/${filename}_$key.log'>Download</a>\n"

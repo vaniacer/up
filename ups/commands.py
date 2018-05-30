@@ -676,7 +676,7 @@ def info(data):
 	if data.get('dumps'):
 		url += '&dumps=%s' % data.get('dumps')
 	if data.get('tab'):
-		url += '#%s' % data.get('tab')
+		url += '&tab=%s' % data.get('tab')
 	return url
 
 

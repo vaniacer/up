@@ -44,7 +44,7 @@
         {% if end %}
             <dt><br><a class="btn {{ok}}"  href="{{back}}">OK</a></dt>
         {% else %}
-            <meta http-equiv="refresh" content="1">
+            <meta http-equiv="refresh" content="2">
             <br><br>
             <a class="btn btn-primary" href="{{cancel}}">Cancel</a>
         {% endif %}
@@ -57,8 +57,8 @@
 
     <div class="output_bottom">{% include "ups/output_bottom_panel.html" %}</div>
 
-    <script type="text/javascript">
-        $(document).ready(function() { go_down(); });
-    </script>
+    <!--<script type="text/javascript">-->
+        <!--$(document).ready(function() { go_down(); });-->
+    <!--</script>-->
 
 {% endblock content %}
