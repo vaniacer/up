@@ -25,7 +25,7 @@ commandick = {
 		'run': "run_or_cron('RUN');",             # If set to "run_or_cron('RUN');" then command will be run only
 		'history': True,                          # Save or not command log to history
 		'tag':     False,                         # Show or not html tags in command log
-		'cron':    True,                         # This command is for cronjobs
+		'cron':    True,                          # This command is for cronjobs
 	},
 
 	'change_date': {
@@ -696,25 +696,25 @@ def cmd_run(data, project, user):
 		logid = logid + '&logid=%s' % key
 		add_event(selected, 'Working...', '', key, key, date)
 		starter(selected)
+	else:
+		for server in data.getlist('selected_servers'):
 
-	for server in data.getlist('selected_servers'):
+			key = get_key()
+			selected['key'] = key
+			selected['servers'] = [server, ]
+			logid = logid + '&logid=%s' % key
 
-		key = get_key()
-		selected['key'] = key
-		selected['servers'] = [server, ]
-		logid = logid + '&logid=%s' % key
-
-		if data['run_type'] == 'CRON':
-			crn = key
-			if not his:
-				return '/projects/%s/?%s' % (project.id, info(data))
-			add_job(selected, 'Working...', key)
-			selected['cid'] = key
-			selected['name'] = 'Set cron job - %s' % selected['command'].lower()
-		if his:
-			selected['hid'] = key
-			add_event(selected, 'Working...', '', crn, key, date)
-		starter(selected)
+			if data['run_type'] == 'CRON':
+				crn = key
+				if not his:
+					return '/projects/%s/?%s' % (project.id, info(data))
+				add_job(selected, 'Working...', key)
+				selected['cid'] = key
+				selected['name'] = 'Set cron job - %s' % selected['command'].lower()
+			if his:
+				selected['hid'] = key
+				add_event(selected, 'Working...', '', crn, key, date)
+			starter(selected)
 
 	url = '/command_log/?cmd=%s&tab=%s&prid=%s%s%s&timedate=%s' % (
 		selected['command'],
