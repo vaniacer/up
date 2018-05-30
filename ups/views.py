@@ -106,7 +106,7 @@ def cancel(request):
 	logids = data.getlist('logid')
 
 	Popen(['kill', '-9', ' '.join(logids)])
-	tag, his = command({'command': data['cmd']})
+	tag, his, job = command({'command': data['cmd']})
 
 	for logid in logids:
 
