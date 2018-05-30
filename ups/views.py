@@ -145,34 +145,36 @@ def command_log(request):
 	}
 
 	logids = data.getlist('logid')
+	final = {}
 
 	for logid in logids:
 
-		end = 0
+		final[logid] = False
+		event = History.objects.get(uniq=logid)
 
 		try:
-			log = open(conf.LOG_FILE + logid, 'r').read()
-			pid = open(conf.PID_FILE + logid, 'r').read()
-		except IOError:
-			log = ''
+			err = int(event.exit)
+			log = event.desc
 			pid = ''
-			# pass
-			# return HttpResponseRedirect('/projects/%s/?%s' % (data['prid'], info(data)))
+			final[logid] = True
+		except ValueError:
+			try:
+				log = open(conf.LOG_FILE + logid, 'r').read()
+				pid = open(conf.PID_FILE + logid, 'r').read()
+			except IOError:
+				log = 'Working...'
+				pid = ''
 
-		try:
-			err = open(conf.ERR_FILE + logid, 'r').read()
-		except IOError:
-			err = ''
+			try:
+				err = int(open(conf.ERR_FILE + logid, 'r').read())
+			except IOError:
+				err = 999
 
-		if err:
-			err = int(err)
-			end = 1
-			if err > 0:
-				context['ok'] = 'btn-danger'
-			# 	context['color'] = '#f2dede'
-
-		context['logs'].extend([{'log': log.replace('__URL__', url), 'err': err, 'end': end}])
+		context['logs'].extend([{'id': logid, 'log': log.replace('__URL__', url), 'err': err}])
 		context['cancel'] = context['cancel'] + '&pid=%s' % pid
+
+	if all(value is True for value in final.values()):
+		context['end'] = True
 
 	return render(request, 'ups/command_log.html', context)
 

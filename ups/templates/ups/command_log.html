@@ -18,34 +18,36 @@
 
     <div class="output">
 
-        <div id="output_log">
+        {% for log in logs %}
 
-            {% for log in logs %}
-
-                <dl class="dl-horizontal">
-                    {% if tag %}
-                        <dt>Event logs</dt><dd class="log"><tt>{{log.log|safe}}</tt></dd>
-                    {% else %}
-                        <dt>Event logs</dt><dd class="log"><tt>{{log.log}}</tt></dd>
-                    {% endif %}
-                </dl>
-
-                {% if log.err >= 0 %}
-                    <dl class="dl-horizontal"><dt>Error code</dt><dd>{{log.err}}</dd></dl>
+            <dl class="dl-horizontal" id="log{{log.id}}">
+                {% if tag %}
+                    <dt>Event logs</dt><dd class="log"><tt>{{log.log|safe}}</tt></dd>
                 {% else %}
-                    <dl class="dl-horizontal"><dd><div class="small_loader"></div></dd></dl>
+                    <dt>Event logs</dt><dd class="log"><tt>{{log.log}}</tt></dd>
                 {% endif %}
+            </dl>
 
-            {% endfor %}
-
-            {% if log.end %}
-                <dt><br><a class="btn {{ok}}"  href="{{back}}">OK</a></dt>
+            {% if log.err < 999 %}
+                <dl class="dl-horizontal"><dt>Error code</dt><dd>{{log.err}}</dd></dl>
+                {% if log.err > 0 %}
+                    <script type="text/javascript">
+                        document.getElementById('log{{log.id}}').style.background = 'MistyRose';
+                    </script>
+                {% endif %}
             {% else %}
-                <meta http-equiv="refresh" content="1">
-                <dt><br><br><a class="btn btn-primary" href="{{cancel}}">Cancel</a></dt>
+                <dl class="dl-horizontal"><dd><div class="small_loader"></div></dd></dl>
             {% endif %}
 
-        </div>
+        {% endfor %}
+
+        {% if end %}
+            <dt><br><a class="btn {{ok}}"  href="{{back}}">OK</a></dt>
+        {% else %}
+            <meta http-equiv="refresh" content="1">
+            <br><br>
+            <a class="btn btn-primary" href="{{cancel}}">Cancel</a>
+        {% endif %}
 
         <br><br><br>
         <br><br><br>
@@ -56,10 +58,7 @@
     <div class="output_bottom">{% include "ups/output_bottom_panel.html" %}</div>
 
     <script type="text/javascript">
-        $(document).ready(function() {
-            document.getElementById('output_log').style.background = '{{color}}';
-            go_down();
-        });
+        $(document).ready(function() { go_down(); });
     </script>
 
 {% endblock content %}

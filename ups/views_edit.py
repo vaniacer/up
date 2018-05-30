@@ -4,11 +4,11 @@ from .forms import ProjectForm, ServerForm, UpdateForm, ScriptEditForm
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 from .models import Project, Server, Update, Script
+from .commands_engine import add_event, get_key
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from django.conf import settings as conf
-from .commands_engine import add_event
 from .permissions import check_perm_or404
+from django.conf import settings as conf
 from .commands import info
 import shutil
 import os
@@ -24,14 +24,16 @@ def delete_project(project):
 def delete_server(request, server):
 	"""Удаляет сервер, записывает событие в историю."""
 	dick = {'project': server.proj, 'user': request.user, 'name': 'Del server'}
-	add_event(dick, 'Удален сервер:\n%s\n\nНазначение:\n%s' % (str(server), server.desc.encode('utf-8')), 0, '', '')
+	desc = 'Удален сервер:\n%s\n\nНазначение:\n%s' % (str(server), server.desc.encode('utf-8'))
+	add_event(dick, desc, 0, '', get_key(), '')
 	server.delete()
 
 
 def delete_object(request, obj):
 	"""Удаляет обновление\скрипт и соотв. файлы, записывает событие в историю."""
 	dick = {'project': obj.proj, 'user': request.user, 'name': 'Del upd\scr'}
-	add_event(dick, 'Удален файл:\n%s\n\nНазначение:\n%s' % (str(obj), obj.desc.encode('utf-8')), 0, '', '')
+	desc = 'Удален файл:\n%s\n\nНазначение:\n%s' % (str(obj), obj.desc.encode('utf-8'))
+	add_event(dick, desc, 0, '', get_key(), '')
 	os.remove(str(obj.file))
 	obj.delete()
 
@@ -39,13 +41,15 @@ def delete_object(request, obj):
 def edit_server_log(request, server):
 	"""Записывает событие редактирования сервера в историю."""
 	dick = {'project': server.proj, 'user': request.user, 'name': 'Edit server'}
-	add_event(dick, 'Изменен cервер:\n%s\n\nНазначение:\n%s' % (str(server), server.desc.encode('utf-8')), 0, '', '')
+	desc = 'Изменен cервер:\n%s\n\nНазначение:\n%s' % (str(server), server.desc.encode('utf-8'))
+	add_event(dick, desc, 0, '', get_key(), '')
 	
 	
 def edit_object_log(request, obj):
 	"""Записывает событие редактирования обновлений\скриптов в историю."""
 	dick = {'project': obj.proj, 'user': request.user, 'name': 'Edit upd\scr'}
-	add_event(dick, 'Изменен файл:\n%s\n\nНазначение:\n%s' % (str(obj), obj.desc.encode('utf-8')), 0, '', '')
+	desc = 'Изменен файл:\n%s\n\nНазначение:\n%s' % (str(obj), obj.desc.encode('utf-8'))
+	add_event(dick, desc, 0, '', get_key(), '')
 
 
 @login_required
