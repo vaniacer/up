@@ -257,7 +257,7 @@ commandick = {
 		'section': 'script',
 		'title': 'Run selected script(s) on selected server(s).',
 		'class': '',
-		'menu': 'Run script',
+		'menu': 'Run script(s)',
 		'bash': 'run_script.sh',
 		'srv': 'true',
 		'upd': 'false',
