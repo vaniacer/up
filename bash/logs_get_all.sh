@@ -13,7 +13,6 @@ function body () { #--------------------------------| Main function |-----------
     ssh $sopt $addr "zip -jy $arhive $wdir/jboss-bas-*/standalone/log/* > /dev/null" && {
 
         echo -e "\nСоздан архив \"$arhive\"."; download
-        ssh $sopt $addr "rm $arhive" || error=$?
 
     } || error=$?
 

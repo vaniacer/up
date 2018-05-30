@@ -14,12 +14,12 @@ function body () { #--------------------------------| Main function |-----------
         find $wdir/jboss-bas-*/standalone/log -type f -daystart -ctime 0 | xargs zip -jy $arhive > /dev/null" && {
 
             echo -e "\nСоздан архив \"$arhive\"."; download
-            ssh $sopt $addr "rm $arhive" || error=$?
 
         } || { error=$?; printf "No files found."; }
 
     # Delete tmp folder after execution
     ssh $sopt $addr "rm -r $tmp_folder" || error=$?
+
 } #---------------------------------------------------------------------------------------------------------------------
 
 function run () { for server in "${servers[@]}"; { addr; body; }; info 'Done' $error; }
