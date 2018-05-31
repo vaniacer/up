@@ -126,7 +126,7 @@ commandick = {
 		'run': '',
 		'history': True,
 		'tag':     False,
-		'cron':     False,
+		'cron':    False,
 	},
 
 	'send_dump': {
@@ -290,8 +290,8 @@ commandick = {
 		'dgr': 'true',
 		'run': '',
 		'history': True,
-		'tag': False,
-		'cron': False,
+		'tag':     False,
+		'cron':    False,
 	},
 
 	'maintenance_off': {
