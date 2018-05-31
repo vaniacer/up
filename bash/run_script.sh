@@ -17,7 +17,10 @@ function body () { #--------------------------------| Main function |-----------
         } || { error=$?; echo -e "\nscript copy error."; return $error; }
     }
 
-    for script in "${scripts[@]}"; { filename=${script##*/}; type=${filename##*.}
+    for script in "${scripts[@]}"; {
+
+        filename=${script##*/}
+        type=${filename##*.}
 
         printf "\n<b>Run script - $filename</b>\n"
 
@@ -58,7 +61,7 @@ function body () { #--------------------------------| Main function |-----------
                     # Save result to make it downloadable
                     cat >> $dumpdir/${filename}_$key.log <<< "$result"
 
-                    printf "\n<b>Log script will be stored until tomorrow, please download it if you need this script!</b>"
+                    printf "\n<b>Log will be stored until tomorrow, please download if you need it!</b>"
                     printf "\n<a class='btn btn-primary' href='/dumps/${filename}_$key.log'>Download</a>\n";;
             esac
 
