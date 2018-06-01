@@ -38,6 +38,8 @@ line () { printf %.s"$1" $(seq $2); }
 # Write logs to DB
 function make_history () {
 
+    [[ -f $rundir/log$key ]] || return
+
     LOG=`cat $rundir/log$key`
 
     # Get DB configuration from conf.py

@@ -103,10 +103,10 @@ def cancel(request):
 	data = request.GET
 	current_project = get_object_or_404(Project, id=data['prid'])
 	check_perm_or404('view_project', current_project, request.user)
-	logids = data.getlist('logid')
 
-	Popen(['kill', '-9', ' '.join(logids)])
 	tag, his, job = command({'command': data['cmd']})
+
+	logids = data.getlist('logid')
 
 	for logid in logids:
 
@@ -116,12 +116,14 @@ def cancel(request):
 				log = open(conf.LOG_FILE + logid, 'r').read()
 			except IOError:
 				log = ''
+
 			text = '\n\n<%s{ Canceled :( }%s>' % ('-' * 46, '-' * 47)
 			history.desc = log + text
 			history.exit = 1
 			history.save()
 
-		delete_files([conf.LOG_FILE + logid, conf.PID_FILE + logid, conf.ERR_FILE + logid])
+	opt = [conf.BASE_DIR + '/bash/killer.sh', ' '.join(logids)]
+	Popen(opt)
 
 	return HttpResponseRedirect('/projects/%s/?%s' % (data['prid'], info(data)))
 
@@ -164,16 +166,16 @@ def command_log(request):
 			err = int(event.exit)
 			final[logid] = True
 			log = event.desc
-			pid = ''
+			# pid = ''
 			if err > 0:
 				context['ok'] = 'btn-danger'
 		except:
 			try:
 				log = open(conf.LOG_FILE + logid, 'r').read()
-				pid = open(conf.PID_FILE + logid, 'r').read()
+				# pid = open(conf.PID_FILE + logid, 'r').read()
 			except IOError:
 				log = 'Working...'
-				pid = ''
+				# pid = ''
 
 			try:
 				err = int(open(conf.ERR_FILE + logid, 'r').read())
@@ -182,7 +184,7 @@ def command_log(request):
 				err = 999
 
 		context['logs'].extend([{'id': logid, 'log': log.replace('__URL__', url), 'err': err}])
-		context['cancel'] = context['cancel'] + '&pid=%s' % pid
+		# context['cancel'] = context['cancel'] + '&pid=%s' % pid
 
 	if all(value is True for value in final.values()):
 		context['end'] = True

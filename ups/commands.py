@@ -716,13 +716,11 @@ def cmd_run(data, project, user):
 				add_event(selected, 'Working...', '', crn, key, date)
 			starter(selected)
 
-	url = '/command_log/?cmd=%s&tab=%s&prid=%s%s%s&timedate=%s' % (
+	url = '/command_log/?cmd=%s&prid=%s%s%s' % (
 		selected['command'],
-		data.get('tab'),
 		project.id,
 		info(data),
 		logid,
-		date,
 	)
 
 	return url

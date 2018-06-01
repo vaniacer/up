@@ -42,27 +42,29 @@ function body () { #--------------------------------| Main function |-----------
             case $type in
 
                 sh)
-                    ssh $sopt $addr "cd $wdir; bash $tmp_folder/$filename $opt" || {
+                    ssh -ttt $sopt $addr "cd $wdir; bash $tmp_folder/$filename $opt" || {
                     error=$?; printf "\n<b>Script ended with error: $error</b>\n"
                 };;
 
                 py)
-                    ssh $sopt $addr "cd $wdir; python $tmp_folder/$filename $opt" || {
+                    ssh -ttt $sopt $addr "cd $wdir; python $tmp_folder/$filename $opt" || {
                     error=$?; printf "\n<b>Script ended with error: $error</b>\n"
                 };;
 
                 sql)
                     # Run script
-                    result=`ssh $sopt $addr "$wdir/krupd execsql $tmp_folder/$filename"` || error=$?
+                    result=`ssh -ttt $sopt $addr "$wdir/krupd execsql $tmp_folder/$filename"` && {
+                        # Show result
+                        printf "$result\n"
 
-                    # Show result
-                    printf "$result\n"
+                        # Save result to make it downloadable
+                        cat >> $dumpdir/${filename}_$key.log <<< "$result"
 
-                    # Save result to make it downloadable
-                    cat >> $dumpdir/${filename}_$key.log <<< "$result"
+                        printf "\n<b>Log will be stored until tomorrow, please download if you need it!</b>"
+                        printf "\n<a class='btn btn-primary' href='/dumps/${filename}_$key.log'>Download</a>\n"
 
-                    printf "\n<b>Log will be stored until tomorrow, please download if you need it!</b>"
-                    printf "\n<a class='btn btn-primary' href='/dumps/${filename}_$key.log'>Download</a>\n";;
+                    } || error=$?;;
+
             esac
 
         } || error=$?
