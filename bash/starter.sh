@@ -40,7 +40,12 @@ function make_history () {
 
     [[ -f $rundir/log$key ]] || return
 
-    LOG=`cat $rundir/log$key`
+    log_lenght=(`cat $rundir/log$key | wc`)
+
+    [[ $log_lenght -gt 50 ]] \
+        && { LOG="<b>Log is too long to store in history, cutting...</b>"
+             LOG="$LOG`head -n25 $rundir/log$key; printf "...\n"; tail -n25 $rundir/log$key`"; } \
+        || { LOG=`cat $rundir/log$key`; }
 
     # Get DB configuration from conf.py
     raw=`grep 'db.* =' $workdir/../conf.py`
@@ -178,13 +183,20 @@ function download () {
 # Start 'run' function, save logs to $rundir or $crondir if started from cron.
 function starter  () {
     stty cols $width # Set terminal width
-    [[ "$cron" ]] && { run &> $crondir/$cron; dat=$(date +'%m.%d.%Y %R')
-                       echo -e "\nError: ${error}\nDate: $dat" >> $crondir/$cron; } \
-                  || { echo $$     > $rundir/pid$key
-                       run        &> $rundir/log$key
-                       echo $error > $rundir/err$key
-                       [[ $hid ]] && make_history
-                       sleep 3;   rm $rundir/*$key; }
+    [[ "$cron" ]] \
+        && {
+            run  &> $crondir/$cron;            dat=$(date +'%m.%d.%Y %R')
+            echo -e "\nError: ${error}\nDate: $dat" >> $crondir/$cron
+           } \
+        || {
+            echo $$     > $rundir/pid$key
+            run        &> $rundir/log$key
+            echo $error > $rundir/err$key
+            sleep 2
+            [[ $hid ]] && make_history
+            sleep 2
+            rm $rundir/*$key
+           }
 }
 
 # Show description or run command itself
