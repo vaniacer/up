@@ -40,11 +40,11 @@ function make_history () {
 
     [[ -f $rundir/log$key ]] || return
 
-    log_lenght=(`cat $rundir/log$key | wc`)
+    log_lenght=(`wc -l $rundir/log$key`)
 
     [[ $log_lenght -gt 50 ]] \
         && { LOG="<b>Log is too long to store in history, cutting...</b>"
-             LOG="$LOG`head -n25 $rundir/log$key; printf "...\n"; tail -n25 $rundir/log$key`"; } \
+             LOG="$LOG`head -25 $rundir/log$key; printf "...\n"; tail -25 $rundir/log$key`"; } \
         || { LOG=`cat $rundir/log$key`; }
 
     # Get DB configuration from conf.py
