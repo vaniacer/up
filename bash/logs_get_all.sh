@@ -11,7 +11,7 @@ function body () { #--------------------------------| Main function |-----------
 
     arhive="$tmp_folder/allogs.zip"
 
-    ssh $sopt $addr "zip -jy $arhive $wdir/jboss-bas-*/standalone/log/* > /dev/null" && {
+    ssh -ttt $sopt $addr "zip -jy $arhive $wdir/jboss-bas-*/standalone/log/* > /dev/null" && {
 
         echo -e "\nСоздан архив \"$arhive\"."; download
 

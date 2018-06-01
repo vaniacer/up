@@ -10,7 +10,7 @@ function run () { #--------------------------------| Main function |------------
     addr # Get server address and print it in log
 
     printf "\nПакеты обновлений:\n"
-    ssh $sopt $addr "ls $wdir/updates/new" || error=$?
+    ssh -ttt $sopt $addr "ls $wdir/updates/new" || error=$?
 
     info 'Done' $error
 

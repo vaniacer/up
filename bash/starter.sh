@@ -133,7 +133,7 @@ function addr () {
 #   ssh_yes "-p22 user@localhost"
 function ssh_yes () {
 expect << EOF
-spawn ssh $1
+spawn ssh $sopt $1
 expect {
     "(yes/no)?" {
         send "yes\n"

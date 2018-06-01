@@ -9,7 +9,7 @@ function body () { #--------------------------------| Main function |-----------
 
     ssh_yes "$sopt $addr" > /dev/null
 
-    ssh $sopt $addr "
+    ssh -ttt $sopt $addr "
         printf '\n<b>Hostname:</b>\n'
         hostname
 

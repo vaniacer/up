@@ -9,7 +9,7 @@ function run () { #--------------------------------| Main function |------------
 
     addr # Get server address and print it in log
 
-    ssh $sopt $addr "$wdir/krupd bkp db" || error=$?; download
+    ssh -ttt $sopt $addr "$wdir/krupd bkp db" || error=$?; download
 
     info 'Done' $error
 

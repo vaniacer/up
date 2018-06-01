@@ -7,8 +7,8 @@ function description () { #---------------------| Function description |--------
 
 function body () { #--------------------------------| Main function |---------------------------------------------------
 
-    ssh $sopt $addr "$wdir/krupd bkp db"  || error=$?; download
-    ssh $sopt $addr "$wdir/krupd bkp sys" || error=$?; download
+    ssh -ttt $sopt $addr "$wdir/krupd bkp db"  || error=$?; download
+    ssh -ttt $sopt $addr "$wdir/krupd bkp sys" || error=$?; download
 
 } #---------------------------------------------------------------------------------------------------------------------
 

@@ -7,7 +7,7 @@ function description () { #---------------------| Function description |--------
 
 function body () { #--------------------------------| Main function |---------------------------------------------------
 
-    ssh $sopt $addr $wdir/krupd jboss.kill || error=$?
+    ssh -ttt $sopt $addr $wdir/krupd jboss.kill || error=$?
 
 } #---------------------------------------------------------------------------------------------------------------------
 

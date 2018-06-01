@@ -63,7 +63,7 @@ function body () { #--------------------------------| Main function |-----------
                         printf "\n<b>Log will be stored until tomorrow, please download if you need it!</b>"
                         printf "\n<a class='btn btn-primary' href='/dumps/${filename}_$key.log'>Download</a>\n"
 
-                    } || error=$?;;
+                    } || { error=$?; printf "\n<b>Script ended with error: $error</b>\n"; };;
 
             esac
 

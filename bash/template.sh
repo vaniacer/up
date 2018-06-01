@@ -11,7 +11,7 @@ function description () { #---------------------| Function description |--------
 
 function body () { #--------------------------------| Main function |---------------------------------------------------
 
-    ssh $sopt $addr "Put your code here" || error=$?
+    ssh -ttt $sopt $addr "Put your code here" || error=$?
 
 } #---------------------------------------------------------------------------------------------------------------------
 

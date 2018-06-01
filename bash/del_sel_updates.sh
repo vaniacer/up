@@ -10,7 +10,7 @@ function body () { #--------------------------------| Main function |-----------
 
     for file in "${updates[@]}"; {
         filename=${file##*/}; echo -e "\nDelete file - $filename."
-        ssh $sopt $addr "rm $wdir/updates/new/$filename" || error=$?
+        ssh -ttt $sopt $addr "rm $wdir/updates/new/$filename" || error=$?
     }
 
 } #---------------------------------------------------------------------------------------------------------------------

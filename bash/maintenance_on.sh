@@ -8,7 +8,7 @@ function description () { #---------------------| Function description |--------
 function body () { #--------------------------------| Main function |---------------------------------------------------
 
     printf "\nStart dummy page."
-    ssh $sopt $addr "~/.utils/dp.sh --start --jport $port" || error=$?
+    ssh -ttt $sopt $addr "~/.utils/dp.sh --start --jport $port" || error=$?
 
 } #---------------------------------------------------------------------------------------------------------------------
 

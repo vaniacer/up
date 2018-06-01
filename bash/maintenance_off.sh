@@ -8,7 +8,7 @@ function description () { #---------------------| Function description |--------
 function body () { #--------------------------------| Main function |---------------------------------------------------
 
     printf "\nStop dummy page."
-    ssh $sopt $addr '~/.utils/dp.sh --stop' || error=$?
+    ssh -ttt $sopt $addr '~/.utils/dp.sh --stop' || error=$?
 
 } #---------------------------------------------------------------------------------------------------------------------
 

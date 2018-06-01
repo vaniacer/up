@@ -7,10 +7,10 @@ function description () { #---------------------| Function description |--------
 
 function body () { #--------------------------------| Main function |---------------------------------------------------
 
-    ssh $sopt $addr "$wdir/krupd bkp db" || error=$?; download "$pname"
+    ssh -ttt $sopt $addr "$wdir/krupd bkp db" || error=$?; download "$pname"
     # функция download сохраняет имя файла дампа в переменной $name
     # удаляю файл $name на сервере после скачивания на ups
-    [[ $name ]] && ssh $sopt $addr "rm $name"
+    [[ $name ]] && ssh -ttt $sopt $addr "rm $name"
 
 } #---------------------------------------------------------------------------------------------------------------------
 

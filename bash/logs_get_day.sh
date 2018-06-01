@@ -11,7 +11,7 @@ function body () { #--------------------------------| Main function |-----------
 
     arhive="$tmp_folder/daylogs.zip"
 
-    ssh $sopt $addr "
+    ssh -ttt $sopt $addr "
         find $wdir/jboss-bas-*/standalone/log -type f -daystart -ctime 0 | xargs zip -jy $arhive > /dev/null" && {
 
             echo -e "\nСоздан архив \"$arhive\"."; download
