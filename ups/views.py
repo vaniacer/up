@@ -166,16 +166,13 @@ def command_log(request):
 			err = int(event.exit)
 			final[logid] = True
 			log = event.desc
-			# pid = ''
 			if err > 0:
 				context['ok'] = 'btn-danger'
 		except:
 			try:
 				log = open(conf.LOG_FILE + logid, 'r').read()
-				# pid = open(conf.PID_FILE + logid, 'r').read()
 			except IOError:
 				log = 'Working...'
-				# pid = ''
 
 			try:
 				err = int(open(conf.ERR_FILE + logid, 'r').read())
@@ -184,7 +181,6 @@ def command_log(request):
 				err = 999
 
 		context['logs'].extend([{'id': logid, 'log': log.replace('__URL__', url), 'err': err}])
-		# context['cancel'] = context['cancel'] + '&pid=%s' % pid
 
 	if all(value is True for value in final.values()):
 		context['end'] = True
