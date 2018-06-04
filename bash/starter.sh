@@ -181,22 +181,21 @@ function download () {
 . $workdir/$cmd
 
 # Start 'run' function, save logs to $rundir or $crondir if started from cron.
-function starter  () {
+function starter () {
+
     stty cols $width # Set terminal width
+
     [[ "$cron" ]] \
-        && {
-            run  &> $crondir/$cron;            dat=$(date +'%m.%d.%Y %R')
-            echo -e "\nError: ${error}\nDate: $dat" >> $crondir/$cron
-           } \
-        || {
-            echo $$     > $rundir/pid$key
-            run        &> $rundir/log$key
-            echo $error > $rundir/err$key
-            sleep 2
-            [[ $hid ]] && make_history
-            sleep 2
-            rm $rundir/*$key
-           }
+          && { ( run; printf "\nError: $error\nDate: $(date +'%m.%d.%Y %R')" ) &> $crondir/$cron; } \
+          || {
+                echo $$     > $rundir/pid$key
+                run        &> $rundir/log$key
+                echo $error > $rundir/err$key
+                sleep 2
+                [[ $hid ]] && make_history
+                sleep 2
+                rm $rundir/*$key
+             }
 }
 
 # Show description or run command itself
