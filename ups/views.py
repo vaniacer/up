@@ -104,26 +104,8 @@ def cancel(request):
 	current_project = get_object_or_404(Project, id=data['prid'])
 	check_perm_or404('view_project', current_project, request.user)
 
-	tag, his, job = command({'command': data['cmd']})
-
 	logids = data.getlist('logid')
-
-	for logid in logids:
-
-		if his:
-			history = get_object_or_404(History, uniq=logid)
-			try:
-				log = open(conf.LOG_FILE + logid, 'r').read()
-			except IOError:
-				log = ''
-
-			text = '\n\n<%s{ Canceled :( }%s>' % ('-' * 46, '-' * 47)
-			history.desc = log + text
-			history.exit = 1
-			history.save()
-
-	opt = [conf.BASE_DIR + '/bash/killer.sh', ' '.join(logids)]
-	Popen(opt)
+	Popen([conf.BASE_DIR + '/bash/killer.sh', ' '.join(logids)])
 
 	return HttpResponseRedirect('/projects/%s/?%s' % (data['prid'], info(data)))
 

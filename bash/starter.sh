@@ -55,8 +55,8 @@ function make_history () {
 
     declare -A dbconf # Create named array
 
-    for ((i=0; i<${#data[*]}; i+=2)); do # loop through data
-        key_value=( ${data[@]:$i:2} )    # get key_value pairs
+    for ((i=0;   i<${#data[*]}; i+=2)); do # loop through data
+        key_value=( ${data[@]:$i:2} )      # get key_value pairs
         # assign  key___________________value pairs to named array
         dbconf["${key_value[0]}"]=${key_value[1]}
     done
@@ -180,7 +180,17 @@ function download () {
 # Load 'run' and 'description' functions from $cmd.
 . $workdir/$cmd
 
-# Start 'run' function, save logs to $rundir or $crondir if started from cron.
+function cancel () {
+    error=1
+    printf '\n<b>Interrupted...</b>'
+    [[ $hid ]] && make_history
+    rm $rundir/*$key
+    exit $error
+}
+
+trap cancel INT
+
+# Start 'run' function, save logs to $rundir or $crondir(if started from cron).
 function starter () {
 
     stty cols $width # Set terminal width
