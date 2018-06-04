@@ -33,7 +33,7 @@ esac; shift 2; done 2> /dev/null
 #---------------------------------
 
 # Print line, usage: line - 10 | line -= 20 | line "Hello World!" 20
-line () { printf %.s"$1" $(seq $2); }
+line () { printf %.s"$1" `seq $2`; }
 
 # Write logs to DB
 function make_history () {
@@ -44,11 +44,11 @@ function make_history () {
 
     [[ $log_lenght -gt 50 ]] \
         && { LOG="<b>Log is too long to store in history, cutting...</b>"
-             LOG="$LOG`head -25 $rundir/log$key; printf "...\n"; tail -25 $rundir/log$key`"; } \
-        || { LOG=`cat $rundir/log$key`; }
+             LOG="$LOG$(head -25 $rundir/log$key; printf "...\n"; tail -25 $rundir/log$key)"; } \
+        || { LOG=$(cat $rundir/log$key); }
 
     # Get DB configuration from conf.py
-    raw=`grep 'db.* =' $workdir/../conf.py`
+    raw=$(grep 'db.* =' $workdir/../conf.py)
     raw=${raw//\'/}
     raw=${raw//=/}
     data=( $raw )
@@ -90,7 +90,7 @@ function warning () {
         ' \     \_/\_/_/   \_\_| \_\_| \_|___|_| \_|\____(_)  /  '
         '  \_________________________________________________/   ')
 
-    for i in "${attention[@]}"; { printf "`line " " 32`$i\n"; }
+    for i in "${attention[@]}"; { printf "$(line ' ' 32)$i\n"; }
     printf "\n$1"
 
     printf "If it's not what you wished to do, you've got $2 seconds to cancel this!\n"
@@ -156,11 +156,11 @@ EOF
 
 # Copy files created in the process to $dumpdir and add a 'download' button to the output log.
 # Used in backup_* and dump_get.
-function download () {
-    [[ "$cron" ]] && { name=$(tail -n2 $crondir/$cron)  ; } \
-                  || { name=$(tail -n2 $rundir/log$key) ; }
-                       name=${name#*\"}; name=${name//\"./}
-
+function download  ()   {
+    [[ "$cron" ]]  &&   {   name=$(tail -2 $crondir/$cron) ;  } \
+                   ||   {   name=$(tail -2 $rundir/log$key);  }
+                            name=${name#*\"}
+                            name=${name//\"./}
     ssh $sopt $addr [[ -f "$name" ]] && {
 
         newname=${addr}_${name//\/*\//}
