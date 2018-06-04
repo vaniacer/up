@@ -65,6 +65,11 @@ function body () { #--------------------------------| Main function |-----------
 
                     } || { error=$?; printf "\n<b>Script ended with error: $error</b>\n"; };;
 
+                *)
+                    printf "Unknown script type, exit.\n"
+                    error=1
+                    continue;;
+
             esac
 
         } || error=$?
