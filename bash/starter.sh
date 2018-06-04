@@ -180,6 +180,7 @@ function download () {
 # Load 'run' and 'description' functions from $cmd.
 . $workdir/$cmd
 
+# Cancel running process
 function cancel () {
     error=1
     printf '\n<b>Interrupted...</b>'
