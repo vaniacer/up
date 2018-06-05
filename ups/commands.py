@@ -101,7 +101,7 @@ commandick = {
 		'upd': 'false',
 		'job': 'false',
 		'scr': 'false',
-		'dmp': 'true',
+		'dmp': 'false',
 		'dgr': 'false',
 		'run': '',
 		'history': True,
