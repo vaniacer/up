@@ -717,18 +717,19 @@ def cmd_run(data, project, user):
 				add_event(selected, 'Working...', '', crn, key, date, server)
 			starter(selected)
 
-	# url = '/command_log/?cmd=%s&prid=%s%s%s' % (
-	# 	selected['command'],
-	# 	project.id,
-	# 	info(data),
-	# 	logid,
-	# )
-
-	url = '/projects/%s/?cmdlog=%s%s%s' % (
-		project.id,
-		selected['command'],
-		info(data),
-		logid,
-	)
+	if his:
+		url = '/projects/%s/?cmdlog=%s%s%s' % (
+			project.id,
+			selected['command'],
+			info(data),
+			logid,
+		)
+	else:
+		url = '/command_log/?cmd=%s&prid=%s%s%s' % (
+			selected['command'],
+			project.id,
+			info(data),
+			logid,
+		)
 
 	return url
