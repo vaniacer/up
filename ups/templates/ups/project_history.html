@@ -10,6 +10,7 @@
 
     <dl class="dl-horizontal" id="event{{event.id}}">
         <!--<dt>Unique ID</dt><dd>{{event.uniq}}</dd>-->
+        <dt>Event on server</dt><dd>{{event.serv}}</dd>
         <dt>Event name</dt><dd>{{event.name}}</dd>
         <dt>Event date</dt><dd>{{event.date|date:'M d, Y H:i'}}</dd>
         {% if event.cron %}

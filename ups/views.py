@@ -6,7 +6,7 @@ from .permissions import check_perm_or404, check_permission
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from .commands import command, cmd_run, info, commandick
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, render_to_response
 from .models import Project, Update, Script, History
 from django.conf import settings as conf
 from wsgiref.util import FileWrapper
@@ -111,6 +111,42 @@ def cancel(request):
 
 
 @login_required
+def command_logs(request):
+	"""Выводит страницу логов выполняющейся комманды."""
+	data = request.GET
+	current_project = get_object_or_404(Project, id=data['prid'])
+	check_perm_or404('view_project', current_project, request.user)
+	check_perm_or404('run_command', current_project, request.user)
+
+	logid = data.get('logid')
+	event = History.objects.get(uniq=logid)
+	server = event.serv
+
+	context = {
+		'project': current_project,
+		'ok':      'btn-success',
+		'cmd':     data['cmd'],
+		'end':     False,
+	}
+
+	try:
+		err = int(event.exit)
+		context['end'] = True
+		if err > 0:
+			context['ok'] = 'btn-danger'
+	except:
+		try:
+			err = int(open(conf.ERR_FILE + logid, 'r').read())
+			context['end'] = True
+		except IOError:
+			err = 999
+
+	context['log'] = {'id': logid, 'srv': server.name, 'err': err}
+
+	return render(request, 'ups/command_logs.html', context)
+
+
+@login_required
 def command_log(request):
 	"""Выводит страницу логов выполняющейся комманды."""
 	data = request.GET
@@ -202,6 +238,9 @@ def project(request, project_id):
 	commandsorted = sorted(commandick.itervalues(), key=itemgetter('position'))
 	hide_info_form = HideInfoForm(initial=data)
 
+	logids = data.getlist('logid') or []
+	cmdlog = data.get('cmdlog') or ''
+
 	context = {
 		'info': info(data),
 		'updates': updates,
@@ -229,6 +268,8 @@ def project(request, project_id):
 		context['history'] = history
 		context['hist_bk'] = hist_bk
 		context['hist_fd'] = hist_fd
+		context['cmdlog'] = cmdlog
+		context['logs'] = logids
 
 		if data.get('selected_command'):
 			url = cmd_run(data, current_project, request.user)

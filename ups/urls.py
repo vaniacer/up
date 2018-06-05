@@ -13,6 +13,8 @@ urlpatterns = [
 	url(r'^cancel/$', views.cancel, name='cancel'),
 	# Страница логов.
 	url(r'^command_log/$', views.command_log, name='command_log'),
+	# Страница минилогов.
+	url(r'^command_logs/$', views.command_logs, name='command_logs'),
 
 	# Вывод всех проектов.
 	url(r'^projects/$', views.projects, name='projects'),

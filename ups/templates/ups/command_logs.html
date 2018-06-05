@@ -1,0 +1,27 @@
+{% load bootstrap3 %}
+{% bootstrap_css %}
+<style type="text/css">
+    {% include "ups/css/loader.css"  %}
+    {% include "ups/css/control.css" %}
+</style>
+
+<!--{% if log.err >= 999 %}-->
+    <!---->
+<!--{% endif %}-->
+
+<div class="panel panel-default">
+
+    <div class="panel-heading">
+        <h5>{{log.srv}}</h5>
+    </div>
+
+    <div class="panel-body">
+        {% if end %}
+            <a href="/command_log/?cmd={{cmd}}&prid={{project.id}}&logid={{log.id}}">Done</a>
+        {% else %}
+            <a href="/command_log/?cmd={{cmd}}&prid={{project.id}}&logid={{log.id}}">Working</a>
+            <meta http-equiv="refresh" content="2">
+        {% endif %}
+    </div>
+
+</div>

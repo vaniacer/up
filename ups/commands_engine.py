@@ -14,12 +14,13 @@ def get_key():
 	return str(b64encode(urandom(6), 'dfsDFAsfsf'))
 
 
-def add_event(selected, log, err, cron, uniq, date):
+def add_event(selected, log, err, cron, uniq, date, serv):
 	"""Создает событие в истории."""
 	History.objects.create(
 		name=selected['name'].capitalize().replace('_', ' '),
 		proj=selected['project'],
 		user=selected['user'],
+		serv=serv,
 		cron=cron,
 		uniq=uniq,
 		cdat=date,

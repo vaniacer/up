@@ -40,6 +40,13 @@
     padding-left:  5px;
 }
 
+iframe {
+    border-style: hidden;
+    overflow: hidden;
+    height: 80px;
+    width:  100px;
+}
+
 /*---{ Individual info on\off buttons }---*/
 .glyphicon-menu-down, .glyphicon-menu-up {
     color: SteelBlue;

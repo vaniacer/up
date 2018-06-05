@@ -127,6 +127,7 @@ class History(models.Model):
 	cdat = models.CharField(max_length=30)
 	exit = models.CharField(max_length=10)
 	proj = models.ForeignKey(Project)
+	serv = models.ForeignKey(Server)
 	user = models.ForeignKey(User)
 	desc = models.TextField()
 

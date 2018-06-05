@@ -61,6 +61,14 @@
                        onclick="show_or_hide_all('dummy', 'servers_tab', 'dummy', 'hide')">Cron Jobs</a>
                 </li>
 
+                {% if logs %}
+                    <li role="presentation">
+                        <a title="Command log"
+                           href="#logs" aria-controls="logs" role="tab" data-toggle="tab"
+                           onclick="show_or_hide_all('dummy', 'servers_tab', 'dummy', 'hide')">Logs</a>
+                    </li>
+                {% endif %}
+
                 <li role="presentation">
                     <a title="Projects history log"
                        href="#history" aria-controls="history" role="tab" data-toggle="tab"
@@ -111,6 +119,19 @@
                     <div class="col-sm-2">{% include "ups/commands_list_cron.html" %}</div>
                     <div class="col-sm-10">{% include "ups/project_cron.html" %}</div>
                 </div>
+
+                {% if logs %}
+                    <div role="tabpanel" class="tab-pane" id="logs">
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-10">
+                            <p></p>
+                            {% for log in logs %}
+                                <iframe src="/command_logs/?cmd={{cmdlog}}&prid={{project.id}}&logid={{log}}"
+                                        class="log_window"></iframe>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
 
                 <div role="tabpanel" class="tab-pane" id="history">
                     {% include "ups/project_history.html" %}

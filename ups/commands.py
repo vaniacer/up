@@ -2,8 +2,8 @@
 
 from .commands_engine import get_key, starter, add_event, add_job
 from .permissions import check_perm_or404
+from .models import Server
 import datetime
-
 
 commandick = {
 
@@ -694,14 +694,15 @@ def cmd_run(data, project, user):
 		selected['key'] = key
 		selected['servers'] = []
 		logid = logid + '&logid=%s' % key
-		add_event(selected, 'Working...', '', key, key, date)
+		add_event(selected, 'Working...', '', key, key, date, )
 		starter(selected)
 	else:
-		for server in data.getlist('selected_servers'):
+		for serverid in data.getlist('selected_servers'):
 
+			server = Server.objects.get(id=serverid)
 			key = get_key()
 			selected['key'] = key
-			selected['servers'] = [server, ]
+			selected['servers'] = [serverid, ]
 			logid = logid + '&logid=%s' % key
 
 			if data['run_type'] == 'CRON':
@@ -713,12 +714,19 @@ def cmd_run(data, project, user):
 				selected['name'] = 'Set cron job - %s' % selected['command'].lower()
 			if his:
 				selected['hid'] = key
-				add_event(selected, 'Working...', '', crn, key, date)
+				add_event(selected, 'Working...', '', crn, key, date, server)
 			starter(selected)
 
-	url = '/command_log/?cmd=%s&prid=%s%s%s' % (
-		selected['command'],
+	# url = '/command_log/?cmd=%s&prid=%s%s%s' % (
+	# 	selected['command'],
+	# 	project.id,
+	# 	info(data),
+	# 	logid,
+	# )
+
+	url = '/projects/%s/?cmdlog=%s%s%s' % (
 		project.id,
+		selected['command'],
 		info(data),
 		logid,
 	)
