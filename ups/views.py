@@ -119,7 +119,7 @@ def mini_log(request):
 	check_perm_or404('run_command', current_project, request.user)
 
 	logid = data.get('logid')
-	event = History.objects.get(uniq=logid)
+	event = get_object_or_404(History, uniq=logid)
 
 	context = {
 		'project': current_project,
@@ -129,15 +129,12 @@ def mini_log(request):
 		'end':     False,
 	}
 
-	try:
-		err = int(event.exit)
+	if event.exit:
 		context['end'] = True
-		if err and err > 0:
+		if int(event.exit) > 0:
 			context['panel'] = 'panel-danger'
 		else:
 			context['panel'] = 'panel-success'
-	except:
-		pass
 
 	return render(request, 'ups/command_log_mini.html', context)
 
@@ -172,7 +169,7 @@ def command_log(request):
 
 		final[logid] = False
 		try:
-			event = History.objects.get(uniq=logid)
+			event = get_object_or_404(History, uniq=logid)
 		except:
 			pass
 
