@@ -695,6 +695,7 @@ def cmd_run(data, project, user):
 		selected['servers'] = []
 		logid = logid + '&logid=%s' % key
 		add_event(selected, 'Working...', '', key, key, date, )
+
 		starter(selected)
 	else:
 		for serverid in data.getlist('selected_servers'):
@@ -715,6 +716,7 @@ def cmd_run(data, project, user):
 			if his:
 				selected['hid'] = key
 				add_event(selected, 'Working...', '', crn, key, date, server)
+
 			starter(selected)
 
 	if his:

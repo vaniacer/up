@@ -6,7 +6,7 @@ from .permissions import check_perm_or404, check_permission
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from .commands import command, cmd_run, info, commandick
-from django.shortcuts import render, get_object_or_404, render_to_response
+from django.shortcuts import render, get_object_or_404
 from .models import Project, Update, Script, History
 from django.conf import settings as conf
 from wsgiref.util import FileWrapper
@@ -111,7 +111,7 @@ def cancel(request):
 
 
 @login_required
-def command_logs(request):
+def mini_log(request):
 	"""Выводит страницу логов выполняющейся комманды."""
 	data = request.GET
 	current_project = get_object_or_404(Project, id=data['prid'])
@@ -124,7 +124,7 @@ def command_logs(request):
 
 	context = {
 		'project': current_project,
-		'ok':      'btn-success',
+		'panel':   'panel-default',
 		'cmd':     data['cmd'],
 		'end':     False,
 	}
@@ -133,17 +133,23 @@ def command_logs(request):
 		err = int(event.exit)
 		context['end'] = True
 		if err > 0:
-			context['ok'] = 'btn-danger'
+			context['panel'] = 'panel-danger'
+		else:
+			context['panel'] = 'panel-success'
 	except:
 		try:
 			err = int(open(conf.ERR_FILE + logid, 'r').read())
 			context['end'] = True
+			if err > 0:
+				context['panel'] = 'panel-danger'
+			else:
+				context['panel'] = 'panel-success'
 		except IOError:
 			err = 999
 
 	context['log'] = {'id': logid, 'srv': server.name, 'err': err}
 
-	return render(request, 'ups/command_logs.html', context)
+	return render(request, 'ups/command_log_mini.html', context)
 
 
 @login_required

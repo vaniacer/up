@@ -14,7 +14,7 @@ urlpatterns = [
 	# Страница логов.
 	url(r'^command_log/$', views.command_log, name='command_log'),
 	# Страница минилогов.
-	url(r'^command_logs/$', views.command_logs, name='command_logs'),
+	url(r'^mini_log/$', views.mini_log, name='mini_log'),
 
 	# Вывод всех проектов.
 	url(r'^projects/$', views.projects, name='projects'),

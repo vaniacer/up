@@ -1,0 +1,23 @@
+{% load bootstrap3 %}
+{% bootstrap_css %}
+<style type="text/css">
+    {% include "ups/css/control.css" %}
+</style>
+
+<div class="panel {{panel}} mini_log"
+     onclick="window.open('/command_log/?cmd={{cmd}}&prid={{project.id}}&logid={{log.id}}', '_blank');">
+
+    <div class="panel-heading">
+        <h4>{{log.srv}}</h4>
+    </div>
+
+    <div class="panel-body">
+        {% if end %}
+            <h4>Done</h4>
+        {% else %}
+            <h5>Working</h5>
+            <meta http-equiv="refresh" content="2">
+        {% endif %}
+    </div>
+
+</div>

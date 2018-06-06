@@ -40,11 +40,16 @@
     padding-left:  5px;
 }
 
+/*-----{ Mini logs }-----*/
 iframe {
-    border-style: hidden;
+    border:   none;
     overflow: hidden;
-    height: 80px;
-    width:  100px;
+    height:   auto;
+    width:    auto;
+}
+
+.mini_log:hover {
+    cursor: pointer;
 }
 
 /*---{ Individual info on\off buttons }---*/
@@ -75,7 +80,7 @@ iframe {
     border: 1px solid LightGrey;
 }
 
-.panel-default:hover, .jumbotron:hover, .well:hover {
+.panel:hover, .jumbotron:hover, .well:hover {
     border-color: DarkGrey;
 }
 

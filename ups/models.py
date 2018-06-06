@@ -110,6 +110,7 @@ class Job(models.Model):
 	cron = models.CharField(max_length=255)
 	cdat = models.CharField(max_length=30)
 	proj = models.ForeignKey(Project)
+	serv = models.ForeignKey(Server)
 	user = models.ForeignKey(User)
 	desc = models.TextField()
 
