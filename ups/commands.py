@@ -1,6 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 from .commands_engine import get_key, starter, add_event, add_job
+from django.shortcuts import get_object_or_404
 from .permissions import check_perm_or404
 from .models import Server, Job
 import datetime
@@ -690,7 +691,7 @@ def cmd_run(data, project, user):
 
 	if job:
 		for cronjob in selected['cronjbs']:
-			jobobj = Job.objects.get(cron=cronjob)
+			jobobj = get_object_or_404(Job, cron=cronjob)
 			server = jobobj.serv
 			key = get_key()
 			selected['hid'] = key
@@ -704,7 +705,7 @@ def cmd_run(data, project, user):
 	else:
 		for server_id in data.getlist('selected_servers'):
 
-			server = Server.objects.get(id=server_id)
+			server = get_object_or_404(Server, id=server_id)
 			key = get_key()
 			selected['key'] = key
 			selected['servers'] = [server_id, ]
