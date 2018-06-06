@@ -120,34 +120,24 @@ def mini_log(request):
 
 	logid = data.get('logid')
 	event = History.objects.get(uniq=logid)
-	server = event.serv
 
 	context = {
 		'project': current_project,
 		'panel':   'panel-default',
 		'cmd':     data['cmd'],
+		'event':   event,
 		'end':     False,
 	}
 
 	try:
 		err = int(event.exit)
 		context['end'] = True
-		if err > 0:
+		if err and err > 0:
 			context['panel'] = 'panel-danger'
 		else:
 			context['panel'] = 'panel-success'
 	except:
-		try:
-			err = int(open(conf.ERR_FILE + logid, 'r').read())
-			context['end'] = True
-			if err > 0:
-				context['panel'] = 'panel-danger'
-			else:
-				context['panel'] = 'panel-success'
-		except IOError:
-			err = 999
-
-	context['log'] = {'id': logid, 'srv': server.name, 'err': err, 'name': event.name}
+		pass
 
 	return render(request, 'ups/command_log_mini.html', context)
 

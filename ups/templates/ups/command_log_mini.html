@@ -6,15 +6,15 @@
 
 <div class="panel {{panel}} mini_log"
      title="Click to view command log."
-     onclick="window.open('/command_log/?cmd={{cmd}}&prid={{project.id}}&logid={{log.id}}', '_blank');">
+     onclick="window.open('/command_log/?cmd={{cmd}}&prid={{project.id}}&logid={{event.uniq}}', '_blank');">
 
     <div class="panel-heading">
-        <h4>{{log.srv}} - {{log.name|lower}}</h4>
+        <h4>{{event.serv.name}} - {{event.name|lower}}</h4>
     </div>
 
     <div class="panel-body">
         {% if end %}
-            <h4>Done</h4>
+            <h5>Done</h5>
         {% else %}
             <h5>Working</h5>
             <meta http-equiv="refresh" content="2">
