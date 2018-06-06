@@ -147,7 +147,7 @@ def mini_log(request):
 		except IOError:
 			err = 999
 
-	context['log'] = {'id': logid, 'srv': server.name, 'err': err}
+	context['log'] = {'id': logid, 'srv': server.name, 'err': err, 'name': event.name}
 
 	return render(request, 'ups/command_log_mini.html', context)
 
