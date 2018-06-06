@@ -127,7 +127,7 @@ function addr () {
 
     # Show $addr as info
     [[ $sopt ]] && mess="Server $sopt $addr" || mess="Server $addr"
-    info "$mess"
+#    info "$mess"
 }
 
 # If connecting first time send 'yes' on ssh's request.
@@ -197,7 +197,7 @@ function starter () {
     stty cols $width # Set terminal width
 
     [[ "$cron" ]] \
-          && { ( run; printf "\nError: $error\nDate: $(date +'%m.%d.%Y %R')" ) &> $crondir/$cron; } \
+          && { ( run; printf "\nError: $error\nDate: $(date +'%b %d, %Y %R')" ) &> $crondir/$cron; } \
           || {
                 echo $$     > $rundir/pid$key
                 run        &> $rundir/log$key

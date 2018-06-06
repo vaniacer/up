@@ -6,10 +6,9 @@ function description () { #---------------------| Function description |--------
     printf      "\nto Server:\n$addr"
 }
 
-function body () { #--------------------------------| Main function |---------------------------------------------------
+function run () { #--------------------------------| Main function |---------------------------------------------------
 
+    addr # Get server address
     rsync -e "ssh $sopt" --progress -lzuogthvr "${updates[@]}" $addr:$wdir/updates/new/ || error=$?
 
 } #---------------------------------------------------------------------------------------------------------------------
-
-function run () { addr; body; info 'Done' $error; }

@@ -6,8 +6,9 @@ function description () { #---------------------| Function description |--------
     printf     "\non Server:\n$addr"
 }
 
-function body () { #--------------------------------| Main function |---------------------------------------------------
+function run () { #--------------------------------| Main function |---------------------------------------------------
 
+    addr              # Get server address
     create_tmp_folder # Creates tmp folder tmp_folder=$wdir/updates/new/$key
 
     # If updates where selected copy them too and add as options to the script
@@ -79,5 +80,3 @@ function body () { #--------------------------------| Main function |-----------
     ssh $sopt $addr "rm -r $tmp_folder" || error=$?
 
 } #---------------------------------------------------------------------------------------------------------------------
-
-function run () { addr; body; info 'Done' $error; }

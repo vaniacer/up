@@ -5,8 +5,9 @@ function description () { #---------------------| Function description |--------
     printf "\nGet current day logs from server:\n$addr"
 }
 
-function body () { #--------------------------------| Main function |---------------------------------------------------
+function run () { #--------------------------------| Main function |---------------------------------------------------
 
+    addr              # Get server address
     create_tmp_folder # Creates tmp folder tmp_folder=$wdir/updates/new/$key
 
     arhive="$tmp_folder/daylogs.zip"
@@ -22,5 +23,3 @@ function body () { #--------------------------------| Main function |-----------
     ssh $sopt $addr "rm -r $tmp_folder" || error=$?
 
 } #---------------------------------------------------------------------------------------------------------------------
-
-function run () { addr; body; info 'Done' $error; }

@@ -2,7 +2,7 @@
 
 from .commands_engine import get_key, starter, add_event, add_job
 from .permissions import check_perm_or404
-from .models import Server
+from .models import Server, Job
 import datetime
 
 commandick = {
@@ -689,28 +689,32 @@ def cmd_run(data, project, user):
 	tag, his, job = command(selected)
 
 	if job:
-		key = get_key()
-		selected['hid'] = key
-		selected['key'] = key
-		selected['servers'] = []
-		logid = logid + '&logid=%s' % key
-		add_event(selected, 'Working...', '', key, key, date, )
+		for cronjob in selected['cronjbs']:
+			jobobj = Job.objects.get(cron=cronjob)
+			server = jobobj.serv
+			key = get_key()
+			selected['hid'] = key
+			selected['key'] = key
+			selected['servers'] = []
+			selected['cronjbs'] = [cronjob, ]
+			logid = logid + '&logid=%s' % key
+			add_event(selected, 'Working...', '', key, key, date, server)
 
-		starter(selected)
+			starter(selected)
 	else:
-		for serverid in data.getlist('selected_servers'):
+		for server_id in data.getlist('selected_servers'):
 
-			server = Server.objects.get(id=serverid)
+			server = Server.objects.get(id=server_id)
 			key = get_key()
 			selected['key'] = key
-			selected['servers'] = [serverid, ]
+			selected['servers'] = [server_id, ]
 			logid = logid + '&logid=%s' % key
 
 			if data['run_type'] == 'CRON':
 				crn = key
 				if not his:
 					return '/projects/%s/?%s' % (project.id, info(data))
-				add_job(selected, 'Working...', key)
+				add_job(selected, 'Working...', key, server)
 				selected['cid'] = key
 				selected['name'] = 'Set cron job - %s' % selected['command'].lower()
 			if his:
@@ -720,18 +724,8 @@ def cmd_run(data, project, user):
 			starter(selected)
 
 	if his:
-		url = '/projects/%s/?cmdlog=%s%s%s' % (
-			project.id,
-			selected['command'],
-			info(data),
-			logid,
-		)
+		url = '/projects/%s/?cmdlog=%s%s%s' % (project.id, selected['command'], info(data), logid,)
 	else:
-		url = '/command_log/?cmd=%s&prid=%s%s%s' % (
-			selected['command'],
-			project.id,
-			info(data),
-			logid,
-		)
+		url = '/command_log/?cmd=%s&prid=%s%s%s' % (selected['command'], project.id, info(data), logid,)
 
 	return url

@@ -7,10 +7,7 @@ function description () { #---------------------| Function description |--------
 
 function run () { #--------------------------------| Main function |---------------------------------------------------
 
-    addr # Get server address and print it in log
-
+    addr # Get server address
     ssh -ttt $sopt $addr "$wdir/krupd bkp db" || error=$?; download
-
-    info 'Done' $error
 
 } #---------------------------------------------------------------------------------------------------------------------

@@ -13,6 +13,7 @@ def get_cron_logs():
 	if logfiles:
 		for filename in logfiles:
 			job = Job.objects.get(cron=filename)
+			srv = job.serv
 
 			f = open(os.path.join(conf.CRON_DIR, filename), 'r')
 			out = f.readlines()
@@ -24,7 +25,7 @@ def get_cron_logs():
 
 			dick = {'project': job.proj, 'user': job.user, 'name': job.name}
 			os.remove(os.path.join(conf.CRON_DIR, filename))
-			add_event(dick, out, int(err), filename, get_key(), dat)
+			add_event(dick, out, int(err), filename, get_key(), dat, srv)
 
 			if not job.perm:  # удаляю если задача не постоянная
 				del_job(filename)

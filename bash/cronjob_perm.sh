@@ -6,7 +6,7 @@ function description () { #---------------------| Function description |--------
 
 function run () { #---------------------------------| Main function |---------------------------------------------------
 
-    info 'Set job(s) to run everyday'; printf "\n"
+    printf "\nSet job(s) to run everyday:\n"
 
     for id in "${jobs[@]}"; {
         sed="s|;.*$id.*$||g;/.*$id/ s| [0-9][0-9] [0-9][0-9] \*| \* \* \*|g;"$sed
@@ -14,6 +14,5 @@ function run () { #---------------------------------| Main function |-----------
     }
 
     sed "$sed" -i $cronfile || error=$?
-    info 'Done' $error
 
 } #---------------------------------------------------------------------------------------------------------------------

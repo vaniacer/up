@@ -6,13 +6,12 @@ function description () { #---------------------| Function description |--------
     printf      "\nfrom Server:\n$addr"
 }
 
-function body () { #--------------------------------| Main function |---------------------------------------------------
+function run () { #--------------------------------| Main function |---------------------------------------------------
 
+    addr # Get server address
     for file in "${updates[@]}"; {
         filename=${file##*/}; echo -e "\nDelete file - $filename."
         ssh -ttt $sopt $addr "rm $wdir/updates/new/$filename" || error=$?
     }
 
 } #---------------------------------------------------------------------------------------------------------------------
-
-function run () { addr; body; info 'Done' $error; }

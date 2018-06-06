@@ -29,7 +29,7 @@ def add_event(selected, log, err, cron, uniq, date, serv):
 	)
 
 
-def add_job(selected, log, cron):
+def add_job(selected, log, cron, serv):
 	"""Создает запись о крон жобе."""
 	Job.objects.create(
 		name=selected['command'].capitalize().replace('_', ' '),
@@ -37,6 +37,7 @@ def add_job(selected, log, cron):
 		user=selected['user'],
 		cdat=selected['date'],
 		perm=False,
+		serv=serv,
 		cron=cron,
 		desc=log,
 	)

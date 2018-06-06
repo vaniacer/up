@@ -5,8 +5,9 @@ function description () { #---------------------| Function description |--------
     printf "\nShow conf of server:\n$addr"
 }
 
-function body () { #--------------------------------| Main function |---------------------------------------------------
+function run () { #--------------------------------| Main function |---------------------------------------------------
 
+    addr # Get server address
     ssh -ttt $sopt $addr "
         printf '\nJava options\n'
         ps axo command | grep $wdir | grep [j]ava
@@ -15,5 +16,3 @@ function body () { #--------------------------------| Main function |-----------
         cat $wdir/jboss-bas-*/standalone/configuration/standalone-full.xml" || error=$?
 
 } #---------------------------------------------------------------------------------------------------------------------
-
-function run () { addr; body; info 'Done' $error; }

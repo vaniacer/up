@@ -5,8 +5,9 @@ function description () { #---------------------| Function description |--------
     printf "\nShow system info of server:\n$addr"
 }
 
-function body () { #--------------------------------| Main function |---------------------------------------------------
+function run () { #--------------------------------| Main function |---------------------------------------------------
 
+    addr # Get server address
     ssh_yes "$sopt $addr" > /dev/null
 
     ssh -ttt $sopt $addr "
@@ -39,5 +40,3 @@ function body () { #--------------------------------| Main function |-----------
         top -b -n1" || error=$?
 
 } #---------------------------------------------------------------------------------------------------------------------
-
-function run () { addr; body; info 'Done' $error; }

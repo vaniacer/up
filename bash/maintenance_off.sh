@@ -5,11 +5,10 @@ function description () { #---------------------| Function description |--------
     printf "\nStop dummy page on server:\n$addr"
 }
 
-function body () { #--------------------------------| Main function |---------------------------------------------------
+function run () { #--------------------------------| Main function |---------------------------------------------------
 
+    addr # Get server address
     printf "\nStop dummy page."
     ssh -ttt $sopt $addr '~/.utils/dp.sh --stop' || error=$?
 
 } #---------------------------------------------------------------------------------------------------------------------
-
-function run () { addr; body; info 'Done' $error; }

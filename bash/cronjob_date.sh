@@ -10,7 +10,7 @@ function run () { #---------------------------------| Main function |-----------
     time=${date#* }; date=${date% *}; hh=${time%:*}; mm=${time#*:}; DD=${date##*-}; MM=${date#*-}; MM=${MM%-*}
     date="$mm $hh $DD $MM" # Cron format date
 
-    info 'Change job(s) run date and time'; printf "\n"
+    printf "\nChange run date\time for job(s):\n"
 
     for id in ${jobs[@]}; {
         job="`grep "\-C $id" $cronfile`"
@@ -21,6 +21,5 @@ function run () { #---------------------------------| Main function |-----------
     }
 
     sed "$sed" -i $cronfile || error=$?
-    info 'Done' $error
 
 } #---------------------------------------------------------------------------------------------------------------------

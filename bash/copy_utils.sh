@@ -5,10 +5,9 @@ function description () { #---------------------| Function description |--------
     printf "\nCopy utils folder to server:\n$addr"
 }
 
-function body () { #--------------------------------| Main function |---------------------------------------------------
+function run () { #--------------------------------| Main function |---------------------------------------------------
 
+    addr # Get server address
     rsync -e "ssh $sopt" --progress -lzghr ~/utils/* $addr:~/.utils || error=$?
 
 } #---------------------------------------------------------------------------------------------------------------------
-
-function run () { addr; body; info 'Done' $error; }

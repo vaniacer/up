@@ -5,10 +5,9 @@ function description () { #---------------------| Function description |--------
     printf "\nKill jboss on server:\n$addr"
 }
 
-function body () { #--------------------------------| Main function |---------------------------------------------------
+function run () { #--------------------------------| Main function |---------------------------------------------------
 
+    addr # Get server address
     ssh -ttt $sopt $addr $wdir/krupd jboss.kill || error=$?
 
 } #---------------------------------------------------------------------------------------------------------------------
-
-function run () { addr; body; info 'Done' $error; }

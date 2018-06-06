@@ -5,10 +5,9 @@ function description () { #---------------------| Function description |--------
     printf "\nShow logs of server:\n$addr"
 }
 
-function body () { #--------------------------------| Main function |---------------------------------------------------
+function run () { #--------------------------------| Main function |---------------------------------------------------
 
+    addr # Get server address
     ssh -ttt $sopt $addr "cat $wdir/jboss-bas-*/standalone/log/server.log" || error=$?
 
 } #---------------------------------------------------------------------------------------------------------------------
-
-function run () { addr; body; info 'Done' $error; }

@@ -9,7 +9,7 @@
         <dl id="jb{{job.id}}"
             class="dl-horizontal job-body"
             onclick="selector('jx{{job.id}}', 'jb{{job.id}}', '{{job.name}}', 'SJ')">
-
+            <dt>Job on server</dt><dd>{{job.serv}}</dd>
             <dt>Cron job id</dt><dd>{{job.cron}}</dd>
             <dt>Job name</dt><dd>{{job.name}}</dd>
             <dt>Permanent</dt><dd>{{job.perm}}</dd>

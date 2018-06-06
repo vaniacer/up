@@ -5,11 +5,10 @@ function description () { #---------------------| Function description |--------
     printf "\nBackup full on server:\n$addr"
 }
 
-function body () { #--------------------------------| Main function |---------------------------------------------------
+function run () { #--------------------------------| Main function |---------------------------------------------------
 
+    addr # Get server address
     ssh -ttt $sopt $addr "$wdir/krupd bkp db"  || error=$?; download
     ssh -ttt $sopt $addr "$wdir/krupd bkp sys" || error=$?; download
 
 } #---------------------------------------------------------------------------------------------------------------------
-
-function run () { addr; body; info 'Done' $error; }

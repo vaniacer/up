@@ -5,8 +5,11 @@ function description () { #---------------------| Function description |--------
     printf "\nCopy DB dump $updates to server:\n$addr"
 }
 
-function body () { #--------------------------------| Main function |---------------------------------------------------
+function run () { #--------------------------------| Main function |---------------------------------------------------
 
+    [[ ${#dumps[*]} -gt 1 ]] && { printf "\nMultiple dumps selected, need one.\n"; error=1; return 1; }
+
+    addr              # Get server address
     create_tmp_folder # Creates tmp folder tmp_folder=$wdir/updates/new/$key
     
     filename=$dumps
@@ -23,12 +26,3 @@ function body () { #--------------------------------| Main function |-----------
     ssh $sopt $addr "rm -r $tmp_folder" || error=$?
 
 } #---------------------------------------------------------------------------------------------------------------------
-
-function run () {
-
-    [[ ${#dumps[*]} -gt 1 ]] && { printf "\nMultiple dumps selected, need one.\n"; error=1; } || {
-
-        addr; body; info 'Done' $error
-
-    }
-}
