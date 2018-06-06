@@ -25,7 +25,7 @@ def delete_server(request, server):
 	"""Удаляет сервер, записывает событие в историю."""
 	dick = {'project': server.proj, 'user': request.user, 'name': 'Del server'}
 	desc = 'Удален сервер:\n%s\n\nНазначение:\n%s' % (str(server), server.desc.encode('utf-8'))
-	add_event(dick, desc, 0, '', get_key(), '')
+	add_event(dick, desc, 0, '', get_key(), '', None)
 	server.delete()
 
 
@@ -33,7 +33,7 @@ def delete_object(request, obj):
 	"""Удаляет обновление\скрипт и соотв. файлы, записывает событие в историю."""
 	dick = {'project': obj.proj, 'user': request.user, 'name': 'Del upd\scr'}
 	desc = 'Удален файл:\n%s\n\nНазначение:\n%s' % (str(obj), obj.desc.encode('utf-8'))
-	add_event(dick, desc, 0, '', get_key(), '')
+	add_event(dick, desc, 0, '', get_key(), '', None)
 	os.remove(str(obj.file))
 	obj.delete()
 
@@ -42,14 +42,14 @@ def edit_server_log(request, server):
 	"""Записывает событие редактирования сервера в историю."""
 	dick = {'project': server.proj, 'user': request.user, 'name': 'Edit server'}
 	desc = 'Изменен cервер:\n%s\n\nНазначение:\n%s' % (str(server), server.desc.encode('utf-8'))
-	add_event(dick, desc, 0, '', get_key(), '')
+	add_event(dick, desc, 0, '', get_key(), '', None)
 	
 	
 def edit_object_log(request, obj):
 	"""Записывает событие редактирования обновлений\скриптов в историю."""
 	dick = {'project': obj.proj, 'user': request.user, 'name': 'Edit upd\scr'}
 	desc = 'Изменен файл:\n%s\n\nНазначение:\n%s' % (str(obj), obj.desc.encode('utf-8'))
-	add_event(dick, desc, 0, '', get_key(), '')
+	add_event(dick, desc, 0, '', get_key(), '', None)
 
 
 @login_required

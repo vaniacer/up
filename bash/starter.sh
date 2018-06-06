@@ -182,11 +182,10 @@ function download  ()   {
 
 # Cancel running process
 function cancel () {
-    error=1
     printf '\n<b>Interrupted...</b>'
     [[ $hid ]] && make_history
     rm $rundir/*$key
-    exit $error
+    exit 1
 }
 
 trap cancel INT
