@@ -58,7 +58,7 @@ function run () { #--------------------------------| Main function |------------
                         # Show result
                         printf "$result\n"
 
-                        # Save result to make it downloadable
+                        # Save result to file and make it downloadable
                         cat >> $dumpdir/${filename}_$key.log <<< "$result"
 
                         printf "\n<b>Log will be stored until tomorrow, please download if you need it!</b>"
