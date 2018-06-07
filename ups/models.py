@@ -122,12 +122,12 @@ class Job(models.Model):
 class History(models.Model):
 	"""История проекта."""
 	date = models.DateTimeField(auto_now_add=True, db_index=True)
-	serv = models.ForeignKey(Server,   blank=True,     null=True)
+	serv = models.ForeignKey(Server, blank=True, null=True)
 	name = models.CharField(max_length=255)
 	cron = models.CharField(max_length=255)
 	uniq = models.CharField(max_length=255)
-	cdat = models.CharField(max_length=30)
 	exit = models.CharField(max_length=10)
+	cdat = models.CharField(max_length=30)
 	proj = models.ForeignKey(Project)
 	user = models.ForeignKey(User)
 	desc = models.TextField()

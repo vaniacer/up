@@ -671,59 +671,65 @@ def del_job(job_id):
 		pass
 
 
-def job_opt(selected, job):
-	"""В зависимости от выбранного действия с кронжобом, удаляет либо меняет job.perm статус."""
-	if selected['command'] == 'permanent_job':
-		job.cdat = 'Everyday %s' % job.cdat.split()[-1]
-		job.perm = True
-		job.save()
-	if selected['command'] == 'change_date':
-		job.cdat = selected['date']
-		job.save()
-	if selected['command'] == 'cancel_job':
-		job.delete()
-	if selected['command'] == 'once_job':
-		job.cdat = '%s %s' % (datetime.datetime.now().strftime("%Y-%m-%d"), job.cdat.split()[-1])
-		job.perm = False
-		job.save()
+def add_job(selected):
+	"""Создает запись о крон жобе."""
+	Job.objects.create(
+		name=selected['name'].capitalize().replace('_', ' '),
+		proj=selected['proj'],
+		user=selected['user'],
+		cdat=selected['cdat'],
+		perm=selected['perm'],
+		serv=selected['serv'],
+		cron=selected['cron'],
+		desc=selected['desc'],
+	)
 
 
-def add_event(selected, log, err, cron, uniq, date, serv):
+def add_event(selected):
 	"""Создает событие в истории."""
 	History.objects.create(
 		name=selected['name'].capitalize().replace('_', ' '),
-		proj=selected['project'],
+		proj=selected['proj'],
 		user=selected['user'],
-		serv=serv,
-		cron=cron,
-		uniq=uniq,
-		cdat=date,
-		desc=log,
-		exit=err,
+		serv=selected['serv'],
+		cron=selected['cron'],
+		uniq=selected['uniq'],
+		cdat=selected['cdat'],
+		desc=selected['desc'],
+		exit=selected['exit'],
 	)
 
 
-def add_job(selected, log, cron, serv):
-	"""Создает запись о крон жобе."""
-	Job.objects.create(
-		name=selected['command'].capitalize().replace('_', ' '),
-		proj=selected['project'],
-		user=selected['user'],
-		cdat=selected['date'],
-		perm=False,
-		serv=serv,
-		cron=cron,
-		desc=log,
-	)
+def job_opt(selected):
+	"""В зависимости от выбранного действия с кронжобой, удаляет либо меняет job.perm статус."""
+	if selected['name'] == 'permanent_job':
+		selected['jobj'].cdat = 'Everyday %s' % selected['jobj'].cdat.split()[-1]
+		selected['jobj'].perm = True
+		selected['jobj'].save()
+
+	if selected['name'] == 'change_date':
+		selected['jobj'].cdat = selected['cdat']
+		selected['jobj'].save()
+
+	if selected['name'] == 'cancel_job':
+		selected['jobj'].delete()
+
+	if selected['name'] == 'once_job':
+		selected['jobj'].cdat = '%s %s' % (
+			datetime.datetime.now().strftime("%Y-%m-%d"),
+			selected['jobj'].cdat.split()[-1]
+		)
+		selected['jobj'].perm = False
+		selected['jobj'].save()
 
 
 def starter(selected):
 	"""Выполняет комманду."""
 	opt = [
 		conf.BASE_DIR + '/bash/starter.sh',
-		'-prj',  '%s:%s' % (str(selected['project'].id), str(selected['project'].name)),
-		'-date', selected['date'],
-		'-key',  selected['key']
+		'-prj',  '%s:%s' % (str(selected['proj'].id), str(selected['proj'].name)),
+		'-date', selected['cdat'],
+		'-key',  selected['uniq']
 	]
 
 	opt.extend(selected['opt'])
@@ -736,7 +742,7 @@ def starter(selected):
 		script = get_object_or_404(Script, id=ID)
 		opt.extend(['-x', str(script.file)])
 
-	for dump in selected['dumps']:
+	for dump in selected['dbdumps']:
 		opt.extend(['-m', str(dump)])
 
 	if conf.DEBUG:
@@ -745,74 +751,86 @@ def starter(selected):
 	Popen(opt)
 
 
-def cmd_run(data, project, user):
+def run_cmd(data, project, user):
 	"""Запускает выбранную команду."""
 	check_perm_or404('run_command', project, user)
 
-	crn = ''
-	logid = ''
+	logi = ''
 	date = run_date()
-	cmd = data['selected_command']
 
-	job = commandick[cmd]['cron']
-	his = commandick[cmd]['history']
+	name = data['selected_command']
+	bash = commandick[name]['bash']
+
+	job = commandick[name]['cron']
+	his = commandick[name]['history']
 
 	if data['selected_date'] and data['selected_time']:
 		date = '%s %s' % (data['selected_date'], data['selected_time'])
 
 	selected = {
-		'name':    cmd,
-		'command': cmd,
-		'date':    date,
-		'user':    user,
-		'project': project,
-		'rtype':   data['run_type'],
-		'bashcmd': commandick[cmd]['bash'],
-		'dumps':   data.getlist('selected_dumps'),
+		'jobj': '',
+		'serv': '',
+		'cron': '',
+		'uniq': '',
+		'exit': '',
+		'name': name,
+		'user': user,
+		'cdat': date,
+		'perm': False,
+		'proj': project,
+		'desc': 'Working...',
+		'dbdumps': data.getlist('selected_dbdumps'),
 		'updates': data.getlist('selected_updates'),
 		'scripts': data.getlist('selected_scripts'),
 	}
 
 	if job:
-		for job_id in data.getlist('selected_jobs'):
-			jobobj = get_object_or_404(Job, cron=job_id)
-			server = jobobj.serv
-			key = get_key()
-			selected['key'] = key
-			logid = logid + '&logid=%s' % key
-			selected['opt'] = ['-job', job_id, '-hid', key, '-cmd', selected['bashcmd']]
-			add_event(selected, 'Working...', '', key, key, date, server)
+		for jobi in data.getlist('selected_jobs'):
 
-			job_opt(selected, jobobj)
+			print jobi
+			jobj = get_object_or_404(Job, cron=jobi)
+			serv = jobj.serv
+			uniq = get_key()
+			logi = logi + '&logid=%s' % uniq
+			print jobj.cron
+
+			selected.update({'cron': uniq, 'uniq': uniq, 'serv': serv, 'jobj': jobj})
+			add_event(selected)
+			job_opt(selected)
+
+			selected['opt'] = ['-job', jobi, '-hid', uniq, '-cmd', bash]
 			starter(selected)
 	else:
 		for server_id in data.getlist('selected_servers'):
 
-			key = get_key()
-			selected['key'] = key
-			logid = logid + '&logid=%s' % key
-			server = get_object_or_404(Server, id=server_id)
-			selected['opt'] = ['-server', '%s:%s:%s' % (server.addr, server.wdir, server.port), ]
+			uniq = get_key()
+			logi = logi + '&logid=%s' % uniq
+			serv = get_object_or_404(Server, id=server_id)
+
+			selected.update({'uniq': uniq, 'serv': serv})
+			selected['opt'] = ['-server', '%s:%s:%s' % (serv.addr, serv.wdir, serv.port), ]
 
 			if data['run_type'] == 'CRON':
 				if not his:
 					return '/projects/%s/?%s' % (project.id, info(data))
-				crn = key
-				add_job(selected, 'Working...', key, server)
-				selected['name'] = 'Set cron job - %s' % selected['command'].lower()
-				selected['opt'].extend(['-cmd',  'cron.sh', '-run',  selected['bashcmd'], '-cid', key, ])
+
+				selected.update({'cron': uniq, 'cdat': date})
+				add_job(selected)
+
+				selected['name'] = 'Set cron job - %s' % name.lower()
+				selected['opt'].extend(['-cmd',  'cron.sh', '-run', bash, '-cid', uniq, ])
 			else:
-				selected['opt'].extend(['-cmd', selected['bashcmd']])
+				selected['opt'].extend(['-cmd', bash])
 
 			if his:
-				selected['opt'].extend(['-hid', key])
-				add_event(selected, 'Working...', '', crn, key, date, server)
+				selected['opt'].extend(['-hid', uniq])
+				add_event(selected)
 
 			starter(selected)
 
 	if his:
-		url = '/projects/%s/?cmdlog=%s%s%s' % (project.id, selected['command'], info(data), logid,)
+		url = '/projects/%s/?cmdlog=%s%s%s' % (project.id, name, info(data), logi,)
 	else:
-		url = '/command_log/?cmd=%s&prid=%s%s%s' % (selected['command'], project.id, info(data), logid,)
+		url = '/command_log/?cmd=%s&prid=%s%s%s' % (name, project.id, info(data), logi,)
 
 	return url

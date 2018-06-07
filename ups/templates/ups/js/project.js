@@ -165,9 +165,9 @@ function Validation(cmd, srv, upd, job, scr, dmp, dgr) {
         if  (!selected_updates) { alert('Update(s) not selected.'); return false; }}
 
     if (dmp) {
-        var dumps = document.getElementsByName('selected_dumps');
-        for (i = 0; i < dumps.length; i++) { if (dumps[i].checked) { var selected_dumps = true; break; }}
-        if  (!selected_dumps) { alert('Dump(s) not selected.'); return false; }}
+        var dumps = document.getElementsByName('selected_dbdumps');
+        for (i = 0; i < dumps.length; i++) { if (dumps[i].checked) { var selected_dbdumps = true; break; }}
+        if  (!selected_dbdumps) { alert('Dump(s) not selected.'); return false; }}
 
     if (srv) {
         var servers = document.getElementsByName('selected_servers');

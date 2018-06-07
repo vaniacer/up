@@ -22,33 +22,69 @@ def delete_project(project):
 
 def delete_server(request, server):
 	"""Удаляет сервер, записывает событие в историю."""
-	dick = {'project': server.proj, 'user': request.user, 'name': 'Del server'}
-	desc = 'Удален сервер:\n%s\n\nНазначение:\n%s' % (str(server), server.desc.encode('utf-8'))
-	add_event(dick, desc, 0, '', get_key(), '', None)
+	dick = {
+		'exit': 0,
+		'cron': '',
+		'cdat': '',
+		'serv': None,
+		'uniq': get_key(),
+		'proj': server.proj,
+		'user': request.user,
+		'name': 'Del server',
+		'desc': 'Удален сервер:\n%s\n\nНазначение:\n%s' % (str(server), server.desc.encode('utf-8')),
+	}
+	add_event(dick)
 	server.delete()
 
 
 def delete_object(request, obj):
 	"""Удаляет обновление\скрипт и соотв. файлы, записывает событие в историю."""
-	dick = {'project': obj.proj, 'user': request.user, 'name': 'Del upd\scr'}
-	desc = 'Удален файл:\n%s\n\nНазначение:\n%s' % (str(obj), obj.desc.encode('utf-8'))
-	add_event(dick, desc, 0, '', get_key(), '', None)
+	dick = {
+		'exit': 0,
+		'cron': '',
+		'cdat': '',
+		'serv': None,
+		'proj': obj.proj,
+		'uniq': get_key(),
+		'user': request.user,
+		'name': 'Del upd\scr',
+		'desc': 'Удален файл:\n%s\n\nНазначение:\n%s' % (str(obj), obj.desc.encode('utf-8')),
+	}
+	add_event(dick)
 	os.remove(str(obj.file))
 	obj.delete()
 
 
 def edit_server_log(request, server):
 	"""Записывает событие редактирования сервера в историю."""
-	dick = {'project': server.proj, 'user': request.user, 'name': 'Edit server'}
-	desc = 'Изменен cервер:\n%s\n\nНазначение:\n%s' % (str(server), server.desc.encode('utf-8'))
-	add_event(dick, desc, 0, '', get_key(), '', None)
+	dick = {
+		'exit': 0,
+		'cron': '',
+		'cdat': '',
+		'serv': None,
+		'uniq': get_key(),
+		'proj': server.proj,
+		'user': request.user,
+		'name': 'Edit server',
+		'desc': 'Изменен cервер:\n%s\n\nНазначение:\n%s' % (str(server), server.desc.encode('utf-8')),
+	}
+	add_event(dick)
 	
 	
 def edit_object_log(request, obj):
 	"""Записывает событие редактирования обновлений\скриптов в историю."""
-	dick = {'project': obj.proj, 'user': request.user, 'name': 'Edit upd\scr'}
-	desc = 'Изменен файл:\n%s\n\nНазначение:\n%s' % (str(obj), obj.desc.encode('utf-8'))
-	add_event(dick, desc, 0, '', get_key(), '', None)
+	dick = {
+		'exit': 0,
+		'cron': '',
+		'cdat': '',
+		'serv': None,
+		'proj': obj.proj,
+		'uniq': get_key(),
+		'user': request.user,
+		'name': 'Del upd\scr',
+		'desc': 'Изменен файл:\n%s\n\nНазначение:\n%s' % (str(obj), obj.desc.encode('utf-8')),
+	}
+	add_event(dick)
 
 
 @login_required

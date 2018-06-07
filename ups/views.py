@@ -7,7 +7,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 from .models import Project, Update, Script, History
-from .commands import cmd_run, info, commandick
+from .commands import run_cmd, info, commandick
 from django.conf import settings as conf
 from wsgiref.util import FileWrapper
 from .cron import get_cron_logs
@@ -206,6 +206,11 @@ def project(request, project_id):
 	check_perm_or404('view_project', current_project, request.user)
 
 	data = request.GET
+
+	if data.get('selected_command'):
+		url = run_cmd(data, current_project, request.user)
+		return HttpResponseRedirect(url)
+
 	get_cron_logs()
 
 	servers_filter = data.get('servers', '')
@@ -263,9 +268,5 @@ def project(request, project_id):
 		context['hist_fd'] = hist_fd
 		context['cmdlog'] = cmdlog
 		context['logs'] = logids
-
-		if data.get('selected_command'):
-			url = cmd_run(data, current_project, request.user)
-			return HttpResponseRedirect(url)
 
 	return render(request, 'ups/project.html', context)

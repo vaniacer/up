@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 
+from django.shortcuts import get_object_or_404
 from .commands import add_event, get_key
 from django.conf import settings as conf
 from .commands import del_job
@@ -13,8 +14,7 @@ def get_cron_logs():
 
 	if logfiles:
 		for filename in logfiles:
-			job = Job.objects.get(cron=filename)
-			srv = job.serv
+			job = get_object_or_404(Job, cron=filename)
 
 			f = open(os.path.join(conf.CRON_DIR, filename), 'r')
 			out = f.readlines()
@@ -24,9 +24,20 @@ def get_cron_logs():
 			dat = ' '.join(out[-1].split()[1:])
 			out = ''.join(out[:-2])
 
-			dick = {'project': job.proj, 'user': job.user, 'name': job.name}
+			dick = {
+				'desc': out,
+				'cdat': dat,
+				'serv': job.serv,
+				'cron': filename,
+				'uniq': get_key(),
+				'exit': int(err),
+				'name': job.name,
+				'user': job.user,
+				'proj': job.proj,
+			}
+
 			os.remove(os.path.join(conf.CRON_DIR, filename))
-			add_event(dick, out, int(err), filename, get_key(), dat, srv)
+			add_event(dick)
 
 			if not job.perm:  # удаляю если задача не постоянная
 				del_job(filename)
