@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 
-from .commands_engine import add_event, get_key
+from .commands import add_event, get_key
 from django.conf import settings as conf
 from .commands import del_job
 from .models import Job

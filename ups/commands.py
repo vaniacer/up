@@ -1,10 +1,13 @@
 # -*- encoding: utf-8 -*-
 
-from .commands_engine import get_key, starter, add_event, add_job
+from .models import Server, History, Job, Update, Script
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import get_object_or_404
 from .permissions import check_perm_or404
-from .models import Server, Job
+from django.conf import settings as conf
+from subprocess import Popen
+from base64 import b64encode
+from os import urandom
 import datetime
 
 
@@ -649,6 +652,11 @@ def info(data):
 	return url
 
 
+def get_key():
+	"""Создает случайную последовательность символов."""
+	return str(b64encode(urandom(6), 'dfsDFAsfsf'))
+
+
 def run_date():
 	"""Если не указана дата, возвращает текущую дату + 1 минута."""
 	date = datetime.datetime.now() + datetime.timedelta(minutes=1)
@@ -678,6 +686,63 @@ def job_opt(selected, job):
 		job.cdat = '%s %s' % (datetime.datetime.now().strftime("%Y-%m-%d"), job.cdat.split()[-1])
 		job.perm = False
 		job.save()
+
+
+def add_event(selected, log, err, cron, uniq, date, serv):
+	"""Создает событие в истории."""
+	History.objects.create(
+		name=selected['name'].capitalize().replace('_', ' '),
+		proj=selected['project'],
+		user=selected['user'],
+		serv=serv,
+		cron=cron,
+		uniq=uniq,
+		cdat=date,
+		desc=log,
+		exit=err,
+	)
+
+
+def add_job(selected, log, cron, serv):
+	"""Создает запись о крон жобе."""
+	Job.objects.create(
+		name=selected['command'].capitalize().replace('_', ' '),
+		proj=selected['project'],
+		user=selected['user'],
+		cdat=selected['date'],
+		perm=False,
+		serv=serv,
+		cron=cron,
+		desc=log,
+	)
+
+
+def starter(selected):
+	"""Выполняет комманду."""
+	opt = [
+		conf.BASE_DIR + '/bash/starter.sh',
+		'-prj',  '%s:%s' % (str(selected['project'].id), str(selected['project'].name)),
+		'-date', selected['date'],
+		'-key',  selected['key']
+	]
+
+	opt.extend(selected['opt'])
+
+	for ID in selected['updates']:
+		update = get_object_or_404(Update, id=ID)
+		opt.extend(['-u', str(update.file)])
+
+	for ID in selected['scripts']:
+		script = get_object_or_404(Script, id=ID)
+		opt.extend(['-x', str(script.file)])
+
+	for dump in selected['dumps']:
+		opt.extend(['-m', str(dump)])
+
+	if conf.DEBUG:
+		print '\n', opt, '\n\n', selected, '\n'
+
+	Popen(opt)
 
 
 def cmd_run(data, project, user):
@@ -714,8 +779,6 @@ def cmd_run(data, project, user):
 			server = jobobj.serv
 			key = get_key()
 			selected['key'] = key
-			selected['servers'] = []
-			selected['cronjbs'] = [job_id, ]
 			logid = logid + '&logid=%s' % key
 			selected['opt'] = ['-job', job_id, '-hid', key, '-cmd', selected['bashcmd']]
 			add_event(selected, 'Working...', '', key, key, date, server)
@@ -728,7 +791,6 @@ def cmd_run(data, project, user):
 			key = get_key()
 			selected['key'] = key
 			logid = logid + '&logid=%s' % key
-
 			server = get_object_or_404(Server, id=server_id)
 			selected['opt'] = ['-server', '%s:%s:%s' % (server.addr, server.wdir, server.port), ]
 

@@ -4,12 +4,11 @@ from .forms import ProjectForm, ServerForm, UpdateForm, ScriptEditForm
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 from .models import Project, Server, Update, Script
-from .commands_engine import add_event, get_key
+from .commands import info, add_event, get_key
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from .permissions import check_perm_or404
 from django.conf import settings as conf
-from .commands import info
 import shutil
 import os
 
