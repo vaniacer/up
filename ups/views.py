@@ -5,9 +5,9 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .permissions import check_perm_or404, check_permission
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
-from .commands import command, cmd_run, info, commandick
 from django.shortcuts import render, get_object_or_404
 from .models import Project, Update, Script, History
+from .commands import cmd_run, info, commandick
 from django.conf import settings as conf
 from wsgiref.util import FileWrapper
 from .cron import get_cron_logs
@@ -147,7 +147,7 @@ def command_log(request):
 	check_perm_or404('view_project', current_project, request.user)
 	check_perm_or404('run_command', current_project, request.user)
 
-	tag, his, job = command({'command': data['cmd']})
+	tag = commandick[data['cmd']]['tag']
 	qst = request.META['QUERY_STRING']
 	url = request.META['SERVER_NAME']
 

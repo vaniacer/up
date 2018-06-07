@@ -1,10 +1,12 @@
 # -*- encoding: utf-8 -*-
 
 from .commands_engine import get_key, starter, add_event, add_job
+from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import get_object_or_404
 from .permissions import check_perm_or404
 from .models import Server, Job
 import datetime
+
 
 commandick = {
 
@@ -624,14 +626,6 @@ Files will be stored on the server(s) and downloaded to UpS.',
 }
 
 
-def command(selected):
-	"""Определяет bash script по полученному command name."""
-	cmd = ''.join(selected['command'])
-	selected['cmdname'] = commandick[cmd]['bash']
-	selected['history'] = commandick[cmd]['history']
-	return commandick[cmd]['tag'], selected['history'], commandick[cmd]['cron']
-
-
 def info(data):
 	url = ''
 	if data.get('server_info'):
@@ -661,6 +655,31 @@ def run_date():
 	return date.strftime("%Y-%m-%d %H:%M")
 
 
+def del_job(job_id):
+	"""Удаляет из базы запись о крон жобе."""
+	try:
+		get_object_or_404(Job, cron=job_id).delete()
+	except ObjectDoesNotExist:
+		pass
+
+
+def job_opt(selected, job):
+	"""В зависимости от выбранного действия с кронжобом, удаляет либо меняет job.perm статус."""
+	if selected['command'] == 'permanent_job':
+		job.cdat = 'Everyday %s' % job.cdat.split()[-1]
+		job.perm = True
+		job.save()
+	if selected['command'] == 'change_date':
+		job.cdat = selected['date']
+		job.save()
+	if selected['command'] == 'cancel_job':
+		job.delete()
+	if selected['command'] == 'once_job':
+		job.cdat = '%s %s' % (datetime.datetime.now().strftime("%Y-%m-%d"), job.cdat.split()[-1])
+		job.perm = False
+		job.save()
+
+
 def cmd_run(data, project, user):
 	"""Запускает выбранную команду."""
 	check_perm_or404('run_command', project, user)
@@ -668,58 +687,63 @@ def cmd_run(data, project, user):
 	crn = ''
 	logid = ''
 	date = run_date()
+	cmd = data['selected_command']
+
+	job = commandick[cmd]['cron']
+	his = commandick[cmd]['history']
 
 	if data['selected_date'] and data['selected_time']:
 		date = '%s %s' % (data['selected_date'], data['selected_time'])
 
 	selected = {
-		'hid':     '',
-		'cid':     '',
+		'name':    cmd,
+		'command': cmd,
 		'date':    date,
 		'user':    user,
 		'project': project,
 		'rtype':   data['run_type'],
-		'name':    data['selected_command'],
-		'command': data['selected_command'],
-		'cronjbs': data.getlist('selected_jobs'),
+		'bashcmd': commandick[cmd]['bash'],
 		'dumps':   data.getlist('selected_dumps'),
 		'updates': data.getlist('selected_updates'),
 		'scripts': data.getlist('selected_scripts'),
 	}
 
-	tag, his, job = command(selected)
-
 	if job:
-		for cronjob in selected['cronjbs']:
-			jobobj = get_object_or_404(Job, cron=cronjob)
+		for job_id in data.getlist('selected_jobs'):
+			jobobj = get_object_or_404(Job, cron=job_id)
 			server = jobobj.serv
 			key = get_key()
-			selected['hid'] = key
 			selected['key'] = key
 			selected['servers'] = []
-			selected['cronjbs'] = [cronjob, ]
+			selected['cronjbs'] = [job_id, ]
 			logid = logid + '&logid=%s' % key
+			selected['opt'] = ['-job', job_id, '-hid', key, '-cmd', selected['bashcmd']]
 			add_event(selected, 'Working...', '', key, key, date, server)
 
+			job_opt(selected, jobobj)
 			starter(selected)
 	else:
 		for server_id in data.getlist('selected_servers'):
 
-			server = get_object_or_404(Server, id=server_id)
 			key = get_key()
 			selected['key'] = key
-			selected['servers'] = [server_id, ]
 			logid = logid + '&logid=%s' % key
 
+			server = get_object_or_404(Server, id=server_id)
+			selected['opt'] = ['-server', '%s:%s:%s' % (server.addr, server.wdir, server.port), ]
+
 			if data['run_type'] == 'CRON':
-				crn = key
 				if not his:
 					return '/projects/%s/?%s' % (project.id, info(data))
+				crn = key
 				add_job(selected, 'Working...', key, server)
-				selected['cid'] = key
 				selected['name'] = 'Set cron job - %s' % selected['command'].lower()
+				selected['opt'].extend(['-cmd',  'cron.sh', '-run',  selected['bashcmd'], '-cid', key, ])
+			else:
+				selected['opt'].extend(['-cmd', selected['bashcmd']])
+
 			if his:
-				selected['hid'] = key
+				selected['opt'].extend(['-hid', key])
 				add_event(selected, 'Working...', '', crn, key, date, server)
 
 			starter(selected)
