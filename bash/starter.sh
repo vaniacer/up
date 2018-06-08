@@ -131,8 +131,8 @@ function addr () {
 }
 
 # If connecting first time send 'yes' on ssh's request.
-# Expect must be installed on server. Options:
-#   $1 - ssh address with parameters(if needed)
+# Expect must be installed on server.
+# Ssh address have to be send as an option.
 #
 # Usage example:
 #   ssh_yes "-p22 user@localhost"
