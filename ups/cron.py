@@ -24,16 +24,22 @@ def get_cron_logs():
 			dat = ' '.join(out[-1].split()[1:])
 			out = ''.join(out[:-2])
 
+			try:
+				err = int(err)
+			except ValueError:
+				continue
+
 			dick = {
 				'desc': out,
 				'cdat': dat,
+				'exit': err,
 				'serv': job.serv,
 				'cron': filename,
-				'uniq': get_key(),
-				'exit': int(err),
+
 				'name': job.name,
 				'user': job.user,
 				'proj': job.proj,
+				'uniq': get_key(),
 			}
 
 			os.remove(os.path.join(conf.CRON_DIR, filename))
@@ -41,3 +47,4 @@ def get_cron_logs():
 
 			if not job.perm:  # удаляю если задача не постоянная
 				del_job(filename)
+
