@@ -31,8 +31,7 @@ function run () { #--------------------------------| Main function |------------
 
                 printf "\n$script\n"
                 ansible-playbook $script -i "$addr," $extra --vault-password-file ~/vault.txt --syntax-check \
-                    || error=$?
-
+                    || { error=$?; continue; }
                 ansible-playbook $script -i "$addr," $extra --vault-password-file ~/vault.txt || error=$?
                 continue;;
         esac
@@ -43,7 +42,7 @@ function run () { #--------------------------------| Main function |------------
             case $type in
 
                 sh)
-                    ssh -ttt $sopt $addr "cd $wdir; bash $tmp_folder/$filename $opt" || {
+                    ssh -ttt $sopt $addr "cd $wdir; bash $tmp_folder/$filename $opt"   || {
                     error=$?; printf "\n<b>Script ended with error: $error</b>\n"
                 };;
 
@@ -55,6 +54,7 @@ function run () { #--------------------------------| Main function |------------
                 sql)
                     # Run script
                     result=`ssh -ttt $sopt $addr "$wdir/krupd execsql $tmp_folder/$filename"` && {
+
                         # Show result
                         printf "$result\n"
 
@@ -68,8 +68,7 @@ function run () { #--------------------------------| Main function |------------
 
                 *)
                     printf "Unknown script type, exit.\n"
-                    error=1
-                    continue;;
+                    error=1; continue;;
 
             esac
 
