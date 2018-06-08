@@ -54,12 +54,12 @@ class Project(models.Model):
 
 class Server(models.Model):
 	"""Серверы проекта."""
+	wdir = models.CharField(max_length=255, default='/var/lib/jboss')
 	date = models.DateTimeField(auto_now_add=True, db_index=True)
 	port = models.CharField(max_length=5, default='8080')
 	opts = models.CharField(max_length=255, blank=True)  # SSH options
 	addr = models.CharField(max_length=255)              # SSH address
 	name = models.CharField(max_length=255)
-	wdir = models.CharField(max_length=255)
 	desc = models.TextField(max_length=255)
 	proj = models.ForeignKey(Project)
 	user = models.ForeignKey(User)
