@@ -785,12 +785,10 @@ def run_cmd(data, project, user):
 	if job:
 		for jobi in data.getlist('selected_jobs'):
 
-			print jobi
 			jobj = get_object_or_404(Job, cron=jobi)
 			serv = jobj.serv
 			uniq = get_key()
 			logi = logi + '&logid=%s' % uniq
-			print jobj.cron
 
 			selected.update({'cron': uniq, 'uniq': uniq, 'serv': serv, 'jobj': jobj})
 			add_event(selected)
