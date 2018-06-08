@@ -61,7 +61,7 @@ function run () { #--------------------------------| Main function |------------
                         # Save result to file and make it downloadable
                         cat >> $dumpdir/${filename}_$key.log <<< "$result"
 
-                        printf "\n<b>Log will be stored until tomorrow, please download if you need it!</b>"
+                        printf "\n<b>Log will be stored until tomorrow, download it please if you need it!</b>"
                         printf "\n<a class='btn btn-primary' href='/dumps/${filename}_$key.log'>Download</a>\n"
 
                     } || { error=$?; printf "\n<b>Script ended with error: $error</b>\n"; };;
