@@ -9,7 +9,8 @@
      onclick="window.open('/command_log/?cmd={{cmd}}&prid={{project.id}}&logid={{event.uniq}}', '_blank');">
 
     <div class="panel-heading">
-        <h4>{{event.serv.name}} - {{event.name|lower}}</h4>
+        <!--<h4>{{event.serv.name}} - {{event.name|lower}}</h4>-->
+        <h4>{{event.name }} on {{event.serv.name}}</h4>
     </div>
 
     <div class="panel-body">
