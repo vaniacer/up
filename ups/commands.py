@@ -804,7 +804,7 @@ def run_cmd(data, project, user):
 			serv = get_object_or_404(Server, id=server_id)
 
 			selected.update({'uniq': uniq, 'serv': serv})
-			selected['opt'] = ['-server', '%s:%s:%s' % (serv.addr, serv.wdir, serv.port), ]
+			selected['opt'] = ['-server', '%s:%s:%s' % (serv.addr, serv.wdir, serv.port)]
 
 			if data['run_type'] == 'CRON':
 				if not his:
@@ -814,7 +814,7 @@ def run_cmd(data, project, user):
 				add_job(selected)
 
 				selected['name'] = 'Set cron job - %s' % name.lower()
-				selected['opt'].extend(['-cmd',  'cron.sh', '-run', bash, '-cid', uniq, ])
+				selected['opt'].extend(['-cmd',  'cron.sh', '-run', bash, '-cid', uniq])
 			else:
 				selected['opt'].extend(['-cmd', bash])
 
@@ -825,8 +825,8 @@ def run_cmd(data, project, user):
 			starter(selected)
 
 	if his:
-		url = '/projects/%s/?cmdlog=%s%s%s' % (project.id, name, info(data), logi,)
+		url = '/projects/%s/?cmdlog=%s%s%s' % (project.id, name, info(data), logi)
 	else:
-		url = '/command_log/?cmd=%s&prid=%s%s%s' % (name, project.id, info(data), logi,)
+		url = '/command_log/?cmd=%s&prid=%s%s%s' % (name, project.id, info(data), logi)
 
 	return url
