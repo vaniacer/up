@@ -29,7 +29,7 @@ function run () { #---------------------------------| Main function |-----------
     # Set crontab job
     JS="#`line '=' 28`| job $key start |`line '=' 28`"
     JE="#`line '=' 28`|  job $key end  |`line '=' 28`"
-    printf "$JS\n$date $cmnd $optcrn; $cncl$JE\n" >> "$cronfile" || error=$?
+    printf "$JS\n$date $cmnd $optcrn ; $cncl$JE\n" >> "$cronfile" || error=$?
 
     # Info
     $cmnd "${optdsc[@]}" -desc true || error=$? # Show description of command

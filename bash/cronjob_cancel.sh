@@ -7,6 +7,7 @@ function description () { #---------------------| Function description |--------
 function run () { #---------------------------------| Main function |---------------------------------------------------
 
     printf "\nCancel job $job_id\n"
+
     sed "/$job_id/d" -i /var/spool/cron/crontabs/$USER || error=$?
 
 } #---------------------------------------------------------------------------------------------------------------------

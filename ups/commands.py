@@ -689,8 +689,18 @@ def job_opt(selected):
 		selected['jobj'].save()
 
 
+def history(selected):
+	"""Создает событие в истории"""
+	if selected['his']:
+		selected['opt'].extend(['-hid', selected['uniq']])
+		add_event(selected)
+
+
 def starter(selected):
 	"""Выполняет комманду."""
+
+	history(selected)
+
 	opt = [
 		conf.BASE_DIR + '/bash/starter.sh',
 		'-prj',  '%s:%s' % (str(selected['proj'].id), str(selected['proj'].name)),
@@ -721,15 +731,10 @@ def run_cmd(data, project, user):
 	"""Запускает выбранную команду."""
 	check_perm_or404('run_command', project, user)
 
-	logi = ''
 	date = run_date()
 
 	name = data['selected_command']
 	bash = commandick[name]['bash']
-
-	his = commandick[name]['his']
-	job = commandick[name]['job']
-	srv = commandick[name]['srv']
 
 	if data['selected_date'] and data['selected_time']:
 		date = '%s %s' % (data['selected_date'], data['selected_time'])
@@ -739,58 +744,64 @@ def run_cmd(data, project, user):
 		'cron': '',
 		'uniq': '',
 		'exit': '',
+		'logi': '',
 		'serv': None,
 		'name': name,
 		'user': user,
 		'cdat': date,
 		'proj': project,
 		'desc': 'Working...',
+
+		'his': commandick[name]['his'],
+		'job': commandick[name]['job'],
+		'srv': commandick[name]['srv'],
+
 		'dbdumps': data.getlist('selected_dbdumps'),
 		'updates': data.getlist('selected_updates'),
 		'scripts': data.getlist('selected_scripts'),
 	}
 
-	if job == 'true':
+	# Cronjob specific commands
+	if selected['job'] == 'true':
 
 		for jobi in data.getlist('selected_jobs'):
 
 			jobj = get_object_or_404(Job, cron=jobi)
 			serv = jobj.serv
 			uniq = get_key()
-			logi = logi + '&logid=%s' % uniq
 
+			selected['logi'] += '&logid=%s' % uniq
+			selected['opt'] = ['-job', jobi, '-cmd', bash]
 			selected.update({'cron': uniq, 'uniq': uniq, 'serv': serv, 'jobj': jobj})
-			add_event(selected)
-			job_opt(selected)
 
-			selected['opt'] = ['-job', jobi, '-hid', uniq, '-cmd', bash]
+			job_opt(selected)
 			starter(selected)
 
-	elif srv == 'false':
+	# Commands that runs without server(s)
+	elif selected['srv'] == 'false':
 
 			uniq = get_key()
-			logi = logi + '&logid=%s' % uniq
 
+			selected.update({'uniq': uniq})
 			selected['opt'] = ['-cmd', bash]
-			selected['uniq'] = uniq
-			if his:
-				selected['opt'].extend(['-hid', uniq])
-				add_event(selected)
+			selected['logi'] += '&logid=%s' % uniq
+
 			starter(selected)
 
+	# Server commands
 	else:
 
 		for server_id in data.getlist('selected_servers'):
 
 			uniq = get_key()
-			logi = logi + '&logid=%s' % uniq
 			serv = get_object_or_404(Server, id=server_id)
 
+			selected['logi'] += '&logid=%s' % uniq
 			selected.update({'uniq': uniq, 'serv': serv})
 			selected['opt'] = ['-server', '%s:%s:%s' % (serv.addr, serv.wdir, serv.port)]
 
 			if data['run_type'] == 'CRON':
-				if not his:
+				if not selected['his']:
 					return '/projects/%s/?%s' % (project.id, info(data))
 
 				selected.update({'cron': uniq, 'cdat': date})
@@ -801,15 +812,11 @@ def run_cmd(data, project, user):
 			else:
 				selected['opt'].extend(['-cmd', bash])
 
-			if his:
-				selected['opt'].extend(['-hid', uniq])
-				add_event(selected)
-
 			starter(selected)
 
-	if his:
-		url = '/projects/%s/?cmdlog=%s%s%s' % (project.id, name, info(data), logi)
+	if selected['his']:
+		url = '/projects/%s/?cmdlog=%s%s%s' % (project.id, name, info(data), selected['logi'])
 	else:
-		url = '/command_log/?cmd=%s&prid=%s%s%s' % (name, project.id, info(data), logi)
+		url = '/command_log/?cmd=%s&prid=%s%s%s' % (name, project.id, info(data), selected['logi'])
 
 	return url

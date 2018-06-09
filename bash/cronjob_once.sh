@@ -6,11 +6,20 @@ function description () { #---------------------| Function description |--------
 
 function run () { #---------------------------------| Main function |---------------------------------------------------
 
+    printf "\nSet job $job_id to run once\n"
+
     # Get time
     date=${date% *}; DD=${date##*-}; MM=${date#*-}; MM=${MM%-*}
 
-    printf "\nSet job $job_id to run once\n"
-    sed="s|^.*-C $job_id.*$|&; sed '/$job_id/d' -i '$cronfile'|g;/.*$job_id/ s|\* \* \*|$DD $MM \*|g"
+    job="`grep "\-C $job_id" $cronfile`"   # Get cron string
+    job="${job//'*'/'\*'}"                 # Screen * with \
+    job="${job//-/'\-'}"                   # Screen - with \
+    cut=( $job )                           # Make an array
+    cncl="sed '/$job_id/d' -i '$cronfile'" # Command to delete executed cron job
+    cut[2]="$DD"; cut[3]="$MM"             # Set month and day
+    new="${cut[@]} ; $cncl"                # New cron string
+    sed="/\-C $job_id/c$new"               # Make sed rule, change cron string with '-C $job_id' to $new string
+
     sed "$sed" -i $cronfile || error=$?
 
 } #---------------------------------------------------------------------------------------------------------------------

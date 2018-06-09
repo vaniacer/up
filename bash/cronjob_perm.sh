@@ -7,6 +7,15 @@ function description () { #---------------------| Function description |--------
 function run () { #---------------------------------| Main function |---------------------------------------------------
 
     printf "\nSet job $job_id to run everyday\n"
-    sed "s|;.*$job_id.*$||g;/.*$job_id/ s| [0-9][0-9] [0-9][0-9] \*| \* \* \*|g" -i $cronfile || error=$?
+
+    job="`grep "\-C $job_id" $cronfile`" # Get cron string
+    job="${job//'*'/'\*'}"               # Screen * with \
+    job="${job//-/'\-'}"                 # Screen - with \
+    cut=( $job )                         # Make an array
+    cut[2]='\*'; cut[3]='\*'             # Change month and day to \*
+    new="${cut[@]::${#cut[@]}-5}"        # New cron string
+    sed="/\-C $job_id/c$new"             # Make sed rule, change cron string with '-C $job_id' to $new string
+
+    sed "$sed" -i $cronfile || error=$?
 
 } #---------------------------------------------------------------------------------------------------------------------
