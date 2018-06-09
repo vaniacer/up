@@ -15,7 +15,7 @@ function run () { #--------------------------------| Main function |------------
     ssh -ttt $sopt $addr "
         find $wdir/jboss-bas-*/standalone/log -type f -daystart -ctime 0 | xargs zip -jy $arhive > /dev/null" && {
 
-            echo -e "\nСоздан архив \"$arhive\"."; download
+            echo -e "\nСоздан архив \"$arhive\"."; download "$arhive"
 
         } || { error=$?; printf "No files found."; }
 

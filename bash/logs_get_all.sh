@@ -14,7 +14,7 @@ function run () { #--------------------------------| Main function |------------
 
     ssh -ttt $sopt $addr "zip -jy $arhive $wdir/jboss-bas-*/standalone/log/* > /dev/null" && {
 
-        echo -e "\nСоздан архив \"$arhive\"."; download
+        echo -e "\nСоздан архив \"$arhive\"."; download "$arhive"
 
     } || error=$?
 

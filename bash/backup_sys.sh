@@ -8,6 +8,6 @@ function description () { #---------------------| Function description |--------
 function run () { #--------------------------------| Main function |---------------------------------------------------
 
     addr # Get server address
-    ssh -ttt $sopt $addr "$wdir/krupd bkp sys" || error=$?; download
+    ssh -ttt $sopt $addr "$wdir/krupd bkp sys" || error=$?
 
 } #---------------------------------------------------------------------------------------------------------------------
