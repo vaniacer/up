@@ -29,8 +29,8 @@ commandick = {
 		'dmp': 'false',                           # Check if some dumps selected
 		'dgr': 'false',                           # If true will show confirmation window
 		'run': "run_or_cron('RUN');",             # If set to "run_or_cron('RUN');" then command will be run only
-		'history': True,                          # Save or not command log to history
-		'tag':     False,                         # Show or not html tags in command log
+		'his': True,                              # Save or not command log to history
+		'tag': False,                             # Show or not html tags in command log
 	},
 
 	'change_date': {
@@ -48,8 +48,8 @@ commandick = {
 		'dmp': 'false',
 		'dgr': 'false',
 		'run': "run_or_cron('RUN');",
-		'history': True,
-		'tag':     False,
+		'his': True,
+		'tag': False,
 	},
 
 	'permanent_job':   {
@@ -67,8 +67,8 @@ commandick = {
 		'dmp': 'false',
 		'dgr': 'false',
 		'run': "run_or_cron('RUN');",
-		'history': True,
-		'tag':     False,
+		'his': True,
+		'tag': False,
 	},
 
 	'once_job': {
@@ -86,8 +86,8 @@ commandick = {
 		'dmp': 'false',
 		'dgr': 'false',
 		'run': "run_or_cron('RUN');",
-		'history': True,
-		'tag':     False,
+		'his': True,
+		'tag': False,
 	},
 
 	# Dumps section }---------------------------------------------------------------------------------------------------
@@ -106,8 +106,8 @@ commandick = {
 		'dmp': 'false',
 		'dgr': 'false',
 		'run': '',
-		'history': True,
-		'tag':     True,
+		'his': True,
+		'tag': True,
 	},
 
 	'del_dump': {
@@ -125,8 +125,8 @@ commandick = {
 		'dmp': 'true',
 		'dgr': 'false',
 		'run': '',
-		'history': True,
-		'tag':     False,
+		'his': True,
+		'tag': False,
 	},
 
 	'send_dump': {
@@ -144,8 +144,8 @@ commandick = {
 		'dmp': 'true',
 		'dgr': 'true',
 		'run': '',
-		'history': True,
-		'tag':     True,
+		'his': True,
+		'tag': True,
 	},
 
 	# Updates section }-------------------------------------------------------------------------------------------------
@@ -164,8 +164,8 @@ commandick = {
 		'dmp': 'false',
 		'dgr': 'false',
 		'run': '',
-		'history': True,
-		'tag':     False,
+		'his': True,
+		'tag': False,
 	},
 
 	'check_updates': {
@@ -183,8 +183,8 @@ commandick = {
 		'dmp': 'false',
 		'dgr': 'false',
 		'run': "run_or_cron('RUN');",
-		'history': False,
-		'tag':     False,
+		'his': False,
+		'tag': False,
 	},
 
 	'update': {
@@ -202,8 +202,8 @@ commandick = {
 		'dmp': 'false',
 		'dgr': 'true',
 		'run': '',
-		'history': True,
-		'tag':     True,
+		'his': True,
+		'tag': True,
 	},
 
 	'del_sel_updates': {
@@ -221,8 +221,8 @@ commandick = {
 		'dmp': 'false',
 		'dgr': 'false',
 		'run': '',
-		'history': True,
-		'tag':     False,
+		'his': True,
+		'tag': False,
 	},
 
 	'del_all_updates': {
@@ -240,8 +240,8 @@ commandick = {
 		'dmp': 'false',
 		'dgr': 'false',
 		'run': '',
-		'history': True,
-		'tag':     False,
+		'his': True,
+		'tag': False,
 	},
 
 	# Script section }--------------------------------------------------------------------------------------------------
@@ -260,8 +260,8 @@ commandick = {
 		'dmp': 'false',
 		'dgr': 'false',
 		'run': '',
-		'history': True,
-		'tag':     True,
+		'his': True,
+		'tag': True,
 	},
 
 	# Server section }--------------------------------------------------------------------------------------------------
@@ -282,8 +282,8 @@ commandick = {
 		'dmp': 'false',
 		'dgr': 'true',
 		'run': '',
-		'history': True,
-		'tag':     False,
+		'his': True,
+		'tag': False,
 	},
 
 	'maintenance_off': {
@@ -301,8 +301,8 @@ commandick = {
 		'dmp': 'false',
 		'dgr': 'true',
 		'run': '',
-		'history': True,
-		'tag':     False,
+		'his': True,
+		'tag': False,
 	},
 
 	# Jboss
@@ -321,8 +321,8 @@ commandick = {
 		'dmp': 'false',
 		'dgr': 'true',
 		'run': '',
-		'history': True,
-		'tag':     False,
+		'his': True,
+		'tag': False,
 	},
 
 	'restart': {
@@ -340,8 +340,8 @@ commandick = {
 		'dmp': 'false',
 		'dgr': 'true',
 		'run': '',
-		'history': True,
-		'tag':     False,
+		'his': True,
+		'tag': False,
 	},
 
 	'start': {
@@ -359,8 +359,8 @@ commandick = {
 		'dmp': 'false',
 		'dgr': 'true',
 		'run': '',
-		'history': True,
-		'tag':     False,
+		'his': True,
+		'tag': False,
 	},
 
 	'stop': {
@@ -378,8 +378,8 @@ commandick = {
 		'dmp': 'false',
 		'dgr': 'true',
 		'run': '',
-		'history': True,
-		'tag':     False,
+		'his': True,
+		'tag': False,
 	},
 
 	'kill': {
@@ -397,8 +397,8 @@ commandick = {
 		'dmp': 'false',
 		'dgr': 'true',
 		'run': '',
-		'history': True,
-		'tag':     False,
+		'his': True,
+		'tag': False,
 	},
 
 	'server_info': {
@@ -416,8 +416,8 @@ commandick = {
 		'dmp': 'false',
 		'dgr': 'false',
 		'run': "run_or_cron('RUN');",
-		'history': False,
-		'tag':     True,
+		'his': False,
+		'tag': True,
 	},
 
 	'check_conf': {
@@ -435,8 +435,8 @@ commandick = {
 		'dmp': 'false',
 		'dgr': 'false',
 		'run': "run_or_cron('RUN');",
-		'history': False,
-		'tag':     False,
+		'his': False,
+		'tag': False,
 	},
 
 	# Logs
@@ -455,8 +455,8 @@ commandick = {
 		'dmp': 'false',
 		'dgr': 'false',
 		'run': "run_or_cron('RUN');",
-		'history': False,
-		'tag':     False,
+		'his': False,
+		'tag': False,
 	},
 
 
@@ -475,8 +475,8 @@ commandick = {
 		'dmp': 'false',
 		'dgr': 'false',
 		'run': '',
-		'history': True,
-		'tag':     True,
+		'his': True,
+		'tag': True,
 	},
 
 	'get_logs_all': {
@@ -494,8 +494,8 @@ commandick = {
 		'dmp': 'false',
 		'dgr': 'false',
 		'run': '',
-		'history': True,
-		'tag':     True,
+		'his': True,
+		'tag': True,
 	},
 
 	# Backup
@@ -514,8 +514,8 @@ commandick = {
 		'dmp': 'false',
 		'dgr': 'false',
 		'run': '',
-		'history': True,
-		'tag':     True,
+		'his': True,
+		'tag': True,
 	},
 
 	'backup_sys': {
@@ -533,8 +533,8 @@ commandick = {
 		'dmp': 'false',
 		'dgr': 'false',
 		'run': '',
-		'history': True,
-		'tag':     True,
+		'his': True,
+		'tag': True,
 	},
 
 	'backup_full': {
@@ -552,8 +552,8 @@ commandick = {
 		'dmp': 'false',
 		'dgr': 'false',
 		'run': '',
-		'history': True,
-		'tag':     True,
+		'his': True,
+		'tag': True,
 	},
 
 	'copy_utils': {
@@ -571,8 +571,8 @@ commandick = {
 		'dmp': 'false',
 		'dgr': 'false',
 		'run': '',
-		'history': True,
-		'tag':     False,
+		'his': True,
+		'tag': False,
 	},
 
 	'tunnel': {
@@ -590,8 +590,8 @@ commandick = {
 		'dmp': 'false',
 		'dgr': 'false',
 		'run': "run_or_cron('RUN');",
-		'history': False,
-		'tag':     True,
+		'his': False,
+		'tag': True,
 	},
 }
 
@@ -727,7 +727,7 @@ def run_cmd(data, project, user):
 	name = data['selected_command']
 	bash = commandick[name]['bash']
 
-	his = commandick[name]['history']
+	his = commandick[name]['his']
 	job = commandick[name]['job']
 	srv = commandick[name]['srv']
 
