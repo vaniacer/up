@@ -157,25 +157,22 @@ EOF
 
 # Copy files created in the process to $dumpdir and add a 'download' button to the output log.
 # Used in backup_* and dump_get.
-function download  ()   {
-    [[ "$cron" ]]  &&   {   name=$(tail -2 $crondir/$cron) ;  } \
-                   ||   {   name=$(tail -2 $rundir/log$key);  }
-                            name=${name#*\"}
-                            name=${name//\"./}
-    ssh $sopt $addr [[ -f "$name" ]] && {
+function download () {
 
-        newname=${addr}_${name//\/*\//}
-        [[ -d $dumpdir/$1 ]] || mkdir $dumpdir/$1
+    remote_file="$1"
+    download_to="$dumpdir/$2"
+    remote_filename=`basename "$1"`
 
-        echo  -e "Копирую файл - ${name}"
-        rsync -e "ssh $sopt" --progress -lzuogthvr $addr:$name $dumpdir/$1/$newname || error=$?
-        case $1 in
-            $pname) printf "\n<a class='btn btn-primary' href='/download_dump/$prj/$newname'>Download</a>\n";;
-                '') printf "\n<b>File will be stored until tomorrow, please download it if you need this file!</b>"
-                    printf "\n<a class='btn btn-primary' href='/dumps/$newname'>Download</a>\n";;
-        esac
+    [[ -d "$download_to" ]] || mkdir -p "$download_to"
 
-    } || { echo "File not found."; error=1; name=; }
+    echo  -e "\n<b>Копирую файл - $remote_filename</b>\n"
+    rsync -e "ssh $sopt" --progress -lzuogthvr $addr:"$remote_file" "$download_to" || { error=$?; return $error; }
+
+    case $2 in
+        $pname) printf "\n<a class='btn btn-primary' href='/download_dump/$prj/$remote_filename'>Download</a>\n";;
+             *) printf "\n<b>File will be stored until tomorrow, please download it if you need this file!</b>"
+                printf "\n<a class='btn btn-primary' href='/dumps/$remote_filename'>Download</a>\n";;
+    esac
 }
 
 # Load 'run' and 'description' functions from $cmd.

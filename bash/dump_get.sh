@@ -7,10 +7,16 @@ function description () { #---------------------| Function description |--------
 
 function run () { #--------------------------------| Main function |---------------------------------------------------
 
-    addr # Get server address
-    ssh -ttt $sopt $addr "$wdir/krupd bkp db" || error=$?; download "$pname"
-    # функция download сохраняет имя файла дампа в переменной $name
-    # удаляю файл $name на сервере после скачивания на ups
-    [[ $name ]] && ssh -ttt $sopt $addr "rm $name"
+    addr              # Get server address
+    create_tmp_folder # Creates tmp folder tmp_folder=$wdir/updates/new/$key
+
+    # Copy dbdump script to server
+    rsync -e "ssh $sopt" --progress -lzuogthvr $workdir/remote_db.sh $addr:$tmp_folder > /dev/null || error=$?
+
+    # Run script, run download
+    ssh -ttt $sopt $addr "cd $tmp_folder; bash remote_db.sh $wdir $addr" && download "$tmp_folder/"*.gz "$pname"
+
+    # Delete tmp folder after execution
+    ssh $sopt $addr "rm -r $tmp_folder" || error=$?
 
 } #---------------------------------------------------------------------------------------------------------------------

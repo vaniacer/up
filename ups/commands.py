@@ -762,16 +762,17 @@ def run_cmd(data, project, user):
 
 	job = commandick[name]['cron']
 	his = commandick[name]['history']
+	srv = commandick[name]['srv']
 
 	if data['selected_date'] and data['selected_time']:
 		date = '%s %s' % (data['selected_date'], data['selected_time'])
 
 	selected = {
 		'jobj': '',
-		'serv': '',
 		'cron': '',
 		'uniq': '',
 		'exit': '',
+		'serv': None,
 		'name': name,
 		'user': user,
 		'cdat': date,
@@ -797,32 +798,46 @@ def run_cmd(data, project, user):
 			selected['opt'] = ['-job', jobi, '-hid', uniq, '-cmd', bash]
 			starter(selected)
 	else:
-		for server_id in data.getlist('selected_servers'):
+
+		if srv == 'false':
 
 			uniq = get_key()
 			logi = logi + '&logid=%s' % uniq
-			serv = get_object_or_404(Server, id=server_id)
 
-			selected.update({'uniq': uniq, 'serv': serv})
-			selected['opt'] = ['-server', '%s:%s:%s' % (serv.addr, serv.wdir, serv.port)]
-
-			if data['run_type'] == 'CRON':
-				if not his:
-					return '/projects/%s/?%s' % (project.id, info(data))
-
-				selected.update({'cron': uniq, 'cdat': date})
-				add_job(selected)
-
-				selected['name'] = 'Set cron job - %s' % name.lower()
-				selected['opt'].extend(['-cmd',  'cron.sh', '-run', bash, '-cid', uniq])
-			else:
-				selected['opt'].extend(['-cmd', bash])
-
+			selected['opt'] = ['-cmd', bash]
+			selected['uniq'] = uniq
 			if his:
 				selected['opt'].extend(['-hid', uniq])
 				add_event(selected)
-
 			starter(selected)
+
+		else:
+			for server_id in data.getlist('selected_servers'):
+
+				uniq = get_key()
+				logi = logi + '&logid=%s' % uniq
+				serv = get_object_or_404(Server, id=server_id)
+
+				selected.update({'uniq': uniq, 'serv': serv})
+				selected['opt'] = ['-server', '%s:%s:%s' % (serv.addr, serv.wdir, serv.port)]
+
+				if data['run_type'] == 'CRON':
+					if not his:
+						return '/projects/%s/?%s' % (project.id, info(data))
+
+					selected.update({'cron': uniq, 'cdat': date})
+					add_job(selected)
+
+					selected['name'] = 'Set cron job - %s' % name.lower()
+					selected['opt'].extend(['-cmd',  'cron.sh', '-run', bash, '-cid', uniq])
+				else:
+					selected['opt'].extend(['-cmd', bash])
+
+				if his:
+					selected['opt'].extend(['-hid', uniq])
+					add_event(selected)
+
+				starter(selected)
 
 	if his:
 		url = '/projects/%s/?cmdlog=%s%s%s' % (project.id, name, info(data), logi)
