@@ -31,7 +31,6 @@ commandick = {
 		'run': "run_or_cron('RUN');",             # If set to "run_or_cron('RUN');" then command will be run only
 		'history': True,                          # Save or not command log to history
 		'tag':     False,                         # Show or not html tags in command log
-		'cron':    True,                          # This command is for cronjobs
 	},
 
 	'change_date': {
@@ -51,7 +50,6 @@ commandick = {
 		'run': "run_or_cron('RUN');",
 		'history': True,
 		'tag':     False,
-		'cron':    True,
 	},
 
 	'permanent_job':   {
@@ -71,7 +69,6 @@ commandick = {
 		'run': "run_or_cron('RUN');",
 		'history': True,
 		'tag':     False,
-		'cron':    True,
 	},
 
 	'once_job': {
@@ -91,7 +88,6 @@ commandick = {
 		'run': "run_or_cron('RUN');",
 		'history': True,
 		'tag':     False,
-		'cron':    True,
 	},
 
 	# Dumps section }---------------------------------------------------------------------------------------------------
@@ -112,7 +108,6 @@ commandick = {
 		'run': '',
 		'history': True,
 		'tag':     True,
-		'cron':    False,
 	},
 
 	'del_dump': {
@@ -132,7 +127,6 @@ commandick = {
 		'run': '',
 		'history': True,
 		'tag':     False,
-		'cron':    False,
 	},
 
 	'send_dump': {
@@ -152,7 +146,6 @@ commandick = {
 		'run': '',
 		'history': True,
 		'tag':     True,
-		'cron':    False,
 	},
 
 	# Updates section }-------------------------------------------------------------------------------------------------
@@ -173,7 +166,6 @@ commandick = {
 		'run': '',
 		'history': True,
 		'tag':     False,
-		'cron':    False,
 	},
 
 	'check_updates': {
@@ -193,7 +185,6 @@ commandick = {
 		'run': "run_or_cron('RUN');",
 		'history': False,
 		'tag':     False,
-		'cron':    False,
 	},
 
 	'update': {
@@ -213,7 +204,6 @@ commandick = {
 		'run': '',
 		'history': True,
 		'tag':     True,
-		'cron':    False,
 	},
 
 	'del_sel_updates': {
@@ -233,7 +223,6 @@ commandick = {
 		'run': '',
 		'history': True,
 		'tag':     False,
-		'cron':    False,
 	},
 
 	'del_all_updates': {
@@ -253,7 +242,6 @@ commandick = {
 		'run': '',
 		'history': True,
 		'tag':     False,
-		'cron':    False,
 	},
 
 	# Script section }--------------------------------------------------------------------------------------------------
@@ -274,7 +262,6 @@ commandick = {
 		'run': '',
 		'history': True,
 		'tag':     True,
-		'cron':    False,
 	},
 
 	# Server section }--------------------------------------------------------------------------------------------------
@@ -297,7 +284,6 @@ commandick = {
 		'run': '',
 		'history': True,
 		'tag':     False,
-		'cron':    False,
 	},
 
 	'maintenance_off': {
@@ -317,7 +303,6 @@ commandick = {
 		'run': '',
 		'history': True,
 		'tag':     False,
-		'cron':    False,
 	},
 
 	# Jboss
@@ -338,7 +323,6 @@ commandick = {
 		'run': '',
 		'history': True,
 		'tag':     False,
-		'cron':    False,
 	},
 
 	'restart': {
@@ -358,7 +342,6 @@ commandick = {
 		'run': '',
 		'history': True,
 		'tag':     False,
-		'cron':    False,
 	},
 
 	'start': {
@@ -378,7 +361,6 @@ commandick = {
 		'run': '',
 		'history': True,
 		'tag':     False,
-		'cron':    False,
 	},
 
 	'stop': {
@@ -398,7 +380,6 @@ commandick = {
 		'run': '',
 		'history': True,
 		'tag':     False,
-		'cron':    False,
 	},
 
 	'kill': {
@@ -418,7 +399,6 @@ commandick = {
 		'run': '',
 		'history': True,
 		'tag':     False,
-		'cron':    False,
 	},
 
 	'server_info': {
@@ -438,7 +418,6 @@ commandick = {
 		'run': "run_or_cron('RUN');",
 		'history': False,
 		'tag':     True,
-		'cron':    False,
 	},
 
 	'check_conf': {
@@ -458,7 +437,6 @@ commandick = {
 		'run': "run_or_cron('RUN');",
 		'history': False,
 		'tag':     False,
-		'cron':    False,
 	},
 
 	# Logs
@@ -479,7 +457,6 @@ commandick = {
 		'run': "run_or_cron('RUN');",
 		'history': False,
 		'tag':     False,
-		'cron':    False,
 	},
 
 
@@ -500,7 +477,6 @@ commandick = {
 		'run': '',
 		'history': True,
 		'tag':     True,
-		'cron':    False,
 	},
 
 	'get_logs_all': {
@@ -520,7 +496,6 @@ commandick = {
 		'run': '',
 		'history': True,
 		'tag':     True,
-		'cron':    False,
 	},
 
 	# Backup
@@ -528,8 +503,7 @@ commandick = {
 		'name': 'backup_db',
 		'position': 60,
 		'section': 'server',
-		'title': 'Database backup via "./krupd bkp db". \
-Files will be stored on the server(s) and downloaded to UpS.',
+		'title': 'Database backup, files will be stored on the server(s) and downloaded to UpS.',
 		'class': '',
 		'menu': 'Backup base',
 		'bash': 'backup_db.sh',
@@ -542,15 +516,13 @@ Files will be stored on the server(s) and downloaded to UpS.',
 		'run': '',
 		'history': True,
 		'tag':     True,
-		'cron':    False,
 	},
 
 	'backup_sys': {
 		'name': 'backup_sys',
 		'position': 61,
 		'section': 'server',
-		'title': 'System backup via "./krupd bkp sys". \
-Files will be stored on the server(s) and downloaded to UpS.',
+		'title': 'System backup files will be stored on the server(s) and downloaded to UpS.',
 		'class': '',
 		'menu': 'Backup system',
 		'bash': 'backup_sys.sh',
@@ -563,15 +535,13 @@ Files will be stored on the server(s) and downloaded to UpS.',
 		'run': '',
 		'history': True,
 		'tag':     True,
-		'cron':    False,
 	},
 
 	'backup_full': {
 		'name': 'backup_full',
 		'position': 62,
 		'section': 'server',
-		'title': 'System and DB backup via "./krupd bkp full". \
-Files will be stored on the server(s) and downloaded to UpS.',
+		'title': 'System and DB backup files will be stored on the server(s) and downloaded to UpS.',
 		'class': '',
 		'menu': 'Backup full',
 		'bash': 'backup_full.sh',
@@ -584,7 +554,6 @@ Files will be stored on the server(s) and downloaded to UpS.',
 		'run': '',
 		'history': True,
 		'tag':     True,
-		'cron':    False,
 	},
 
 	'copy_utils': {
@@ -604,7 +573,6 @@ Files will be stored on the server(s) and downloaded to UpS.',
 		'run': '',
 		'history': True,
 		'tag':     False,
-		'cron':    False,
 	},
 
 	'tunnel': {
@@ -624,7 +592,6 @@ Files will be stored on the server(s) and downloaded to UpS.',
 		'run': "run_or_cron('RUN');",
 		'history': False,
 		'tag':     True,
-		'cron':    False,
 	},
 }
 
@@ -760,8 +727,8 @@ def run_cmd(data, project, user):
 	name = data['selected_command']
 	bash = commandick[name]['bash']
 
-	job = commandick[name]['cron']
 	his = commandick[name]['history']
+	job = commandick[name]['job']
 	srv = commandick[name]['srv']
 
 	if data['selected_date'] and data['selected_time']:
@@ -783,7 +750,8 @@ def run_cmd(data, project, user):
 		'scripts': data.getlist('selected_scripts'),
 	}
 
-	if job:
+	if job == 'true':
+
 		for jobi in data.getlist('selected_jobs'):
 
 			jobj = get_object_or_404(Job, cron=jobi)
@@ -797,9 +765,8 @@ def run_cmd(data, project, user):
 
 			selected['opt'] = ['-job', jobi, '-hid', uniq, '-cmd', bash]
 			starter(selected)
-	else:
 
-		if srv == 'false':
+	elif srv == 'false':
 
 			uniq = get_key()
 			logi = logi + '&logid=%s' % uniq
@@ -811,33 +778,34 @@ def run_cmd(data, project, user):
 				add_event(selected)
 			starter(selected)
 
-		else:
-			for server_id in data.getlist('selected_servers'):
+	else:
 
-				uniq = get_key()
-				logi = logi + '&logid=%s' % uniq
-				serv = get_object_or_404(Server, id=server_id)
+		for server_id in data.getlist('selected_servers'):
 
-				selected.update({'uniq': uniq, 'serv': serv})
-				selected['opt'] = ['-server', '%s:%s:%s' % (serv.addr, serv.wdir, serv.port)]
+			uniq = get_key()
+			logi = logi + '&logid=%s' % uniq
+			serv = get_object_or_404(Server, id=server_id)
 
-				if data['run_type'] == 'CRON':
-					if not his:
-						return '/projects/%s/?%s' % (project.id, info(data))
+			selected.update({'uniq': uniq, 'serv': serv})
+			selected['opt'] = ['-server', '%s:%s:%s' % (serv.addr, serv.wdir, serv.port)]
 
-					selected.update({'cron': uniq, 'cdat': date})
-					add_job(selected)
+			if data['run_type'] == 'CRON':
+				if not his:
+					return '/projects/%s/?%s' % (project.id, info(data))
 
-					selected['name'] = 'Set cron job - %s' % name.lower()
-					selected['opt'].extend(['-cmd',  'cron.sh', '-run', bash, '-cid', uniq])
-				else:
-					selected['opt'].extend(['-cmd', bash])
+				selected.update({'cron': uniq, 'cdat': date})
+				add_job(selected)
 
-				if his:
-					selected['opt'].extend(['-hid', uniq])
-					add_event(selected)
+				selected['name'] = 'Set cron job - %s' % name.lower()
+				selected['opt'].extend(['-cmd',  'cron.sh', '-run', bash, '-cid', uniq])
+			else:
+				selected['opt'].extend(['-cmd', bash])
 
-				starter(selected)
+			if his:
+				selected['opt'].extend(['-hid', uniq])
+				add_event(selected)
+
+			starter(selected)
 
 	if his:
 		url = '/projects/%s/?cmdlog=%s%s%s' % (project.id, name, info(data), logi)

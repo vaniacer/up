@@ -1,7 +1,6 @@
 #!/bin/bash
 
 confolder="$1"
-servrname=$2
 
 rawdta=$(grep '"DataaccessDS"' -A12 "$confolder"/jboss-bas-*/standalone/configuration/standalone-full.xml)
 dbuser=${rawdta//*<user-name>/}; dbuser=${dbuser//<\/user-name>*/}
@@ -11,6 +10,6 @@ dbport=${rawdta//*${dbhost}:/};  dbport=${dbport//\/*/}
 dbname=${rawdta//*${dbport}\//}; dbname=${dbname//<*/}
 dbopts="-h $dbhost -p $dbport -U $dbuser"
 
-filename="${servrname}_`printf "%(%d-%m-%Y)T"`.gz"
+filename="${2:-$dbname}_`printf "%(%d-%m-%Y)T"`.gz"
 
 PGPASSWORD="$dbpass" pg_dump -Ox $dbopts -d $dbname | gzip > "$filename" || exit 1
