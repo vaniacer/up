@@ -14,7 +14,7 @@ function run () { #--------------------------------| Main function |------------
     rsync -e "ssh $sopt" --progress -lzuogthvr $workdir/remote_sys.sh $addr:$tmp_folder > /dev/null || error=$?
 
     # Run script, run download
-    ssh -ttt $sopt $addr "cd $tmp_folder; bash remote_sys.sh $wdir" \
+    ssh -ttt $sopt $addr "cd $tmp_folder; bash remote_sys.sh $wdir ${addr}_system" \
         && download "$tmp_folder/"*.zip || error=$?
 
     # Move archive to backup folder

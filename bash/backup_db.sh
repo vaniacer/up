@@ -14,7 +14,7 @@ function run () { #--------------------------------| Main function |------------
     rsync -e "ssh $sopt" --progress -lzuogthvr $workdir/remote_db.sh $addr:$tmp_folder > /dev/null || error=$?
 
     # Run script, run download
-    ssh -ttt $sopt $addr "cd $tmp_folder; bash remote_db.sh $wdir" \
+    ssh -ttt $sopt $addr "cd $tmp_folder; bash remote_db.sh $wdir ${addr}_dbdump" \
         && download "$tmp_folder/"*.gz || error=$?
 
     # Move dump to backup folder

@@ -10,7 +10,7 @@ function run () { #--------------------------------| Main function |------------
     addr              # Get server address
     create_tmp_folder # Creates tmp folder tmp_folder=$wdir/updates/new/$key
 
-    arhive="$tmp_folder/daylogs.zip"
+    arhive="$tmp_folder/${addr}_daylogs_`printf "%(%d-%m-%Y)T"`.zip"
 
     ssh -ttt $sopt $addr "
         find $wdir/jboss-bas-*/standalone/log -type f -daystart -ctime 0 | xargs zip -jy $arhive > /dev/null" && {
