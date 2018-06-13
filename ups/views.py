@@ -170,10 +170,6 @@ def command_log(request):
 		final[logid] = False
 		try:
 			event = get_object_or_404(History, uniq=logid)
-		except:
-			pass
-
-		try:
 			err = int(event.exit)
 			final[logid] = True
 			log = event.desc

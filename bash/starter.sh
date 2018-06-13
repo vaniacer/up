@@ -70,6 +70,8 @@ function make_history () {
             -d ${dbconf[dbname]} \
             -c "UPDATE ups_history SET \"desc\" = \$$ $LOG \$$, exit = \$$ $error \$$
                 WHERE uniq = '$key' AND proj_id = $prj;$job_update"
+
+    rm $rundir/*$key
 }
 
 # Checks existence of updates/new folder in workdir, creates if not
@@ -203,9 +205,7 @@ function starter () {
                 run        &> $rundir/log$key
                 echo $error > $rundir/err$key
                 sleep 2
-                [[ $hid ]] && make_history
-                sleep 2
-                rm $rundir/*$key
+                [[ $hid ]] && make_history || { sleep 10; rm $rundir/*$key; }
              }
 }
 
