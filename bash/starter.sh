@@ -184,10 +184,9 @@ function download () {
 function cancel () {
     error=1
     printf '\n<b>Interrupted...</b>'
-    [[ $hid ]] && make_history
     tmp_folder=$wdir/updates/new/$key
+    [[ $hid ]] && make_history || rm $rundir/*$key
     ssh $sopt $addr "[[ -d $tmp_folder ]] && rm -r $tmp_folder" || error=$?
-    rm $rundir/*$key
     exit $error
 }
 
