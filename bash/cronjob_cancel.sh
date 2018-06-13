@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function description () { #---------------------| Function description |------------------------------------------------
-    printf "\nDelete cron job(s):\n"; for i in "${jobs[@]//\'/}"; { echo "$i"; }
+    printf "\nCancel cron job $job_id\n"
 }
 
 function run () { #---------------------------------| Main function |---------------------------------------------------
