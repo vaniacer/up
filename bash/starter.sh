@@ -204,7 +204,6 @@ function starter () {
                 echo $$     > $rundir/pid$key
                 run        &> $rundir/log$key
                 echo $error > $rundir/err$key
-                sleep 2
                 [[ $hid ]] && make_history || { sleep 10; rm $rundir/*$key; }
              }
 }
