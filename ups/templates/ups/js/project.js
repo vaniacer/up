@@ -113,6 +113,7 @@ function selector(box_id, body_id, name, obj) {
     var txt = '<a title=\"Deselect ' + name + '\" href=\"javascript:;\" onclick=\"selector(\''
         + box_id + '\', \'' + body_id + '\', \'' + name + '\', \''+ obj + '\')\">' + name + '</a> | '
 
+    if (!box) { return; }
     function change(list) {
         if ( box.checked == false ) {
             box.checked = true; body.classList.add('selected');

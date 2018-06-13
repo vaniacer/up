@@ -25,8 +25,8 @@
                 <span id="dh{{dump.id}}"
                       title="Show\Hide this dump info."
                       class="glyphicon glyphicon-menu-down dshow right"
-                      onclick="selector('dx{{dump.id}}', 'db{{dump.id}}', '{{dump.name}}', 'SD');
-                               show_or_hide_this('dh{{dump.id}}', 'dp{{dump.id}}')">
+                      onclick="show_or_hide_this('dh{{dump.id}}', 'dp{{dump.id}}');
+                               selector('dx{{dump.id}}', 'db{{dump.id}}', '{{dump.name}}', 'SD')">
                 </span>
             </div>
 
@@ -41,6 +41,8 @@
                     value="{{dump.name}}"
                     data-target="{{dump.name}}"/>
         {% endif %}
+
+
 
     {% empty %}
         There are no dumps for this project yet.

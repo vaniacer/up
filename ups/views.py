@@ -207,8 +207,6 @@ def project(request, project_id):
 		url = run_cmd(data, current_project, request.user)
 		return HttpResponseRedirect(url)
 
-	get_cron_logs()
-
 	servers_filter = data.get('servers', '')
 	servers = current_project.server_set.order_by('name')
 	servers_filtered = servers.filter(name__iregex=servers_filter)
@@ -232,9 +230,6 @@ def project(request, project_id):
 	commandsorted = sorted(commandick.itervalues(), key=itemgetter('position'))
 	hide_info_form = HideInfoForm(initial=data)
 
-	logids = data.getlist('logid') or []
-	cmdlog = data.get('cmdlog') or ''
-
 	context = {
 		'info': info(data),
 		'updates': updates,
@@ -255,6 +250,12 @@ def project(request, project_id):
 	}
 
 	if check_permission('run_command', current_project, request.user):
+
+		get_cron_logs()
+
+		cmdlog = data.get('cmdlog') or ''
+		logids = data.getlist('logid') or []
+
 		history = current_project.history_set.order_by('date').reverse()
 		cronjob = current_project.job_set.order_by('date').reverse()
 		history, hist_fd, hist_bk = pagination(request, history)
