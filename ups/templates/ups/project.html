@@ -135,7 +135,8 @@
                             {% endif %}
 
                             {% for log in logs %}
-                                <iframe src="/mini_log/?cmd={{cmdlog}}&prid={{project.id}}&logid={{log}}"></iframe>
+                                <iframe scrolling="no"
+                                        src="/mini_log/?cmd={{cmdlog}}&prid={{project.id}}&logid={{log}}"></iframe>
                             {% endfor %}
 
                             <br><br><br>
