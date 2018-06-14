@@ -42,8 +42,9 @@
 
 /*-----{ Mini logs }-----*/
 iframe {
-    width:    33%;
-    padding:  3px;
+    height:  60;
+    width:   100%;
+    padding: 3px;
 }
 
 .mini_log:hover {
