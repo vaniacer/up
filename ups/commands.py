@@ -777,7 +777,7 @@ def run_cmd(data, project, user):
 			job_opt(selected)
 			starter(selected)
 
-	# Commands that runs without server(s)
+	# Commands that can run without server(s)
 	elif selected['srv'] == 'false':
 
 			uniq = get_key()

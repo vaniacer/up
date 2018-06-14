@@ -176,6 +176,7 @@ def command_log(request):
 			if err > 0:
 				context['ok'] = 'btn-danger'
 		except:
+			event = None
 			try:
 				log = open(conf.LOG_FILE + logid, 'r').read()
 			except IOError:
@@ -187,7 +188,7 @@ def command_log(request):
 			except IOError:
 				err = 999
 
-		context['logs'].extend([{'id': logid, 'log': log.replace('__URL__', url), 'err': err}])
+		context['logs'].extend([{'id': logid, 'log': log.replace('__URL__', url), 'err': err, 'event': event}])
 
 	if all(value is True for value in final.values()):
 		context['end'] = True
@@ -255,6 +256,13 @@ def project(request, project_id):
 
 		cmdlog = data.get('cmdlog') or ''
 		logids = data.getlist('logid') or []
+
+		if len(logids) > 1:
+			context['allogs'] = '/command_log/?cmd=%s&prid=%s&logid=%s' % (
+				cmdlog,
+				current_project.id,
+				'&logid='.join(logids)
+			)
 
 		history = current_project.history_set.order_by('date').reverse()
 		cronjob = current_project.job_set.order_by('date').reverse()

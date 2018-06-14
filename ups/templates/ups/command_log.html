@@ -21,23 +21,27 @@
         {% for log in logs %}
 
             <dl class="dl-horizontal" id="log{{log.id}}">
+                {% if log.event %}
+                    <dt>Server name</dt><dd>{{log.event.serv}}</dd>
+                {% endif %}
                 {% if tag %}
                     <dt>Event logs</dt><dd class="log"><tt>{{log.log|safe}}</tt></dd>
                 {% else %}
                     <dt>Event logs</dt><dd class="log"><tt>{{log.log}}</tt></dd>
                 {% endif %}
+                {% if log.err < 999 %}
+                    <dt>Error code</dt><dd>{{log.err}}</dd>
+                    {% if log.err > 0 %}
+                        <script type="text/javascript">
+                            document.getElementById('log{{log.id}}').style.background = 'MistyRose';
+                        </script>
+                    {% endif %}
+                {% else %}
+                    <dd><div class="small_loader"></div></dd>
+                {% endif %}
             </dl>
 
-            {% if log.err < 999 %}
-                <dl class="dl-horizontal"><dt>Error code</dt><dd>{{log.err}}</dd></dl>
-                {% if log.err > 0 %}
-                    <script type="text/javascript">
-                        document.getElementById('log{{log.id}}').style.background = 'MistyRose';
-                    </script>
-                {% endif %}
-            {% else %}
-                <dl class="dl-horizontal"><dd><div class="small_loader"></div></dd></dl>
-            {% endif %}
+            <hr>
 
         {% endfor %}
 

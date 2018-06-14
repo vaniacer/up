@@ -44,8 +44,10 @@
 iframe {
     border:   none;
     overflow: hidden;
-    height:   auto;
-    width:    auto;
+    width:    33%;
+    padding:  3px;
+    margin_bottom: 5px;
+    margin_top: 5px;
 }
 
 .mini_log:hover {
@@ -82,6 +84,7 @@ iframe {
 
 .panel:hover, .jumbotron:hover, .well:hover {
     border-color: DarkGrey;
+    cursor: pointer;
 }
 
 .panel-heading { padding: 2px 2px 2px 5px; }
