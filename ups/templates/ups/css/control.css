@@ -42,8 +42,6 @@
 
 /*-----{ Mini logs }-----*/
 iframe {
-    border:   none;
-    overflow: hidden;
     width:    33%;
     padding:  3px;
 }
