@@ -10,9 +10,9 @@ function run () { #--------------------------------| Main function |------------
     # Add server name coz this command not stored in history and don't have event.serv.name
     printf "\n-----{ Server $addr }-----\n"
 
-    timer=60
-    lport=42250     #42250
-    rport=${port}   #8080
+    timer=60      # If not used, connection will be dropped after this amount of seconds
+    lport=42250   # default 42250
+    rport=${port} # default 8080
 
     until ! netstat -ln | grep $lport > /dev/null; do ((lport++)); done
     printf "\n<a class=\"btn btn-primary\" href=\"http://__URL__:$lport/application\">Application</a>\n"
