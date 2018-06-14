@@ -258,6 +258,7 @@ def project(request, project_id):
 		logids = data.getlist('logid') or []
 
 		if len(logids) > 1:
+			# Create allogs url if there are more then 1 log
 			context['allogs'] = '/command_log/?cmd=%s&prid=%s&logid=%s' % (
 				cmdlog,
 				current_project.id,
