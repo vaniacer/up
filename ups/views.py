@@ -38,8 +38,8 @@ def pagination(request, history):
 		history = hist_pages.page(hist_pages.num_pages)
 
 	hist_pg = list(hist_pages.page_range)
-	hist_fd = hist_pg[int(page):int(page) + 4]
-	hist_bk = hist_pg[max(int(page) - 5, 0):int(page) - 1]
+	hist_fd = hist_pg[int(page):int(page) + 2]
+	hist_bk = hist_pg[max(int(page) - 3, 0):int(page) - 1]
 	return history, hist_fd, hist_bk
 
 
