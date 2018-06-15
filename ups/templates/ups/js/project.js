@@ -232,15 +232,18 @@ $(function() {
     var hash = window.location.hash;
     var tabs = document.getElementById('id_tab');
 
-    if (tabs) { if (tabs.value) { hash = '#' + tabs.value; } }
-    else      { tabs.value = hash.replace('#', ''); }
+    if (!hash) { hash = '#scripts'; }
+
+    if (tabs) {
+        if (tabs.value) { hash = '#' + tabs.value; }
+        else            { hash.replace('#', ''); }
+    }
 
     hash && $('ul.nav a[href="' + hash + '"]').tab('show');
 
     function servers(hash) {
-        var tabs = document.getElementById('id_tab');
         show_or_hide_all('dummy', 'servers_tab', 'dummy', 'hide');
-        if (tabs) {tabs.value = hash.replace('#', '');}
+        if (tabs) { tabs.value = hash.replace('#', ''); }
         if (hash == '#scripts' || hash == '#updates' || hash == '#dumps' || hash == '') {
             show_or_hide_all('dummy', 'servers_tab', 'dummy', 'show');
         }
@@ -266,7 +269,6 @@ $(function() {
 
 $(document).ready(function() {
 
-    go_up();
     if (document.getElementById('id_server_info')) {
         if (document.getElementById('id_server_info').checked) {
                show_or_hide_all('id_server_info', 'server-panel', 'sshow', 'show'); }
