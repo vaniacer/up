@@ -1,0 +1,23 @@
+
+<div class="roller"  id="logs_roller">
+
+    <p></p>
+
+    {% if allogs %}
+        <div class="well well-sm"
+             title="View all logs in one window."
+             onclick="window.open('{{allogs}}', '_blank');">
+             <strong>All logs</strong>
+        </div>
+    {% endif %}
+
+    {% for log in logs %}
+        <div class="mini_log">
+            <iframe scrolling="no" frameborder="no"
+                    src="/mini_log/?cmd={{cmdlog}}&prid={{project.id}}&logid={{log}}"></iframe>
+        </div>
+    {% endfor %}
+
+    <hr>
+
+</div>

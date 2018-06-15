@@ -15,12 +15,11 @@
 
 <body>
 
-    <div class="panel {{panel}} mini_log"
+    <div class="panel {{panel}}"
          title="Click to view command log."
          onclick="window.open('/command_log/?cmd={{cmd}}&prid={{project.id}}&logid={{event.uniq}}', '_blank');">
 
         <div class="panel-heading">
-            <!--<h4>{{event.serv.name}} - {{event.name|lower}}</h4>-->
             <nobr>{{event.name}} {% if event.serv %} on <strong>{{event.serv.name}}</strong> {% endif %}</nobr>
         </div>
 

@@ -1,39 +1,38 @@
-{% load bootstrap3 %}
 
-<br>
+<div class="roller" id="history_roller">
 
-{% if history %}
-    {% include "ups/project_history_paginator.html" %}
-{% endif %}
+    {% if history %}
+        {% include "ups/project_history_paginator.html" %}
+    {% endif %}
 
-{% for event in history %}
+    {% for event in history %}
 
-    <dl class="dl-horizontal" id="event{{event.id}}">
-        <!--<dt>Unique ID</dt><dd>{{event.uniq}}</dd>-->
-        {% if event.serv %}
-            <dt>Server name</dt><dd>{{event.serv}}</dd>
-        {% endif %}
-        <dt>Event name</dt><dd>{{event.name}}</dd>
-        <dt>Event date</dt><dd>{{event.date|date:'M d, Y H:i'}}</dd>
-        {% if event.cron %}
-            <dt>Cron date</dt><dd>{{event.cdat|capfirst}}</dd>
-            <dt>Cron name</dt><dd>{{event.cron}}</dd>
-        {% endif %}
-        <dt>Event user</dt><dd>{{event.user}}</dd>
-        <dt>Event logs</dt><dd class="log"><tt>{{event.desc|safe}}</tt></dd>
-        <dt>Error code</dt><dd>{{event.exit}}</dd>
-    </dl>
+        <dl class="dl-horizontal" id="event{{event.id}}">
+            <!--<dt>Unique ID</dt><dd>{{event.uniq}}</dd>-->
+            {% if event.serv %}
+                <dt>Server name</dt><dd>{{event.serv}}</dd>
+            {% endif %}
+            <dt>Event name</dt><dd>{{event.name}}</dd>
+            <dt>Event date</dt><dd>{{event.date|date:'M d, Y H:i'}}</dd>
+            {% if event.cron %}
+                <dt>Cron date</dt><dd>{{event.cdat|capfirst}}</dd>
+                <dt>Cron name</dt><dd>{{event.cron}}</dd>
+            {% endif %}
+            <dt>Event user</dt><dd>{{event.user}}</dd>
+            <dt>Event logs</dt><dd class="log"><tt>{{event.desc|safe}}</tt></dd>
+            <dt>Error code</dt><dd>{{event.exit}}</dd>
 
-    <style onload="color('event{{event.id}}', '{{event.exit}}', '{{event.cron}}')"></style>
+            <dt><style onload="color('event{{event.id}}', '{{event.exit}}', '{{event.cron}}')"></style></dt>
+        </dl>
 
-    <hr>
+        <hr>
 
-{% empty %}
-    There are no events in this project yet.
-{% endfor %}
+    {% empty %}
+        There are no events in this project yet.
+    {% endfor %}
 
-{% if history %}
-    {% include "ups/project_history_paginator.html" %}
-{% endif %}
+    {% if history %}
+        {% include "ups/project_history_paginator.html" %}
+    {% endif %}
 
-<br><br>
+</div>

@@ -1,8 +1,7 @@
-{% load bootstrap3 %}
-
 {% include "ups/project_scripts_buttons.html" %}
 
-<div class="roller">
+<div class="roller" id="scripts_roller">
+
     {% for script in scripts_filtered %}
 
         <div id="xb{{script.id}}"

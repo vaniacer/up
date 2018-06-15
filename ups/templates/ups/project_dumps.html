@@ -2,7 +2,7 @@
 
 {% include "ups/project_dumps_buttons.html" %}
 
-<div class="roller">
+<div class="roller" id="dumps_roller">
     {% for dump in dmplist_filtered %}
 
         <div id="db{{dump.id}}"

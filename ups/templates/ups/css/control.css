@@ -41,10 +41,19 @@
 }
 
 /*-----{ Mini logs }-----*/
-iframe {
-    width:   100%;
-    height:  60px;
-    padding: 3px;
+.mini_log {
+    position: relative;
+    overflow: hidden;
+    padding:  30px;
+    height:   auto;
+}
+
+.mini_log iframe {
+    position: absolute;
+    height:   100%;
+    width:    100%;
+    left:     0;
+    top:      0;
 }
 
 .mini_log:hover {

@@ -15,12 +15,30 @@ function show_loader() {
 }
 
 function go_up() {
+    var tabs = document.getElementById('id_tab');
+
+    if (tabs) {
+        var active_div = document.getElementById(tabs.value + '_roller');
+        var server_div = document.getElementById('servers_roller');
+        active_div.scrollTop = 0;
+        server_div.scrollTop = 0;
+    }
+
     document.body.scrollTop = 0; // For Chrome, Safari and Opera
     document.documentElement.scrollTop = 0; // For IE and Firefox
 }
 
 function go_down() {
+    var tabs = document.getElementById('id_tab');
     var jump = $(document).height();
+
+    if (tabs) {
+        var active_div = document.getElementById(tabs.value + '_roller');
+        var server_div = document.getElementById('servers_roller');
+        active_div.scrollTop = active_div.scrollHeight;
+        server_div.scrollTop = server_div.scrollHeight;
+    }
+
     document.body.scrollTop = jump; // For Chrome, Safari and Opera
     document.documentElement.scrollTop = jump; // For IE and Firefox
 }
@@ -213,10 +231,14 @@ $(function() {
     // Change tab on load
     var hash = window.location.hash;
     var tabs = document.getElementById('id_tab');
+
     if (tabs) { if (tabs.value) { hash = '#' + tabs.value; } }
+    else      { tabs.value = hash.replace('#', ''); }
+
     hash && $('ul.nav a[href="' + hash + '"]').tab('show');
 
     function servers(hash) {
+        var tabs = document.getElementById('id_tab');
         show_or_hide_all('dummy', 'servers_tab', 'dummy', 'hide');
         if (tabs) {tabs.value = hash.replace('#', '');}
         if (hash == '#scripts' || hash == '#updates' || hash == '#dumps' || hash == '') {
@@ -228,8 +250,8 @@ $(function() {
     $('.nav-tabs a').click(function() {
         $(this).tab('show');
         window.location.hash = this.hash;
+        tabs.value = hash.replace('#', '');
         servers(hash);
-        go_up();
     });
 
     // Change tab on hashchange
@@ -237,7 +259,6 @@ $(function() {
         var changedHash = window.location.hash;
         changedHash && $('ul.nav a[href="' + changedHash + '"]').tab('show');
         servers(changedHash);
-        go_up();
     }, false);
 
     servers(hash);

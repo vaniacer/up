@@ -1,44 +1,45 @@
-{% load bootstrap3 %}
 
-<br>
+<div class="roller"  id="cron_roller">
 
-<div class="roller">
+    <p></p>
 
     {% for job in cronjob %}
 
-        <dl id="jb{{job.id}}"
-            class="dl-horizontal job-body"
-            onclick="selector('jx{{job.id}}', 'jb{{job.id}}', '{{job.name}}', 'SJ')">
-            <dt>Job on server</dt><dd>{{job.serv}}</dd>
-            <dt>Cron job id</dt><dd>{{job.cron}}</dd>
-            <dt>Job name</dt><dd>{{job.name}}</dd>
-            <dt>Permanent</dt><dd>{{job.perm}}</dd>
-            <dt>Description</dt><dd>{{job.desc|linebreaks}}</dd>
-            <dt><big>Date\Time</big></dt><dd><big>{{job.cdat}}</big></dd>
-        </dl>
+        <div>
+            <dl id="jb{{job.id}}"
+                class="dl-horizontal job-body"
+                onclick="selector('jx{{job.id}}', 'jb{{job.id}}', '{{job.name}}', 'SJ')">
+                <dt>Job on server</dt><dd>{{job.serv}}</dd>
+                <dt>Cron job id</dt><dd>{{job.cron}}</dd>
+                <dt>Job name</dt><dd>{{job.name}}</dd>
+                <dt>Permanent</dt><dd>{{job.perm}}</dd>
+                <dt>Description</dt><dd>{{job.desc|linebreaks}}</dd>
+                <dt><big>Date\Time</big></dt><dd><big>{{job.cdat}}</big></dd>
+            </dl>
 
-        <hr>
+            <hr>
 
-        {% if job.perm %}
-            <script type="text/javascript">
-                color('jb{{job.id}}', 0, '{{job.perm}}');
-            </script>
-        {% endif %}
+            {% if job.perm %}
+                <script type="text/javascript">
+                    color('jb{{job.id}}', 0, '{{job.perm}}');
+                </script>
+            {% endif %}
 
-        {% if "run_command" in pr_view_perms %}
-            <!--Hidden checkboxes-->
-            <input class="hidden"
-                   type="checkbox"
-                   id="jx{{job.id}}"
-                   name="selected_jobs"
-                   value="{{job.cron}}"
-                   data-target="{{job.name}}"/>
-        {% endif %}
+            {% if "run_command" in pr_view_perms %}
+                <!--Hidden checkboxes-->
+                <input class="hidden"
+                       type="checkbox"
+                       id="jx{{job.id}}"
+                       name="selected_jobs"
+                       value="{{job.cron}}"
+                       data-target="{{job.name}}"/>
+            {% endif %}
+        </div>
 
     {% empty %}
         There are no cron jobs for this project yet.
     {% endfor %}
 
-    <br>
+    <br><br>
 
 </div>

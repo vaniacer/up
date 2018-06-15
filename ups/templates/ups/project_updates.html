@@ -2,7 +2,7 @@
 
 {% include "ups/project_updates_buttons.html" %}
 
-<div class="roller">
+<div class="roller" id="updates_roller">
     {% for update in updates_filtered %}
 
         <div id="ub{{update.id}}"
