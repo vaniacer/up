@@ -124,6 +124,7 @@ def mini_log(request):
 	context = {
 		'project': current_project,
 		'panel':   'panel-default',
+		'text':    'Working ...',
 		'cmd':     data['cmd'],
 		'event':   event,
 		'end':     False,
@@ -133,8 +134,10 @@ def mini_log(request):
 		context['end'] = True
 		if int(event.exit) > 0:
 			context['panel'] = 'panel-danger'
+			context['text'] = 'Done :('
 		else:
 			context['panel'] = 'panel-success'
+			context['text'] = 'Done :)'
 
 	return render(request, 'ups/command_log_mini.html', context)
 
