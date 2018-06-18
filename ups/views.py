@@ -156,10 +156,10 @@ def command_log(request):
 
 	context = {
 		'back':    '/projects/%s/?%s' % (data['prid'], info(data)),
+		'name':     data['cmd'].capitalize().replace('_', ' '),
 		'cancel':  '/cancel/?%s' % qst,
 		'project': current_project,
 		'ok':      'btn-success',
-		'cmd':     data['cmd'],
 		'tag':     tag,
 		'logs':    [],
 		'color':   '',
