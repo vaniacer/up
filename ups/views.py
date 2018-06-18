@@ -173,13 +173,16 @@ def command_log(request):
 		final[logid] = False
 		try:
 			event = get_object_or_404(History, uniq=logid)
+		except:
+			event = None
+
+		try:
 			err = int(event.exit)
 			final[logid] = True
 			log = event.desc
 			if err > 0:
 				context['ok'] = 'btn-danger'
 		except:
-			event = None
 			try:
 				log = open(conf.LOG_FILE + logid, 'r').read()
 			except IOError:
