@@ -7,4 +7,4 @@ zip -ry $arhive \
     $folder/jboss-bas-*/standalone/configuration/* \
     $folder/jboss-bas-*/standalone/deployments/* \
     `find $folder -maxdepth 1 -type f` \
-    $folder/templates > /dev/null
+    $folder/templates > /dev/null && printf "$arhive" || exit 1

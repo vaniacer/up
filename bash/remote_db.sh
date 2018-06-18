@@ -12,4 +12,4 @@ dbopts="-h $dbhost -p $dbport -U $dbuser"
 
 filename="${2:-$dbname}_`printf "%(%d-%m-%Y)T"`.gz"
 
-PGPASSWORD="$dbpass" pg_dump -Ox $dbopts -d $dbname | gzip > "$filename" || exit 1
+PGPASSWORD="$dbpass" pg_dump -Ox $dbopts -d $dbname | gzip > "$filename" && printf "$filename" || exit 1
