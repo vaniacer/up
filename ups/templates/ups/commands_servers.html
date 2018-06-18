@@ -49,4 +49,12 @@
        title="Make ssh tunnel to the bind port of this server."
        href="javascript:;"
        class="small">Tunnel</a>
+
+    {% if server.http %}
+        <a onclick="selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS')"
+           title="{{server.http}}"
+           href="{{server.http}}"
+           class="small">URL</a>
+    {% endif %}
+
 {% endif %}
