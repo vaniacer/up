@@ -10,11 +10,11 @@ function run () { #--------------------------------| Main function |------------
 
     addr              # Get server address
     create_tmp_folder # Creates tmp folder tmp_folder=$wdir/updates/new/$key
-
+    
     # If updates where selected copy them too and add as options to the script
     [[ ${updates[@]} ]] && {
         rsync -e "ssh $sopt" --progress -lzuogthvr ${updates[@]} $addr:$tmp_folder && {
-            for U in ${updates[@]}; { opt+=" $tmp_folder/${U##*/}"  ; }
+            for U in ${updates[@]}; { scr_opts+=" $tmp_folder/${U##*/}"  ; }
         } || { error=$?; echo -e "\nscript copy error."; return $error; }
     }
 
@@ -42,12 +42,12 @@ function run () { #--------------------------------| Main function |------------
             case $type in
 
                 sh)
-                    ssh -ttt $sopt $addr "cd $wdir; bash $tmp_folder/$filename $opt"   || {
+                    ssh -ttt $sopt $addr "cd $wdir; bash $tmp_folder/$filename $scr_opts"   || {
                     error=$?; printf "\n<b>Script ended with error: $error</b>\n"
                 };;
 
                 py)
-                    ssh -ttt $sopt $addr "cd $wdir; python $tmp_folder/$filename $opt" || {
+                    ssh -ttt $sopt $addr "cd $wdir; python $tmp_folder/$filename $scr_opts" || {
                     error=$?; printf "\n<b>Script ended with error: $error</b>\n"
                 };;
 

@@ -17,6 +17,18 @@
                 <dl class="dl-horizontal script-panel" id="xp{{script.id}}">
                     <dt>       Description</dt><dd>{{script.desc|linebreaks}}</dd>
                     <dt>           Preview</dt><dd><samp>{{script.body|linebreaks|truncatewords:30}}</samp></dd>
+
+                    {% if script.type == 'sh' or script.type ==  'py' %}
+                    <dt>Options</dt>
+                        <dd>
+                            <input type="text"
+                                   class="form-control input-sm"
+                                   name="script_opt{{script.id}}"
+                                   title="Enter custom options here."
+                                   onclick="selector('xx{{script.id}}', 'xb{{script.id}}', '{{script}}', 'SX')">
+                        </dd>
+                    {% endif %}
+
                     <dt class="small">User</dt><dd class="small">{{script.user}}</dd>
                     <dt class="small">Date</dt><dd class="small">{{script.date|date:'M d, Y H:i'}}</dd>
                 </dl>

@@ -717,6 +717,8 @@ def starter(selected):
 	for ID in selected['scripts']:
 		script = get_object_or_404(Script, id=ID)
 		opt.extend(['-x', str(script.file)])
+		if selected['data'].get('script_opt' + ID):
+			opt.extend(['-o', selected['data'].get('script_opt' + ID)])
 
 	for dump in selected['dbdumps']:
 		opt.extend(['-m', str(dump)])
@@ -749,6 +751,7 @@ def run_cmd(data, project, user):
 		'name': name,
 		'user': user,
 		'cdat': date,
+		'data': data,
 		'proj': project,
 		'desc': 'Working...',
 
