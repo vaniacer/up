@@ -37,7 +37,7 @@ function run () { #--------------------------------| Main function |------------
         esac
 
         # Copy script to server
-        rsync -e "ssh $sopt" --progress -lzuogthvr $script $addr:$tmp_folder > /dev/null && {
+        rsync -e "ssh $sopt" --progress -lzuogthr $script $addr:$tmp_folder > /dev/null && {
 
             case $type in
 
@@ -52,11 +52,15 @@ function run () { #--------------------------------| Main function |------------
                 };;
 
                 sql)
+                    # Copy sqlaunch script to server
+                    rsync -e "ssh $sopt" --progress -lzuogthr $workdir/remote_sql.sh $addr:$tmp_folder > /dev/null \
+                        || error=$?
+
                     # Run script
-                    result=`ssh -ttt $sopt $addr "$wdir/krupd execsql $tmp_folder/$filename"` && {
+                    result=`ssh -ttt $sopt $addr "cd $tmp_folder; bash remote_sql.sh $wdir $filename"` && {
 
                         # Show result
-                        printf "$result\n"
+                        printf "\n$result\n"
 
                         # Save result to file and make it downloadable
                         cat >> $dumpdir/${filename}_$key.log <<< "$result"
@@ -64,7 +68,7 @@ function run () { #--------------------------------| Main function |------------
                         printf "\n<b>Log will be stored until tomorrow, download it please if you need it!</b>"
                         printf "\n<a class='btn btn-primary' href='/dumps/${filename}_$key.log'>Download</a>\n"
 
-                    } || { error=$?; printf "\n<b>Script ended with error: $error</b>\n"; };;
+                    } || { error=$?; printf "\n$result\n"; };;
 
                 *)
                     printf "Unknown script type, exit.\n"
