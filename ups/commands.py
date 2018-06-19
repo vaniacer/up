@@ -18,15 +18,15 @@ commandick = {
 		'position': 10,                           # Position in commands list(dick sorted by position)
 		'section': 'cron',                        # Section in which command will be placed
 		'class': '',                              # Class assigned to a command button(for example 'danger')
-		'title': 'Cancel selected cron job(s).',  # Pop up help message
+		'title': 'Cancel dick cron job(s).',  # Pop up help message
 		'bash': 'cronjob_cancel.sh',              # Bash script that this command will start
 		'name': 'cancel_job',                     # Web command name id(Internal command name id)
 		'menu': 'Cancel job',                     # Menu name of the command
-		'srv': 'false',                           # Check if some servers selected
-		'upd': 'false',                           # Check if some updates selected
-		'job': 'true',                            # Check if some cron jobs selected
-		'scr': 'false',                           # Check if some scripts selected
-		'dmp': 'false',                           # Check if some dumps selected
+		'srv': 'false',                           # Check if some servers dick
+		'upd': 'false',                           # Check if some updates dick
+		'job': 'true',                            # Check if some cron jobs dick
+		'scr': 'false',                           # Check if some scripts dick
+		'dmp': 'false',                           # Check if some dumps dick
 		'dgr': 'false',                           # If true will show confirmation window
 		'run': "run_or_cron('RUN');",             # If set to "run_or_cron('RUN');" then command will be run only
 		'his': True,                              # Save or not command log to history
@@ -37,7 +37,7 @@ commandick = {
 		'position': 20,
 		'name': 'change_date',
 		'section': 'cron',
-		'title': 'Change selected cron job(s) run date and time.',
+		'title': 'Change dick cron job(s) run date and time.',
 		'class': '',
 		'menu': 'Change date',
 		'bash': 'cronjob_date.sh',
@@ -56,7 +56,7 @@ commandick = {
 		'position': 30,
 		'name': 'permanent_job',
 		'section': 'cron',
-		'title': 'Make selected cron job(s) permanent.',
+		'title': 'Make dick cron job(s) permanent.',
 		'class': '',
 		'menu': 'Run everyday',
 		'bash': 'cronjob_perm.sh',
@@ -75,7 +75,7 @@ commandick = {
 		'position': 40,
 		'name': 'once_job',
 		'section': 'cron',
-		'title': 'Make selected cron job(s) run once (default).',
+		'title': 'Make dick cron job(s) run once (default).',
 		'class': '',
 		'menu': 'Run once',
 		'bash': 'cronjob_once.sh',
@@ -95,7 +95,7 @@ commandick = {
 		'name': 'get_dump',
 		'position': 10,
 		'section': 'dump',
-		'title': 'Get DB dump from selected server(s).',
+		'title': 'Get DB dump from dick server(s).',
 		'class': '',
 		'menu': 'Get dump',
 		'bash': 'dump_get.sh',
@@ -114,7 +114,7 @@ commandick = {
 		'name': 'del_dump',
 		'position': 20,
 		'section': 'dump',
-		'title': 'Delete selected dump(s) from UpS.',
+		'title': 'Delete dick dump(s) from UpS.',
 		'class': '',
 		'menu': 'Del dump',
 		'bash': 'dump_del.sh',
@@ -133,7 +133,7 @@ commandick = {
 		'name': 'send_dump',
 		'position': 30,
 		'section': 'dump',
-		'title': "Recreate selected server's DB with this dump.",
+		'title': "Recreate dick server's DB with this dump.",
 		'class': 'danger',
 		'menu': 'Send dump',
 		'bash': 'dump_send.sh',
@@ -153,7 +153,7 @@ commandick = {
 		'name': 'copy',
 		'position': 10,
 		'section': 'update',
-		'title': 'Copy selected update(s) to selected server(s).',
+		'title': 'Copy dick update(s) to dick server(s).',
 		'class': '',
 		'menu': 'Copy',
 		'bash': 'copy.sh',
@@ -172,7 +172,7 @@ commandick = {
 		'name': 'check_updates',
 		'position': 20,
 		'section': 'update',
-		'title': 'Check updates on selected server(s).',
+		'title': 'Check updates on dick server(s).',
 		'class': '',
 		'menu': 'Check',
 		'bash': 'check_updates.sh',
@@ -191,7 +191,7 @@ commandick = {
 		'name': 'update',
 		'position': 30,
 		'section': 'update',
-		'title': 'Update selected server(s) with selected update file.',
+		'title': 'Update dick server(s) with dick update file.',
 		'class': 'danger',
 		'menu': 'Start Update',
 		'bash': 'update.sh',
@@ -210,7 +210,7 @@ commandick = {
 		'name': 'del_sel_updates',
 		'position': 40,
 		'section': 'update',
-		'title': 'Delete selected update(s) from selected server(s).',
+		'title': 'Delete dick update(s) from dick server(s).',
 		'class': '',
 		'menu': 'Delete updates',
 		'bash': 'del_sel_updates.sh',
@@ -229,7 +229,7 @@ commandick = {
 		'name': 'del_all_updates',
 		'position': 50,
 		'section': 'update',
-		'title': 'Delete all updates from selected server(s).',
+		'title': 'Delete all updates from dick server(s).',
 		'class': '',
 		'menu': 'Delete all updates',
 		'bash': 'del_all_updates.sh',
@@ -249,7 +249,7 @@ commandick = {
 		'name': 'run_script',
 		'position': 10,
 		'section': 'script',
-		'title': 'Run selected script(s) on selected server(s).',
+		'title': 'Run dick script(s) on dick server(s).',
 		'class': '',
 		'menu': 'Run script(s)',
 		'bash': 'run_script.sh',
@@ -271,7 +271,7 @@ commandick = {
 		'name': 'maintenance_on',
 		'position': 10,
 		'section': 'server',
-		'title': 'Show "Maintenance" page on selected server(s).',
+		'title': 'Show "Maintenance" page on dick server(s).',
 		'class': 'danger',
 		'menu': 'Maintenance ON',
 		'bash': 'maintenance_on.sh',
@@ -290,7 +290,7 @@ commandick = {
 		'name': 'maintenance_off',
 		'position': 11,
 		'section': 'server',
-		'title': 'Hide "Maintenance" page on selected server(s).',
+		'title': 'Hide "Maintenance" page on dick server(s).',
 		'class': 'danger',
 		'menu': 'Maintenance Off',
 		'bash': 'maintenance_off.sh',
@@ -310,7 +310,7 @@ commandick = {
 		'name': 'reload',
 		'position': 20,
 		'section': 'server',
-		'title': 'Reload jboss config on selected server(s).',
+		'title': 'Reload jboss config on dick server(s).',
 		'class': 'danger',
 		'menu': 'Reload config',
 		'bash': 'jboss_reload.sh',
@@ -329,7 +329,7 @@ commandick = {
 		'name': 'restart',
 		'position': 21,
 		'section': 'server',
-		'title': 'Restart jboss on selected server(s).',
+		'title': 'Restart jboss on dick server(s).',
 		'class': 'danger',
 		'menu': 'Restart jboss',
 		'bash': 'jboss_restart.sh',
@@ -348,7 +348,7 @@ commandick = {
 		'name': 'start',
 		'position': 22,
 		'section': 'server',
-		'title': 'Start jboss(krupd jboss.start) on selected server(s).',
+		'title': 'Start jboss(krupd jboss.start) on dick server(s).',
 		'class': 'danger',
 		'menu': 'Start jboss',
 		'bash': 'jboss_start.sh',
@@ -367,7 +367,7 @@ commandick = {
 		'name': 'stop',
 		'section': 'server',
 		'position': 23,
-		'title': 'Stop jboss(krupd jboss.stop) on selected server(s).',
+		'title': 'Stop jboss(krupd jboss.stop) on dick server(s).',
 		'class': 'danger',
 		'menu': 'Stop jboss',
 		'bash': 'jboss_stop.sh',
@@ -386,7 +386,7 @@ commandick = {
 		'name': 'kill',
 		'position': 24,
 		'section': 'server',
-		'title': 'Kill jboss(krupd jboss.kill) on selected server(s).',
+		'title': 'Kill jboss(krupd jboss.kill) on dick server(s).',
 		'class': 'danger',
 		'menu': 'Kill jboss',
 		'bash': 'jboss_kill.sh',
@@ -424,7 +424,7 @@ commandick = {
 		'name': 'check_conf',
 		'position': 40,
 		'section': 'server',
-		'title': 'Show conf(standalone-full.xml) and java options of selected server(s).',
+		'title': 'Show conf(standalone-full.xml) and java options of dick server(s).',
 		'class': '',
 		'menu': 'Check conf',
 		'bash': 'check_conf.sh',
@@ -444,7 +444,7 @@ commandick = {
 		'name': 'check_logs',
 		'position': 50,
 		'section': 'server',
-		'title': 'Check logs on selected server(s).',
+		'title': 'Check logs on dick server(s).',
 		'class': '',
 		'menu': 'Check logs',
 		'bash': 'check_logs.sh',
@@ -464,7 +464,7 @@ commandick = {
 		'name': 'get_logs_day',
 		'position': 51,
 		'section': 'server',
-		'title': 'Get day logs from selected server(s).',
+		'title': 'Get day logs from dick server(s).',
 		'class': '',
 		'menu': 'Get day logs',
 		'bash': 'logs_get_day.sh',
@@ -483,7 +483,7 @@ commandick = {
 		'name': 'get_logs_all',
 		'position': 52,
 		'section': 'server',
-		'title': 'Get all logs from selected server(s).',
+		'title': 'Get all logs from dick server(s).',
 		'class': '',
 		'menu': 'Get all logs',
 		'bash': 'logs_get_all.sh',
@@ -560,7 +560,7 @@ commandick = {
 		'name': 'copy_utils',
 		'position': 70,
 		'section': 'server',
-		'title': 'Copy utils folder to selected server(s).',
+		'title': 'Copy utils folder to dick server(s).',
 		'class': '',
 		'menu': 'Copy utils',
 		'bash': 'copy_utils.sh',
@@ -579,7 +579,7 @@ commandick = {
 		'name': 'tunnel',
 		'position': 80,
 		'section': 'server',
-		'title': 'Make ssh tunnel to the bind port of selected server(s).',
+		'title': 'Make ssh tunnel to the bind port of dick server(s).',
 		'class': '',
 		'menu': 'Create tunnel',
 		'bash': 'tunnel.sh',
@@ -638,93 +638,93 @@ def del_job(job_id):
 		pass
 
 
-def add_job(selected):
+def add_job(dick):
 	"""Создает запись о крон жобе."""
 	Job.objects.create(
-		name=selected['name'].capitalize().replace('_', ' '),
-		proj=selected['proj'],
-		user=selected['user'],
-		cdat=selected['cdat'],
-		serv=selected['serv'],
-		cron=selected['cron'],
-		desc=selected['desc'],
+		name=dick['name'].capitalize().replace('_', ' '),
+		proj=dick['proj'],
+		user=dick['user'],
+		cdat=dick['cdat'],
+		serv=dick['serv'],
+		cron=dick['cron'],
+		desc=dick['desc'],
 	)
 
 
-def add_event(selected):
+def add_event(dick):
 	"""Создает событие в истории."""
 	History.objects.create(
-		name=selected['name'].capitalize().replace('_', ' '),
-		proj=selected['proj'],
-		user=selected['user'],
-		serv=selected['serv'],
-		cron=selected['cron'],
-		uniq=selected['uniq'],
-		cdat=selected['cdat'],
-		desc=selected['desc'],
-		exit=selected['exit'],
+		name=dick['name'].capitalize().replace('_', ' '),
+		proj=dick['proj'],
+		user=dick['user'],
+		serv=dick['serv'],
+		cron=dick['cron'],
+		uniq=dick['uniq'],
+		cdat=dick['cdat'],
+		desc=dick['desc'],
+		exit=dick['exit'],
 	)
 
 
-def job_opt(selected):
+def job_opt(dick):
 	"""В зависимости от выбранного действия с кронжобой, удаляет либо меняет job.perm статус."""
-	if selected['name'] == 'permanent_job':
-		selected['jobj'].cdat = 'Everyday %s' % selected['jobj'].cdat.split()[-1]
-		selected['jobj'].perm = True
-		selected['jobj'].save()
+	if dick['name'] == 'permanent_job':
+		dick['jobj'].cdat = 'Everyday %s' % dick['jobj'].cdat.split()[-1]
+		dick['jobj'].perm = True
+		dick['jobj'].save()
 
-	if selected['name'] == 'change_date':
-		selected['jobj'].cdat = selected['cdat']
-		selected['jobj'].save()
+	if dick['name'] == 'change_date':
+		dick['jobj'].cdat = dick['cdat']
+		dick['jobj'].save()
 
-	if selected['name'] == 'cancel_job':
-		selected['jobj'].delete()
+	if dick['name'] == 'cancel_job':
+		dick['jobj'].delete()
 
-	if selected['name'] == 'once_job':
-		selected['jobj'].cdat = '%s %s' % (
+	if dick['name'] == 'once_job':
+		dick['jobj'].cdat = '%s %s' % (
 			datetime.datetime.now().strftime("%Y-%m-%d"),
-			selected['jobj'].cdat.split()[-1]
+			dick['jobj'].cdat.split()[-1]
 		)
-		selected['jobj'].perm = False
-		selected['jobj'].save()
+		dick['jobj'].perm = False
+		dick['jobj'].save()
 
 
-def history(selected):
+def history(dick):
 	"""Создает событие в истории"""
-	if selected['his']:
-		selected['opt'].extend(['-hid', selected['uniq']])
-		add_event(selected)
+	if dick['his']:
+		dick['opt'].extend(['-hid', dick['uniq']])
+		add_event(dick)
 
 
-def starter(selected):
+def starter(dick):
 	"""Выполняет комманду."""
 
-	history(selected)
+	history(dick)
 
 	opt = [
 		conf.BASE_DIR + '/bash/starter.sh',
-		'-prj',  '%s:%s' % (str(selected['proj'].id), str(selected['proj'].name)),
-		'-date', selected['cdat'],
-		'-key',  selected['uniq']
+		'-prj',  '%s:%s' % (str(dick['proj'].id), str(dick['proj'].name)),
+		'-date', dick['cdat'],
+		'-key',  dick['uniq']
 	]
 
-	opt.extend(selected['opt'])
+	opt.extend(dick['opt'])
 
-	for ID in selected['updates']:
+	for ID in dick['data'].getlist('selected_updates'):
 		update = get_object_or_404(Update, id=ID)
 		opt.extend(['-u', str(update.file)])
 
-	for ID in selected['scripts']:
+	for ID in dick['data'].getlist('selected_scripts'):
 		script = get_object_or_404(Script, id=ID)
 		opt.extend(['-x', str(script.file)])
-		if selected['data'].get('script_opt' + ID):
-			opt.extend(['-o', selected['data'].get('script_opt' + ID)])
+		if dick['data'].get('script_opt' + ID):
+			opt.extend(['-o', dick['data'].get('script_opt' + ID)])
 
-	for dump in selected['dbdumps']:
+	for dump in dick['data'].getlist('selected_dbdumps'):
 		opt.extend(['-m', str(dump)])
 
 	if conf.DEBUG:
-		print '\n', opt, '\n\n', selected, '\n'
+		print '\n', opt, '\n\n', dick, '\n'
 
 	Popen(opt)
 
@@ -741,7 +741,7 @@ def run_cmd(data, project, user):
 	if data['selected_date'] and data['selected_time']:
 		date = '%s %s' % (data['selected_date'], data['selected_time'])
 
-	selected = {
+	dick = {
 		'jobj': '',
 		'cron': '',
 		'uniq': '',
@@ -758,14 +758,10 @@ def run_cmd(data, project, user):
 		'his': commandick[name]['his'],
 		'job': commandick[name]['job'],
 		'srv': commandick[name]['srv'],
-
-		'dbdumps': data.getlist('selected_dbdumps'),
-		'updates': data.getlist('selected_updates'),
-		'scripts': data.getlist('selected_scripts'),
 	}
 
 	# Cronjob specific commands
-	if selected['job'] == 'true':
+	if dick['job'] == 'true':
 
 		for jobi in data.getlist('selected_jobs'):
 
@@ -773,23 +769,23 @@ def run_cmd(data, project, user):
 			serv = jobj.serv
 			uniq = get_key()
 
-			selected['logi'] += '&logid=%s' % uniq
-			selected['opt'] = ['-job', jobi, '-cmd', bash]
-			selected.update({'cron': uniq, 'uniq': uniq, 'serv': serv, 'jobj': jobj})
+			dick['logi'] += '&logid=%s' % uniq
+			dick['opt'] = ['-job', jobi, '-cmd', bash]
+			dick.update({'cron': uniq, 'uniq': uniq, 'serv': serv, 'jobj': jobj})
 
-			job_opt(selected)
-			starter(selected)
+			job_opt(dick)
+			starter(dick)
 
 	# Commands that can run without server(s)
-	elif selected['srv'] == 'false':
+	elif dick['srv'] == 'false':
 
 			uniq = get_key()
 
-			selected.update({'uniq': uniq})
-			selected['opt'] = ['-cmd', bash]
-			selected['logi'] += '&logid=%s' % uniq
+			dick.update({'uniq': uniq})
+			dick['opt'] = ['-cmd', bash]
+			dick['logi'] += '&logid=%s' % uniq
 
-			starter(selected)
+			starter(dick)
 
 	# Server commands
 	else:
@@ -799,27 +795,27 @@ def run_cmd(data, project, user):
 			uniq = get_key()
 			serv = get_object_or_404(Server, id=server_id)
 
-			selected['logi'] += '&logid=%s' % uniq
-			selected.update({'uniq': uniq, 'serv': serv})
-			selected['opt'] = ['-server', '%s:%s:%s' % (serv.addr, serv.wdir, serv.port)]
+			dick['logi'] += '&logid=%s' % uniq
+			dick.update({'uniq': uniq, 'serv': serv})
+			dick['opt'] = ['-server', '%s:%s:%s' % (serv.addr, serv.wdir, serv.port)]
 
 			if data['run_type'] == 'CRON':
-				if not selected['his']:
+				if not dick['his']:
 					return '/projects/%s/?%s' % (project.id, info(data))
 
-				selected.update({'cron': uniq, 'cdat': date})
-				add_job(selected)
+				dick.update({'cron': uniq, 'cdat': date})
+				add_job(dick)
 
-				selected['name'] = 'Set cron job - %s' % name.lower()
-				selected['opt'].extend(['-cmd',  'cron.sh', '-run', bash, '-cid', uniq])
+				dick['name'] = 'Set cron job - %s' % name.lower()
+				dick['opt'].extend(['-cmd',  'cron.sh', '-run', bash, '-cid', uniq])
 			else:
-				selected['opt'].extend(['-cmd', bash])
+				dick['opt'].extend(['-cmd', bash])
 
-			starter(selected)
+			starter(dick)
 
-	if selected['his']:
-		url = '/projects/%s/?cmdlog=%s%s%s' % (project.id, name, info(data), selected['logi'])
+	if dick['his']:
+		url = '/projects/%s/?cmdlog=%s%s%s' % (project.id, name, info(data), dick['logi'])
 	else:
-		url = '/command_log/?cmd=%s&prid=%s%s%s' % (name, project.id, info(data), selected['logi'])
+		url = '/command_log/?cmd=%s&prid=%s%s%s' % (name, project.id, info(data), dick['logi'])
 
 	return url
