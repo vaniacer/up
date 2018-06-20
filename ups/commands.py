@@ -596,7 +596,7 @@ commandick = {
 }
 
 
-def info(data):
+def info(data, tab=''):
 	url = ''
 	if data.get('server_info'):
 		url += '&server_info=on'
@@ -614,7 +614,9 @@ def info(data):
 		url += '&updates=%s' % data.get('updates')
 	if data.get('dumps'):
 		url += '&dumps=%s' % data.get('dumps')
-	if data.get('tab'):
+	if tab:
+		url += '&tab=%s' % tab
+	elif data.get('tab'):
 		url += '&tab=%s' % data.get('tab')
 	return url
 
@@ -813,7 +815,7 @@ def run_cmd(data, project, user):
 			starter(dick)
 
 	if dick['his']:
-		url = '/projects/%s/?cmdlog=%s%s%s' % (project.id, name, info(data), dick['logi'])
+		url = '/projects/%s/?&cmdlog=%s%s%s' % (project.id, name, info(data, 'logs'), dick['logi'])
 	else:
 		url = '/command_log/?cmd=%s&prid=%s%s%s' % (name, project.id, info(data), dick['logi'])
 
