@@ -214,11 +214,6 @@ def project(request, project_id):
 		url = run_cmd(data, current_project, request.user)
 		return HttpResponseRedirect(url)
 
-	jobs_filter = data.get('jobs', '')
-	jobs = current_project.job_set.order_by('serv')
-	jobs_filtered = [job for job in jobs if re.search(jobs_filter, str(job.serv), re.IGNORECASE)]
-	jobs_filter_form = JobsFilterForm(initial=data)
-
 	servers_filter = data.get('servers', '')
 	servers = current_project.server_set.order_by('name')
 	servers_filtered = servers.filter(name__iregex=servers_filter)
@@ -263,6 +258,11 @@ def project(request, project_id):
 
 	if check_permission('run_command', current_project, request.user):
 
+		jobs_filter = data.get('jobs', '')
+		jobs = current_project.job_set.order_by('serv')
+		jobs_filtered = [job for job in jobs if re.search(jobs_filter, '%s on %s' % (job, job.serv), re.IGNORECASE)]
+		jobs_filter_form = JobsFilterForm(initial=data)
+
 		get_cron_logs()
 
 		cmdlog = data.get('cmdlog') or ''
@@ -286,5 +286,6 @@ def project(request, project_id):
 		context['hist_fd'] = hist_fd
 		context['cmdlog'] = cmdlog
 		context['logs'] = logids
+		context['jobs'] = jobs
 
 	return render(request, 'ups/project.html', context)
