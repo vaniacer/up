@@ -79,7 +79,7 @@ class ScriptEditForm(forms.ModelForm):
 
 class HideInfoForm(forms.Form):
 	tab = forms.CharField(label='', required=False)
-	cron_info = forms.BooleanField(label='', required=False)
+	job_info = forms.BooleanField(label='', required=False)
 	server_info = forms.BooleanField(label='', required=False)
 	script_info = forms.BooleanField(label='', required=False)
 	update_info = forms.BooleanField(label='', required=False)

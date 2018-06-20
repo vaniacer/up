@@ -286,8 +286,8 @@ $(document).ready(function() {
                show_or_hide_all('id_dbdump_info', 'dbdump-panel', 'dshow', 'show'); }
         else { show_or_hide_all('id_dbdump_info', 'dbdump-panel', 'dshow', 'hide'); }
 
-        if (document.getElementById('id_cron_info').checked) {
-               show_or_hide_all('id_cron_info', 'cron-panel', 'jshow', 'show'); }
-        else { show_or_hide_all('id_cron_info', 'cron-panel', 'jshow', 'hide'); }
+        if (document.getElementById('id_job_info').checked) {
+               show_or_hide_all('id_job_info', 'job-panel', 'jshow', 'show'); }
+        else { show_or_hide_all('id_job_info', 'job-panel', 'jshow', 'hide'); }
     }
 });

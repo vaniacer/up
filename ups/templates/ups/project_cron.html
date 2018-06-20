@@ -5,17 +5,17 @@
     {% for job in jobs_filtered %}
 
         <div id="jb{{job.id}}"
-             class="panel panel-default cron-body"
+             class="panel panel-default job-body"
              onclick="selector('jx{{job.id}}', 'jb{{job.id}}', '{{job.name}}', 'SJ')">
 
             <div class="panel-heading">
                 <h4 class="inline" title="{{job.desc}}">
-                    {{job|truncatechars:50}} on server <strong>{{job.serv|truncatechars:50}}</strong>
+                    {{job|truncatechars:50}} on <strong>{{job.serv|truncatechars:50}}</strong>
                 </h4>
             </div>
 
             <div class="panel-body">
-                <dl class="dl-horizontal cron-panel" id="jp{{job.id}}">
+                <dl class="dl-horizontal job-panel" id="jp{{job.id}}">
 
                     <!--<dt>Job on server</dt><dd>{{job.serv}}</dd>-->
                     <dt>  Cron job id</dt><dd>{{job.cron}}</dd>
@@ -52,7 +52,7 @@
                    id="jx{{job.id}}"
                    name="selected_jobs"
                    value="{{job.cron}}"
-                   data-target="{{job.name}}"/>
+                   data-target="{{job|truncatechars:50}} on {{job.serv|truncatechars:50}}"/>
         {% endif %}
 
     {% empty %}
