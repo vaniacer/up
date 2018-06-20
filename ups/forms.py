@@ -79,6 +79,7 @@ class ScriptEditForm(forms.ModelForm):
 
 class HideInfoForm(forms.Form):
 	tab = forms.CharField(label='', required=False)
+	cron_info = forms.BooleanField(label='', required=False)
 	server_info = forms.BooleanField(label='', required=False)
 	script_info = forms.BooleanField(label='', required=False)
 	update_info = forms.BooleanField(label='', required=False)
@@ -99,3 +100,7 @@ class UpdatesFilterForm(forms.Form):
 
 class DumpsFilterForm(forms.Form):
 	dumps = forms.CharField(label='', required=False)
+
+
+class JobsFilterForm(forms.Form):
+	jobs = forms.CharField(label='', required=False)

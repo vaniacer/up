@@ -109,6 +109,9 @@
 .server-panel dt { width:       110px; }
 .server-panel dd { margin-left: 120px; }
 
+.cron-panel   dt { width:       110px; }
+.cron-panel   dd { margin-left: 120px; }
+
 /*-------------{ Tables }-----------------*/
 .commands_table, th, td {
     border-top:    1px solid LightGrey;

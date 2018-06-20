@@ -1,23 +1,43 @@
+{% include "ups/project_cron_buttons.html" %}
 
 <div class="roller"  id="cron_roller">
 
     <p></p>
 
-    {% for job in cronjob %}
+    {% for job in jobs_filtered %}
 
-        <div>
-            <dl id="jb{{job.id}}"
-                class="dl-horizontal job-body"
-                onclick="selector('jx{{job.id}}', 'jb{{job.id}}', '{{job.name}}', 'SJ')">
-                <dt>Job on server</dt><dd>{{job.serv}}</dd>
-                <dt>Cron job id</dt><dd>{{job.cron}}</dd>
-                <dt>Job name</dt><dd>{{job.name}}</dd>
-                <dt>Permanent</dt><dd>{{job.perm}}</dd>
-                <dt>Description</dt><dd>{{job.desc|linebreaks}}</dd>
-                <dt><big>Date\Time</big></dt><dd><big>{{job.cdat}}</big></dd>
-            </dl>
+        <div id="jb{{job.id}}"
+             class="panel panel-default cron-body"
+             onclick="selector('jx{{job.id}}', 'jb{{job.id}}', '{{job.name}}', 'SJ')">
 
-            <hr>
+            <div class="panel-heading">
+                <h4 class="inline" title="{{job.desc}}">
+                    {{job|truncatechars:50}} on server <strong>{{job.serv|truncatechars:50}}</strong>
+                </h4>
+            </div>
+
+            <div class="panel-body">
+                <dl class="dl-horizontal cron-panel" id="jp{{job.id}}">
+
+                    <!--<dt>Job on server</dt><dd>{{job.serv}}</dd>-->
+                    <dt>  Cron job id</dt><dd>{{job.cron}}</dd>
+                    <!--<dt>     Job name</dt><dd>{{job.name}}</dd>-->
+                    <dt>    Permanent</dt><dd>{{job.perm}}</dd>
+                    <dt>  Description</dt><dd>{{job.desc|linebreaks}}</dd>
+
+                    <dt><big>Date\Time</big></dt><dd><big>{{job.cdat}}</big></dd>
+
+                    <dt class="small">User</dt><dd class="small">{{job.user}}</dd>
+                    <dt class="small">Date</dt><dd class="small">{{job.date|date:'M d, Y H:i'}}</dd>
+                </dl>
+                <!--Individual visibility buttons-->
+                <span id="jh{{job.id}}"
+                      title="Show\Hide this cron job info."
+                      class="glyphicon glyphicon-menu-down jshow right"
+                      onclick="show_or_hide_this('jh{{job.id}}', 'jp{{job.id}}');
+                               selector('jx{{job.id}}', 'jb{{job.id}}', '{{job.name}}', 'SJ')">
+                </span>
+            </div>
 
             {% if job.perm %}
                 <script type="text/javascript">
@@ -25,16 +45,17 @@
                 </script>
             {% endif %}
 
-            {% if "run_command" in pr_view_perms %}
-                <!--Hidden checkboxes-->
-                <input class="hidden"
-                       type="checkbox"
-                       id="jx{{job.id}}"
-                       name="selected_jobs"
-                       value="{{job.cron}}"
-                       data-target="{{job.name}}"/>
-            {% endif %}
         </div>
+
+        {% if "run_command" in pr_view_perms %}
+            <!--Hidden checkboxes-->
+            <input class="hidden"
+                   type="checkbox"
+                   id="jx{{job.id}}"
+                   name="selected_jobs"
+                   value="{{job.cron}}"
+                   data-target="{{job.name}}"/>
+        {% endif %}
 
     {% empty %}
         There are no cron jobs for this project yet.

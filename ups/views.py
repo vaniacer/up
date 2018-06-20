@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 
-from .forms import ServersFilterForm, ScriptsFilterForm, HideInfoForm, UpdatesFilterForm, DumpsFilterForm
+from .forms import ServersFilterForm, ScriptsFilterForm, HideInfoForm, UpdatesFilterForm, DumpsFilterForm, JobsFilterForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .permissions import check_perm_or404, check_permission
 from django.http import HttpResponse, HttpResponseRedirect
@@ -214,6 +214,11 @@ def project(request, project_id):
 		url = run_cmd(data, current_project, request.user)
 		return HttpResponseRedirect(url)
 
+	jobs_filter = data.get('jobs', '')
+	jobs = current_project.job_set.order_by('serv')
+	jobs_filtered = jobs.filter(name__iregex=jobs_filter)
+	jobs_filter_form = JobsFilterForm(initial=data)
+
 	servers_filter = data.get('servers', '')
 	servers = current_project.server_set.order_by('name')
 	servers_filtered = servers.filter(name__iregex=servers_filter)
@@ -274,6 +279,9 @@ def project(request, project_id):
 		history = current_project.history_set.order_by('date').reverse()
 		cronjob = current_project.job_set.order_by('date').reverse()
 		history, hist_fd, hist_bk = pagination(request, history)
+
+		context['jobs_filtered'] = jobs_filtered
+		context['jobs_filter'] = jobs_filter_form
 		context['cronjob'] = cronjob
 		context['history'] = history
 		context['hist_bk'] = hist_bk

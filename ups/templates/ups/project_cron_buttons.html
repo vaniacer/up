@@ -1,0 +1,53 @@
+{% load bootstrap3 %}
+
+<div class="row">
+
+    <div class="input-group">
+
+        <div class="input-group-btn">
+
+            <!--Updates label-->
+            <a class="btn btn-primary btn-sm disabled">Cron</a>
+
+            <!--Add new update button-->
+            <!--{% if "add_update" in pr_view_perms %}-->
+                <!--<a title="Add new update."-->
+                   <!--class="btn btn-success btn-sm"-->
+                   <!--href="{% url 'ups:new_update' project.id %}?{{info}}">Add</a>-->
+            <!--{% endif %}-->
+
+            <!--Info visibility button-->
+            <input id="jshow"
+                   type="button"
+                   value="Info Off"
+                   title="Show\Hide cron jobs info."
+                   class="btn btn-info btn-sm"
+                   onclick="show_or_hide_all('id_cron_info', 'cron-panel', 'jshow')"/>
+
+            <!-- Hidden submit button -->
+            <button class="hidden">submit</button>
+
+            <!-- Dropdown using dropdown-toggle class -->
+            <button data-toggle="dropdown"
+                    class="btn btn-info btn-sm dropdown-toggle">Filter <span class="caret"></span></button>
+
+            <!-- Dropdown list items -->
+            <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                <li><a href="javascript:;" onclick="filter_by('id_jobs', '')">All</a></li>
+
+                <li class="divider"></li>
+
+                {% for JOB in cronjob %}
+                    <li><a href="javascript:;" onclick="filter_by('id_jobs', '{{JOB}}')">{{JOB}}</a></li>
+                {% endfor %}
+
+                <li><br><br><br></li>
+            </ul>
+
+        </div>
+
+        {% bootstrap_form jobs_filter size="sm" %}
+
+    </div>
+
+</div>
