@@ -3,7 +3,7 @@
 {% if "edit_script" in pr_view_perms %}
     <a onclick="selector('xx{{script.id}}', 'xb{{script.id}}', '{{script}}', 'SX')"
        href="{% url 'ups:edit_script' script.id %}?{{info}}"
-       title="Edit this script."
+       title="Edit this script"
        class="small">Edit</a>
 {% endif %}
 
@@ -13,7 +13,7 @@
     <a onclick="select_all('selected_scripts', 'script-body', false, 'SX');
                 selector('xx{{script.id}}', 'xb{{script.id}}', '{{script}}', 'SX');
                 Validation('run_script', true, false, false, true)"
-       title="Run this script on selected server(s)."
+       title="Run this script on selected server(s)"
        href="javascript:;"
        class="small">Run</a>
 {% endif %}
@@ -22,6 +22,6 @@
 {% if "dld_script" in pr_view_perms %}
     <a onclick="selector('xx{{script.id}}', 'xb{{script.id}}', '{{script}}', 'SX')"
        href="/download_script/{{project.id}}/{{script.id}}"
-       title="Download this script."
+       title="Download this script"
        class="small">Download</a>
 {% endif %}

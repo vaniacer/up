@@ -13,7 +13,7 @@
             {% if "run_command" in pr_view_perms %}
                 <a onclick="run_or_cron('RUN');
                             return Validation('get_dump', true, false, false, false, false)"
-                   title="Get DB dump from selected server(s)."
+                   title="Get DB dump from selected server(s)"
                    class="btn btn-success btn-sm"
                    href="javascript:;">Get</a>
             {% endif %}
@@ -23,7 +23,7 @@
                 <input id="dshow"
                        type="button"
                        value="Info Off"
-                       title="Show\Hide dumps info."
+                       title="Show\Hide dumps info"
                        class="btn btn-info btn-sm"
                        onclick="show_or_hide_all('id_dbdump_info', 'dbdump-panel', 'dshow')"/>
             </div>
@@ -33,6 +33,7 @@
 
             <!-- Dropdown using dropdown-toggle class -->
             <button data-toggle="dropdown"
+                    title="Filter dumps by name"
                     class="btn btn-info btn-sm dropdown-toggle">Filter <span class="caret"></span></button>
 
             <!-- Dropdown list items -->

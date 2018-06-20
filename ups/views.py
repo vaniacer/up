@@ -216,7 +216,8 @@ def project(request, project_id):
 
 	jobs_filter = data.get('jobs', '')
 	jobs = current_project.job_set.order_by('serv')
-	jobs_filtered = jobs.filter(name__iregex=jobs_filter)
+	# jobs_filtered = jobs.filter(name__iregex=jobs_filter)
+	jobs_filtered = [job for job in jobs if re.search(jobs_filter, str(job.serv), re.IGNORECASE)]
 	jobs_filter_form = JobsFilterForm(initial=data)
 
 	servers_filter = data.get('servers', '')

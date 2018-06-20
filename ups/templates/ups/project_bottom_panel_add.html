@@ -12,24 +12,24 @@
         <ul class="dropdown-menu" aria-labelledby="dropdown_ADD">
             {% if "run_command" in pr_view_perms %}
                 <li><a onclick="return Validation('get_dump', true, false, false, false, false)"
-                       title="Get DB dump from selected server(s)."
+                       title="Get DB dump from selected server(s)"
                        href="javascript:;">Get dump</a></li>
             {% endif %}
 
             {% if "add_server" in pr_view_perms %}
-                <li><a title="Add new server."
+                <li><a title="Add new server"
                        href="{% url 'ups:new_server' project.id %}?{{info}}">Add Server</a></li>
             {% endif %}
 
             {% if "add_update" in pr_view_perms %}
-                <li><a title="Add new updete file."
+                <li><a title="Add new updete file"
                        href="{% url 'ups:new_update' project.id %}?{{info}}">Add Update</a></li>
             {% endif %}
 
             {% if "add_script" in pr_view_perms %}
-                <li><a title="Upload new script."
+                <li><a title="Upload new script"
                        href="{% url 'ups:add_script' project.id %}?{{info}}">Upload Script</a></li>
-                <li><a title="Create new script."
+                <li><a title="Create new script"
                        href="{% url 'ups:new_script' project.id %}?{{info}}">Create script</a></li>
             {% endif %}
         </ul>

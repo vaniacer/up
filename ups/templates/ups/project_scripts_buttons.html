@@ -16,13 +16,14 @@
             {% if "add_script" in pr_view_perms %}
                 <div class="dropdown btn-group">
                     <button data-toggle="dropdown"
+                            title="Add new script"
                             class="btn btn-success btn-sm dropdown dropdown-toggle">Add <span class="caret"></span>
                     </button>
 
                     <ul class="dropdown dropdown-menu dropdown-menu">
-                        <li><a title="Upload new script."
+                        <li><a title="Upload new script"
                                href="{% url 'ups:add_script' project.id %}?{{info}}">Upload</a></li>
-                        <li><a title="Create new script."
+                        <li><a title="Create new script"
                                href="{% url 'ups:new_script' project.id %}?{{info}}">Create</a></li>
                     </ul>
                 </div>
@@ -33,12 +34,13 @@
                    type="button"
                    value="Info Off"
                    class="btn btn-info btn-sm"
-                   title="Show\Hide scripts info."
+                   title="Show\Hide scripts info"
                    onclick="show_or_hide_all('id_script_info', 'script-panel', 'xshow')"/>
 
             <!-- Dropdown filter-menu -->
             <div class="dropdown btn-group">
                 <button data-toggle="dropdown"
+                        title="Filter scripts by name"
                         class="btn btn-info btn-sm dropdown-toggle">Filter <span class="caret"></span>
                 </button>
 

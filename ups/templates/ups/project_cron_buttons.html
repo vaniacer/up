@@ -20,7 +20,7 @@
             <input id="jshow"
                    type="button"
                    value="Info Off"
-                   title="Show\Hide cron jobs info."
+                   title="Show\Hide cron jobs info"
                    class="btn btn-info btn-sm"
                    onclick="show_or_hide_all('id_cron_info', 'cron-panel', 'jshow')"/>
 
@@ -29,16 +29,21 @@
 
             <!-- Dropdown using dropdown-toggle class -->
             <button data-toggle="dropdown"
+                    title="Filter jobs by server"
                     class="btn btn-info btn-sm dropdown-toggle">Filter <span class="caret"></span></button>
 
             <!-- Dropdown list items -->
-            <ul class="dropdown-menu dropdown-menu-right" role="menu">
+            <ul class="dropdown-menu dropdown-menu-left" role="menu">
                 <li><a href="javascript:;" onclick="filter_by('id_jobs', '')">All</a></li>
 
                 <li class="divider"></li>
 
-                {% for JOB in cronjob %}
-                    <li><a href="javascript:;" onclick="filter_by('id_jobs', '{{JOB}}')">{{JOB}}</a></li>
+                <!--{% for JOB in cronjob %}-->
+                    <!--<li><a href="javascript:;" onclick="filter_by('id_jobs', '{{JOB}}')">{{JOB}}</a></li>-->
+                <!--{% endfor %}-->
+
+                {% for SRV in servers %}
+                    <li><a href="javascript:;" onclick="filter_by('id_jobs', '{{SRV}}')">{{SRV}}</a></li>
                 {% endfor %}
 
                 <li><br><br><br></li>

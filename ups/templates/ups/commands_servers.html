@@ -3,7 +3,7 @@
 {% if "edit_server" in pr_view_perms %}
     <a onclick="selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS');"
        href="{% url 'ups:edit_server' server.id %}?{{info}}"
-       title="Edit this server's info."
+       title="Edit this server's info"
        class="small">Edit</a>
 {% endif %}
 
@@ -14,7 +14,7 @@
                 select_all('selected_servers', 'server-body', false, 'SS');
                 selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS');
                 Validation('server_info', true, false, false, false)"
-       title="Show system info: CPU, mem, disk etc."
+       title="Show system info: CPU, mem, disk etc"
        href="javascript:;"
        class="small">Info</a>
 
@@ -22,7 +22,7 @@
                 select_all('selected_servers', 'server-body', false, 'SS');
                 selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS');
                 Validation('check_conf', true, false, false, false)"
-       title="Show conf(standalone-full.xml) and java options of this server."
+       title="Show conf(standalone-full.xml) and java options of this server"
        href="javascript:;"
        class="small">Conf</a>
 
@@ -30,7 +30,7 @@
                 select_all('selected_servers', 'server-body', false, 'SS');
                 selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS');
                 Validation('check_logs', true, false, false, false)"
-       title="Check logs from this server."
+       title="Check logs from this server"
        href="javascript:;"
        class="small">Logs</a>
 
@@ -38,7 +38,7 @@
                 select_all('selected_servers', 'server-body', false, 'SS');
                 selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS');
                 Validation('check_updates', true, false, false, false)"
-       title="Check updates on this server."
+       title="Check updates on this server"
        href="javascript:;"
        class="small">Updates</a>
 
@@ -46,7 +46,7 @@
                 select_all('selected_servers', 'server-body', false, 'SS');
                 selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS');
                 Validation('tunnel', true, false, false, false)"
-       title="Make ssh tunnel to the bind port of this server."
+       title="Make ssh tunnel to the bind port of this server"
        href="javascript:;"
        class="small">Tunnel</a>
 

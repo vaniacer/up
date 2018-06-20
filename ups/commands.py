@@ -647,7 +647,7 @@ def del_job(job_id):
 def add_job(dick):
 	"""Создает запись о крон жобе."""
 	Job.objects.create(
-		name=dick['name'].capitalize().replace('_', ' '),
+		name=dick['data'].get('selected_command').capitalize().replace('_', ' '),
 		proj=dick['proj'],
 		user=dick['user'],
 		cdat=dick['cdat'],

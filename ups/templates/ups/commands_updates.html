@@ -3,7 +3,7 @@
 {% if "edit_update" in pr_view_perms %}
     <a onclick="selector('ux{{ update.id }}', 'ub{{ update.id }}', '{{ update }}', 'SX')"
        href="{% url 'ups:edit_update' update.id %}?{{info}}"
-       title="Edit this update's info."
+       title="Edit this update's info"
        class="small">Edit</a>
 {% endif %}
 
@@ -13,7 +13,7 @@
     <a onclick="select_all('selected_updates', 'update-body', false, 'SU');
                 selector('ux{{ update.id }}', 'ub{{ update.id }}', '{{ update }}', 'SX');
                 Validation('copy', true, true, false, false)"
-       title="Copy this update to selected server(s)."
+       title="Copy this update to selected server(s)"
        href="javascript:;"
        class="small">Copy</a>
 {% endif %}
@@ -22,6 +22,6 @@
 {% if "dld_update" in pr_view_perms %}
     <a onclick="selector('ux{{ update.id }}', 'ub{{ update.id }}', '{{ update }}', 'SU')"
        href="/download_upd/{{ project.id }}/{{ update.id }}"
-       title="Download this update."
+       title="Download this update"
        class="small">Download</a>
 {% endif %}

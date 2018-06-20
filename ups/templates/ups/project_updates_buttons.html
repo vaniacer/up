@@ -11,7 +11,7 @@
 
             <!--Add new update button-->
             {% if "add_update" in pr_view_perms %}
-                <a title="Add new update."
+                <a title="Add new update"
                    class="btn btn-success btn-sm"
                    href="{% url 'ups:new_update' project.id %}?{{info}}">Add</a>
             {% endif %}
@@ -20,7 +20,7 @@
             <input id="ushow"
                    type="button"
                    value="Info Off"
-                   title="Show\Hide updates info."
+                   title="Show\Hide updates info"
                    class="btn btn-info btn-sm"
                    onclick="show_or_hide_all('id_update_info', 'update-panel', 'ushow')"/>
 
@@ -29,6 +29,7 @@
 
             <!-- Dropdown using dropdown-toggle class -->
             <button data-toggle="dropdown"
+                    title="Filter updates by name"
                     class="btn btn-info btn-sm dropdown-toggle">Filter <span class="caret"></span></button>
 
             <!-- Dropdown list items -->

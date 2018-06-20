@@ -2,8 +2,6 @@
 
 <div class="roller"  id="cron_roller">
 
-    <p></p>
-
     {% for job in jobs_filtered %}
 
         <div id="jb{{job.id}}"
@@ -32,7 +30,7 @@
                 </dl>
                 <!--Individual visibility buttons-->
                 <span id="jh{{job.id}}"
-                      title="Show\Hide this cron job info."
+                      title="Show\Hide this cron job info"
                       class="glyphicon glyphicon-menu-down jshow right"
                       onclick="show_or_hide_this('jh{{job.id}}', 'jp{{job.id}}');
                                selector('jx{{job.id}}', 'jb{{job.id}}', '{{job.name}}', 'SJ')">
@@ -41,7 +39,7 @@
 
             {% if job.perm %}
                 <script type="text/javascript">
-                    color('jb{{job.id}}', 0, '{{job.perm}}');
+                    document.getElementById('jb{{job.id}}').classList.add('panel-info');
                 </script>
             {% endif %}
 

@@ -6,13 +6,13 @@
         <tr><th>Cron commands</th></tr>
 
         <tr>
-            <td title="Select all cron jobs."
-                onclick="select_all('selected_jobs', 'job-body', true,  'SJ')">Select all jobs</td>
+            <td title="Select all cron jobs"
+                onclick="select_all('selected_jobs', 'cron-body', true,  'SJ')">Select all jobs</td>
         </tr>
 
         <tr>
-            <td title="Deselect all cron jobs."
-                onclick="select_all('selected_jobs', 'job-body', false, 'SJ')">Deselect all jobs</td>
+            <td title="Deselect all cron jobs"
+                onclick="select_all('selected_jobs', 'cron-body', false, 'SJ')">Deselect all jobs</td>
         </tr>
 
         {% for command in commands %}

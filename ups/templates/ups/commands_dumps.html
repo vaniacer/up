@@ -3,6 +3,6 @@
 {% if "dld_update" in pr_view_perms %}
     <a onclick="selector('dx{{ dump.id }}', 'db{{ dump.id }}', '{{ dump.name }}', 'SD')"
        href="/download_dump/{{ project.id }}/{{ dump.name }}"
-       title="Download this dump."
+       title="Download this dump"
        class="small">Download</a>
 {% endif %}
