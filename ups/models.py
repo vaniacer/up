@@ -89,7 +89,7 @@ class Script(models.Model):
 	date = models.DateTimeField(auto_now_add=True, db_index=True)  # Creation date
 	file = models.FileField(upload_to=script_upload_to)            # Full file path
 	flnm = models.CharField(max_length=255)                        # Filename only
-	desc = models.TextField(max_length=255)                        # Description
+	desc = models.TextField(max_length=999)                        # Description
 	proj = models.ForeignKey(Project)                              # Project relation
 	user = models.ForeignKey(User)                                 # User relation
 	body = models.TextField()                                      # Script body

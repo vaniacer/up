@@ -216,7 +216,6 @@ def project(request, project_id):
 
 	jobs_filter = data.get('jobs', '')
 	jobs = current_project.job_set.order_by('serv')
-	# jobs_filtered = jobs.filter(name__iregex=jobs_filter)
 	jobs_filtered = [job for job in jobs if re.search(jobs_filter, str(job.serv), re.IGNORECASE)]
 	jobs_filter_form = JobsFilterForm(initial=data)
 
@@ -278,12 +277,10 @@ def project(request, project_id):
 			)
 
 		history = current_project.history_set.order_by('date').reverse()
-		cronjob = current_project.job_set.order_by('date').reverse()
 		history, hist_fd, hist_bk = pagination(request, history)
 
 		context['jobs_filtered'] = jobs_filtered
 		context['jobs_filter'] = jobs_filter_form
-		context['cronjob'] = cronjob
 		context['history'] = history
 		context['hist_bk'] = hist_bk
 		context['hist_fd'] = hist_fd
