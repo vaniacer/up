@@ -725,7 +725,12 @@ def starter(dick):
 		script = get_object_or_404(Script, id=ID)
 		opt.extend(['-x', str(script.file)])
 		if dick['data'].get('script_opt' + ID):
-			opt.extend(['-o', re.escape(dick['data'].get('script_opt' + ID))])
+			# split options string coz re.escape escapes spaces as well
+			oplist = re.split(' ', str(dick['data'].get('script_opt' + ID)))
+			# join it back and escape special symbols
+			opdone = ' '.join(re.escape(opt) for opt in oplist)
+			# add result as script arg -o 'test 123'
+			opt.extend(['-o', opdone])
 
 	for dump in dick['data'].getlist('selected_dbdumps'):
 		opt.extend(['-m', str(dump)])
