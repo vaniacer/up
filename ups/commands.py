@@ -9,6 +9,7 @@ from subprocess import Popen
 from base64 import b64encode
 from os import urandom
 import datetime
+import re
 
 
 commandick = {
@@ -647,7 +648,7 @@ def del_job(job_id):
 def add_job(dick):
 	"""Создает запись о крон жобе."""
 	Job.objects.create(
-		name=dick['data'].get('selected_command').capitalize().replace('_', ' '),
+		name=dick['cmnd'].capitalize().replace('_', ' '),
 		proj=dick['proj'],
 		user=dick['user'],
 		cdat=dick['cdat'],
@@ -724,7 +725,7 @@ def starter(dick):
 		script = get_object_or_404(Script, id=ID)
 		opt.extend(['-x', str(script.file)])
 		if dick['data'].get('script_opt' + ID):
-			opt.extend(['-o', dick['data'].get('script_opt' + ID)])
+			opt.extend(['-o', re.escape(dick['data'].get('script_opt' + ID))])
 
 	for dump in dick['data'].getlist('selected_dbdumps'):
 		opt.extend(['-m', str(dump)])
@@ -753,6 +754,7 @@ def run_cmd(data, project, user):
 		'exit': '',
 		'logi': '',
 		'serv': None,
+		'cmnd': name,
 		'name': name,
 		'user': user,
 		'cdat': date,

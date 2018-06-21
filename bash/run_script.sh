@@ -14,40 +14,41 @@ function run () { #--------------------------------| Main function |------------
     # If updates where selected copy them too and add as options to the script
     [[ ${updates[@]} ]] && {
         rsync -e "ssh $sopt" --progress -lzuogthvr ${updates[@]} $addr:$tmp_folder && {
-            for U in ${updates[@]}; { scr_opts+=" $tmp_folder/${U##*/}"  ; }
+            for U in ${updates[@]}; { file_opt+=" $tmp_folder/${U##*/}"  ; }
         } || { error=$?; echo -e "\nscript copy error."; return $error; }
     }
 
-    for script in "${scripts[@]}"; {
+    for ((i=0; i<${#scripts[@]}; i++)); {
+#    for script in "${scripts[@]}"; {
 
-        filename=${script##*/}
-        type=${filename##*.}
+        filename="${scripts[$i]##*/}"
+        scrptype="${filename##*.}"
+        soptions="${scropts[$i]}"
 
         printf "\n<b>Run script - $filename</b>\n"
 
-        case $type in
+        case $scrptype in
             yml)
                 [[ $sopt ]] && extra="--ssh-extra-args=$sopt"
 
-                printf "\n$script\n"
-                ansible-playbook $script -i "$addr," $extra --vault-password-file ~/vault.txt --syntax-check \
+                ansible-playbook ${scripts[$i]} -i "$addr," $extra --vault-password-file ~/vault.txt --syntax-check \
                     || { error=$?; continue; }
-                ansible-playbook $script -i "$addr," $extra --vault-password-file ~/vault.txt || error=$?
+                ansible-playbook ${scripts[$i]} -i "$addr," $extra --vault-password-file ~/vault.txt || error=$?
                 continue;;
         esac
 
         # Copy script to server
-        rsync -e "ssh $sopt" --progress -lzuogthr $script $addr:$tmp_folder > /dev/null && {
+        rsync -e "ssh $sopt" --progress -lzuogthr ${scripts[$i]} $addr:$tmp_folder > /dev/null && {
 
-            case $type in
+            case $scrptype in
 
                 sh)
-                    ssh -ttt $sopt $addr "cd $wdir; bash $tmp_folder/$filename $scr_opts"   || {
+                    ssh -ttt $sopt $addr "cd $wdir; bash $tmp_folder/$filename $soptions $file_opt"   || {
                     error=$?; printf "\n<b>Script ended with error: $error</b>\n"
                 };;
 
                 py)
-                    ssh -ttt $sopt $addr "cd $wdir; python $tmp_folder/$filename $scr_opts" || {
+                    ssh -ttt $sopt $addr "cd $wdir; python $tmp_folder/$filename $soptions $file_opt" || {
                     error=$?; printf "\n<b>Script ended with error: $error</b>\n"
                 };;
 

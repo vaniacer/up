@@ -15,7 +15,7 @@ until [[ -z $1 ]]; do case $1 in
     -update | -u) updates+=("$2");; # List of update files
     -dump   | -m) dbdumps+=("$2");; # List of dump files
     -script | -x) scripts+=("$2");; # List of script files
-    -opts   | -o) scr_opts="$2";;   # Custom script options
+    -opts   | -o) scropts+=("$2");; # Custom script options
     -job    | -j) job_id="$2";;     # Cron job
     -server | -s) server="$2";;     # Server
     -date   | -d) date=$2;;         # Cron job date
