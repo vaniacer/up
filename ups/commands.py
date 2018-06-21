@@ -22,7 +22,7 @@ commandick = {
 		'title':    'Cancel selected cron job(s).',  # Pop up help message
 		'bash':     'cronjob_cancel.sh',             # Bash script that this command will start
 		'name':     'cancel_job',                    # Web command name id(Internal command name id)
-		'menu':     'Cancel job',                    # Menu name of the command
+		'menu':     'Cancel job(s)',                 # Menu name of the command
 		'srv':      'false',                         # Check if some servers selected
 		'upd':      'false',                         # Check if some updates selected
 		'job':      'true',                          # Check if some cron jobs selected
@@ -98,7 +98,7 @@ commandick = {
 		'class':    '',
 		'title':    'Get DB dump from selected server(s).',
 		'name':     'get_dump',
-		'menu':     'Get dump',
+		'menu':     'Get dump(s)',
 		'bash':     'dump_get.sh',
 		'srv':      'true',
 		'upd':      'false',
@@ -117,7 +117,7 @@ commandick = {
 		'class':    '',
 		'title':    'Delete selected dump(s) from UpS.',
 		'name':     'del_dump',
-		'menu':     'Del dump',
+		'menu':     'Del dump(s)',
 		'bash':     'dump_del.sh',
 		'srv':      'false',
 		'upd':      'false',
@@ -156,7 +156,7 @@ commandick = {
 		'class':   '',
 		'title':   'Copy selected update(s) to selected server(s).',
 		'name':    'copy',
-		'menu':    'Copy',
+		'menu':    'Copy update(s)',
 		'bash':    'copy.sh',
 		'srv':     'true',
 		'upd':     'true',
@@ -175,7 +175,7 @@ commandick = {
 		'class':    '',
 		'title':    'Check updates on selected server(s).',
 		'name':     'check_updates',
-		'menu':     'Check',
+		'menu':     'Check updates',
 		'bash':     'check_updates.sh',
 		'srv':      'true',
 		'upd':      'false',
@@ -213,7 +213,7 @@ commandick = {
 		'class':    '',
 		'title':    'Delete selected update(s) from selected server(s).',
 		'name':     'del_sel_updates',
-		'menu':     'Delete updates',
+		'menu':     'Delete update(s)',
 		'bash':     'del_sel_updates.sh',
 		'srv':      'true',
 		'upd':      'true',
@@ -402,6 +402,7 @@ commandick = {
 		'tag':      False,
 	},
 
+	# Info
 	'server_info': {
 		'position': 30,
 		'section':  'server',
@@ -459,7 +460,6 @@ commandick = {
 		'his':      False,
 		'tag':      False,
 	},
-
 
 	'get_logs_day': {
 		'position': 51,
