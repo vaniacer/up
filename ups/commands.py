@@ -48,7 +48,7 @@ commandick = {
 		'scr':      'false',
 		'dmp':      'false',
 		'dgr':      'false',
-		'run':      "ru    n_or_cron('RUN');",
+		'run':      "run_or_cron('RUN');",
 		'his':      True,
 		'tag':      False,
 	},
