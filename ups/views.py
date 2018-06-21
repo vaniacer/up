@@ -260,7 +260,9 @@ def project(request, project_id):
 
 		jobs_filter = data.get('jobs', '')
 		jobs = current_project.job_set.order_by('serv')
-		jobs_filtered = [job for job in jobs if re.search(jobs_filter, '%s on %s' % (job, job.serv), re.IGNORECASE)]
+		jobs_filtered = [
+			job for job in jobs if re.search(jobs_filter, '%s on %s %s' % (job, job.serv, job.cdat), re.IGNORECASE)
+		]
 		jobs_filter_form = JobsFilterForm(initial=data)
 
 		get_cron_logs()

@@ -29,7 +29,7 @@
 
             <!-- Dropdown using dropdown-toggle class -->
             <button data-toggle="dropdown"
-                    title="Filter jobs by server or name"
+                    title="Filter jobs by current date, full name or server"
                     class="btn btn-info btn-sm dropdown-toggle">Filter <span class="caret"></span></button>
 
             <!-- Dropdown list items -->
@@ -38,18 +38,23 @@
 
                 <li class="divider"></li>
 
-                {% for SRV in servers %}
-                    <li><a href="javascript:;" onclick="filter_by('id_jobs', '{{SRV}}')">{{SRV}}</a></li>
-                {% endfor %}
+                <li><a href="javascript:;"
+                       onclick="filter_by('id_jobs',
+                               '{%now 'd-m-Y'%}|{%now 'd.m.Y'%}|{%now 'Y.m.d'%}|{%now 'Y-m-d'%}')">Current date</a></li>
 
                 <li class="divider"></li>
 
                 {% for JOB in jobs %}
                     <li>
-                        <a href="javascript:;" onclick="filter_by('id_jobs', '{{JOB}} on {{JOB.serv}}')">
-                            {{JOB}} on {{JOB.serv}}
+                        <a href="javascript:;" onclick="filter_by('id_jobs', '{{JOB}} on {{JOB.serv}} {{JOB.cdat}}')">
+                            {{JOB}} on {{JOB.serv}} {{JOB.cdat}}
                         </a>
                     </li>
+                {% endfor %}
+                <li class="divider"></li>
+
+                {% for SRV in servers %}
+                    <li><a href="javascript:;" onclick="filter_by('id_jobs', '{{SRV}}')">{{SRV}}</a></li>
                 {% endfor %}
 
                 <li><br><br><br></li>

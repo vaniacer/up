@@ -10,7 +10,7 @@
 
             <div class="panel-heading">
                 <h4 class="inline" title="{{job.desc}}&#xA;{{job.cdat}}">
-                    {{job|truncatechars:50}} on <strong>{{job.serv|truncatechars:50}}</strong>
+                    {{job|truncatechars:50}} on <strong>{{job.serv|truncatechars:50}}</strong> <small>{{job.cdat}}</small>
                 </h4>
             </div>
 
@@ -18,15 +18,18 @@
                 <dl class="dl-horizontal job-panel" id="jp{{job.id}}">
 
                     <!--<dt>Job on server</dt><dd>{{job.serv}}</dd>-->
-                    <dt>  Cron job id</dt><dd>{{job.cron}}</dd>
+                    <!--<dt>  Cron job id</dt><dd>{{job.cron}}</dd>-->
                     <!--<dt>     Job name</dt><dd>{{job.name}}</dd>-->
-                    <dt>    Permanent</dt><dd>{{job.perm}}</dd>
-                    <dt>  Description</dt><dd>{{job.desc|linebreaks}}</dd>
-
-                    <dt><big>Date\Time</big></dt><dd><big>{{job.cdat}}</big></dd>
-
+                    {% if job.perm %}
+                        <dt>Permanent</dt><dd>{{job.perm}}</dd>
+                        <script type="text/javascript">
+                            document.getElementById('jb{{job.id}}').classList.add('panel-info');
+                        </script>
+                    {% endif %}
+                    <dt>Description</dt><dd>{{job.desc|linebreaks}}</dd>
+                    <dt><big>Start date</big></dt><dd><big>{{job.cdat}}</big></dd>
+                    <dt class="small">Creation date</dt><dd class="small">{{job.date|date:'M d, Y H:i'}}</dd>
                     <dt class="small">User</dt><dd class="small">{{job.user}}</dd>
-                    <dt class="small">Date</dt><dd class="small">{{job.date|date:'M d, Y H:i'}}</dd>
                 </dl>
                 <!--Individual visibility buttons-->
                 <span id="jh{{job.id}}"
@@ -36,12 +39,6 @@
                                selector('jx{{job.id}}', 'jb{{job.id}}', '{{job.name}}', 'SJ')">
                 </span>
             </div>
-
-            {% if job.perm %}
-                <script type="text/javascript">
-                    document.getElementById('jb{{job.id}}').classList.add('panel-info');
-                </script>
-            {% endif %}
 
         </div>
 
