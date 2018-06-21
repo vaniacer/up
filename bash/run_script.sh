@@ -19,7 +19,6 @@ function run () { #--------------------------------| Main function |------------
     }
 
     for ((i=0; i<${#scripts[@]}; i++)); {
-#    for script in "${scripts[@]}"; {
 
         filename="${scripts[$i]##*/}"
         scrptype="${filename##*.}"
