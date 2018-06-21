@@ -1,9 +1,7 @@
 {% load bootstrap3 %}
 
 <div class="row">
-
     <div class="input-group">
-
         <div class="input-group-btn">
 
             <!--Servers label-->
@@ -16,46 +14,51 @@
                    href="{% url 'ups:new_server' project.id %}?{{info}}">Add</a>
             {% endif %}
 
-            <!--Info visibility button-->
-            <input id="sshow"
-                   type="button"
-                   value="Info Off"
-                   title="Show\Hide servers info"
-                   class="btn btn-info btn-sm"
-                   onclick="show_or_hide_all('id_server_info', 'server-panel', 'sshow')"/>
+            {% if servers %}
 
-            <!-- Hidden submit button -->
-            <button class="hidden">submit</button>
+                <!--Info visibility button-->
+                <input id="sshow"
+                       type="button"
+                       value="Info Off"
+                       title="Show\Hide servers info"
+                       class="btn btn-info btn-sm"
+                       onclick="show_or_hide_all('id_server_info', 'server-panel', 'sshow')"/>
 
-            <!-- Dropdown using dropdown-toggle class -->
-            <button data-toggle="dropdown"
-                    title="Filter servers by type or name"
-                    class="btn btn-info btn-sm dropdown-toggle">Filter <span class="caret"></span></button>
+                <!-- Hidden submit button -->
+                <button class="hidden">submit</button>
 
-            <!-- Dropdown list items -->
-            <ul class="dropdown-menu" role="menu">
-                <li><a href="javascript:;" onclick="filter_by('id_servers', '')"              >All </a></li>
+                <!-- Dropdown using dropdown-toggle class -->
+                <button data-toggle="dropdown"
+                        title="Filter servers by type or name"
+                        class="btn btn-info btn-sm dropdown-toggle">Filter <span class="caret"></span></button>
 
-                <li class="divider"></li>
+                <!-- Dropdown list items -->
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="javascript:;" onclick="filter_by('id_servers', '')"              >All </a></li>
 
-                <li><a href="javascript:;" onclick="filter_by('id_servers', 'dev|дев|разраб')">Dev </a></li>
-                <li><a href="javascript:;" onclick="filter_by('id_servers', 'test|тест')"     >Test</a></li>
-                <li><a href="javascript:;" onclick="filter_by('id_servers', 'prod|прод')"     >Prod</a></li>
-                <li><a href="javascript:;" onclick="filter_by('id_servers', 'demo|демо')"     >Demo</a></li>
+                    <li class="divider"></li>
 
-                <li class="divider"></li>
+                    <li><a href="javascript:;" onclick="filter_by('id_servers', 'dev|дев|разраб')">Dev </a></li>
+                    <li><a href="javascript:;" onclick="filter_by('id_servers', 'test|тест')"     >Test</a></li>
+                    <li><a href="javascript:;" onclick="filter_by('id_servers', 'prod|прод')"     >Prod</a></li>
+                    <li><a href="javascript:;" onclick="filter_by('id_servers', 'demo|демо')"     >Demo</a></li>
 
-                {% for SRV in servers %}
-                    <li><a href="javascript:;" onclick="filter_by('id_servers', '{{SRV}}')">{{SRV}}</a></li>
-                {% endfor %}
+                    <li class="divider"></li>
 
-                <li><br><br><br></li>
-            </ul>
+                    {% for SRV in servers %}
+                        <li><a href="javascript:;" onclick="filter_by('id_servers', '{{SRV}}')">{{SRV}}</a></li>
+                    {% endfor %}
+
+                    <li><br><br><br></li>
+                </ul>
+
+            {% endif %}
 
         </div>
 
-        {% bootstrap_form servers_filter size="sm" %}
+        {% if servers %}
+            {% bootstrap_form servers_filter size="sm" %}
+        {% endif %}
 
     </div>
-
 </div>

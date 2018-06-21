@@ -1,9 +1,7 @@
 {% load bootstrap3 %}
 
 <div class="row">
-
     <div class="input-group">
-
         <div class="input-group-btn">
 
             <!--Scripts label-->
@@ -29,22 +27,23 @@
                 </div>
             {% endif %}
 
-            <!--Info visibility button-->
-            <input id="xshow"
-                   type="button"
-                   value="Info Off"
-                   class="btn btn-info btn-sm"
-                   title="Show\Hide scripts info"
-                   onclick="show_or_hide_all('id_script_info', 'script-panel', 'xshow')"/>
+            {% if scripts %}
 
-            <!-- Dropdown filter-menu -->
-            <div class="dropdown btn-group">
+                <!--Info visibility button-->
+                <input id="xshow"
+                       type="button"
+                       value="Info Off"
+                       class="btn btn-info btn-sm"
+                       title="Show\Hide scripts info"
+                       onclick="show_or_hide_all('id_script_info', 'script-panel', 'xshow')"/>
+
+                <!-- Dropdown filter-menu -->
                 <button data-toggle="dropdown"
                         title="Filter scripts by type or name"
-                        class="btn btn-info btn-sm dropdown-toggle">Filter <span class="caret"></span>
-                </button>
+                        class="btn btn-info btn-sm dropdown-toggle">Filter <span class="caret"></span></button>
 
-                <ul class="dropdown-menu dropdown-menu-right">
+                <!-- Dropdown list items -->
+                <ul class="dropdown-menu dropdown-menu-right" role="menu">
                     <li><a href="javascript:;" onclick="filter_by('id_scripts', '')"    >All   </a></li>
 
                     <li class="divider"></li>
@@ -62,12 +61,14 @@
 
                     <li><br><br><br></li>
                 </ul>
-            </div>
+
+            {% endif %}
 
         </div>
 
-        {% bootstrap_form scripts_filter size="sm" %}
+        {% if scripts %}
+            {% bootstrap_form scripts_filter size="sm" %}
+        {% endif %}
 
     </div>
-
 </div>

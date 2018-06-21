@@ -1,63 +1,66 @@
 {% load bootstrap3 %}
 
 <div class="row">
-
     <div class="input-group">
-
         <div class="input-group-btn">
 
             <!--Updates label-->
             <a class="btn btn-primary btn-sm disabled">Cron</a>
 
-            <!--Info visibility button-->
-            <input id="jshow"
-                   type="button"
-                   value="Info Off"
-                   title="Show\Hide cron jobs info"
-                   class="btn btn-info btn-sm"
-                   onclick="show_or_hide_all('id_job_info', 'job-panel', 'jshow')"/>
+            {% if jobs %}
 
-            <!-- Hidden submit button -->
-            <button class="hidden">submit</button>
+                <!--Info visibility button-->
+                <input id="jshow"
+                       type="button"
+                       value="Info Off"
+                       title="Show\Hide cron jobs info"
+                       class="btn btn-info btn-sm"
+                       onclick="show_or_hide_all('id_job_info', 'job-panel', 'jshow')"/>
 
-            <!-- Dropdown using dropdown-toggle class -->
-            <button data-toggle="dropdown"
-                    title="Filter jobs by current date, full name or server"
-                    class="btn btn-info btn-sm dropdown-toggle">Filter <span class="caret"></span></button>
+                <!-- Hidden submit button -->
+                <button class="hidden">submit</button>
 
-            <!-- Dropdown list items -->
-            <ul class="dropdown-menu dropdown-menu-left" role="menu">
-                <li><a href="javascript:;" onclick="filter_by('id_jobs', '')">All</a></li>
+                <!-- Dropdown using dropdown-toggle class -->
+                <button data-toggle="dropdown"
+                        title="Filter jobs by current date, full name or server"
+                        class="btn btn-info btn-sm dropdown-toggle">Filter <span class="caret"></span></button>
 
-                <li class="divider"></li>
+                <!-- Dropdown list items -->
+                <ul class="dropdown-menu dropdown-menu-left" role="menu">
+                    <li><a href="javascript:;" onclick="filter_by('id_jobs', '')">All</a></li>
 
-                <li><a href="javascript:;"
-                       onclick="filter_by('id_jobs',
-                               '{%now 'd-m-Y'%}|{%now 'd.m.Y'%}|{%now 'Y.m.d'%}|{%now 'Y-m-d'%}')">Current date</a></li>
+                    <li class="divider"></li>
 
-                <li class="divider"></li>
+                    <li><a href="javascript:;"
+                           onclick="filter_by('id_jobs',
+                                   '{%now 'd-m-Y'%}|{%now 'd.m.Y'%}|{%now 'Y.m.d'%}|{%now 'Y-m-d'%}')">Current date</a></li>
 
-                {% for JOB in jobs %}
-                    <li>
-                        <a href="javascript:;" onclick="filter_by('id_jobs', '{{JOB}} on {{JOB.serv}} {{JOB.cdat}}')">
-                            {{JOB}} on {{JOB.serv}} {{JOB.cdat}}
-                        </a>
-                    </li>
-                {% endfor %}
+                    <li class="divider"></li>
 
-                <li class="divider"></li>
+                    {% for JOB in jobs %}
+                        <li>
+                            <a href="javascript:;" onclick="filter_by('id_jobs', '{{JOB}} on {{JOB.serv}} {{JOB.cdat}}')">
+                                {{JOB}} on {{JOB.serv}} {{JOB.cdat}}
+                            </a>
+                        </li>
+                    {% endfor %}
 
-                {% for SRV in servers %}
-                    <li><a href="javascript:;" onclick="filter_by('id_jobs', '{{SRV}}')">{{SRV}}</a></li>
-                {% endfor %}
+                    <li class="divider"></li>
 
-                <li><br><br><br></li>
-            </ul>
+                    {% for SRV in servers %}
+                        <li><a href="javascript:;" onclick="filter_by('id_jobs', '{{SRV}}')">{{SRV}}</a></li>
+                    {% endfor %}
+
+                    <li><br><br><br></li>
+                </ul>
+
+            {% endif %}
 
         </div>
 
-        {% bootstrap_form jobs_filter size="sm" %}
+        {% if jobs %}
+            {% bootstrap_form jobs_filter size="sm" %}
+        {% endif %}
 
     </div>
-
 </div>

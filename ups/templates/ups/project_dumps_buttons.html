@@ -1,9 +1,7 @@
 {% load bootstrap3 %}
 
 <div class="row">
-
     <div class="input-group">
-
         <div class="input-group-btn">
 
             <!--Dumps label-->
@@ -18,53 +16,57 @@
                    href="javascript:;">Get</a>
             {% endif %}
 
-            <!--Info visibility button-->
-            <div class="btn-group">
+            {% if dmplist %}
+
+                <!--Info visibility button-->
                 <input id="dshow"
                        type="button"
                        value="Info Off"
                        title="Show\Hide dumps info"
                        class="btn btn-info btn-sm"
                        onclick="show_or_hide_all('id_dbdump_info', 'dbdump-panel', 'dshow')"/>
-            </div>
 
-            <!-- Hidden submit button -->
-            <button class="hidden">submit</button>
 
-            <!-- Dropdown using dropdown-toggle class -->
-            <button data-toggle="dropdown"
-                    title="Filter dumps by current date, server address or name"
-                    class="btn btn-info btn-sm dropdown-toggle">Filter <span class="caret"></span></button>
+                <!-- Hidden submit button -->
+                <button class="hidden">submit</button>
 
-            <!-- Dropdown list items -->
-            <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                <li><a href="javascript:;" onclick="filter_by('id_dumps', '')">All</a></li>
+                <!-- Dropdown using dropdown-toggle class -->
+                <button data-toggle="dropdown"
+                        title="Filter dumps by current date, server address or name"
+                        class="btn btn-info btn-sm dropdown-toggle">Filter <span class="caret"></span></button>
 
-                <li class="divider"></li>
+                <!-- Dropdown list items -->
+                <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                    <li><a href="javascript:;" onclick="filter_by('id_dumps', '')">All</a></li>
 
-                <li><a href="javascript:;"
-                       onclick="filter_by('id_dumps',
-                               '{%now 'd-m-Y'%}|{%now 'd.m.Y'%}|{%now 'Y.m.d'%}|{%now 'Y-m-d'%}')">Current date</a></li>
+                    <li class="divider"></li>
 
-                <li class="divider"></li>
+                    <li><a href="javascript:;"
+                           onclick="filter_by('id_dumps',
+                                   '{%now 'd-m-Y'%}|{%now 'd.m.Y'%}|{%now 'Y.m.d'%}|{%now 'Y-m-d'%}')">Current date</a></li>
 
-                {% for SRV in servers %}
-                    <li><a href="javascript:;" onclick="filter_by('id_dumps', '{{SRV.addr}}')">{{SRV.addr}}</a></li>
-                {% endfor %}
+                    <li class="divider"></li>
 
-                <li class="divider"></li>
+                    {% for SRV in servers %}
+                        <li><a href="javascript:;" onclick="filter_by('id_dumps', '{{SRV.addr}}')">{{SRV.addr}}</a></li>
+                    {% endfor %}
 
-                {% for DMP in dmplist %}
-                    <li><a href="javascript:;" onclick="filter_by('id_dumps', '{{DMP.name}}')">{{DMP.name}}</a></li>
-                {% endfor %}
+                    <li class="divider"></li>
 
-                <li><br><br><br></li>
-            </ul>
+                    {% for DMP in dmplist %}
+                        <li><a href="javascript:;" onclick="filter_by('id_dumps', '{{DMP.name}}')">{{DMP.name}}</a></li>
+                    {% endfor %}
+
+                    <li><br><br><br></li>
+                </ul>
+
+            {% endif %}
 
         </div>
 
-        {% bootstrap_form dmplist_filter size="sm" %}
+        {% if dmplist %}
+            {% bootstrap_form dmplist_filter size="sm" %}
+        {% endif %}
 
     </div>
-
 </div>
