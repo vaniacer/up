@@ -9,13 +9,6 @@
             <!--Updates label-->
             <a class="btn btn-primary btn-sm disabled">Cron</a>
 
-            <!--Add new update button-->
-            <!--{% if "add_update" in pr_view_perms %}-->
-                <!--<a title="Add new update."-->
-                   <!--class="btn btn-success btn-sm"-->
-                   <!--href="{% url 'ups:new_update' project.id %}?{{info}}">Add</a>-->
-            <!--{% endif %}-->
-
             <!--Info visibility button-->
             <input id="jshow"
                    type="button"
@@ -51,6 +44,7 @@
                         </a>
                     </li>
                 {% endfor %}
+
                 <li class="divider"></li>
 
                 {% for SRV in servers %}

@@ -6,11 +6,20 @@
 
         <div id="jb{{job.id}}"
              class="panel panel-default job-body"
-             onclick="selector('jx{{job.id}}', 'jb{{job.id}}', '{{job.name}}', 'SJ')">
+             onclick="selector('jx{{job.id}}',
+                               'jb{{job.id}}',
+                               '{{job}} on {{job.serv|truncatechars:50}} {{job.cdat}}', 'SJ')">
 
             <div class="panel-heading">
                 <h4 class="inline" title="{{job.desc}}&#xA;{{job.cdat}}">
-                    {{job|truncatechars:50}} on <strong>{{job.serv|truncatechars:50}}</strong> <small>{{job.cdat}}</small>
+                    {{job}} on <a href="javascript:;"
+                                  onclick="selector('jx{{job.id}}',
+                                                    'jb{{job.id}}',
+                                                    '{{job}} on {{job.serv|truncatechars:50}} {{job.cdat}}', 'SJ');
+                                           selector('sx{{job.serv.id}}',
+                                                    'sb{{job.serv.id}}',
+                                                    '{{job.serv}}', 'SS')">
+                    <strong>{{job.serv|truncatechars:50}}</strong></a> <small>{{job.cdat}}</small>
                 </h4>
             </div>
 
@@ -36,7 +45,9 @@
                       title="Show\Hide this cron job info"
                       class="glyphicon glyphicon-menu-down jshow right"
                       onclick="show_or_hide_this('jh{{job.id}}', 'jp{{job.id}}');
-                               selector('jx{{job.id}}', 'jb{{job.id}}', '{{job.name}}', 'SJ')">
+                               selector('jx{{job.id}}',
+                                        'jb{{job.id}}',
+                                        '{{job}} on {{job.serv|truncatechars:50}} {{job.cdat}}', 'SJ')">
                 </span>
             </div>
 
@@ -49,7 +60,9 @@
                    id="jx{{job.id}}"
                    name="selected_jobs"
                    value="{{job.cron}}"
-                   data-target="{{job|truncatechars:50}} on {{job.serv|truncatechars:50}}"/>
+                   data-target1="{{job.serv}}"
+                   data-target2="{{job.serv.id}}"
+                   data-target="{{job}} on {{job.serv|truncatechars:50}} {{job.cdat}}"/>
         {% endif %}
 
     {% empty %}

@@ -124,6 +124,24 @@ function show_or_hide_all(id, panel, button, set) {
     }
 }
 
+//function find_servers() {
+//    var all_jobs = document.getElementsByName('selected_jobs');
+//    var serv_ids = []
+//    var serv_nam = []
+//
+//    for (i = 0; i < all_jobs.length; i++) {
+//        if (all_jobs[i].checked) {
+//            data = all_jobs[i].dataset;
+//            serv_nam.push(data.target1);
+//            serv_ids.push(data.target2);
+//        }
+//    }
+//
+//    for (i = 0; i < serv_ids.length; i++) {
+//        selector('sx' + serv_ids[i], 'sb' + serv_ids[i], serv_nam[i], 'SS');
+//    }
+//}
+
 function selector(box_id, body_id, name, obj) {
     var body = document.getElementById(body_id);
     var box  = document.getElementById(box_id);
