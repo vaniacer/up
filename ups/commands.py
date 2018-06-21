@@ -607,8 +607,8 @@ def info(data, tab=''):
 		url += '&update_info=on'
 	if data.get('dbdump_info'):
 		url += '&dbdump_info=on'
-	if data.get('cron_info'):
-		url += '&cron_info=on'
+	if data.get('job_info'):
+		url += '&job_info=on'
 	if data.get('servers'):
 		url += '&servers=%s' % data.get('servers')
 	if data.get('scripts'):
