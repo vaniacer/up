@@ -15,10 +15,6 @@
                 onclick="select_all('selected_jobs', 'job-body', false, 'SJ')">Deselect all jobs</td>
         </tr>
 
-        <!--<tr>-->
-            <!--<td title="Select servers related to selected jobs" onclick="find_servers()">Find server(s)</td>-->
-        <!--</tr>-->
-
         {% for command in commands %}
             {% if command.section == "cron" %}
                 {% include "ups/commands_table.html" %}
