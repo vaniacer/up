@@ -155,7 +155,10 @@ def command_log(request):
 	url = request.META['SERVER_NAME']
 
 	context = {
-		'back':    '/projects/%s/?%s' % (data['prid'], info(data)),
+		'back':    '/projects/{project_id:s}/?{parameters:s}'.format(
+			project_id=data['prid'],
+			parameters=info(data),
+		),
 		'name':     data['cmd'].capitalize().replace('_', ' '),
 		'cancel':  '/cancel/?%s' % qst,
 		'project': current_project,
@@ -261,23 +264,26 @@ def project(request, project_id):
 		jobs_filter = data.get('jobs', '')
 		jobs = current_project.job_set.order_by('serv')
 		jobs_filtered = [
-			job for job in jobs if re.search(jobs_filter, '%s on %s %s' % (job, job.serv, job.cdat), re.IGNORECASE)
+			job for job in jobs if re.search(jobs_filter, '{jobname:s} on {servername:s} {time:s}'.format(
+				servername=job.serv,
+				jobname=job,
+				time=job.cdat,
+			), re.IGNORECASE)
 		]
 		jobs_filter_form = JobsFilterForm(initial=data)
 
 		get_cron_logs()
 
-		cmdlog = data.get('cmdlog') or ''
 		logids = data.getlist('logid') or []
+		cmdlog = data.get('cmdlog') or ''
 
 		if len(logids) > 1:
 			# Create allogs url if there are more then 1 log
-			context['allogs'] = '/command_log/?cmd=%s&prid=%s&logid=%s' % (
-				cmdlog,
-				current_project.id,
-				'&logid='.join(logids)
+			context['allogs'] = '/command_log/?cmd={cmn_name:s}&prid={project_id:s}&logid={log_ids}'.format(
+				log_ids='&logid='.join(logids),
+				project_id=current_project.id,
+				cmn_name=cmdlog,
 			)
-
 		history = current_project.history_set.order_by('date').reverse()
 		history, hist_fd, hist_bk = pagination(request, history)
 
