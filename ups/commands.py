@@ -746,7 +746,7 @@ def run_cmd(data, project, user):
 	check_perm_or404('run_command', project, user)
 
 	date = run_date()
-	name = data['selected_command']
+	name = data['sel_cmnd']
 	bash = commandick[name]['bash']
 
 	if data['selected_date'] and data['selected_time']:
