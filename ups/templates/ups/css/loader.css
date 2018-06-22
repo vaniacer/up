@@ -1,33 +1,62 @@
+:root {
+    --small: 10px;
+    --big:   20px;
+}
+
+.loader, .smalloader {
+    top:     0;
+    left:    0;
+    right:   0;
+    bottom:  0;
+    width:   200;
+    margin:  auto;
+    display: inline-block;
+}
+
 .loader {
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    margin: auto;
-    width: 200px;
-    height: 200px;
+    height:   var(--big);
     position: absolute;
-    border-radius: 50%;
-    border: 20px solid #f3f3f3;     /* Light grey */
-    border-top: 20px solid #3498db; /* Blue */
-    animation: spin 1.23s linear infinite;
 }
 
-.small_loader {
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    width: 50px;
-    height: 50px;
-    margin: auto;
-    border-radius: 50%;
-    border: 10px solid #f3f3f3;     /* Light grey */
-    border-top: 10px solid #3498db; /* Blue */
-    animation: spin 1.23s linear infinite;
+.smalloader {
+    left:     35%;
+    height:   var(--big);
+    position: relative;
 }
 
-@keyframes spin {
-    0%   { transform: rotate(0deg);   }
-    100% { transform: rotate(360deg); }
+.loader div, .smalloader div {
+    border-color: SteelBlue;
+    border-style: solid;
+    position:     absolute;
+    display:      inline-block;
+}
+
+.loader div {
+    left:  10px;
+    width: 20px;
+    border-width: thick;
+    animation: loader 0.5s cubic-bezier(0,0.2,0.5,1) infinite;
+}
+
+.smalloader div {
+    left:  5px;
+    width: 10px;
+    border-width: 2px;
+    animation: smalloader 0.5s cubic-bezier(0,0.2,0.5,1) infinite;
+}
+
+.loader div:nth-child(1), .smalloader div:nth-child(1) { animation-delay: -0.4s; left:  10px; }
+.loader div:nth-child(2), .smalloader div:nth-child(2) { animation-delay: -0.3s; left:  40px; }
+.loader div:nth-child(3), .smalloader div:nth-child(3) { animation-delay: -0.2s; left:  70px; }
+.loader div:nth-child(4), .smalloader div:nth-child(4) { animation-delay: -0.1s; left: 100px; }
+.loader div:nth-child(5), .smalloader div:nth-child(5) { animation-delay: -0.0s; left: 130px; }
+
+@keyframes loader {
+    100% { top: calc(var(--big)/2); height:      var(--big);    }
+    0%   { top: 0px;                height: calc(var(--big)*2); }
+}
+
+@keyframes smalloader {
+    100% { top: calc(var(--small)/2); height:      var(--small);    }
+    0%   { top: 0px;                  height: calc(var(--small)*2); }
 }
