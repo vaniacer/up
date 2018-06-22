@@ -1,62 +1,75 @@
 :root {
-    --small: 10px;
-    --big:   20px;
+    --min: 10px;
+    --max: 30px;
 }
 
-.loader, .smalloader {
+.loader-max, .loader-min {
     top:     0;
     left:    0;
     right:   0;
     bottom:  0;
-    width:   200;
     margin:  auto;
     display: inline-block;
 }
 
-.loader {
-    height:   var(--big);
+.loader-max {
+    height:     var(--max);
+    width: calc(var(--max)*8);
     position: absolute;
 }
 
-.smalloader {
+.loader-min {
     left:     35%;
-    height:   var(--big);
+    height:   var(--min);
     position: relative;
 }
 
-.loader div, .smalloader div {
+.loader-max div, .loader-min div {
     border-color: SteelBlue;
     border-style: solid;
     position:     absolute;
     display:      inline-block;
+    animation:    0.5s cubic-bezier(0,0.2,0.5,1) infinite;
 }
 
-.loader div {
-    left:  10px;
-    width: 20px;
-    border-width: thick;
-    animation: loader 0.5s cubic-bezier(0,0.2,0.5,1) infinite;
+.loader-max div {
+    width:             var(--max);
+    left:         calc(var(--max)/2);
+    border-width: calc(var(--max)/4);
+    animation-name:   loader-max;
 }
 
-.smalloader div {
-    left:  5px;
-    width: 10px;
-    border-width: 2px;
-    animation: smalloader 0.5s cubic-bezier(0,0.2,0.5,1) infinite;
+.loader-min div {
+    width:             var(--min);
+    left:         calc(var(--min)/2);
+    border-width: calc(var(--min)/4);
+    animation-name:   loader-min;
 }
 
-.loader div:nth-child(1), .smalloader div:nth-child(1) { animation-delay: -0.4s; left:  10px; }
-.loader div:nth-child(2), .smalloader div:nth-child(2) { animation-delay: -0.3s; left:  40px; }
-.loader div:nth-child(3), .smalloader div:nth-child(3) { animation-delay: -0.2s; left:  70px; }
-.loader div:nth-child(4), .smalloader div:nth-child(4) { animation-delay: -0.1s; left: 100px; }
-.loader div:nth-child(5), .smalloader div:nth-child(5) { animation-delay: -0.0s; left: 130px; }
+.loader-max div:nth-child(1), .loader-min div:nth-child(1) { animation-delay: -0.4s; }
+.loader-max div:nth-child(2), .loader-min div:nth-child(2) { animation-delay: -0.3s; }
+.loader-max div:nth-child(3), .loader-min div:nth-child(3) { animation-delay: -0.2s; }
+.loader-max div:nth-child(4), .loader-min div:nth-child(4) { animation-delay: -0.1s; }
+.loader-max div:nth-child(5), .loader-min div:nth-child(5) { animation-delay: -0.0s; }
 
-@keyframes loader {
-    100% { top: calc(var(--big)/2); height:      var(--big);    }
-    0%   { top: 0px;                height: calc(var(--big)*2); }
+.loader-max div:nth-child(1) { left: calc(var(--max)*0.5); }
+.loader-max div:nth-child(2) { left: calc(var(--max)*2  ); }
+.loader-max div:nth-child(3) { left: calc(var(--max)*3.5); }
+.loader-max div:nth-child(4) { left: calc(var(--max)*5  ); }
+.loader-max div:nth-child(5) { left: calc(var(--max)*6.5); }
+
+.loader-min div:nth-child(1) { left: calc(var(--min)*0.5); }
+.loader-min div:nth-child(2) { left: calc(var(--min)*2  ); }
+.loader-min div:nth-child(3) { left: calc(var(--min)*3.5); }
+.loader-min div:nth-child(4) { left: calc(var(--min)*5  ); }
+.loader-min div:nth-child(5) { left: calc(var(--min)*6.5); }
+
+@keyframes loader-max {
+    100% { top: calc(var(--max)/2); height:      var(--max);    }
+    0%   { top: 0px;                height: calc(var(--max)*2); }
 }
 
-@keyframes smalloader {
-    100% { top: calc(var(--small)/2); height:      var(--small);    }
-    0%   { top: 0px;                  height: calc(var(--small)*2); }
+@keyframes loader-min {
+    100% { top: calc(var(--min)/2); height:      var(--min);    }
+    0%   { top: 0px;                height: calc(var(--min)*2); }
 }

@@ -11,7 +11,7 @@ function color(body_id, ec, cron) {
 
 function show_loader() {
     $('.project').hide();
-    $('.loader').show();
+    $('.loader-max').show();
 }
 
 function go_up() {
