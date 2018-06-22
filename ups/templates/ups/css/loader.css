@@ -1,3 +1,11 @@
+
+/*
+ * All parameters are calculated from this vars
+ *   max - big loader when command run
+ *   min - small loader in logs
+ *
+ */
+
 :root {
     --min: 10px;
     --max: 30px;
