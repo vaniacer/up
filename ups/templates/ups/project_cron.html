@@ -25,10 +25,6 @@
 
             <div class="panel-body">
                 <dl class="dl-horizontal job-panel" id="jp{{job.id}}">
-
-                    <!--<dt>Job on server</dt><dd>{{job.serv}}</dd>-->
-                    <!--<dt>  Cron job id</dt><dd>{{job.cron}}</dd>-->
-                    <!--<dt>     Job name</dt><dd>{{job.name}}</dd>-->
                     {% if job.perm %}
                         <dt>Permanent</dt><dd>{{job.perm}}</dd>
                         <script type="text/javascript">
@@ -60,8 +56,6 @@
                    id="jx{{job.id}}"
                    name="selected_jobs"
                    value="{{job.cron}}"
-                   data-target1="{{job.serv}}"
-                   data-target2="{{job.serv.id}}"
                    data-target="{{job}} on {{job.serv|truncatechars:50}} {{job.cdat}}"/>
         {% endif %}
 
