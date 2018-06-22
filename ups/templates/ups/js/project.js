@@ -260,10 +260,11 @@ $(function() {
     hash && $('ul.nav a[href="' + hash + '"]').tab('show');
 
     function servers(hash) {
-        show_or_hide_all('dummy', 'servers_tab', 'dummy', 'hide');
+        var serv_tab = document.getElementById('servers_tab');
+        if (serv_tab) { serv_tab.classList.add('hidden'); }
         if (tabs) { tabs.value = hash.replace('#', ''); }
         if (hash == '#scripts' || hash == '#updates' || hash == '#dumps' || hash == '#cron' || hash == '') {
-            show_or_hide_all('dummy', 'servers_tab', 'dummy', 'show');
+            if (serv_tab) { serv_tab.classList.remove('hidden'); }
         }
     }
 
