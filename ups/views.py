@@ -210,7 +210,7 @@ def project(request, project_id):
 
 	data = request.GET
 
-	if data.get('sel_cmnd'):
+	if data.get('run_cmnd'):
 		url = run_cmd(data, current_project, request.user)
 		return HttpResponseRedirect(url)
 

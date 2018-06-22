@@ -230,21 +230,21 @@ function Validation(cmd, srv, upd, job, scr, dmp, dgr) {
 
     show_loader();
     if (cmd) {
-        document.getElementById('sel_cmnd').value = cmd;
+        document.getElementById('run_cmnd').value = cmd;
         document.getElementById('selector').submit();
     }
 }
 
 function filter_by(id, value) {
-    document.getElementById('sel_cmnd').value = '';
+    document.getElementById('run_cmnd').value = '';
     document.getElementById(id).value = value;
     document.getElementById('selector').submit();
 }
 
 $(function() {
 
-    var sel_cmnd = document.getElementById('sel_cmnd');
-    if (sel_cmnd) { sel_cmnd.value = ''; }
+    var run_cmnd = document.getElementById('run_cmnd');
+    if (run_cmnd) { run_cmnd.value = ''; }
 
     // Change tab on load
     var hash = window.location.hash;
