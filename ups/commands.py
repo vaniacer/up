@@ -626,6 +626,14 @@ def info(data, tab=''):
 	return url
 
 
+def back_url(data):
+	"""Возвращает url проекта с тек. параметрами."""
+	return '/projects/{project_id!s}/?{parameters!s}'.format(
+		project_id=data['prid'],
+		parameters=info(data),
+	)
+
+
 def get_key():
 	"""Создает случайную последовательность символов."""
 	return str(b64encode(urandom(6), 'dfsDFAsfsf'))
@@ -813,7 +821,7 @@ def run_cmd(data, project, user):
 
 			if data['run_type'] == 'CRON':
 				if not dick['his']:
-					return '/projects/%s/?%s' % (project.id, info(data))
+					return back_url(data)
 
 				dick.update({'cron': uniq, 'cdat': date})
 				add_job(dick)
@@ -826,8 +834,17 @@ def run_cmd(data, project, user):
 			starter(dick)
 
 	if dick['his']:
-		url = '/projects/%s/?&cmdlog=%s%s%s' % (project.id, name, info(data, 'logs'), dick['logi'])
+		url = '/projects/{project_id!s}/?&cmdlog={command_name!s}{parameters!s}{log_ids!s}'.format(
+			parameters=info(data, 'logs'),
+			project_id=project.id,
+			log_ids=dick['logi'],
+			command_name=name,
+		)
 	else:
-		url = '/command_log/?cmd=%s&prid=%s%s%s' % (name, project.id, info(data), dick['logi'])
-
+		url = '/command_log/?cmd={command_name!s}&prid={project_id!s}{parameters!s}{log_ids!s}'.format(
+			parameters=info(data),
+			project_id=project.id,
+			log_ids=dick['logi'],
+			command_name=name,
+		)
 	return url

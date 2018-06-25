@@ -5,9 +5,9 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .permissions import check_perm_or404, check_permission
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
+from .commands import run_cmd, info, commandick, back_url
 from django.shortcuts import render, get_object_or_404
 from .models import Project, Update, Script, History
-from .commands import run_cmd, info, commandick
 from django.conf import settings as conf
 from wsgiref.util import FileWrapper
 from .cron import get_cron_logs
@@ -86,7 +86,10 @@ def download_dump(request, project_id, dump):
 	"""Закачка дампов."""
 	current_project = get_object_or_404(Project, id=project_id)
 	check_perm_or404('view_project', current_project, request.user)
-	return download(conf.MEDIA_ROOT + '/dumps/%s/%s' % (current_project.name, str(dump)), str(dump))
+	return download(conf.MEDIA_ROOT + '/dumps/{project_name!s}/{file_name!s}'.format(
+		project_name=current_project,
+		file_name=dump
+	), str(dump))
 
 
 @login_required
@@ -107,7 +110,7 @@ def cancel(request):
 	logids = data.getlist('logid')
 	Popen([conf.BASE_DIR + '/bash/killer.sh', ' '.join(logids)])
 
-	return HttpResponseRedirect('/projects/%s/?%s' % (data['prid'], info(data)))
+	return HttpResponseRedirect(back_url(data))
 
 
 @login_required
@@ -155,13 +158,10 @@ def command_log(request):
 	url = request.META['SERVER_NAME']
 
 	context = {
-		'back':    '/projects/{project_id:s}/?{parameters:s}'.format(
-			project_id=data['prid'],
-			parameters=info(data),
-		),
 		'name':     data['cmd'].capitalize().replace('_', ' '),
 		'cancel':  '/cancel/?%s' % qst,
 		'project': current_project,
+		'back':    back_url(data),
 		'ok':      'btn-success',
 		'tag':     tag,
 		'logs':    [],
@@ -264,7 +264,7 @@ def project(request, project_id):
 		jobs_filter = data.get('jobs', '')
 		jobs = current_project.job_set.order_by('serv')
 		jobs_filtered = [
-			job for job in jobs if re.search(jobs_filter, '{jobname:s} on {servername:s} {time:s}'.format(
+			job for job in jobs if re.search(jobs_filter, '{jobname!s} on {servername!s} {time!s}'.format(
 				servername=job.serv,
 				jobname=job,
 				time=job.cdat,
@@ -279,7 +279,7 @@ def project(request, project_id):
 
 		if len(logids) > 1:
 			# Create allogs url if there are more then 1 log
-			context['allogs'] = '/command_log/?cmd={cmn_name:s}&prid={project_id:s}&logid={log_ids}'.format(
+			context['allogs'] = '/command_log/?cmd={cmn_name!s}&prid={project_id!s}&logid={log_ids}'.format(
 				log_ids='&logid='.join(logids),
 				project_id=current_project.id,
 				cmn_name=cmdlog,
