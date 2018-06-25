@@ -1,8 +1,25 @@
+{% extends "ups/base.html" %}
 
-<div class="roller" id="history_roller">
+{% block header %}
+
+    <title>UpS: {{project}} history log</title>
+
+    <div class="row">
+        <br>
+        <h4 class="Name">{{project}} history</h4>
+    </div>
+
+{% endblock header %}
+{% block content %}
+
+    <div class="hidden">
+        <input id="id_server_info"/><input id="id_script_info"/>
+        <input id="id_update_info"/><input id="id_dbdump_info"/>
+        <input id="id_job_info"/>
+    </div>
 
     {% if history %}
-        {% include "ups/project_history_paginator.html" %}
+        {% include "ups/history_paginator.html" %}
     {% endif %}
 
     {% for event in history %}
@@ -22,17 +39,25 @@
             <dt>Event logs</dt><dd class="log"><tt>{{event.desc|safe}}</tt></dd>
             <dt>Error code</dt><dd>{{event.exit}}</dd>
 
-            <dt><style onload="color('event{{event.id}}', '{{event.exit}}', '{{event.cron}}')"></style></dt>
+            <!--<dt><style onload="color('event{{event.id}}', '{{event.exit}}', '{{event.cron}}')"></style></dt>-->
         </dl>
 
         <hr>
+
+        <script type="text/javascript">
+            color('event{{event.id}}', '{{event.exit}}', '{{event.cron}}');
+        </script>
 
     {% empty %}
         <br>There are no events in this project yet.
     {% endfor %}
 
     {% if history %}
-        {% include "ups/project_history_paginator.html" %}
+        {% include "ups/history_paginator.html" %}
     {% endif %}
 
-</div>
+    <br><br>
+
+    <div class="output_bottom">{% include "ups/output_bottom_panel.html" %}</div>
+
+{% endblock content %}

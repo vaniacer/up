@@ -206,6 +206,25 @@ def command_log(request):
 
 
 @login_required
+def history(request, project_id):
+	"""Выводит один проект, все его серверы, пакеты обновлений и скрипты, обрабатывает кнопки действий."""
+	current_project = get_object_or_404(Project, id=project_id)
+	check_perm_or404('run_command', current_project, request.user)
+
+	history = current_project.history_set.order_by('date').reverse()
+	history, hist_fd, hist_bk = pagination(request, history)
+
+	context = {
+		'project': current_project,
+		'history': history,
+		'hist_bk': hist_bk,
+		'hist_fd': hist_fd,
+	}
+
+	return render(request, 'ups/history.html', context)
+
+
+@login_required
 def project(request, project_id):
 	"""Выводит один проект, все его серверы, пакеты обновлений и скрипты, обрабатывает кнопки действий."""
 	current_project = get_object_or_404(Project, id=project_id)
@@ -284,14 +303,9 @@ def project(request, project_id):
 				project_id=current_project.id,
 				cmn_name=cmdlog,
 			)
-		history = current_project.history_set.order_by('date').reverse()
-		history, hist_fd, hist_bk = pagination(request, history)
 
 		context['jobs_filtered'] = jobs_filtered
 		context['jobs_filter'] = jobs_filter_form
-		context['history'] = history
-		context['hist_bk'] = hist_bk
-		context['hist_fd'] = hist_fd
 		context['cmdlog'] = cmdlog
 		context['logs'] = logids
 		context['jobs'] = jobs

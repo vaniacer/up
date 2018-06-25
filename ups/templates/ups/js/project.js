@@ -232,7 +232,7 @@ $(function() {
     var hash = window.location.hash;
     var tabs = document.getElementById('id_tab');
 
-    if (!hash) { hash = '#scripts'; }
+//    if (!hash) { hash = '#scripts'; }
 
     if (tabs) {
         if (tabs.value) { hash = '#' + tabs.value; }
@@ -241,31 +241,18 @@ $(function() {
 
     hash && $('ul.nav a[href="' + hash + '"]').tab('show');
 
-    function servers(hash) {
-        var serv_tab = document.getElementById('servers_tab');
-        if (serv_tab) { serv_tab.classList.add('hidden'); }
-        if (tabs) { tabs.value = hash.replace('#', ''); }
-        if (hash == '#scripts' || hash == '#updates' || hash == '#dumps' || hash == '#cron' || hash == '') {
-            if (serv_tab) { serv_tab.classList.remove('hidden'); }
-        }
-    }
-
     // Change tab on click
     $('.nav-tabs a').click(function() {
         $(this).tab('show');
         window.location.hash = this.hash;
         tabs.value = hash.replace('#', '');
-        servers(hash);
     });
 
     // Change tab on hashchange
     window.addEventListener('hashchange', function() {
         var changedHash = window.location.hash;
         changedHash && $('ul.nav a[href="' + changedHash + '"]').tab('show');
-        servers(changedHash);
     }, false);
-
-    servers(hash);
 });
 
 $(document).ready(function() {
