@@ -17,6 +17,7 @@ def delete_project(project):
 	"""Удаляет проект c файлами обновлений и скриптами."""
 	shutil.rmtree(conf.MEDIA_ROOT + '/updates/' + project.name, ignore_errors=True)
 	shutil.rmtree(conf.MEDIA_ROOT + '/scripts/' + project.name, ignore_errors=True)
+	shutil.rmtree(conf.MEDIA_ROOT + '/dumps/' + project.name, ignore_errors=True)
 	project.delete()
 
 
