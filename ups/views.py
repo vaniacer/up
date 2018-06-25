@@ -209,6 +209,7 @@ def command_log(request):
 def history(request, project_id):
 	"""Выводит один проект, все его серверы, пакеты обновлений и скрипты, обрабатывает кнопки действий."""
 	current_project = get_object_or_404(Project, id=project_id)
+	check_perm_or404('view_project', current_project, request.user)
 	check_perm_or404('run_command', current_project, request.user)
 
 	history = current_project.history_set.order_by('date').reverse()
