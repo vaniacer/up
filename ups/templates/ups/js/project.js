@@ -232,12 +232,7 @@ $(function() {
     var hash = window.location.hash;
     var tabs = document.getElementById('id_tab');
 
-//    if (!hash) { hash = '#scripts'; }
-
-//    if (tabs) {
-//        if (tabs.value) { hash = '#' + tabs.value; }
-//        else            { hash.replace('#', ''); }
-//    }
+    if (tabs) { tabs.value = hash.replace('#', ''); }
 
     hash && $('ul.nav a[href="' + hash + '"]').tab('show');
 
@@ -245,12 +240,13 @@ $(function() {
     $('.nav-tabs a').click(function() {
         $(this).tab('show');
         window.location.hash = this.hash;
-        tabs.value = hash.replace('#', '');
+        tabs.value = this.hash.replace('#', '');
     });
 
     // Change tab on hashchange
     window.addEventListener('hashchange', function() {
         var changedHash = window.location.hash;
+        tabs.value = changedhash.replace('#', '');
         changedHash && $('ul.nav a[href="' + changedHash + '"]').tab('show');
     }, false);
 });

@@ -598,39 +598,39 @@ commandick = {
 
 
 def info(data, tab=''):
-	url = ''
+	url = u''
 	if data.get('server_info'):
-		url += '&server_info=on'
+		url += u'&server_info=on'
 	if data.get('script_info'):
-		url += '&script_info=on'
+		url += u'&script_info=on'
 	if data.get('update_info'):
-		url += '&update_info=on'
+		url += u'&update_info=on'
 	if data.get('dbdump_info'):
-		url += '&dbdump_info=on'
+		url += u'&dbdump_info=on'
 	if data.get('job_info'):
-		url += '&job_info=on'
+		url += u'&job_info=on'
 	if data.get('servers'):
-		url += '&servers=%s' % data.get('servers')
+		url += u'&servers=%s' % data.get('servers')
 	if data.get('scripts'):
-		url += '&scripts=%s' % data.get('scripts')
+		url += u'&scripts=%s' % data.get('scripts')
 	if data.get('updates'):
-		url += '&updates=%s' % data.get('updates')
+		url += u'&updates=%s' % data.get('updates')
 	if data.get('dumps'):
-		url += '&dumps=%s' % data.get('dumps')
+		url += u'&dumps=%s' % data.get('dumps')
 	if data.get('jobs'):
-		url += '&jobs=%s' % data.get('jobs')
+		url += u'&jobs=%s' % data.get('jobs')
 	if tab:
 		# url += '&tab=%s' % tab
-		url += '#%s' % tab
+		url += u'#%s' % tab
 	elif data.get('tab'):
-		# url += '&tab=%s' % data.get('tab')
-		url += '#%s' % data.get('tab')
+		url += u'&tab=%s' % data.get('tab')
+		# url += '#%s' % data.get('tab')
 	return url
 
 
 def back_url(data):
 	"""Возвращает url проекта с тек. параметрами."""
-	return '/projects/{project_id!s}/?{parameters!s}'.format(
+	return u'/projects/{project_id!s}/?{parameters!s}'.format(
 		project_id=data['prid'],
 		parameters=info(data),
 	)
@@ -835,17 +835,18 @@ def run_cmd(data, project, user):
 			starter(dick)
 
 	if dick['his']:
-		url = '/projects/{project_id!s}/?&cmdlog={command_name!s}{log_ids!s}{parameters!s}'.format(
+		url = u'/projects/{project_id!s}/?&cmdlog={command_name!s}{log_ids!s}{parameters!s}'.format(
 			parameters=info(data, 'logs'),
 			project_id=project.id,
 			log_ids=dick['logi'],
 			command_name=name,
 		)
 	else:
-		url = '/command_log/?cmd={command_name!s}&prid={project_id!s}{log_ids!s}{parameters!s}'.format(
+		url = u'/command_log/?cmd={command_name!s}&prid={project_id!s}{log_ids!s}{parameters!s}'.format(
 			parameters=info(data),
 			project_id=project.id,
 			log_ids=dick['logi'],
 			command_name=name,
 		)
+
 	return url
