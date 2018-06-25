@@ -234,10 +234,10 @@ $(function() {
 
 //    if (!hash) { hash = '#scripts'; }
 
-    if (tabs) {
-        if (tabs.value) { hash = '#' + tabs.value; }
-        else            { hash.replace('#', ''); }
-    }
+//    if (tabs) {
+//        if (tabs.value) { hash = '#' + tabs.value; }
+//        else            { hash.replace('#', ''); }
+//    }
 
     hash && $('ul.nav a[href="' + hash + '"]').tab('show');
 
