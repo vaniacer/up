@@ -298,7 +298,7 @@ def project(request, project_id):
 
 		if len(logids) > 1:
 			# Create allogs url if there are more then 1 log
-			context['allogs'] = '/command_log/?cmd={cmn_name!s}&prid={project_id!s}&logid={log_ids}'.format(
+			context['allogs'] = u'/command_log/?cmd={cmn_name!s}&prid={project_id!s}&logid={log_ids!s}'.format(
 				log_ids='&logid='.join(logids),
 				project_id=current_project.id,
 				cmn_name=cmdlog,

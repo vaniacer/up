@@ -620,11 +620,9 @@ def info(data, tab=''):
 	if data.get('jobs'):
 		url += u'&jobs=%s' % data.get('jobs')
 	if tab:
-		# url += '&tab=%s' % tab
 		url += u'#%s' % tab
 	elif data.get('tab'):
-		url += u'&tab=%s' % data.get('tab')
-		# url += '#%s' % data.get('tab')
+		url += u'#%s' % data.get('tab')
 	return url
 
 
@@ -842,10 +840,11 @@ def run_cmd(data, project, user):
 			command_name=name,
 		)
 	else:
-		url = u'/command_log/?cmd={command_name!s}&prid={project_id!s}{log_ids!s}{parameters!s}'.format(
+		url = u'/command_log/?cmd={command_name!s}&tab={tab!s}&prid={project_id!s}{log_ids!s}{parameters!s}'.format(
 			parameters=info(data),
 			project_id=project.id,
 			log_ids=dick['logi'],
+			tab=data.get('tab'),
 			command_name=name,
 		)
 
