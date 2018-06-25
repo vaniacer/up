@@ -39,7 +39,6 @@
                     <ul class="nav navbar-nav">
                         <li><a href="{% url 'ups:projects' %}">Projects</a></li>
                         {% if project %}
-
                             <li><a href="{% url 'ups:project' project.id %}">{{project}}</a></li>
                         {% endif %}
                     </ul>
