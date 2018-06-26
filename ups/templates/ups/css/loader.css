@@ -27,7 +27,7 @@
 }
 
 .loader-min {
-    left:     35%;
+    left:     50%;
     height:   var(--min);
     position: relative;
 }
