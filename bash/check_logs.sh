@@ -9,7 +9,7 @@ function run () { #--------------------------------| Main function |------------
 
     addr # Get server address
     # Add server name coz this command not stored in history and don't have event.serv.name
-    printf "\n-----{ Server $addr }-----\n\n"
+    printf "\n-----{ <b>Server $addr</b> }-----\n\n"
 
     ssh -ttt $sopt $addr "cat $wdir/jboss-bas-*/standalone/log/server.log" || error=$?
 

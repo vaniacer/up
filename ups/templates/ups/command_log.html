@@ -26,11 +26,7 @@
                 {% if log.event %}
                     <dt>Server name</dt><dd>{{log.event.serv}}</dd>
                 {% endif %}
-                {% if tag %}
-                    <dt>Event logs</dt><dd class="log"><tt>{{log.log|safe}}</tt></dd>
-                {% else %}
-                    <dt>Event logs</dt><dd class="log"><tt>{{log.log}}</tt></dd>
-                {% endif %}
+                <dt>Event logs</dt><dd class="log"><tt>{{log.log|safe}}</tt></dd>
                 {% if log.err < 999 %}
                     <dt>Error code</dt><dd>{{log.err}}</dd>
                     {% if log.err > 0 %}

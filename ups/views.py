@@ -153,7 +153,6 @@ def command_log(request):
 	check_perm_or404('view_project', current_project, request.user)
 	check_perm_or404('run_command', current_project, request.user)
 
-	tag = commandick[data['cmd']]['tag']
 	qst = request.META['QUERY_STRING']
 	url = request.META['SERVER_NAME']
 
@@ -163,7 +162,6 @@ def command_log(request):
 		'project': current_project,
 		'back':    back_url(data),
 		'ok':      'btn-success',
-		'tag':     tag,
 		'logs':    [],
 		'color':   '',
 	}

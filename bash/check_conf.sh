@@ -9,13 +9,14 @@ function run () { #--------------------------------| Main function |------------
 
     addr # Get server address
     # Add server name coz this command not stored in history and don't have event.serv.name
-    printf "\n-----{ Server $addr }-----\n"
+    printf "\n-----{ <b>Server $addr</b> }-----\n"
 
     ssh -ttt $sopt $addr "
-        printf '\nJava options\n'
+        printf '\n<b>Java options</b>\n\n'
         ps axo command | grep $wdir | grep [j]ava
 
-        printf '\nStandalone-full.xml\n'
-        cat $wdir/jboss-bas-*/standalone/configuration/standalone-full.xml" || error=$?
+        printf '\n<b>Standalone-full.xml</b>\n\n'
+        cat $wdir/jboss-bas-*/standalone/configuration/standalone-full.xml | sed 's|<|\&lt\;|g;s|>|\&gt\;|g'" \
+            || error=$?
 
 } #---------------------------------------------------------------------------------------------------------------------

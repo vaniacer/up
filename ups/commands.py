@@ -31,7 +31,6 @@ commandick = {
 		'dgr':      'false',                         # If true will show confirmation window
 		'run':      "run_or_cron('RUN');",           # If set to "run_or_cron('RUN');" then command will be run only
 		'his':      True,                            # Save or not command log to history
-		'tag':      False,                           # Show or not html tags in command log
 	},
 
 	'change_date': {
@@ -50,7 +49,6 @@ commandick = {
 		'dgr':      'false',
 		'run':      "run_or_cron('RUN');",
 		'his':      True,
-		'tag':      False,
 	},
 
 	'permanent_job': {
@@ -69,7 +67,6 @@ commandick = {
 		'dgr':      'false',
 		'run':      "run_or_cron('RUN');",
 		'his':      True,
-		'tag':      False,
 	},
 
 	'once_job': {
@@ -88,7 +85,6 @@ commandick = {
 		'dgr':      'false',
 		'run':      "run_or_cron('RUN');",
 		'his':      True,
-		'tag':      False,
 	},
 
 	# Dumps section }---------------------------------------------------------------------------------------------------
@@ -108,7 +104,6 @@ commandick = {
 		'dgr':      'false',
 		'run':      '',
 		'his':      True,
-		'tag':      True,
 	},
 
 	'del_dump': {
@@ -127,7 +122,6 @@ commandick = {
 		'dgr':      'false',
 		'run':      '',
 		'his':      True,
-		'tag':      False,
 	},
 
 	'send_dump': {
@@ -146,7 +140,6 @@ commandick = {
 		'dgr':      'true',
 		'run':      '',
 		'his':      True,
-		'tag':      True,
 	},
 
 	# Updates section }-------------------------------------------------------------------------------------------------
@@ -166,7 +159,6 @@ commandick = {
 		'dgr':     'false',
 		'run':     '',
 		'his':     True,
-		'tag':     False,
 	},
 
 	'check_updates': {
@@ -185,7 +177,6 @@ commandick = {
 		'dgr':      'false',
 		'run':      "run_or_cron('RUN');",
 		'his':      False,
-		'tag':      False,
 	},
 
 	'update': {
@@ -204,7 +195,6 @@ commandick = {
 		'dgr':      'true',
 		'run':      '',
 		'his':      True,
-		'tag':      True,
 	},
 
 	'del_sel_updates': {
@@ -223,7 +213,6 @@ commandick = {
 		'dgr':      'false',
 		'run':      '',
 		'his':      True,
-		'tag':      False,
 	},
 
 	'del_all_updates': {
@@ -242,7 +231,6 @@ commandick = {
 		'dgr':      'false',
 		'run':      '',
 		'his':      True,
-		'tag':      False,
 	},
 
 	# Script section }--------------------------------------------------------------------------------------------------
@@ -262,7 +250,6 @@ commandick = {
 		'dgr':      'false',
 		'run':      '',
 		'his':      True,
-		'tag':      True,
 	},
 
 	# Server section }--------------------------------------------------------------------------------------------------
@@ -284,7 +271,6 @@ commandick = {
 		'dgr':      'true',
 		'run':      '',
 		'his':      True,
-		'tag':      False,
 	},
 
 	'maintenance_off': {
@@ -303,7 +289,6 @@ commandick = {
 		'dgr':      'true',
 		'run':      '',
 		'his':      True,
-		'tag':      False,
 	},
 
 	# Jboss
@@ -323,7 +308,6 @@ commandick = {
 		'dgr':     'true',
 		'run':     '',
 		'his':     True,
-		'tag':     False,
 	},
 
 	'restart': {
@@ -342,7 +326,6 @@ commandick = {
 		'dgr':      'true',
 		'run':      '',
 		'his':      True,
-		'tag':      False,
 	},
 
 	'start': {
@@ -361,7 +344,6 @@ commandick = {
 		'dgr':      'true',
 		'run':      '',
 		'his':      True,
-		'tag':      False,
 	},
 
 	'stop': {
@@ -380,7 +362,6 @@ commandick = {
 		'dgr':      'true',
 		'run':      '',
 		'his':      True,
-		'tag':      False,
 	},
 
 	'kill': {
@@ -399,7 +380,6 @@ commandick = {
 		'dgr':      'true',
 		'run':      '',
 		'his':      True,
-		'tag':      False,
 	},
 
 	# Info
@@ -419,7 +399,6 @@ commandick = {
 		'dgr':      'false',
 		'run':      "run_or_cron('RUN');",
 		'his':      False,
-		'tag':      True,
 	},
 
 	'check_conf': {
@@ -438,7 +417,6 @@ commandick = {
 		'dgr':      'false',
 		'run':      "run_or_cron('RUN');",
 		'his':      False,
-		'tag':      False,
 	},
 
 	# Logs
@@ -458,7 +436,6 @@ commandick = {
 		'dgr':      'false',
 		'run':      "run_or_cron('RUN');",
 		'his':      False,
-		'tag':      False,
 	},
 
 	'get_logs_day': {
@@ -477,7 +454,6 @@ commandick = {
 		'dgr':      'false',
 		'run':      '',
 		'his':      True,
-		'tag':      True,
 	},
 
 	'get_logs_all': {
@@ -496,7 +472,6 @@ commandick = {
 		'dgr':      'false',
 		'run':      '',
 		'his':      True,
-		'tag':      True,
 	},
 
 	# Backup
@@ -516,7 +491,6 @@ commandick = {
 		'dgr':      'false',
 		'run':      '',
 		'his':      True,
-		'tag':      True,
 	},
 
 	'backup_sys': {
@@ -535,7 +509,6 @@ commandick = {
 		'dgr':      'false',
 		'run':      '',
 		'his':      True,
-		'tag':      True,
 	},
 
 	'backup_full': {
@@ -554,7 +527,6 @@ commandick = {
 		'dgr':      'false',
 		'run':      '',
 		'his':      True,
-		'tag':      True,
 	},
 
 	'copy_utils': {
@@ -573,7 +545,6 @@ commandick = {
 		'dgr':      'false',
 		'run':      '',
 		'his':      True,
-		'tag':      False,
 	},
 
 	'tunnel': {
@@ -592,7 +563,6 @@ commandick = {
 		'dgr':      'false',
 		'run':      "run_or_cron('RUN');",
 		'his':      False,
-		'tag':      True,
 	},
 }
 
