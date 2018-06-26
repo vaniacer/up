@@ -70,6 +70,8 @@
         <!-- Tab panes -->
         <div class="tab-content">
 
+            {% include "ups/commands_list_cron_options.html" %}
+
             <div role="tabpanel" class="tab-pane in active" id="scripts">
                 <div class="col-sm-2">
                     {% if "run_command" in pr_view_perms %}
@@ -120,7 +122,7 @@
 
         </div>
 
-        <div class="col-sm-5" id="servers_tab">
+        <div class="col-sm-5">
             {% include "ups/project_servers.html" %}
         </div>
 

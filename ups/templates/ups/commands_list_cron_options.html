@@ -1,0 +1,34 @@
+<table class="commands_table cron_table no_border">
+
+    <tr><th>Cron options</th></tr>
+
+    <tr>
+        <td title="Schedule command to run from cron"
+            onclick="run_or_cron('')"
+            class="no_border"
+            id="CRON_BUTTON">Run in cron</td>
+    </tr>
+
+    <tr id="datepicker" class="hidden no_border">
+        <th class="no_border no_padding">
+            <div class="input-group no_border">
+                <input type="date" name="selected_date" class="form-control no_border" title="Enter cron job date">
+                <span class="input-group-addon no_border">
+                <span class="glyphicon glyphicon-calendar no_border"></span>
+                </span>
+            </div>
+        </th>
+    </tr>
+
+    <tr id="timepicker" class="hidden no_border">
+        <th class="no_border no_padding">
+            <div class="input-group no_border">
+                <input type="time" name="selected_time" class="form-control no_border" title="Enter cron job time">
+                <span class="input-group-addon no_border">
+                <span class="glyphicon glyphicon-time no_border"></span>
+                </span>
+            </div>
+        </th>
+    </tr>
+
+</table>

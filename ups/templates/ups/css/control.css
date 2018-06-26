@@ -39,7 +39,7 @@
     height:     80%;
 }
 
-.col-sm-2, .col-sm-5, .col-sm-10 {
+.container-fluid, .col-sm-2, .col-sm-5, .col-sm-10 {
     padding-right: 5px;
     padding-left:  5px;
 }
@@ -133,4 +133,12 @@ td {
 td:hover {
     background: LightGrey;
     cursor:     pointer;
+}
+
+.no_padding{
+    padding: 0;
+}
+
+.no_border {
+    border-bottom: none;
 }
