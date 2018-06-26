@@ -793,7 +793,7 @@ def run_cmd(data, project, user):
 
 			dick['logi'] += '&logid=%s' % uniq
 			dick['opt'] = ['-job', jobi, '-cmd', bash]
-			dick.update({'cron': uniq, 'uniq': uniq, 'serv': serv, 'jobj': jobj})
+			dick.update({'cron': jobi, 'uniq': uniq, 'serv': serv, 'jobj': jobj})
 
 			job_opt(dick)
 			starter(dick)
