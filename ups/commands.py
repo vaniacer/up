@@ -752,6 +752,7 @@ def run_cmd(data, project, user):
 	"""Запускает выбранную команду."""
 	check_perm_or404('run_command', project, user)
 
+	tab = ''
 	date = run_date()
 	name = data['run_cmnd']
 	bash = commandick[name]['bash']
@@ -782,6 +783,8 @@ def run_cmd(data, project, user):
 	# Cronjob specific commands
 	if dick['job'] == 'true':
 
+		tab = 'cron'
+
 		for jobi in data.getlist('selected_jobs'):
 
 			jobj = get_object_or_404(Job, cron=jobi)
@@ -809,6 +812,8 @@ def run_cmd(data, project, user):
 	# Server commands
 	else:
 
+		tab = 'logs'
+
 		for server_id in data.getlist('selected_servers'):
 
 			uniq = get_key()
@@ -834,7 +839,7 @@ def run_cmd(data, project, user):
 
 	if dick['his']:
 		url = u'/projects/{project_id!s}/?&cmdlog={command_name!s}{log_ids!s}{parameters!s}'.format(
-			parameters=info(data, 'logs'),
+			parameters=info(data, tab),
 			project_id=project.id,
 			log_ids=dick['logi'],
 			command_name=name,
