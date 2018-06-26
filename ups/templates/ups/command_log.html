@@ -50,8 +50,13 @@
         {% endfor %}
 
         {% if end %}
-            <dt><br><a class="btn {{ok}}" href="{{back}}">OK</a></dt>
-            <!--<dt><br><a class="btn {{ok}}" onclick="window.close();">Close</a></dt>-->
+
+            {% if his %}
+                <dt><br><a class="btn {{ok}}" onclick="window.close();">Close</a></dt>
+            {% else %}
+                <dt><br><a class="btn {{ok}}" href="{{back}}">OK</a></dt>
+            {% endif %}
+
         {% else %}
             <meta http-equiv="refresh" content="2">
             <br><br>

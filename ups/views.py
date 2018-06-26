@@ -157,7 +157,8 @@ def command_log(request):
 	url = request.META['SERVER_NAME']
 
 	context = {
-		'name':     data['cmd'].capitalize().replace('_', ' '),
+		'name':    data['cmd'].capitalize().replace('_', ' '),
+		'his':     commandick[data['cmd']]['his'],
 		'cancel':  '/cancel/?%s' % qst,
 		'project': current_project,
 		'back':    back_url(data),
