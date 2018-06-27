@@ -1,6 +1,6 @@
 # Update Server
 
-![screenshot](https://user-images.githubusercontent.com/18072680/41148862-afbce64a-6b12-11e8-8a6e-1b1aed14b5eb.png)
+![screenshot](https://user-images.githubusercontent.com/18072680/41978759-21348e96-7a2b-11e8-80c6-ffc86caad370.png)
 
 <p><strong>Manage your servers through ssh via web interface.</strong></p>
 <p>
@@ -12,7 +12,6 @@
         <i>'Dumps'</i><br>
         <i>'Cron'</i><br>
         <i>'Logs'</i><br>
-        <i>'History'</i><br>
 </p>
 <p>
     On the <i>'Scripts'</i> tab you can view, select, edit or add new scripts.<br>
@@ -32,19 +31,19 @@
     Here you can view command logs.<br>
 </p>
 <p>
-    On the <i>'History'</i> tab you can view history log. Events ended with errors marked red.<br>
+    Click <i>'History'</i> link at the top-right to view history log. Events ended with errors marked red.<br>
     Events run in cron marked light-blue.
 </p>
 <p>
-    <i>'Add'</i> and <i>'Select'</i> buttons duplicated at the bottom nav bar.<br>
-    Available commands are located in left menu and split to sections: <br>
+    Available commands are located in left menu and split to sections:<br>
     <i>'Scripts commands'</i><br>
     <i>'Servers commands'</i><br>
     <i>'Updates commands'</i><br>
     <i>'Dumps commands'</i><br>
+    <i>'Cron options'</i><br>
 </p>
 <p>
-    If you activate the <i>'CRON'</i> switch-button(turns red) commands will be scheduled to run via cron.<br>
-    Date and time can be set via date\time widget.
+    If you activate the <i>'Run in cron'</i> switch-button(turns red) commands will be scheduled to run via cron.
+    <br>Date and time can be set via date\time widget.
 </p>
 <p>Have fun!)</p>
