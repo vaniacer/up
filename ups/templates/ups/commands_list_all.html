@@ -1,34 +1,10 @@
-<tr><th>Scripts commands</th></tr>
+<div class="roller">
 
-{% for command in commands %}
-    {% if command.section == "script" %}
-        {% include "ups/commands_table.html" %}
-    {% endif %}
-{% endfor %}
+    {% include "ups/commands_list_cron_options.html" %}
+    {% include "ups/commands_list_cron.html" %}
+    {% include "ups/commands_list_dumps.html" %}
+    {% include "ups/commands_list_updates.html" %}
+    {% include "ups/commands_list_scripts.html" %}
+    {% include "ups/commands_list_servers.html" %}
 
-<tr><th>Servers commands</th></tr>
-
-{% for command in commands %}
-    {% if command.section == "server" %}
-        {% include "ups/commands_table.html" %}
-    {% endif %}
-{% endfor %}
-
-<tr><th>Updates commands</th></tr>
-
-{% for command in commands %}
-    {% if command.section == "update" %}
-        {% include "ups/commands_table.html" %}
-    {% endif %}
-{% endfor %}
-
-<tr><th>Dumps commands</th></tr>
-
-{% for command in commands %}
-    {% if command.section == "dump" %}
-        {% include "ups/commands_table.html" %}
-    {% endif %}
-{% endfor %}
-
-<tr><td></td></tr>
-<tr><td></td></tr>
+</div>

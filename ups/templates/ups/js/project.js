@@ -94,29 +94,31 @@ function show_or_hide_this(btn_id, pnl_id) {
 
 function show_or_hide_all(id, panel, button, set) {
 
-    var pluses = document.getElementsByClassName(button);
-    var panels = document.getElementsByClassName(panel);
+    var pluses = Array.from(document.getElementsByClassName(button));
+    var panels = Array.from(document.getElementsByClassName(panel));
     var button = document.getElementById(button);
     var status = document.getElementById(id);
 
     function show_info() {
         if (status) { status.checked = true; }
         if (button) { button.value = 'Info On'; }
-        for (i = 0; i < panels.length; i++) { panels[i].classList.remove('hidden'); }
-        for (i = 0; i < pluses.length; i++) {
-            pluses[i].classList.add('glyphicon-menu-up');
-            pluses[i].classList.remove('glyphicon-menu-down');
-        }
+
+        panels.forEach( function(item) { item.classList.remove('hidden'); });
+        pluses.forEach( function(item) {
+            item.classList.add('glyphicon-menu-up');
+            item.classList.remove('glyphicon-menu-down');
+        });
     }
 
     function hide_info() {
         if (status) { status.checked = false; }
         if (button) { button.value = 'Info Off'; }
-        for (i = 0; i < panels.length; i++) { panels[i].classList.add('hidden'); }
-        for (i = 0; i < pluses.length; i++) {
-            pluses[i].classList.add('glyphicon-menu-down');
-            pluses[i].classList.remove('glyphicon-menu-up');
-        }
+
+        panels.forEach( function(item) { item.classList.add('hidden'); });
+        pluses.forEach( function(item) {
+            item.classList.remove('glyphicon-menu-up');
+            item.classList.add('glyphicon-menu-down');
+        });
     }
 
     if (set == 'show') { show_info(); }
@@ -173,37 +175,27 @@ function select_all(box_name, body_name, state, obj) {
 function Validation(cmd, srv, upd, job, scr, dmp, dgr) {
 
     var server_names = '';
+    var check = function(item) { return item.checked; }
 
     if (job) {
-        var jobs = document.getElementsByName('selected_jobs');
-        for (i = 0; i < jobs.length; i++) { if (jobs[i].checked) { var selected_jobs = true; break; }}
-        if  (!selected_jobs) { alert('Job(s) not selected.'); return false; }}
+        var jobs = Array.from(document.getElementsByName('selected_jobs'));
+        if (!jobs.some(check)) { alert('Job(s) not selected.'); return false; }}
 
     if (scr) {
-        var updates = document.getElementsByName('selected_scripts');
-        for (i = 0; i < updates.length; i++) { if (updates[i].checked) { var selected_updates = true; break; }}
-        if  (!selected_updates) { alert('Script(s) not selected.'); return false; }}
+        var scripts = Array.from(document.getElementsByName('selected_scripts'));
+        if (!scripts.some(check)) { alert('Script(s) not selected.'); return false; }}
 
     if (upd) {
-        var updates = document.getElementsByName('selected_updates');
-        for (i = 0; i < updates.length; i++) { if (updates[i].checked) { var selected_updates = true; break; }}
-        if  (!selected_updates) { alert('Update(s) not selected.'); return false; }}
+        var updates = Array.from(document.getElementsByName('selected_updates'));
+        if (!updates.some(check)) { alert('Update(s) not selected.'); return false; }}
 
     if (dmp) {
-        var dumps = document.getElementsByName('selected_dbdumps');
-        for (i = 0; i < dumps.length; i++) { if (dumps[i].checked) { var selected_dbdumps = true; break; }}
-        if  (!selected_dbdumps) { alert('Dump(s) not selected.'); return false; }}
+        var dumps = Array.from(document.getElementsByName('selected_dbdumps'));
+        if (!dumps.some(check)) { alert('Dump(s) not selected.'); return false; }}
 
     if (srv) {
-        var servers = document.getElementsByName('selected_servers');
-        for (i = 0; i < servers.length; i++) {
-            data = servers[i].dataset;
-            if (servers[i].checked) {
-                var selected_servers = true;
-                server_names = '\n\t' + data.target + server_names;
-            }
-        }
-        if  (!selected_servers) { alert('Server(s) not selected.'); return false; }}
+        var servers = Array.from(document.getElementsByName('selected_servers'));
+        if (!servers.some(check)) { alert('Server(s) not selected.'); return false; }}
 
     if (dgr) {
         var sure = confirm(
@@ -227,6 +219,17 @@ function filter_by(id, value) {
     document.getElementById('run_cmnd').value = '';
     document.getElementById(id).value = value;
     document.getElementById('selector').submit();
+}
+
+function show_commands(name) {
+
+    var cmdlist = document.getElementById(name);
+
+    Array.from(document.getElementsByClassName('hidden_commands')).forEach(
+        function(item) { item.classList.add('hidden'); }
+    );
+
+    cmdlist.classList.remove('hidden');
 }
 
 $(function() {
@@ -253,7 +256,7 @@ $(function() {
     // Change tab on hashchange
     window.addEventListener('hashchange', function() {
         var changedHash = window.location.hash;
-        tabs.value = changedhash.replace('#', '');
+        tabs.value = changedHash.replace('#', '');
         changedHash && $('ul.nav a[href="' + changedHash + '"]').tab('show');
     }, false);
 });

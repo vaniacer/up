@@ -140,5 +140,6 @@ td:hover {
 }
 
 .no_border {
-    border-bottom: none;
+    border-top:    0;
+    border-bottom: 0;
 }

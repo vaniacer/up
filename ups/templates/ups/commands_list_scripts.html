@@ -1,28 +1,19 @@
-<div class="roller">
+<table class="commands_table no_border hidden_commands" id="scripts_commands">
+    <tr><th class="no_border">Scripts commands</th></tr>
 
-    <!--<table class="table small">-->
-    <table class="commands_table">
+    <tr>
+        <td title="Select all scripts"
+            onclick="select_all('selected_scripts', 'script-body', true,  'SX')">Select all scripts</td>
+    </tr>
 
-        <tr><th>Scripts commands</th></tr>
+    <tr>
+        <td title="Deselect all scripts"
+            onclick="select_all('selected_scripts', 'script-body', false, 'SX')">Deselect all scripts</td>
+    </tr>
 
-        <tr>
-            <td title="Select all scripts"
-                onclick="select_all('selected_scripts', 'script-body', true,  'SX')">Select all scripts</td>
-        </tr>
-
-        <tr>
-            <td title="Deselect all scripts"
-                onclick="select_all('selected_scripts', 'script-body', false, 'SX')">Deselect all scripts</td>
-        </tr>
-
-        {% for command in commands %}
-            {% if command.section == "script" %}
-                {% include "ups/commands_table.html" %}
-            {% endif %}
-        {% endfor %}
-
-        {% include "ups/commands_list_servers.html" %}
-
-    </table>
-
-</div>
+    {% for command in commands %}
+        {% if command.section == "script" %}
+            {% include "ups/commands_table.html" %}
+        {% endif %}
+    {% endfor %}
+</table>

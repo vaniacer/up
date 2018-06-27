@@ -11,20 +11,6 @@
 
         <div id="navbar_bottom" class="navbar-collapse collapse">
 
-            <ul class="nav navbar-nav col-sm-2">
-                {% if "add_script" in pr_view_perms or "add_update" in pr_view_perms or "add_server" in pr_view_perms %}
-                    {% include "ups/project_bottom_panel_add.html" %}
-                {% endif %}
-                {% if "run_command" in pr_view_perms %}
-                    {% include "ups/project_bottom_panel_select.html" %}
-                {% endif %}
-            </ul>
-            <ul class="nav navbar-nav col-sm-5">
-                {% if "run_command" in pr_view_perms %}
-                    {% include "ups/project_bottom_panel_cron.html" %}
-                {% endif %}
-            </ul>
-
             <!-- Buttons by the right side -->
             <ul class="nav navbar-nav col-sm-5">
                 {% include "ups/project_bottom_panel_right.html" %}
