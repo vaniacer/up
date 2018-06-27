@@ -9,7 +9,6 @@
 {% block content %}
 
     {% get_obj_perms request.user for project as "pr_view_perms" %}
-    {% include "ups/up_down_buttons.html" %}
 
     <p id="SU"></p> <!-- Selected updates list -->
     <p id="SS"></p> <!-- Selected servers list -->
