@@ -52,12 +52,10 @@ function run_or_cron(type) {
 
     function color_button(cron) {
         if (cron == 'CRON') {
-//            cron_button.classList.remove('btn-default');
             cron_button.classList.add('btn-danger');
             datepicker.classList.remove('hidden');
             timepicker.classList.remove('hidden');
         } else {
-//            cron_button.classList.add('btn-default');
             cron_button.classList.remove('btn-danger');
             datepicker.classList.add('hidden');
             timepicker.classList.add('hidden');
@@ -229,7 +227,7 @@ function show_commands(name) {
         function(item) { item.classList.add('hidden'); }
     );
 
-    cmdlist.classList.remove('hidden');
+    if (cmdlist) { cmdlist.classList.remove('hidden'); }
 }
 
 $(function() {
@@ -244,12 +242,14 @@ $(function() {
     if (tabs) { tabs.value = hash.replace('#', ''); }
 
     hash && $('ul.nav a[href="' + hash + '"]').tab('show');
+    if (hash) { show_commands(hash.replace('#', '') + '_commands'); }
 
     // Change tab on click
     $('.nav-tabs a').click(function() {
         $(this).tab('show');
         window.location.hash = this.hash;
         tabs.value = this.hash.replace('#', '');
+        show_commands(tabs.value + '_commands');
         go_up();
     });
 
@@ -258,6 +258,7 @@ $(function() {
         var changedHash = window.location.hash;
         tabs.value = changedHash.replace('#', '');
         changedHash && $('ul.nav a[href="' + changedHash + '"]').tab('show');
+        show_commands(tabs.value + '_commands');
     }, false);
 });
 

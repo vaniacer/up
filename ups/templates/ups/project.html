@@ -37,26 +37,22 @@
 
             <li role="presentation" class="active">
                 <a title="Project scripts and servers"
-                   onclick="show_commands('scripts_commands');"
                    href="#scripts" aria-controls="scripts" role="tab" data-toggle="tab">Scripts</a>
             </li>
 
             <li role="presentation">
                 <a title="Project updates and servers"
-                   onclick="show_commands('updates_commands');"
                    href="#updates" aria-controls="updates" role="tab" data-toggle="tab">Updates</a>
             </li>
 
             <li role="presentation">
                 <a title="Project dumps and servers"
-                   onclick="show_commands('dumps_commands');"
                    href="#dumps" aria-controls="dumps" role="tab" data-toggle="tab">Dumps</a>
             </li>
 
             {% if "run_command" in pr_view_perms %}
                 <li role="presentation">
                     <a title="Project cron jobs"
-                       onclick="show_commands('cron_commands');"
                        href="#cron" aria-controls="cron" role="tab" data-toggle="tab">Cron</a>
                 </li>
 
