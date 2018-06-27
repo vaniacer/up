@@ -2,8 +2,12 @@
   border-radius: 0 !important;
 }
 
+.commands_all {
+    margin-bottom: 20px;
+}
+
 .project_name {
-    margin-top: 8;
+    margin-top: 8px;
 }
 
 .ok_btn {

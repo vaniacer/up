@@ -235,10 +235,6 @@ function show_commands(name) {
     if (cmdlist) { cmdlist.classList.remove('hidden'); }
 }
 
-function isOverflown(element) {
-    return element.scrollHeight > element.clientHeight;
-}
-
 $(function() {
 
     var run_cmnd = document.getElementById('run_cmnd');
