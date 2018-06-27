@@ -235,19 +235,25 @@ function show_commands(name) {
     if (cmdlist) { cmdlist.classList.remove('hidden'); }
 }
 
+function isOverflown(element) {
+    return element.scrollHeight > element.clientHeight;
+}
+
 $(function() {
 
     var run_cmnd = document.getElementById('run_cmnd');
+    var updown = document.getElementById('updown');
     if (run_cmnd) { run_cmnd.value = ''; }
 
     // Change tab on load
     var hash = window.location.hash;
     var tabs = document.getElementById('id_tab');
 
-    if (tabs) { tabs.value = hash.replace('#', ''); }
+    if (!hash) { hash = '#scripts'; }
+    if (tabs)  { tabs.value = hash.replace('#', ''); }
 
     hash && $('ul.nav a[href="' + hash + '"]').tab('show');
-    if (hash) { show_commands(hash.replace('#', '') + '_commands'); }
+    show_commands(hash.replace('#', '') + '_commands');
 
     // Change tab on click
     $('.nav-tabs a').click(function() {
@@ -265,6 +271,11 @@ $(function() {
         changedHash && $('ul.nav a[href="' + changedHash + '"]').tab('show');
         show_commands(tabs.value + '_commands');
     }, false);
+
+    // Show up\down buttons if window is overflown
+    window.addEventListener('overflow',  function () { updown.classList.remove('hidden'); }, false);
+    window.addEventListener('underflow', function () { updown.classList.add('hidden');    }, false);
+
 });
 
 $(document).ready(function() {

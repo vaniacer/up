@@ -12,6 +12,8 @@
 {% endblock header %}
 {% block content %}
 
+    {% include "ups/up_down_buttons.html" %}
+
     <div class="hidden">
         <input id="id_server_info"/><input id="id_script_info"/>
         <input id="id_update_info"/><input id="id_dbdump_info"/>
@@ -50,26 +52,18 @@
         {% endfor %}
 
         {% if end %}
-
             {% if his %}
-                <dt><br><a class="btn {{ok}}" onclick="window.close();">Close</a></dt>
+                <dt><p><a class="btn ok_btn {{ok}}" onclick="window.close();">Close</a></p></dt>
             {% else %}
-                <dt><br><a class="btn {{ok}}" href="{{back}}">OK</a></dt>
+                <dt><p><a class="btn ok_btn {{ok}}" href="{{back}}">OK</a></p></dt>
             {% endif %}
-
         {% else %}
             <meta http-equiv="refresh" content="2">
             <br><br>
             <a class="btn btn-primary" href="{{cancel}}">Cancel</a>
         {% endif %}
 
-        <br><br><br>
-        <br><br><br>
-        <br><br><br>
-
     </div>
-
-    <div class="output_bottom">{% include "ups/output_bottom_panel.html" %}</div>
 
     <script type="text/javascript">
         $(document).ready(function() { go_down(); });
