@@ -162,6 +162,6 @@ td:hover {
 }
 
 /*-------------{ Up\Down arrows }-----------------*/
-.updown   { right:  10px; position: fixed; top: 45%; }
-.updown a { right:  0px;  position: absolute; }
+#updown   { right:  10px; position: fixed; top: 45%; }
+#updown a { right:  0px;  position: absolute; }
 .goto-bot { top:    35px; }
