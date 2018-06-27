@@ -161,13 +161,12 @@ function selector(box_id, body_id, name, obj) {
 }
 
 function select_all(box_name, body_name, state, obj) {
-    var boxes  = document.getElementsByName(box_name);
-    var bodies = document.getElementsByClassName(body_name);
+    var boxes  = Array.from(document.getElementsByName(box_name));
+    var bodies = Array.from(document.getElementsByClassName(body_name));
 
-    for (i = 0; i < boxes.length;  i++) {
-        data = boxes[i].dataset;
-        if ( boxes[i].checked != state ) { selector(boxes[i].id, bodies[i].id, data.target, obj); }
-    }
+    boxes.forEach( function (box, i) {
+        if ( box.checked != state ) { selector(box.id, bodies[i].id, box.dataset.target, obj); }
+    });
 }
 
 function Validation(cmd, srv, upd, job, scr, dmp, dgr) {
