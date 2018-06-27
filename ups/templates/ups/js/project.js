@@ -171,28 +171,34 @@ function select_all(box_name, body_name, state, obj) {
 
 function Validation(cmd, srv, upd, job, scr, dmp, dgr) {
 
-    var server_names = '';
     var check = function(item) { return item.checked; }
 
     if (job) {
         var jobs = Array.from(document.getElementsByName('selected_jobs'));
-        if (!jobs.some(check)) { alert('Job(s) not selected.'); return false; }}
+        if (!jobs.some(check)) { alert('Job(s) not selected.'); return false; }
+    }
 
     if (scr) {
         var scripts = Array.from(document.getElementsByName('selected_scripts'));
-        if (!scripts.some(check)) { alert('Script(s) not selected.'); return false; }}
+        if (!scripts.some(check)) { alert('Script(s) not selected.'); return false; }
+    }
 
     if (upd) {
         var updates = Array.from(document.getElementsByName('selected_updates'));
-        if (!updates.some(check)) { alert('Update(s) not selected.'); return false; }}
+        if (!updates.some(check)) { alert('Update(s) not selected.'); return false; }
+    }
 
     if (dmp) {
         var dumps = Array.from(document.getElementsByName('selected_dbdumps'));
-        if (!dumps.some(check)) { alert('Dump(s) not selected.'); return false; }}
+        if (!dumps.some(check)) { alert('Dump(s) not selected.'); return false; }
+    }
 
     if (srv) {
+        var server_names = '';
         var servers = Array.from(document.getElementsByName('selected_servers'));
-        if (!servers.some(check)) { alert('Server(s) not selected.'); return false; }}
+        if (!servers.some(check)) { alert('Server(s) not selected.'); return false; }
+        servers.forEach(function(S) { if (S.checked) { server_names = '\n\t' + S.dataset.target + server_names; }});
+    }
 
     if (dgr) {
         var sure = confirm(
