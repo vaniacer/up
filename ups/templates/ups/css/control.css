@@ -40,8 +40,13 @@
 }
 
 .container-fluid, .col-sm-2, .col-sm-5, .col-sm-10 {
-    padding-right: 5px;
-    padding-left:  5px;
+    padding-right: 0px;
+    padding-left:  0px;
+}
+
+.col-sm-6 {
+    padding-right: 0px;
+    padding-left:  10px;
 }
 
 /*-----{ Mini logs }-----*/
@@ -142,4 +147,13 @@ td:hover {
 .no_border {
     border-top:    0;
     border-bottom: 0;
+}
+
+ul, li {
+    border-color: LightGrey;
+    border-style: thick;
+}
+
+.project_name {
+    margin-top: 8;
 }
