@@ -238,6 +238,7 @@ window.onload = function() {
     var tabs = document.getElementById('id_tab');
     var hash = window.location.hash;
 
+    // Empty command just in case)
     if (run_cmnd) { run_cmnd.value = ''; }
 
     // Show\hide fast scrolling buttons
@@ -269,6 +270,7 @@ window.onload = function() {
         show_commands(tabs.value + '_commands');
     }, false);
 
+    // Show\hide objects info
     if (document.getElementById('id_server_info')) {
         if (document.getElementById('id_server_info').checked) {
                show_or_hide_all('id_server_info', 'server-panel', 'sshow', 'show'); }
