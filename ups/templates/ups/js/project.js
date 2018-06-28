@@ -236,10 +236,26 @@ function show_commands(name) {
 }
 
 $(function() {
-
+    var roller_list = Array.from(document.getElementsByClassName('roller'));
     var run_cmnd = document.getElementById('run_cmnd');
     var updown = document.getElementById('updown');
     if (run_cmnd) { run_cmnd.value = ''; }
+
+    window.onscroll = function() {
+        if (document.body.scrollTop > 10) { updown.classList.remove('hidden'); }
+        else { updown.classList.add('hidden'); }
+    }
+    roller_list.forEach(
+        function (item) {
+            item.onscroll = function() {
+                if (item.scrollTop > 10) { updown.classList.remove('hidden'); }
+                else { updown.classList.add('hidden'); }
+            }
+        }
+    );
+
+//    window.addEventListener('overflow',  function () { updown.classList.remove('hidden'); });
+//    window.addEventListener('underflow', function () { updown.classList.add('hidden');    });
 
     // Change tab on load
     var hash = window.location.hash;
@@ -267,10 +283,6 @@ $(function() {
         changedHash && $('ul.nav a[href="' + changedHash + '"]').tab('show');
         show_commands(tabs.value + '_commands');
     }, false);
-
-    // Show up\down buttons if window is overflown
-    window.addEventListener('overflow',  function () { updown.classList.remove('hidden'); });
-    window.addEventListener('underflow', function () { updown.classList.add('hidden');    });
 
 });
 
