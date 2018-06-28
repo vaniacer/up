@@ -269,8 +269,8 @@ $(function() {
     }, false);
 
     // Show up\down buttons if window is overflown
-    window.addEventListener('overflow',  function () { updown.classList.remove('hidden'); }, false);
-    window.addEventListener('underflow', function () { updown.classList.add('hidden');    }, false);
+    window.addEventListener('overflow',  function () { updown.classList.remove('hidden'); });
+    window.addEventListener('underflow', function () { updown.classList.add('hidden');    });
 
 });
 

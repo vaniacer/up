@@ -815,12 +815,16 @@ def run_cmd(data, project, user):
 			command_name=name,
 		)
 	else:
+		tab = data.get('tab')
+		if tab == 'logs':
+			tab = 'scripts'
+
 		url = u'/command_log/?cmd={command_name!s}&tab={tab!s}&prid={project_id!s}{log_ids!s}{parameters!s}'.format(
-			parameters=info(data),
+			parameters=info(data, tab),
 			project_id=project.id,
 			log_ids=dick['logi'],
-			tab=data.get('tab'),
 			command_name=name,
+			tab=tab,
 		)
 
 	return url
