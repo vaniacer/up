@@ -246,10 +246,6 @@ $(function() {
     roller_list.forEach( function(item) { item.onscroll = function() {
                                             if (item.scrollTop > 10) { updown.classList.remove('hidden'); }
                                                                 else { updown.classList.add('hidden');    } }});
-
-//    window.addEventListener('overflow',  function () { updown.classList.remove('hidden'); });
-//    window.addEventListener('underflow', function () { updown.classList.add('hidden');    });
-
     // Change tab on load
     var hash = window.location.hash;
     var tabs = document.getElementById('id_tab');
