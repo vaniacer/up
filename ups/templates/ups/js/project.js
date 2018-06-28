@@ -1,6 +1,6 @@
 function color(body_id, ec, cron) {
     var body = document.getElementById(body_id);
-    if (cron  ) { body.classList.add('cron');   }
+    if (cron  ) { body.classList.add('cron'); }
     if (ec > 0) {
         body.classList.remove('cron');
         body.classList.add('danger');
@@ -10,8 +10,8 @@ function color(body_id, ec, cron) {
 }
 
 function show_loader() {
-    $('.project').hide();
-    $('.loader-max').show();
+    document.getElementById('project-body').classList.add('hidden');
+    document.getElementById('loader-max').classList.remove('hidden');
 }
 
 function go_up() {
@@ -297,4 +297,5 @@ $(document).ready(function() {
                show_or_hide_all('id_job_info', 'job-panel', 'jshow', 'show'); }
         else { show_or_hide_all('id_job_info', 'job-panel', 'jshow', 'hide'); }
     }
+
 });

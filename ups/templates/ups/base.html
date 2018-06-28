@@ -7,8 +7,6 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <!--<title>Update Server</title>-->
-
         {% bootstrap_css %}
         <style type="text/css">
             {% include "ups/css/loader.css"  %}
@@ -21,7 +19,6 @@
         </script>
 
         {% include "ups/up_down_buttons.html" %}
-
     </head>
 
     <body>
@@ -66,25 +63,10 @@
         </nav>
 
         <div class="container">
-            <div class="page-header">
-                {% block header %}{% endblock header %}
-            </div>
-            <div class="project">
-                {% block content %}{% endblock content %}
-            </div>
-
-            <div class="loader-max">
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-            </div>
-            <script type="text/javascript">
-                $('.loader-max').hide();
-            </script>
-
-        </div> <!-- /container -->
+            <div class="page-header">{% block header %}{% endblock header %}</div>
+            <div id="project-body">{% block content %}{% endblock content %}</div>
+            <div id="loader-max" class="hidden">{% include "ups/5div.html" %}</div>
+        </div>
 
     </body>
 
