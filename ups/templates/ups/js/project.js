@@ -16,31 +16,27 @@ function show_loader() {
 
 function go_up() {
     var tabs = document.getElementById('id_tab');
-
     if (tabs) {
-        var active_div = document.getElementById(tabs.value + '_roller');
-        var server_div = document.getElementById('servers_roller');
-        active_div.scrollTop = 0;
-        server_div.scrollTop = 0;
+        var active_tab = document.getElementById(tabs.value + '_roller');
+        var server_tab = document.getElementById('servers_roller');
+        active_tab.scrollTop = 0;
+        server_tab.scrollTop = 0;
     }
 
-    document.body.scrollTop = 0; // For Chrome, Safari and Opera
-    document.documentElement.scrollTop = 0; // For IE and Firefox
+    document.body.scrollTop = 0;
 }
 
 function go_down() {
     var tabs = document.getElementById('id_tab');
-    var jump = $(document).height();
-
+    var jump = document.body.scrollHeight;
     if (tabs) {
-        var active_div = document.getElementById(tabs.value + '_roller');
-        var server_div = document.getElementById('servers_roller');
-        active_div.scrollTop = active_div.scrollHeight;
-        server_div.scrollTop = server_div.scrollHeight;
+        var active_tab = document.getElementById(tabs.value + '_roller');
+        var server_tab = document.getElementById('servers_roller');
+        active_tab.scrollTop = active_tab.scrollHeight;
+        server_tab.scrollTop = server_tab.scrollHeight;
     }
 
-    document.body.scrollTop = jump; // For Chrome, Safari and Opera
-    document.documentElement.scrollTop = jump; // For IE and Firefox
+    document.body.scrollTop = jump;
 }
 
 function run_or_cron(type) {
@@ -231,17 +227,18 @@ function show_commands(name) {
     Array.from(document.getElementsByClassName('hidden_commands')).forEach(
         function(item) { item.classList.add('hidden'); }
     );
-
     if (cmdlist) { cmdlist.classList.remove('hidden'); }
 }
 
 window.onload = function() {
 
     var roller_list = Array.from(document.getElementsByClassName('roller'));
-    var run_cmnd = document.getElementById('run_cmnd').value = '';
+    var run_cmnd = document.getElementById('run_cmnd');
     var updown = document.getElementById('updown');
     var tabs = document.getElementById('id_tab');
     var hash = window.location.hash;
+
+    if (run_cmnd) { run_cmnd.value = ''; }
 
     // Show\hide fast scrolling buttons
     window.onscroll = function() { if (document.body.scrollTop > 10) { updown.classList.remove('hidden'); }
