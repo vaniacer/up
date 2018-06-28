@@ -296,5 +296,4 @@ $(document).ready(function() {
                show_or_hide_all('id_job_info', 'job-panel', 'jshow', 'show'); }
         else { show_or_hide_all('id_job_info', 'job-panel', 'jshow', 'hide'); }
     }
-
 });
