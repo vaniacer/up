@@ -235,20 +235,21 @@ function show_commands(name) {
     if (cmdlist) { cmdlist.classList.remove('hidden'); }
 }
 
-$(function() {
-    var roller_list = Array.from(document.getElementsByClassName('roller'));
-    var run_cmnd = document.getElementById('run_cmnd');
-    var updown = document.getElementById('updown');
-    if (run_cmnd) { run_cmnd.value = ''; }
+window.onload = function() {
 
+    var roller_list = Array.from(document.getElementsByClassName('roller'));
+    var run_cmnd = document.getElementById('run_cmnd').value = '';
+    var updown = document.getElementById('updown');
+    var tabs = document.getElementById('id_tab');
+    var hash = window.location.hash;
+
+    // Show\hide fast scrolling buttons
     window.onscroll = function() { if (document.body.scrollTop > 10) { updown.classList.remove('hidden'); }
                                                                 else { updown.classList.add('hidden'); }  }
     roller_list.forEach( function(item) { item.onscroll = function() {
                                             if (item.scrollTop > 10) { updown.classList.remove('hidden'); }
                                                                 else { updown.classList.add('hidden');    } }});
     // Change tab on load
-    var hash = window.location.hash;
-    var tabs = document.getElementById('id_tab');
     if (!hash) { hash = '#scripts'; }
     if (tabs)  { tabs.value = hash.replace('#', ''); }
     hash && $('ul.nav a[href="' + hash + '"]').tab('show');
@@ -271,10 +272,6 @@ $(function() {
         show_commands(tabs.value + '_commands');
     }, false);
 
-});
-
-$(document).ready(function() {
-
     if (document.getElementById('id_server_info')) {
         if (document.getElementById('id_server_info').checked) {
                show_or_hide_all('id_server_info', 'server-panel', 'sshow', 'show'); }
@@ -296,4 +293,4 @@ $(document).ready(function() {
                show_or_hide_all('id_job_info', 'job-panel', 'jshow', 'show'); }
         else { show_or_hide_all('id_job_info', 'job-panel', 'jshow', 'hide'); }
     }
-});
+}
