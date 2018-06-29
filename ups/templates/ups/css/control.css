@@ -47,6 +47,10 @@
     font-weight: bold;
 }
 
+.panel-body  {
+    word-break:break-all;
+}
+
 .roller {
     overflow-y: auto;
     height:     80%;
