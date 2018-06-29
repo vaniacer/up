@@ -45,7 +45,7 @@ function make_history () {
 
     [[ $log_lenght -gt 100 ]] \
         && { LOG="<b>Log is too long to store in history, cutting...</b>\n"
-             LOG="$LOG$(head -25 $rundir/log$key; printf "...\n"; tail -25 $rundir/log$key)"; } \
+             LOG="$LOG$(head -50 $rundir/log$key; printf "...\n"; tail -50 $rundir/log$key)"; } \
         || { LOG=$(cat $rundir/log$key); }
 
     # Get DB configuration from conf.py

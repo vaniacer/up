@@ -27,7 +27,7 @@
                         </dd>
                     {% endif %}
 
-                    <dt>           Preview</dt><dd><samp>{{script.body|linebreaks|truncatewords:30}}</samp></dd>
+                    <dt>           Preview</dt><dd><samp>{{script.body|linebreaks|truncatewords:10}}</samp></dd>
                     <dt class="small">User</dt><dd class="small">{{script.user}}</dd>
                     <dt class="small">Date</dt><dd class="small">{{script.date|date:'M d, Y H:i'}}</dd>
                 </dl>
