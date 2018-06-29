@@ -47,8 +47,9 @@
     font-weight: bold;
 }
 
-.panel-body  {
-    word-break:break-all;
+.panel-body, tt  {
+    word-wrap: break-word;
+    word-break: break-all;
 }
 
 .roller {
