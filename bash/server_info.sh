@@ -13,7 +13,7 @@ function run () { #--------------------------------| Main function |------------
 
     ssh_yes "$sopt $addr" > /dev/null
 
-    ssh -ttt $sopt $addr "
+    ssh -t -t $sopt $addr "
         printf '\n<b>Hostname:</b>\n'
         hostname
 

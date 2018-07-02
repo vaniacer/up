@@ -12,6 +12,6 @@ function description () { #---------------------| Function description |--------
 function run () { #--------------------------------| Main function |---------------------------------------------------
 
     addr # Get server address
-    ssh -ttt $sopt $addr "Put your code here" || error=$?
+    ssh -t -t $sopt $addr "Put your code here" || error=$?
 
 } #---------------------------------------------------------------------------------------------------------------------

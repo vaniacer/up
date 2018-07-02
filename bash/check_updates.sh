@@ -12,6 +12,6 @@ function run () { #--------------------------------| Main function |------------
     printf "\n-----{ <b>Server $addr</b> }-----\n"
 
     printf "\nПакеты обновлений:\n"
-    ssh -ttt $sopt $addr "ls $wdir/updates/new" || error=$?
+    ssh -t -t $sopt $addr "ls $wdir/updates/new" || error=$?
 
 } #---------------------------------------------------------------------------------------------------------------------

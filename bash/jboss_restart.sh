@@ -8,7 +8,7 @@ function description () { #---------------------| Function description |--------
 function run () { #--------------------------------| Main function |---------------------------------------------------
 
     addr # Get server address
-    ssh -ttt $sopt $addr $wdir/krupd jboss.stop  || error=$?
-    ssh -ttt $sopt $addr $wdir/krupd jboss.start || error=$?
+    ssh -t -t $sopt $addr $wdir/krupd jboss.stop  || error=$?
+    ssh -t -t $sopt $addr $wdir/krupd jboss.start || error=$?
 
 } #---------------------------------------------------------------------------------------------------------------------

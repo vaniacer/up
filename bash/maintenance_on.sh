@@ -9,6 +9,6 @@ function run () { #--------------------------------| Main function |------------
 
     addr # Get server address
     printf "\nStart dummy page."
-    ssh -ttt $sopt $addr "~/.utils/dp.sh --start --jport $port" || error=$?
+    ssh -t -t $sopt $addr "~/.utils/dp.sh --start --jport $port" || error=$?
 
 } #---------------------------------------------------------------------------------------------------------------------

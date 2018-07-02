@@ -169,7 +169,7 @@ function download () {
     [[ -d "$download_to" ]] || mkdir -p "$download_to"
 
     echo  -e "\n<b>Копирую файл - $remote_filename</b>\n"
-    rsync -e "ssh $sopt" --progress -lzuogthvr $addr:"$remote_file" "$download_to" || { error=$?; return $error; }
+    rsync -e "ssh -t -t $sopt" --progress -lzuogthvr $addr:"$remote_file" "$download_to" || { error=$?; return $error; }
 
     case $2 in
         $pname) printf "\n<a class='btn btn-primary' href='/download_dump/$prj/$remote_filename'>Download</a>\n";;

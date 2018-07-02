@@ -12,7 +12,7 @@ function run () { #--------------------------------| Main function |------------
 
     arhive="$tmp_folder/${addr}_daylogs_`printf "%(%d-%m-%Y)T"`.zip"
 
-    ssh -ttt $sopt $addr "
+    ssh -t -t $sopt $addr "
         find $wdir/jboss-bas-*/standalone/log -type f -daystart -ctime 0 | xargs zip -jy $arhive > /dev/null" && {
 
             echo -e "\nСоздан архив \"$arhive\"."; download "$arhive"
@@ -20,6 +20,6 @@ function run () { #--------------------------------| Main function |------------
         } || { error=$?; printf "No files found."; }
 
     # Delete tmp folder after execution
-    ssh $sopt $addr "rm -r $tmp_folder" || error=$?
+    ssh -t -t $sopt $addr "rm -r $tmp_folder" || error=$?
 
 } #---------------------------------------------------------------------------------------------------------------------

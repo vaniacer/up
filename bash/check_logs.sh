@@ -11,6 +11,6 @@ function run () { #--------------------------------| Main function |------------
     # Add server name coz this command not stored in history and don't have event.serv.name
     printf "\n-----{ <b>Server $addr</b> }-----\n\n"
 
-    ssh -ttt $sopt $addr "cat $wdir/jboss-bas-*/standalone/log/server.log" || error=$?
+    ssh -t -t $sopt $addr "cat $wdir/jboss-bas-*/standalone/log/server.log" || error=$?
 
 } #---------------------------------------------------------------------------------------------------------------------
