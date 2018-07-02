@@ -10,7 +10,7 @@ function run () { #--------------------------------| Main function |------------
 
     addr              # Get server address
     create_tmp_folder # Creates tmp folder tmp_folder=$wdir/updates/new/$key
-    
+
     # If updates where selected copy them too and add as options to the script
     [[ ${updates[@]} ]] && {
         rsync -e "ssh $sopt" --progress -lzuogthvr ${updates[@]} $addr:$tmp_folder && {
@@ -42,12 +42,12 @@ function run () { #--------------------------------| Main function |------------
             case $scrptype in
 
                 sh)
-                    ssh -ttt $sopt $addr "cd $wdir; bash $tmp_folder/$filename $soptions $file_opt"   || {
+                    ssh -t -t $sopt $addr "cd $wdir; bash $tmp_folder/$filename $soptions $file_opt"   || {
                     error=$?; printf "\n<b>Script ended with error: $error</b>\n"
                 };;
 
                 py)
-                    ssh -ttt $sopt $addr "cd $wdir; python $tmp_folder/$filename $soptions $file_opt" || {
+                    ssh -t -t $sopt $addr "cd $wdir; python $tmp_folder/$filename $soptions $file_opt" || {
                     error=$?; printf "\n<b>Script ended with error: $error</b>\n"
                 };;
 
@@ -57,7 +57,7 @@ function run () { #--------------------------------| Main function |------------
                         || error=$?
 
                     # Run script
-                    result=`ssh -ttt $sopt $addr "cd $tmp_folder; bash remote_sql.sh $wdir $filename"` && {
+                    result=`ssh -t -t $sopt $addr "cd $tmp_folder; bash remote_sql.sh $wdir $filename"` && {
 
                         # Show result
                         printf "\n$result\n"
