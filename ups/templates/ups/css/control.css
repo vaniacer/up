@@ -1,5 +1,5 @@
 * {
-  border-radius: 0 !important;
+    border-radius: 0 !important;
 }
 
 .commands_all {
@@ -7,7 +7,7 @@
 }
 
 .project_name {
-    margin-top: 8px;
+    margin-top:    8px;
 }
 
 .ok_btn {
@@ -142,7 +142,6 @@
 /*-------------{ Tables }-----------------*/
 .commands_table, th, td {
     border-top:    1px solid LightGrey;
-    border-bottom: 1px solid LightGrey;
     padding:       6px 3px 6px 10px;
     font-size:     small;
     width:         100%;
@@ -153,7 +152,7 @@ td {
     color:   SteelBlue;
 }
 
-td:hover {
+td:hover, th:hover {
     background: LightGrey;
     cursor:     pointer;
 }

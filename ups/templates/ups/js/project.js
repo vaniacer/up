@@ -230,6 +230,15 @@ function show_commands(name) {
     if (cmdlist) { cmdlist.classList.remove('hidden'); }
 }
 
+function show_hide_commands(name) {
+
+    var cmdlist = document.getElementById(name);
+    if (cmdlist) {
+        if (cmdlist.classList.contains('hidden')) { cmdlist.classList.remove('hidden'); }
+        else { cmdlist.classList.add('hidden'); }
+    }
+}
+
 window.onload = function() {
 
     var roller_list = Array.from(document.getElementsByClassName('roller'));
