@@ -259,7 +259,6 @@ window.onload = function() {
         window.location.hash = this.hash;
         tabs.value = this.hash.replace('#', '');
         show_commands(tabs.value + '_commands');
-        go_up();
     });
 
     // Change tab on hashchange

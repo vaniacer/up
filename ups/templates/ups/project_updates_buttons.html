@@ -16,6 +16,25 @@
 
             {% if updates %}
 
+                <!--Select\deselect button-->
+                <div class="dropdown btn-group">
+                    <button data-toggle="dropdown"
+                            title="Select\deselect updates"
+                            class="btn btn-info btn-sm dropdown dropdown-toggle">Select <span class="caret"></span>
+                    </button>
+
+                    <ul class="dropdown dropdown-menu dropdown-menu">
+                        <li><a href="javascript:;"
+                               title="Select all updates"
+                               onclick="select_all('selected_updates', 'update-body', true,  'SU')">Select all</a>
+                        </li>
+                        <li><a href="javascript:;"
+                               title="Deselect all updates"
+                               onclick="select_all('selected_updates', 'update-body', false, 'SU')">Deselect all</a>
+                        </li>
+                    </ul>
+                </div>
+            
                 <!--Info visibility button-->
                 <input id="ushow"
                        type="button"

@@ -1,16 +1,6 @@
 <table class="commands_table no_border" id="servers_commands">
     <tr><th class="no_border">Servers commands</th></tr>
 
-    <tr>
-        <td title="Select all servers"
-            onclick="select_all('selected_servers', 'server-body', true,  'SS')">Select all servers</td>
-    </tr>
-
-    <tr>
-        <td title="Deselect all servers"
-            onclick="select_all('selected_servers', 'server-body', false, 'SS')">Deselect all servers</td>
-    </tr>
-
     {% for command in commands %}
         {% if command.section == "server" %}
             {% include "ups/commands_table.html" %}

@@ -1,16 +1,6 @@
 <table class="commands_table no_border hidden hidden_commands" id="dumps_commands">
     <tr><th class="no_border">Dumps commands</th></tr>
 
-    <tr>
-        <td title="Select all dumps"
-            onclick="select_all('selected_dbdumps', 'dump-body', true, 'SD')">Select all dumps</td>
-    </tr>
-
-    <tr>
-        <td title="Deselect all dumps"
-            onclick="select_all('selected_dbdumps', 'dump-body', false, 'SD')">Deselect all dumps</td>
-    </tr>
-
     {% for command in commands %}
         {% if command.section == "dump" %}
             {% include "ups/commands_table.html" %}
