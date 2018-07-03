@@ -1,6 +1,8 @@
-<table class="commands_table" id="servers_commands">
-    <tr><th>Servers commands</th></tr>
+<table class="commands_table">
+    <tr><th onclick="show_hide_commands('servers_commands');">Servers commands</th></tr>
+</table>
 
+<table class="commands_table" id="servers_commands">
     {% for command in commands %}
         {% if command.section == "server" %}
             {% include "ups/commands_table.html" %}
