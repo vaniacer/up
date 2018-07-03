@@ -28,11 +28,9 @@ function run () { #--------------------------------| Main function |------------
 
         case $scrptype in
             yml)
-                [[ $sopt ]] && extra="--ssh-extra-args=-t -t $sopt" || extra="--ssh-extra-args=-t -t"
-
-                ansible-playbook ${scripts[$i]} -i "$addr," $extra --vault-password-file ~/vault.txt --syntax-check \
+                ansible-playbook ${scripts[$i]} -i "$addr," --vault-password-file ~/vault.txt --syntax-check \
                     || { error=$?; continue; }
-                ansible-playbook ${scripts[$i]} -i "$addr," $extra --vault-password-file ~/vault.txt || error=$?
+                ansible-playbook ${scripts[$i]} -i "$addr," --vault-password-file ~/vault.txt || error=$?
                 continue;;
         esac
 
