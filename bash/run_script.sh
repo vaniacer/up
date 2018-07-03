@@ -28,7 +28,7 @@ function run () { #--------------------------------| Main function |------------
 
         case $scrptype in
             yml)
-                [[ $sopt ]] && extra="--ssh-extra-args=$sopt"
+                [[ $sopt ]] && extra="--ssh-extra-args=-t -t $sopt" || extra="--ssh-extra-args=-t -t"
 
                 ansible-playbook ${scripts[$i]} -i "$addr," $extra --vault-password-file ~/vault.txt --syntax-check \
                     || { error=$?; continue; }
@@ -53,7 +53,7 @@ function run () { #--------------------------------| Main function |------------
 
                 sql)
                     # Copy sqlaunch script to server
-                    rsync -e "ssh -t -t $sopt" --progress -lzuogthr $workdir/remote_sql.sh $addr:$tmp_folder > /dev/null \
+                    rsync -e "ssh $sopt" --progress -lzuogthr $workdir/remote_sql.sh $addr:$tmp_folder > /dev/null \
                         || error=$?
 
                     # Run script
@@ -80,6 +80,6 @@ function run () { #--------------------------------| Main function |------------
     }
 
     # Delete tmp folder after execution
-    ssh -t -t $sopt $addr "rm -r $tmp_folder" || error=$?
+    ssh $sopt $addr "rm -r $tmp_folder" || error=$?
 
 } #---------------------------------------------------------------------------------------------------------------------

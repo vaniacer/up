@@ -22,9 +22,9 @@ function run () { #--------------------------------| Main function |------------
         && download "$tmp_folder/$filename2" || error=$?
 
     # Move files to backup folder
-    ssh -t -t $sopt $addr "mv $tmp_folder/{$filename1,$filename2} $wdir/backup" || error=$?
+    ssh $sopt $addr "mv $tmp_folder/{$filename1,$filename2} $wdir/backup" || error=$?
 
     # Delete tmp folder after execution
-    ssh -t -t $sopt $addr "rm -r $tmp_folder" || error=$?
+    ssh $sopt $addr "rm -r $tmp_folder" || error=$?
 
 } #---------------------------------------------------------------------------------------------------------------------

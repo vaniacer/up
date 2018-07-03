@@ -8,7 +8,7 @@ function description () { #---------------------| Function description |--------
 function run () { #--------------------------------| Main function |---------------------------------------------------
 
     addr # Get server address
-    printf "\nStop dummy page."
+    printf "\nStop dummy page\n"
     ssh -t -t $sopt $addr '~/.utils/dp.sh --stop' || error=$?
 
 } #---------------------------------------------------------------------------------------------------------------------

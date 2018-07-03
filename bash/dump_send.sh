@@ -15,13 +15,13 @@ function run () { #--------------------------------| Main function |------------
     warning "You are sending dump - <b>$dbdumps</b>\nto server - <b>$addr</b>\n\n" 30
 
     printf "\nCopy dump.\n"
-    rsync -e "ssh -t -t $sopt" --progress -lzuogthvr "$dumpdir/$pname/$dbdumps" $addr:$tmp_folder && {
+    rsync -e "ssh $sopt" --progress -lzuogthvr "$dumpdir/$pname/$dbdumps" $addr:$tmp_folder && {
 
         ssh -t -t $sopt $addr "cd $wdir; ./krupd restore db $tmp_folder/$dbdumps" || error=$?
 
     } || error=$?
 
     # Delete tmp folder after execution
-    ssh -t -t $sopt $addr "rm -r $tmp_folder" || error=$?
+    ssh $sopt $addr "rm -r $tmp_folder" || error=$?
 
 } #---------------------------------------------------------------------------------------------------------------------

@@ -20,6 +20,6 @@ function run () { #--------------------------------| Main function |------------
     for postfix in "${postfixes[@]}"; {
         printf "\n<a href=\"http://__URL__:$lport$postfix\">http://__URL__:$lport$postfix</a>\n"
     }
-    ssh -t -t $sopt $addr -f -L 0.0.0.0:$lport:127.0.0.1:$rport sleep $timer || error=$?
+    ssh $sopt $addr -f -L 0.0.0.0:$lport:127.0.0.1:$rport sleep $timer || error=$?
 
 } #---------------------------------------------------------------------------------------------------------------------

@@ -10,7 +10,8 @@ function run () { #--------------------------------| Main function |------------
 
     addr # Get server address
     for file in "${updates[@]}"; {
-        filename=${file##*/}; echo -e "\nDelete file - $filename."
+        filename=${file##*/}
+        printf "\nDelete file - $filename\n"
         ssh -t -t $sopt $addr "rm $wdir/updates/new/$filename" || error=$?
     }
 

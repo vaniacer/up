@@ -8,7 +8,7 @@ function description () { #---------------------| Function description |--------
 function run () { #--------------------------------| Main function |---------------------------------------------------
 
     addr # Get server address
-    ssh -t -t $sopt $addr "echo -e \"\nDelete files:\n$(ls $wdir/updates/new)\""
+    printf "\nDelete all files in $wdir/updates/new)\n"
     ssh -t -t $sopt $addr "rm $wdir/updates/new/*" || error=$?
 
 } #---------------------------------------------------------------------------------------------------------------------

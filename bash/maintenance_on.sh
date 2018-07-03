@@ -8,7 +8,7 @@ function description () { #---------------------| Function description |--------
 function run () { #--------------------------------| Main function |---------------------------------------------------
 
     addr # Get server address
-    printf "\nStart dummy page."
+    printf "\nStart dummy page\n"
     ssh -t -t $sopt $addr "~/.utils/dp.sh --start --jport $port" || error=$?
 
 } #---------------------------------------------------------------------------------------------------------------------

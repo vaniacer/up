@@ -19,6 +19,6 @@ function run () { #--------------------------------| Main function |------------
     } || error=$?
 
     # Delete tmp folder after execution
-    ssh -t -t $sopt $addr "rm -r $tmp_folder" || error=$?
+    ssh $sopt $addr "rm -r $tmp_folder" || error=$?
 
 } #---------------------------------------------------------------------------------------------------------------------
