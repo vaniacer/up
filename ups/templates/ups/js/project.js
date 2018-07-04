@@ -95,7 +95,7 @@ function show_or_hide_all(id, panel, button, set) {
 
     function show_info() {
         if (status) { status.checked = true; }
-        if (button) { button.value = 'Info On'; }
+        if (button) { button.value = 'Hide'; }
 
         panels.forEach( function(item) { item.classList.remove('hidden'); });
         pluses.forEach( function(item) {
@@ -106,7 +106,7 @@ function show_or_hide_all(id, panel, button, set) {
 
     function hide_info() {
         if (status) { status.checked = false; }
-        if (button) { button.value = 'Info Off'; }
+        if (button) { button.value = 'Show'; }
 
         panels.forEach( function(item) { item.classList.add('hidden'); });
         pluses.forEach( function(item) {

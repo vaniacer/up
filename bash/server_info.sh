@@ -39,6 +39,9 @@ function run () { #--------------------------------| Main function |------------
         printf '<b>Logged in Users:</b>\n'
         who
 
+        printf '<b>\nNetworking info:</b>\n'
+        netstat -lnp
+
         printf '\n<b>Processes:</b>\n'
         top -bn1" || error=$?
 
