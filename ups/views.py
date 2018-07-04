@@ -1,6 +1,7 @@
 # -*- encoding: utf-8 -*-
 
-from .forms import ServersFilterForm, ScriptsFilterForm, HideInfoForm, UpdatesFilterForm, DumpsFilterForm, JobsFilterForm
+from .forms import ServersFilterForm, ScriptsFilterForm, \
+	HideInfoForm, UpdatesFilterForm, DumpsFilterForm, JobsFilterForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .permissions import check_perm_or404, check_permission
 from django.http import HttpResponse, HttpResponseRedirect
@@ -179,17 +180,19 @@ def command_log(request):
 			event = None
 
 		try:
+			log = open(conf.LOG_FILE + logid, 'r').read()
+		except IOError:
+			try:
+				log = event.desc
+			except:
+				log = 'Working...'
+
+		try:
 			err = int(event.exit)
 			final[logid] = True
-			log = event.desc
 			if err > 0:
 				context['ok'] = 'btn-danger'
 		except:
-			try:
-				log = open(conf.LOG_FILE + logid, 'r').read()
-			except IOError:
-				log = 'Working...'
-
 			try:
 				err = int(open(conf.ERR_FILE + logid, 'r').read())
 				final[logid] = True

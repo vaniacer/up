@@ -13,7 +13,7 @@ time=600            # Timeout in sec
 grce=10             # Graceful timeout in sec
 work=5              # Number of workers
 #-----------------------------------------------------------------------------------------------------------------------
-[ -f run.conf ] && . run.conf # get saved conf if exist
+[[ -f run.conf ]] && . run.conf # get saved conf if exist
 
 help="
 Available options are:
@@ -74,7 +74,7 @@ function reset {
 }
 
 # Get opts
-until [ -z "$1" ]; do case $1 in
+until [[ -z "$1" ]]; do case $1 in
 
     -addr  | -a) shift; addr=${1};;
     -port  | -p) shift; port=${1};;

@@ -39,40 +39,10 @@ line () { printf %.s"$1" `seq $2`; }
 # Write logs to DB
 function make_history () {
 
-    [[ -f $rundir/log$key ]] || return
+    . ../env/bin/activate; python dbwriter.py "his" "$key" "$error"
+    [[ $cid ]]     &&      python dbwriter.py "job" "$cid"
 
-    log_lenght=(`wc -l $rundir/log$key`)
-
-    [[ $log_lenght -gt 100 ]] \
-        && { LOG="<b>Log is too long to store in history, cutting...</b>\n"
-             LOG="$LOG$(head -50 $rundir/log$key; printf "...\n"; tail -50 $rundir/log$key)"; } \
-        || { LOG=$(cat $rundir/log$key); }
-
-    # Get DB configuration from conf.py
-    raw=$(grep 'db.* =' $workdir/../conf.py)
-    raw=${raw//\'/}
-    raw=${raw//=/}
-    data=( $raw )
-
-    declare -A dbconf # Create named array
-
-    for ((i=0;   i<${#data[*]}; i+=2)); do # loop through data
-        key_value=( ${data[@]:$i:2} )      # get key_value pairs
-        # assign  key___________________value pairs to named array
-        dbconf["${key_value[0]}"]=${key_value[1]}
-    done
-
-    [[ $cid ]] && \
-    job_update="UPDATE ups_job SET \"desc\" = \$$ $LOG \$$ WHERE cron = '$cid' AND proj_id = $prj;"
-    PGPASSWORD=${dbconf[dbpass]} psql \
-            -U ${dbconf[dbuser]} \
-            -h ${dbconf[dbhost]} \
-            -p ${dbconf[dbport]} \
-            -d ${dbconf[dbname]} \
-            -c "UPDATE ups_history SET \"desc\" = \$$ $LOG \$$, exit = \$$ $error \$$
-                WHERE uniq = '$key' AND proj_id = $prj;$job_update"
-
-    rm $rundir/*$key
+#    rm $rundir/*$key
 }
 
 # Checks existence of updates/new folder in workdir, creates if not
@@ -204,7 +174,8 @@ function starter () {
                 echo $$     > $rundir/pid$key
                 run        &> $rundir/log$key
                 echo $error > $rundir/err$key
-                [[ $hid ]] && make_history || { sleep 10; rm $rundir/*$key; }
+                [[ $hid ]] && make_history
+                sleep 10; rm $rundir/*$key
              }
 }
 
