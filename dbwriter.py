@@ -5,7 +5,6 @@ import django
 django.setup()
 from ups.models import History, Job
 from django.conf import settings as conf
-from django.shortcuts import get_object_or_404
 
 typ = sys.argv[1]
 key = sys.argv[2]
@@ -26,9 +25,9 @@ if num_lines > 100:
 
 object_to_change = None
 if typ == 'his':
-	object_to_change = get_object_or_404(History, uniq=key)
+	object_to_change = History.objects.get(uniq=key)
 if typ == 'job':
-	object_to_change = get_object_or_404(Job, cron=key)
+	object_to_change = Job.objects.get(cron=key)
 
 object_to_change.desc = log_body
 if err:
