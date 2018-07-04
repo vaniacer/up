@@ -15,7 +15,7 @@ function run () { #--------------------------------| Main function |------------
     [[ ${updates[@]} ]] && {
         rsync -e "ssh $sopt" --progress -lzuogthvr ${updates[@]} $addr:$wdir/updates/new/ && {
             for U in ${updates[@]}; { file_opt+=" $wdir/updates/new/${U##*/}"  ; }
-        } || { error=$?; echo -e "\nscript copy error."; return $error; }
+        } || { error=$?; printf "\nUpdate(s) copy error\n"; return $error; }
     }
 
     for ((i=0; i<${#scripts[@]}; i++)); {
