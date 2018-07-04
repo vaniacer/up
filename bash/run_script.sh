@@ -9,7 +9,7 @@ function description () { #---------------------| Function description |--------
 function run () { #--------------------------------| Main function |---------------------------------------------------
 
     addr              # Get server address
-    create_tmp_folder # Creates tmp folder tmp_folder=$wdir/updates/new/$key
+    create_tmp_folder # Creates tmp folder tmp_folder=$wdir/temp/$key
 
     # If updates where selected copy them too and add as options to the script
     [[ ${updates[@]} ]] && {

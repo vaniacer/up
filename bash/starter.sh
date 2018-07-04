@@ -48,7 +48,7 @@ function make_history () {
 # Checks existence of updates/new folder in workdir, creates if not
 function create_tmp_folder () {
 
-    tmp_folder=$wdir/updates/new/$key
+    tmp_folder=$wdir/temp/$key
     ssh -t -t $sopt $addr "[[ -d $tmp_folder ]] || mkdir -p $tmp_folder" || error=$?
 }
 
@@ -155,9 +155,8 @@ function download () {
 function cancel () {
     error=1
     printf '\n<b>Interrupted...</b>'
-    tmp_folder=$wdir/updates/new/$key
     [[ $hid ]] && make_history || rm $rundir/*$key
-    ssh $sopt $addr "[[ -d $tmp_folder ]] && rm -r $tmp_folder" || error=$?
+    [[ $tmp_folder ]] && ssh $sopt $addr "rm -r $tmp_folder" || error=$?
     exit $error
 }
 

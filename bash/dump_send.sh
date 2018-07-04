@@ -10,7 +10,7 @@ function run () { #--------------------------------| Main function |------------
     [[ ${#dbdumps[*]} -gt 1 ]] && { printf "\nMultiple dumps selected, need one.\n"; error=1; return 1; }
 
     addr              # Get server address
-    create_tmp_folder # Creates tmp folder tmp_folder=$wdir/updates/new/$key
+    create_tmp_folder # Creates tmp folder tmp_folder=$wdir/temp/$key
     
     warning "You are sending dump - <b>$dbdumps</b>\nto server - <b>$addr</b>\n\n" 30
 

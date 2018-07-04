@@ -8,7 +8,7 @@ function description () { #---------------------| Function description |--------
 function run () { #--------------------------------| Main function |---------------------------------------------------
 
     addr              # Get server address
-    create_tmp_folder # Creates tmp folder tmp_folder=$wdir/updates/new/$key
+    create_tmp_folder # Creates tmp folder tmp_folder=$wdir/temp/$key
 
     arhive="$tmp_folder/${addr}_daylogs_`printf "%(%d-%m-%Y)T"`.zip"
 

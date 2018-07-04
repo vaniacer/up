@@ -8,7 +8,7 @@ function description () { #---------------------| Function description |--------
 function run () { #--------------------------------| Main function |---------------------------------------------------
 
     addr              # Get server address
-    create_tmp_folder # Creates tmp folder tmp_folder=$wdir/updates/new/$key
+    create_tmp_folder # Creates tmp folder tmp_folder=$wdir/temp/$key
 
     # Copy archive maker to server
     rsync -e "ssh $sopt" --progress -lzuogthvr $workdir/remote_sys.sh $addr:$tmp_folder > /dev/null || error=$?
