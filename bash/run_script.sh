@@ -13,8 +13,8 @@ function run () { #--------------------------------| Main function |------------
 
     # If updates where selected copy them too and add as options to the script
     [[ ${updates[@]} ]] && {
-        rsync -e "ssh $sopt" --progress -lzuogthvr ${updates[@]} $addr:$tmp_folder && {
-            for U in ${updates[@]}; { file_opt+=" $tmp_folder/${U##*/}"  ; }
+        rsync -e "ssh $sopt" --progress -lzuogthvr ${updates[@]} $addr:$wdir/updates/new/ && {
+            for U in ${updates[@]}; { file_opt+=" $wdir/updates/new/${U##*/}"  ; }
         } || { error=$?; echo -e "\nscript copy error."; return $error; }
     }
 
