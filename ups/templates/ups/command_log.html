@@ -50,7 +50,10 @@
             {% endif %}
         {% else %}
             <meta http-equiv="refresh" content="2">
-            <a class="btn btn-primary ok_btn" href="{{cancel}}">Cancel</a>
+            <div class="btn-group">
+                <a class="btn btn-primary ok_btn" href="{{cancel}}">Cancel</a>
+                <a class="btn btn-default ok_btn" onclick="window.close();">Close</a>
+            </div>
         {% endif %}
 
     </div>
