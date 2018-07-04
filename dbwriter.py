@@ -19,8 +19,8 @@ num_lines = str.count(log_body, '\n')
 
 if num_lines > 100:
 	splited = log_body.split('\n')
-	first_half = ''.join(splited[:50])
-	last_half = ''.join(splited[-50:])
+	first_half = '\n'.join(splited[:50])
+	last_half = '\n'.join(splited[-50:])
 	log_body = '<b>Log is too long to store in history, cutting</b>\n' + first_half + '\n...\n' + last_half
 
 object_to_change = None
