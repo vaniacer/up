@@ -9,6 +9,6 @@ function run () { #--------------------------------| Main function |------------
 
     addr # Get server address
     printf "\nDelete all files in $wdir/updates/new)\n"
-    ssh -t -t $sopt $addr "rm $wdir/updates/new/*" || error=$?
+    ssh $sopt $addr "rm $wdir/updates/new/*" || error=$?
 
 } #---------------------------------------------------------------------------------------------------------------------

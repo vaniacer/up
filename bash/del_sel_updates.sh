@@ -12,7 +12,7 @@ function run () { #--------------------------------| Main function |------------
     for file in "${updates[@]}"; {
         filename=${file##*/}
         printf "\nDelete file - $filename\n"
-        ssh -t -t $sopt $addr "rm $wdir/updates/new/$filename" || error=$?
+        ssh $sopt $addr "rm $wdir/updates/new/$filename" || error=$?
     }
 
 } #---------------------------------------------------------------------------------------------------------------------
