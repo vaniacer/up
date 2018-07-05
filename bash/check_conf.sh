@@ -11,7 +11,7 @@ function run () { #--------------------------------| Main function |------------
     # Add server name coz this command not stored in history and don't have event.serv.name
     printf "\n-----{ <b>Server $addr</b> }-----\n"
 
-    ssh -t -t $sopt $addr "
+    ssh $sopt $addr "
         printf '\n<b>Java options</b>\n\n'
         ps axo command | grep $wdir | grep [j]ava
 

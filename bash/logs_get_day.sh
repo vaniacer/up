@@ -12,7 +12,7 @@ function run () { #--------------------------------| Main function |------------
 
     arhive="$tmp_folder/${addr}_daylogs_`printf "%(%d-%m-%Y)T"`.zip"
 
-    ssh -t -t $sopt $addr "
+    ssh $sopt $addr "
         find $wdir/jboss-bas-*/standalone/log -type f -daystart -ctime 0 | xargs zip -jy $arhive > /dev/null" && {
 
             echo -e "\nСоздан архив \"$arhive\"."; download "$arhive"

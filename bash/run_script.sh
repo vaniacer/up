@@ -40,12 +40,12 @@ function run () { #--------------------------------| Main function |------------
             case $scrptype in
 
                 sh)
-                    ssh -t -t $sopt $addr "cd $wdir; bash $tmp_folder/$filename $soptions $file_opt"   || {
+                    ssh $sopt $addr "cd $wdir; bash $tmp_folder/$filename $soptions $file_opt"   || {
                     error=$?; printf "\n<b>Script ended with error: $error</b>\n"
                 };;
 
                 py)
-                    ssh -t -t $sopt $addr "cd $wdir; python $tmp_folder/$filename $soptions $file_opt" || {
+                    ssh $sopt $addr "cd $wdir; python $tmp_folder/$filename $soptions $file_opt" || {
                     error=$?; printf "\n<b>Script ended with error: $error</b>\n"
                 };;
 
@@ -55,7 +55,7 @@ function run () { #--------------------------------| Main function |------------
                         || error=$?
 
                     # Run script
-                    result=`ssh -t -t $sopt $addr "cd $tmp_folder; bash remote_sql.sh $wdir $filename"` && {
+                    result=`ssh $sopt $addr "cd $tmp_folder; bash remote_sql.sh $wdir $filename"` && {
 
                         # Show result
                         printf "\n$result\n"

@@ -17,7 +17,7 @@ function run () { #--------------------------------| Main function |------------
     printf "\nCopy dump.\n"
     rsync -e "ssh $sopt" --progress -lzuogthvr "$dumpdir/$pname/$dbdumps" $addr:$tmp_folder && {
 
-        ssh -t -t $sopt $addr "cd $wdir; ./krupd restore db $tmp_folder/$dbdumps" || error=$?
+        ssh $sopt $addr "cd $wdir; ./krupd restore db $tmp_folder/$dbdumps" || error=$?
 
     } || error=$?
 

@@ -79,7 +79,7 @@ function make_history () {
 function create_tmp_folder () {
 
     tmp_folder=$wdir/updates/new/$key
-    ssh -t -t $sopt $addr "[[ -d $tmp_folder ]] || mkdir -p $tmp_folder" || error=$?
+    ssh $sopt $addr "[[ -d $tmp_folder ]] || mkdir -p $tmp_folder" || error=$?
 }
 
 # Warning with countdown timer. Options: $1 - message, $2 - timeout in sec.
