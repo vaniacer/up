@@ -40,3 +40,21 @@ update = u'UPDATE {tab} SET "desc" = $$ {log} $${ext} WHERE {col};'.format(
 
 opt = ['psql', '-U', dbuser, '-h', dbhost, '-p', dbport, '-d', dbname, '-c', update]
 Popen(opt, env={"PGPASSWORD": dbpass})
+
+# Variant with psycopg2, but my is slightly faster
+# import psycopg2
+# # Connect to an existing database
+# conn = psycopg2.connect(host=dbhost, port=dbport, dbname=dbname, user=dbuser, password=dbpass)
+# cur = conn.cursor()  # Open a cursor to perform database operations
+#
+# # Execute a command: update
+# cur.execute(u'UPDATE {tab} SET "desc" = $$ {log} $${ext} WHERE {col};'.format(
+# 	col=types[typ]['col'],
+# 	tab=types[typ]['tab'],
+# 	ext=types[typ]['ext'],
+# 	log=log_body,
+# ))
+#
+# conn.commit()  # Make the changes to the database persistent
+# cur.close()    # Close communication
+# conn.close()   # with the database
