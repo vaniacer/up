@@ -40,4 +40,3 @@ update = u'UPDATE {tab} SET "desc" = $$ {log} $${ext} WHERE {col};'.format(
 
 opt = ['psql', '-U', dbuser, '-h', dbhost, '-p', dbport, '-d', dbname, '-c', update]
 Popen(opt, env={"PGPASSWORD": dbpass})
-
