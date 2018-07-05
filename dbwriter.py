@@ -19,37 +19,25 @@ num_lines = str.count(log_body, '\n')
 
 if num_lines > 100:
 	splited = log_body.split('\n')
-	log_body = u'{head!s}{first!s}{midle!s}{last!s}'.format(
+	log_body = u'{head!s}{first!s}{middle!s}{last!s}'.format(
 		head='<b>Log is too long to store in history, cutting</b>\n',
 		first='\n'.join(splited[:50]),
 		last='\n'.join(splited[-50:]),
-		midle='\n...\n',
+		middle='\n...\n',
 	)
 
-update = ''
-if typ == 'his':
-	update = u'UPDATE ups_history SET ' \
-			u'"desc" = $$ {log} $$, ' \
-			u'"exit" = $$ {err} $$ ' \
-			u'WHERE "uniq" = \'{key}\';'.format(
-				log=log_body,
-				err=err,
-				key=key,
-			)
-if typ == 'job':
-	update = u'UPDATE ups_job SET "desc" = $$ {log} $$ WHERE "cron" = \'{key}\';'.format(
-		log=log_body,
-		key=key,
-	)
+types = {
+	'his': {'tab': 'ups_history', 'col': "uniq = '%s'" % key, 'ext': ', "exit" = $$ %s $$' % err},
+	'job': {'tab': 'ups_job',     'col': "cron = '%s'" % key, 'ext': ''},
+}
 
-opt = [
-	'psql',
-	'-U', dbuser,
-	'-h', dbhost,
-	'-p', dbport,
-	'-d', dbname,
-	'-c', update,
-]
+update = u'UPDATE {tab} SET "desc" = $$ {log} $${ext} WHERE {col};'.format(
+	col=types[typ]['col'],
+	tab=types[typ]['tab'],
+	ext=types[typ]['ext'],
+	log=log_body,
+)
 
+opt = ['psql', '-U', dbuser, '-h', dbhost, '-p', dbport, '-d', dbname, '-c', update]
 Popen(opt, env={"PGPASSWORD": dbpass})
 
