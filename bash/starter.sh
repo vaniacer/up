@@ -38,11 +38,8 @@ line () { printf %.s"$1" `seq $2`; }
 
 # Write logs to DB
 function make_history () {
-
     . ../env/bin/activate; python dbwriter.py "his" "$key" "$error"
     [[ $cid ]]     &&      python dbwriter.py "job" "$cid"
-
-#    rm $rundir/*$key
 }
 
 # Checks existence of updates/new folder in workdir, creates if not
