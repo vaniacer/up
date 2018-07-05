@@ -1,10 +1,10 @@
 # -*- encoding: utf-8 -*-
 
 import sys
-import django
-django.setup()
-from ups.models import History, Job
-from django.conf import settings as conf
+from subprocess import Popen
+from up.settings import LOG_FILE
+from conf import dbname, dbhost, dbpass, dbport, dbuser
+
 
 typ = sys.argv[1]
 key = sys.argv[2]
@@ -13,7 +13,7 @@ try:
 except IndexError:
 	err = None
 
-log_filename = conf.LOG_FILE + key
+log_filename = LOG_FILE + key
 log_body = open(log_filename, 'r').read()
 num_lines = str.count(log_body, '\n')
 
@@ -26,13 +26,30 @@ if num_lines > 100:
 		midle='\n...\n',
 	)
 
-object_to_change = None
+update = ''
 if typ == 'his':
-	object_to_change = History.objects.get(uniq=key)
+	update = u'UPDATE ups_history SET ' \
+			u'"desc" = $$ {log} $$, ' \
+			u'"exit" = $$ {err} $$ ' \
+			u'WHERE "uniq" = \'{key}\';'.format(
+				log=log_body,
+				err=err,
+				key=key,
+			)
 if typ == 'job':
-	object_to_change = Job.objects.get(cron=key)
+	update = u'UPDATE ups_job SET "desc" = $$ {log} $$ WHERE "cron" = \'{key}\';'.format(
+		log=log_body,
+		key=key,
+	)
 
-object_to_change.desc = log_body
-if err:
-	object_to_change.exit = err
-object_to_change.save()
+opt = [
+	'psql',
+	'-U', dbuser,
+	'-h', dbhost,
+	'-p', dbport,
+	'-d', dbname,
+	'-c', update,
+]
+
+Popen(opt, env={"PGPASSWORD": dbpass})
+
