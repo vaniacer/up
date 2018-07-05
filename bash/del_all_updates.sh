@@ -5,7 +5,7 @@ function description () { #---------------------| Function description |--------
     printf "\nDelete all updates from server:\n$addr"
 }
 
-function run () { #--------------------------------| Main function |---------------------------------------------------
+function run () { #---------------------------------| Main function |---------------------------------------------------
 
     addr # Get server address
     printf "\nDelete all files in $wdir/updates/new)\n"

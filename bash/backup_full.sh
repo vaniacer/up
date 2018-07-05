@@ -5,7 +5,7 @@ function description () { #---------------------| Function description |--------
     printf "\nBackup full on server:\n$addr"
 }
 
-function run () { #--------------------------------| Main function |---------------------------------------------------
+function run () { #---------------------------------| Main function |---------------------------------------------------
 
     addr              # Get server address
     create_tmp_folder # Creates tmp folder tmp_folder=$wdir/temp/$key

@@ -5,7 +5,7 @@ function description () { #---------------------| Function description |--------
     printf "\nStop dummy page on server:\n$addr"
 }
 
-function run () { #--------------------------------| Main function |---------------------------------------------------
+function run () { #---------------------------------| Main function |---------------------------------------------------
 
     addr # Get server address
     printf "\nStop dummy page\n"

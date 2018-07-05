@@ -4,7 +4,7 @@ function description () { #---------------------| Function description |--------
     printf "\nMake ssh tunnel to server's port."
 }
 
-function run () { #--------------------------------| Main function |---------------------------------------------------
+function run () { #---------------------------------| Main function |---------------------------------------------------
 
     addr # Get server address
     # Add server name coz this command not stored in history and don't have event.serv.name

@@ -5,7 +5,7 @@ function description () { #---------------------| Function description |--------
     printf "\nCopy DB dump $dbdumps to server:\n$addr"
 }
 
-function run () { #--------------------------------| Main function |---------------------------------------------------
+function run () { #---------------------------------| Main function |---------------------------------------------------
 
     [[ ${#dbdumps[*]} -gt 1 ]] && { printf "\nMultiple dumps selected, need one.\n"; error=1; return 1; }
 

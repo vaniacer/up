@@ -5,7 +5,7 @@ function description () { #---------------------| Function description |--------
     printf "\nShow logs of server:\n$addr"
 }
 
-function run () { #--------------------------------| Main function |---------------------------------------------------
+function run () { #---------------------------------| Main function |---------------------------------------------------
 
     addr # Get server address
     # Add server name coz this command not stored in history and don't have event.serv.name

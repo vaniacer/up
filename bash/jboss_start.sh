@@ -5,7 +5,7 @@ function description () { #---------------------| Function description |--------
     printf "\nStart jboss on server:\n$addr"
 }
 
-function run () { #--------------------------------| Main function |---------------------------------------------------
+function run () { #---------------------------------| Main function |---------------------------------------------------
 
     addr # Get server address
     ssh $sopt $addr $wdir/krupd jboss.start || error=$?

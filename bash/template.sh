@@ -9,7 +9,7 @@ function description () { #---------------------| Function description |--------
     printf     "\nto Server):\n$addr"
 }
 
-function run () { #--------------------------------| Main function |---------------------------------------------------
+function run () { #---------------------------------| Main function |---------------------------------------------------
 
     addr # Get server address
     ssh -t -t $sopt $addr "Put your code here" || error=$?

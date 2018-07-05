@@ -6,7 +6,7 @@ function description () { #---------------------| Function description |--------
     printf      "\nfrom Server:\n$addr"
 }
 
-function run () { #--------------------------------| Main function |---------------------------------------------------
+function run () { #---------------------------------| Main function |---------------------------------------------------
 
     addr # Get server address
     for file in "${updates[@]}"; {
