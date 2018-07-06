@@ -19,11 +19,10 @@ num_lines = str.count(log_body, '\n')
 
 if num_lines > 100:
 	splited = log_body.split('\n')
-	log_body = u'{head!s}{first!s}{middle!s}{last!s}'.format(
+	log_body = '{head!s}{first!s}\n...\n{last!s}'.format(
 		head='<b>Log is too long to store in history, cutting</b>\n',
 		first='\n'.join(splited[:50]),
 		last='\n'.join(splited[-50:]),
-		middle='\n...\n',
 	)
 
 types = {
