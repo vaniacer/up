@@ -19,6 +19,20 @@ virtualenv ../env; . ../env/bin/activate
 echo -e "Create some folders."
 mkdir -p static media/{dumps,scripts,updates} ../logs/{cron,run,srv}
 
+echo -e "Add logrotate."
+logdir="`dirname $PWD`/logs/srv/*"
+sudo cat > /etc/logrotate.d/ups << EOF
+$logdir {
+    weekly
+    compress
+    missingok
+    rotate 12
+    notifempty
+    delaycompress
+    create 0640 $USER $USER
+}
+EOF
+
 echo -e "Install requirements."
 easy_install $(cat requirements.txt)
 

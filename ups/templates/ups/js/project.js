@@ -258,7 +258,8 @@ window.onload = function() {
                                                                 else { updown.classList.add('hidden');    } }});
     // Change tab on load
     if (!hash) { hash = '#scripts'; }
-    if (tabs)  { tabs.value = hash.replace('#', ''); show_commands(tabs.value + '_commands');}
+    if (tabs)  { tabs.value = hash.replace('#', '');
+                 show_commands(tabs.value + '_commands'); }
     hash && $('ul.nav a[href="' + hash + '"]').tab('show');
 
     // Change tab on click
