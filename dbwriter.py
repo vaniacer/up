@@ -27,11 +27,11 @@ if num_lines > 100:
 	)
 
 types = {
-	'his': {'tab': 'ups_history', 'col': "uniq = '%s'" % key, 'ext': ', "exit" = $$ %s $$' % err},
+	'his': {'tab': 'ups_history', 'col': "uniq = '%s'" % key, 'ext': ', exit = %s' % err},
 	'job': {'tab': 'ups_job',     'col': "cron = '%s'" % key, 'ext': ''},
 }
 
-update = u'UPDATE {tab} SET "desc" = $$ {log} $${ext} WHERE {col};'.format(
+update = u'UPDATE {tab} SET "desc" = $$ {log!s} $${ext} WHERE {col};'.format(
 	col=types[typ]['col'],
 	tab=types[typ]['tab'],
 	ext=types[typ]['ext'],
