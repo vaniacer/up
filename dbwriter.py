@@ -19,10 +19,11 @@ num_lines = str.count(log_body, '\n')
 
 if num_lines > 100:
 	splited = log_body.split('\n')
-	log_body = '{head!s}{first!s}\n...\n{last!s}'.format(
+	log_body = '{head}{first}{middle}{last}'.format(
 		head='<b>Log is too long to store in history, cutting</b>\n',
 		first='\n'.join(splited[:50]),
 		last='\n'.join(splited[-50:]),
+		middle='\n...\n',
 	)
 
 types = {
@@ -30,7 +31,7 @@ types = {
 	'job': {'tab': 'ups_job',     'col': "cron = '%s'" % key, 'ext': ''},
 }
 
-update = 'UPDATE {tab} SET "desc" = $$ {log!s} $${ext} WHERE {col};'.format(
+update = 'UPDATE {tab} SET "desc" = $$ {log} $${ext} WHERE {col};'.format(
 	col=types[typ]['col'],
 	tab=types[typ]['tab'],
 	ext=types[typ]['ext'],
