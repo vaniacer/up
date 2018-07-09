@@ -23,14 +23,14 @@ class CommandClass:
 		bash='',      # Bash script that this command will start
 		name='',      # Web command name id(Internal command name id)
 		menu='',      # Menu name of the command
+		run='',       # If set to "run_or_cron('RUN');" then command will be run only
+		his=True,     # Save or not command log to history
 		srv='false',  # Check if some servers selected
 		upd='false',  # Check if some updates selected
 		job='false',  # Check if some cron jobs selected
 		scr='false',  # Check if some scripts selected
 		dmp='false',  # Check if some dumps selected
 		dgr='false',  # If true will show confirmation window
-		run='',       # If set to "run_or_cron('RUN');" then command will be run only
-		his=True,     # Save or not command log to history
 	):
 		self.position = position
 		self.section = section
