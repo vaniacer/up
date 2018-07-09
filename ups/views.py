@@ -25,23 +25,23 @@ def index(request):
 	return render(request, 'ups/index.html')
 
 
-def pagination(request, history):
+def pagination(request, hist):
 	"""Создает страницы для закладки 'History'."""
-	hist_pages = Paginator(history, 20)
+	hist_pages = Paginator(hist, 20)
 	page = request.GET.get('page') or 1
 	try:
-		history = hist_pages.page(page)
+		hist = hist_pages.page(page)
 	except PageNotAnInteger:
 		# If page is not an integer, deliver first page.
-		history = hist_pages.page(1)
+		hist = hist_pages.page(1)
 	except EmptyPage:
 		# If page is out of range (e.g. 9999), deliver last page of results.
-		history = hist_pages.page(hist_pages.num_pages)
+		hist = hist_pages.page(hist_pages.num_pages)
 
 	hist_pg = list(hist_pages.page_range)
 	hist_fd = hist_pg[int(page):int(page) + 3]
 	hist_bk = hist_pg[max(int(page) - 4, 0):int(page) - 1]
-	return history, hist_fd, hist_bk
+	return hist, hist_fd, hist_bk
 
 
 def delete_files(files):
@@ -214,14 +214,14 @@ def history(request, project_id):
 	check_perm_or404('view_project', current_project, request.user)
 	check_perm_or404('run_command', current_project, request.user)
 
-	history = current_project.history_set.order_by('date').reverse()
-	history, hist_fd, hist_bk = pagination(request, history)
+	hist = current_project.history_set.order_by('date').reverse()
+	hist, hist_fd, hist_bk = pagination(request, hist)
 
 	context = {
 		'project': current_project,
-		'history': history,
 		'hist_bk': hist_bk,
 		'hist_fd': hist_fd,
+		'history': hist,
 	}
 
 	return render(request, 'ups/history.html', context)
