@@ -16,21 +16,21 @@ class CommandClass:
 	"""Класс команды"""
 	def __init__(
 		self,
-		position=1,   # Position in commands list(selected sorted by position)
-		section='',   # Section in which command will be placed
+		position=1,   # Position in commands list
+		section='',   # Section command will be placed to(scripts, updates, dumps, cron, servers)
 		style='',     # Class assigned to a command button(for example 'danger')
-		title='',     # Pop up help message
-		bash='',      # Bash script that this command will start
-		name='',      # Web command name id(Internal command name id)
-		menu='',      # Menu name of the command
+		title='',     # Pop up help message(via title)
+		bash='',      # Bash script to start
+		menu='',      # Command name in UI
+		name='',      # Command name(an internal command name)
 		run='',       # If set to "run_or_cron('RUN');" then command will be run only
-		his=True,     # Save or not command log to history
+		his=True,     # If True, command log will be saved to history
+		dgr='false',  # If true will show confirmation window
+		job='false',  # Check if some cron jobs selected
 		srv='false',  # Check if some servers selected
 		upd='false',  # Check if some updates selected
-		job='false',  # Check if some cron jobs selected
 		scr='false',  # Check if some scripts selected
 		dmp='false',  # Check if some dumps selected
-		dgr='false',  # If true will show confirmation window
 	):
 		self.position = position
 		self.section = section
