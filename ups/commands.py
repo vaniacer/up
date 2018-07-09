@@ -23,7 +23,7 @@ class CommandClass:
 		bash='',      # Bash script to start
 		menu='',      # Command name in UI
 		name='',      # Command name(an internal command name)
-		run='',       # If set to "run_or_cron('RUN');" then command will be run only
+		run='',       # Pre validation command, if set to "run_or_cron('RUN');" then command will be run only
 		his=True,     # If True, command log will be saved to history
 		dgr='false',  # If true will show confirmation window
 		job='false',  # Check if some cron jobs selected
