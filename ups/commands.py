@@ -16,7 +16,7 @@ class CommandClass:
 	"""Класс команды"""
 	def __init__(
 		self,
-		position=10,  # Position in commands list(selected sorted by position)
+		position=1,   # Position in commands list(selected sorted by position)
 		section='',   # Section in which command will be placed
 		style='',     # Class assigned to a command button(for example 'danger')
 		title='',     # Pop up help message
@@ -101,7 +101,6 @@ commandick = {
 
 	# Dumps section }---------------------------------------------------------------------------------------------------
 	'get_dump': CommandClass(
-		position=10,
 		section='dump',
 		title='Get DB dump from selected server(s).',
 		name='get_dump',
@@ -133,7 +132,6 @@ commandick = {
 
 	# Updates section }-------------------------------------------------------------------------------------------------
 	'copy': CommandClass(
-		position=10,
 		section='update',
 		title='Copy selected update(s) to selected server(s).',
 		name='copy',
@@ -191,7 +189,6 @@ commandick = {
 
 	# Script section }--------------------------------------------------------------------------------------------------
 	'run_script': CommandClass(
-		position=10,
 		section='script',
 		title='Run selected script(s) on selected server(s).',
 		name='run_script',
@@ -205,7 +202,6 @@ commandick = {
 
 	# Maintenance
 	'maintenance_on': CommandClass(
-		position=10,
 		section='server',
 		style='danger',
 		title='Show "Maintenance" page on selected server(s).',
