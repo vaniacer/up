@@ -159,7 +159,7 @@ def command_log(request):
 
 	context = {
 		'name':    data['cmd'].capitalize().replace('_', ' '),
-		'his':     commandick[data['cmd']]['his'],
+		'his':     commandick[data['cmd']].his,
 		'cancel':  '/cancel/?%s' % qst,
 		'project': current_project,
 		'back':    back_url(data),
@@ -259,7 +259,7 @@ def project(request, project_id):
 	dmplist_filtered = [dump for dump in dmplist if re.search(dmplist_filter, dump['name'], re.IGNORECASE)]
 	dmplist_filter_form = DumpsFilterForm(initial=data)
 
-	commandsorted = sorted(commandick.itervalues(), key=itemgetter('position'))
+	commandsorted = sorted(commandick.itervalues())
 	hide_info_form = HideInfoForm(initial=data)
 
 	context = {

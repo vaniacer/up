@@ -44,14 +44,12 @@ function make_history () {
 
 # Checks existence of updates/new folder in workdir, creates if not
 function create_tmp_folder () {
-
     tmp_folder=$wdir/temp/$key
     ssh $sopt $addr "[[ -d $tmp_folder ]] || mkdir -p $tmp_folder" || error=$?
 }
 
 # Warning with countdown timer. Options: $1 - message, $2 - timeout in sec.
 function warning () {
-
     attention=(
         '   _________________________________________________    '
         '  / __        ___    ____  _   _ ___ _   _  ____ _  \   '
@@ -128,7 +126,6 @@ EOF
 # Copy files created in the process to $dumpdir and add a 'download' button to the output log.
 # Used in backup_* and dump_get.
 function download () {
-
     remote_file="$1"
     download_to="$dumpdir/$2"
     remote_filename=`basename "$1"`
@@ -161,9 +158,7 @@ trap cancel INT
 
 # Start 'run' function, save logs to $rundir or $crondir(if started from cron).
 function starter () {
-
     stty cols $width # Set terminal width
-
     [[ "$cron" ]] \
           && { ( run; printf "\nError: $error\nDate: $(date +'%b %d, %Y %R')" ) &> $crondir/$cron; } \
           || {
