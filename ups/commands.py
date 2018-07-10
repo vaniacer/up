@@ -518,10 +518,9 @@ def starter(dick):
 	history(dick)
 
 	opt = [
-		conf.BASE_DIR + '/bash/starter.sh',
-		'-prj',  '%s:%s' % (str(dick['proj'].id), str(dick['proj'].name)),
-		'-date', dick['cdat'],
-		'-key',  dick['uniq']
+		'python', 'starter.py', dick['cmnd'], dick['uniq'],
+		'--project',  '%s:%s' % (str(dick['proj'].id), str(dick['proj'].name)),
+		'--date', dick['cdat'],
 	]
 
 	opt.extend(dick['opt'])
@@ -556,7 +555,6 @@ def run_cmd(data, project, user):
 	tab = ''
 	date = run_date()
 	name = data['run_cmnd']
-	bash = commandick[name].bash
 
 	if data['selected_date'] and data['selected_time']:
 		date = '%s %s' % (data['selected_date'], data['selected_time'])
@@ -592,8 +590,8 @@ def run_cmd(data, project, user):
 			serv = jobj.serv
 			uniq = get_key()
 
+			dick['opt'] = ['--job', jobi]
 			dick['logi'] += '&logid=%s' % uniq
-			dick['opt'] = ['-job', jobi, '-cmd', bash]
 			dick.update({'cron': jobi, 'uniq': uniq, 'serv': serv, 'jobj': jobj})
 
 			job_opt(dick)
@@ -605,7 +603,6 @@ def run_cmd(data, project, user):
 			uniq = get_key()
 
 			dick.update({'uniq': uniq})
-			dick['opt'] = ['-cmd', bash]
 			dick['logi'] += '&logid=%s' % uniq
 
 			starter(dick)
@@ -622,7 +619,7 @@ def run_cmd(data, project, user):
 
 			dick['logi'] += '&logid=%s' % uniq
 			dick.update({'uniq': uniq, 'serv': serv})
-			dick['opt'] = ['-server', '%s:%s:%s' % (serv.addr, serv.wdir, serv.port)]
+			dick['opt'] = ['--server', '%s:%s:%s' % (serv.addr, serv.wdir, serv.port)]
 
 			if data['run_type'] == 'CRON':
 				if not dick['his']:
@@ -632,9 +629,7 @@ def run_cmd(data, project, user):
 				add_job(dick)
 
 				dick['name'] = 'Set cron job - %s' % name.lower()
-				dick['opt'].extend(['-cmd',  'cron.sh', '-run', bash, '-cid', uniq])
-			else:
-				dick['opt'].extend(['-cmd', bash])
+				dick['opt'].extend(['-cron'])
 
 			starter(dick)
 
