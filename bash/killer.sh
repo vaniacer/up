@@ -7,5 +7,5 @@ for id in $@; {
 
     pid=`cat $rundir/pid$id`
     kill -2 $pid `ps -o pid= --ppid $pid`
-
+    rm $rundir/*$id
 }

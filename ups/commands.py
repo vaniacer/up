@@ -508,7 +508,7 @@ def job_opt(dick):
 def history(dick):
 	"""Создает событие в истории"""
 	if dick['his']:
-		dick['opt'].extend(['-hid', dick['uniq']])
+		dick['opt'].extend(['--history'])
 		add_event(dick)
 
 
@@ -619,7 +619,7 @@ def run_cmd(data, project, user):
 
 			dick['logi'] += '&logid=%s' % uniq
 			dick.update({'uniq': uniq, 'serv': serv})
-			dick['opt'] = ['--server', '%s:%s:%s' % (serv.addr, serv.wdir, serv.port)]
+			dick['opt'] = ['--server', serv.addr, '--wdir', serv.wdir, '--port', serv.port]
 
 			if data['run_type'] == 'CRON':
 				if not dick['his']:

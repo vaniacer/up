@@ -1,25 +1,30 @@
 # -*- encoding: utf-8 -*-
 
+import os
 import sys
+import time
 import argparse
 import importlib
 from subprocess import Popen
-from up.settings import LOG_FILE
+from up.settings import LOG_FILE, ERR_FILE
 from conf import dbname, dbhost, dbpass, dbport, dbuser
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument('-u', '--update',      help='List of update files')
-parser.add_argument('-x', '--script',      help='List of script files')
-parser.add_argument('-o', '--opts',        help='Custom script options')
-parser.add_argument('-m', '--dump',        help='List of dump files')
-parser.add_argument('-j', '--job',         help='List of cron job ids')
-parser.add_argument('-s', '--server',      help='Server')
-parser.add_argument('-d', '--date',        help='Cron job date')
-parser.add_argument('-c', '--cron',        help='Run in cron')
-parser.add_argument('-p', '--project',     help='Run in cron')
-parser.add_argument('cmd',                 help='Unique key')
-parser.add_argument('key',                 help='Unique key')
+parser.add_argument('-u', '--update',  help='List of update files')
+parser.add_argument('-x', '--script',  help='List of script files')
+parser.add_argument('-o', '--opts',    help='Custom script options')
+parser.add_argument('-m', '--dump',    help='List of dump files')
+parser.add_argument('-j', '--job',     help='List of cron job ids')
+parser.add_argument('-s', '--server',  help='Server')
+parser.add_argument('-w', '--wdir',    help="Server's working directory")
+parser.add_argument('-P', '--port',    help="Server's port")
+parser.add_argument('-d', '--date',    help='Cron job date')
+parser.add_argument('-c', '--cron',    help='Run in cron')
+parser.add_argument('-p', '--project', help='Run in cron')
+parser.add_argument('-H', '--history', help="Save log to history")
+parser.add_argument('cmd',             help='Command name')
+parser.add_argument('key',             help='Unique key')
 args = parser.parse_args()
 
 
@@ -30,6 +35,7 @@ except ImportError:
 	sys.exit(1)
 
 log_filename = LOG_FILE + args.key
+err_filename = ERR_FILE + args.key
 
 
 def make_history(typ):
@@ -47,7 +53,7 @@ def make_history(typ):
 		)
 
 	types = {
-		'his': {'tab': 'ups_history', 'col': "uniq = '%s'" % args.key, 'ext': ', exit = %s' % err},
+		'his': {'tab': 'ups_history', 'col': "uniq = '%s'" % args.key, 'ext': ', exit = %s' % error},
 		'job': {'tab': 'ups_job',     'col': "cron = '%s'" % args.key, 'ext': ''},
 	}
 
@@ -58,7 +64,36 @@ def make_history(typ):
 		log=log_body,
 	)
 
-	opt = ['psql', '-U', dbuser, '-h', dbhost, '-p', dbport, '-d', dbname, '-c', update]
-	Popen(opt, env={"PGPASSWORD": dbpass})
+	psql_opt = ['psql', '-U', dbuser, '-h', dbhost, '-p', dbport, '-d', dbname, '-c', update]
+	Popen(psql_opt, env={"PGPASSWORD": dbpass})
 
-imp.run()
+
+if args.cron:
+	imp.description(args.server)
+else:
+	# imp.run(args.server, args.wdir, args.port)
+
+	opt = ['ssh', args.server, imp.command]
+
+	log = open(log_filename, 'wb')
+	process = Popen(opt, stdout=log, stderr=log)
+	streamdata = process.communicate()[0]
+	error = process.returncode
+	log.close()
+
+	err = open(err_filename, 'wb')
+	err.write(str(error))
+	err.close()
+
+	if args.history:
+		make_history('his')
+
+	if args.cron:
+		make_history('job')
+
+	time.sleep(10)
+	for f in log_filename, err_filename:
+		try:
+			os.remove(f)
+		except OSError:
+			continue
