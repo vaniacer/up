@@ -10,6 +10,11 @@ def description(args):
 def run(args):
 
 	filename = '{server}_dbdump_{date:%d-%m-%Y}.gz'.format(server=args.server, date=datetime.now())
+	message = """
+			\n<b>Копирую файл - {file}</b>\n
+			\n<b>File will be stored until tomorrow, please download it if you need this file!</b>
+			\n<a class='btn btn-primary' href='/dumps/{file}'>Download</a>\n
+			""".format(file=filename)
 	download = {
 		'path': '{wdir}/backup/{file}'.format(wdir=args.wdir, file=filename),
 		'file': filename,
@@ -33,7 +38,7 @@ def run(args):
 		'''.format(wdir=args.wdir, file=download['path'])
 	]
 
-	dick = {'command': command, 'message': '', 'download': download}
+	dick = {'command': command, 'message': message, 'download': download}
 
 	return dick
 

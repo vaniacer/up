@@ -74,22 +74,10 @@ def make_history(typ):
 def download(download, log):
 
 	dump_dir = DUMP_DIR
-	filename = download['file']
 	filepath = download['path']
 
 	if download['dest']:
 		dump_dir = os.path.join(DUMP_DIR, download['dest'])
-		log.write("\n<a class='btn btn-primary' href='/download_dump/{id}/{file}'>Download</a>\n".format(
-			id=args.proid,
-			file=filename,
-		))
-	else:
-		log.write(
-			"""
-			\n<b>File will be stored until tomorrow, please download it if you need this file!</b>
-			\n<a class='btn btn-primary' href='/dumps/{file}'>Download</a>\n
-			""".format(file=filename)
-		)
 
 	try:
 		os.mkdir(dump_dir)
@@ -101,7 +89,6 @@ def download(download, log):
 		'{addr}:"{file}"'.format(addr=args.server, file=filepath), dump_dir
 	]
 
-	log.write('\n<b>Копирую файл - %s</b>\n' % filename)
 	Popen(rsync_opt, stdout=log, stderr=log)
 
 
@@ -122,7 +109,7 @@ else:
 	opt.extend(dick['command'])
 
 	run_command = Popen(opt, stdout=log, stderr=log)
-	streamdata = run_command.communicate()[0]
+	streamdata = run_command.communicate()
 	error = run_command.returncode
 	ppid = run_command.pid
 
