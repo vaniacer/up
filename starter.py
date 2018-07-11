@@ -6,7 +6,7 @@ import time
 import argparse
 import importlib
 from subprocess import Popen
-from up.settings import LOG_FILE, ERR_FILE
+from up.settings import LOG_FILE, ERR_FILE, PID_FILE
 from conf import dbname, dbhost, dbpass, dbport, dbuser
 
 
@@ -36,6 +36,7 @@ except ImportError:
 
 log_filename = LOG_FILE + args.key
 err_filename = ERR_FILE + args.key
+pid_filename = PID_FILE + args.key
 
 
 def make_history(typ):
@@ -69,31 +70,42 @@ def make_history(typ):
 
 
 if args.cron:
-	imp.description(args.server)
+	log = open(log_filename, 'w')
+	log.write(imp.description(args.server))
+	make_history('job')
+	log.close()
 else:
-	# imp.run(args.server, args.wdir, args.port)
+	command, message = imp.run(args.server, args.port, args.wdir)
+	log = open(log_filename, 'w')
+	log.write(message)
+	log.close()
 
-	opt = ['ssh', args.server, imp.command]
+	log = open(log_filename, 'a')
 
-	log = open(log_filename, 'wb')
+	opt = ['ssh', args.server]
+	opt.extend(command)
+
 	process = Popen(opt, stdout=log, stderr=log)
 	streamdata = process.communicate()[0]
 	error = process.returncode
+	ppid = process.pid
+
 	log.close()
 
-	err = open(err_filename, 'wb')
+	err = open(err_filename, 'w')
 	err.write(str(error))
 	err.close()
+
+	pid = open(pid_filename, 'w')
+	pid.write(str(ppid))
+	pid.close()
 
 	if args.history:
 		make_history('his')
 
-	if args.cron:
-		make_history('job')
-
-	time.sleep(10)
-	for f in log_filename, err_filename:
-		try:
-			os.remove(f)
-		except OSError:
-			continue
+time.sleep(10)
+for f in log_filename, err_filename, pid_filename:
+	try:
+		os.remove(f)
+	except OSError:
+		continue
