@@ -22,9 +22,6 @@ def run(args):
 
 	link = ''
 	postfixes = ('/application', '/login', '')
-
-	command = ['-f', '-L', '0.0.0.0:{LP}:127.0.0.1:{RP}'.format(LP=lport, RP=args.port), 'sleep', str(timer)]
-
 	for postfix in postfixes:
 		link += '\n<a href="http://__URL__:{lport}{postfix}">http://__URL__:{lport}{postfix}</a>\n'.format(
 			lport=lport,
@@ -32,6 +29,7 @@ def run(args):
 		)
 
 	message = '\n-----{{ <b>Server {server}</b> }}-----\n{link}'.format(server=args.server, link=link)
+	command = ['-f', '-L', '0.0.0.0:{LP}:127.0.0.1:{RP}'.format(LP=lport, RP=args.port), 'sleep', str(timer)]
 
 	dick = {'command': command, 'message': message, 'download': ''}
 
