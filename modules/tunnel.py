@@ -12,18 +12,18 @@ def run(server, port, wdir):
 	timer = 60  # If not used, connection will be dropped after this amount of seconds
 	lport = 42250  # default 42250
 
-	command = ['-f', '-L', '0.0.0.0:{lport}:127.0.0.1:{rport}'.format(lport=lport, rport=port), 'sleep', str(timer)]
-
-	sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
 	while True:
-		error = sock.connect_ex(('127.0.0.1', lport))
-		if error == 0:
+		sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+		ptest = sock.connect_ex(('127.0.0.1', lport))
+		sock.close()
+		if ptest:
 			break
 		lport += 1
 
 	link = ''
 	postfixes = ('/application', '/login', '')
+
+	command = ['-f', '-L', '0.0.0.0:{lport}:127.0.0.1:{rport}'.format(lport=lport, rport=port), 'sleep', str(timer)]
 
 	for postfix in postfixes:
 		link += '\n<a href="http://__URL__:{lport}{postfix}">http://__URL__:{lport}{postfix}</a>\n'.format(
@@ -31,5 +31,5 @@ def run(server, port, wdir):
 			postfix=postfix,
 		)
 
-	message = '\n-----{ <b>Server %s</b> }-----\n%s' % (server, link)
+	message = '\n-----{{ <b>Server {server}</b> }}-----\n{link}'.format(server=server, link=link)
 	return command, message

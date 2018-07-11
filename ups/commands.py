@@ -20,7 +20,6 @@ class CommandClass:
 		section='',   # Section command will be placed to(scripts, updates, dumps, cron, servers)
 		style='',     # Class assigned to a command button(for example 'danger')
 		title='',     # Pop up help message(via title)
-		bash='',      # Bash script to start
 		menu='',      # Command name in UI
 		name='',      # Command name(an internal command name)
 		run='',       # Pre validation command, if set to "run_or_cron('RUN');" then command will be run only
@@ -36,7 +35,6 @@ class CommandClass:
 		self.section = section
 		self.style = style
 		self.title = title
-		self.bash = bash
 		self.name = name
 		self.menu = menu
 		self.srv = srv
@@ -59,7 +57,6 @@ commandick = {
 	'cancel_job': CommandClass(
 			section='cron',
 			title='Cancel selected cron job(s).',
-			bash='cronjob_cancel.sh',
 			name='cancel_job',
 			menu='Cancel job(s)',
 			job='true',
@@ -72,7 +69,6 @@ commandick = {
 		title='Change selected cron job(s) run date and time.',
 		name='change_date',
 		menu='Change date',
-		bash='cronjob_date.sh',
 		job='true',
 		run="run_or_cron('RUN');",
 	),
@@ -83,7 +79,6 @@ commandick = {
 		title='Make selected cron job(s) permanent.',
 		name='permanent_job',
 		menu='Run everyday',
-		bash='cronjob_perm.sh',
 		job='true',
 		run="run_or_cron('RUN');",
 	),
@@ -94,7 +89,6 @@ commandick = {
 		title='Make selected cron job(s) run once (default).',
 		name='once_job',
 		menu='Run once',
-		bash='cronjob_once.sh',
 		job='true',
 		run="run_or_cron('RUN');",
 	),
@@ -105,7 +99,6 @@ commandick = {
 		title='Get DB dump from selected server(s).',
 		name='get_dump',
 		menu='Get dump(s)',
-		bash='dump_get.sh',
 		srv='true',
 	),
 
@@ -115,7 +108,6 @@ commandick = {
 		title='Delete selected dump(s) from UpS.',
 		name='del_dump',
 		menu='Del dump(s)',
-		bash='dump_del.sh',
 		dmp='true',
 	),
 
@@ -126,7 +118,6 @@ commandick = {
 		title="Recreate selected server's DB with this dump.",
 		name='send_dump',
 		menu='Send dump',
-		bash='dump_send.sh',
 		srv='true',
 	),
 
@@ -136,7 +127,6 @@ commandick = {
 		title='Copy selected update(s) to selected server(s).',
 		name='copy',
 		menu='Copy update(s)',
-		bash='copy.sh',
 		srv='true',
 	),
 
@@ -146,7 +136,6 @@ commandick = {
 		title='Check updates on selected server(s).',
 		name='check_updates',
 		menu='Check updates',
-		bash='check_updates.sh',
 		srv='true',
 		run="run_or_cron('RUN');",
 		his=False,
@@ -159,7 +148,6 @@ commandick = {
 		title='Update selected server(s) with selected update file.',
 		name='update',
 		menu='Start Update',
-		bash='update.sh',
 		srv='true',
 		upd='true',
 		dgr='true',
@@ -171,7 +159,6 @@ commandick = {
 		title='Delete selected update(s) from selected server(s).',
 		name='del_sel_updates',
 		menu='Delete update(s)',
-		bash='del_sel_updates.sh',
 		srv='true',
 		upd='true',
 	),
@@ -182,7 +169,6 @@ commandick = {
 		title='Delete all updates from selected server(s).',
 		name='del_all_updates',
 		menu='Delete all updates',
-		bash='del_all_updates.sh',
 		srv='true',
 		upd='true',
 	),
@@ -193,7 +179,6 @@ commandick = {
 		title='Run selected script(s) on selected server(s).',
 		name='run_script',
 		menu='Run script(s)',
-		bash='run_script.sh',
 		srv='true',
 		scr='true',
 	),
@@ -207,7 +192,6 @@ commandick = {
 		title='Show "Maintenance" page on selected server(s).',
 		name='maintenance_on',
 		menu='Maintenance ON',
-		bash='maintenance_on.sh',
 		srv='true',
 		dgr='true',
 	),
@@ -219,7 +203,6 @@ commandick = {
 		title='Hide "Maintenance" page on selected server(s).',
 		name='maintenance_off',
 		menu='Maintenance Off',
-		bash='maintenance_off.sh',
 		srv='true',
 		dgr='true',
 	),
@@ -232,7 +215,6 @@ commandick = {
 		title='Reload jboss config on selected server(s).',
 		name='reload',
 		menu='Reload config',
-		bash='jboss_reload.sh',
 		srv='true',
 		dgr='true',
 	),
@@ -244,7 +226,6 @@ commandick = {
 		title='Restart jboss on selected server(s).',
 		name='restart',
 		menu='Restart jboss',
-		bash='jboss_restart.sh',
 		srv='true',
 		dgr='true',
 	),
@@ -256,7 +237,6 @@ commandick = {
 		title='Start jboss(krupd jboss.start) on selected server(s).',
 		name='start',
 		menu='Start jboss',
-		bash='jboss_start.sh',
 		srv='true',
 		dgr='true',
 	),
@@ -268,7 +248,6 @@ commandick = {
 		title='Stop jboss(krupd jboss.stop) on selected server(s).',
 		name='stop',
 		menu='Stop jboss',
-		bash='jboss_stop.sh',
 		srv='true',
 		dgr='true',
 	),
@@ -280,7 +259,6 @@ commandick = {
 		title='Kill jboss(krupd jboss.kill) on selected server(s).',
 		name='kill',
 		menu='Kill jboss',
-		bash='jboss_kill.sh',
 		srv='true',
 		dgr='true',
 	),
@@ -292,7 +270,6 @@ commandick = {
 		title='Show system info: CPU, mem, disk etc.',
 		name='server_info',
 		menu='System Info',
-		bash='server_info.sh',
 		srv='true',
 		run="run_or_cron('RUN');",
 		his=False,
@@ -304,7 +281,6 @@ commandick = {
 		title='Show conf(standalone-full.xml) and java options of selected server(s).',
 		name='check_conf',
 		menu='Check conf',
-		bash='check_conf.sh',
 		srv='true',
 		run="run_or_cron('RUN');",
 		his=False,
@@ -317,7 +293,6 @@ commandick = {
 		title='Check logs on selected server(s).',
 		name='check_logs',
 		menu='Check logs',
-		bash='check_logs.sh',
 		srv='true',
 		run="run_or_cron('RUN');",
 		his=False,
@@ -329,7 +304,6 @@ commandick = {
 		title='Get day logs from selected server(s).',
 		name='get_logs_day',
 		menu='Get day logs',
-		bash='logs_get_day.sh',
 		srv='true',
 	),
 
@@ -339,7 +313,6 @@ commandick = {
 		title='Get all logs from selected server(s).',
 		name='get_logs_all',
 		menu='Get all logs',
-		bash='logs_get_all.sh',
 		srv='true',
 	),
 
@@ -350,7 +323,6 @@ commandick = {
 		title='Database backup, files will be stored on the server(s) and downloaded to UpS.',
 		name='backup_db',
 		menu='Backup base',
-		bash='backup_db.sh',
 		srv='true',
 	),
 
@@ -360,7 +332,6 @@ commandick = {
 		title='System backup files will be stored on the server(s) and downloaded to UpS.',
 		name='backup_sys',
 		menu='Backup system',
-		bash='backup_sys.sh',
 		srv='true',
 	),
 
@@ -370,7 +341,6 @@ commandick = {
 		title='System and DB backup files will be stored on the server(s) and downloaded to UpS.',
 		name='backup_full',
 		menu='Backup full',
-		bash='backup_full.sh',
 		srv='true',
 	),
 
@@ -380,7 +350,6 @@ commandick = {
 		title='Copy utils folder to selected server(s).',
 		name='copy_utils',
 		menu='Copy utils',
-		bash='copy_utils.sh',
 		srv='true',
 	),
 
@@ -390,7 +359,6 @@ commandick = {
 		title='Make ssh tunnel to the bind port of selected server(s).',
 		name='tunnel',
 		menu='Create tunnel',
-		bash='tunnel.sh',
 		srv='true',
 		run="run_or_cron('RUN');",
 		his=False,
