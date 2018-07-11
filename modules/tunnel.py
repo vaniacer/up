@@ -32,4 +32,7 @@ def run(args):
 		)
 
 	message = '\n-----{{ <b>Server {server}</b> }}-----\n{link}'.format(server=args.server, link=link)
-	return command, message
+
+	dick = {'command': command, 'message': message, 'download': ''}
+
+	return dick

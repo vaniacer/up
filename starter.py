@@ -6,7 +6,7 @@ import time
 import argparse
 import importlib
 from subprocess import Popen
-from up.settings import LOG_FILE, ERR_FILE, PID_FILE
+from up.settings import LOG_FILE, ERR_FILE, PID_FILE, DUMP_DIR
 from conf import dbname, dbhost, dbpass, dbport, dbuser
 
 
@@ -21,7 +21,8 @@ parser.add_argument('-w', '--wdir',    help="Server's working directory")
 parser.add_argument('-P', '--port',    help="Server's port")
 parser.add_argument('-d', '--date',    help='Cron job date')
 parser.add_argument('-c', '--cron',    help='Run in cron')
-parser.add_argument('-p', '--project', help='Run in cron')
+parser.add_argument('-p', '--proid',   help='Project id')
+parser.add_argument('-n', '--proname', help='Project name')
 parser.add_argument('-H', '--history', action='store_true', help="Save log to history")
 parser.add_argument('cmd',             help='Command name')
 parser.add_argument('key',             help='Unique key')
@@ -69,26 +70,54 @@ def make_history(typ):
 	Popen(psql_opt, env={"PGPASSWORD": dbpass})
 
 
+def download(filename, log):
+	dump_dir = os.path.join(DUMP_DIR, args.proname)
+	try:
+		os.mkdir(dump_dir)
+	except OSError:
+		pass
+
+	log.write('\n<b>Копирую файл - %s</b>\n' % filename)
+
+	#    rsync -e "ssh $sopt" --progress -lzuogthvr $addr:"$remote_file" "$download_to" || { error=$?; return $error; }
+	#
+	#    case $2 in
+	#        $pname) printf "\n<a class='btn btn-primary' href='/download_dump/$prj/$remote_filename'>Download</a>\n";;
+	#             *) printf "\n<b>File will be stored until tomorrow, please download it if you need this file!</b>"
+	#                printf "\n<a class='btn btn-primary' href='/dumps/$remote_filename'>Download</a>\n";;
+	#    esac
+
+	rsync_opt = [
+		'rsync', '-e', 'ssh', '--progress', '-lzuogthvr',
+		'{addr}:"{file}"'.format(addr=args.server, file=filename), dump_dir
+	]
+
+	Popen(rsync_opt, stdout=log, stderr=log)
+
+
 if args.cron:
 	log = open(log_filename, 'w')
 	log.write(imp.description(args))
 	make_history('job')
 	log.close()
 else:
-	command, message = imp.run(args)
+	dick = imp.run(args)
 	log = open(log_filename, 'w')
-	log.write(message)
+	log.write(dick['message'])
 	log.close()
 
 	log = open(log_filename, 'a')
 
 	opt = ['ssh', args.server]
-	opt.extend(command)
+	opt.extend(dick['command'])
 
 	run_command = Popen(opt, stdout=log, stderr=log)
 	streamdata = run_command.communicate()[0]
 	error = run_command.returncode
 	ppid = run_command.pid
+
+	if dick['download']:
+		download(dick['download'], log)
 
 	log.close()
 

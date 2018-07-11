@@ -19,5 +19,7 @@ def run(args):
 
 	message = '\n-----{ <b>Server %s</b> }-----\n' % args.server
 
-	return command, message
+	dick = {'command': command, 'message': message, 'download': ''}
+
+	return dick
 

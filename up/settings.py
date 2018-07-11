@@ -29,6 +29,7 @@ STATICFILES_DIRS = (
 )
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+DUMP_DIR = os.path.join(MEDIA_ROOT, 'dumps')
 MEDIA_URL = '/media/'
 
 # Quick-start development settings - unsuitable for production

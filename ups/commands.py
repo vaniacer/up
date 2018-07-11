@@ -487,7 +487,8 @@ def starter(dick):
 
 	opt = [
 		'python', 'starter.py', dick['cmnd'], dick['uniq'],
-		'--project',  '%s:%s' % (str(dick['proj'].id), str(dick['proj'].name)),
+		'--proname', str(dick['proj'].name),
+		'--proid', str(dick['proj'].id),
 		'--date', dick['cdat'],
 	]
 
