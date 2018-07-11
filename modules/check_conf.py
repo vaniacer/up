@@ -1,11 +1,11 @@
 # -*- encoding: utf-8 -*-
 
 
-def description(server):
-	return "\nShow conf of server:\n%s" % server
+def description(args):
+	return "\nShow conf of server:\n%s" % args.server
 
 
-def run(server, port, wdir):
+def run(args):
 
 	command = [
 		"""
@@ -14,10 +14,10 @@ def run(server, port, wdir):
 
 		printf '\n<b>Standalone-full.xml</b>\n\n'
 		cat {wdir}/jboss-bas-*/standalone/configuration/standalone-full.xml | sed 's|<|\&lt\;|g;s|>|\&gt\;|g'
-		""".format(wdir=wdir)
+		""".format(wdir=args.wdir)
 	]
 
-	message = '\n-----{ <b>Server %s</b> }-----\n' % server
+	message = '\n-----{ <b>Server %s</b> }-----\n' % args.server
 
 	return command, message
 

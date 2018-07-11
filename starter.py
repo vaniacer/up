@@ -22,7 +22,7 @@ parser.add_argument('-P', '--port',    help="Server's port")
 parser.add_argument('-d', '--date',    help='Cron job date')
 parser.add_argument('-c', '--cron',    help='Run in cron')
 parser.add_argument('-p', '--project', help='Run in cron')
-parser.add_argument('-H', '--history', help="Save log to history")
+parser.add_argument('-H', '--history', action='store_true', help="Save log to history")
 parser.add_argument('cmd',             help='Command name')
 parser.add_argument('key',             help='Unique key')
 args = parser.parse_args()
@@ -71,11 +71,11 @@ def make_history(typ):
 
 if args.cron:
 	log = open(log_filename, 'w')
-	log.write(imp.description(args.server))
+	log.write(imp.description(args))
 	make_history('job')
 	log.close()
 else:
-	command, message = imp.run(args.server, args.port, args.wdir)
+	command, message = imp.run(args)
 	log = open(log_filename, 'w')
 	log.write(message)
 	log.close()
@@ -85,10 +85,10 @@ else:
 	opt = ['ssh', args.server]
 	opt.extend(command)
 
-	process = Popen(opt, stdout=log, stderr=log)
-	streamdata = process.communicate()[0]
-	error = process.returncode
-	ppid = process.pid
+	run_command = Popen(opt, stdout=log, stderr=log)
+	streamdata = run_command.communicate()[0]
+	error = run_command.returncode
+	ppid = run_command.pid
 
 	log.close()
 

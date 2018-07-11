@@ -3,11 +3,11 @@
 import socket
 
 
-def description(server):
-	return "\nMake ssh tunnel to bind port of server:\n%s" % server
+def description(args):
+	return "\nMake ssh tunnel to bind port of server:\n%s" % args.server
 
 
-def run(server, port, wdir):
+def run(args):
 
 	timer = 60  # If not used, connection will be dropped after this amount of seconds
 	lport = 42250  # default 42250
@@ -23,7 +23,7 @@ def run(server, port, wdir):
 	link = ''
 	postfixes = ('/application', '/login', '')
 
-	command = ['-f', '-L', '0.0.0.0:{lport}:127.0.0.1:{rport}'.format(lport=lport, rport=port), 'sleep', str(timer)]
+	command = ['-f', '-L', '0.0.0.0:{LP}:127.0.0.1:{RP}'.format(LP=lport, RP=args.port), 'sleep', str(timer)]
 
 	for postfix in postfixes:
 		link += '\n<a href="http://__URL__:{lport}{postfix}">http://__URL__:{lport}{postfix}</a>\n'.format(
@@ -31,5 +31,5 @@ def run(server, port, wdir):
 			postfix=postfix,
 		)
 
-	message = '\n-----{{ <b>Server {server}</b> }}-----\n{link}'.format(server=server, link=link)
+	message = '\n-----{{ <b>Server {server}</b> }}-----\n{link}'.format(server=args.server, link=link)
 	return command, message

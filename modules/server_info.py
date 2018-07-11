@@ -1,11 +1,11 @@
 # -*- encoding: utf-8 -*-
 
 
-def description(server):
-	return "\nShow system info of server:\n%s" % server
+def description(args):
+	return "\nShow system info of server:\n%s" % args.server
 
 
-def run(server, port, wdir):
+def run(args):
 
 	command = [
 		"""
@@ -44,7 +44,7 @@ def run(server, port, wdir):
 		"""
 	]
 
-	message = '\n-----{ <b>Server %s</b> }-----\n' % server
+	message = '\n-----{ <b>Server %s</b> }-----\n' % args.server
 
 	return command, message
 
