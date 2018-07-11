@@ -10,7 +10,11 @@ def description(args):
 def run(args):
 
 	filename = '{server}_dbdump_{date:%d-%m-%Y}.gz'.format(server=args.server, date=datetime.now())
-	download = '{wdir}/backup/{file}'.format(wdir=args.wdir, file=filename)
+	download = {
+		'path': '{wdir}/backup/{file}'.format(wdir=args.wdir, file=filename),
+		'file': filename,
+		'dest': ''
+	}
 	command = [
 		'''
 		rawdta=$(grep '"DataaccessDS"' -A15  "{wdir}"/jboss-bas-*/standalone/configuration/standalone-full.xml)
@@ -26,7 +30,7 @@ def run(args):
 			printf "<b>Ошибка резервного копирования</b>"
 			exit $error
 		}}
-		'''.format(wdir=args.wdir, file=download)
+		'''.format(wdir=args.wdir, file=download['path'])
 	]
 
 	dick = {'command': command, 'message': '', 'download': download}

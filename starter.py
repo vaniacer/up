@@ -71,29 +71,37 @@ def make_history(typ):
 	Popen(psql_opt, env={"PGPASSWORD": dbpass})
 
 
-def download(filepath, log):
-	dump_dir = os.path.join(DUMP_DIR, args.proname)
+def download(download, log):
+
+	dump_dir = DUMP_DIR
+	filename = download['file']
+	filepath = download['path']
+
+	if download['dest']:
+		dump_dir = os.path.join(DUMP_DIR, download['dest'])
+		log.write("\n<a class='btn btn-primary' href='/download_dump/{id}/{file}'>Download</a>\n".format(
+			id=args.proid,
+			file=filename,
+		))
+	else:
+		log.write(
+			"""
+			\n<b>File will be stored until tomorrow, please download it if you need this file!</b>
+			\n<a class='btn btn-primary' href='/dumps/{file}'>Download</a>\n
+			""".format(file=filename)
+		)
+
 	try:
 		os.mkdir(dump_dir)
 	except OSError:
 		pass
-
-	filename = filepath.split('/')[-1]
-	log.write('\n<b>Копирую файл - %s</b>\n' % filename)
-
-	#    rsync -e "ssh $sopt" --progress -lzuogthvr $addr:"$remote_file" "$download_to" || { error=$?; return $error; }
-	#
-	#    case $2 in
-	#        $pname) printf "\n<a class='btn btn-primary' href='/download_dump/$prj/$remote_filename'>Download</a>\n";;
-	#             *) printf "\n<b>File will be stored until tomorrow, please download it if you need this file!</b>"
-	#                printf "\n<a class='btn btn-primary' href='/dumps/$remote_filename'>Download</a>\n";;
-	#    esac
 
 	rsync_opt = [
 		'rsync', '-e', 'ssh', '--progress', '-lzuogthvr',
 		'{addr}:"{file}"'.format(addr=args.server, file=filepath), dump_dir
 	]
 
+	log.write('\n<b>Копирую файл - %s</b>\n' % filename)
 	Popen(rsync_opt, stdout=log, stderr=log)
 
 
