@@ -42,7 +42,8 @@ pid_filename = PID_FILE + args.key
 
 def make_history(typ):
 
-	log_body = open(log_filename, 'r').read()
+	log_file = open(log_filename)
+	log_body = log_file.read()
 	num_lines = str.count(log_body, '\n')
 
 	if num_lines > 100:
@@ -70,13 +71,14 @@ def make_history(typ):
 	Popen(psql_opt, env={"PGPASSWORD": dbpass})
 
 
-def download(filename, log):
+def download(filepath, log):
 	dump_dir = os.path.join(DUMP_DIR, args.proname)
 	try:
 		os.mkdir(dump_dir)
 	except OSError:
 		pass
 
+	filename = filepath.split('/')[-1]
 	log.write('\n<b>Копирую файл - %s</b>\n' % filename)
 
 	#    rsync -e "ssh $sopt" --progress -lzuogthvr $addr:"$remote_file" "$download_to" || { error=$?; return $error; }
@@ -89,7 +91,7 @@ def download(filename, log):
 
 	rsync_opt = [
 		'rsync', '-e', 'ssh', '--progress', '-lzuogthvr',
-		'{addr}:"{file}"'.format(addr=args.server, file=filename), dump_dir
+		'{addr}:"{file}"'.format(addr=args.server, file=filepath), dump_dir
 	]
 
 	Popen(rsync_opt, stdout=log, stderr=log)
