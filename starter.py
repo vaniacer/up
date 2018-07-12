@@ -89,7 +89,7 @@ def download(download, log):
 		'{addr}:"{file}"'.format(addr=args.server, file=filepath), dump_dir
 	]
 
-	Popen(rsync_opt, stdout=log, stderr=log)
+	Popen(rsync_opt, stdout=log, stderr=log).wait()
 
 
 if args.cron:
@@ -100,7 +100,7 @@ if args.cron:
 else:
 	dick = imp.run(args)
 	log = open(log_filename, 'w')
-	log.write(dick['message'])
+	log.write(dick['message']['top'])
 	log.close()
 
 	log = open(log_filename, 'a')
@@ -112,11 +112,15 @@ else:
 	streamdata = run_command.communicate()
 	error = run_command.returncode
 	ppid = run_command.pid
+	run_command.wait()
 
 	if dick['download']:
 		download(dick['download'], log)
 
 	log.close()
+
+	with open(log_filename, 'a') as f:
+		f.write(dick['message']['bot'])
 
 	err = open(err_filename, 'w')
 	err.write(str(error))
