@@ -76,7 +76,7 @@ def download_file(ddick, dlog):
 
 	dump_dir = DUMP_DIR
 	files = ' '.join(ddick['file'])
-	print files
+
 	if ddick['dest']:
 		dump_dir = os.path.join(DUMP_DIR, ddick['dest'])
 
@@ -87,10 +87,14 @@ def download_file(ddick, dlog):
 
 	rsync_opt = [
 		'rsync', '-e', 'ssh', '--progress', '-lzuogthvr',
-		'{addr}:{files}'.format(addr=args.server, files=files), dump_dir
+		'{addr}:{files}1'.format(addr=args.server, files=files), dump_dir
 	]
 
-	Popen(rsync_opt, stdout=dlog, stderr=dlog).wait()
+	run_rsync = Popen(rsync_opt, stdout=dlog, stderr=dlog)
+	run_rsync.communicate()
+	rsync_error = run_rsync.returncode
+	run_rsync.wait()
+	return rsync_error
 
 
 if args.cron:
@@ -104,13 +108,15 @@ else:
 
 	log = open(log_filename, 'a')
 	run_command = Popen(dick['command'], stdout=log, stderr=log)
-	streamdata = run_command.communicate()
+	run_command.communicate()
 	error = run_command.returncode
 	ppid = run_command.pid
 	run_command.wait()
 
 	if dick['download']:
-		download_file(dick['download'], log)
+		rsync_error = download_file(dick['download'], log)
+		if rsync_error > 0:
+			error = rsync_error
 
 	log.write(dick['message']['bot'])
 
