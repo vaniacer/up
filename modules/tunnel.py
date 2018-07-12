@@ -9,7 +9,7 @@ def description(args):
 
 def run(args):
 
-	timer = 60  # If not used, connection will be dropped after this amount of seconds
+	timer = 60     # If not used, connection will be dropped after this amount of seconds
 	lport = 42250  # default 42250
 
 	while True:
@@ -28,8 +28,15 @@ def run(args):
 			postfix=postfix,
 		)
 
-	message = '\n-----{{ <b>Server {server}</b> }}-----\n{link}'.format(server=args.server, link=link)
-	command = ['-f', '-L', '0.0.0.0:{LP}:127.0.0.1:{RP}'.format(LP=lport, RP=args.port), 'sleep', str(timer)]
+	message = {
+		'top': '\n-----{{ <b>Server {server}</b> }}-----\n{link}'.format(server=args.server, link=link),
+		'bot': '',
+	}
+
+	command = [
+		'ssh', args.server, '-f', '-L', '0.0.0.0:{LP}:127.0.0.1:{RP}'.format(LP=lport, RP=args.port),
+		'sleep', str(timer)
+	]
 
 	dick = {'command': command, 'message': message, 'download': ''}
 

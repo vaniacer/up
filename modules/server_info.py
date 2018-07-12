@@ -8,6 +8,7 @@ def description(args):
 def run(args):
 
 	command = [
+		'ssh', args.server,
 		"""
 		LANG=Us
 
@@ -44,8 +45,7 @@ def run(args):
 		"""
 	]
 
-	message = '\n-----{ <b>Server %s</b> }-----\n' % args.server
-
+	message = {'top': '\n-----{ <b>Server %s</b> }-----\n' % args.server, 'bot': ''}
 	dick = {'command': command, 'message': message, 'download': ''}
 
 	return dick

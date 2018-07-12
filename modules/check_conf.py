@@ -8,6 +8,7 @@ def description(args):
 def run(args):
 
 	command = [
+		'ssh', args.server,
 		"""
 		printf '\n<b>Java options</b>\n\n'
 		ps axo command | grep {wdir} | grep [j]ava
@@ -17,8 +18,7 @@ def run(args):
 		""".format(wdir=args.wdir)
 	]
 
-	message = '\n-----{ <b>Server %s</b> }-----\n' % args.server
-
+	message = {'top': '\n-----{ <b>Server %s</b> }-----\n' % args.server, 'bot': ''}
 	dick = {'command': command, 'message': message, 'download': ''}
 
 	return dick

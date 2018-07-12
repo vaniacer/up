@@ -7,9 +7,8 @@ def description(args):
 
 def run(args):
 
-	command = ['cat {wdir}/jboss-bas-*/standalone/log/server.log'.format(wdir=args.wdir)]
-	message = '\n-----{ <b>Server %s</b> }-----\n' % args.server
-
+	command = ['ssh', args.server, 'cat {wdir}/jboss-bas-*/standalone/log/server.log'.format(wdir=args.wdir)]
+	message = {'top': '\n-----{ <b>Server %s</b> }-----\n' % args.server, 'bot': ''}
 	dick = {'command': command, 'message': message, 'download': ''}
 
 	return dick

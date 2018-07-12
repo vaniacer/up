@@ -7,9 +7,8 @@ def description(args):
 
 def run(args):
 
-	command = ['ls {wdir}/updates/new'.format(wdir=args.wdir)]
-	message = '\n-----{ <b>Server %s</b> }-----\n\nПакеты обновлений:\n' % args.server
-
+	command = ['ssh', args.server, 'ls {wdir}/updates/new'.format(wdir=args.wdir)]
+	message = {'top': '\n-----{ <b>Server %s</b> }-----\n\nПакеты обновлений:\n' % args.server, 'bot': ''}
 	dick = {'command': command, 'message': message, 'download': ''}
 
 	return dick
