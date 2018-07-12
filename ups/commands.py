@@ -170,7 +170,6 @@ commandick = {
 		name='del_all_updates',
 		menu='Delete all updates',
 		srv='true',
-		upd='true',
 	),
 
 	# Script section }--------------------------------------------------------------------------------------------------

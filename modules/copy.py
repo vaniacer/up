@@ -2,7 +2,7 @@
 
 
 def description(args):
-	updates = '\n'.join(args.update)
+	updates = '\n'.join(update.split('/')[-1] for update in args.update)
 	return "\nCopy updates:\n{updates}\nto server {server}\n".format(updates=updates, server=args.server)
 
 
