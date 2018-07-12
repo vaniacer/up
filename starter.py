@@ -28,15 +28,10 @@ parser.add_argument('cmd',             help='Command name')
 parser.add_argument('key',             help='Unique key')
 args = parser.parse_args()
 
-try:
-	imp = importlib.import_module('modules.%s' % args.cmd)
-except ImportError:
-	print 'No such module'
-	sys.exit(1)
-
 log_filename = LOG_FILE + args.key
 err_filename = ERR_FILE + args.key
 pid_filename = PID_FILE + args.key
+command = importlib.import_module('modules.%s' % args.cmd)
 
 
 def make_history(typ):
@@ -99,10 +94,10 @@ def download_file(download, log):
 
 if args.cron:
 	with open(log_filename, 'w') as log:
-		log.write(imp.description(args))
+		log.write(command.description(args))
 	make_history('job')
 else:
-	dick = imp.run(args)
+	dick = command.run(args)
 	with open(log_filename, 'w') as log:
 		log.write(dick['message']['top'])
 
