@@ -16,18 +16,17 @@ parser.add_argument('-x', '--script',  help='List of script files')
 parser.add_argument('-o', '--opts',    help='Custom script options')
 parser.add_argument('-m', '--dump',    help='List of dump files')
 parser.add_argument('-j', '--job',     help='List of cron job ids')
-parser.add_argument('-s', '--server',  help='Server')
+parser.add_argument('-s', '--server',  help="Server's ssh address")
 parser.add_argument('-w', '--wdir',    help="Server's working directory")
 parser.add_argument('-P', '--port',    help="Server's port")
 parser.add_argument('-d', '--date',    help='Cron job date')
-parser.add_argument('-c', '--cron',    help='Run in cron')
 parser.add_argument('-p', '--proid',   help='Project id')
 parser.add_argument('-n', '--proname', help='Project name')
+parser.add_argument('-c', '--cron',    help='Run in cron',         action='store_true')
 parser.add_argument('-H', '--history', help="Save log to history", action='store_true')
 parser.add_argument('cmd',             help='Command name')
 parser.add_argument('key',             help='Unique key')
 args = parser.parse_args()
-
 
 try:
 	imp = importlib.import_module('modules.%s' % args.cmd)
@@ -41,17 +40,18 @@ pid_filename = PID_FILE + args.key
 
 
 def make_history(typ):
+	"""Записывает инфо в базу."""
 
 	with open(log_filename) as hlog:
 		log_body = hlog.read()
 	num_lines = str.count(log_body, '\n')
 
 	if num_lines > 100:
-		splited = log_body.split('\n')
-		log_body = '{head}{first}{middle}{last}'.format(
-			head='<b>Log is too long to store in history, cutting</b>\n',
-			first='\n'.join(splited[:50]),
-			last='\n'.join(splited[-50:]),
+		splited_log = log_body.split('\n')
+		log_body = '{top}{head}{middle}{tail}'.format(
+			top='<b>Log is too long to store in history, cutting</b>\n',
+			head='\n'.join(splited_log[:50]),
+			tail='\n'.join(splited_log[-50:]),
 			middle='\n...\n',
 		)
 
@@ -72,6 +72,7 @@ def make_history(typ):
 
 
 def download(ddick, dlog):
+	"""Закачка файлов."""
 
 	dump_dir = DUMP_DIR
 	filepath = ddick['path']
