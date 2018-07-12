@@ -38,6 +38,7 @@ def run(args):
 
 	download = {
 		'file': ['{wdir}/backup/{file}'.format(wdir=args.wdir, file=filename)],
+		'kill': False,
 		'dest': '',
 	}
 

@@ -28,6 +28,7 @@ def run(args):
 
 	download = {
 		'file': [db_file, sys_file],
+		'kill': False,
 		'dest': '',
 	}
 

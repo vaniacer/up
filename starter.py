@@ -81,13 +81,17 @@ def download_file(download, log):
 
 	rsync_opt = [
 		'rsync', '-e', 'ssh', '--progress', '-lzuogthvr',
-		'{addr}:{files}'.format(addr=args.server, files=files), dump_dir
+		'{addr}:{files}'.format(addr=args.server, files=files), dump_dir,
 	]
+
+	if download['kill']:
+		rsync_opt.extend(['--remove-source-files'])
 
 	rsync = Popen(rsync_opt, stdout=log, stderr=log)
 	rsync.communicate()
 	error = rsync.returncode
 	rsync.wait()
+
 	return error
 
 
