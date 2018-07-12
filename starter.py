@@ -75,8 +75,8 @@ def download_file(ddick, dlog):
 	"""Закачка файлов."""
 
 	dump_dir = DUMP_DIR
-	filepath = ddick['path']
-
+	files = ' '.join(ddick['file'])
+	print files
 	if ddick['dest']:
 		dump_dir = os.path.join(DUMP_DIR, ddick['dest'])
 
@@ -87,7 +87,7 @@ def download_file(ddick, dlog):
 
 	rsync_opt = [
 		'rsync', '-e', 'ssh', '--progress', '-lzuogthvr',
-		'{addr}:"{file}"'.format(addr=args.server, file=filepath), dump_dir
+		'{addr}:{files}'.format(addr=args.server, files=files), dump_dir
 	]
 
 	Popen(rsync_opt, stdout=dlog, stderr=dlog).wait()
