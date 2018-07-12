@@ -40,4 +40,3 @@ def run(args):
 	dick = {'command': command, 'message': message, 'download': download}
 
 	return dick
-

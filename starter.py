@@ -1,7 +1,6 @@
 # -*- encoding: utf-8 -*-
 
 import os
-import sys
 import time
 import argparse
 import importlib
@@ -11,7 +10,7 @@ from conf import dbname, dbhost, dbpass, dbport, dbuser
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument('-u', '--update',  help='List of update files')
+parser.add_argument('-u', '--update',  help='List of update files', action='append')
 parser.add_argument('-x', '--script',  help='List of script files')
 parser.add_argument('-o', '--opts',    help='Custom script options')
 parser.add_argument('-m', '--dump',    help='List of dump files')
