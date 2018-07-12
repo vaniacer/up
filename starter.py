@@ -91,24 +91,17 @@ def download(download, log):
 
 	Popen(rsync_opt, stdout=log, stderr=log).wait()
 
-
 if args.cron:
-	log = open(log_filename, 'w')
-	log.write(imp.description(args))
+	with open(log_filename, 'w') as f:
+		f.write(imp.description(args))
 	make_history('job')
-	log.close()
 else:
 	dick = imp.run(args)
-	log = open(log_filename, 'w')
-	log.write(dick['message']['top'])
-	log.close()
+	with open(log_filename, 'w') as f:
+		f.write(dick['message']['top'])
 
 	log = open(log_filename, 'a')
-
-	opt = ['ssh', args.server]
-	opt.extend(dick['command'])
-
-	run_command = Popen(opt, stdout=log, stderr=log)
+	run_command = Popen(dick['command'], stdout=log, stderr=log)
 	streamdata = run_command.communicate()
 	error = run_command.returncode
 	ppid = run_command.pid
@@ -117,21 +110,18 @@ else:
 	if dick['download']:
 		download(dick['download'], log)
 
+	log.write(dick['message']['bot'])
+
+	with open(err_filename, 'w') as f:
+		f.write(str(error))
+
+	with open(pid_filename, 'w') as f:
+		f.write(str(ppid))
+
 	log.close()
 
-	with open(log_filename, 'a') as f:
-		f.write(dick['message']['bot'])
-
-	err = open(err_filename, 'w')
-	err.write(str(error))
-	err.close()
-
-	pid = open(pid_filename, 'w')
-	pid.write(str(ppid))
-	pid.close()
-
-	if args.history:
-		make_history('his')
+if args.history:
+	make_history('his')
 
 time.sleep(10)
 for f in log_filename, err_filename, pid_filename:
