@@ -42,8 +42,8 @@ pid_filename = PID_FILE + args.key
 
 def make_history(typ):
 
-	log_file = open(log_filename)
-	log_body = log_file.read()
+	with open(log_filename) as hlog:
+		log_body = hlog.read()
 	num_lines = str.count(log_body, '\n')
 
 	if num_lines > 100:
@@ -71,13 +71,13 @@ def make_history(typ):
 	Popen(psql_opt, env={"PGPASSWORD": dbpass})
 
 
-def download(download, log):
+def download(ddick, dlog):
 
 	dump_dir = DUMP_DIR
-	filepath = download['path']
+	filepath = ddick['path']
 
-	if download['dest']:
-		dump_dir = os.path.join(DUMP_DIR, download['dest'])
+	if ddick['dest']:
+		dump_dir = os.path.join(DUMP_DIR, ddick['dest'])
 
 	try:
 		os.mkdir(dump_dir)
@@ -89,16 +89,17 @@ def download(download, log):
 		'{addr}:"{file}"'.format(addr=args.server, file=filepath), dump_dir
 	]
 
-	Popen(rsync_opt, stdout=log, stderr=log).wait()
+	Popen(rsync_opt, stdout=dlog, stderr=dlog).wait()
+
 
 if args.cron:
-	with open(log_filename, 'w') as f:
-		f.write(imp.description(args))
+	with open(log_filename, 'w') as log:
+		log.write(imp.description(args))
 	make_history('job')
 else:
 	dick = imp.run(args)
-	with open(log_filename, 'w') as f:
-		f.write(dick['message']['top'])
+	with open(log_filename, 'w') as log:
+		log.write(dick['message']['top'])
 
 	log = open(log_filename, 'a')
 	run_command = Popen(dick['command'], stdout=log, stderr=log)
@@ -112,11 +113,11 @@ else:
 
 	log.write(dick['message']['bot'])
 
-	with open(err_filename, 'w') as f:
-		f.write(str(error))
+	with open(err_filename, 'w') as errlog:
+		errlog.write(str(error))
 
-	with open(pid_filename, 'w') as f:
-		f.write(str(ppid))
+	with open(pid_filename, 'w') as pidlog:
+		pidlog.write(str(ppid))
 
 	log.close()
 
