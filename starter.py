@@ -10,11 +10,11 @@ from conf import dbname, dbhost, dbpass, dbport, dbuser
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument('-u', '--update',  help='List of update files', action='append')
-parser.add_argument('-x', '--script',  help='List of script files')
-parser.add_argument('-o', '--opts',    help='Custom script options')
-parser.add_argument('-m', '--dump',    help='List of dump files')
-parser.add_argument('-j', '--job',     help='List of cron job ids')
+parser.add_argument('-u', '--update',  help='List of update files',  action='append')
+parser.add_argument('-x', '--script',  help='List of script files',  action='append')
+parser.add_argument('-o', '--opts',    help='Custom script options', action='append')
+parser.add_argument('-m', '--dump',    help='List of dump files',    action='append')
+parser.add_argument('-j', '--job',     help='List of cron job ids',  action='append')
 parser.add_argument('-s', '--server',  help="Server's ssh address")
 parser.add_argument('-w', '--wdir',    help="Server's working directory")
 parser.add_argument('-P', '--port',    help="Server's port")

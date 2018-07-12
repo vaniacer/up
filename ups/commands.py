@@ -528,6 +528,7 @@ def run_cmd(data, project, user):
 		date = '%s %s' % (data['selected_date'], data['selected_time'])
 
 	dick = {
+		'opt': [],
 		'jobj': '',
 		'cron': '',
 		'uniq': '',
