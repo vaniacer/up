@@ -4,12 +4,12 @@ from datetime import datetime
 
 
 def description(args):
-	return "\nBackup database on server:\n%s" % args.server
+	return "\nBackup system on server:\n%s" % args.server
 
 
 def run(args):
 
-	filename = '{server}_dbdump_{date:%d-%m-%Y}.gz'.format(server=args.server, date=datetime.now())
+	filename = '{server}_system_{date:%d-%m-%Y}.zip'.format(server=args.server, date=datetime.now())
 	message = {
 		'top': '\n<b>Копирую файл - {file}</b>\n'.format(file=filename),
 		'bot':
@@ -28,19 +28,14 @@ def run(args):
 	command = [
 		'ssh', args.server,
 		'''
-		rawdta=$(grep '"DataaccessDS"' -A15  "{wdir}"/jboss-bas-*/standalone/configuration/standalone-full.xml)
-		dbuser=${{rawdta//*<user-name>/}};   dbuser=${{dbuser//<\/user-name>*/}}
-		dbpass=${{rawdta//*<password>/}};    dbpass=${{dbpass//<\/password>*/}}
-		dbhost=${{rawdta//*:\/\//}};         dbhost=${{dbhost//:[0-9]*/}}
-		dbport=${{rawdta//*${{dbhost}}:/}};  dbport=${{dbport//\/*/}}
-		dbname=${{rawdta//*${{dbport}}\//}}; dbname=${{dbname//<*/}}
-		dbopts="-h $dbhost -p $dbport -U $dbuser"
-		
-		PGPASSWORD="$dbpass" pg_dump -Ox $dbopts -d $dbname | gzip > "{file}" || {{
+		zip -ry {file} \
+		{wdir}/jboss-bas-*/standalone/{{configuration,deployments}}/* \
+		$(find {wdir} -maxdepth 1 -type f) \
+		{wdir}/templates > /dev/null || {{
 			error=$?
 			printf "<b>Ошибка резервного копирования</b>"
 			exit $error
-		}}
+		}}		
 		'''.format(wdir=args.wdir, file=download['path']),
 	]
 
