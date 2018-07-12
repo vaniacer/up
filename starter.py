@@ -28,16 +28,16 @@ parser.add_argument('cmd',             help='Command name')
 parser.add_argument('key',             help='Unique key')
 args = parser.parse_args()
 
-log_filename = LOG_FILE + args.key
-err_filename = ERR_FILE + args.key
-pid_filename = PID_FILE + args.key
+logfile = LOG_FILE + args.key
+errfile = ERR_FILE + args.key
+pidfile = PID_FILE + args.key
 command = importlib.import_module('modules.%s' % args.cmd)
 
 
 def make_history(typ):
 	"""Записывает инфо в базу."""
 
-	with open(log_filename) as hlog:
+	with open(logfile) as hlog:
 		log_body = hlog.read()
 	num_lines = str.count(log_body, '\n')
 
@@ -93,15 +93,15 @@ def download_file(download, log):
 
 
 if args.cron:
-	with open(log_filename, 'w') as log:
+	with open(logfile, 'w') as log:
 		log.write(command.description(args))
 	make_history('job')
 else:
 	dick = command.run(args)
-	with open(log_filename, 'w') as log:
+	with open(logfile, 'w') as log:
 		log.write(dick['message']['top'])
 
-	log = open(log_filename, 'a')
+	log = open(logfile, 'a')
 	run_command = Popen(dick['command'], stdout=log, stderr=log)
 	run_command.communicate()
 	error = run_command.returncode
@@ -115,10 +115,10 @@ else:
 
 	log.write(dick['message']['bot'])
 
-	with open(err_filename, 'w') as errlog:
+	with open(errfile, 'w') as errlog:
 		errlog.write(str(error))
 
-	with open(pid_filename, 'w') as pidlog:
+	with open(pidfile, 'w') as pidlog:
 		pidlog.write(str(ppid))
 
 	log.close()
@@ -127,7 +127,7 @@ if args.history:
 	make_history('his')
 
 time.sleep(10)
-for f in log_filename, err_filename, pid_filename:
+for f in logfile, errfile, pidfile:
 	try:
 		os.remove(f)
 	except OSError:
