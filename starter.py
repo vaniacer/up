@@ -71,14 +71,14 @@ def make_history(typ):
 	Popen(psql_opt, env={"PGPASSWORD": dbpass})
 
 
-def download_file(ddick, dlog):
+def download_file(download, log):
 	"""Закачка файлов."""
 
 	dump_dir = DUMP_DIR
-	files = ' '.join(ddick['file'])
+	files = ' '.join(download['file'])
 
-	if ddick['dest']:
-		dump_dir = os.path.join(DUMP_DIR, ddick['dest'])
+	if download['dest']:
+		dump_dir = os.path.join(DUMP_DIR, download['dest'])
 
 	try:
 		os.mkdir(dump_dir)
@@ -90,11 +90,11 @@ def download_file(ddick, dlog):
 		'{addr}:{files}'.format(addr=args.server, files=files), dump_dir
 	]
 
-	run_rsync = Popen(rsync_opt, stdout=dlog, stderr=dlog)
-	run_rsync.communicate()
-	rsync_error = run_rsync.returncode
-	run_rsync.wait()
-	return rsync_error
+	rsync = Popen(rsync_opt, stdout=log, stderr=log)
+	rsync.communicate()
+	error = rsync.returncode
+	rsync.wait()
+	return error
 
 
 if args.cron:
@@ -114,9 +114,9 @@ else:
 	run_command.wait()
 
 	if dick['download']:
-		rsync_error = download_file(dick['download'], log)
-		if rsync_error > 0:
-			error = rsync_error
+		download_error = download_file(dick['download'], log)
+		if download_error > 0:
+			error = download_error
 
 	log.write(dick['message']['bot'])
 
