@@ -71,7 +71,7 @@ def make_history(typ):
 	Popen(psql_opt, env={"PGPASSWORD": dbpass})
 
 
-def download(ddick, dlog):
+def download_file(ddick, dlog):
 	"""Закачка файлов."""
 
 	dump_dir = DUMP_DIR
@@ -110,7 +110,7 @@ else:
 	run_command.wait()
 
 	if dick['download']:
-		download(dick['download'], log)
+		download_file(dick['download'], log)
 
 	log.write(dick['message']['bot'])
 
