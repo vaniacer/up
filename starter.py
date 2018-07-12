@@ -87,7 +87,7 @@ def download_file(ddick, dlog):
 
 	rsync_opt = [
 		'rsync', '-e', 'ssh', '--progress', '-lzuogthvr',
-		'{addr}:{files}1'.format(addr=args.server, files=files), dump_dir
+		'{addr}:{files}'.format(addr=args.server, files=files), dump_dir
 	]
 
 	run_rsync = Popen(rsync_opt, stdout=dlog, stderr=dlog)
