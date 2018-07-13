@@ -119,6 +119,7 @@ commandick = {
 		name='send_dump',
 		menu='Send dump',
 		srv='true',
+		dgr='true',
 	),
 
 	# Updates section }-------------------------------------------------------------------------------------------------
