@@ -13,6 +13,6 @@ def run(args):
 	command = ['rsync', '-e', 'ssh', '--progress', '-lzuogthvr']
 	command.extend(args.update)
 	command.extend(['{addr}:{wdir}/updates/new/'.format(addr=args.server, wdir=args.wdir)])
-	dick = {'command': command, 'message': message, 'download': ''}
+	dick = {'command': command, 'message': message}
 
 	return dick

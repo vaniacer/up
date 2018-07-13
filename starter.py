@@ -80,7 +80,7 @@ def download_file(download, log):
 		pass
 
 	rsync_opt = [
-		'rsync', '-e', 'ssh', '--progress', '-lzuogthvr',
+		'rsync', '--progress', '-lzuogthvr',
 		'{addr}:{files}'.format(addr=args.server, files=files), dump_dir,
 	]
 
@@ -91,38 +91,78 @@ def download_file(download, log):
 	rsync.communicate()
 	error = rsync.returncode
 	rsync.wait()
-
 	return error
 
 
+def upload_file(upload, log):
+
+	list_of_files = upload['file']
+	destination = upload['dest']
+
+	rsync_opt = ['rsync', '--progress', '-lzuogthvr']
+	rsync_opt.extend(list_of_files)
+	rsync_opt.extend(['{addr}:{dest}/'.format(dest=destination, addr=args.server)])
+
+	rsync = Popen(rsync_opt, stdout=log, stderr=log)
+	rsync.communicate()
+	error = rsync.returncode
+	rsync.wait()
+	return error
+
+
+error = 0
 if args.cron:
-	with open(logfile, 'w') as log:
-		log.write(command.description(args))
+	with open(logfile, 'w') as f:
+		f.write(command.description(args))
 	make_history('job')
 else:
 	dick = command.run(args)
-	with open(logfile, 'w') as log:
-		log.write(dick['message']['top'])
+	try:
+		upload = dick['upload']
+	except KeyError:
+		upload = ''
 
+	try:
+		download = dick['download']
+	except KeyError:
+		download = ''
+
+	# Head massage
+	with open(logfile, 'w') as f:
+		f.write(dick['message']['top'])
+
+	# Start logging
 	log = open(logfile, 'a')
+
+	# Upload some files if needed
+	if upload:
+		upload_error = upload_file(upload, log)
+		if upload_error > 0:
+			error = upload_error
+
+	# Run command
 	run_command = Popen(dick['command'], stdout=log, stderr=log)
 	run_command.communicate()
-	error = run_command.returncode
+	cmd_error = run_command.returncode
+	if cmd_error > 0:
+		error = cmd_error
 	ppid = run_command.pid
 	run_command.wait()
 
-	if dick['download']:
-		download_error = download_file(dick['download'], log)
+	with open(pidfile, 'w') as f:
+		f.write(str(ppid))
+
+	# Download some files if needed
+	if download:
+		download_error = download_file(download, log)
 		if download_error > 0:
 			error = download_error
 
+	# Final message
 	log.write(dick['message']['bot'])
 
-	with open(errfile, 'w') as errlog:
-		errlog.write(str(error))
-
-	with open(pidfile, 'w') as pidlog:
-		pidlog.write(str(ppid))
+	with open(errfile, 'w') as f:
+		f.write(str(error))
 
 	log.close()
 

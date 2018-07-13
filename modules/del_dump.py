@@ -17,6 +17,6 @@ def run(args):
 	dumps = [os.path.join(DUMP_DIR, args.proname, dump) for dump in args.dump]
 	command = ['rm']
 	command.extend(dumps)
-	dick = {'command': command, 'message': message, 'download': ''}
+	dick = {'command': command, 'message': message}
 
 	return dick

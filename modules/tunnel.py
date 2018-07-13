@@ -38,6 +38,6 @@ def run(args):
 		'sleep', str(timer)
 	]
 
-	dick = {'command': command, 'message': message, 'download': ''}
+	dick = {'command': command, 'message': message}
 
 	return dick

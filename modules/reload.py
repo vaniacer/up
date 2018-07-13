@@ -9,6 +9,6 @@ def run(args):
 
 	message = {'top': '\n<b>Выполняю jboss.reload</b>\n'.format(wdir=args.wdir), 'bot': ''}
 	command = ['ssh', args.server, '{wdir}/jboss-bas-*/bin/jboss-cli.sh -c command=":reload"'.format(wdir=args.wdir)]
-	dick = {'command': command, 'message': message, 'download': ''}
+	dick = {'command': command, 'message': message}
 
 	return dick

@@ -19,6 +19,6 @@ def run(args):
 
 	updates = ' '.join(update.split('/')[-1] for update in args.update)
 	command = ['ssh', args.server, 'cd {wdir}/updates/new/; rm {updates}'.format(updates=updates, wdir=args.wdir)]
-	dick = {'command': command, 'message': message, 'download': ''}
+	dick = {'command': command, 'message': message}
 
 	return dick

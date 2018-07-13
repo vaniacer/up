@@ -9,6 +9,6 @@ def run(args):
 
 	message = {'top': '\n<b>Удаляю все файлы из каталога {wdir}/updates/new</b>\n'.format(wdir=args.wdir), 'bot': ''}
 	command = ['ssh', args.server, 'rm {wdir}/updates/new/*'.format(wdir=args.wdir)]
-	dick = {'command': command, 'message': message, 'download': ''}
+	dick = {'command': command, 'message': message}
 
 	return dick

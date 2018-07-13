@@ -15,6 +15,6 @@ def run(args):
 		'rsync', '-e', 'ssh', '--progress', '-lzuogthvr', '{home}/utils'.format(home=home),
 		'{addr}:~/.utils'.format(addr=args.server),
 	]
-	dick = {'command': command, 'message': message, 'download': ''}
+	dick = {'command': command, 'message': message}
 
 	return dick
