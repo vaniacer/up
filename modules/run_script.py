@@ -22,7 +22,7 @@ def run(args):
 		filename = script.split('/')[-1]
 		script_type = script.split('.')[-1]
 		filepath = '{tmp}/{file}'.format(tmp=tmp_dir, file=filename)
-		script_list += 'printf "\n<b>Выполняю скрипт {file}</b>\n"; '.format(file=filename)
+		script_list += 'printf "\n<b>Выполняю скрипт {file}</b>\n";'.format(file=filename)
 
 		if script_type == 'sh':
 			script_list += 'bash {file};'.format(file=filepath)
