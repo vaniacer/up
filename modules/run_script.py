@@ -21,18 +21,14 @@ def run(args):
 	for script in args.script:
 		filename = script.split('/')[-1]
 		script_type = script.split('.')[-1]
+		filepath = '{tmp}/{file}'.format(tmp=tmp_dir, file=filename)
+		script_list += 'printf "\n<b>Выполняю скрипт {file}</b>\n"; '.format(file=filename)
 
 		if script_type == 'sh':
-			script_list += 'printf "\n<b>Выполняю скрипт {file}</b>\n"; bash {tmp}/{file};'.format(
-				tmp=tmp_dir,
-				file=filename
-			)
+			script_list += 'bash {file};'.format(file=filepath)
 
 		if script_type == 'py':
-			script_list += 'printf "\n<b>Выполняю скрипт {file}</b>\n"; python {tmp}/{file};'.format(
-				tmp=tmp_dir,
-				file=filename
-			)
+			script_list += 'python {file};'.format(file=filepath)
 
 	script_list += 'rm -r {tmp}'.format(tmp=tmp_dir)
 
