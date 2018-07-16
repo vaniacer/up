@@ -11,17 +11,32 @@ def description(args):
 
 def run(args):
 
-	filename = args.dump[0]
 	tmp_dir = '{wdir}/temp/{key}'.format(wdir=args.wdir, key=args.key)
 	scripts = '\n'.join(script.split('/')[-1] for script in args.script)
 	message = {'top': '\n<b>Копирую файл(ы):\n{}</b>\n'.format(scripts), 'bot': ''}
 	upload = {'file': args.script, 'dest': tmp_dir}
-	command = [
-		'ssh', args.server,
-		'''
-		echo
-		'''.format(file=filename, wdir=args.wdir, tmp=tmp_dir)
-	]
+
+	# Make command from script list
+	script_list = ''
+	for script in args.script:
+		filename = script.split('/')[-1]
+		script_type = script.split('.')[-1]
+
+		if script_type == 'sh':
+			script_list += 'printf "\n<b>Выполняю скрипт {file}</b>\n"; bash {tmp}/{file};'.format(
+				tmp=tmp_dir,
+				file=filename
+			)
+
+		if script_type == 'py':
+			script_list += 'printf "\n<b>Выполняю скрипт {file}</b>\n"; python {tmp}/{file};'.format(
+				tmp=tmp_dir,
+				file=filename
+			)
+
+	script_list += 'rm -r {tmp}'.format(tmp=tmp_dir)
+
+	command = ['ssh', args.server, script_list]
 
 	dick = {'command': command, 'message': message, 'upload': upload}
 
