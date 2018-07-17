@@ -1,17 +1,18 @@
 # -*- encoding: utf-8 -*-
 
-
-def description(args):
-	return "\nShow system info of server:\n%s" % args.server
+from my_popen import my_popen
 
 
-def run(args):
+def description(args, log):
+	log.write("\nShow system info of server %s" % args.server)
+
+
+def run(args, log, pidfile):
 
 	command = [
 		'ssh', args.server,
-		"""
-		LANG=Us
-
+		"""printf '\n-----{{ <b>Server {server}</b> }}-----\n'
+		
 		printf '\n<b>Hostname:</b>\n'
 		hostname
 
@@ -19,7 +20,7 @@ def run(args):
 		ip a | grep 'inet ' | sed '/127.0.0.1/d; s/.*inet //g; s|/.*$||g'
 
 		printf '\n<b>Memory:</b>\n'
-		free -h
+		LANG=Us free -h
 
 		printf '\n<b>CPU:</b>\n'
 		lscpu
@@ -29,10 +30,10 @@ def run(args):
 
 		printf '\n<b>Software:</b>\n'
 		uname -a; echo
-		[[ -e /usr/bin/lsb_release ]] && { lsb_release -a; echo; }
-		[[ -e /usr/bin/java        ]] && { java  -version; echo; }
-		[[ -e /usr/bin/psql        ]] && { psql  -V      ; echo; }
-		[[ -e /usr/sbin/nginx      ]] && { nginx -v      ; echo; }
+		[[ -e /usr/bin/lsb_release ]] && {{ lsb_release -a; echo; }}
+		[[ -e /usr/bin/java        ]] && {{ java  -version; echo; }}
+		[[ -e /usr/bin/psql        ]] && {{ psql  -V      ; echo; }}
+		[[ -e /usr/sbin/nginx      ]] && {{ nginx -v      ; echo; }}
 
 		printf '<b>Logged in Users:</b>\n'
 		who
@@ -42,10 +43,8 @@ def run(args):
 
 		printf '\n<b>Processes:</b>\n'
 		top -bn1
-		"""
+		""".format(server=args.server)
 	]
 
-	message = {'top': '\n-----{ <b>Server %s</b> }-----\n' % args.server, 'bot': ''}
-	dick = {'command': command, 'message': message}
-
-	return dick
+	error = my_popen(command, log, pidfile)
+	return error

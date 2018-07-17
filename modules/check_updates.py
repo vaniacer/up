@@ -1,14 +1,22 @@
 # -*- encoding: utf-8 -*-
 
-
-def description(args):
-	return "\nShow updates of server:\n%s" % args.server
+from my_popen import my_popen
 
 
-def run(args):
+def description(args, log):
+	log.write("\nShow updates on server %s" % args.server)
 
-	command = ['ssh', args.server, 'ls {wdir}/updates/new'.format(wdir=args.wdir)]
-	message = {'top': '\n-----{ <b>Server %s</b> }-----\n\nПакеты обновлений:\n' % args.server, 'bot': ''}
-	dick = {'command': command, 'message': message}
 
-	return dick
+def run(args, log, pidfile):
+
+	command = [
+		'ssh', args.server,
+		'''printf '\n-----{{ <b>Server {server}</b> }}-----\n'
+		
+		printf '\nПакеты обновлений:\n'
+		ls {wdir}/updates/new
+		'''.format(wdir=args.wdir, server=args.server)
+	]
+
+	error = my_popen(command, log, pidfile)
+	return error

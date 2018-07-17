@@ -4,7 +4,7 @@ import os
 import time
 import argparse
 import importlib
-from subprocess import Popen
+from subprocess import Popen, call
 from up.settings import LOG_FILE, ERR_FILE, PID_FILE, DUMP_DIR
 from conf import dbname, dbhost, dbpass, dbport, dbuser
 
@@ -62,7 +62,8 @@ def make_history(typ):
 	)
 
 	psql_opt = ['psql', '-U', dbuser, '-h', dbhost, '-p', dbport, '-d', dbname, '-c', update]
-	Popen(psql_opt, env={"PGPASSWORD": dbpass})
+	his_error = call(psql_opt, env={"PGPASSWORD": dbpass})
+	return his_error
 
 
 def download_file(download, log):
@@ -87,11 +88,8 @@ def download_file(download, log):
 	if download['kill']:
 		rsync_opt.extend(['--remove-source-files'])
 
-	rsync = Popen(rsync_opt, stdout=log, stderr=log)
-	rsync.communicate()
-	error = rsync.returncode
-	rsync.wait()
-	return error
+	rsync_error = call(rsync_opt, stdout=log, stderr=log)
+	return rsync_error
 
 
 def upload_file(upload, log):
@@ -103,71 +101,29 @@ def upload_file(upload, log):
 	rsync_opt.extend(list_of_files)
 	rsync_opt.extend(['{addr}:{dest}/'.format(dest=destination, addr=args.server)])
 
-	rsync = Popen(rsync_opt, stdout=log, stderr=log)
-	rsync.communicate()
-	error = rsync.returncode
-	rsync.wait()
-	return error
+	rsync_error = call(rsync_opt, stdout=log, stderr=log)
+	return rsync_error
 
 
 error = 0
+log = open(logfile, 'a')
+
 if args.cron:
-	with open(logfile, 'w') as f:
-		f.write(command.description(args))
-	make_history('job')
+	command.description(args, log)
 else:
-	dick = command.run(args)
-	try:
-		upload = dick['upload']
-	except KeyError:
-		upload = ''
-
-	try:
-		download = dick['download']
-	except KeyError:
-		download = ''
-
-	# Head massage
-	with open(logfile, 'w') as f:
-		f.write(dick['message']['top'])
-
-	# Start logging
-	log = open(logfile, 'a')
-
-	# Upload some files if needed
-	if upload:
-		upload_error = upload_file(upload, log)
-		if upload_error > 0:
-			error = upload_error
-
-	# Run command
-	run_command = Popen(dick['command'], stdout=log, stderr=log)
-	run_command.communicate()
-	cmd_error = run_command.returncode
+	cmd_error = command.run(args, log, pidfile)
 	if cmd_error > 0:
 		error = cmd_error
-	ppid = run_command.pid
-	run_command.wait()
 
-	with open(pidfile, 'w') as f:
-		f.write(str(ppid))
-
-	# Download some files if needed
-	if download:
-		download_error = download_file(download, log)
-		if download_error > 0:
-			error = download_error
-
-	# Final message
-	log.write(dick['message']['bot'])
-
-	with open(errfile, 'w') as f:
-		f.write(str(error))
-
-	log.close()
+log.close()
 
 if args.history:
-	make_history('his')
+	his_error = make_history('his')
+	if his_error > 0:
+				error = his_error
+
+with open(errfile, 'w') as f:
+	f.write(str(error))
 
 time.sleep(10)
 for f in logfile, errfile, pidfile:
