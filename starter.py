@@ -66,45 +66,6 @@ def make_history(typ):
 	return his_error
 
 
-def download_file(download, log):
-	"""Закачка файлов."""
-
-	dump_dir = DUMP_DIR
-	files = ' '.join(download['file'])
-
-	if download['dest']:
-		dump_dir = os.path.join(DUMP_DIR, download['dest'])
-
-	try:
-		os.mkdir(dump_dir)
-	except OSError:
-		pass
-
-	rsync_opt = [
-		'rsync', '--progress', '-lzuogthvr',
-		'{addr}:{files}'.format(addr=args.server, files=files), dump_dir,
-	]
-
-	if download['kill']:
-		rsync_opt.extend(['--remove-source-files'])
-
-	rsync_error = call(rsync_opt, stdout=log, stderr=log)
-	return rsync_error
-
-
-def upload_file(upload, log):
-
-	list_of_files = upload['file']
-	destination = upload['dest']
-
-	rsync_opt = ['rsync', '--progress', '-lzuogthvr']
-	rsync_opt.extend(list_of_files)
-	rsync_opt.extend(['{addr}:{dest}/'.format(dest=destination, addr=args.server)])
-
-	rsync_error = call(rsync_opt, stdout=log, stderr=log)
-	return rsync_error
-
-
 error = 0
 log = open(logfile, 'a')
 

@@ -11,10 +11,9 @@ def run(args, log, pidfile):
 
 	command = [
 		'ssh', args.server,
-		'''printf '\n-----{{ <b>Server {server}</b> }}-----\n'
-		
-		printf '\nПакеты обновлений:\n'
-		ls {wdir}/updates/new
+		''' printf '\n-----{{ <b>Server {server}</b> }}-----\n'
+			printf '\nПакеты обновлений:\n'
+			ls {wdir}/updates/new
 		'''.format(wdir=args.wdir, server=args.server)
 	]
 

@@ -1,40 +1,26 @@
 # -*- encoding: utf-8 -*-
 
 from datetime import datetime
+from my_popen import my_popen
+from xml_parser import parser
+from download_upload import download_file
+from subprocess import check_output
 
 
-command_template = '''
-		rawdta=$(grep '"DataaccessDS"' -A15  "{wdir}"/jboss-bas-*/standalone/configuration/standalone-full.xml)
-		dbuser=${{rawdta//*<user-name>/}};   dbuser=${{dbuser//<\/user-name>*/}}
-		dbpass=${{rawdta//*<password>/}};    dbpass=${{dbpass//<\/password>*/}}
-		dbhost=${{rawdta//*:\/\//}};         dbhost=${{dbhost//:[0-9]*/}}
-		dbport=${{rawdta//*${{dbhost}}:/}};  dbport=${{dbport//\/*/}}
-		dbname=${{rawdta//*${{dbport}}\//}}; dbname=${{dbname//<*/}}
-		dbopts="-h $dbhost -p $dbport -U $dbuser"
-		
-		PGPASSWORD="$dbpass" pg_dump -Ox $dbopts -d $dbname | gzip > "{file}" || {{
-			error=$?
-			printf "<b>Ошибка резервного копирования</b>"
-			exit $error
-		}}
-	'''
+def description(args, log):
+	log.write("\nBackup database on server %s" % args.server)
 
 
-def description(args):
-	return "\nBackup database on server:\n%s" % args.server
-
-
-def run(args):
+def run(args, log, pid):
 
 	filename = '{server}_dbdump_{date:%d-%m-%Y}.gz'.format(server=args.server, date=datetime.now())
-	message = {
-		'top': '\n<b>Копирую файл - {file}</b>\n'.format(file=filename),
-		'bot':
-			"""
-			\n<b>File will be stored until tomorrow, please download it if you need this file!</b>
-			\n<a class='btn btn-primary' href='/dumps/{file}'>Download</a>\n
-			""".format(file=filename),
-	}
+	message_top = ['printf', '\n<b>Копирую файл - {file}</b>\n'.format(file=filename)]
+	message_bot = [
+		'printf',
+		''' \n<b>File will be stored until tomorrow, please download it if you need this file!</b>
+			\n<a class='btn btn-primary' href='/dumps/{file}'>Download</a>
+		'''.format(file=filename)
+	]
 
 	download = {
 		'file': ['{wdir}/backup/{file}'.format(wdir=args.wdir, file=filename)],
@@ -42,7 +28,40 @@ def run(args):
 		'dest': '',
 	}
 
-	command = ['ssh', args.server, command_template.format(wdir=args.wdir, file=download['file'][0])]
-	dick = {'command': command, 'message': message, 'download': download}
+	get_xml = [
+		'ssh', args.server,
+		'''cat {wdir}/jboss-bas-*/standalone/configuration/standalone-full.xml
+		'''.format(wdir=args.wdir)
+	]
 
-	return dick
+	xml = check_output(get_xml)
+	dbhost, dbport, dbname, dbuser, dbpass = parser(xml)
+
+	command = [
+		'ssh', args.server,
+		''' dbopts="-h {dbhost} -p {dbport} -U {dbuser}"
+			PGPASSWORD="{dbpass}" pg_dump -Ox $dbopts -d {dbname} | gzip > "{file}" || {{
+				error=$?
+				printf "<b>Ошибка резервного копирования</b>"
+				exit $error
+			}}
+		'''.format(
+			file=download['file'][0],
+			wdir=args.wdir,
+			dbhost=dbhost,
+			dbport=dbport,
+			dbuser=dbuser,
+			dbpass=dbpass,
+			dbname=dbname,
+		)
+	]
+
+	my_popen(message_top, log, pid)
+
+	error = my_popen(command, log, pid)
+	download_error = download_file(download, args.server, log)
+	if download_error > 0:
+		error = download_error
+
+	my_popen(message_bot, log, pid)
+	return error

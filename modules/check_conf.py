@@ -11,13 +11,13 @@ def run(args, log, pidfile):
 
 	command = [
 		'ssh', args.server,
-		"""printf '\n-----{{ <b>Server {server}</b> }}-----\n'
+		""" printf '\n-----{{ <b>Server {server}</b> }}-----\n'
 		
-		printf '\n<b>Java options</b>\n\n'
-		ps axo command | grep {wdir} | grep [j]ava
-
-		printf '\n<b>Standalone-full.xml</b>\n\n'
-		cat {wdir}/jboss-bas-*/standalone/configuration/standalone-full.xml | sed 's|<|\&lt\;|g;s|>|\&gt\;|g'
+			printf '\n<b>Java options</b>\n\n'
+			ps axo command | grep {wdir} | grep [j]ava
+	
+			printf '\n<b>Standalone-full.xml</b>\n\n'
+			cat {wdir}/jboss-bas-*/standalone/configuration/standalone-full.xml | sed 's|<|\&lt\;|g;s|>|\&gt\;|g'
 		""".format(wdir=args.wdir, server=args.server)
 	]
 

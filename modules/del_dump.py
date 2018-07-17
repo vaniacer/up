@@ -1,22 +1,23 @@
 # -*- encoding: utf-8 -*-
 
 import os
+from my_popen import my_popen
 from up.settings import DUMP_DIR
 
 
-def description(args):
+def description(args, log):
 	dumps = '\n'.join(args.dump)
-	return "\nDelete dump(s):\n{dumps}\n".format(dumps=dumps)
+	log.write('\nDelete dump(s):\n{dumps}\n'.format(dumps=dumps))
 
 
-def run(args):
+def run(args, log, pid):
 
 	dumps = '\n'.join(args.dump)
-	message = {'top': '\n<b>Удаляю дамп(ы):</b>\n{dumps}\n'.format(dumps=dumps), 'bot': ''}
+	message_top = ['printf', '\n<b>Удаляю дамп(ы):</b>\n{dumps}\n'.format(dumps=dumps)]
+	my_popen(message_top, log, pid)
 
 	dumps = [os.path.join(DUMP_DIR, args.proname, dump) for dump in args.dump]
 	command = ['rm']
 	command.extend(dumps)
-	dick = {'command': command, 'message': message}
-
-	return dick
+	error = my_popen(command, log, pid)
+	return error

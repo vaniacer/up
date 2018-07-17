@@ -1,18 +1,21 @@
 # -*- encoding: utf-8 -*-
 
+from download_upload import upload_file
+from my_popen import my_popen
 
-def description(args):
+
+def description(args, log):
 	updates = '\n'.join(update.split('/')[-1] for update in args.update)
-	return "\nCopy updates:\n{updates}\nto server {server}\n".format(updates=updates, server=args.server)
+	log.write('\nCopy updates:\n{updates}\nto server {server}\n'.format(updates=updates, server=args.server))
 
 
-def run(args):
+def run(args, log, pid):
 
 	updates = '\n'.join(update.split('/')[-1] for update in args.update)
-	message = {'top': '\n<b>Копирую файл(ы):\n{files}</b>\n'.format(files=updates), 'bot': ''}
-	command = ['rsync', '-e', 'ssh', '--progress', '-lzuogthvr']
-	command.extend(args.update)
-	command.extend(['{addr}:{wdir}/updates/new/'.format(addr=args.server, wdir=args.wdir)])
-	dick = {'command': command, 'message': message}
+	message_top = ['printf', '\n<b>Копирую файл(ы):\n{files}</b>\n'.format(files=updates)]
 
-	return dick
+	my_popen(message_top, log, pid)
+
+	upload = {'file': args.update, 'dest': '{wdir}/updates/new/'.format(wdir=args.wdir)}
+	error = upload_file(upload, args.server, log)
+	return error
