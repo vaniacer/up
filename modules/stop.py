@@ -1,14 +1,17 @@
 # -*- encoding: utf-8 -*-
 
-
-def description(args):
-	return "\nStop jboss on server {server}\n".format(server=args.server)
+from my_popen import my_popen
 
 
-def run(args):
+def description(args, log):
+	log.write('\nStop jboss on server %s\n' % args.server)
 
-	message = {'top': '\n<b>Выполняю jboss.stop</b>\n'.format(wdir=args.wdir), 'bot': ''}
+
+def run(args, log, pid):
+
+	message_top = ['printf', '\n<b>Выполняю jboss.stop</b>\n'.format(wdir=args.wdir)]
+	my_popen(message_top, log, pid)
+
 	command = ['ssh', args.server, '{wdir}/krupd jboss.stop'.format(wdir=args.wdir)]
-	dick = {'command': command, 'message': message}
-
-	return dick
+	error = my_popen(command, log, pid)
+	return error

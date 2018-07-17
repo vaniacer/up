@@ -1,14 +1,17 @@
 # -*- encoding: utf-8 -*-
 
+from start import run as start
+from stop import run as stop
 
-def description(args):
-	return "\nRestart jboss on server {server}\n".format(server=args.server)
+
+def description(args, log):
+	log.write('\nRestart jboss on server %s\n' % args.server)
 
 
-def run(args):
+def run(args, log, pid):
 
-	message = {'top': '\n<b>Выполняю jboss.stop & jboss.start</b>\n'.format(wdir=args.wdir), 'bot': ''}
-	command = ['ssh', args.server, '{wdir}/krupd jboss.stop; {wdir}/krupd jboss.start'.format(wdir=args.wdir)]
-	dick = {'command': command, 'message': message}
-
-	return dick
+	error = stop(args, log, pid)
+	start_error = start(args, log, pid)
+	if start_error > 0:
+		error = start_error
+	return error

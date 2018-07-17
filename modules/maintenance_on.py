@@ -1,14 +1,17 @@
 # -*- encoding: utf-8 -*-
 
-
-def description(args):
-	return "\nStart dummy page on server {server}\n".format(server=args.server)
+from my_popen import my_popen
 
 
-def run(args):
+def description(args, log):
+	log.write('\nStart dummy page on server %s\n' % args.server)
 
-	message = {'top': '\n<b>Выполняю jboss.start</b>\n'.format(wdir=args.wdir), 'bot': ''}
+
+def run(args, log, pid):
+
+	message_top = ['printf', '\n<b>Включаю страницу "Регламентные работы"</b>\n'.format(wdir=args.wdir)]
+	my_popen(message_top, log, pid)
+
 	command = ['ssh', args.server, '~/.utils/dp.sh --start --jport {port}'.format(port=args.port)]
-	dick = {'command': command, 'message': message}
-
-	return dick
+	error = my_popen(command, log, pid)
+	return error
