@@ -599,7 +599,7 @@ def run_cmd(data, project, user):
 				add_job(dick)
 
 				dick['name'] = 'Set cron job - %s' % name.lower()
-				dick['opt'].extend(['-cron'])
+				dick['opt'].extend(['--cron'])
 
 			starter(dick)
 
