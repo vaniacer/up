@@ -33,6 +33,10 @@ pidfile = PID_FILE + args.key
 command = import_module('modules.%s' % args.cmd)
 
 
+def make_cron():
+	pass
+
+
 def make_history(typ):
 	"""Записывает инфо в базу."""
 
