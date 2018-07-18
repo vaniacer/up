@@ -1,10 +1,10 @@
 # -*- encoding: utf-8 -*-
 
-from subprocess import check_output, CalledProcessError
+from subprocess import check_output, STDOUT, CalledProcessError
+from os.path import expanduser, join as opj
 from xml_parser import get_db_parameters
 from download_upload import upload_file
 from popen_call import my_call, message
-from os.path import expanduser
 from up.settings import DUMP_DIR
 
 
@@ -52,7 +52,7 @@ def run(args, log):
 			if py_error > 0:
 				error = py_error
 		elif script_type == 'yml':
-			command = ['ansible-playbook', '--vault-password-file', '%s/vault.txt' % home, '-i', args.server, script]
+			command = ['ansible-playbook', script, '--vault-password-file', '%s/vault.txt' % home, '-i', args.server]
 			yml_error = my_call(command, log)
 			if yml_error > 0:
 				error = yml_error
@@ -60,11 +60,7 @@ def run(args, log):
 			command = [
 				'ssh', args.server,
 				''' dbopts="-h {dbhost} -p {dbport} -U {dbuser}"
-					PGPASSWORD="{dbpass}" psql -v ON_ERROR_STOP=1 $dbopts -d {dbname} < "{file}" || {{
-						error=$?
-						printf "<b>Ошибка в скрипте</b>"
-						exit $error
-					}}
+					PGPASSWORD="{dbpass}" psql -v ON_ERROR_STOP=1 $dbopts -d {dbname} < "{file}"
 				'''.format(
 					wdir=args.wdir,
 					file=filepath,
@@ -77,10 +73,18 @@ def run(args, log):
 			]
 
 			try:
-				sql_result = check_output(command)
-				with open(os.path.join(DUMP_DIR, download['dest']))
-				message(sql_result, log)
+				sql_result = check_output(command, stderr=STDOUT)
+				log_name = '{file}_{key}.log'.format(file=filename, key=args.key)
+				with open(opj(DUMP_DIR, log_name), 'w') as f:
+					f.write(sql_result)
+				message(
+					''' {sql}\n<b>Log will be stored until tomorrow, download it please if you need it!</b>
+						\n<a class='btn btn-primary' href='/dumps/{file}'>Download</a>
+					'''.format(file=log_name, sql=sql_result), log
+				)
+
 			except CalledProcessError as e:
+				message(e.output, log)
 				error = e.returncode
 
 	remove_tmp = ['ssh', args.server, 'rm -r {tmp}'.format(tmp=tmp_dir)]
