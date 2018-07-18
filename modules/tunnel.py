@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 
-import socket
+from socket import socket, AF_INET, SOCK_STREAM
 from popen_call import my_call
 
 
@@ -14,7 +14,7 @@ def run(args, log):
 	lport = 42250  # default 42250
 
 	while True:
-		sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+		sock = socket(AF_INET, SOCK_STREAM)
 		ptest = sock.connect_ex(('127.0.0.1', lport))
 		sock.close()
 		if ptest:

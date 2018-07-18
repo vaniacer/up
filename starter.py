@@ -1,15 +1,15 @@
 # -*- encoding: utf-8 -*-
 
-import os
-import time
-import argparse
-import importlib
-from subprocess import Popen, call
-from up.settings import LOG_FILE, ERR_FILE, PID_FILE, DUMP_DIR
+from os import remove
+from time import sleep
+from subprocess import call
+from importlib import import_module
+from argparse import ArgumentParser
+from up.settings import LOG_FILE, ERR_FILE, PID_FILE
 from conf import dbname, dbhost, dbpass, dbport, dbuser
 
 
-parser = argparse.ArgumentParser()
+parser = ArgumentParser()
 parser.add_argument('-u', '--update',  help='List of update files',  action='append')
 parser.add_argument('-x', '--script',  help='List of script files',  action='append')
 parser.add_argument('-o', '--opts',    help='Custom script options', action='append')
@@ -30,7 +30,7 @@ args = parser.parse_args()
 logfile = LOG_FILE + args.key
 errfile = ERR_FILE + args.key
 pidfile = PID_FILE + args.key
-command = importlib.import_module('modules.%s' % args.cmd)
+command = import_module('modules.%s' % args.cmd)
 
 
 def make_history(typ):
@@ -86,9 +86,9 @@ if args.history:
 with open(errfile, 'w') as f:
 	f.write(str(error))
 
-time.sleep(10)
+sleep(10)
 for f in logfile, errfile, pidfile:
 	try:
-		os.remove(f)
+		remove(f)
 	except OSError:
 		continue

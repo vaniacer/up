@@ -25,11 +25,7 @@ def run(args, log):
 		''' zip -ry {file} \
 			{wdir}/jboss-bas-*/standalone/{{configuration,deployments}}/* \
 			$(find {wdir} -maxdepth 1 -type f) \
-			{wdir}/templates > /dev/null || {{
-				error=$?
-				printf "<b>Ошибка резервного копирования</b>"
-				exit $error
-			}}		
+			{wdir}/templates > /dev/null
 		'''.format(wdir=args.wdir, file=download['file'][0])
 	]
 

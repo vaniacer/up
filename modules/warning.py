@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 from popen_call import message
-import time
+from time import sleep
 
 
 def warning(txt, pause, log):
@@ -27,6 +27,6 @@ def warning(txt, pause, log):
 
 	for i in range(pause):
 		message('\n%s' % i, log)
-		time.sleep(1)
+		sleep(1)
 
 	message('\n\nOk, i warned you!)\n', log)

@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
-import os
 from warning import warning
+from os.path import join as opj
 from up.settings import DUMP_DIR
 from download_upload import upload_file
 from popen_call import my_call, message
@@ -15,7 +15,7 @@ def description(args, log):
 def run(args, log):
 
 	filename = args.dump[0]
-	dump = os.path.join(DUMP_DIR, args.proname, args.dump[0])
+	dump = opj(DUMP_DIR, args.proname, args.dump[0])
 	tmp_dir = '{wdir}/temp/{key}'.format(wdir=args.wdir, key=args.key)
 
 	warning('You are sending dump - <b>{dump}</b>\nto server - <b>{server}</b>'.format(

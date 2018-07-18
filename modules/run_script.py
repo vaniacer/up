@@ -52,8 +52,13 @@ def run(args, log):
 			if py_error > 0:
 				error = py_error
 		elif script_type == 'yml':
-			command = ['ansible-playbook', script, '--vault-password-file', '%s/vault.txt' % home, '-i', args.server]
+			command = [
+				'ansible-playbook', script, '-i', '%s,' % args.server,
+				'--vault-password-file', '%s/vault.txt' % home, '--syntax-check'
+			]
 			yml_error = my_call(command, log)
+			if yml_error == 0:
+				yml_error = my_call(command[0:-1], log)
 			if yml_error > 0:
 				error = yml_error
 		elif script_type == 'sql':

@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 
 from up.settings import DUMP_DIR
+from os.path import join as opj
 from subprocess import call
-import os
 
 
 def upload_file(upload, server, log):
@@ -25,12 +25,7 @@ def download_file(download, server, log):
 	files = ' '.join(download['file'])
 
 	if download['dest']:
-		dump_dir = os.path.join(DUMP_DIR, download['dest'])
-
-	try:
-		os.mkdir(dump_dir)
-	except OSError:
-		pass
+		dump_dir = opj(DUMP_DIR, download['dest'])
 
 	rsync_opt = [
 		'rsync', '--progress', '-lzuogthvr',

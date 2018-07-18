@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 
-import os
+from os.path import join as opj
 from up.settings import DUMP_DIR
 from popen_call import my_call, message
 
@@ -15,7 +15,7 @@ def run(args, log):
 	dumps = '\n'.join(args.dump)
 	message('\n<b>Удаляю дамп(ы):</b>\n{dumps}\n'.format(dumps=dumps), log)
 
-	dumps = [os.path.join(DUMP_DIR, args.proname, dump) for dump in args.dump]
+	dumps = [opj(DUMP_DIR, args.proname, dump) for dump in args.dump]
 	command = ['rm']
 	command.extend(dumps)
 	error = my_call(command, log)

@@ -28,11 +28,7 @@ def run(args, log):
 	command = [
 		'ssh', args.server,
 		''' dbopts="-h {dbhost} -p {dbport} -U {dbuser}"
-			PGPASSWORD="{dbpass}" pg_dump -Ox $dbopts -d {dbname} | gzip > "{file}" || {{
-				error=$?
-				printf "<b>Ошибка резервного копирования</b>"
-				exit $error
-			}}
+			PGPASSWORD="{dbpass}" pg_dump -Ox $dbopts -d {dbname} | gzip > "{file}"
 		'''.format(
 			file=download['file'][0],
 			wdir=args.wdir,
