@@ -72,7 +72,7 @@ log = open(logfile, 'a')
 if args.cron:
 	command.description(args, log)
 else:
-	cmd_error = command.run(args, log, pidfile)
+	cmd_error = command.run(args, log)
 	if cmd_error > 0:
 		error = cmd_error
 

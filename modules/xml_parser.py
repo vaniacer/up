@@ -1,6 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 import xml.etree.cElementTree as ET
+from subprocess import check_output
 
 
 def parser(xml):
@@ -34,3 +35,9 @@ def parser(xml):
 	dbpass = password
 
 	return dbhost, dbport, dbname, dbuser, dbpass
+
+
+def get_db_parameters(server, filename):
+	get_xml = ['ssh', server, 'cat %s' % filename]
+	xml = check_output(get_xml)
+	return parser(xml)

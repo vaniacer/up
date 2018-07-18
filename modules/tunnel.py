@@ -1,14 +1,14 @@
 # -*- encoding: utf-8 -*-
 
 import socket
-from my_popen import my_popen
+from popen_call import my_call
 
 
 def description(args, log):
 	log.write("\nMake ssh tunnel to bind port of server %s" % args.server)
 
 
-def run(args, log, pidfile):
+def run(args, log):
 
 	timer = 60     # If not used, connection will be dropped after this amount of seconds
 	lport = 42250  # default 42250
@@ -29,12 +29,11 @@ def run(args, log, pidfile):
 			postfix=postfix,
 		)
 
-	command1 = ['printf', '\n-----{{ <b>Server {server}</b> }}-----\n{link}'.format(server=args.server, link=link)]
+	log.write('\n-----{{ <b>Server {server}</b> }}-----\n{link}'.format(server=args.server, link=link))
 	command2 = [
 		'ssh', args.server, '-f', '-L', '0.0.0.0:{LP}:127.0.0.1:{RP}'.format(LP=lport, RP=args.port),
 		'sleep', str(timer)
 	]
 
-	my_popen(command1, log, pidfile)
-	error = my_popen(command2, log, pidfile)
+	error = my_call(command2, log)
 	return error

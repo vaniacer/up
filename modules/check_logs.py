@@ -1,13 +1,13 @@
 # -*- encoding: utf-8 -*-
 
-from my_popen import my_popen
+from popen_call import my_call
 
 
 def description(args, log):
 	log.write("\nShow logs of server %s" % args.server)
 
 
-def run(args, log, pidfile):
+def run(args, log):
 
 	command = [
 		'ssh', args.server,
@@ -16,5 +16,5 @@ def run(args, log, pidfile):
 		'''.format(wdir=args.wdir, server=args.server)
 	]
 
-	error = my_popen(command, log, pidfile)
+	error = my_call(command, log)
 	return error

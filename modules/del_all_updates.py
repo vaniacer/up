@@ -1,17 +1,15 @@
 # -*- encoding: utf-8 -*-
 
-from my_popen import my_popen
+from popen_call import my_call, message
 
 
 def description(args, log):
 	log.write('\nDelete all updates from server {server}\n'.format(server=args.server))
 
 
-def run(args, log, pid):
+def run(args, log):
 
-	message_top = ['printf', '\n<b>Удаляю все файлы из каталога {wdir}/updates/new</b>\n'.format(wdir=args.wdir)]
-	my_popen(message_top, log, pid)
-
+	message('\n<b>Удаляю все файлы из каталога {wdir}/updates/new</b>\n'.format(wdir=args.wdir), log)
 	command = ['ssh', args.server, 'rm {wdir}/updates/new/*'.format(wdir=args.wdir)]
-	error = my_popen(command, log, pid)
+	error = my_call(command, log)
 	return error

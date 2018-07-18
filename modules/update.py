@@ -1,14 +1,12 @@
 # -*- encoding: utf-8 -*-
 
-from my_popen import my_popen
+from popen_call import message
 
 
 def description(args, log):
 	log.write('\nUpdate server {server} with update {update}\n'.format(server=args.server, update=args.update[0]))
 
 
-def run(args, log, pid):
+def run(args, log):
 
-	message_top = ['printf', '\nUnder construction\n']
-	error = my_popen(message_top, log, pid)
-	return error
+	message('\nUnder construction\n', log)

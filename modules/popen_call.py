@@ -1,6 +1,17 @@
 # -*- encoding: utf-8 -*-
 
-from subprocess import Popen
+from subprocess import Popen, call
+
+
+def message(txt, log):
+	log.write(txt)
+	log.flush()
+
+
+def my_call(command, log):
+
+	error = call(command, stdout=log, stderr=log)
+	return error
 
 
 def my_popen(command, log, pidfile):

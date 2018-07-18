@@ -8,10 +8,10 @@ def description(args, log):
 	log.write("\nBackup database and system on server %s" % args.server)
 
 
-def run(args, log, pid):
+def run(args, log):
 
-	error = db_bkp(args, log, pid)
-	sys_error = sys_bkp(args, log, pid)
+	error = db_bkp(args, log)
+	sys_error = sys_bkp(args, log)
 	if sys_error > 0:
 		error = sys_error
 

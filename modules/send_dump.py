@@ -2,43 +2,56 @@
 
 import os
 from up.settings import DUMP_DIR
+from download_upload import upload_file
+from popen_call import my_call, message
+from xml_parser import get_db_parameters
 
 
-def description(args):
-	return "\nCopy DB dump {dump} to server {server}\n".format(dump=args.dump[0], server=args.server)
+def description(args, log):
+	log.write('\nCopy DB dump {dump} to server {server}\n'.format(dump=args.dump[0], server=args.server))
 
 
-def run(args):
+def run(args, log):
 
 	filename = args.dump[0]
 	dump = os.path.join(DUMP_DIR, args.proname, args.dump[0])
 	tmp_dir = '{wdir}/temp/{key}'.format(wdir=args.wdir, key=args.key)
 
-	message = {'top': '\n<b>Копирую файл {}</b>\n'.format(filename), 'bot': ''}
+	message('\n<b>Копирую файл {}</b>\n'.format(filename), log)
 	upload = {'file': [dump], 'dest': tmp_dir}
+	error = upload_file(upload, args.server, log)
+
+	dbhost, dbport, dbname, dbuser, dbpass = get_db_parameters(
+		args.server, '{wdir}/jboss-bas-*/standalone/configuration/standalone-full.xml'.format(wdir=args.wdir)
+	)
+
 	command = [
 		'ssh', args.server,
-		'''
-		rawdta=$(grep '"DataaccessDS"' -A15  {wdir}/jboss-bas-*/standalone/configuration/standalone-full.xml)
-		dbuser=${{rawdta//*<user-name>/}};   dbuser=${{dbuser//<\/user-name>*/}}
-		dbpass=${{rawdta//*<password>/}};    dbpass=${{dbpass//<\/password>*/}}
-		dbhost=${{rawdta//*:\/\//}};         dbhost=${{dbhost//:[0-9]*/}}
-		dbport=${{rawdta//*${{dbhost}}:/}};  dbport=${{dbport//\/*/}}
-		dbname=${{rawdta//*${{dbport}}\//}}; dbname=${{dbname//<*/}}
-		dbopts="-h $dbhost -p $dbport -U $dbuser"
-
-		dbterm="ALTER DATABASE $dbname ALLOW_CONNECTIONS false;
-				SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = '$dbname';"
-
-		PGPASSWORD="$dbpass" psql     $dbopts -c "$dbterm" || error=$?
-		PGPASSWORD="$dbpass" dropdb   $dbopts     $dbname  || error=$?
-		PGPASSWORD="$dbpass" createdb $dbopts -O  $dbuser $dbname || error=$?
-		gunzip -c {tmp}/{file} | PGPASSWORD="$dbpass" psql -v ON_ERROR_STOP=1 $dbopts -d $dbname || error=$?
-		rm -r {tmp}
-		exit $error
-		'''.format(file=filename, wdir=args.wdir, tmp=tmp_dir)
+		''' dbopts="-h {dbhost} -p {dbport} -U {dbuser}"
+		
+			dbterm="ALTER DATABASE {dbname} ALLOW_CONNECTIONS false;
+					SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = '{dbname}';"
+	
+			PGPASSWORD="{dbpass}" psql     $dbopts -c "$dbterm"          || error=$?
+			PGPASSWORD="{dbpass}" dropdb   $dbopts     {dbname}          || error=$?
+			PGPASSWORD="{dbpass}" createdb $dbopts -O  {dbuser} {dbname} || error=$?
+			
+			gunzip -c {tmp}/{file} | PGPASSWORD="{dbpass}" psql -v ON_ERROR_STOP=1 $dbopts -d {dbname} || error=$?
+			rm -r {tmp}
+			exit $error
+		'''.format(
+			wdir=args.wdir,
+			file=filename,
+			dbhost=dbhost,
+			dbport=dbport,
+			dbuser=dbuser,
+			dbpass=dbpass,
+			dbname=dbname,
+			tmp=tmp_dir,
+		)
 	]
 
-	dick = {'command': command, 'message': message, 'upload': upload}
-
-	return dick
+	cmd_error = my_call(command, log)
+	if cmd_error > 0:
+		error = cmd_error
+	return error
