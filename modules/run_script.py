@@ -87,7 +87,6 @@ def run(args, log):
 						\n<a class='btn btn-primary' href='/dumps/{file}'>Download</a>
 					'''.format(file=log_name, sql=sql_result), log
 				)
-
 			except CalledProcessError as e:
 				message(e.output, log)
 				error = e.returncode
