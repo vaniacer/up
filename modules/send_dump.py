@@ -18,6 +18,11 @@ def run(args, log):
 	dump = os.path.join(DUMP_DIR, args.proname, args.dump[0])
 	tmp_dir = '{wdir}/temp/{key}'.format(wdir=args.wdir, key=args.key)
 
+	warning('You are sending dump - <b>{dump}</b>\nto server - <b>{server}</b>'.format(
+		server=args.server,
+		dump=filename,
+	), 30, log)
+
 	message('\n<b>Копирую файл {}</b>\n'.format(filename), log)
 	upload = {'file': [dump], 'dest': tmp_dir}
 	error = upload_file(upload, args.server, log)
@@ -52,7 +57,6 @@ def run(args, log):
 		)
 	]
 
-	warning('', 30, log)
 	cmd_error = my_call(command, log)
 	if cmd_error > 0:
 		error = cmd_error
