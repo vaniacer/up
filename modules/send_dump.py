@@ -42,9 +42,8 @@ def run(args, log):
 			PGPASSWORD="{dbpass}" dropdb   $dbopts     {dbname}          || error=$?
 			PGPASSWORD="{dbpass}" createdb $dbopts -O  {dbuser} {dbname} || error=$?
 			
-			gunzip -c {tmp}/{file} | PGPASSWORD="{dbpass}" psql -v ON_ERROR_STOP=1 $dbopts -d {dbname} || error=$?
-			rm -r {tmp}
-			exit $error
+			gunzip -c {tmp}/{file} | PGPASSWORD="{dbpass}" psql -v ON_ERROR_STOP=1 $dbopts -d {dbname}
+			for i in ${{PIPESTATUS[@]}}; {{ ((error+=$i)); }}; exit $error
 		'''.format(
 			wdir=args.wdir,
 			file=filename,

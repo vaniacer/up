@@ -29,6 +29,7 @@ def run(args, log):
 		'ssh', args.server,
 		''' dbopts="-h {dbhost} -p {dbport} -U {dbuser}"
 			PGPASSWORD="{dbpass}" pg_dump -Ox $dbopts -d {dbname} | gzip > "{file}"
+			for i in ${{PIPESTATUS[@]}}; {{ ((error+=$i)); }}; exit $error
 		'''.format(
 			file=download['file'][0],
 			wdir=args.wdir,
@@ -41,14 +42,15 @@ def run(args, log):
 	]
 
 	error = my_call(command, log)
-	download_error = download_file(download, args.server, log)
-	if download_error > 0:
-		error = download_error
+	if error == 0:
+		download_error = download_file(download, args.server, log)
+		if download_error > 0:
+			error = download_error
 
-	message(
-		''' \n<b>File will be stored until tomorrow, please download it if you need this file!</b>
-			\n<a class='btn btn-primary' href='/dumps/{file}'>Download</a>
-		'''.format(file=filename), log
-	)
+		message(
+			''' \n<b>File will be stored until tomorrow, please download it if you need this file!</b>
+				\n<a class='btn btn-primary' href='/dumps/{file}'>Download</a>
+			'''.format(file=filename), log
+		)
 
 	return error

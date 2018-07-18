@@ -18,6 +18,7 @@ def run(args, log):
 	
 			printf '\n<b>Standalone-full.xml</b>\n\n'
 			cat {wdir}/jboss-bas-*/standalone/configuration/standalone-full.xml | sed 's|<|\&lt\;|g;s|>|\&gt\;|g'
+			for i in ${{PIPESTATUS[@]}}; {{ ((error+=$i)); }}; exit $error
 		""".format(wdir=args.wdir, server=args.server)
 	]
 
