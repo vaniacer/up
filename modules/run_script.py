@@ -1,9 +1,11 @@
 # -*- encoding: utf-8 -*-
 
+from subprocess import check_output, CalledProcessError
 from xml_parser import get_db_parameters
 from download_upload import upload_file
 from popen_call import my_call, message
 from os.path import expanduser
+from up.settings import DUMP_DIR
 
 
 def description(args, log):
@@ -58,7 +60,7 @@ def run(args, log):
 			command = [
 				'ssh', args.server,
 				''' dbopts="-h {dbhost} -p {dbport} -U {dbuser}"
-					PGPASSWORD="{dbpass}" pg_dump -v ON_ERROR_STOP=1 -Ox $dbopts -d {dbname} < "{file}" || {{
+					PGPASSWORD="{dbpass}" psql -v ON_ERROR_STOP=1 $dbopts -d {dbname} < "{file}" || {{
 						error=$?
 						printf "<b>Ошибка в скрипте</b>"
 						exit $error
@@ -73,9 +75,13 @@ def run(args, log):
 					dbname=dbname,
 				)
 			]
-			sql_error = my_call(command, log)
-			if sql_error > 0:
-				error = sql_error
+
+			try:
+				sql_result = check_output(command)
+				with open(os.path.join(DUMP_DIR, download['dest']))
+				message(sql_result, log)
+			except CalledProcessError as e:
+				error = e.returncode
 
 	remove_tmp = ['ssh', args.server, 'rm -r {tmp}'.format(tmp=tmp_dir)]
 	my_call(remove_tmp, log)
