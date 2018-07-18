@@ -1,6 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 import os
+from warning import warning
 from up.settings import DUMP_DIR
 from download_upload import upload_file
 from popen_call import my_call, message
@@ -51,6 +52,7 @@ def run(args, log):
 		)
 	]
 
+	warning('', 30, log)
 	cmd_error = my_call(command, log)
 	if cmd_error > 0:
 		error = cmd_error
