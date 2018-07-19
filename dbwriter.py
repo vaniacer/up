@@ -30,7 +30,7 @@ types = {
 	'job': {'tab': 'ups_job',     'col': "cron = '%s'" % key, 'ext': ''},
 }
 
-update = 'UPDATE {tab} SET "desc" = $$ {log!s} $${ext} WHERE {col};'.format(
+update = 'UPDATE {tab} SET "desc" = $$ {log} $${ext} WHERE {col};'.format(
 	col=types[typ]['col'],
 	tab=types[typ]['tab'],
 	ext=types[typ]['ext'],
