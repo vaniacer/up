@@ -18,7 +18,7 @@ parser.add_argument('-u', '--update',  help='List of update files',  action='app
 parser.add_argument('-x', '--script',  help='List of script files',  action='append')
 parser.add_argument('-o', '--opts',    help='Custom script options', action='append')
 parser.add_argument('-m', '--dump',    help='List of dump files',    action='append')
-parser.add_argument('-j', '--job',     help='List of cron job ids')
+parser.add_argument('-j', '--job',     help='Cron job id')
 parser.add_argument('-s', '--server',  help="Server's ssh address")
 parser.add_argument('-w', '--wdir',    help="Server's working directory")
 parser.add_argument('-P', '--port',    help="Server's port")
@@ -41,26 +41,25 @@ def add_cron_job():
 	save_argv = argv
 	save_argv.remove('--cron')
 	save_argv.remove('starter.py')
-	command = ' '.join(save_argv)
 	starter = opj(BASE_DIR, 'starter.py')
 	python = opj(BASE_DIR, '../env/bin/python')
 	cronfile = opj('/var/spool/cron/crontabs', getuser())
 	datetime_object = datetime.strptime(args.date, '%Y-%m-%d %H:%M')
-
-	cron_job = "{minute} {hour} {day} {month} * {python} {starter} {command}; sed '/{key}/d' -i '{cronfile}'\n".format(
-		minute=datetime_object.minute,
-		month=datetime_object.month,
-		hour=datetime_object.hour,
+	command = '{python} {starter} {command}'.format(python=python, starter=starter, command=' '.join(save_argv))
+	cronjob = "{top}\n{min} {hur} {day} {mon} * {command}; sed '/{key}/d' -i '{cronfile}'\n{bot}\n".format(
+		top='#' + '-' * 28 + '{ job %s start }' % args.key + '-' * 28,
+		bot='#' + '-' * 28 + '{  job %s end  }' % args.key + '-' * 28,
+		min=datetime_object.minute,
+		mon=datetime_object.month,
+		hur=datetime_object.hour,
 		day=datetime_object.day,
 		cronfile=cronfile,
 		command=command,
-		starter=starter,
-		python=python,
 		key=args.key,
 	)
 
 	with open(cronfile, 'a') as f:
-		f.write(cron_job)
+		f.write(cronjob)
 
 
 def make_history():
