@@ -65,17 +65,16 @@ def add_cron_job():
 def make_history():
 	"""Записывает инфо в базу."""
 
-	with open(logfile) as hlog:
-		log_body = hlog.read()
-	num_lines = str.count(log_body, '\n')
+	with open(logfile) as f:
+		log_body = f.read()
 
-	if num_lines > 100:
-		splited_log = log_body.split('\n')
-		log_body = '{top}{head}{middle}{tail}'.format(
-			top='<b>Log is too long to store in history, cutting</b>\n',
-			head='\n'.join(splited_log[:50]),
-			tail='\n'.join(splited_log[-50:]),
-			middle='\n...\n',
+	log_body = log_body.decode('utf-8', errors='replace')
+	log_size = len(log_body)
+	if log_size > 4000:
+		log_body = u'{head!s}{first!s}\n...\n{last!s}'.format(
+			head='<b>Log is too long to store in history, cutting</b>\n',
+			first=log_body[:2000],
+			last=log_body[-2000:],
 		)
 
 	types = {
@@ -83,7 +82,7 @@ def make_history():
 		'job': {'tab': 'ups_job',     'col': "cron = '%s'" % args.key, 'ext': ''},
 	}
 
-	update = 'UPDATE {tab} SET "desc" = $$ {log} $${ext} WHERE {col};'.format(
+	update = u'UPDATE {tab} SET "desc" = $$ {log} $${ext} WHERE {col};'.format(
 		col=types['his']['col'],
 		tab=types['his']['tab'],
 		ext=types['his']['ext'],
@@ -91,7 +90,7 @@ def make_history():
 	)
 
 	if args.cron:
-		update += 'UPDATE {tab} SET "desc" = $$ {log} $${ext} WHERE {col};'.format(
+		update += u'UPDATE {tab} SET "desc" = $$ {log} $${ext} WHERE {col};'.format(
 			col=types['job']['col'],
 			tab=types['job']['tab'],
 			ext=types['job']['ext'],
