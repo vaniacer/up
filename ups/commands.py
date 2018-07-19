@@ -5,11 +5,12 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import get_object_or_404
 from .permissions import check_perm_or404
 from django.conf import settings as conf
+from datetime import datetime, timedelta
+from os.path import join as opj
 from subprocess import Popen
 from base64 import b64encode
+from re import split, escape
 from os import urandom
-import datetime
-import re
 
 
 class CommandClass:
@@ -410,7 +411,7 @@ def get_key():
 
 def run_date():
 	"""Если не указана дата, возвращает текущую дату + 1 минута."""
-	date = datetime.datetime.now() + datetime.timedelta(minutes=1)
+	date = datetime.now() + timedelta(minutes=1)
 	return date.strftime("%Y-%m-%d %H:%M")
 
 
@@ -466,7 +467,7 @@ def job_opt(dick):
 
 	if dick['name'] == 'once_job':
 		dick['jobj'].cdat = '%s %s' % (
-			datetime.datetime.now().strftime("%Y-%m-%d"),
+			datetime.now().strftime("%Y-%m-%d"),
 			dick['jobj'].cdat.split()[-1]
 		)
 		dick['jobj'].perm = False
@@ -484,9 +485,9 @@ def starter(dick):
 	"""Выполняет комманду."""
 
 	history(dick)
-
+	python = opj(conf.BASE_DIR, '../env/bin/python')
 	opt = [
-		'python', 'starter.py', dick['cmnd'], dick['uniq'],
+		python, 'starter.py', dick['cmnd'], dick['uniq'],
 		'--proname', str(dick['proj'].name),
 		'--proid', str(dick['proj'].id),
 		'--date', dick['cdat'],
@@ -502,9 +503,9 @@ def starter(dick):
 		script = get_object_or_404(Script, id=ID)
 		opt.extend(['-x', str(script.file)])
 		# split options string coz re.escape escapes spaces as well
-		oplist = re.split(' ', str(dick['data'].get('script_opt' + ID)))
+		oplist = split(' ', str(dick['data'].get('script_opt' + ID)))
 		# join it back and escape special symbols
-		opdone = ' '.join(re.escape(opt) for opt in oplist)
+		opdone = ' '.join(escape(opt) for opt in oplist)
 		# add result as script arg -o 'test 123'
 		opt.extend(['-o', opdone])
 

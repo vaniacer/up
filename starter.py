@@ -1,12 +1,16 @@
 # -*- encoding: utf-8 -*-
 
+from sys import argv
 from os import remove
 from time import sleep
+from getpass import getuser
 from subprocess import call
+from datetime import datetime
+from os.path import join as opj
 from importlib import import_module
 from argparse import ArgumentParser
-from up.settings import LOG_FILE, ERR_FILE, PID_FILE
 from conf import dbname, dbhost, dbpass, dbport, dbuser
+from up.settings import LOG_FILE, ERR_FILE, PID_FILE, BASE_DIR
 
 
 parser = ArgumentParser()
@@ -14,7 +18,7 @@ parser.add_argument('-u', '--update',  help='List of update files',  action='app
 parser.add_argument('-x', '--script',  help='List of script files',  action='append')
 parser.add_argument('-o', '--opts',    help='Custom script options', action='append')
 parser.add_argument('-m', '--dump',    help='List of dump files',    action='append')
-parser.add_argument('-j', '--job',     help='List of cron job ids',  action='append')
+parser.add_argument('-j', '--job',     help='List of cron job ids')
 parser.add_argument('-s', '--server',  help="Server's ssh address")
 parser.add_argument('-w', '--wdir',    help="Server's working directory")
 parser.add_argument('-P', '--port',    help="Server's port")
@@ -33,11 +37,29 @@ pidfile = PID_FILE + args.key
 command = import_module('modules.%s' % args.cmd)
 
 
-def make_cron():
-	pass
+def add_cron_job():
+	save_argv = argv
+	save_argv.remove('--cron')
+	save_argv.remove('starter.py')
+	starter = opj(BASE_DIR, 'starter.py')
+	python = opj(BASE_DIR, '../env/bin/python')
+
+	cron_job = "{python} {starter} {command}; sed '/{key}/d' -i '$cronfile'\n".format(
+		command=' '.join(save_argv),
+		starter=starter,
+		python=python,
+		key=args.key
+	)
+
+	datetime_object = datetime.strptime(args.date, '%Y-%m-%d %H:%M')
+
+	job.minute.on(datetime_object.minute)
+	job.hour.on(datetime_object.hour)
+	job.month.on(datetime_object.month)
+	job.day.on(datetime_object.day)
 
 
-def make_history(typ):
+def make_history():
 	"""Записывает инфо в базу."""
 
 	with open(logfile) as hlog:
@@ -59,11 +81,19 @@ def make_history(typ):
 	}
 
 	update = 'UPDATE {tab} SET "desc" = $$ {log} $${ext} WHERE {col};'.format(
-		col=types[typ]['col'],
-		tab=types[typ]['tab'],
-		ext=types[typ]['ext'],
+		col=types['his']['col'],
+		tab=types['his']['tab'],
+		ext=types['his']['ext'],
 		log=log_body,
 	)
+
+	if args.cron:
+		update += 'UPDATE {tab} SET "desc" = $$ {log} $${ext} WHERE {col};'.format(
+			col=types['job']['col'],
+			tab=types['job']['tab'],
+			ext=types['job']['ext'],
+			log=log_body,
+		)
 
 	psql_opt = ['psql', '-U', dbuser, '-h', dbhost, '-p', dbport, '-d', dbname, '-c', update]
 	his_error = call(psql_opt, env={"PGPASSWORD": dbpass})
@@ -75,6 +105,7 @@ log = open(logfile, 'a')
 
 if args.cron:
 	command.description(args, log)
+	add_cron_job()
 else:
 	cmd_error = command.run(args, log)
 	if cmd_error > 0:
@@ -83,7 +114,7 @@ else:
 log.close()
 
 if args.history:
-	his_error = make_history('his')
+	his_error = make_history()
 	if his_error > 0:
 				error = his_error
 
