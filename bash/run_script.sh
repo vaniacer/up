@@ -35,7 +35,7 @@ function run () { #---------------------------------| Main function |-----------
         esac
 
         # Copy script to server
-        rsync -e "ssh $sopt" --progress -lzuogthr ${scripts[$i]} $addr:$tmp_folder > /dev/null && {
+        rsync -e "ssh $sopt" --progress -lzuogthr "${scripts[$i]}" $addr:$tmp_folder > /dev/null && {
 
             case $scrptype in
 
