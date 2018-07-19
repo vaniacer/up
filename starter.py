@@ -27,8 +27,8 @@ parser.add_argument('-p', '--proid',   help='Project id')
 parser.add_argument('-n', '--proname', help='Project name')
 parser.add_argument('-c', '--cron',    help='Run in cron',         action='store_true')
 parser.add_argument('-H', '--history', help="Save log to history", action='store_true')
+parser.add_argument('-k', '--key',     help='Unique key')
 parser.add_argument('cmd',             help='Command name')
-parser.add_argument('key',             help='Unique key')
 args = parser.parse_args()
 
 logfile = LOG_FILE + args.key

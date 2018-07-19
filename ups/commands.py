@@ -487,10 +487,11 @@ def starter(dick):
 	history(dick)
 	python = opj(conf.BASE_DIR, '../env/bin/python')
 	opt = [
-		python, 'starter.py', dick['cmnd'], dick['uniq'],
+		python, 'starter.py', dick['cmnd'],
 		'--proname', str(dick['proj'].name),
 		'--proid', str(dick['proj'].id),
 		'--date', dick['cdat'],
+		'--key', dick['uniq'],
 	]
 
 	opt.extend(dick['opt'])
