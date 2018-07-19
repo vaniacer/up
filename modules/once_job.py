@@ -13,15 +13,11 @@ def description(args, log):
 def run(args, log):
 
 	job = find_job(args.job)
-	new_command = ' '.join(escape(opt) for opt in job[4:])
 	datetime_object = datetime.strptime(args.date, '%Y-%m-%d %H:%M')
-	new_job = '{min} {hur} {day} {mon} {job}'.format(
-		min=datetime_object.minute,
-		mon=datetime_object.month,
-		hur=datetime_object.hour,
-		day=datetime_object.day,
-		job=new_command,
-	)
+	job[3] = datetime_object.month  # change month and day to current
+	job[2] = datetime_object.day    # or to selected date\time
+	new_job = ' '.join(escape(str(opt)) for opt in job)
+	new_job += "; sed '/{key}/d' \-i '{cronfile}'".format(cronfile=cronfile, key=args.key)  # add cancel command
 
 	message('\nSet job {job} to run once\n'.format(job=args.job), log)
 	command = ['sed', '/\-\-key {job}/c{new}'.format(job=args.job, new=new_job), '-i', cronfile]
