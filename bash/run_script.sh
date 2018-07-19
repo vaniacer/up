@@ -58,7 +58,7 @@ function run () { #---------------------------------| Main function |-----------
                     result=`ssh $sopt $addr "cd $tmp_folder; bash remote_sql.sh $wdir $filename"` && {
 
                         # Show result
-                        printf "\n$result\n"
+                        echo "$result"
 
                         # Save result to file and make it downloadable
                         cat >> $dumpdir/${filename}_$key.log <<< "$result"

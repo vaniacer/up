@@ -14,11 +14,13 @@ except IndexError:
 	err = None
 
 log_filename = LOG_FILE + key
-log_body = open(log_filename, 'r').read()
-log_size = len(log_body)
+with open(log_filename) as f:
+	log_body = f.read()
 
+log_body = log_body.decode('utf-8', errors='replace')
+log_size = len(log_body)
 if log_size > 4000:
-	log_body = '{head!s}{first!s}\n...\n{last!s}'.format(
+	log_body = u'{head!s}{first!s}\n...\n{last!s}'.format(
 		head='<b>Log is too long to store in history, cutting</b>\n',
 		first=log_body[:2000],
 		last=log_body[-2000:],
@@ -29,7 +31,7 @@ types = {
 	'job': {'tab': 'ups_job',     'col': "cron = '%s'" % key, 'ext': ''},
 }
 
-update = 'UPDATE {tab} SET "desc" = $$ {log} $${ext} WHERE {col};'.format(
+update = u'UPDATE {tab} SET "desc" = $$ {log} $${ext} WHERE {col};'.format(
 	col=types[typ]['col'],
 	tab=types[typ]['tab'],
 	ext=types[typ]['ext'],
