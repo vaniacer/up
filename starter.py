@@ -41,22 +41,26 @@ def add_cron_job():
 	save_argv = argv
 	save_argv.remove('--cron')
 	save_argv.remove('starter.py')
+	command = ' '.join(save_argv)
 	starter = opj(BASE_DIR, 'starter.py')
 	python = opj(BASE_DIR, '../env/bin/python')
-
-	cron_job = "{python} {starter} {command}; sed '/{key}/d' -i '$cronfile'\n".format(
-		command=' '.join(save_argv),
-		starter=starter,
-		python=python,
-		key=args.key
-	)
-
+	cronfile = opj('/var/spool/cron/crontabs', getuser())
 	datetime_object = datetime.strptime(args.date, '%Y-%m-%d %H:%M')
 
-	job.minute.on(datetime_object.minute)
-	job.hour.on(datetime_object.hour)
-	job.month.on(datetime_object.month)
-	job.day.on(datetime_object.day)
+	cron_job = "{minute} {hour} {day} {month} * {python} {starter} {command}; sed '/{key}/d' -i '{cronfile}'\n".format(
+		minute=datetime_object.minute,
+		month=datetime_object.month,
+		hour=datetime_object.hour,
+		day=datetime_object.day,
+		cronfile=cronfile,
+		command=command,
+		starter=starter,
+		python=python,
+		key=args.key,
+	)
+
+	with open(cronfile, 'a') as f:
+		f.write(cron_job)
 
 
 def make_history():
