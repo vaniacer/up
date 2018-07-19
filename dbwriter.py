@@ -17,11 +17,11 @@ log_filename = LOG_FILE + key
 log_body = open(log_filename, 'r').read()
 log_size = len(log_body)
 
-if log_size > 2000:
+if log_size > 1000:
 	log_body = '{head!s}{first!s}\n...\n{last!s}'.format(
 		head='<b>Log is too long to store in history, cutting</b>\n',
-		first=log_body[:1000],
-		last=log_body[-1000:],
+		first=log_body[:500],
+		last=log_body[-500:],
 	)
 
 types = {
