@@ -1,7 +1,8 @@
 #!/bin/bash
 
+IFS=$'\n'
 for id in $@; {
-    OI=$IFS; IFS=$'\n'; pids=($(ps a | grep $id | grep -v grep)); IFS=$OI
+    pids=($(ps a | grep $id | grep -v grep))
     for pid in "${pids[@]}"; { pid=($pid); list+=" $pid"; }
     kill $list
 }
