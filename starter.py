@@ -10,37 +10,42 @@ from os.path import join as opj
 from importlib import import_module
 from argparse import ArgumentParser
 from conf import dbname, dbhost, dbpass, dbport, dbuser
-from up.settings import LOG_FILE, ERR_FILE, PID_FILE, BASE_DIR
+from up.settings import LOG_FILE, ERR_FILE, PID_FILE, BASE_DIR, CRON_DIR
 
 
 parser = ArgumentParser()
+parser.add_argument('-H', '--history', help="Save log to history",   action='store_true')
+parser.add_argument('-c', '--cron',    help='Set cron job',          action='store_true')
+parser.add_argument('--from_cron',     help='Running from cron',     action='store_true')
 parser.add_argument('-u', '--update',  help='List of update files',  action='append')
 parser.add_argument('-x', '--script',  help='List of script files',  action='append')
 parser.add_argument('-o', '--options', help='Custom script options', action='append')
 parser.add_argument('-m', '--dump',    help='List of dump files',    action='append')
-parser.add_argument('-j', '--job',     help='Cron job id')
-parser.add_argument('-s', '--server',  help="Server's ssh address")
 parser.add_argument('-w', '--wdir',    help="Server's working directory")
+parser.add_argument('-s', '--server',  help="Server's ssh address")
 parser.add_argument('-P', '--port',    help="Server's port")
 parser.add_argument('-d', '--date',    help='Cron job date')
-parser.add_argument('-p', '--proid',   help='Project id')
 parser.add_argument('-n', '--proname', help='Project name')
-parser.add_argument('-c', '--cron',    help='Run in cron',         action='store_true')
-parser.add_argument('-H', '--history', help="Save log to history", action='store_true')
-parser.add_argument('-k', '--key',     help='Unique key')
 parser.add_argument('cmd',             help='Command name')
+parser.add_argument('-j', '--job',     help='Cron job id')
+parser.add_argument('-k', '--key',     help='Unique key')
+parser.add_argument('-p', '--proid',   help='Project id')
 args = parser.parse_args()
 
-logfile = LOG_FILE + args.key
+command = import_module('modules.%s' % args.cmd)
 errfile = ERR_FILE + args.key
 pidfile = PID_FILE + args.key
-command = import_module('modules.%s' % args.cmd)
+logfile = LOG_FILE + args.key
+if args.from_cron:
+	logfile = opj(CRON_DIR, args.key)
+print logfile
 
 
 def add_cron_job():
 	save_argv = argv
 	save_argv.remove('--cron')
 	save_argv.remove('starter.py')
+	save_argv.extend(['--from_cron'])
 	starter = opj(BASE_DIR, 'starter.py')
 	python = opj(BASE_DIR, '../env/bin/python')
 	cronfile = opj('/var/spool/cron/crontabs', getuser())
@@ -105,29 +110,31 @@ def make_history():
 
 
 error = 0
-log = open(logfile, 'a')
+with open(logfile, 'a') as log:
+	if args.cron:
+		command.description(args, log)
+		add_cron_job()
+	else:
+		cmd_error = command.run(args, log)
+		if cmd_error > 0:
+			error = cmd_error
 
-if args.cron:
-	command.description(args, log)
-	add_cron_job()
+if args.from_cron:
+	with open(logfile, 'a') as log:
+		today = datetime.today()
+		log.write("\nError: {error}\nDate: {date}".format(date=today.strftime('%Y-%m-%d %H:%M'), error=error))
 else:
-	cmd_error = command.run(args, log)
-	if cmd_error > 0:
-		error = cmd_error
+	if args.history:
+		his_error = make_history()
+		if his_error > 0:
+			error = his_error
 
-log.close()
+	with open(errfile, 'w') as f:
+		f.write(str(error))
 
-if args.history:
-	his_error = make_history()
-	if his_error > 0:
-				error = his_error
-
-with open(errfile, 'w') as f:
-	f.write(str(error))
-
-sleep(10)
-for f in logfile, errfile, pidfile:
-	try:
-		remove(f)
-	except OSError:
-		continue
+	sleep(10)
+	for f in logfile, errfile, pidfile:
+		try:
+			remove(f)
+		except OSError:
+			continue
