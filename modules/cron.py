@@ -7,10 +7,15 @@ from os.path import join as opj
 cronfile = opj('/var/spool/cron/crontabs', getuser())
 
 
-def find_job(id):
+def find_job(key):
+
+	job = []
+	jobid = "'--key' '%s'" % key
 	with open(cronfile) as f:
 		for line in f:
-			if '--key %s' % id in line:
+			if jobid in line:
 				line = line.strip()
 				job = line.split(' ')
-				return job
+				break
+
+	return job, jobid

@@ -12,7 +12,8 @@ def description(args, log):
 
 def run(args, log):
 
-	job = find_job(args.job)
+	job, jobid = find_job(args.job)
+	print job, jobid
 	new_command = ' '.join(escape(opt) for opt in job[4:])
 	datetime_object = datetime.strptime(args.date, '%Y-%m-%d %H:%M')
 	new_job = '{min} {hur} {day} {mon} {job}'.format(
@@ -24,6 +25,6 @@ def run(args, log):
 	)
 
 	message('\nChange run date and time for job {job}\n'.format(job=args.job), log)
-	command = ['sed', '/\-\-key {job}/c{new}'.format(job=args.job, new=new_job), '-i', cronfile]
+	command = ['sed', "/{id}/c{new}".format(id=jobid, job=args.job, new=new_job), '-i', cronfile]
 	error = my_call(command, log)
 	return error

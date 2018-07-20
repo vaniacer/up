@@ -46,7 +46,8 @@ def add_cron_job():
 	cronfile = opj('/var/spool/cron/crontabs', getuser())
 	datetime_object = datetime.strptime(args.date, '%Y-%m-%d %H:%M')
 
-	command = '{python} {starter} {command}'.format(python=python, starter=starter, command=' '.join(save_argv))
+	wraped_command = ["'%s'" % opt for opt in save_argv]  # wrap all arguments with ''
+	command = '{python} {starter} {command}'.format(python=python, starter=starter, command=' '.join(wraped_command))
 	cronjob = "{top}\n{min} {hur} {day} {mon} * {command}; sed '/{key}/d' -i '{cronfile}'\n{bot}\n".format(
 		top='#' + '-' * 28 + '{ job %s start }' % args.key + '-' * 28,
 		bot='#' + '-' * 28 + '{  job %s end  }' % args.key + '-' * 28,
