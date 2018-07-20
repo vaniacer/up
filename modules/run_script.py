@@ -16,6 +16,7 @@ def description(args, log):
 def run(args, log):
 
 	error = 0
+	updates = None
 	home = expanduser('~')
 	tmp_dir = '{wdir}/temp/{key}'.format(wdir=args.wdir, key=args.key)
 	dbhost, dbport, dbname, dbuser, dbpass = '', '', '', '', ''
@@ -25,32 +26,54 @@ def run(args, log):
 			args.server, '{wdir}/jboss-bas-*/standalone/configuration/standalone-full.xml'.format(wdir=args.wdir)
 		)
 
-	if any(".yml" in s for s in args.script):
-		pass
+	files_to_upload = [script for script in args.script if '.yml' not in script]  # remove .yml from list
+	if args.update:
+		files_to_upload.extend(args.update)
+		updates = ['{tmp}/{upd}'.format(tmp=tmp_dir, upd=update.split('/')[-1]) for update in args.update]
+		updates = ' '.join(updates)
 
-	upload = {'file': args.script, 'dest': tmp_dir}
-	scripts = '\n'.join(script.split('/')[-1] for script in args.script)
-	message('\n<b>Копирую файл(ы):\n{}</b>\n'.format(scripts), log)
+	upload = {'file': files_to_upload, 'dest': tmp_dir}
+	upfiles = '\n'.join(script.split('/')[-1] for script in files_to_upload)
+	message('\n<b>Копирую файл(ы):\n{}</b>\n'.format(upfiles), log)
 	up_error = upload_file(upload, args.server, log)
 	if up_error > 0:
 		error = up_error
 
-	for script in args.script:
+	for script, options in map(None, args.script, args.options):
 		filename = script.split('/')[-1]
 		script_type = script.split('.')[-1]
 		filepath = '{tmp}/{file}'.format(tmp=tmp_dir, file=filename)
 		message('\n<b>Выполняю скрипт {file}</b>\n'.format(file=filename), log)
+		if updates:
+			options += updates
 
+		# ------------------{ Run bash script }--------------------------------
 		if script_type == 'sh':
-			command = ['ssh', args.server, 'cd {wdir}; bash {file}'.format(file=filepath, wdir=args.wdir)]
+			command = [
+				'ssh', args.server, 'cd {wdir}; bash {file} {options}'.format(
+					options=options,
+					wdir=args.wdir,
+					file=filepath,
+				)
+			]
 			sh_error = my_call(command, log)
 			if sh_error > 0:
 				error = sh_error
+
+		# ------------------{ Run python script }------------------------------
 		elif script_type == 'py':
-			command = ['ssh', args.server, 'cd {wdir}; python {file}'.format(file=filepath, wdir=args.wdir)]
+			command = [
+				'ssh', args.server, 'cd {wdir}; python {file} {options}'.format(
+					options=options,
+					wdir=args.wdir,
+					file=filepath,
+				)
+			]
 			py_error = my_call(command, log)
 			if py_error > 0:
 				error = py_error
+
+		# ------------------{ Run YML script }---------------------------------
 		elif script_type == 'yml':
 			command = [
 				'ansible-playbook', script, '-i', '%s,' % args.server,
@@ -61,6 +84,8 @@ def run(args, log):
 				yml_error = my_call(command[0:-1], log)
 			if yml_error > 0:
 				error = yml_error
+
+		# ------------------{ Run SQL script }---------------------------------
 		elif script_type == 'sql':
 			command = [
 				'ssh', args.server,

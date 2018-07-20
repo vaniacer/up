@@ -16,7 +16,7 @@ from up.settings import LOG_FILE, ERR_FILE, PID_FILE, BASE_DIR
 parser = ArgumentParser()
 parser.add_argument('-u', '--update',  help='List of update files',  action='append')
 parser.add_argument('-x', '--script',  help='List of script files',  action='append')
-parser.add_argument('-o', '--opts',    help='Custom script options', action='append')
+parser.add_argument('-o', '--options', help='Custom script options', action='append')
 parser.add_argument('-m', '--dump',    help='List of dump files',    action='append')
 parser.add_argument('-j', '--job',     help='Cron job id')
 parser.add_argument('-s', '--server',  help="Server's ssh address")
