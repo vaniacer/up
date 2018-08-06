@@ -1,7 +1,7 @@
 #!/bin/bash
 
 folder="$1"
-arhive="${2:-system}_`printf "%(%d-%m-%Y)T"`.zip"
+arhive="${2:-system}_`printf "%(%d-%m-%Y)T"`.sys.zip"
 
 zip -ry $arhive \
     $folder/jboss-bas-*/standalone/configuration/* \

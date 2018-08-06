@@ -1,7 +1,7 @@
 #!/bin/bash
 
 confolder="$1"
-filename="${2:-$dbname}_`printf "%(%d-%m-%Y)T"`.gz"
+filename="${2:-$dbname}_`printf "%(%d-%m-%Y)T"`.db.gz"
 
 rawdta=$(grep '"DataaccessDS"' -A15 "$confolder"/jboss-bas-*/standalone/configuration/standalone-full.xml)
 dbuser=${rawdta//*<user-name>/}; dbuser=${dbuser//<\/user-name>*/}
