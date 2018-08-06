@@ -12,8 +12,8 @@ def description(args, log):
 
 def run(args, log):
 
-	filename = '{server}_{date:%d-%m-%Y}.gz'.format(server=args.server, date=datetime.now())
-	message('\n<b>Копирую дамп: {file}</b>\n'.format(file=filename), log)
+	filename = '{server}_dbdump_{date:%d-%m-%Y}.gz'.format(server=args.server, date=datetime.now())
+	message('\n<b>Копирую файл {file}</b>\n'.format(file=filename), log)
 
 	download = {
 		'file': ['{wdir}/backup/{file}'.format(wdir=args.wdir, file=filename)],
@@ -50,11 +50,8 @@ def run(args, log):
 		message(
 			"\n<a class='btn btn-primary' href='/download_dump/{pro}/{file}'>Download</a>".format(
 				file=filename,
-				pro=args.proid
+				pro=args.proid,
 			), log
 		)
-
-	command = ['ssh', args.server, 'rm %s' % download['file'][0]]
-	my_call(command, log)
 
 	return error

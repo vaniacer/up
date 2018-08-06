@@ -13,7 +13,7 @@ def description(args, log):
 def run(args, log):
 
 	filename = '{server}_dbdump_{date:%d-%m-%Y}.gz'.format(server=args.server, date=datetime.now())
-	message('\n<b>Копирую файл - {file}</b>\n'.format(file=filename), log)
+	message('\n<b>Копирую файл {file}</b>\n'.format(file=filename), log)
 
 	download = {
 		'file': ['{wdir}/backup/{file}'.format(wdir=args.wdir, file=filename)],
