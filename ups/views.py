@@ -109,7 +109,7 @@ def cancel(request):
 	check_perm_or404('view_project', current_project, request.user)
 
 	logids = data.getlist('logid')
-	command = [os.path.join(conf.BASE_DIR, '../env/bin/python')]
+	command = [os.path.join(conf.BASE_DIR, '../env/bin/python'), 'killer.py']
 	command.extend(logids)
 	call(command)
 
