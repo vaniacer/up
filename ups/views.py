@@ -13,7 +13,7 @@ from django.conf import settings as conf
 from wsgiref.util import FileWrapper
 from .cron import get_cron_logs
 from operator import itemgetter
-from subprocess import Popen
+from subprocess import call
 from .dump import get_dumps
 import mimetypes
 import os
@@ -109,7 +109,9 @@ def cancel(request):
 	check_perm_or404('view_project', current_project, request.user)
 
 	logids = data.getlist('logid')
-	Popen([conf.BASE_DIR + '/bash/killer.sh', ' '.join(logids)])
+	command = [os.path.join(conf.BASE_DIR, '../env/bin/python')]
+	command.extend(logids)
+	call(command)
 
 	return HttpResponseRedirect(back_url(data))
 
