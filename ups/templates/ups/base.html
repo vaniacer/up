@@ -10,13 +10,15 @@
 
         {% bootstrap_css %}
         {% bootstrap_javascript %}
-        {% include "ups/up_down_buttons.html" %}
+        <script src="{% static 'js/project.js' %}"></script>
         <link rel="stylesheet" href="{% static 'css/loader.css' %}">
         <link rel="stylesheet" href="{% static 'css/control.css' %}">
-        <script src="{% static 'js/project.js' %}"></script>
+
     </head>
 
     <body>
+
+        {% include "ups/up_down_buttons.html" %}
 
         <!-- Статическая навигационная панель -->
         <nav class="navbar navbar-default navbar-fixed-top">
