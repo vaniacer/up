@@ -58,7 +58,6 @@ class Server(models.Model):
 	http = models.CharField(max_length=255, blank=True, null=True)     # Http\s url
 	date = models.DateTimeField(auto_now_add=True, db_index=True)      # Creation date
 	port = models.CharField(max_length=5, default='8080')              # Bind port, default - 8080
-	opts = models.CharField(max_length=255, blank=True)                # SSH options
 	addr = models.CharField(max_length=255)                            # SSH address
 	name = models.CharField(max_length=255)                            # Name in web interface
 	desc = models.TextField(max_length=255)                            # Description
