@@ -89,7 +89,7 @@ commandick = {
 		section='cron',
 		title='Make selected cron job(s) run once (default).',
 		name='once_job',
-		menu='Run once',
+		menu='Run one time',
 		job='true',
 		run="run_or_cron('RUN');",
 	),
