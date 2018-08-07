@@ -31,6 +31,7 @@ def make_history():
 	psql_opt = ['psql', '-U', dbuser, '-h', dbhost, '-p', dbport, '-d', dbname, '-c', update]
 	call(psql_opt, env={"PGPASSWORD": dbpass})
 
+
 error = 1
 update = u''
 keys = argv[1::]
