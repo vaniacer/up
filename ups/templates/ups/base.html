@@ -1,4 +1,5 @@
 {% load bootstrap3 %}
+{% load static %}
 
 <html lang="en">
 
@@ -8,17 +9,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         {% bootstrap_css %}
-        <style type="text/css">
-            {% include "ups/css/loader.css"  %}
-            {% include "ups/css/control.css" %}
-        </style>
-
         {% bootstrap_javascript %}
-        <script type="text/javascript">
-            {% include "ups/js/project.js" %}
-        </script>
-
         {% include "ups/up_down_buttons.html" %}
+        <link rel="stylesheet" href="{% static 'css/loader.css' %}">
+        <link rel="stylesheet" href="{% static 'css/control.css' %}">
+        <script src="{% static 'js/project.js' %}"></script>
     </head>
 
     <body>
