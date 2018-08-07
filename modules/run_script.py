@@ -32,12 +32,13 @@ def run(args, log):
 		updates = ['{tmp}/{upd}'.format(tmp=tmp_dir, upd=update.split('/')[-1]) for update in args.update]
 		updates = ' '.join(updates)
 
-	upload = {'file': files_to_upload, 'dest': tmp_dir}
-	upfiles = '\n'.join(script.split('/')[-1] for script in files_to_upload)
-	message('\n<b>Копирую файл(ы):\n{}</b>\n'.format(upfiles), log)
-	up_error = upload_file(upload, args.server, log)
-	if up_error > 0:
-		error = up_error
+	if files_to_upload:
+		upload = {'file': files_to_upload, 'dest': tmp_dir}
+		upfiles = '\n'.join(script.split('/')[-1] for script in files_to_upload)
+		message('\n<b>Копирую файл(ы):\n{}</b>\n'.format(upfiles), log)
+		up_error = upload_file(upload, args.server, log)
+		if up_error > 0:
+			error = up_error
 
 	for script, options in map(None, args.script, args.options):
 		filename = script.split('/')[-1]
@@ -116,6 +117,6 @@ def run(args, log):
 				message(e.output, log)
 				error = e.returncode
 
-	remove_tmp = ['ssh', args.server, 'rm -r {tmp}'.format(tmp=tmp_dir)]
+	remove_tmp = ['ssh', args.server, 'rm -rf {tmp}'.format(tmp=tmp_dir)]
 	my_call(remove_tmp, log)
 	return error
