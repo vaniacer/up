@@ -261,7 +261,6 @@ def project(request, project_id):
 	dmplist_filtered = [dump for dump in dmplist if re.search(dmplist_filter, dump['name'], re.IGNORECASE)]
 	dmplist_filter_form = DumpsFilterForm(initial=data)
 
-	commandsorted = sorted(commandick.itervalues())
 	hide_info_form = HideInfoForm(initial=data)
 
 	context = {
@@ -270,7 +269,6 @@ def project(request, project_id):
 		'dmplist': dmplist,
 		'scripts': scripts,
 		'servers': servers,
-		'commands': commandsorted,
 		'project': current_project,
 		'hide_info_form': hide_info_form,
 		'servers_filtered': servers_filtered,
@@ -285,8 +283,9 @@ def project(request, project_id):
 
 	if check_permission('run_command', current_project, request.user):
 
-		jobs_filter = data.get('jobs', '')
+		commandsorted = sorted(commandick.itervalues(), key=lambda cmd: cmd.position)
 		jobs = current_project.job_set.order_by('serv')
+		jobs_filter = data.get('jobs', '')
 		jobs_filtered = [
 			job for job in jobs if re.search(jobs_filter, '{jobname!s} on {servername!s} {time!s}'.format(
 				servername=job.serv,
@@ -309,10 +308,13 @@ def project(request, project_id):
 				cmn_name=cmdlog,
 			)
 
-		context['jobs_filtered'] = jobs_filtered
-		context['jobs_filter'] = jobs_filter_form
-		context['cmdlog'] = cmdlog
-		context['logs'] = logids
-		context['jobs'] = jobs
+		context.update({
+			'jobs_filter':   jobs_filter_form,
+			'jobs_filtered': jobs_filtered,
+			'commands': commandsorted,
+			'cmdlog': cmdlog,
+			'logs': logids,
+			'jobs': jobs,
+		})
 
 	return render(request, 'ups/project.html', context)
