@@ -56,12 +56,12 @@ commandick = {
 
 	# Cron submenu }----------------------------------------------------------------------------------------------------
 	'cancel_job': CommandClass(
-			section='cron',
-			title='Cancel selected cron job(s).',
-			name='cancel_job',
-			menu='Cancel job(s)',
-			job='true',
-			run="run_or_cron('RUN');",
+		section='cron',
+		title='Cancel selected cron job(s).',
+		name='cancel_job',
+		menu='Cancel job(s)',
+		job='true',
+		run="run_or_cron('RUN');",
 	),
 
 	'change_date': CommandClass(
