@@ -132,7 +132,7 @@ else:
 		f.write(str(error))
 
 	sleep(10)
-	for f in logfile, errfile, pidfile:
+	for f in logfile, errfile:
 		try:
 			remove(f)
 		except OSError:
