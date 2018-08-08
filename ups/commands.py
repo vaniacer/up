@@ -83,7 +83,7 @@ commandick = {
 	'change_date': CommandClass(
 		position=40,
 		section='cron',
-		title='Change selected cron job(s) run date and time. If date\\time not set, will set current date\\time.',
+		title='Change selected cron job(s) run date and time. If date\\time not set, it will set current date\\time.',
 		name='change_date',
 		menu='Change date',
 		job='true',
