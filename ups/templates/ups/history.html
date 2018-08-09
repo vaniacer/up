@@ -24,6 +24,7 @@
     {% for event in history %}
 
         <dl class="dl-horizontal" id="event{{event.id}}">
+            <!--<dt>Event id</dt><dd>{{event.uniq}}</dd>-->
             {% if event.serv %}
                 <dt>Server name</dt><dd>{{event.serv}}</dd>
             {% endif %}

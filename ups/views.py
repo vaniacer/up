@@ -13,7 +13,7 @@ from django.conf import settings as conf
 from wsgiref.util import FileWrapper
 from .cron import get_cron_logs
 from operator import itemgetter
-from subprocess import Popen
+from subprocess import call
 from .dump import get_dumps
 import mimetypes
 import os
@@ -25,23 +25,23 @@ def index(request):
 	return render(request, 'ups/index.html')
 
 
-def pagination(request, history):
+def pagination(request, hist):
 	"""Создает страницы для закладки 'History'."""
-	hist_pages = Paginator(history, 20)
+	hist_pages = Paginator(hist, 20)
 	page = request.GET.get('page') or 1
 	try:
-		history = hist_pages.page(page)
+		hist = hist_pages.page(page)
 	except PageNotAnInteger:
 		# If page is not an integer, deliver first page.
-		history = hist_pages.page(1)
+		hist = hist_pages.page(1)
 	except EmptyPage:
 		# If page is out of range (e.g. 9999), deliver last page of results.
-		history = hist_pages.page(hist_pages.num_pages)
+		hist = hist_pages.page(hist_pages.num_pages)
 
 	hist_pg = list(hist_pages.page_range)
 	hist_fd = hist_pg[int(page):int(page) + 3]
 	hist_bk = hist_pg[max(int(page) - 4, 0):int(page) - 1]
-	return history, hist_fd, hist_bk
+	return hist, hist_fd, hist_bk
 
 
 def delete_files(files):
@@ -109,7 +109,9 @@ def cancel(request):
 	check_perm_or404('view_project', current_project, request.user)
 
 	logids = data.getlist('logid')
-	Popen([conf.BASE_DIR + '/bash/killer.sh', ' '.join(logids)])
+	command = [os.path.join(conf.BASE_DIR, '../env/bin/python'), 'killer.py']
+	command.extend(logids)
+	call(command)
 
 	return HttpResponseRedirect(back_url(data))
 
@@ -159,7 +161,7 @@ def command_log(request):
 
 	context = {
 		'name':    data['cmd'].capitalize().replace('_', ' '),
-		'his':     commandick[data['cmd']]['his'],
+		'his':     commandick[data['cmd']].his,
 		'cancel':  '/cancel/?%s' % qst,
 		'project': current_project,
 		'back':    back_url(data),
@@ -212,16 +214,16 @@ def history(request, project_id):
 	"""Выводит один проект, все его серверы, пакеты обновлений и скрипты, обрабатывает кнопки действий."""
 	current_project = get_object_or_404(Project, id=project_id)
 	check_perm_or404('view_project', current_project, request.user)
-	check_perm_or404('run_command', current_project, request.user)
+	check_perm_or404('run_command',  current_project, request.user)
 
-	history = current_project.history_set.order_by('date').reverse()
-	history, hist_fd, hist_bk = pagination(request, history)
+	hist = current_project.history_set.order_by('date').reverse()
+	hist, hist_fd, hist_bk = pagination(request, hist)
 
 	context = {
 		'project': current_project,
-		'history': history,
 		'hist_bk': hist_bk,
 		'hist_fd': hist_fd,
+		'history': hist,
 	}
 
 	return render(request, 'ups/history.html', context)
@@ -259,7 +261,6 @@ def project(request, project_id):
 	dmplist_filtered = [dump for dump in dmplist if re.search(dmplist_filter, dump['name'], re.IGNORECASE)]
 	dmplist_filter_form = DumpsFilterForm(initial=data)
 
-	commandsorted = sorted(commandick.itervalues(), key=itemgetter('position'))
 	hide_info_form = HideInfoForm(initial=data)
 
 	context = {
@@ -268,7 +269,6 @@ def project(request, project_id):
 		'dmplist': dmplist,
 		'scripts': scripts,
 		'servers': servers,
-		'commands': commandsorted,
 		'project': current_project,
 		'hide_info_form': hide_info_form,
 		'servers_filtered': servers_filtered,
@@ -283,8 +283,9 @@ def project(request, project_id):
 
 	if check_permission('run_command', current_project, request.user):
 
-		jobs_filter = data.get('jobs', '')
+		commandsorted = sorted(commandick.itervalues(), key=lambda cmd: cmd.position)
 		jobs = current_project.job_set.order_by('serv')
+		jobs_filter = data.get('jobs', '')
 		jobs_filtered = [
 			job for job in jobs if re.search(jobs_filter, '{jobname!s} on {servername!s} {time!s}'.format(
 				servername=job.serv,
@@ -307,10 +308,13 @@ def project(request, project_id):
 				cmn_name=cmdlog,
 			)
 
-		context['jobs_filtered'] = jobs_filtered
-		context['jobs_filter'] = jobs_filter_form
-		context['cmdlog'] = cmdlog
-		context['logs'] = logids
-		context['jobs'] = jobs
+		context.update({
+			'jobs_filter':   jobs_filter_form,
+			'jobs_filtered': jobs_filtered,
+			'commands': commandsorted,
+			'cmdlog': cmdlog,
+			'logs': logids,
+			'jobs': jobs,
+		})
 
 	return render(request, 'ups/project.html', context)
