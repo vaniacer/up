@@ -20,9 +20,6 @@
                     {% if server.http %}
                         <dt>  HTTP address</dt><dd>{{server.http|urlize}}</dd>
                     {% endif %}
-                    {% if server.opts %}
-                        <dt>   SSH options</dt><dd>{{server.opts}}</dd>
-                    {% endif %}
                     <dt>    Working folder</dt><dd>{{server.wdir}}</dd>
                     <dt>  Server bind port</dt><dd>{{server.port}}</dd>
                     <dt>       Description</dt><dd>{{server.desc|linebreaks|urlize}}</dd>
