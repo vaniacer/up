@@ -13,7 +13,7 @@ def make_log(logfile):
 	with open(logfile) as f:
 		log_body = f.read()
 
-	log_body += '<b>Interrupted...</b>'
+	log_body += '\n<b>Interrupted...</b>'
 	log_body = log_body.decode('utf-8', errors='replace')
 	log_size = len(log_body)
 	if log_size > 4000:
