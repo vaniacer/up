@@ -116,6 +116,9 @@ def run(args, log):
 			except CalledProcessError as e:
 				message(e.output, log)
 				error = e.returncode
+		else:
+			message('\nUnknown script type.\n', log)
+			error = 1
 
 	remove_tmp = ['ssh', args.server, 'rm -rf {tmp}'.format(tmp=tmp_dir)]
 	my_call(remove_tmp, log)
