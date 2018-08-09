@@ -44,7 +44,7 @@ def add_cron_job():
 	save_argv = argv
 	save_argv.remove('--cron')
 	save_argv.remove('starter.py')
-	save_argv.extend(['--from_cron'])
+	save_argv.append('--from_cron')
 	starter = opj(BASE_DIR, 'starter.py')
 	python = opj(BASE_DIR, '../env/bin/python')
 	cronfile = opj('/var/spool/cron/crontabs', getuser())
