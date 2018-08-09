@@ -116,6 +116,8 @@ def run(args, log):
 			except CalledProcessError as e:
 				message(e.output, log)
 				error = e.returncode
+
+		# ------------------{ Unknown script type }----------------------------
 		else:
 			message('\nUnknown script type.\n', log)
 			error = 1
