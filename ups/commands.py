@@ -52,6 +52,7 @@ commandick = {
 
 	# Cron submenu }----------------------------------------------------------------------------------------------------
 	'cancel_job': CommandClass(
+		position=4,
 		section='cron',
 		title='Cancel selected cron job(s).',
 		name='cancel_job',
@@ -61,7 +62,7 @@ commandick = {
 	),
 
 	'permanent_job': CommandClass(
-		position=20,
+		position=3,
 		section='cron',
 		title='Make selected cron job(s) permanent.',
 		name='permanent_job',
@@ -71,7 +72,7 @@ commandick = {
 	),
 
 	'once_job': CommandClass(
-		position=30,
+		position=2,
 		section='cron',
 		title='Make selected cron job(s) run once (default).',
 		name='once_job',
@@ -81,7 +82,7 @@ commandick = {
 	),
 
 	'change_date': CommandClass(
-		position=40,
+		position=1,
 		section='cron',
 		title='Change selected cron job(s) run date and time. If date\\time not set, it will set current date\\time.',
 		name='change_date',

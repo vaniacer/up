@@ -9,13 +9,6 @@
             onclick="run_or_cron('')"
             title="Schedule command to run from cron">Run in cron</td>
     </tr>
-
-    {% for command in commands %}
-        {% if command.section == "cron" %}
-            {% include "ups/commands_table.html" %}
-        {% endif %}
-    {% endfor %}
-
     <tr>
         {% include "ups/date_picker.html" %}
     </tr>
@@ -23,4 +16,12 @@
     <tr>
         {% include "ups/time_picker.html" %}
     </tr>
+
+    {% for command in commands %}
+        {% if command.section == "cron" %}
+            {% include "ups/commands_table.html" %}
+        {% endif %}
+    {% endfor %}
+
+
 </table>
