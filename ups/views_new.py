@@ -6,10 +6,12 @@ from django.core.files.base import ContentFile
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from .permissions import check_perm_or404
+from django.conf import settings as conf
 from django.shortcuts import render
 from .models import Project
 from .commands import info
-from django.conf import settings as conf
+from os.path import isfile, splitext
+from commands import get_key
 
 
 def handle_uploaded_dump(dump_file, projectname):
@@ -19,6 +21,10 @@ def handle_uploaded_dump(dump_file, projectname):
 		project=projectname,
 		file=filename,
 	)
+	if isfile(filepath):
+		filename, extension = splitext(filepath)
+		filepath = '{old}_{key}{ext}'.format(old=filename, key=get_key(), ext=extension)
+
 	with open(filepath, 'wb+') as destination:
 		for chunk in dump_file.chunks():
 			destination.write(chunk)
