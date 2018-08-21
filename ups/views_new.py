@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 
-from .forms import ProjectForm, ServerForm, UpdateForm, ScriptAddForm, ScriptCreateForm
+from .forms import ProjectForm, ServerForm, UpdateForm, ScriptAddForm, ScriptCreateForm, DumpForm
 from django.contrib.auth.decorators import login_required, permission_required
 from django.core.files.base import ContentFile
 from django.http import HttpResponseRedirect
@@ -9,6 +9,14 @@ from .permissions import check_perm_or404
 from django.shortcuts import render
 from .models import Project
 from .commands import info
+from django.conf import settings as conf
+
+
+def handle_uploaded_dump(dump_file, projectname):
+	filename = str(dump_file)
+	with open('%s/dumps/%s/%s' % (conf.MEDIA_ROOT, projectname, filename), 'wb+') as destination:
+		for chunk in dump_file.chunks():
+			destination.write(chunk)
 
 
 # @login_required
@@ -81,6 +89,29 @@ def new_update(request, project_id):
 
 	context = {'project': project, 'form': form, 'info': info(data)}
 	return render(request, 'ups/new_update.html', context)
+
+
+@login_required
+def add_dump(request, project_id):
+	"""Добавляет новое обновление."""
+	project = Project.objects.get(id=project_id)
+	# check_perm_or404('add_update', project, request.user)
+	data = request.GET
+
+	if request.method != 'POST':
+		# Данные не отправлялись; создается пустая форма.
+		form = DumpForm()
+	else:
+		# Отправлены данные POST; обработать данные.
+		form = DumpForm(request.POST, request.FILES)
+
+		if form.is_valid():
+			print request.FILES['file']
+			handle_uploaded_dump(request.FILES['file'], project.name)
+			return HttpResponseRedirect('/projects/%s/?%s' % (project.id, info(data)))
+
+	context = {'project': project, 'form': form, 'info': info(data)}
+	return render(request, 'ups/new_dump.html', context)
 
 
 @login_required

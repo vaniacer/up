@@ -1,0 +1,22 @@
+{% extends "ups/base.html" %}
+{% load bootstrap3 %}
+
+{% block header %}
+    <br>
+    <h2>Upload dump to the project - <a href="{% url 'ups:project' project.id %}">{{ project }}</a></h2>
+{% endblock header %}
+
+{% block content %}
+
+    <form action="{% url 'ups:add_dump' project.id %}?{{info}}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+
+        {% buttons %}
+            <button onclick="show_loader()" class="btn btn-primary" name='submit'>Upload</button>
+            <a class="btn btn-primary" href="{% url 'ups:project' project.id %}?{{info}}">Cancel</a>
+            <!--<a class="btn btn-primary" onclick="window.history.back();">Cancel</a>-->
+        {% endbuttons %}
+    </form>
+
+{% endblock content %}

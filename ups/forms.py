@@ -30,6 +30,10 @@ class UpdateForm(forms.ModelForm):
 		labels = {'file': 'Update file', 'desc': 'Update description'}
 
 
+class DumpForm(forms.Form):
+	file = forms.FileField(label='PG dumpg in .gz format')
+
+
 class ScriptAddForm(forms.ModelForm):
 	class Meta:
 		model = Script

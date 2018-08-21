@@ -50,4 +50,6 @@ urlpatterns = [
 
 	# Скачать файл дампа базы.
 	url(r'^download_dump/(?P<project_id>\d+)/(?P<dump>.+)$', views.download_dump, name='download_dump'),
+	# Страница для добавления дампа
+	url(r'^add_dump/(?P<project_id>\d+)/$', views_new.add_dump, name='add_dump'),
 ]
