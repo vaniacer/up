@@ -14,7 +14,12 @@ from django.conf import settings as conf
 
 def handle_uploaded_dump(dump_file, projectname):
 	filename = str(dump_file)
-	with open('%s/dumps/%s/%s' % (conf.MEDIA_ROOT, projectname, filename), 'wb+') as destination:
+	filepath = '{home}/dumps/{project}/{file}'.format(
+		home=conf.MEDIA_ROOT,
+		project=projectname,
+		file=filename,
+	)
+	with open(filepath, 'wb+') as destination:
 		for chunk in dump_file.chunks():
 			destination.write(chunk)
 
@@ -106,7 +111,6 @@ def add_dump(request, project_id):
 		form = DumpForm(request.POST, request.FILES)
 
 		if form.is_valid():
-			print request.FILES['file']
 			handle_uploaded_dump(request.FILES['file'], project.name)
 			return HttpResponseRedirect('/projects/%s/?%s' % (project.id, info(data)))
 
