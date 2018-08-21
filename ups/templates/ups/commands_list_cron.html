@@ -3,6 +3,13 @@
 </table>
 
 <table class="commands_table hidden hidden_commands" id="cron_commands">
+
+    <tr>
+        <td id="CRON_BUTTON"
+            onclick="run_or_cron('')"
+            title="Schedule command to run from cron">Run in cron</td>
+    </tr>
+
     {% for command in commands %}
         {% if command.section == "cron" %}
             {% include "ups/commands_table.html" %}

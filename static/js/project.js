@@ -41,20 +41,14 @@ function go_down() {
 
 function run_or_cron(type) {
     var cron_button = document.getElementById('CRON_BUTTON');
-    var datepicker = document.getElementById('datepicker');
-    var timepicker = document.getElementById('timepicker');
     var run_type = document.getElementById('run_type');
     var current_run_type = run_type.value;
 
     function color_button(cron) {
         if (cron == 'CRON') {
             cron_button.classList.add('btn-danger');
-            datepicker.classList.remove('hidden');
-            timepicker.classList.remove('hidden');
         } else {
             cron_button.classList.remove('btn-danger');
-            datepicker.classList.add('hidden');
-            timepicker.classList.add('hidden');
         }
     }
 
