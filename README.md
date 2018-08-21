@@ -16,15 +16,19 @@
 <p>
     On the <i>'Scripts'</i> tab you can view, select, edit or add new scripts.<br>
     On the <i>'Updates'</i> tab you can view, select, edit or add new updates.<br>
-    On the <i>'Dumps'</i> here you can view, select, edit or add new dumps.<br>
+    On the <i>'Dumps'</i> tab you can view, select, edit or add new dumps.<br>
+    On the <i>'Cron'</i> tab you can view, select or edit cron jobs scheduled for this project.<br>
     Also on these tabs you can view, select, edit or add new servers.<br>
 </p>
 <p>
     On the <i>'Cron'</i> tab you can view cron jobs scheduled for this project.<br>
-    You can select them via click or by pressing <i>'Select All Jobs'</i> button.<br>
-    Cancel them by pressing <i>'Cancel job'</i> button. Set job(s) to run everyday<br>
-    via <i>'Run everyday'</i> button or set back to run once via <i>'Run once' button.</i><br>
-    And change run date via <i>'Change date'</i> button.
+    You can select them via click or by pressing <i>'Select All'</i> button.<br>
+    Cancel them by pressing <i>'Remove job(s)'</i> button. Set job(s) to run everyday<br>
+    via <i>'Run everyday'</i> button or set back to run once via <i>'Run one time' button.</i><br>
+    And change run date via <i>'Change date'</i> button.<br>
+    If you activate the <i>'Run in cron'</i> switch-button(turns red) commands will be scheduled to run via cron.
+    <br>Date and time can be set via date\time widget
+
 </p>
 <p>
     The <i>'Logs'</i> tab will appear if you run some command.<br>
@@ -40,10 +44,11 @@
     <i>'Servers commands'</i><br>
     <i>'Updates commands'</i><br>
     <i>'Dumps commands'</i><br>
-    <i>'Cron options'</i><br>
+    <i>'Cron commands'</i><br>
 </p>
 <p>
-    If you activate the <i>'Run in cron'</i> switch-button(turns red) commands will be scheduled to run via cron.
-    <br>Date and time can be set via date\time widget.
+    If you activate the <i>'Run in cron'</i> button(turns red) from <i>'Cron commands'</i><br>
+    task will be scheduled to run via cron.<br>
+    Date and time can be set via date\time widget
 </p>
 <p>Have fun!)</p>
