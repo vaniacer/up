@@ -57,9 +57,10 @@ def download(file_path, file_name):
 	"""Скачать файл."""
 	file_mimetype = mimetypes.guess_type(file_path)
 	file_wrapper = FileWrapper(file(file_path, 'rb'))
+	file_size = os.path.getsize(file_path)
 	response = HttpResponse(file_wrapper, content_type=file_mimetype)
 	response['Content-Disposition'] = 'attachment; filename=%s' % file_name
-	response['Content-Length'] = os.stat(file_path).st_size
+	response['Content-Length'] = file_size
 	response['X-Sendfile'] = file_path
 	return response
 

@@ -7,11 +7,11 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from .permissions import check_perm_or404
 from django.conf import settings as conf
+from os.path import isfile, splitext
 from django.shortcuts import render
+from commands import get_key
 from .models import Project
 from .commands import info
-from os.path import isfile, splitext
-from commands import get_key
 
 
 def handle_uploaded_dump(dump_file, projectname):
