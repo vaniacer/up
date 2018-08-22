@@ -11,11 +11,11 @@ from django.shortcuts import render, get_object_or_404
 from .models import Project, Update, Script, History
 from django.conf import settings as conf
 from wsgiref.util import FileWrapper
+from mimetypes import guess_type
 from .cron import get_cron_logs
 from operator import itemgetter
 from subprocess import call
 from .dump import get_dumps
-import mimetypes
 import os
 import re
 
@@ -55,10 +55,11 @@ def delete_files(files):
 
 def download(file_path, file_name):
 	"""Скачать файл."""
-	file_mimetype = mimetypes.guess_type(file_path)
-	file_wrapper = FileWrapper(file(file_path, 'rb'))
+	file_wrap = FileWrapper(file(file_path, 'rb'))
 	file_size = os.path.getsize(file_path)
-	response = HttpResponse(file_wrapper, content_type=file_mimetype)
+	file_type = guess_type(file_path)
+
+	response = HttpResponse(file_wrap, content_type=file_type)
 	response['Content-Disposition'] = 'attachment; filename=%s' % file_name
 	response['Content-Length'] = file_size
 	response['X-Sendfile'] = file_path
