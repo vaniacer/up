@@ -3,8 +3,8 @@
 from .forms import ServersFilterForm, ScriptsFilterForm, \
 	HideInfoForm, UpdatesFilterForm, DumpsFilterForm, JobsFilterForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.http import HttpResponseRedirect, StreamingHttpResponse
 from .permissions import check_perm_or404, check_permission
-from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from .commands import run_cmd, info, commandick, back_url
 from django.shortcuts import render, get_object_or_404
@@ -54,15 +54,14 @@ def delete_files(files):
 
 
 def download(file_path, file_name):
-	"""Скачать файл."""
-	file_wrap = FileWrapper(file(file_path, 'rb'))
+	chunk_size = 8192
+	file_wrap = FileWrapper(open(file_path, 'rb'), chunk_size)
 	file_size = os.path.getsize(file_path)
 	file_type = guess_type(file_path)
 
-	response = HttpResponse(file_wrap, content_type=file_type)
-	response['Content-Disposition'] = 'attachment; filename=%s' % file_name
+	response = StreamingHttpResponse(file_wrap, content_type=file_type)
+	response['Content-Disposition'] = "attachment; filename=%s" % file_name
 	response['Content-Length'] = file_size
-	response['X-Sendfile'] = file_path
 	return response
 
 
