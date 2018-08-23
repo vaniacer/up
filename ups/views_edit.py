@@ -110,7 +110,7 @@ def edit_project(request, project_id):
 			elif request.POST.get('ok'):
 				form.save()
 
-			return HttpResponseRedirect('/projects/%s/?%s' % (project.id, info(data)))
+			return HttpResponseRedirect(reverse('ups:projects'))
 
 	context = {'project': project, 'form': form, 'info': info(data)}
 	return render(request, 'ups/edit_project.html', context)

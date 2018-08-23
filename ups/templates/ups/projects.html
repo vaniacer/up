@@ -17,7 +17,10 @@
             <div class="well" onclick="location.href='{% url 'ups:project' project.id %}'" >
                 <div class="row">
                     <div class="col-md-2">
-                        <h3><a href="{% url 'ups:project' project.id %}">{{ project }}</a></h3>
+                        <h3 class="inline"><a href="{% url 'ups:project' project.id %}">{{ project }}</a></h3>
+                        {% if "edit_project" in project_perms %}
+                            <a href="{% url 'ups:edit_project' project.id %}?{{info}}" class="Edit">Edit</a>
+                        {% endif %}
                     </div>
                     <div class="col-md-6"><small>{{ project.desc|linebreaks }}</small></div>
                 </div>
