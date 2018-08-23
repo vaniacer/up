@@ -6,10 +6,6 @@
     margin-bottom: 20px;
 }
 
-.project_name {
-    margin-top:    8px;
-}
-
 .ok_btn {
     margin-bottom: 100px;
     margin-top:    50px;
@@ -62,9 +58,13 @@
     padding-left:  0px;
 }
 
-.col-sm-6 {
+.col-sm-5 {
     padding-right: 0px;
     padding-left:  10px;
+}
+
+.col-sm-2 {
+    padding-top: 10px;
 }
 
 /*-----{ Mini logs }-----*/
@@ -164,6 +164,21 @@ td:hover, th:hover {
 .no_border {
     border-top:    0;
     border-bottom: 0;
+}
+
+/*-------------{ Tabs mod }-----------------------*/
+.nav-tabs li.disabled a {
+    color:     black;
+    font-size:  20px;
+    text-align: left;
+    padding: 7;
+}
+
+.nav-tabs li.disabled a:hover {
+    border-top-color:   transparent;
+    border-left-color:  transparent;
+    border-right-color: transparent;
+    cursor: default;
 }
 
 /*-------------{ Up\Down arrows }-----------------*/
