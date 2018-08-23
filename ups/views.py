@@ -54,6 +54,7 @@ def delete_files(files):
 
 
 def download(file_path, file_name):
+	"""Потоковая качалка"""
 	file_wrap = FileWrapper(open(file_path, 'rb'), blksize=8192)
 	file_size = os.path.getsize(file_path)
 	file_type = guess_type(file_path)
