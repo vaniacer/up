@@ -44,15 +44,17 @@
 
         {% if end %}
             {% if his %}
-                <dt><p><a class="btn ok_btn {{ok}}" onclick="window.close();">Close</a></p></dt>
+                <dt><p><a title="Close this window"
+                          class="btn ok_btn {{ok}}"
+                          onclick="window.close();">Close</a></p></dt>
             {% else %}
-                <dt><p><a class="btn ok_btn {{ok}}" href="{{back}}">OK</a></p></dt>
+                <dt><p><a title="Go back to project" class="btn ok_btn {{ok}}" href="{{back}}">OK</a></p></dt>
             {% endif %}
         {% else %}
             <meta http-equiv="refresh" content="2">
             <div class="btn-group ok_btn">
-                <a class="btn btn-primary" href="{{cancel}}">Cancel</a>
-                <a class="btn btn-default" onclick="window.close();">Close</a>
+                <a title="Cancel this command" class="btn btn-primary" href="{{cancel}}">Cancel</a>
+                <a title="Close this window"   class="btn btn-default" onclick="window.close();">Close</a>
             </div>
         {% endif %}
 
