@@ -20,7 +20,7 @@ def run(args, log):
 			ip a | grep 'inet ' | sed '/127.0.0.1/d; s/.*inet //g; s|/.*$||g'
 	
 			printf '\n<b>Memory:</b>\n'
-			LANG=Us free -h
+			LANG=Us free --si -h
 	
 			printf '\n<b>CPU:</b>\n'
 			lscpu
