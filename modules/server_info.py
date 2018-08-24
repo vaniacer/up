@@ -38,11 +38,11 @@ def run(args, log):
 			printf '<b>Logged in Users:</b>\n'
 			who
 	
-			printf '<b>\nNetworking info:</b>\n'
-			netstat -lnp
+			printf '<b>\nPort usage info:</b>\n'
+			netstat -tulp
 	
 			printf '\n<b>Processes:</b>\n'
-			top -bn1
+			top -bn1 | head -n30
 		""".format(server=args.server)
 	]
 
