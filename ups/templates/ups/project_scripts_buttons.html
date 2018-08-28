@@ -19,10 +19,10 @@
                     </button>
 
                     <ul class="dropdown dropdown-menu dropdown-menu">
-                        <li><a title="Upload new script"
-                               href="{% url 'ups:add_script' project.id %}?{{info}}">Upload</a></li>
                         <li><a title="Create new script"
                                href="{% url 'ups:new_script' project.id %}?{{info}}">Create</a></li>
+                        <li><a title="Upload new script"
+                               href="{% url 'ups:add_script' project.id %}?{{info}}">Upload</a></li>
                     </ul>
                 </div>
             {% endif %}
