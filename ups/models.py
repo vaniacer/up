@@ -30,6 +30,7 @@ class Project(models.Model):
 
 			("dld_update",   "Can download updates"),
 			("dld_script",   "Can download scripts"),
+			("dld_dump",     "Can download dumps"),
 
 			("add_script",   "Can add scripts to project"),
 			("add_server",   "Can add servers to project"),

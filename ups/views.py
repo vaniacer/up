@@ -87,7 +87,7 @@ def download_script(request, project_id, script_id):
 def download_dump(request, project_id, dump):
 	"""Закачка дампов."""
 	current_project = get_object_or_404(Project, id=project_id)
-	check_perm_or404('view_project', current_project, request.user)
+	check_perm_or404('dld_dump', current_project, request.user)
 	return download(conf.MEDIA_ROOT + '/dumps/{project_name!s}/{file_name!s}'.format(
 		project_name=current_project,
 		file_name=dump
