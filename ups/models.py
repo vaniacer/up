@@ -45,25 +45,24 @@ class Project(models.Model):
 			("del_update",   "Can delete project's updates"),
 			("del_script",   "Can delete project's scripts"),
 
-			("run_command", "Can run commands"),
-			("run_cron",    "Can run cron commands"),
-			("run_dump",    "Can run dump commands"),
-			("run_update",  "Can run update commands"),
-			("run_script",  "Can run project's scripts"),
+			("run_command",  "Can run commands"),
+			("run_cron",     "Can run cron commands"),
+			("run_dump",     "Can run dump commands"),
+			("run_update",   "Can run update commands"),
+			("run_script",   "Can run project's scripts"),
 
-			("send_dump",   "Can run command 'Send dump'"),
-			("peep_pass",   "Can run command 'Peep passwords'"),
-			("maintenance", """ Can run maintenance commands:
-								'Maintenance ON/OFF',
-								'Reload config'
-								'Restart jboss'
-								'Start jboss'
-								'Stop jboss'
-								'Kill jboss'
-								'Backup base'
-								'Backup system'
-								'Backup full'
-							"""),
+			("send_dump",    "Can run command 'Send dump'"),
+			("peep_pass",    "Can run command 'Peep passwords'"),
+			("maintenance",  """Can run maintenance commands:
+								Maintenance ON/OFF,
+								Reload config
+								Restart jboss
+								Start jboss
+								Stop jboss
+								Kill jboss
+								Backup full
+								Backup base
+								Backup system"""),
 		)
 		get_latest_by = 'date'
 
