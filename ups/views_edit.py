@@ -1,5 +1,4 @@
 # -*- encoding: utf-8 -*-
-from difflib import Differ
 
 from .forms import ProjectForm, ServerForm, UpdateForm, ScriptEditForm
 from django.contrib.auth.decorators import login_required
@@ -10,6 +9,7 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from .permissions import check_perm_or404
 from django.conf import settings as conf
+from difflib import Differ
 import shutil
 import os
 
@@ -215,12 +215,11 @@ def edit_script(request, script_id):
 					old_text = f.readlines(1)
 
 				new_text = script.body.replace('\r\n', '\n').encode('utf-8')
-
 				with open(str(filename), 'wb') as f:
 					f.write(new_text)
 
-				new_text = new_text.splitlines(1)
 				show_difference = Differ()
+				new_text = new_text.splitlines(1)
 				result = list(show_difference.compare(old_text, new_text))
 				diff = '\n\nИзменено:\n' + ''.join(result)
 				edit_object_log(request, script, diff)
