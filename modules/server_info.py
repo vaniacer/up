@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 from popen_call import my_call
-from subprocess import call
+from ssh_yes import ssh_yes
 
 
 def description(args, log):
@@ -9,27 +9,6 @@ def description(args, log):
 
 
 def run(args, log):
-
-	ssh_yes = [
-		'expect', '-c',
-		''' spawn ssh {server}
-			expect {{
-				"(yes/no)?" {{
-					send "yes\n"
-					expect {{
-						"assword:" {{ exit }}
-						"$ "       {{ send "exit\n" }}
-					}}
-				}}
-				"assword:" {{ exit }}
-				"$ "       {{ send "exit\n" }}
-			}}
-			exit
-			}}
-		'''.format(server=args.server)
-	]
-
-	call(ssh_yes)
 
 	command = [
 		'ssh', args.server,
@@ -68,5 +47,6 @@ def run(args, log):
 		""".format(server=args.server)
 	]
 
+	ssh_yes(args.server)
 	error = my_call(command, log)
 	return error
