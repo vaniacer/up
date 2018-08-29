@@ -28,9 +28,9 @@ class Project(models.Model):
 		permissions = (
 			("view_project", "Can view project"),
 
+			("dld_dump", "Can download dumps"),
 			("dld_update",   "Can download updates"),
 			("dld_script",   "Can download scripts"),
-			("dld_dump",     "Can download dumps"),
 
 			("add_script",   "Can add scripts to project"),
 			("add_server",   "Can add servers to project"),
@@ -45,14 +45,15 @@ class Project(models.Model):
 			("del_update",   "Can delete project's updates"),
 			("del_script",   "Can delete project's scripts"),
 
-			("run_script",   "Can run project's scripts"),
-			("run_update",   "Can run update commands"),
-			("run_cron",     "Can run cron commands"),
-			("run_dump",     "Can run dump commands"),
-			("run_command",  "Can run commands"),
-			("peep_pass",    "Can run command 'Peep passwords'"),
-			("send_dump",    "Can run command 'Send dump'"),
-			("maintenance",  """ Can run maintenance commands:
+			("run_command", "Can run commands"),
+			("run_cron",    "Can run cron commands"),
+			("run_dump",    "Can run dump commands"),
+			("run_update",  "Can run update commands"),
+			("run_script",  "Can run project's scripts"),
+
+			("send_dump",   "Can run command 'Send dump'"),
+			("peep_pass",   "Can run command 'Peep passwords'"),
+			("maintenance", """ Can run maintenance commands:
 								'Maintenance ON/OFF',
 								'Reload config'
 								'Restart jboss'
