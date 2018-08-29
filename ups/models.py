@@ -42,6 +42,7 @@ class Project(models.Model):
 			("del_script",   "Can delete project's scripts"),
 			("run_update",   "Can run update commands"),
 			("run_cron",     "Can run cron commands"),
+			("run_dump",     "Can run dump commands"),
 			("run_command",  "Can run commands"),
 			("peep_pass",    "Can run command 'Peep passwords'"),
 			("send_dump",    "Can run command 'Send dump'"),

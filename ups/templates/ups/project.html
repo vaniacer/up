@@ -47,10 +47,12 @@
                 </li>
             {% endif %}
 
-            <li role="presentation">
-                <a title="Project dumps and servers"
-                   href="#dumps" aria-controls="dumps" role="tab" data-toggle="tab">Dumps</a>
-            </li>
+            {% if "run_dump" in pr_view_perms %}
+                <li role="presentation">
+                    <a title="Project dumps and servers"
+                       href="#dumps" aria-controls="dumps" role="tab" data-toggle="tab">Dumps</a>
+                </li>
+            {% endif %}
 
             {% if "run_command" in pr_view_perms %}
 
@@ -92,9 +94,11 @@
                 </div>
             {% endif %}
 
-            <div role="tabpanel" class="tab-pane" id="dumps">
-                <div class="col-sm-5">{% include "ups/project_dumps.html" %}</div>
-            </div>
+            {% if "run_dump" in pr_view_perms %}
+                <div role="tabpanel" class="tab-pane" id="dumps">
+                    <div class="col-sm-5">{% include "ups/project_dumps.html" %}</div>
+                </div>
+            {% endif %}
 
             {% if "run_command" in pr_view_perms %}
 

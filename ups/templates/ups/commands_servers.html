@@ -34,13 +34,15 @@
        href="javascript:;"
        class="small">Logs</a>
 
-    <a onclick="run_or_cron('RUN');
-                select_all('selected_servers', 'server-body', false, 'SS');
-                selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS');
-                Validation('check_updates', true, false, false, false)"
-       title="Check updates on this server"
-       href="javascript:;"
-       class="small">Updates</a>
+    {% if "run_update" in pr_view_perms %}
+        <a onclick="run_or_cron('RUN');
+                    select_all('selected_servers', 'server-body', false, 'SS');
+                    selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS');
+                    Validation('check_updates', true, false, false, false)"
+           title="Check updates on this server"
+           href="javascript:;"
+           class="small">Updates</a>
+    {% endif %}
 
     <a onclick="run_or_cron('RUN');
                 select_all('selected_servers', 'server-body', false, 'SS');

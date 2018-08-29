@@ -564,7 +564,7 @@ def run_cmd(data, project, user):
 	if commandick[name].permission:
 		check_perm_or404(commandick[name].permission, project, user)
 
-	if data['selected_date'] and data['selected_time']:
+	if data.get('selected_date', default=None) and data.get('selected_time', default=None):
 		date = '%s %s' % (data['selected_date'], data['selected_time'])
 
 	dick = {
