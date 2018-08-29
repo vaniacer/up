@@ -1,4 +1,5 @@
 # -*- encoding: utf-8 -*-
+from difflib import Differ
 
 from .forms import ProjectForm, ServerForm, UpdateForm, ScriptEditForm
 from django.contrib.auth.decorators import login_required
@@ -72,7 +73,7 @@ def edit_server_log(request, server):
 	add_event(dick)
 	
 	
-def edit_object_log(request, obj):
+def edit_object_log(request, obj, diff=''):
 	"""Записывает событие редактирования обновлений\скриптов в историю."""
 	dick = {
 		'exit': 0,
@@ -83,7 +84,11 @@ def edit_object_log(request, obj):
 		'uniq': get_key(),
 		'user': request.user,
 		'name': 'Del upd\scr',
-		'desc': 'Изменен файл:\n%s\n\nНазначение:\n%s' % (str(obj), obj.desc.encode('utf-8')),
+		'desc': 'Изменен файл:\n{file}\n\nНазначение:\n{desc}{diff}'.format(
+			desc=obj.desc.encode('utf-8'),
+			file=str(obj),
+			diff=diff,
+		),
 	}
 	add_event(dick)
 
@@ -205,10 +210,20 @@ def edit_script(request, script_id):
 				delete_object(request, script)
 			elif request.POST.get('ok'):
 				form.save()
-				body = open(str(filename), 'wb')
-				body.write(script.body.replace('\r\n', '\n').encode('utf-8'))
-				body.close()
-				edit_object_log(request, script)
+
+				with open(str(filename)) as f:
+					old_text = f.readlines(1)
+
+				new_text = script.body.replace('\r\n', '\n').encode('utf-8')
+
+				with open(str(filename), 'wb') as f:
+					f.write(new_text)
+
+				new_text = new_text.splitlines(1)
+				show_difference = Differ()
+				result = list(show_difference.compare(old_text, new_text))
+				diff = '\n\nИзменено:\n' + ''.join(result)
+				edit_object_log(request, script, diff)
 
 			return HttpResponseRedirect('/projects/%s/?%s' % (project.id, info(data)))
 
