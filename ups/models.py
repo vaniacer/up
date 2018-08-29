@@ -27,19 +27,24 @@ class Project(models.Model):
 		"""Добавляет доп. разрешения."""
 		permissions = (
 			("view_project", "Can view project"),
-			("edit_project", "Can edit project"),
+
 			("dld_update",   "Can download updates"),
 			("dld_script",   "Can download scripts"),
+
+			("add_script",   "Can add scripts to project"),
 			("add_server",   "Can add servers to project"),
 			("add_update",   "Can add updates to project"),
-			("add_script",   "Can add scripts to project"),
-			("run_script",   "Can run project's scripts"),
+
+			("edit_project", "Can edit project"),
 			("edit_server",  "Can edit projects's servers"),
 			("edit_update",  "Can edit projects's updates"),
 			("edit_script",  "Can edit projects's scripts"),
+
 			("del_server",   "Can delete project's servers"),
 			("del_update",   "Can delete project's updates"),
 			("del_script",   "Can delete project's scripts"),
+
+			("run_script",   "Can run project's scripts"),
 			("run_update",   "Can run update commands"),
 			("run_cron",     "Can run cron commands"),
 			("run_dump",     "Can run dump commands"),
