@@ -1,12 +1,14 @@
-<tr>
-    <td title="{{command.title}}"
-        class="{{command.style}}"
-        onclick="{{command.run}}
-                 return Validation('{{command.name}}',
-                                    {{command.srv}},
-                                    {{command.upd}},
-                                    {{command.job}},
-                                    {{command.scr}},
-                                    {{command.dmp}},
-                                    {{command.dgr}})">{{command.menu}}</td>
-</tr>
+{% if command.permission == '' or command.permission in pr_view_perms %}
+    <tr>
+        <td title="{{command.title}}"
+            class="{{command.style}}"
+            onclick="{{command.run}}
+                     return Validation('{{command.name}}',
+                                        {{command.srv}},
+                                        {{command.upd}},
+                                        {{command.job}},
+                                        {{command.scr}},
+                                        {{command.dmp}},
+                                        {{command.dgr}})">{{command.menu}}</td>
+    </tr>
+{% endif %}

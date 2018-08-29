@@ -17,21 +17,23 @@ class CommandClass:
 	"""Класс команды"""
 	def __init__(
 		self,
-		position=1,   # Position in commands list
-		section='',   # Section command will be placed to(scripts, updates, dumps, cron, servers)
-		style='',     # Class assigned to a command button(for example 'danger')
-		title='',     # Pop up help message(via title)
-		menu='',      # Command name in UI
-		name='',      # Command name(an internal command name)
-		run='',       # Pre validation command, if set to "run_or_cron('RUN');" then command will be run only
-		his=True,     # If True, command log will be saved to history
-		dgr='false',  # If true will show confirmation window
-		job='false',  # Check if some cron jobs selected
-		srv='false',  # Check if some servers selected
-		upd='false',  # Check if some updates selected
-		scr='false',  # Check if some scripts selected
-		dmp='false',  # Check if some dumps selected
+		permission='',  # Permission needed to run this command.
+		position=1,     # Position in commands list
+		section='',     # Section command will be placed to(scripts, updates, dumps, cron, servers)
+		style='',       # Class assigned to a command button(for example 'danger')
+		title='',       # Pop up help message(via title)
+		menu='',        # Command name in UI
+		name='',        # Command name(an internal command name)
+		run='',         # Pre validation command, if set to "run_or_cron('RUN');" then command will be run only
+		his=True,       # If True, command log will be saved to history
+		dgr='false',    # If true will show confirmation window
+		job='false',    # Check if some cron jobs selected
+		srv='false',    # Check if some servers selected
+		upd='false',    # Check if some updates selected
+		scr='false',    # Check if some scripts selected
+		dmp='false',    # Check if some dumps selected
 	):
+		self.permission = permission
 		self.position = position
 		self.section = section
 		self.style = style
@@ -110,6 +112,7 @@ commandick = {
 	),
 
 	'send_dump': CommandClass(
+		permission='send_dump',
 		position=30,
 		section='dump',
 		style='danger',
@@ -351,6 +354,18 @@ commandick = {
 		srv='true',
 	),
 
+	'peep_pass': CommandClass(
+		permission='peep_pass',
+		position=75,
+		section='server',
+		title='Peep passwords from file krista-users.properties.',
+		name='peep_pass',
+		menu='Peep passwords',
+		srv='true',
+		run="run_or_cron('RUN');",
+		his=False,
+	),
+
 	'tunnel': CommandClass(
 		position=80,
 		section='server',
@@ -523,6 +538,10 @@ def run_cmd(data, project, user):
 	tab = ''
 	date = run_date()
 	name = data['run_cmnd']
+
+	# Check command permission
+	if commandick[name].permission:
+		check_perm_or404(commandick[name].permission, project, user)
 
 	if data['selected_date'] and data['selected_time']:
 		date = '%s %s' % (data['selected_date'], data['selected_time'])

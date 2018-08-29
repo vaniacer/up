@@ -29,6 +29,8 @@ class Project(models.Model):
 			("view_project", "Can view project"),
 			("edit_project", "Can edit project"),
 			("run_command",  "Can run commands"),
+			("peep_pass",    "Can run command 'Peep passwords'"),
+			("send_dump",    "Can run command 'Send dump'"),
 			("dld_update",   "Can download updates"),
 			("dld_script",   "Can download scripts"),
 			("add_server",   "Can add servers to project"),
