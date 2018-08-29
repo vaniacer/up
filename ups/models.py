@@ -28,20 +28,34 @@ class Project(models.Model):
 		permissions = (
 			("view_project", "Can view project"),
 			("edit_project", "Can edit project"),
-			("run_command",  "Can run commands"),
-			("peep_pass",    "Can run command 'Peep passwords'"),
-			("send_dump",    "Can run command 'Send dump'"),
 			("dld_update",   "Can download updates"),
 			("dld_script",   "Can download scripts"),
 			("add_server",   "Can add servers to project"),
 			("add_update",   "Can add updates to project"),
 			("add_script",   "Can add scripts to project"),
+			("run_script",   "Can run project's scripts"),
 			("edit_server",  "Can edit projects's servers"),
 			("edit_update",  "Can edit projects's updates"),
 			("edit_script",  "Can edit projects's scripts"),
 			("del_server",   "Can delete project's servers"),
 			("del_update",   "Can delete project's updates"),
 			("del_script",   "Can delete project's scripts"),
+			("run_update",   "Can run update commands"),
+			("run_cron",     "Can run cron commands"),
+			("run_command",  "Can run commands"),
+			("peep_pass",    "Can run command 'Peep passwords'"),
+			("send_dump",    "Can run command 'Send dump'"),
+			("maintenance",  """ Can run maintenance commands:
+								'Maintenance ON/OFF',
+								'Reload config'
+								'Restart jboss'
+								'Start jboss'
+								'Stop jboss'
+								'Kill jboss'
+								'Backup base'
+								'Backup system'
+								'Backup full'
+							"""),
 		)
 		get_latest_by = 'date'
 

@@ -54,6 +54,7 @@ commandick = {
 
 	# Cron submenu }----------------------------------------------------------------------------------------------------
 	'cancel_job': CommandClass(
+		permission='run_cron',
 		position=4,
 		section='cron',
 		title='Cancel selected cron job(s).',
@@ -64,6 +65,7 @@ commandick = {
 	),
 
 	'permanent_job': CommandClass(
+		permission='run_cron',
 		position=3,
 		section='cron',
 		title='Make selected cron job(s) permanent.',
@@ -74,6 +76,7 @@ commandick = {
 	),
 
 	'once_job': CommandClass(
+		permission='run_cron',
 		position=2,
 		section='cron',
 		title='Make selected cron job(s) run once (default).',
@@ -84,6 +87,7 @@ commandick = {
 	),
 
 	'change_date': CommandClass(
+		permission='run_cron',
 		position=1,
 		section='cron',
 		title='Change selected cron job(s) run date and time. If date\\time not set, it will set current date\\time.',
@@ -125,6 +129,7 @@ commandick = {
 
 	# Updates section }-------------------------------------------------------------------------------------------------
 	'copy': CommandClass(
+		permission='run_update',
 		section='update',
 		title='Copy selected update(s) to selected server(s).',
 		name='copy',
@@ -133,6 +138,7 @@ commandick = {
 	),
 
 	'check_updates': CommandClass(
+		permission='run_update',
 		position=20,
 		section='update',
 		title='Check updates on selected server(s).',
@@ -144,6 +150,7 @@ commandick = {
 	),
 
 	'update': CommandClass(
+		permission='run_update',
 		position=30,
 		section='update',
 		style='danger',
@@ -156,6 +163,7 @@ commandick = {
 	),
 
 	'del_sel_updates': CommandClass(
+		permission='run_update',
 		position=40,
 		section='update',
 		title='Delete selected update(s) from selected server(s).',
@@ -166,6 +174,7 @@ commandick = {
 	),
 
 	'del_all_updates': CommandClass(
+		permission='run_update',
 		position=50,
 		section='update',
 		title='Delete all updates from selected server(s).',
@@ -176,6 +185,7 @@ commandick = {
 
 	# Script section }--------------------------------------------------------------------------------------------------
 	'run_script': CommandClass(
+		permission='run_script',
 		section='script',
 		title='Run selected script(s) on selected server(s).',
 		name='run_script',
@@ -188,6 +198,7 @@ commandick = {
 
 	# Maintenance
 	'maintenance_on': CommandClass(
+		permission='maintenance',
 		section='server',
 		style='danger',
 		title='Show "Maintenance" page on selected server(s).',
@@ -198,6 +209,7 @@ commandick = {
 	),
 
 	'maintenance_off': CommandClass(
+		permission='maintenance',
 		position=11,
 		section='server',
 		style='danger',
@@ -210,6 +222,7 @@ commandick = {
 
 	# Jboss
 	'reload': CommandClass(
+		permission='maintenance',
 		position=20,
 		section='server',
 		style='danger',
@@ -221,6 +234,7 @@ commandick = {
 	),
 
 	'restart': CommandClass(
+		permission='maintenance',
 		position=21,
 		section='server',
 		style='danger',
@@ -232,6 +246,7 @@ commandick = {
 	),
 
 	'start': CommandClass(
+		permission='maintenance',
 		position=22,
 		section='server',
 		style='danger',
@@ -243,6 +258,7 @@ commandick = {
 	),
 
 	'stop': CommandClass(
+		permission='maintenance',
 		position=23,
 		section='server',
 		style='danger',
@@ -254,6 +270,7 @@ commandick = {
 	),
 
 	'kill': CommandClass(
+		permission='maintenance',
 		position=24,
 		section='server',
 		style='danger',
@@ -319,6 +336,7 @@ commandick = {
 
 	# Backup
 	'backup_db': CommandClass(
+		permission='maintenance',
 		position=60,
 		section='server',
 		title='Database backup, files will be stored on the server(s) and downloaded to UpS.',
@@ -328,6 +346,7 @@ commandick = {
 	),
 
 	'backup_sys': CommandClass(
+		permission='maintenance',
 		position=61,
 		section='server',
 		title='System backup files will be stored on the server(s) and downloaded to UpS.',
@@ -337,6 +356,7 @@ commandick = {
 	),
 
 	'backup_full': CommandClass(
+		permission='maintenance',
 		position=62,
 		section='server',
 		title='System and DB backup files will be stored on the server(s) and downloaded to UpS.',
@@ -346,6 +366,7 @@ commandick = {
 	),
 
 	'copy_utils': CommandClass(
+		permission='maintenance',
 		position=70,
 		section='server',
 		title='Copy utils folder to selected server(s).',

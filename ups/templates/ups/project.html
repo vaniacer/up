@@ -33,15 +33,19 @@
                 <a href="javascript:;" title="{{project.desc}}">{{project}}</a>
             </li>
 
-            <li role="presentation" class="active">
-                <a title="Project scripts and servers"
-                   href="#scripts" aria-controls="scripts" role="tab" data-toggle="tab">Scripts</a>
-            </li>
+            {% if "run_script" in pr_view_perms %}
+                <li role="presentation" class="active">
+                    <a title="Project scripts and servers"
+                       href="#scripts" aria-controls="scripts" role="tab" data-toggle="tab">Scripts</a>
+                </li>
+            {% endif %}
 
-            <li role="presentation">
-                <a title="Project updates and servers"
-                   href="#updates" aria-controls="updates" role="tab" data-toggle="tab">Updates</a>
-            </li>
+            {% if "run_update" in pr_view_perms %}
+                <li role="presentation">
+                    <a title="Project updates and servers"
+                       href="#updates" aria-controls="updates" role="tab" data-toggle="tab">Updates</a>
+                </li>
+            {% endif %}
 
             <li role="presentation">
                 <a title="Project dumps and servers"
@@ -49,10 +53,14 @@
             </li>
 
             {% if "run_command" in pr_view_perms %}
-                <li role="presentation">
-                    <a title="Project cron jobs"
-                       href="#cron" aria-controls="cron" role="tab" data-toggle="tab">Cron</a>
-                </li>
+
+                {% if "run_cron" in pr_view_perms %}
+                    <li role="presentation">
+                        <a title="Project cron jobs"
+                           href="#cron" aria-controls="cron" role="tab" data-toggle="tab">Cron</a>
+                    </li>
+                {% endif %}
+
                 {% if logs %}
                     <li role="presentation">
                         <a title="Command logs"
@@ -72,22 +80,30 @@
         <!-- Tab panes -->
         <div class="tab-content">
 
-            <div role="tabpanel" class="tab-pane in active" id="scripts">
-                <div class="col-sm-5">{% include "ups/project_scripts.html" %}</div>
-            </div>
+            {% if "run_script" in pr_view_perms %}
+                <div role="tabpanel" class="tab-pane in active" id="scripts">
+                    <div class="col-sm-5">{% include "ups/project_scripts.html" %}</div>
+                </div>
+            {% endif %}
 
-            <div role="tabpanel" class="tab-pane" id="updates">
-                <div class="col-sm-5">{% include "ups/project_updates.html" %}</div>
-            </div>
+            {% if "run_update" in pr_view_perms %}
+                <div role="tabpanel" class="tab-pane" id="updates">
+                    <div class="col-sm-5">{% include "ups/project_updates.html" %}</div>
+                </div>
+            {% endif %}
 
             <div role="tabpanel" class="tab-pane" id="dumps">
                 <div class="col-sm-5">{% include "ups/project_dumps.html" %}</div>
             </div>
 
             {% if "run_command" in pr_view_perms %}
-                <div role="tabpanel" class="tab-pane" id="cron">
-                    <div class="col-sm-5">{% include "ups/project_cron.html" %}</div>
-                </div>
+
+                {% if "run_cron" in pr_view_perms %}
+                    <div role="tabpanel" class="tab-pane" id="cron">
+                        <div class="col-sm-5">{% include "ups/project_cron.html" %}</div>
+                    </div>
+                {% endif %}
+
                 {% if logs %}
                     <div role="tabpanel" class="tab-pane" id="logs">
                         <div class="col-sm-5">{% include "ups/project_logs.html" %}</div>
