@@ -28,7 +28,7 @@ class Project(models.Model):
 		permissions = (
 			("view_project", "Can view project"),
 
-			("dld_dump", "Can download dumps"),
+			("dld_dump",     "Can download dumps"),
 			("dld_update",   "Can download updates"),
 			("dld_script",   "Can download scripts"),
 
