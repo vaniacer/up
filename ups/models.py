@@ -54,7 +54,7 @@ class Project(models.Model):
 			("send_dump",    "Can run command 'Send dump'"),
 			("peep_pass",    "Can run command 'Peep passwords'"),
 			("maintenance",  """Can run maintenance commands:
-								Maintenance ON/OFF,
+								Maintenance ON/OFF
 								Reload config
 								Restart jboss
 								Start jboss

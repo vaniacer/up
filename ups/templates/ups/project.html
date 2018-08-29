@@ -101,7 +101,6 @@
             {% endif %}
 
             {% if "run_command" in pr_view_perms %}
-
                 {% if "run_cron" in pr_view_perms %}
                     <div role="tabpanel" class="tab-pane" id="cron">
                         <div class="col-sm-5">{% include "ups/project_cron.html" %}</div>
