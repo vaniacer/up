@@ -7,12 +7,20 @@ from django.db import models
 
 def update_upload_to(instance, filename):
 	"""Задаёт путь сохранения пакетов обновлений."""
-	return '%s/updates/%s/%s' % (conf.MEDIA_ROOT, instance.proj.name, filename)
+	return '{home}/updates/{project}/{file}'.format(
+		project=instance.proj.name,
+		home=conf.MEDIA_ROOT,
+		file=filename,
+	)
 
 
 def script_upload_to(instance, filename):
 	"""Задаёт путь сохранения пакетов обновлений."""
-	return '%s/scripts/%s/%s' % (conf.MEDIA_ROOT, instance.proj.name, filename)
+	return '{home}/scripts/{project}/{file}'.format(
+		project=instance.proj.name,
+		home=conf.MEDIA_ROOT,
+		file=filename,
+	)
 
 
 class Project(models.Model):
