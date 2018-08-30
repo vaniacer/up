@@ -104,7 +104,7 @@ def upload_update(request, project_id):
 
 @login_required
 def upload_dump(request, project_id):
-	"""Добавляет новое обновление."""
+	"""Загружает новое обновление."""
 	project = Project.objects.get(id=project_id)
 	check_perm_or404('run_dump', project, request.user)
 	data = request.GET
@@ -126,7 +126,7 @@ def upload_dump(request, project_id):
 
 @login_required
 def upload_script(request, project_id):
-	"""Добавляет новый скрипт."""
+	"""Загружает новый скрипт."""
 	project = Project.objects.get(id=project_id)
 	check_perm_or404('add_script', project, request.user)
 	data = request.GET
