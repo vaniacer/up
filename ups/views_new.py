@@ -2,6 +2,8 @@
 
 from .forms import ProjectForm, ServerForm, UpdateForm, ScriptAddForm, ScriptCreateForm, DumpForm
 from django.contrib.auth.decorators import login_required, permission_required
+from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.cache import cache_page
 from django.core.files.base import ContentFile
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
@@ -76,7 +78,9 @@ def new_server(request, project_id):
 	return render(request, 'ups/new_server.html', context)
 
 
+@csrf_protect
 @login_required
+@cache_page(60 * 15)
 def new_update(request, project_id):
 	"""Добавляет новое обновление."""
 	project = Project.objects.get(id=project_id)
@@ -102,11 +106,13 @@ def new_update(request, project_id):
 	return render(request, 'ups/new_update.html', context)
 
 
+@csrf_protect
 @login_required
+@cache_page(60 * 15)
 def add_dump(request, project_id):
 	"""Добавляет новое обновление."""
 	project = Project.objects.get(id=project_id)
-	# check_perm_or404('add_update', project, request.user)
+	check_perm_or404('run_dump', project, request.user)
 	data = request.GET
 
 	if request.method != 'POST':
