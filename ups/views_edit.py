@@ -15,7 +15,7 @@ from os import remove
 
 
 def delete_project(project):
-	"""Удаляет проект c файлами обновлений и скриптами."""
+	"""Удаляет проект c файлами обновлений, скриптами и дампами."""
 	folders = ['updates', 'scripts', 'dumps']
 	home = conf.MEDIA_ROOT
 	for folder in folders:
