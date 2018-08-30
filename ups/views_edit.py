@@ -83,7 +83,7 @@ def edit_object_log(request, obj, diff=''):
 		'proj': obj.proj,
 		'uniq': get_key(),
 		'user': request.user,
-		'name': 'Del upd\scr',
+		'name': 'Edit upd\scr',
 		'desc': 'Изменен файл:\n{file}\n\nНазначение:\n{desc}{diff}'.format(
 			desc=obj.desc.encode('utf-8'),
 			file=str(obj),
@@ -221,7 +221,7 @@ def edit_script(request, script_id):
 				show_difference = Differ()
 				new_text = new_text.splitlines(1)
 				result = list(show_difference.compare(old_text, new_text))
-				diff = '\n\nИзменено:\n' + ''.join(result)
+				diff = '\n\nИзменено:\n%s' % ''.join(result)
 				edit_object_log(request, script, diff)
 
 			return HttpResponseRedirect('/projects/%s/?%s' % (project.id, info(data)))
