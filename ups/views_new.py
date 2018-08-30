@@ -12,6 +12,7 @@ from django.shortcuts import render
 from commands import get_key
 from .models import Project
 from .commands import info
+from os import remove
 
 
 def handle_uploaded_dump(dump_file, projectname):
@@ -147,7 +148,12 @@ def upload_script(request, project_id):
 			with open(str(script.file), 'rU') as f:
 				script.body = f.read()
 			script.flnm = script.file.name.split('/')[-1]
-			script.save()
+			try:
+				script.save()
+			except ValueError:
+				remove(str(script.file))
+				script.delete()
+				return render(request, 'ups/500.html')
 
 			return HttpResponseRedirect('/projects/%s/?%s' % (project.id, info(data)))
 
