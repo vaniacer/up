@@ -11,13 +11,15 @@ from django.shortcuts import render, get_object_or_404
 from .models import Project, Update, Script, History
 from django.conf import settings as conf
 from wsgiref.util import FileWrapper
+from re import search, IGNORECASE
 from mimetypes import guess_type
 from .cron import get_cron_logs
 from operator import itemgetter
+from os.path import join as opj
 from subprocess import call
 from .dump import get_dumps
-import os
-import re
+from os.path import getsize
+from os import remove
 
 
 def index(request):
@@ -48,7 +50,7 @@ def delete_files(files):
 	"""Удаляет список файлов."""
 	for f in files:
 		try:
-			os.remove(f)
+			remove(f)
 		except OSError:
 			continue
 
@@ -56,8 +58,8 @@ def delete_files(files):
 def download(file_path, file_name):
 	"""Потоковая качалка"""
 	file_wrap = FileWrapper(open(file_path, 'rb'), blksize=8192)
-	file_size = os.path.getsize(file_path)
 	file_type = guess_type(file_path)
+	file_size = getsize(file_path)
 
 	response = StreamingHttpResponse(file_wrap, content_type=file_type)
 	response['Content-Disposition'] = "attachment; filename=%s" % file_name
@@ -110,7 +112,7 @@ def cancel(request):
 	check_perm_or404('view_project', current_project, request.user)
 
 	logids = data.getlist('logid')
-	command = [os.path.join(conf.BASE_DIR, '../env/bin/python'), 'killer.py']
+	command = [opj(conf.BASE_DIR, '../env/bin/python'), 'killer.py']
 	command.extend(logids)
 	call(command)
 
@@ -259,7 +261,7 @@ def project(request, project_id):
 
 	dmplist_filter = data.get('dumps', '')
 	dmplist = sorted(get_dumps(current_project.name) or '', key=itemgetter('date'), reverse=True)
-	dmplist_filtered = [dump for dump in dmplist if re.search(dmplist_filter, dump['name'], re.IGNORECASE)]
+	dmplist_filtered = [dump for dump in dmplist if search(dmplist_filter, dump['name'], IGNORECASE)]
 	dmplist_filter_form = DumpsFilterForm(initial=data)
 
 	hide_info_form = HideInfoForm(initial=data)
@@ -288,11 +290,11 @@ def project(request, project_id):
 		jobs = current_project.job_set.order_by('serv')
 		jobs_filter = data.get('jobs', '')
 		jobs_filtered = [
-			job for job in jobs if re.search(jobs_filter, '{jobname!s} on {servername!s} {time!s}'.format(
+			job for job in jobs if search(jobs_filter, '{jobname!s} on {servername!s} {time!s}'.format(
 				servername=job.serv,
 				jobname=job,
 				time=job.cdat,
-			), re.IGNORECASE)
+			), IGNORECASE)
 		]
 		jobs_filter_form = JobsFilterForm(initial=data)
 
