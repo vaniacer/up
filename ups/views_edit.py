@@ -10,15 +10,16 @@ from django.core.urlresolvers import reverse
 from .permissions import check_perm_or404
 from django.conf import settings as conf
 from difflib import Differ
-import shutil
-import os
+from shutil import rmtree
+from os import remove
 
 
 def delete_project(project):
 	"""Удаляет проект c файлами обновлений и скриптами."""
-	shutil.rmtree(conf.MEDIA_ROOT + '/updates/' + project.name, ignore_errors=True)
-	shutil.rmtree(conf.MEDIA_ROOT + '/scripts/' + project.name, ignore_errors=True)
-	shutil.rmtree(conf.MEDIA_ROOT + '/dumps/' + project.name, ignore_errors=True)
+	folders = ['updates', 'scripts', 'dumps']
+	home = conf.MEDIA_ROOT
+	for folder in folders:
+		rmtree('{home}/{folder}/{name}'.format(home=home, name=project.name, folder=folder), ignore_errors=True)
 	project.delete()
 
 
@@ -53,7 +54,7 @@ def delete_object(request, obj):
 		'desc': 'Удален файл:\n%s\n\nНазначение:\n%s' % (str(obj), obj.desc.encode('utf-8')),
 	}
 	add_event(dick)
-	os.remove(str(obj.file))
+	remove(str(obj.file))
 	obj.delete()
 
 
@@ -176,7 +177,7 @@ def edit_update(request, update_id):
 				if form.files:
 					# если при редактировании прикладывается новый файл
 					# удаляю старый чтобы не плодить файлы-призроки О_о
-					os.remove(str(filename))
+					remove(str(filename))
 
 				form.save()
 				edit_object_log(request, update)
