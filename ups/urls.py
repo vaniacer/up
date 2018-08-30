@@ -33,16 +33,16 @@ urlpatterns = [
 	url(r'^edit_server/(?P<server_id>\d+)/$', views_edit.edit_server, name='edit_server'),
 
 	# Страница для добавления нового обновления
-	url(r'^new_update/(?P<project_id>\d+)/$', views_new.new_update, name='new_update'),
+	url(r'^new_update/(?P<project_id>\d+)/$', views_new.upload_update, name='new_update'),
 	# Страница для редактирования обновления
 	url(r'^edit_update/(?P<update_id>\d+)/$', views_edit.edit_update, name='edit_update'),
 	# Скачать файл обновления.
 	url(r'^download_upd/(?P<project_id>\d+)/(?P<update_id>\d+)$', views.download_upd, name='download_upd'),
 
 	# Страница для добавления нового скрипта
-	url(r'^add_script/(?P<project_id>\d+)/$', views_new.add_script, name='add_script'),
+	url(r'^add_script/(?P<project_id>\d+)/$', views_new.upload_script, name='add_script'),
 	# Страница для создания скрипта
-	url(r'^new_script/(?P<project_id>\d+)/$', views_new.new_script, name='new_script'),
+	url(r'^new_script/(?P<project_id>\d+)/$', views_new.create_script, name='new_script'),
 	# Страница для редактирования скрипта
 	url(r'^edit_script/(?P<script_id>\d+)/$', views_edit.edit_script, name='edit_script'),
 	# Скачать файл скрипта.
@@ -51,5 +51,5 @@ urlpatterns = [
 	# Скачать файл дампа базы.
 	url(r'^download_dump/(?P<project_id>\d+)/(?P<dump>.+)$', views.download_dump, name='download_dump'),
 	# Страница для добавления дампа
-	url(r'^add_dump/(?P<project_id>\d+)/$', views_new.add_dump, name='add_dump'),
+	url(r'^add_dump/(?P<project_id>\d+)/$', views_new.upload_dump, name='add_dump'),
 ]

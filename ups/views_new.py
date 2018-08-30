@@ -77,7 +77,7 @@ def new_server(request, project_id):
 
 
 @login_required
-def new_update(request, project_id):
+def upload_update(request, project_id):
 	"""Добавляет новое обновление."""
 	project = Project.objects.get(id=project_id)
 	check_perm_or404('add_update', project, request.user)
@@ -103,7 +103,7 @@ def new_update(request, project_id):
 
 
 @login_required
-def add_dump(request, project_id):
+def upload_dump(request, project_id):
 	"""Добавляет новое обновление."""
 	project = Project.objects.get(id=project_id)
 	check_perm_or404('run_dump', project, request.user)
@@ -125,7 +125,7 @@ def add_dump(request, project_id):
 
 
 @login_required
-def add_script(request, project_id):
+def upload_script(request, project_id):
 	"""Добавляет новый скрипт."""
 	project = Project.objects.get(id=project_id)
 	check_perm_or404('add_script', project, request.user)
@@ -144,10 +144,9 @@ def add_script(request, project_id):
 			script.proj = project
 			script.save()
 
-			body = open(str(script.file), 'rU')
+			with open(str(script.file), 'rU') as f:
+				script.body = f.read()
 			script.flnm = script.file.name.split('/')[-1]
-			script.body = body.read()
-			body.close()
 			script.save()
 
 			return HttpResponseRedirect('/projects/%s/?%s' % (project.id, info(data)))
@@ -157,7 +156,7 @@ def add_script(request, project_id):
 
 
 @login_required
-def new_script(request, project_id):
+def create_script(request, project_id):
 	"""Создает новый скрипт."""
 	project = Project.objects.get(id=project_id)
 	check_perm_or404('add_script', project, request.user)
