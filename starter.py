@@ -9,6 +9,7 @@ from datetime import datetime
 from os.path import join as opj
 from importlib import import_module
 from argparse import ArgumentParser
+from modules.log_cutter import log_cutter
 from conf import dbname, dbhost, dbpass, dbport, dbuser
 from up.settings import LOG_FILE, ERR_FILE, PID_FILE, BASE_DIR, CRON_DIR
 
@@ -74,14 +75,7 @@ def make_history():
 	with open(logfile) as f:
 		log_body = f.read()
 
-	log_body = log_body.decode('utf-8', errors='replace')
-	log_size = len(log_body)
-	if log_size > 4000:
-		log_body = u'{head!s}{first!s}\n...\n{last!s}'.format(
-			head='<b>Log is too long to store in history, cutting</b>\n',
-			first=log_body[:2000],
-			last=log_body[-2000:],
-		)
+	log_body = log_cutter(log_body)
 
 	types = {
 		'his': {'tab': 'ups_history', 'col': "uniq = '%s'" % args.key, 'ext': ', exit = %s' % error},
