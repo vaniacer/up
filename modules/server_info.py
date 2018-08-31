@@ -43,7 +43,7 @@ def run(args, log):
 			netstat -tulpn
 	
 			printf '\n<b>Processes:</b>\n'
-			top -bn1 | head -n30
+			COLUMNS=120 top -bcn1 | head -n30
 		""".format(server=args.server)
 	]
 
