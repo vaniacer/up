@@ -36,7 +36,6 @@ def run(args, log):
 			error = up_error
 
 	if args.update:
-		message('\n<b>Копирую файл(ы):</b>\n', log)
 		upload = {'file': args.update, 'dest': upd_dir}
 		updates = ['{dir}/{upd}'.format(dir=upd_dir, upd=update.split('/')[-1]) for update in args.update]
 		up_error = upload_file(upload, args.server, log)
