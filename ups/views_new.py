@@ -141,6 +141,10 @@ def upload_script(request, project_id):
 
 		if form.is_valid():
 			script = form.save(commit=False)
+			# Check permission to upload this type of scripts, this also prevent attempts to add unknown script types
+			perm = 'add_{type}'.format(type=script.file.name.split('.')[-1])
+			check_perm_or404(perm, project, request.user)
+
 			script.user = request.user
 			script.proj = project
 			script.save()
@@ -177,7 +181,7 @@ def create_script(request, project_id):
 
 		if form.is_valid():
 			script = form.save(commit=False)
-			# Check permission to run this type of scripts, this also prevent attempts to add unknown script types
+			# Check permission to create this type of scripts, this also prevent attempts to add unknown script types
 			perm = 'add_{type}'.format(type=script.flnm.split('.')[-1])
 			check_perm_or404(perm, project, request.user)
 
