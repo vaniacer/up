@@ -21,8 +21,8 @@ def get_cron_logs():
 			with open(opj(conf.CRON_DIR, filename)) as f:
 				out = f.readlines()
 
-			err = ''.join(out[-2].split()[1:])
 			dat = ' '.join(out[-1].split()[1:])
+			err = ''.join(out[-2].split()[1:])
 			out = ''.join(out[:-2])
 			log = log_cutter(out)
 
