@@ -18,6 +18,7 @@ def run(args, log):
 	error = 0
 	updates = None
 	home = expanduser('~')
+	upd_dir = '{wdir}/updates/new'.format(wdir=args.wdir)
 	tmp_dir = '{wdir}/temp/{key}'.format(wdir=args.wdir, key=args.key)
 	dbhost, dbport, dbname, dbuser, dbpass = '', '', '', '', ''
 
@@ -28,9 +29,13 @@ def run(args, log):
 
 	files_to_upload = [script for script in args.script if '.yml' not in script]  # remove .yml from list
 	if args.update:
-		files_to_upload.extend(args.update)
-		updates = ['{tmp}/{upd}'.format(tmp=tmp_dir, upd=update.split('/')[-1]) for update in args.update]
+		upload = {'file': args.update, 'dest': upd_dir}
+		updates = ['{dir}/{upd}'.format(dir=upd_dir, upd=update.split('/')[-1]) for update in args.update]
+		message('\n<b>Копирую файл(ы):\n{}</b>\n'.format('\n'.join(updates)), log)
 		updates = ' '.join(updates)
+		up_error = upload_file(upload, args.server, log)
+		if up_error > 0:
+			error = up_error
 
 	if files_to_upload:
 		upload = {'file': files_to_upload, 'dest': tmp_dir}
@@ -40,7 +45,7 @@ def run(args, log):
 		if up_error > 0:
 			error = up_error
 
-	for script, options in map(None, args.script, args.options):
+	for script, options in zip(args.script, args.options):
 		filename = script.split('/')[-1]
 		script_type = script.split('.')[-1]
 		filepath = '{tmp}/{file}'.format(tmp=tmp_dir, file=filename)
