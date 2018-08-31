@@ -39,7 +39,6 @@ def run(args, log):
 		message('\n<b>Копирую файл(ы):</b>\n', log)
 		upload = {'file': args.update, 'dest': upd_dir}
 		updates = ['{dir}/{upd}'.format(dir=upd_dir, upd=update.split('/')[-1]) for update in args.update]
-		updates = ' '.join(updates)
 		up_error = upload_file(upload, args.server, log)
 		if up_error > 0:
 			error = up_error
@@ -50,7 +49,7 @@ def run(args, log):
 		filepath = '{tmp}/{file}'.format(tmp=tmp_dir, file=filename)
 		message('\n<b>Выполняю скрипт {file}</b>\n'.format(file=filename), log)
 		if updates:
-			options += updates
+			options += ' '.join(updates)
 
 		# ------------------{ Run bash script }--------------------------------
 		if script_type == 'sh':
