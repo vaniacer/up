@@ -182,6 +182,9 @@ def create_script(request, project_id):
 			script.user = request.user
 			script.file = new_file
 			script.proj = project
+			perm = 'add_{type}'.format(type=script.flnm.split('.')[-1])
+			print perm
+			check_perm_or404(perm, project, request.user)
 			script.save()
 
 			return HttpResponseRedirect('/projects/%s/?%s' % (project.id, info(data)))

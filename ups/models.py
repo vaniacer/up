@@ -40,9 +40,13 @@ class Project(models.Model):
 			("dld_update",   "Can download updates"),
 			("dld_script",   "Can download scripts"),
 
-			("add_script",   "Can add scripts to project"),
 			("add_server",   "Can add servers to project"),
 			("add_update",   "Can add updates to project"),
+			("add_script",   "Can add scripts to project"),
+			("add_sql",      "Can add SQL scripts to project"),
+			("add_yml",      "Can add YAML scripts to project"),
+			("add_sh",       "Can add BASH scripts to project"),
+			("add_py",       "Can add Python scripts to project"),
 
 			("edit_project", "Can edit project"),
 			("edit_server",  "Can edit projects's servers"),
