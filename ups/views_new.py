@@ -177,14 +177,15 @@ def create_script(request, project_id):
 
 		if form.is_valid():
 			script = form.save(commit=False)
+			# Check permission to run this type of scripts, this also prevent attempts to add unknown script types
+			perm = 'add_{type}'.format(type=script.flnm.split('.')[-1])
+			check_perm_or404(perm, project, request.user)
+
 			new_file = ContentFile(script.body.replace('\r\n', '\n').encode('utf-8'))
 			new_file.name = script.flnm
 			script.user = request.user
 			script.file = new_file
 			script.proj = project
-			perm = 'add_{type}'.format(type=script.flnm.split('.')[-1])
-			print perm
-			check_perm_or404(perm, project, request.user)
 			script.save()
 
 			return HttpResponseRedirect('/projects/%s/?%s' % (project.id, info(data)))
