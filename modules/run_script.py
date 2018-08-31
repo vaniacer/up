@@ -28,19 +28,18 @@ def run(args, log):
 		)
 
 	files_to_upload = [script for script in args.script if '.yml' not in script]  # remove .yml from list
-	if args.update:
-		upload = {'file': args.update, 'dest': upd_dir}
-		updates = ['{dir}/{upd}'.format(dir=upd_dir, upd=update.split('/')[-1]) for update in args.update]
-		message('\n<b>Копирую файл(ы):\n{}</b>\n'.format('\n'.join(updates)), log)
-		updates = ' '.join(updates)
+	if files_to_upload:
+		message('\n<b>Копирую файл(ы):</b>\n', log)
+		upload = {'file': files_to_upload, 'dest': tmp_dir}
 		up_error = upload_file(upload, args.server, log)
 		if up_error > 0:
 			error = up_error
 
-	if files_to_upload:
-		upload = {'file': files_to_upload, 'dest': tmp_dir}
-		upfiles = '\n'.join(script.split('/')[-1] for script in files_to_upload)
-		message('\n<b>Копирую файл(ы):\n{}</b>\n'.format(upfiles), log)
+	if args.update:
+		message('\n<b>Копирую файл(ы):</b>\n', log)
+		upload = {'file': args.update, 'dest': upd_dir}
+		updates = ['{dir}/{upd}'.format(dir=upd_dir, upd=update.split('/')[-1]) for update in args.update]
+		updates = ' '.join(updates)
 		up_error = upload_file(upload, args.server, log)
 		if up_error > 0:
 			error = up_error
