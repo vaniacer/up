@@ -37,7 +37,6 @@ def get_cron_logs():
 				'exit': err,
 				'serv': job.serv,
 				'cron': filename,
-
 				'name': job.name,
 				'user': job.user,
 				'proj': job.proj,
