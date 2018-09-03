@@ -56,6 +56,7 @@ class Project(models.Model):
 			("del_server",   "Can delete project's servers"),
 			("del_update",   "Can delete project's updates"),
 			("del_script",   "Can delete project's scripts"),
+			("del_dump",     "Can delete project's dumps"),
 
 			("run_command",  "Can run commands"),
 			("run_cron",     "Can run cron commands"),

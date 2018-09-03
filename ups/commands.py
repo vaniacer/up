@@ -107,6 +107,7 @@ commandick = {
 	),
 
 	'del_dump': CommandClass(
+		permission='del_dump',
 		position=20,
 		section='dump',
 		title='Delete selected dump(s) from UpS.',
