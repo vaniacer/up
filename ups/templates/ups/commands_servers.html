@@ -44,6 +44,16 @@
            class="small">Updates</a>
     {% endif %}
 
+    {% if "peep_pass" in pr_view_perms %}
+        <a onclick="run_or_cron('RUN');
+                    select_all('selected_servers', 'server-body', false, 'SS');
+                    selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS');
+                    Validation('peep_pass', true, false, false, false)"
+           title="Peep passwords from file krista-users.properties"
+           href="javascript:;"
+           class="small">Pass</a>
+    {% endif %}
+
     <a onclick="run_or_cron('RUN');
                 select_all('selected_servers', 'server-body', false, 'SS');
                 selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS');
