@@ -23,10 +23,9 @@ ERR_FILE = os.path.join(BASE_DIR, '../logs/run/err')
 PID_FILE = os.path.join(BASE_DIR, '../logs/run/pid')
 CRON_DIR = os.path.join(BASE_DIR, '../logs/cron/')
 RUN_DIR = os.path.join(BASE_DIR,  '../logs/run/')
-STATIC_ROOT = 'staticfiles'
-STATICFILES_DIRS = (
-	os.path.join(BASE_DIR, 'static'),
-)
+
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DUMP_DIR = os.path.join(MEDIA_ROOT, 'dumps')
