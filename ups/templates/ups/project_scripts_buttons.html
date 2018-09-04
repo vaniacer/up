@@ -66,18 +66,12 @@
                     <li><a href="javascript:;" onclick="filter_by('id_scripts', '')"    >All   </a></li>
 
                     <li class="divider"></li>
-                        {% if "add_sql" in pr_view_perms %}
-                            <li><a href="javascript:;" onclick="filter_by('id_scripts', '\\.sql')">SQL   </a></li>
-                        {% endif %}
-                        {% if "add_yml" in pr_view_perms %}
-                            <li><a href="javascript:;" onclick="filter_by('id_scripts', '\\.yml')">YAML  </a></li>
-                        {% endif %}
-                        {% if "add_sh" in pr_view_perms %}
-                            <li><a href="javascript:;" onclick="filter_by('id_scripts', '\\.sh')" >BASH  </a></li>
-                        {% endif %}
-                        {% if "add_py" in pr_view_perms %}
-                            <li><a href="javascript:;" onclick="filter_by('id_scripts', '\\.py')" >Python</a></li>
-                        {% endif %}
+
+                    <li><a href="javascript:;" onclick="filter_by('id_scripts', '\\.sql')">SQL   </a></li>
+                    <li><a href="javascript:;" onclick="filter_by('id_scripts', '\\.yml')">YAML  </a></li>
+                    <li><a href="javascript:;" onclick="filter_by('id_scripts', '\\.sh')" >BASH  </a></li>
+                    <li><a href="javascript:;" onclick="filter_by('id_scripts', '\\.py')" >Python</a></li>
+
                     <li class="divider"></li>
 
                     {% for SCR in scripts %}
