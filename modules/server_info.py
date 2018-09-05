@@ -40,7 +40,7 @@ def run(args, log):
 			who
 	
 			printf '<b>\nPort usage info:</b>\n'
-			netstat -tulpn
+			netstat -tulpn 2> /dev/null
 	
 			printf '\n<b>Processes:</b>\n'
 			COLUMNS=120 top -bcn1 | head -n30
