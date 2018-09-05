@@ -29,4 +29,5 @@ def warning(txt, pause, log):
 	for i in range(pause):
 		message('\n%s' % i, log)
 		sleep(1)
+
 	message('\n\nOk, i warned you!)\n', log)
