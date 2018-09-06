@@ -12,7 +12,7 @@ from time import sleep
 
 
 def description(args, log):
-	update = args.update[:1]
+	update = args.update[0]
 	log.write('\nUpdate server {server} with update {update}\n'.format(
 		update=update.split('/')[-1],
 		server=args.server,
@@ -22,7 +22,7 @@ def description(args, log):
 def run(args, log):
 
 	error = 0
-	update = args.update[:1]
+	update = args.update[0]
 	upd_dir = '{wdir}/updates/update'.format(wdir=args.wdir)
 	tmp_dir = '{wdir}/temp/{key}'.format(wdir=args.wdir, key=args.key)
 
@@ -30,7 +30,7 @@ def run(args, log):
 		command = ['ssh', args.server, 'rm -rf "{tmp}" "{updir}"'.format(tmp=tmp_dir, updir=upd_dir)]
 		my_call(command, log)
 
-	upload = {'file': update, 'dest': tmp_dir}
+	upload = {'file': [update], 'dest': tmp_dir}
 	error += upload_file(upload, args.server, log)
 	if error:
 		remove_tmp(args, log)
