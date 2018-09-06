@@ -26,15 +26,20 @@ def run(args, log):
 	upd_dir = '{wdir}/updates/update'.format(wdir=args.wdir)
 	tmp_dir = '{wdir}/temp/{key}'.format(wdir=args.wdir, key=args.key)
 
+	def error_exit(args, log, error):
+		remove_tmp = ['ssh', args.server, 'rm -rf "{tmp}" "{updir}"'.format(tmp=tmp_dir, updir=upd_dir)]
+		my_call(remove_tmp, log)
+		return error
+
 	upload = {'file': update, 'dest': tmp_dir}
 	up_error = upload_file(upload, args.server, log)
 	if up_error > 0:
-		return up_error
+		error_exit(args, log, up_error)
 
 	update_command = [
 		'ssh', args.server,
 		''' cd {wdir}
-			[[ -d {updir} ]] && rm -r {updir}
+			[[ -d "{updir}" ]] && rm -r "{updir}"
 			err_exit () {{ error=$?; printf "$1"; exit $error; }}
 			
 			printf "\nUnzip files.\n"
@@ -84,22 +89,22 @@ def run(args, log):
 	# Start dummy page
 	m_error = maintenance_on(args, log)
 	if m_error > 0:
-		error = m_error
+		error_exit(args, log, m_error)
 
 	# Stoping jboss instance
 	stop_error = jboss_stop(args, log)
 	if stop_error > 0:
-		error = stop_error
+		error_exit(args, log, stop_error)
 
 	# Running update
 	cmd1_error = my_call(update_command, log)
 	if cmd1_error > 0:
-		error = cmd1_error
+		error_exit(args, log, cmd1_error)
 
 	# Starting jboss
 	start_error = jboss_start(args, log)
 	if start_error > 0:
-		error = start_error
+		error_exit(args, log, start_error)
 
 	# Need make pause
 	sleep(10)
@@ -107,21 +112,18 @@ def run(args, log):
 	# Running data imports
 	cmd2_error = my_call(import_command, log)
 	if cmd2_error > 0:
-		error = cmd2_error
+		error_exit(args, log, cmd2_error)
 
 	# Restarting jboss
 	restart_error = jboss_restart(args, log)
 	if restart_error > 0:
-		error = restart_error
+		error_exit(args, log, restart_error)
 
 	# Stop dummy page
 	m_error = maintenance_off(args, log)
 	if m_error > 0:
-		error = m_error
-
-	remove_tmp = ['ssh', args.server, 'rm -rf {tmp} {updir}'.format(tmp=tmp_dir, updir=upd_dir)]
-	my_call(remove_tmp, log)
+		error_exit(args, log, m_error)
 
 	message('\nUpdate complete\n', log)
 
-	return error
+	error_exit(args, log, error)
