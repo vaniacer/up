@@ -26,15 +26,15 @@ def run(args, log):
 	upd_dir = '{wdir}/updates/update'.format(wdir=args.wdir)
 	tmp_dir = '{wdir}/temp/{key}'.format(wdir=args.wdir, key=args.key)
 
-	def error_exit(args, log, error):
+	def error_exit(args, log):
 		remove_tmp = ['ssh', args.server, 'rm -rf "{tmp}" "{updir}"'.format(tmp=tmp_dir, updir=upd_dir)]
 		my_call(remove_tmp, log)
 		return error
 
 	upload = {'file': update, 'dest': tmp_dir}
-	up_error = upload_file(upload, args.server, log)
-	if up_error > 0:
-		error_exit(args, log, up_error)
+	error += upload_file(upload, args.server, log)
+	if error:
+		error_exit(args, log)
 
 	update_command = [
 		'ssh', args.server,
@@ -87,43 +87,43 @@ def run(args, log):
 	]
 
 	# Start dummy page
-	m_error = maintenance_on(args, log)
-	if m_error > 0:
-		error_exit(args, log, m_error)
+	error += maintenance_on(args, log)
+	if error:
+		error_exit(args, log)
 
 	# Stoping jboss instance
-	stop_error = jboss_stop(args, log)
-	if stop_error > 0:
-		error_exit(args, log, stop_error)
+	error += jboss_stop(args, log)
+	if error:
+		error_exit(args, log)
 
 	# Running update
-	cmd1_error = my_call(update_command, log)
-	if cmd1_error > 0:
-		error_exit(args, log, cmd1_error)
+	error += my_call(update_command, log)
+	if error:
+		error_exit(args, log)
 
 	# Starting jboss
-	start_error = jboss_start(args, log)
-	if start_error > 0:
-		error_exit(args, log, start_error)
+	error += jboss_start(args, log)
+	if error:
+		error_exit(args, log)
 
 	# Need make pause
 	sleep(10)
 
 	# Running data imports
-	cmd2_error = my_call(import_command, log)
-	if cmd2_error > 0:
-		error_exit(args, log, cmd2_error)
+	error += my_call(import_command, log)
+	if error:
+		error_exit(args, log)
 
 	# Restarting jboss
-	restart_error = jboss_restart(args, log)
-	if restart_error > 0:
-		error_exit(args, log, restart_error)
+	error = jboss_restart(args, log)
+	if error:
+		error_exit(args, log)
 
 	# Stop dummy page
-	m_error = maintenance_off(args, log)
-	if m_error > 0:
-		error_exit(args, log, m_error)
+	error += maintenance_off(args, log)
+	if error:
+		error_exit(args, log)
 
 	message('\nUpdate complete\n', log)
 
-	error_exit(args, log, error)
+	error_exit(args, log)
