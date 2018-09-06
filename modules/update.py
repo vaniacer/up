@@ -23,17 +23,12 @@ def run(args, log):
 
 	error = 0
 	update = args.update[0]
+	upl_dir = '{wdir}/updates/new'.format(wdir=args.wdir)
 	upd_dir = '{wdir}/updates/update'.format(wdir=args.wdir)
-	tmp_dir = '{wdir}/temp/{key}'.format(wdir=args.wdir, key=args.key)
 
-	def remove_tmp(args, log):
-		command = ['ssh', args.server, 'rm -rf "{tmp}" "{updir}"'.format(tmp=tmp_dir, updir=upd_dir)]
-		my_call(command, log)
-
-	upload = {'file': [update], 'dest': tmp_dir}
+	upload = {'file': [update], 'dest': upl_dir}
 	error += upload_file(upload, args.server, log)
 	if error:
-		remove_tmp(args, log)
 		return error
 
 	update_command = [
@@ -43,7 +38,7 @@ def run(args, log):
 			err_exit () {{ error=$?; printf "$1"; exit $error; }}
 			
 			printf "\nUnzip files.\n"
-			unzip -o {tmp}/{file} -d updates > /dev/null \
+			unzip -o {upl_dir}/{file} -d updates > /dev/null \
 				|| err_exit '\nОшибка извлечения файлов из архива!\n'
 	
 			printf "\nCopy files.\n"
@@ -64,9 +59,9 @@ def run(args, log):
 		
 		'''.format(
 			file=update.split('/')[-1],
+			upl_dir=upl_dir,
 			wdir=args.wdir,
 			updir=upd_dir,
-			tmp=tmp_dir,
 		)
 	]
 
@@ -89,25 +84,25 @@ def run(args, log):
 	# Start dummy page
 	error += maintenance_on(args, log)
 	if error:
-		remove_tmp(args, log)
+
 		return error
 
 	# Stoping jboss instance
 	error += jboss_stop(args, log)
 	if error:
-		remove_tmp(args, log)
+
 		return error
 
 	# Running update
 	error += my_call(update_command, log)
 	if error:
-		remove_tmp(args, log)
+
 		return error
 
 	# Starting jboss
 	error += jboss_start(args, log)
 	if error:
-		remove_tmp(args, log)
+
 		return error
 
 	# Need make pause
@@ -116,19 +111,19 @@ def run(args, log):
 	# Running data imports
 	error += my_call(import_command, log)
 	if error:
-		remove_tmp(args, log)
+
 		return error
 
 	# Restarting jboss
 	error = jboss_restart(args, log)
 	if error:
-		remove_tmp(args, log)
+
 		return error
 
 	# Stop dummy page
 	error += maintenance_off(args, log)
 	if error:
-		remove_tmp(args, log)
+
 		return error
 
 	message('\nUpdate complete\n', log)
