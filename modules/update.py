@@ -26,15 +26,15 @@ def run(args, log):
 	upd_dir = '{wdir}/updates/update'.format(wdir=args.wdir)
 	tmp_dir = '{wdir}/temp/{key}'.format(wdir=args.wdir, key=args.key)
 
-	def error_exit(args, log):
-		remove_tmp = ['ssh', args.server, 'rm -rf "{tmp}" "{updir}"'.format(tmp=tmp_dir, updir=upd_dir)]
-		my_call(remove_tmp, log)
-		return error
+	def remove_tmp(args, log):
+		command = ['ssh', args.server, 'rm -rf "{tmp}" "{updir}"'.format(tmp=tmp_dir, updir=upd_dir)]
+		my_call(command, log)
 
 	upload = {'file': update, 'dest': tmp_dir}
 	error += upload_file(upload, args.server, log)
 	if error:
-		error_exit(args, log)
+		remove_tmp(args, log)
+		return error
 
 	update_command = [
 		'ssh', args.server,
@@ -89,22 +89,26 @@ def run(args, log):
 	# Start dummy page
 	error += maintenance_on(args, log)
 	if error:
-		error_exit(args, log)
+		remove_tmp(args, log)
+		return error
 
 	# Stoping jboss instance
 	error += jboss_stop(args, log)
 	if error:
-		error_exit(args, log)
+		remove_tmp(args, log)
+		return error
 
 	# Running update
 	error += my_call(update_command, log)
 	if error:
-		error_exit(args, log)
+		remove_tmp(args, log)
+		return error
 
 	# Starting jboss
 	error += jboss_start(args, log)
 	if error:
-		error_exit(args, log)
+		remove_tmp(args, log)
+		return error
 
 	# Need make pause
 	sleep(10)
@@ -112,18 +116,22 @@ def run(args, log):
 	# Running data imports
 	error += my_call(import_command, log)
 	if error:
-		error_exit(args, log)
+		remove_tmp(args, log)
+		return error
 
 	# Restarting jboss
 	error = jboss_restart(args, log)
 	if error:
-		error_exit(args, log)
+		remove_tmp(args, log)
+		return error
 
 	# Stop dummy page
 	error += maintenance_off(args, log)
 	if error:
-		error_exit(args, log)
+		remove_tmp(args, log)
+		return error
 
 	message('\nUpdate complete\n', log)
 
-	error_exit(args, log)
+	remove_tmp(args, log)
+	return error
