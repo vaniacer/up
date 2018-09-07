@@ -84,25 +84,21 @@ def run(args, log):
 	# Start dummy page
 	error += maintenance_on(args, log)
 	if error:
-
 		return error
 
 	# Stoping jboss instance
 	error += jboss_stop(args, log)
 	if error:
-
 		return error
 
 	# Running update
 	error += my_call(update_command, log)
 	if error:
-
 		return error
 
 	# Starting jboss
 	error += jboss_start(args, log)
 	if error:
-
 		return error
 
 	# Need make pause
@@ -111,19 +107,16 @@ def run(args, log):
 	# Running data imports
 	error += my_call(import_command, log)
 	if error:
-
 		return error
 
 	# Restarting jboss
 	error = jboss_restart(args, log)
 	if error:
-
 		return error
 
 	# Stop dummy page
 	error += maintenance_off(args, log)
 	if error:
-
 		return error
 
 	message('\nUpdate complete\n', log)
