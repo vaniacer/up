@@ -127,6 +127,4 @@ def run(args, log):
 		return error
 
 	message('\nUpdate complete\n', log)
-
-	remove_tmp(args, log)
 	return error
