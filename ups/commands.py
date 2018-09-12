@@ -313,12 +313,23 @@ commandick = {
 		name='check_logs',
 		menu='Check logs',
 		srv='true',
-		run="run_or_cron('RUN');",
 		his=False,
+		run="run_or_cron('RUN');",
+	),
+
+	'check_GClog': CommandClass(
+		position=51,
+		section='server',
+		title='Check GC log on selected server(s).',
+		name='check_GClog',
+		menu='Check GC log',
+		srv='true',
+		his=False,
+		run="run_or_cron('RUN');",
 	),
 
 	'get_logs_day': CommandClass(
-		position=51,
+		position=52,
 		section='server',
 		title='Get day logs from selected server(s).',
 		name='get_logs_day',
@@ -327,7 +338,7 @@ commandick = {
 	),
 
 	'get_logs_week': CommandClass(
-		position=52,
+		position=53,
 		section='server',
 		title='Get week logs from selected server(s).',
 		name='get_logs_week',
@@ -336,20 +347,11 @@ commandick = {
 	),
 
 	'get_logs_all': CommandClass(
-		position=53,
+		position=55,
 		section='server',
 		title='Get all logs from selected server(s).',
 		name='get_logs_all',
 		menu='Get all logs',
-		srv='true',
-	),
-
-	'get_GC_log': CommandClass(
-		position=53,
-		section='server',
-		title='Get GC log from selected server(s).',
-		name='get_GC_log',
-		menu='Get GC log',
 		srv='true',
 	),
 
