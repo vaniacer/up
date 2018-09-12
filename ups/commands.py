@@ -326,12 +326,30 @@ commandick = {
 		srv='true',
 	),
 
-	'get_logs_all': CommandClass(
+	'get_logs_week': CommandClass(
 		position=52,
+		section='server',
+		title='Get week logs from selected server(s).',
+		name='get_logs_week',
+		menu='Get week logs',
+		srv='true',
+	),
+
+	'get_logs_all': CommandClass(
+		position=53,
 		section='server',
 		title='Get all logs from selected server(s).',
 		name='get_logs_all',
 		menu='Get all logs',
+		srv='true',
+	),
+
+	'get_GC_log': CommandClass(
+		position=53,
+		section='server',
+		title='Get GC log from selected server(s).',
+		name='get_GC_log',
+		menu='Get GC log',
 		srv='true',
 	),
 
