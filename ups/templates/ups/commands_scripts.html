@@ -9,7 +9,7 @@
 
 <!-----------------------------------------Available commands------------------------------------->
 <!--------------------- Validation('cmd_name', server, update, cronjob, script, dump) ------------>
-{% if "run_script" in pr_view_perms %}
+{% if "run_script" and "run_command" in pr_view_perms %}
     <a onclick="select_all('selected_scripts', 'script-body', false, 'SX');
                 selector('xx{{script.id}}', 'xb{{script.id}}', '{{script}}', 'SX');
                 Validation('run_script', true, false, false, true)"
