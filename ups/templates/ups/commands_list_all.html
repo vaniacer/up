@@ -1,6 +1,6 @@
 <div class="commands_all">
 
-    {% if "run_script" in pr_view_perms %}
+    {% if "run_cron" in pr_view_perms %}
         {% include "ups/commands_list_cron.html" %}
     {% endif %}
 
