@@ -59,10 +59,13 @@ class Project(models.Model):
 			("del_dump",     "Can delete project's dumps"),
 
 			("run_command",  "Can run commands"),
+			("tunnel",       "Can create tunnel"),
 			("run_cron",     "Can run cron commands"),
 			("run_dump",     "Can run dump commands"),
 			("run_update",   "Can run update commands"),
 			("run_script",   "Can run project's scripts"),
+			("check_logs",   "Can view\download server's log files"),
+			("check_conf",   "Can view server's standalone-full.xml"),
 
 			("send_dump",    "Can run command 'Send dump'"),
 			("peep_pass",    "Can run command 'Peep passwords'"),

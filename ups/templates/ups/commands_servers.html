@@ -18,21 +18,25 @@
        href="javascript:;"
        class="small">Info</a>
 
-    <a onclick="run_or_cron('RUN');
-                select_all('selected_servers', 'server-body', false, 'SS');
-                selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS');
-                Validation('check_conf', true, false, false, false)"
-       title="Show conf(standalone-full.xml) and java options of this server"
-       href="javascript:;"
-       class="small">Conf</a>
+    {% if "check_conf" in pr_view_perms %}
+        <a onclick="run_or_cron('RUN');
+                    select_all('selected_servers', 'server-body', false, 'SS');
+                    selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS');
+                    Validation('check_conf', true, false, false, false)"
+           title="Show conf(standalone-full.xml) and java options of this server"
+           href="javascript:;"
+           class="small">Conf</a>
+    {% endif %}
 
-    <a onclick="run_or_cron('RUN');
-                select_all('selected_servers', 'server-body', false, 'SS');
-                selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS');
-                Validation('check_logs', true, false, false, false)"
-       title="Check logs from this server"
-       href="javascript:;"
-       class="small">Logs</a>
+    {% if "check_logs" in pr_view_perms %}
+        <a onclick="run_or_cron('RUN');
+                    select_all('selected_servers', 'server-body', false, 'SS');
+                    selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS');
+                    Validation('check_logs', true, false, false, false)"
+           title="Check logs from this server"
+           href="javascript:;"
+           class="small">Logs</a>
+    {% endif %}
 
     {% if "run_update" in pr_view_perms %}
         <a onclick="run_or_cron('RUN');
@@ -54,13 +58,15 @@
            class="small">Pass</a>
     {% endif %}
 
-    <a onclick="run_or_cron('RUN');
-                select_all('selected_servers', 'server-body', false, 'SS');
-                selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS');
-                Validation('tunnel', true, false, false, false)"
-       title="Make ssh tunnel to the bind port of this server"
-       href="javascript:;"
-       class="small">Tunnel</a>
+    {% if "tunnel" in pr_view_perms %}
+        <a onclick="run_or_cron('RUN');
+                    select_all('selected_servers', 'server-body', false, 'SS');
+                    selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS');
+                    Validation('tunnel', true, false, false, false)"
+           title="Make ssh tunnel to the bind port of this server"
+           href="javascript:;"
+           class="small">Tunnel</a>
+    {% endif %}
 
     {% if server.http %}
         <a onclick="selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS')"

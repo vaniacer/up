@@ -295,6 +295,7 @@ commandick = {
 	),
 
 	'check_conf': CommandClass(
+		permission='check_conf',
 		position=40,
 		section='server',
 		title='Show conf(standalone-full.xml) and java options of selected server(s).',
@@ -307,6 +308,7 @@ commandick = {
 
 	# Logs
 	'check_logs': CommandClass(
+		permission='check_logs',
 		position=50,
 		section='server',
 		title='Check logs on selected server(s).',
@@ -318,6 +320,7 @@ commandick = {
 	),
 
 	'check_GClog': CommandClass(
+		permission='check_logs',
 		position=51,
 		section='server',
 		title='Check GC log on selected server(s).',
@@ -329,6 +332,7 @@ commandick = {
 	),
 
 	'get_logs_day': CommandClass(
+		permission='check_logs',
 		position=52,
 		section='server',
 		title='Get day logs from selected server(s).',
@@ -338,6 +342,7 @@ commandick = {
 	),
 
 	'get_logs_week': CommandClass(
+		permission='check_logs',
 		position=53,
 		section='server',
 		title='Get week logs from selected server(s).',
@@ -347,6 +352,7 @@ commandick = {
 	),
 
 	'get_logs_all': CommandClass(
+		permission='check_logs',
 		position=55,
 		section='server',
 		title='Get all logs from selected server(s).',
@@ -409,6 +415,7 @@ commandick = {
 	),
 
 	'tunnel': CommandClass(
+		permission='tunnel',
 		position=80,
 		section='server',
 		title='Make ssh tunnel to the bind port of selected server(s).',
