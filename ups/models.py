@@ -64,10 +64,10 @@ class Project(models.Model):
 			("run_dump",     "Can run dump commands"),
 			("run_update",   "Can run update commands"),
 			("run_script",   "Can run project's scripts"),
-			("check_logs",   "Can view\download server's log files"),
-			("check_conf",   "Can view server's standalone-full.xml"),
 			("send_dump",    "Can run command 'Send dump'"),
 			("peep_pass",    "Can run command 'Peep passwords'"),
+			("check_logs",   "Can view\download server's log files"),
+			("check_conf",   "Can view server's standalone-full.xml"),
 			("maintenance",  """Can run maintenance commands:
 								Maintenance ON/OFF
 								Reload config
