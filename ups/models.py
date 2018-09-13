@@ -66,7 +66,6 @@ class Project(models.Model):
 			("run_script",   "Can run project's scripts"),
 			("check_logs",   "Can view\download server's log files"),
 			("check_conf",   "Can view server's standalone-full.xml"),
-
 			("send_dump",    "Can run command 'Send dump'"),
 			("peep_pass",    "Can run command 'Peep passwords'"),
 			("maintenance",  """Can run maintenance commands:
