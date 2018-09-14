@@ -13,12 +13,11 @@
     {% for command in commands %}
         {% if command.section == "server" and command.fst %}
             {% if command.permission in pr_view_perms %}
-                <a class="small"
-                   href="javascript:;"
+                <a href="javascript:;"
                    title="{{command.title}}"
-                   onclick="{{command.run}}
-                            select_all('selected_servers', 'server-body', false, 'SS');
-                            selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS');
+                   class="small {{command.style}}"
+                   onclick="{{command.run}} select_all('selected_servers', 'server-body', false, 'SS');
+                            selector('sx{{ server.id }}',  'sb{{ server.id }}',  '{{ server }}', 'SS');
                             return Validation('{{command.name}}',
                                                {{command.srv}},
                                                {{command.upd}},
