@@ -283,10 +283,10 @@ commandick = {
 		short='Info',
 		name='server_info',
 		menu='System Info',
+		run="run_or_cron('RUN');",
 		srv='true',
 		his=False,
 		fst=True,
-		run="run_or_cron('RUN');",
 	),
 
 	'health_check': CommandClass(
@@ -297,10 +297,10 @@ commandick = {
 		short='Health',
 		name='health_check',
 		menu='Check health',
+		run="run_or_cron('RUN');",
 		srv='true',
 		his=False,
 		fst=True,
-		run="run_or_cron('RUN');",
 	),
 
 	'check_conf': CommandClass(
@@ -311,10 +311,10 @@ commandick = {
 		short='Conf',
 		name='check_conf',
 		menu='Check conf',
-		fst=True,
-		his=False,
-		srv='true',
 		run="run_or_cron('RUN');",
+		srv='true',
+		his=False,
+		fst=True,
 	),
 
 	# Logs
@@ -326,10 +326,10 @@ commandick = {
 		short='Log',
 		name='check_logs',
 		menu='Check logs',
-		fst=True,
-		his=False,
-		srv='true',
 		run="run_or_cron('RUN');",
+		srv='true',
+		his=False,
+		fst=True,
 	),
 
 	'check_GClog': CommandClass(
@@ -339,9 +339,9 @@ commandick = {
 		title='Check GC log on selected server(s).',
 		name='check_GClog',
 		menu='Check GC log',
-		his=False,
-		srv='true',
 		run="run_or_cron('RUN');",
+		srv='true',
+		his=False,
 	),
 
 	'get_logs_day': CommandClass(
@@ -420,11 +420,13 @@ commandick = {
 		position=75,
 		section='server',
 		title='Peep passwords from file krista-users.properties.',
+		short='Pass',
 		name='peep_pass',
 		menu='Peep passwords',
-		his=False,
-		srv='true',
 		run="run_or_cron('RUN');",
+		srv='true',
+		his=False,
+		fst=True,
 	),
 
 	'check_updates': CommandClass(
@@ -435,10 +437,10 @@ commandick = {
 		short='Updates',
 		name='check_updates',
 		menu='Check updates',
-		fst=True,
-		his=False,
-		srv='true',
 		run="run_or_cron('RUN');",
+		srv='true',
+		his=False,
+		fst=True,
 	),
 
 	'tunnel': CommandClass(
@@ -449,10 +451,10 @@ commandick = {
 		short='Tunnel',
 		name='tunnel',
 		menu='Create tunnel',
-		fst=True,
-		his=False,
-		srv='true',
 		run="run_or_cron('RUN');",
+		srv='true',
+		his=False,
+		fst=True,
 	),
 }
 
