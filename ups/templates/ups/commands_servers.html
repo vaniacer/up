@@ -18,6 +18,14 @@
        href="javascript:;"
        class="small">Info</a>
 
+    <a onclick="run_or_cron('RUN');
+                select_all('selected_servers', 'server-body', false, 'SS');
+                selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS');
+                Validation('health_check', true, false, false, false)"
+       title="Check if jboss process is running and bind port is active"
+       href="javascript:;"
+       class="small">Health</a>
+
     {% if "check_conf" in pr_view_perms %}
         <a onclick="run_or_cron('RUN');
                     select_all('selected_servers', 'server-body', false, 'SS');

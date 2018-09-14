@@ -294,6 +294,18 @@ commandick = {
 		his=False,
 	),
 
+	'health_check': CommandClass(
+		position=35,
+		section='server',
+		title='Check if jboss process is running and bind port is active',
+		name='health_check',
+		menu='Check health',
+		srv='true',
+		run="run_or_cron('RUN');",
+		his=False,
+	),
+
+
 	'check_conf': CommandClass(
 		permission='check_conf',
 		position=40,
