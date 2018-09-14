@@ -26,7 +26,7 @@ class CommandClass:
 		menu='',        # Command name in UI
 		name='',        # Command name(an internal command name)
 		run='',         # Pre validation command, if set to "run_or_cron('RUN');" then command will be run only
-		log=True,       # If True, command log will be saved to history
+		his=True,       # If True, command log will be saved to history
 		fst=False,      # Add command to quick section
 		dgr='false',    # If true will show confirmation window
 		job='false',    # Check if some cron jobs selected
@@ -44,7 +44,7 @@ class CommandClass:
 		self.name = name
 		self.menu = menu
 		self.run = run
-		self.log = log
+		self.his = his
 		self.fst = fst
 		self.srv = srv
 		self.upd = upd
@@ -284,7 +284,7 @@ commandick = {
 		name='server_info',
 		menu='System Info',
 		srv='true',
-		log=False,
+		his=False,
 		fst=True,
 		run="run_or_cron('RUN');",
 	),
@@ -298,7 +298,7 @@ commandick = {
 		name='health_check',
 		menu='Check health',
 		srv='true',
-		log=False,
+		his=False,
 		fst=True,
 		run="run_or_cron('RUN');",
 	),
@@ -312,7 +312,7 @@ commandick = {
 		name='check_conf',
 		menu='Check conf',
 		fst=True,
-		log=False,
+		his=False,
 		srv='true',
 		run="run_or_cron('RUN');",
 	),
@@ -327,7 +327,7 @@ commandick = {
 		name='check_logs',
 		menu='Check logs',
 		fst=True,
-		log=False,
+		his=False,
 		srv='true',
 		run="run_or_cron('RUN');",
 	),
@@ -339,7 +339,7 @@ commandick = {
 		title='Check GC log on selected server(s).',
 		name='check_GClog',
 		menu='Check GC log',
-		log=False,
+		his=False,
 		srv='true',
 		run="run_or_cron('RUN');",
 	),
@@ -422,7 +422,7 @@ commandick = {
 		title='Peep passwords from file krista-users.properties.',
 		name='peep_pass',
 		menu='Peep passwords',
-		log=False,
+		his=False,
 		srv='true',
 		run="run_or_cron('RUN');",
 	),
@@ -436,7 +436,7 @@ commandick = {
 		name='check_updates',
 		menu='Check updates',
 		fst=True,
-		log=False,
+		his=False,
 		srv='true',
 		run="run_or_cron('RUN');",
 	),
@@ -450,7 +450,7 @@ commandick = {
 		name='tunnel',
 		menu='Create tunnel',
 		fst=True,
-		log=False,
+		his=False,
 		srv='true',
 		run="run_or_cron('RUN');",
 	),
