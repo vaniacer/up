@@ -14,7 +14,8 @@ def run(args, log):
 		""" printf '\n-----{{ <b>Server {server}</b> }}-----\n'
 		
 			printf '<b>\nИщу jboss процес </b>\n'
-			ps axo command | grep {wdir} | grep [j]ava \
+			ps axu | head -n1
+			ps axu | grep {wdir} | grep [j]ava \
 				&& {{ printf '\nПриложение работает\n'; }} \
 				|| {{ printf '\nПриложение не работает\n'; ((error++)); }}
 

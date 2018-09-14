@@ -305,7 +305,6 @@ commandick = {
 		his=False,
 	),
 
-
 	'check_conf': CommandClass(
 		permission='check_conf',
 		position=40,
