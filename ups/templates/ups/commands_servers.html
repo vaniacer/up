@@ -1,5 +1,5 @@
 
-<!--------------------------------------------Edit button----------------------------------------->
+<!--------------------------------------------{ Edit button }------------------------------------->
 {% if "edit_server" in pr_view_perms %}
     <a onclick="selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS');"
        href="{% url 'ups:edit_server' server.id %}?{{info}}"
@@ -7,80 +7,34 @@
        class="small">Edit</a>
 {% endif %}
 
-<!-----------------------------------------Available commands------------------------------------->
-<!--------------------- Validation('cmd_name', server, update, cronjob, script, dump) ------------>
+<!-----------------------------------------{ Available commands }--------------------------------->
+<!---------------------{ Validation('cmd_name', server, update, cronjob, script, dump) }---------->
 {% if "run_command" in pr_view_perms %}
-    <a onclick="run_or_cron('RUN');
-                select_all('selected_servers', 'server-body', false, 'SS');
-                selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS');
-                Validation('server_info', true, false, false, false)"
-       title="Show system info: CPU, mem, disk etc"
-       href="javascript:;"
-       class="small">Info</a>
+    {% for command in commands %}
+        {% if command.section == "server" and command.fst %}
+            {% if command.permission in pr_view_perms %}
+                <a class="small"
+                   href="javascript:;"
+                   title="{{command.title}}"
+                   onclick="{{command.run}}
+                            select_all('selected_servers', 'server-body', false, 'SS');
+                            selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS');
+                            return Validation('{{command.name}}',
+                                               {{command.srv}},
+                                               {{command.upd}},
+                                               {{command.job}},
+                                               {{command.scr}},
+                                               {{command.dmp}},
+                                               {{command.dgr}})">{{command.short}}</a>
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+{% endif %}
 
-    <a onclick="run_or_cron('RUN');
-                select_all('selected_servers', 'server-body', false, 'SS');
-                selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS');
-                Validation('health_check', true, false, false, false)"
-       title="Check if jboss process is running, bind port is active and accepts http connections"
-       href="javascript:;"
-       class="small">Health</a>
-
-    {% if "check_conf" in pr_view_perms %}
-        <a onclick="run_or_cron('RUN');
-                    select_all('selected_servers', 'server-body', false, 'SS');
-                    selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS');
-                    Validation('check_conf', true, false, false, false)"
-           title="Show conf(standalone-full.xml) and java options of this server"
-           href="javascript:;"
-           class="small">Conf</a>
-    {% endif %}
-
-    {% if "check_logs" in pr_view_perms %}
-        <a onclick="run_or_cron('RUN');
-                    select_all('selected_servers', 'server-body', false, 'SS');
-                    selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS');
-                    Validation('check_logs', true, false, false, false)"
-           title="Check logs from this server"
-           href="javascript:;"
-           class="small">Logs</a>
-    {% endif %}
-
-    {% if "run_update" in pr_view_perms %}
-        <a onclick="run_or_cron('RUN');
-                    select_all('selected_servers', 'server-body', false, 'SS');
-                    selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS');
-                    Validation('check_updates', true, false, false, false)"
-           title="Check updates on this server"
-           href="javascript:;"
-           class="small">Updates</a>
-    {% endif %}
-
-    {% if "peep_pass" in pr_view_perms %}
-        <a onclick="run_or_cron('RUN');
-                    select_all('selected_servers', 'server-body', false, 'SS');
-                    selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS');
-                    Validation('peep_pass', true, false, false, false)"
-           title="Peep passwords from file krista-users.properties"
-           href="javascript:;"
-           class="small">Pass</a>
-    {% endif %}
-
-    {% if "tunnel" in pr_view_perms %}
-        <a onclick="run_or_cron('RUN');
-                    select_all('selected_servers', 'server-body', false, 'SS');
-                    selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS');
-                    Validation('tunnel', true, false, false, false)"
-           title="Make ssh tunnel to the bind port of this server"
-           href="javascript:;"
-           class="small">Tunnel</a>
-    {% endif %}
-
-    {% if server.http %}
-        <a onclick="selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS')"
-           title="{{server.http}}"
-           href="{{server.http}}"
-           class="small">URL</a>
-    {% endif %}
-
+<!--------------------------------------------{ Servers URL }------------------------------------->
+{% if server.http %}
+    <a onclick="selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS')"
+       title="{{server.http}}"
+       href="{{server.http}}"
+       class="small">URL</a>
 {% endif %}

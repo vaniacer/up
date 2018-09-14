@@ -22,10 +22,12 @@ class CommandClass:
 		section='',     # Section command will be placed to(scripts, updates, dumps, cron, servers)
 		style='',       # Class assigned to a command button(for example 'danger')
 		title='',       # Pop up help message(via title)
+		short='',       # Short name for commands in quick section
 		menu='',        # Command name in UI
 		name='',        # Command name(an internal command name)
 		run='',         # Pre validation command, if set to "run_or_cron('RUN');" then command will be run only
-		his=True,       # If True, command log will be saved to history
+		log=True,       # If True, command log will be saved to history
+		fst=False,      # Add command to quick section
 		dgr='false',    # If true will show confirmation window
 		job='false',    # Check if some cron jobs selected
 		srv='false',    # Check if some servers selected
@@ -38,16 +40,18 @@ class CommandClass:
 		self.section = section
 		self.style = style
 		self.title = title
+		self.short = short
 		self.name = name
 		self.menu = menu
+		self.run = run
+		self.log = log
+		self.fst = fst
 		self.srv = srv
 		self.upd = upd
 		self.job = job
 		self.scr = scr
 		self.dmp = dmp
 		self.dgr = dgr
-		self.run = run
-		self.his = his
 
 
 commandick = {
@@ -136,18 +140,6 @@ commandick = {
 		name='copy',
 		menu='Copy update(s)',
 		srv='true',
-	),
-
-	'check_updates': CommandClass(
-		permission='run_update',
-		position=20,
-		section='update',
-		title='Check updates on selected server(s).',
-		name='check_updates',
-		menu='Check updates',
-		srv='true',
-		run="run_or_cron('RUN');",
-		his=False,
 	),
 
 	'update': CommandClass(
@@ -284,25 +276,31 @@ commandick = {
 
 	# Info
 	'server_info': CommandClass(
+		permission='view_project',
 		position=30,
 		section='server',
 		title='Show system info: CPU, mem, disk etc.',
+		short='Info',
 		name='server_info',
 		menu='System Info',
 		srv='true',
+		log=False,
+		fst=True,
 		run="run_or_cron('RUN');",
-		his=False,
 	),
 
 	'health_check': CommandClass(
+		permission='view_project',
 		position=35,
 		section='server',
 		title='Check if jboss process is running, bind port is active and accepts http connections.',
+		short='Health',
 		name='health_check',
 		menu='Check health',
 		srv='true',
+		log=False,
+		fst=True,
 		run="run_or_cron('RUN');",
-		his=False,
 	),
 
 	'check_conf': CommandClass(
@@ -310,11 +308,13 @@ commandick = {
 		position=40,
 		section='server',
 		title='Show conf(standalone-full.xml) and java options of selected server(s).',
+		short='Conf',
 		name='check_conf',
 		menu='Check conf',
+		fst=True,
+		log=False,
 		srv='true',
 		run="run_or_cron('RUN');",
-		his=False,
 	),
 
 	# Logs
@@ -323,10 +323,12 @@ commandick = {
 		position=50,
 		section='server',
 		title='Check logs on selected server(s).',
+		short='Logs',
 		name='check_logs',
 		menu='Check logs',
+		fst=True,
+		log=False,
 		srv='true',
-		his=False,
 		run="run_or_cron('RUN');",
 	),
 
@@ -337,8 +339,8 @@ commandick = {
 		title='Check GC log on selected server(s).',
 		name='check_GClog',
 		menu='Check GC log',
+		log=False,
 		srv='true',
-		his=False,
 		run="run_or_cron('RUN');",
 	),
 
@@ -420,9 +422,23 @@ commandick = {
 		title='Peep passwords from file krista-users.properties.',
 		name='peep_pass',
 		menu='Peep passwords',
+		log=False,
 		srv='true',
 		run="run_or_cron('RUN');",
-		his=False,
+	),
+
+	'check_updates': CommandClass(
+		permission='run_update',
+		position=77,
+		section='server',
+		title='Check updates on selected server(s).',
+		short='Updates',
+		name='check_updates',
+		menu='Check updates',
+		fst=True,
+		log=False,
+		srv='true',
+		run="run_or_cron('RUN');",
 	),
 
 	'tunnel': CommandClass(
@@ -430,11 +446,13 @@ commandick = {
 		position=80,
 		section='server',
 		title='Make ssh tunnel to the bind port of selected server(s).',
+		short='Tunnel',
 		name='tunnel',
 		menu='Create tunnel',
+		fst=True,
+		log=False,
 		srv='true',
 		run="run_or_cron('RUN');",
-		his=False,
 	),
 }
 
