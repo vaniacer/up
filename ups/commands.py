@@ -297,7 +297,7 @@ commandick = {
 	'health_check': CommandClass(
 		position=35,
 		section='server',
-		title='Check if jboss process is running and bind port is active',
+		title='Check if jboss process is running, bind port is active and accepts http connections.',
 		name='health_check',
 		menu='Check health',
 		srv='true',
