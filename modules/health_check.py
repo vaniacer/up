@@ -20,7 +20,7 @@ def run(args, log):
 				|| {{ printf '\nПриложение не работает\n'; ((error++)); }}
 
 			printf '<b>\nПроверяю доступность порта {port}</b>\n'
-			netstat -tulpn 2> /dev/null | grep {port} \
+			netstat -tulpn 2> /dev/null | grep ':{port} ' \
 				&& {{ printf '\nПорт открыт\n'; }} \
 				|| {{ printf '\nПорт закрыт\n'; ((error+=2)); }}
 
