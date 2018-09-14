@@ -1,6 +1,7 @@
-db.sqlite3
-*.pyc
-media
-media/*
 ups/migrations/0*
+db.sqlite3
+conf.py
 .idea/*
+media/*
+media
+*.pyc
