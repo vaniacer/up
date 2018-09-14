@@ -11,21 +11,19 @@
 <!---------------------{ Validation('cmd_name', server, update, cronjob, script, dump) }---------->
 {% if "run_command" in pr_view_perms %}
     {% for command in commands %}
-        {% if command.section == "server" and command.fst %}
-            {% if command.permission in pr_view_perms %}
-                <a href="javascript:;"
-                   title="{{command.title}}"
-                   class="small {{command.style}}"
-                   onclick="{{command.run}} select_all('selected_servers', 'server-body', false, 'SS');
-                            selector('sx{{ server.id }}',  'sb{{ server.id }}',  '{{ server }}', 'SS');
-                            return Validation('{{command.name}}',
-                                               {{command.srv}},
-                                               {{command.upd}},
-                                               {{command.job}},
-                                               {{command.scr}},
-                                               {{command.dmp}},
-                                               {{command.dgr}})">{{command.short}}</a>
-            {% endif %}
+        {% if command.section == "server" and command.fst and command.permission in pr_view_perms %}
+            <a href="javascript:;"
+               title="{{command.title}}"
+               class="small {{command.style}}"
+               onclick="{{command.run}} select_all('selected_servers', 'server-body', false, 'SS');
+                        selector('sx{{ server.id }}',  'sb{{ server.id }}',  '{{ server }}', 'SS');
+                        return Validation('{{command.name}}',
+                                           {{command.srv}},
+                                           {{command.upd}},
+                                           {{command.job}},
+                                           {{command.scr}},
+                                           {{command.dmp}},
+                                           {{command.dgr}})">{{command.short}}</a>
         {% endif %}
     {% endfor %}
 {% endif %}
