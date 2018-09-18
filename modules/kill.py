@@ -12,7 +12,7 @@ def run(args, log):
 	message('\n<b>Убиваю jboss</b>\n'.format(wdir=args.wdir), log)
 	command = [
 		'ssh', args.server,
-		""" pid=($(ps ax | grep {wdir} | grep [j]ava)) \
+		""" pid=($(ps axo pid,cmd | grep {wdir} | grep [j]ava)) \
 			[[ -e /proc/$pid ]] && kill -9 $pid
 		""".format(wdir=args.wdir)
 	]
