@@ -1,14 +1,21 @@
 # -*- encoding: utf-8 -*-
 
-
-def description(args):
-	return "\nKill jboss on server {server}\n".format(server=args.server)
+from popen_call import my_call, message
 
 
-def run(args):
+def description(args, log):
+	log.write('\nKill jboss on server {server}\n'.format(server=args.server))
 
-	message = {'top': '\n<b>Выполняю jboss.kill</b>\n'.format(wdir=args.wdir), 'bot': ''}
-	command = ['ssh', args.server, '{wdir}/krupd jboss.kill'.format(wdir=args.wdir)]
-	dick = {'command': command, 'message': message}
 
-	return dick
+def run(args, log):
+
+	message('\n<b>Убиваю jboss</b>\n'.format(wdir=args.wdir), log)
+	command = [
+		'ssh', args.server,
+		""" pid=($(ps axu | grep {wdir} | grep [j]ava)) \
+			kill -9 $pid
+		""".format(wdir=args.wdir)
+	]
+
+	error = my_call(command, log)
+	return error
