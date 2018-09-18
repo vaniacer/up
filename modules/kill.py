@@ -13,7 +13,7 @@ def run(args, log):
 	command = [
 		'ssh', args.server,
 		""" pid=($(ps axu | grep {wdir} | grep [j]ava)) \
-			kill -9 $pid
+			[[ -e /proc/$pid ]] && kill -9 $pid
 		""".format(wdir=args.wdir)
 	]
 
