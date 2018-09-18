@@ -13,7 +13,6 @@ def description(args, log):
 def run(args, log):
 
 	job, jobid = find_job(args.job)
-	print job, jobid
 	new_command = ' '.join(escape(opt) for opt in job[4:])
 	datetime_object = datetime.strptime(args.date, '%Y-%m-%d %H:%M')
 	new_job = '{min} {hur} {day} {mon} {job}'.format(
