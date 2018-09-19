@@ -187,6 +187,15 @@ commandick = {
 		scr='true',
 	),
 
+	'del_script': CommandClass(
+		permission='del_script',
+		section='script',
+		title='Delete selected script(s).',
+		name='del_script',
+		menu='Del script(s)',
+		scr='true',
+	),
+
 	# Server section }--------------------------------------------------------------------------------------------------
 
 	# Maintenance
