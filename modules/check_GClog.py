@@ -14,7 +14,7 @@ def run(args, log):
 	command = [
 		'ssh', args.server,
 		''' printf '\n-----{{ <b>Server {server}</b> }}-----\n'
-			cat {wdir}/jboss-bas-*/standalone/log/gc.log
+			cat {wdir}/jboss-bas-*/standalone/log/gc.log*
 		'''.format(wdir=args.wdir, server=args.server)
 	]
 
