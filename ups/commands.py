@@ -133,18 +133,9 @@ commandick = {
 	),
 
 	# Updates section }-------------------------------------------------------------------------------------------------
-	'copy': CommandClass(
-		permission='run_update',
-		section='update',
-		title='Copy selected update(s) to selected server(s).',
-		name='copy',
-		menu='Copy update(s)',
-		srv='true',
-	),
-
 	'update': CommandClass(
 		permission='run_update',
-		position=30,
+		position=10,
 		section='update',
 		style='danger',
 		title='Update selected server(s) with selected update file.',
@@ -155,13 +146,33 @@ commandick = {
 		dgr='true',
 	),
 
+	'copy': CommandClass(
+		permission='run_update',
+		position=20,
+		section='update',
+		title='Copy selected update(s) to selected server(s).',
+		name='copy',
+		menu='Copy to server',
+		srv='true',
+	),
+
+	'del_update': CommandClass(
+		permission='del_update',
+		position=30,
+		section='update',
+		title='Delete selected update(s) from selected server(s).',
+		name='del_update',
+		menu='Delete from UpS',
+		upd='true',
+	),
+
 	'del_sel_updates': CommandClass(
 		permission='run_update',
 		position=40,
 		section='update',
 		title='Delete selected update(s) from selected server(s).',
 		name='del_sel_updates',
-		menu='Delete update(s)',
+		menu='Delete from server',
 		srv='true',
 		upd='true',
 	),
@@ -172,7 +183,7 @@ commandick = {
 		section='update',
 		title='Delete all updates from selected server(s).',
 		name='del_all_updates',
-		menu='Delete all updates',
+		menu='Delete all from server',
 		srv='true',
 	),
 

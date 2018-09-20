@@ -6,8 +6,8 @@ from popen_call import message
 
 
 def description(args, log):
-	scripts = '\n'.join(args.script)
-	log.write('\nDelete script(s):\n{scripts}\n'.format(scripts=scripts))
+	names = '\n'.join(script.split('/')[-1] for script in args.script)
+	log.write('\nDelete script(s):\n{scripts}\n'.format(scripts=names))
 
 
 def run(args, log):
