@@ -4,13 +4,12 @@ from sys import argv
 from os import remove
 from time import sleep
 from getpass import getuser
-from subprocess import call
 from datetime import datetime
 from os.path import join as opj
+from modules.pg_writer import psql
 from importlib import import_module
 from argparse import ArgumentParser
 from modules.log_cutter import log_cutter
-from conf import dbname, dbhost, dbpass, dbport, dbuser
 from up.settings import LOG_FILE, ERR_FILE, PID_FILE, BASE_DIR, CRON_DIR
 
 
@@ -97,9 +96,7 @@ def make_history():
 			log=log_body,
 		)
 
-	psql_opt = ['psql', '-U', dbuser, '-h', dbhost, '-p', dbport, '-d', dbname, '-c', update]
-	his_error = call(psql_opt, env={"PGPASSWORD": dbpass})
-	return his_error
+	return psql(update)
 
 
 error = 0
