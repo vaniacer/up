@@ -103,6 +103,7 @@ commandick = {
 
 	# Dumps section }---------------------------------------------------------------------------------------------------
 	'get_dump': CommandClass(
+		permission='run_dump',
 		section='dump',
 		title='Get DB dump from selected server(s).',
 		name='get_dump',
