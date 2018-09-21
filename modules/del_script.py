@@ -12,15 +12,18 @@ def description(args, log):
 
 def run(args, log):
 
+	sql = ''
 	error = 0
 	names = '\n'.join(script.split('/')[-1] for script in args.script)
 	message('\n<b>Удаляю скрипт(ы):</b>\n{scripts}\n'.format(scripts=names), log)
 
 	for script in args.script:
-		error += psql("delete from ups_script where file = '{script}';".format(script=script))
+		sql += "delete from ups_script where file = '{script}';".format(script=script)
 		try:
 			remove(script)
 		except OSError:
 			error += 1
+
+	error += psql(sql)
 
 	return error
