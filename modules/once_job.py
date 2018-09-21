@@ -1,6 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 from re import escape
+from pg_writer import psql
 from datetime import datetime
 from cron import find_job, cronfile
 from popen_call import my_call, message
@@ -21,5 +22,13 @@ def run(args, log):
 
 	message('\nSet job {job} to run once\n'.format(job=args.job), log)
 	command = ['sed', '/{id}/c{new}'.format(id=jobid, job=args.job, new=new_job), '-i', cronfile]
+	sql = "UPDATE ups_job SET cdat = '{date} {H}:{M}', perm = false WHERE cron = '{job}';".format(
+		date=args.date.split()[0],
+		job=args.job,
+		H=job[1],
+		M=job[0],
+	)
 	error = my_call(command, log)
+	error += psql(sql)
+
 	return error

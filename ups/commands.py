@@ -563,29 +563,6 @@ def add_event(dick):
 	)
 
 
-def job_opt(dick):
-	"""В зависимости от выбранного действия с кронжобой, удаляет либо меняет job.perm статус."""
-	if dick['name'] == 'permanent_job':
-		dick['jobj'].cdat = 'Everyday %s' % dick['jobj'].cdat.split()[-1]
-		dick['jobj'].perm = True
-		dick['jobj'].save()
-
-	if dick['name'] == 'change_date':
-		dick['jobj'].cdat = dick['cdat']
-		dick['jobj'].save()
-
-	if dick['name'] == 'cancel_job':
-		dick['jobj'].delete()
-
-	if dick['name'] == 'once_job':
-		dick['jobj'].cdat = '%s %s' % (
-			datetime.now().strftime("%Y-%m-%d"),
-			dick['jobj'].cdat.split()[-1]
-		)
-		dick['jobj'].perm = False
-		dick['jobj'].save()
-
-
 def history(dick):
 	"""Создает событие в истории"""
 	if dick['his']:
@@ -682,7 +659,6 @@ def run_cmd(data, project, user):
 			dick['logi'] += '&logid=%s' % uniq
 			dick.update({'cron': jobi, 'uniq': uniq, 'serv': serv, 'jobj': jobj})
 
-			job_opt(dick)
 			starter(dick)
 
 	# Commands that can run without server(s)

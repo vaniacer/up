@@ -1,6 +1,7 @@
 # -*- encoding: utf-8 -*-
 
-from re import escape, sub
+from re import sub
+from pg_writer import psql
 from cron import find_job, cronfile
 from popen_call import my_call, message
 
@@ -19,5 +20,11 @@ def run(args, log):
 
 	message('\nSet job {job} to run everyday\n'.format(job=args.job), log)
 	command = ['sed', '/{id}/c{new}'.format(id=jobid, job=args.job, new=new_job), '-i', cronfile]
+	sql = "UPDATE ups_job SET cdat = 'Everyday {time}', perm = true WHERE cron = '{job}';".format(
+		time=args.date.split()[-1],
+		job=args.job
+	)
 	error = my_call(command, log)
+	error += psql(sql)
+
 	return error
