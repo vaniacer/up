@@ -1,6 +1,6 @@
 # Update Server
 
-![screenshot](https://user-images.githubusercontent.com/18072680/41978759-21348e96-7a2b-11e8-80c6-ffc86caad370.png)
+![screenshot](https://user-images.githubusercontent.com/18072680/45957279-56581d80-c01d-11e8-9e00-ca54af573ed2.png)
 
 <p><strong>Manage your servers through ssh via web interface.</strong></p>
 <p>
