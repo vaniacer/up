@@ -10,7 +10,7 @@ from modules.pg_writer import psql
 from importlib import import_module
 from argparse import ArgumentParser
 from modules.log_cutter import log_cutter
-from up.settings import LOG_FILE, ERR_FILE, PID_FILE, BASE_DIR, CRON_DIR
+from up.settings import LOG_FILE, ERR_FILE, BASE_DIR, CRON_DIR
 
 
 parser = ArgumentParser()
