@@ -34,7 +34,6 @@ args = parser.parse_args()
 
 command = import_module('modules.%s' % args.cmd)
 errfile = ERR_FILE + args.key
-pidfile = PID_FILE + args.key
 logfile = LOG_FILE + args.key
 if args.from_cron:
 	logfile = opj(CRON_DIR, args.key)
