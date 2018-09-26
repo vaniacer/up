@@ -385,6 +385,16 @@ commandick = {
 		srv='true',
 	),
 
+	'get_logs_month': CommandClass(
+		permission='check_logs',
+		position=54,
+		section='server',
+		title='Get month logs from selected server(s).',
+		name='get_logs_month',
+		menu='Get month logs',
+		srv='true',
+	),
+
 	'get_logs_all': CommandClass(
 		permission='check_logs',
 		position=55,
