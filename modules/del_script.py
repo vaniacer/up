@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 from os import remove
-from pg_writer import psql
+from psql import psql
 from popen_call import message
 
 

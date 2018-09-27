@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 from re import sub
-from pg_writer import psql
+from psql import psql
 from cron import find_job, cronfile
 from popen_call import my_call, message
 

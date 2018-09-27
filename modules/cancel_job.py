@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 
-from pg_writer import psql
+from psql import psql
 from getpass import getuser
 from os.path import join as opj
 from popen_call import my_call, message

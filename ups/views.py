@@ -13,7 +13,6 @@ from django.conf import settings as conf
 from wsgiref.util import FileWrapper
 from re import search, IGNORECASE
 from mimetypes import guess_type
-from .cron import get_cron_logs
 from operator import itemgetter
 from os.path import join as opj
 from subprocess import call
@@ -297,8 +296,6 @@ def project(request, project_id):
 			), IGNORECASE)
 		]
 		jobs_filter_form = JobsFilterForm(initial=data)
-
-		get_cron_logs()
 
 		logids = data.getlist('logid') or []
 		cmdlog = data.get('cmdlog') or ''

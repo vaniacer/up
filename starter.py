@@ -5,12 +5,13 @@ from os import remove
 from time import sleep
 from getpass import getuser
 from datetime import datetime
+from modules.psql import psql
+from modules.uniq import uniq
 from os.path import join as opj
-from modules.pg_writer import psql
 from importlib import import_module
 from argparse import ArgumentParser
 from modules.log_cutter import log_cutter
-from up.settings import LOG_FILE, ERR_FILE, BASE_DIR, CRON_DIR
+from up.settings import LOG_FILE, ERR_FILE, BASE_DIR
 
 
 parser = ArgumentParser()
@@ -35,8 +36,6 @@ args = parser.parse_args()
 command = import_module('modules.%s' % args.cmd)
 errfile = ERR_FILE + args.key
 logfile = LOG_FILE + args.key
-if args.from_cron:
-	logfile = opj(CRON_DIR, args.key)
 
 
 def add_cron_job():
@@ -69,38 +68,8 @@ def add_cron_job():
 		f.write(cronjob)
 
 
-def make_history():
-	"""Записывает инфо в базу."""
-
-	with open(logfile) as f:
-		log_body = f.read()
-
-	log_body = log_cutter(log_body)
-
-	types = {
-		'his': {'tab': 'ups_history', 'col': "uniq = '%s'" % args.key, 'ext': ', exit = %s' % error},
-		'job': {'tab': 'ups_job',     'col': "cron = '%s'" % args.key, 'ext': ''},
-	}
-
-	update = u'UPDATE {tab} SET "desc" = $$ {log} $${ext} WHERE {col};'.format(
-		col=types['his']['col'],
-		tab=types['his']['tab'],
-		ext=types['his']['ext'],
-		log=log_body,
-	)
-
-	if args.cron:
-		update += u'UPDATE {tab} SET "desc" = $$ {log} $${ext} WHERE {col};'.format(
-			col=types['job']['col'],
-			tab=types['job']['tab'],
-			ext=types['job']['ext'],
-			log=log_body,
-		)
-
-	return psql(update)
-
-
 error = 0
+# Run command }------------------------
 with open(logfile, 'a') as log:
 	if args.cron:
 		command.description(args, log)
@@ -108,20 +77,62 @@ with open(logfile, 'a') as log:
 	else:
 		error += command.run(args, log)
 
+# Write logs to DB }-------------------
+with open(logfile) as f:
+	fullog = f.read()
+
+log = log_cutter(fullog)
+
 if args.from_cron:
-	with open(logfile, 'a') as log:
-		today = datetime.today()
-		log.write("\nError: {error}\nDate: {date}".format(date=today.strftime('%Y-%m-%d %H:%M'), error=error))
+	today = datetime.today()
+	date = today.strftime('%Y-%m-%d %H:%M')
+	data = psql('''SELECT perm, name, proj_id, user_id, serv_id FROM ups_job WHERE cron='{}';
+	'''.format(args.key), select=True)
+	perm, name, proj_id, user_id, serv_id = data.split('|')
+
+	sql = u'''
+		INSERT INTO ups_history VALUES
+			(DEFAULT, current_timestamp, '{name}', '{cron}', '{cdat}', {exit}, '', {proj}, {user}, '{uniq}', {serv});
+		UPDATE ups_history SET \"desc\" = $$ {desc} $$ WHERE uniq='{uniq}';
+	'''.format(
+		cron=args.key,
+		proj=proj_id,
+		serv=serv_id,
+		user=user_id,
+		uniq=uniq(),
+		exit=error,
+		name=name,
+		cdat=date,
+		desc=log,
+	)
+	if perm == 'f':
+		sql += u"DELETE FROM ups_job WHERE cron='{}';".format(args.key)
+
+	psql(sql)
+
 else:
 	if args.history:
-		error += make_history()
+
+		sql = u"UPDATE ups_history SET \"desc\" = $$ {desc} $$, exit={exit} WHERE uniq='{uniq}';".format(
+			uniq=args.key,
+			exit=error,
+			desc=log,
+		)
+
+		if args.cron:
+			sql += u"UPDATE ups_job SET \"desc\" = $$ {desc} $$ WHERE cron='{cron}';".format(
+				cron=args.key,
+				desc=log,
+			)
+
+		error += psql(sql)
 
 	with open(errfile, 'w') as f:
 		f.write(str(error))
 
-	sleep(10)
-	for f in logfile, errfile:
-		try:
-			remove(f)
-		except OSError:
-			continue
+sleep(10)
+for f in logfile, errfile:
+	try:
+		remove(f)
+	except OSError:
+		continue
