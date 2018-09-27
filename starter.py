@@ -40,6 +40,8 @@ if args.from_cron:
 
 
 def add_cron_job():
+	"""Создает запись в кронжоп файле."""
+
 	save_argv = argv
 	save_argv.remove('--cron')
 	save_argv.remove('starter.py')
@@ -104,9 +106,7 @@ with open(logfile, 'a') as log:
 		command.description(args, log)
 		add_cron_job()
 	else:
-		cmd_error = command.run(args, log)
-		if cmd_error > 0:
-			error = cmd_error
+		error += command.run(args, log)
 
 if args.from_cron:
 	with open(logfile, 'a') as log:
@@ -114,9 +114,7 @@ if args.from_cron:
 		log.write("\nError: {error}\nDate: {date}".format(date=today.strftime('%Y-%m-%d %H:%M'), error=error))
 else:
 	if args.history:
-		his_error = make_history()
-		if his_error > 0:
-			error = his_error
+		error += make_history()
 
 	with open(errfile, 'w') as f:
 		f.write(str(error))
