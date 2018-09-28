@@ -9,7 +9,7 @@ from .permissions import check_perm_or404
 from django.conf import settings as conf
 from os.path import isfile, splitext
 from django.shortcuts import render
-from commands import get_key
+from modules.uniq import uniq
 from .models import Project
 from .commands import info
 from os import remove
@@ -24,7 +24,7 @@ def handle_uploaded_dump(dump_file, projectname):
 	)
 	if isfile(filepath):
 		filename, extension = splitext(filepath)
-		filepath = '{old}_{key}{ext}'.format(old=filename, key=get_key(), ext=extension)
+		filepath = '{old}_{key}{ext}'.format(old=filename, key=uniq(), ext=extension)
 
 	with open(filepath, 'wb+') as destination:
 		for chunk in dump_file.chunks():

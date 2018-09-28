@@ -6,11 +6,10 @@ from django.shortcuts import get_object_or_404
 from .permissions import check_perm_or404
 from django.conf import settings as conf
 from datetime import datetime, timedelta
+from modules.uniq import uniq as uniqkey
 from os.path import join as opj
 from subprocess import Popen
-from base64 import b64encode
 from re import split, escape
-from os import urandom
 
 
 class CommandClass:
@@ -527,11 +526,6 @@ def back_url(data):
 	)
 
 
-def get_key():
-	"""Создает случайную последовательность символов."""
-	return str(b64encode(urandom(6), 'dfsDFAsfsf'))
-
-
 def run_date():
 	"""Если не указана дата, возвращает текущую дату + 1 минута."""
 	date = datetime.now() + timedelta(minutes=1)
@@ -664,7 +658,7 @@ def run_cmd(data, project, user):
 
 			jobj = get_object_or_404(Job, cron=jobi)
 			serv = jobj.serv
-			uniq = get_key()
+			uniq = uniqkey()
 
 			dick['opt'] = ['--job', jobi]
 			dick['logi'] += '&logid=%s' % uniq
@@ -675,7 +669,7 @@ def run_cmd(data, project, user):
 	# Commands that can run without server(s)
 	elif dick['srv'] == 'false':
 
-			uniq = get_key()
+			uniq = uniqkey()
 
 			dick.update({'uniq': uniq})
 			dick['logi'] += '&logid=%s' % uniq
@@ -689,7 +683,7 @@ def run_cmd(data, project, user):
 
 		for server_id in data.getlist('selected_servers'):
 
-			uniq = get_key()
+			uniq = uniqkey()
 			serv = get_object_or_404(Server, id=server_id)
 
 			dick['logi'] += '&logid=%s' % uniq

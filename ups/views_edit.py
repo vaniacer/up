@@ -4,11 +4,12 @@ from .forms import ProjectForm, ServerForm, UpdateForm, ScriptEditForm
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 from .models import Project, Server, Update, Script
-from .commands import info, add_event, get_key
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from .permissions import check_perm_or404
 from django.conf import settings as conf
+from .commands import info, add_event
+from modules.uniq import uniq
 from difflib import Differ
 from shutil import rmtree
 from os import remove
@@ -30,7 +31,7 @@ def delete_server(request, server):
 		'cron': '',
 		'cdat': '',
 		'serv': None,
-		'uniq': get_key(),
+		'uniq': uniq(),
 		'proj': server.proj,
 		'user': request.user,
 		'name': 'Del server',
@@ -48,7 +49,7 @@ def delete_object(request, obj):
 		'cdat': '',
 		'serv': None,
 		'proj': obj.proj,
-		'uniq': get_key(),
+		'uniq': uniq(),
 		'user': request.user,
 		'name': 'Del upd\scr',
 		'desc': 'Удален файл:\n%s\n\nНазначение:\n%s' % (str(obj), obj.desc.encode('utf-8')),
@@ -65,7 +66,7 @@ def edit_server_log(request, server):
 		'cron': '',
 		'cdat': '',
 		'serv': None,
-		'uniq': get_key(),
+		'uniq': uniq(),
 		'proj': server.proj,
 		'user': request.user,
 		'name': 'Edit server',
@@ -82,7 +83,7 @@ def edit_object_log(request, obj, diff=''):
 		'cdat': '',
 		'serv': None,
 		'proj': obj.proj,
-		'uniq': get_key(),
+		'uniq': uniq(),
 		'user': request.user,
 		'name': 'Edit upd\scr',
 		'desc': 'Изменен файл:\n{file}\n\nНазначение:\n{desc}{diff}'.format(
