@@ -17,7 +17,7 @@ echo -e "Add virtual env."
 virtualenv ../env; . ../env/bin/activate
 
 echo -e "Create some folders."
-mkdir -p static media/{dumps,scripts,updates} ../logs/{cron,run,srv}
+mkdir -p static media/{dumps,scripts,updates} ../logs/{run,srv}
 
 echo -e "Add logrotate."
 logdir="`dirname $PWD`/logs/srv/*"

@@ -86,13 +86,12 @@ log = log_cutter(fullog)
 if args.from_cron:
 	today = datetime.today()
 	date = today.strftime('%Y-%m-%d %H:%M')
-	data = psql('''SELECT perm, name, proj_id, user_id, serv_id FROM ups_job WHERE cron='{}';
-	'''.format(args.key), select=True)
+	data = psql("SELECT perm, name, proj_id, user_id, serv_id FROM ups_job WHERE cron='{}';".format(args.key), True)
 	perm, name, proj_id, user_id, serv_id = data.split('|')
 
 	sql = u'''
 		INSERT INTO ups_history VALUES
-			(DEFAULT, current_timestamp, '{name}', '{cron}', '{cdat}', {exit}, '', {proj}, {user}, '{uniq}', {serv});
+		(DEFAULT, current_timestamp, '{name}', '{cron}', '{cdat}', {exit}, '', {proj}, {user}, '{uniq}', {serv});
 		UPDATE ups_history SET \"desc\" = $$ {desc} $$ WHERE uniq='{uniq}';
 	'''.format(
 		cron=args.key,
