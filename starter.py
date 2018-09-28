@@ -79,7 +79,6 @@ with open(logfile, 'a') as log:
 # Write logs to DB }-------------------
 with open(logfile) as f:
 	fullog = f.read()
-
 log = log_cutter(fullog)
 
 if args.from_cron:
@@ -87,7 +86,6 @@ if args.from_cron:
 else:
 	if args.history:
 		error += regular_log(args, error, log)
-
 	with open(errfile, 'w') as f:
 		f.write(str(error))
 
