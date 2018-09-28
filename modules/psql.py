@@ -44,7 +44,7 @@ def cron_log(args, error, log):
 	if perm == 'f':
 		sql += u"DELETE FROM ups_job WHERE cron='{}';".format(args.key)
 
-	return psql(sql)
+	psql(sql)
 
 
 def regular_log(args, error, log):
@@ -60,4 +60,4 @@ def regular_log(args, error, log):
 			cron=args.key,
 			desc=log,)
 
-	return psql(sql)
+	psql(sql)

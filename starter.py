@@ -82,10 +82,10 @@ with open(logfile) as f:
 log = log_cutter(fullog)
 
 if args.from_cron:
-	error += cron_log(args, error, log)
+	cron_log(args, error, log)
 else:
 	if args.history:
-		error += regular_log(args, error, log)
+		regular_log(args, error, log)
 	with open(errfile, 'w') as f:
 		f.write(str(error))
 
