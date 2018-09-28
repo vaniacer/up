@@ -297,8 +297,8 @@ def project(request, project_id):
 		]
 		jobs_filter_form = JobsFilterForm(initial=data)
 
-		logids = data.getlist('logid') or []
-		cmdlog = data.get('cmdlog') or ''
+		logids = data.getlist('logid', default=[])
+		cmdlog = data.get('cmdlog',  default=None)
 
 		if len(logids) > 1:
 			# Create allogs url if there are more then 1 log

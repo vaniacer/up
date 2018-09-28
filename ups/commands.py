@@ -16,23 +16,23 @@ class CommandClass:
 	"""Класс команды"""
 	def __init__(
 		self,
-		permission='',  # Permission needed to run this command.
-		position=1,     # Position in commands list
-		section='',     # Section command will be placed to(scripts, updates, dumps, cron, servers)
-		style='',       # Class assigned to a command button(for example 'danger')
-		title='',       # Pop up help message(via title)
-		short='',       # Short name for commands in quick section
-		menu='',        # Command name in UI
-		name='',        # Command name(an internal command name)
-		run='',         # Pre validation command, if set to "run_or_cron('RUN');" then command will be run only
-		his=True,       # If True, command log will be saved to history
-		fst=False,      # Add command to quick section
-		dgr='false',    # If true will show confirmation window
-		job='false',    # Check if some cron jobs selected
-		srv='false',    # Check if some servers selected
-		upd='false',    # Check if some updates selected
-		scr='false',    # Check if some scripts selected
-		dmp='false',    # Check if some dumps selected
+		permission='run_command',  # Permission needed to run this command.
+		position=1,                # Position in commands list
+		section='',                # Section command will be placed to(scripts, updates, dumps, cron, servers)
+		style='',                  # Class assigned to a command button(for example 'danger')
+		title='',                  # Pop up help message(via title)
+		short='',                  # Short name for commands in quick section
+		menu='',                   # Command name in UI
+		name='',                   # Command name(an internal command name)
+		run='',                    # Pre validation command, add "run_or_cron('RUN');" to prevent CRONing
+		his=True,                  # If True, command log will be saved to history
+		fst=False,                 # Add command to quick section
+		dgr='false',               # If true will show confirmation window
+		job='false',               # Check if some cron jobs selected
+		srv='false',               # Check if some servers selected
+		upd='false',               # Check if some updates selected
+		scr='false',               # Check if some scripts selected
+		dmp='false',               # Check if some dumps selected
 	):
 		self.permission = permission
 		self.position = position
@@ -615,15 +615,11 @@ def starter(dick):
 
 def run_cmd(data, project, user):
 	"""Запускает выбранную команду."""
-	check_perm_or404('run_command', project, user)
-
 	tab = ''
 	date = run_date()
 	name = data['run_cmnd']
-
-	# Check command permission
-	if commandick[name].permission:
-		check_perm_or404(commandick[name].permission, project, user)
+	check_perm_or404('run_command', project, user)
+	check_perm_or404(commandick[name].permission, project, user)
 
 	if data.get('selected_date', default=None) and data.get('selected_time', default=None):
 		date = '%s %s' % (data['selected_date'], data['selected_time'])
