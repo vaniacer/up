@@ -4,22 +4,22 @@ admin=admin
 paswd=1234qwer
 email=marov@krista.ru
 
-[ -s conf.py ] || { echo -e "Create 'conf.py' from 'conf.py.template'!"; exit 1; }
+[[ -s conf.py ]] || { printf "\nCreate conf.py!\n\ncp conf.py{.template,}\n"; exit 1; }
 
-echo -e "Install libs."
+printf "Install libs\n"
 sudo apt-get update  -y
 sudo apt-get install -y libpq-dev python-dev rsync expect ansible
 
-echo -e "Add current user to crontab group to (un)set cron jobs."
+printf "Add current user to crontab group to (un)set cron jobs\n"
 sudo adduser $USER crontab
 
-echo -e "Add virtual env."
+printf "Add virtual env\n"
 virtualenv ../env; . ../env/bin/activate
 
-echo -e "Create some folders."
+printf "Create some folders\n"
 mkdir -p static media/{dumps,scripts,updates} ../logs/{run,srv}
 
-echo -e "Add logrotate."
+printf "Add logrotate\n"
 logdir="`dirname $PWD`/logs/srv/*"
 sudo cat > /etc/logrotate.d/ups << EOF
 $logdir {
@@ -33,16 +33,16 @@ $logdir {
 }
 EOF
 
-echo -e "Install requirements."
+printf "Install requirements\n"
 easy_install $(cat requirements.txt)
 
-echo -e "Create db and admin user."
+printf "Create db and admin user\n"
 ./manage.py makemigrations ups; ./manage.py migrate
 echo "from django.contrib.auth.models import User; User.objects.create_superuser('${admin}','${email}','${paswd}')" | \
     python manage.py shell
 
-echo -e "Static files."
+printf "Static files\n"
 ./manage.py collectstatic --noinput
 
-echo -e "Runserver."
+printf "Test run\n"
 ./manage.py runserver
