@@ -38,7 +38,7 @@ logfile = LOG_FILE + args.key
 
 
 def add_cron_job():
-	"""Создает запись в кронжопе)"""
+	"""Создает запись в кронтабзе"""
 
 	save_argv = argv
 	save_argv.remove('--cron')
