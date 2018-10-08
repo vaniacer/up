@@ -39,7 +39,7 @@ def run(args, log):
 			printf '<b>Logged in Users:</b>\n'
 			who
 	
-			printf '<b>\nPort usage info:</b>\n'
+			printf '\n<b>Port usage info:</b>\n'
 			netstat -tulpn 2> /dev/null
 	
 			printf '\n<b>Processes:</b>\n'
