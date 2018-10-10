@@ -9,11 +9,7 @@ def description(args, log):
 
 def run(args, log):
 
-	message('\n<b>Убиваю jboss</b>\n'.format(wdir=args.wdir), log)
-	command = [
-		'ssh', args.server,
-		'pid=($(ps axo pid,cmd | grep {wdir} | grep [j]ava)); [[ $pid ]] && kill -9 $pid'.format(wdir=args.wdir)
-	]
-
+	message('\n<b>Выполняю jboss.kill</b>\n'.format(wdir=args.wdir), log)
+	command = ['ssh', args.server, '{wdir}/krupd jboss.kill'.format(wdir=args.wdir)]
 	error = my_call(command, log)
 	return error
