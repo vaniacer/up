@@ -65,7 +65,8 @@ class ScriptCreateForm(forms.ModelForm):
 		}
 		widgets = {
 			'body': forms.Textarea(attrs={'style': 'height: 50%;font-family: "Lucida Console", Monaco, monospace;'}),
-			'desc': forms.Textarea(attrs={'style': 'height: 7%;'})
+			'flnm': forms.TextInput(attrs={'placeholder': 'File name'}),
+			'desc': forms.Textarea(attrs={'style': 'height: 7%;'}),
 		}
 
 
