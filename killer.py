@@ -22,8 +22,10 @@ for key in keys:
 	errfile = ERR_FILE + key
 	arg = Namespace(key=key, cron=False)
 
-	kill.extend([s.lstrip().split(' ')[0] for s in pid_list if key in s])
-	call(kill)
+	pids = [s.lstrip().split(' ')[0] for s in pid_list if key in s]
+	if pids:
+		kill.extend(pids)
+		call(kill)
 
 	if exists(logfile):
 		with open(logfile) as f:
