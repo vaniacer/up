@@ -1,18 +1,15 @@
 {% load static %}
 
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" href="{% static 'bootstrap-3.3.7-dist/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/control.css' %}">
-
 </head>
 
 <body>
-
     <div class="panel {{panel}}"
          title="Click to view command log"
          onclick="window.open('/command_log/?cmd={{cmd}}&prid={{project.id}}&logid={{event.uniq}}', '_blank');">
@@ -31,5 +28,4 @@
         </div>
 
     </div>
-
 </body>
