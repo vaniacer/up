@@ -13,8 +13,10 @@
 
     {% for log in logs %}
         <div class="mini_log">
-            <iframe scrolling="no" frameborder="no"
-                    src="/mini_log/?cmd={{cmdlog}}&prid={{project.id}}&logid={{log}}"></iframe>
+            <iframe scrolling="no"
+                    frameborder="no"
+                    src="/mini_log/?cmd={{cmdlog}}&prid={{project.id}}&logid={{log}}">
+            </iframe>
         </div>
     {% endfor %}
 
