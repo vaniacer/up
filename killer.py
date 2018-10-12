@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 
-from re import sub
 from sys import argv
 from os import remove
+from re import findall
 from os.path import exists
 from argparse import Namespace
 from modules.psql import regular_log
@@ -14,9 +14,8 @@ from up.settings import LOG_FILE, ERR_FILE
 error = 1
 keys = argv[1::]
 kill = ['kill', '-9']
-pids_raw = check_output(['ps', 'a', '-o', 'pid,cmd'])
-pids_raw = sub('.*killer.py.*', '', pids_raw)
-pid_list = pids_raw.split('\n')
+pids_raw = check_output(['ps', 'ao', 'pid,cmd'])
+pid_list = findall('.*starter.py.*', pids_raw)
 
 for key in keys:
 	logfile = LOG_FILE + key
@@ -24,15 +23,15 @@ for key in keys:
 	arg = Namespace(key=key, cron=False)
 
 	kill.extend([s.lstrip().split(' ')[0] for s in pid_list if key in s])
+	call(kill)
 
 	if exists(logfile):
 		with open(logfile) as f:
-			fullog = f.read()
-		log = log_cutter(fullog)
+			log = f.read()
+		log = log_cutter(log)
+		log += '\n<b>Interrupted...</b>'
 		regular_log(arg, error, log)
 
 	for f in logfile, errfile:
 		if exists(f):
 			remove(f)
-
-call(kill)
