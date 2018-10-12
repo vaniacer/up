@@ -3,39 +3,17 @@
 from re import sub
 from sys import argv
 from os import remove
+from os.path import exists
+from argparse import Namespace
+from modules.psql import regular_log
+from modules.log_cutter import log_cutter
 from subprocess import call, check_output
 from up.settings import LOG_FILE, ERR_FILE
-from conf import dbname, dbhost, dbpass, dbport, dbuser
-
-
-def make_log(logfile):
-	"""Обрабатывает логи"""
-	with open(logfile) as f:
-		log_body = f.read()
-
-	log_body += '\n<b>Interrupted...</b>'
-	log_body = log_body.decode('utf-8', errors='replace')
-	log_size = len(log_body)
-	if log_size > 4000:
-		log_body = u'{head!s}{first!s}\n...\n{last!s}'.format(
-			head='<b>Log is too long to store in history, cutting</b>\n',
-			first=log_body[:2000],
-			last=log_body[-2000:],
-		)
-
-	return log_body
-
-
-def make_history():
-	"""Записывает инфо в базу"""
-	psql_opt = ['psql', '-U', dbuser, '-h', dbhost, '-p', dbport, '-d', dbname, '-c', update]
-	call(psql_opt, env={"PGPASSWORD": dbpass})
 
 
 error = 1
-update = u''
 keys = argv[1::]
-command = ['kill']
+kill = ['kill', '-9']
 pids_raw = check_output(['ps', 'a', '-o', 'pid,cmd'])
 pids_raw = sub('.*killer.py.*', '', pids_raw)
 pid_list = pids_raw.split('\n')
@@ -43,22 +21,18 @@ pid_list = pids_raw.split('\n')
 for key in keys:
 	logfile = LOG_FILE + key
 	errfile = ERR_FILE + key
-	log = make_log(logfile)
+	arg = Namespace(key=key, cron=False)
 
-	update += u'UPDATE {tab} SET "desc" = $$ {log} $$, exit = {ext} WHERE uniq = \'{key}\'; '.format(
-		tab='ups_history',
-		ext=error,
-		log=log,
-		key=key,
-	)
+	kill.extend([s.lstrip().split(' ')[0] for s in pid_list if key in s])
 
-	command.extend([s.lstrip().split(' ')[0] for s in pid_list if key in s])
+	if exists(logfile):
+		with open(logfile) as f:
+			fullog = f.read()
+		log = log_cutter(fullog)
+		regular_log(arg, error, log)
 
 	for f in logfile, errfile:
-		try:
+		if exists(f):
 			remove(f)
-		except OSError:
-			continue
 
-call(command)
-make_history()
+call(kill)
