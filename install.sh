@@ -25,11 +25,12 @@ for file in access error log; {
 sudo cat >> /etc/logrotate.d/ups/$file << EOF
 $logdir {
     daily
+    dateext
+    size 10M
     rotate 5
     compress
     missingok
     notifempty
-    dateext
     dateformat .%Y-%m-%d
     create 0640 $USER $USER
 }
