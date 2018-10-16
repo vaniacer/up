@@ -29,6 +29,8 @@ $logdir {
     compress
     missingok
     notifempty
+    dateext
+    dateformat .%Y-%m-%d
     create 0640 $USER $USER
 }
 
