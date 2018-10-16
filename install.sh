@@ -21,17 +21,19 @@ mkdir -p static media/{dumps,scripts,updates} ../logs/{run,srv}
 
 printf "Add logrotate\n"
 logdir="`dirname $PWD`/logs/srv/*"
-sudo cat > /etc/logrotate.d/ups << EOF
+for file in access error log; {
+sudo cat >> /etc/logrotate.d/ups/$file << EOF
 $logdir {
-    weekly
+    daily
+    rotate 5
     compress
     missingok
-    rotate 12
     notifempty
-    delaycompress
     create 0640 $USER $USER
 }
+
 EOF
+}
 
 printf "Install requirements\n"
 easy_install $(cat requirements.txt)
