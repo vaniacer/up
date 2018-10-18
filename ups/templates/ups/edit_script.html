@@ -1,10 +1,49 @@
 {% extends "ups/base.html" %}
 {% load guardian_tags %}
 {% load bootstrap3 %}
+{% load static %}
 
 {% block header %}
     <br>
     <h2>Edit script - {{ script }}</h2>
+    <link  href="{% static 'lib/TextareaDecorator.css' %}" rel="stylesheet">
+    <style>
+        /* highlight styles */
+        .ldt .comment { color: silver; }
+        .ldt .string  { color: green; }
+        .ldt .number  { color: navy; }
+        /* setting inline-block and margin to avoid misalignment bug in windows */
+        .ldt .keyword  { font-weight: bold; display: inline-block; margin-bottom: -1px; }
+        .ldt .variable { color: orange; }
+        .ldt .define   { color: blue; }
+    </style>
+
+    <script src="{% static 'lib/Parser.js' %}"></script>
+    <script src="{% static 'lib/TextareaDecorator.js' %}"></script>
+    <script type="text/javascript">
+        // get element shortcut
+        function $(e){ return document.getElementById(e); };
+        // generic syntax parser
+        var parser = new Parser({
+            whitespace: /\s+/,
+            comment: /\/\*([^\*]|\*[^\/])*(\*\/?)?|(\/\/|#)[^\r\n]*/,
+            string: /"(\\.|[^"\r\n])*"?|'(\\.|[^'\r\n])*'?/,
+            number: /0x[\dA-Fa-f]+|-?(\d+\.?\d*|\.\d+)/,
+            keyword: /(and|as|case|catch|class|const|def|delete|die|do|else|elseif|esac|exit|extends|false|fi|finally|for|foreach|function|global|if|new|null|or|private|protected|public|published|resource|return|self|static|struct|switch|then|this|throw|true|try|var|void|while|xor)(?!\w|=)/,
+            variable: /[\$\%\@](\->|\w)+(?!\w)|\${\w*}?/,
+            define: /[$A-Z_a-z0-9]+/,
+            op: /[\+\-\*\/=<>!]=?|[\(\)\{\}\[\]\.\|]/,
+            other: /\S+/,
+        });
+        // wait for the page to finish loading before accessing the DOM
+        window.onload = function(){
+            // get the textarea
+            var textarea = $('id_body');
+
+            // start the decorator
+            decorator = new TextareaDecorator( textarea, parser );
+        };
+    </script>
 {% endblock header %}
 
 {% block content %}
