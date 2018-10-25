@@ -31,22 +31,26 @@ def run(args, log):
 	if files_to_upload:
 		message('\n<b>Копирую файл(ы):</b>\n', log)
 		upload = {'file': files_to_upload, 'dest': tmp_dir}
-		up_error = upload_file(upload, args.server, log)
-		if up_error > 0:
-			error = up_error
+		error += upload_file(upload, args.server, log)
 
 	if args.update:
 		upload = {'file': args.update, 'dest': upd_dir}
 		updates = ['{dir}/{upd}'.format(dir=upd_dir, upd=update.split('/')[-1]) for update in args.update]
-		up_error = upload_file(upload, args.server, log)
-		if up_error > 0:
-			error = up_error
+		error += upload_file(upload, args.server, log)
 
 	for script, options in zip(args.script, args.options):
+
+		with open(script) as f:
+			body = f.read()
+
 		filename = script.split('/')[-1]
 		script_type = script.split('.')[-1]
 		filepath = '{tmp}/{file}'.format(tmp=tmp_dir, file=filename)
-		message('\n<b>Выполняю скрипт {file}</b>\n'.format(file=filename), log)
+		message('\n<b>Выполняю скрипт {file}, тело скрипта:</b>\n{body}\n\n<b>Результат выполнения:</b>\n'.format(
+			file=filename,
+			body=body,
+		), log)
+
 		if updates:
 			options += ' '.join(updates)
 
@@ -59,9 +63,7 @@ def run(args, log):
 					file=filepath,
 				)
 			]
-			sh_error = my_call(command, log)
-			if sh_error > 0:
-				error = sh_error
+			error += my_call(command, log)
 
 		# ------------------{ Run python script }------------------------------
 		elif script_type == 'py':
@@ -72,9 +74,7 @@ def run(args, log):
 					file=filepath,
 				)
 			]
-			py_error = my_call(command, log)
-			if py_error > 0:
-				error = py_error
+			error += my_call(command, log)
 
 		# ------------------{ Run YML script }---------------------------------
 		elif script_type == 'yml':
@@ -84,9 +84,7 @@ def run(args, log):
 			]
 			yml_error = my_call(command, log)
 			if yml_error == 0:
-				yml_error = my_call(command[0:-1], log)
-			if yml_error > 0:
-				error = yml_error
+				error += my_call(command[0:-1], log)  # run without '--syntax-check'
 
 		# ------------------{ Run SQL script }---------------------------------
 		elif script_type == 'sql':
@@ -117,7 +115,7 @@ def run(args, log):
 				)
 			except CalledProcessError as e:
 				message(e.output, log)
-				error = e.returncode
+				error += e.returncode
 
 		# ------------------{ Unknown script type }----------------------------
 		else:
