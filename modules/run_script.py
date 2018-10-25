@@ -82,8 +82,8 @@ def run(args, log):
 				'ansible-playbook', script, '-i', '%s,' % args.server,
 				'--vault-password-file', '%s/vault.txt' % home, '--syntax-check'
 			]
-			yml_error = my_call(command, log)
-			if yml_error == 0:
+			syntax_check = my_call(command, log)
+			if syntax_check == 0:
 				error += my_call(command[0:-1], log)  # run without '--syntax-check'
 
 		# ------------------{ Run SQL script }---------------------------------
