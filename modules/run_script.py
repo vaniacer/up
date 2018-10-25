@@ -46,7 +46,7 @@ def run(args, log):
 		filename = script.split('/')[-1]
 		script_type = script.split('.')[-1]
 		filepath = '{tmp}/{file}'.format(tmp=tmp_dir, file=filename)
-		message('\n<b>Выполняю скрипт {file}, тело скрипта:</b>\n{body}\n\n<b>Результат выполнения:</b>\n'.format(
+		message('\n<b>Выполняю скрипт {file}, тело скрипта:</b>\n<i>{body}</i>\n\n<b>Результат:</b>\n'.format(
 			file=filename,
 			body=body,
 		), log)
