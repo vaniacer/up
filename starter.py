@@ -8,10 +8,13 @@ from datetime import datetime
 from os.path import join as opj
 from importlib import import_module
 from argparse import ArgumentParser
+
+from re import escape
+
 from modules.log_cutter import log_cutter
 from modules.psql import cron_log, regular_log
 from up.settings import LOG_FILE, ERR_FILE, BASE_DIR
-
+from subprocess import call
 
 parser = ArgumentParser()
 parser.add_argument('-H', '--history', help="Save log to history",   action='store_true')
@@ -51,7 +54,7 @@ def add_cron_job():
 
 	wraped_command = ["'%s'" % opt for opt in save_argv]  # wrap all arguments with ''
 	command = '{python} {starter} {command}'.format(python=python, starter=starter, command=' '.join(wraped_command))
-	cronjob = "{top}\n{min} {hur} {day} {mon} * {command}; sed '/{key}/d' -i '{cronfile}'\n{bot}\n".format(
+	cronjob = "{top}\n{min} {hur} {day} {mon} * {command}; sed '/{key}/d' -i '{cronfile}'\n{bot}\n#new {key}".format(
 		top='#' + '-' * 28 + '{ job %s start }' % args.key + '-' * 28,
 		bot='#' + '-' * 28 + '{  job %s end  }' % args.key + '-' * 28,
 		min=datetime_object.minute,
@@ -65,6 +68,10 @@ def add_cron_job():
 
 	with open(cronfile, 'a') as f:
 		f.write(cronjob)
+
+	# add this 'magic' to prevent new job freezing
+	sed = ['sed', '/#new {}/d'.format(args.key), '-i', cronfile]
+	call(sed)
 
 
 error = 0
