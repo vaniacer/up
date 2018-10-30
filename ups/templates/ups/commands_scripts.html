@@ -9,13 +9,25 @@
 
 <!-----------------------------------------Available commands------------------------------------->
 <!--------------------- Validation('cmd_name', server, update, cronjob, script, dump) ------------>
-{% if "run_script" and "run_command" in pr_view_perms %}
-    <a onclick="select_all('selected_scripts', 'script-body', false, 'SX');
-                selector('xx{{script.id}}', 'xb{{script.id}}', '{{script}}', 'SX');
-                Validation('run_script', true, false, false, true)"
-       title="Run this script on selected server(s)"
-       href="javascript:;"
-       class="small">Run</a>
+{% if "run_command" in pr_view_perms %}
+
+    {% if script.type == 'sql' and 'run_sql_script' in pr_view_perms %}
+        <a onclick="select_all('selected_scripts', 'script-body', false, 'SX');
+                    selector('xx{{script.id}}', 'xb{{script.id}}', '{{script}}', 'SX');
+                    Validation('run_sql_script', true, false, false, true)"
+           title="Run this {{script.type|upper}} script on selected server(s)"
+           href="javascript:;"
+           class="small">Run</a>
+    {% endif%}
+    {% if script.type != 'sql' and 'run_script' in pr_view_perms %}
+        <a onclick="select_all('selected_scripts', 'script-body', false, 'SX');
+                    selector('xx{{script.id}}', 'xb{{script.id}}', '{{script}}', 'SX');
+                    Validation('run_script', true, false, false, true)"
+           title="Run this {{script.type|upper}} script on selected server(s)"
+           href="javascript:;"
+           class="small">Run</a>
+    {% endif %}
+
 {% endif %}
 
 <!--------------------------------------------Download button------------------------------------->

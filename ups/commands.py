@@ -190,16 +190,29 @@ commandick = {
 	# Script section }--------------------------------------------------------------------------------------------------
 	'run_script': CommandClass(
 		permission='run_script',
+		position=10,
 		section='script',
-		title='Run selected script(s) on selected server(s).',
+		title='Run selected SH, PY or YML script(s) on selected server(s).',
 		name='run_script',
 		menu='Run script',
 		srv='true',
 		scr='true',
 	),
 
+	'run_sql_script': CommandClass(
+		permission='run_sql_script',
+		position=20,
+		section='script',
+		title='Run selected SQL script(s) on selected server(s).',
+		name='run_sql_script',
+		menu='Run sql script',
+		srv='true',
+		scr='true',
+	),
+
 	'del_script': CommandClass(
 		permission='del_script',
+		position=30,
 		section='script',
 		title='Delete selected script(s).',
 		name='del_script',

@@ -1,11 +1,8 @@
 # -*- encoding: utf-8 -*-
 
-from subprocess import check_output, STDOUT, CalledProcessError
-from os.path import expanduser, join as opj
-from xml_parser import get_db_parameters
 from download_upload import upload_file
 from popen_call import my_call, message
-from up.settings import DUMP_DIR
+from os.path import expanduser
 
 
 def description(args, log):
@@ -20,14 +17,9 @@ def run(args, log):
 	home = expanduser('~')
 	upd_dir = '{wdir}/updates/new'.format(wdir=args.wdir)
 	tmp_dir = '{wdir}/temp/{key}'.format(wdir=args.wdir, key=args.key)
-	dbhost, dbport, dbname, dbuser, dbpass = '', '', '', '', ''
 
-	if any(".sql" in s for s in args.script):
-		dbhost, dbport, dbname, dbuser, dbpass = get_db_parameters(
-			args.server, '{wdir}/jboss-bas-*/standalone/configuration/standalone-full.xml'.format(wdir=args.wdir)
-		)
-
-	files_to_upload = [script for script in args.script if '.yml' not in script]  # remove .yml from list
+	# remove .yml and .sql from upload list
+	files_to_upload = [script for script in args.script if '.sql' not in script and '.yml' not in script]
 	if files_to_upload:
 		message('\n<b>Копирую файл(ы):</b>\n', log)
 		upload = {'file': files_to_upload, 'dest': tmp_dir}
@@ -85,37 +77,6 @@ def run(args, log):
 			syntax_check = my_call(command, log)
 			if syntax_check == 0:
 				error += my_call(command[0:-1], log)  # run without '--syntax-check'
-
-		# ------------------{ Run SQL script }---------------------------------
-		elif script_type == 'sql':
-			command = [
-				'ssh', args.server,
-				''' dbopts="-h {dbhost} -p {dbport} -U {dbuser}"
-					PGPASSWORD="{dbpass}" psql -v ON_ERROR_STOP=1 $dbopts -d {dbname} < "{file}"
-				'''.format(
-					wdir=args.wdir,
-					file=filepath,
-					dbhost=dbhost,
-					dbport=dbport,
-					dbuser=dbuser,
-					dbpass=dbpass,
-					dbname=dbname,
-				)
-			]
-
-			try:
-				sql_result = check_output(command, stderr=STDOUT)
-				log_name = '{file}_{key}.log'.format(file=filename, key=args.key)
-				with open(opj(DUMP_DIR, log_name), 'w') as f:
-					f.write(sql_result)
-				message(
-					''' {sql}\n<b>Log will be stored until tomorrow, download it please if you need it!</b>
-						\n<a class='btn btn-primary' href='/dumps/{file}'>Download</a>
-					'''.format(file=log_name, sql=sql_result), log
-				)
-			except CalledProcessError as e:
-				message(e.output, log)
-				error += e.returncode
 
 		# ------------------{ Unknown script type }----------------------------
 		else:
