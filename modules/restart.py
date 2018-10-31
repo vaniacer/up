@@ -1,7 +1,8 @@
 # -*- encoding: utf-8 -*-
 
-from start import run as start
+from time import sleep
 from stop import run as stop
+from start import run as start
 
 
 def description(args, log):
@@ -11,7 +12,6 @@ def description(args, log):
 def run(args, log):
 
 	error = stop(args, log)
-	start_error = start(args, log)
-	if start_error > 0:
-		error = start_error
+	sleep(3)
+	error += start(args, log)
 	return error
