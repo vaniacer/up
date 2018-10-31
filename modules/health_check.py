@@ -25,7 +25,7 @@ def run(args, log):
 				|| {{ printf '\nПорт закрыт\n'; ((error+=2)); }}
 
 			printf '<b>\nПроверяю http доступ(локально)</b>\n'
-			curl -fs 'http://localhost:{port}/application' > /dev/null \
+			curl --connect-timeout 10 -fs 'http://localhost:{port}/application' > /dev/null \
 				&& {{ printf '\nДоступ есть\n'; }} \
 				|| {{ printf '\nДоступа нет\n'; ((error+=3)); }}
 				
