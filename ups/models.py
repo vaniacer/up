@@ -35,6 +35,7 @@ class Project(models.Model):
 		"""Добавляет доп. разрешения."""
 		permissions = (
 			("view_project",   "Can view project"),
+			("view_history",   "Can view project's history"),
 
 			("dld_dump",       "Can download dumps"),
 			("dld_update",     "Can download updates"),
