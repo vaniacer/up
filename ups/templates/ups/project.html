@@ -31,7 +31,7 @@
                 <a href="javascript:;" title="{{project.desc}}">{{project}}</a>
             </li>
 
-            {% if "run_script" in pr_view_perms %}
+            {% if "run_script" in pr_view_perms or "run_sql_script" in pr_view_perms %}
                 <li role="presentation" class="active">
                     <a title="Project scripts and servers"
                        href="#scripts" aria-controls="scripts" role="tab" data-toggle="tab">Scripts</a>
