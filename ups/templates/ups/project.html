@@ -80,7 +80,7 @@
         <!-- Tab panes -->
         <div class="tab-content">
 
-            {% if "run_script" in pr_view_perms %}
+            {% if "run_script" in pr_view_perms or "run_sql_script" in pr_view_perms %}
                 <div role="tabpanel" class="tab-pane in active" id="scripts">
                     <div class="col-sm-5">{% include "ups/project_scripts.html" %}</div>
                 </div>
