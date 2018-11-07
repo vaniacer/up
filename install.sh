@@ -26,7 +26,6 @@ for file in access error log; {
 logfile=$logdir/$file
 sudo cat >> /etc/logrotate.d/ups << EOF
 $logfile {
-    daily
     dateext
     size 10M
     rotate 5
