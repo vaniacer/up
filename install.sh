@@ -22,8 +22,9 @@ mkdir -p static media/{dumps,scripts,updates} ../logs/{run,srv}
 printf "Add logrotate\n"
 logdir="`dirname $PWD`/logs/srv/*"
 for file in access error log; {
-sudo cat >> /etc/logrotate.d/ups/$file << EOF
-$logdir {
+logfile=$logdir/$file
+sudo cat >> /etc/logrotate.d/ups << EOF
+$logfile {
     daily
     dateext
     rotate 5
