@@ -2,7 +2,7 @@
 
 admin=admin
 paswd=1234qwer
-email=marov@krista.ru
+email=admin@pisem.net
 
 [[ -s conf.py ]] || { printf "\nCreate conf.py!\n\ncp conf.py{.template,}\n"; exit 1; }
 
