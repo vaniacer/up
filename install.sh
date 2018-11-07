@@ -20,7 +20,7 @@ printf "Create some folders\n"
 mkdir -p static media/{dumps,scripts,updates} ../logs/{run,srv}
 
 printf "Add logrotate\n"
-logdir="`dirname $PWD`/logs/srv/*"
+logdir="$(dirname $PWD)/logs/srv/*"
 for file in access error log; {
 
 logfile=$logdir/$file
