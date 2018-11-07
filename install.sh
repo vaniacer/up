@@ -28,6 +28,7 @@ sudo cat >> /etc/logrotate.d/ups << EOF
 $logfile {
     daily
     dateext
+    size 10M
     rotate 5
     compress
     missingok
