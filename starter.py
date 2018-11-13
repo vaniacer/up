@@ -3,18 +3,17 @@
 from sys import argv
 from os import remove
 from time import sleep
+from os.path import exists
 from getpass import getuser
+from subprocess import call
 from datetime import datetime
 from os.path import join as opj
 from importlib import import_module
 from argparse import ArgumentParser
-
-from re import escape
-
 from modules.log_cutter import log_cutter
 from modules.psql import cron_log, regular_log
 from up.settings import LOG_FILE, ERR_FILE, BASE_DIR
-from subprocess import call
+
 
 parser = ArgumentParser()
 parser.add_argument('-H', '--history', help="Save log to history",   action='store_true')
@@ -99,7 +98,5 @@ else:
 # Delete log files }-------------------
 sleep(10)
 for f in logfile, errfile:
-	try:
+	if exists(f):
 		remove(f)
-	except OSError:
-		continue
