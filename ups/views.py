@@ -117,7 +117,7 @@ def cancel(request):
 
 @login_required
 def mini_log(request):
-	"""Выводит страницу логов выполняющейся комманды."""
+	"""Выводит мини лог выполняющейся команды."""
 	data = request.GET
 	current_project = get_object_or_404(Project, id=data['prid'])
 	check_perm_or404('view_project', current_project, request.user)
@@ -149,7 +149,7 @@ def mini_log(request):
 
 @login_required
 def command_log(request):
-	"""Выводит страницу логов выполняющейся комманды."""
+	"""Выводит страницу логов выполняющейся команды."""
 	data = request.GET
 	current_project = get_object_or_404(Project, id=data['prid'])
 	check_perm_or404('view_project', current_project, request.user)
