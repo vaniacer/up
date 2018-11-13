@@ -6,6 +6,13 @@
     <title>UpS: {{project}}</title>
 {% endblock header %}
 
+{% block history %}
+    {% get_obj_perms request.user for project as "pr_view_perms" %}
+    {% if "view_history" in pr_view_perms %}
+        <li><a href="{% url 'ups:history' project.id %}">History</a></li>
+    {% endif %}
+{% endblock history %}
+
 {% block content %}
 
     {% get_obj_perms request.user for project as "pr_view_perms" %}
