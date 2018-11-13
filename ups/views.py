@@ -9,15 +9,14 @@ from django.contrib.auth.decorators import login_required
 from .commands import run_cmd, info, commandick, back_url
 from django.shortcuts import render, get_object_or_404
 from .models import Project, Update, Script, History
+from os.path import getsize, exists, join as opj
 from django.conf import settings as conf
 from wsgiref.util import FileWrapper
 from re import search, IGNORECASE
 from mimetypes import guess_type
 from operator import itemgetter
-from os.path import join as opj
 from subprocess import call
 from .dump import get_dumps
-from os.path import getsize
 from os import remove
 
 
@@ -48,10 +47,8 @@ def pagination(request, hist):
 def delete_files(files):
 	"""Удаляет список файлов."""
 	for f in files:
-		try:
+		if exists(f):
 			remove(f)
-		except OSError:
-			continue
 
 
 def download(file_path, file_name):
