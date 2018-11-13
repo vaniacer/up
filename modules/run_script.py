@@ -41,6 +41,9 @@ def run(args, log):
 		with open(script) as f:
 			body = f.read()
 
+		if updates:
+			options += ' {}'.format(' '.join(updates))
+
 		filename = script.split('/')[-1]
 		script_type = script.split('.')[-1]
 		filepath = '{tmp}/{file}'.format(tmp=tmp_dir, file=filename)
@@ -49,9 +52,6 @@ def run(args, log):
 			file=filename,
 			body=body,
 		), log)
-
-		if updates:
-			options += ' '.join(updates)
 
 		# ------------------{ Run bash script }--------------------------------
 		if script_type == 'sh':
