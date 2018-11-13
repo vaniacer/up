@@ -26,7 +26,7 @@ def index(request):
 
 
 def pagination(request, hist):
-	"""Создает страницы для закладки 'History'."""
+	"""Создает страницы для History."""
 	hist_pages = Paginator(hist, 20)
 	page = request.GET.get('page') or 1
 	try:
@@ -210,7 +210,7 @@ def command_log(request):
 
 @login_required
 def history(request, project_id):
-	"""Выводит один проект, все его серверы, пакеты обновлений и скрипты, обрабатывает кнопки действий."""
+	"""Выводит страницу истории."""
 	current_project = get_object_or_404(Project, id=project_id)
 	check_perm_or404('view_project', current_project, request.user)
 	check_perm_or404('view_history',  current_project, request.user)
@@ -230,7 +230,7 @@ def history(request, project_id):
 
 @login_required
 def project(request, project_id):
-	"""Выводит один проект, все его серверы, пакеты обновлений и скрипты, обрабатывает кнопки действий."""
+	"""Выводит всю информацию о проекте, обрабатывает кнопки действий."""
 	current_project = get_object_or_404(Project, id=project_id)
 	check_perm_or404('view_project', current_project, request.user)
 
