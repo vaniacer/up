@@ -10,6 +10,12 @@ def description(args, log):
 	log.write('\nRun script(s):\n{scripts}\non server {server}\n'.format(scripts=scripts, server=args.server))
 
 
+def check_opt(opt):
+	if opt:
+		return '<b>Параметры:\n</b>{}\n'.format(opt)
+	return ''
+
+
 def run(args, log):
 
 	error = 0
@@ -38,7 +44,8 @@ def run(args, log):
 		filename = script.split('/')[-1]
 		script_type = script.split('.')[-1]
 		filepath = '{tmp}/{file}'.format(tmp=tmp_dir, file=filename)
-		message('\n<b>Выполняю скрипт {file}, тело скрипта:</b>\n<i>{body}</i>\n\n<b>Результат:</b>\n'.format(
+		message('\n<b>Выполняю скрипт {file}, тело скрипта:</b>\n<i>{body}</i>\n{opts}\n<b>Результат:</b>\n'.format(
+			opts=check_opt(options),
 			file=filename,
 			body=body,
 		), log)
