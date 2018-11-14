@@ -1,7 +1,6 @@
 # -*- encoding: utf-8 -*-
 
 from popen_call import my_call
-from ssh_yes import ssh_yes
 
 
 def description(args, log):
@@ -47,6 +46,5 @@ def run(args, log):
 		""".format(server=args.server)
 	]
 
-	ssh_yes(args.server)
 	error = my_call(command, log)
 	return error

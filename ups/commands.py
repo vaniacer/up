@@ -499,6 +499,19 @@ commandick = {
 		his=False,
 		fst=True,
 	),
+
+	'test_ssh': CommandClass(
+		permission='tunnel',
+		position=90,
+		section='server',
+		title='Test ssh connection.',
+		short='Tunnel',
+		name='test_ssh',
+		menu='Test ssh',
+		run="run_or_cron('RUN');",
+		srv='true',
+		his=False,
+	),
 }
 
 
