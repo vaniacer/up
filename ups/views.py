@@ -157,8 +157,8 @@ def command_log(request):
 
 	final = {}
 	logids = data.getlist('logid')
-	qst = request.META['QUERY_STRING']
 	url = request.META['SERVER_NAME']
+	qst = request.META['QUERY_STRING']
 	context = {
 		'name':    data['cmd'].capitalize().replace('_', ' '),
 		'his':     commandick[data['cmd']].his,
