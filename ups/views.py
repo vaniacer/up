@@ -157,7 +157,8 @@ def command_log(request):
 
 	qst = request.META['QUERY_STRING']
 	url = request.META['SERVER_NAME']
-
+	logids = data.getlist('logid')
+	final = {}
 	context = {
 		'name':    data['cmd'].capitalize().replace('_', ' '),
 		'his':     commandick[data['cmd']].his,
@@ -169,36 +170,30 @@ def command_log(request):
 		'color':   '',
 	}
 
-	logids = data.getlist('logid')
-	final = {}
-
 	for logid in logids:
 
+		err = 999
+		event = None
+		log = 'Working...'
 		final[logid] = False
-		try:
+		logfile = conf.LOG_FILE + logid
+		errfile = conf.ERR_FILE + logid
+
+		if context['his']:
 			event = get_object_or_404(History, uniq=logid)
-		except:
-			event = None
-
-		try:
-			log = open(conf.LOG_FILE + logid, 'r').read()
-		except IOError:
-			try:
-				log = event.desc
-			except:
-				log = 'Working...'
-
-		try:
-			err = int(event.exit)
-			final[logid] = True
-			if err > 0:
-				context['ok'] = 'btn-danger'
-		except:
-			try:
-				err = int(open(conf.ERR_FILE + logid, 'r').read())
+			log = event.desc
+			if event.exit or event.exit == 0:
+				err = int(event.exit)
 				final[logid] = True
-			except IOError:
-				err = 999
+
+		if exists(logfile):
+			with open(logfile) as f:
+				log = f.read()
+
+		if exists(errfile):
+			with open(errfile) as f:
+				err = int(f.read())
+			final[logid] = True
 
 		context['logs'].extend([{'id': logid, 'log': log.replace('__URL__', url), 'err': err, 'event': event}])
 
