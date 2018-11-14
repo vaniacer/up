@@ -182,7 +182,7 @@ def command_log(request):
 		if context['his']:
 			event = get_object_or_404(History, uniq=logid)
 			log = event.desc
-			if event.exit or event.exit == 0:
+			if event.exit:
 				err = int(event.exit)
 				final[logid] = True
 
