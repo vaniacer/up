@@ -155,10 +155,13 @@ def command_log(request):
 	check_perm_or404('view_project', current_project, request.user)
 	check_perm_or404('run_command', current_project, request.user)
 
+	err = 999
+	final = {}
+	event = None
+	log = 'Working...'
+	logids = data.getlist('logid')
 	qst = request.META['QUERY_STRING']
 	url = request.META['SERVER_NAME']
-	logids = data.getlist('logid')
-	final = {}
 	context = {
 		'name':    data['cmd'].capitalize().replace('_', ' '),
 		'his':     commandick[data['cmd']].his,
@@ -172,9 +175,6 @@ def command_log(request):
 
 	for logid in logids:
 
-		err = 999
-		event = None
-		log = 'Working...'
 		final[logid] = False
 		logfile = conf.LOG_FILE + logid
 		errfile = conf.ERR_FILE + logid
