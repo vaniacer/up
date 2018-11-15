@@ -35,10 +35,11 @@ def run(args, log):
 		'ssh', args.server,
 		''' dbopts="-h {dbhost} -p {dbport} -U {dbuser}"
 		
-			dbterm="ALTER DATABASE {dbname} ALLOW_CONNECTIONS false;
-					SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = '{dbname}';"
+			dbconn="ALTER DATABASE {dbname} ALLOW_CONNECTIONS false;"
+			dbterm="SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = '{dbname}';"
 	
-			PGPASSWORD="{dbpass}" psql     $dbopts -c "$dbterm"          &> /dev/null
+			PGPASSWORD="{dbpass}" psql     $dbopts -c "$dbconn"          &> /dev/null
+			PGPASSWORD="{dbpass}" psql     $dbopts -c "$dbterm"          || error=$?
 			PGPASSWORD="{dbpass}" dropdb   $dbopts     {dbname}          || error=$?
 			PGPASSWORD="{dbpass}" createdb $dbopts -O  {dbuser} {dbname} || error=$?
 			
