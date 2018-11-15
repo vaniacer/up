@@ -34,15 +34,15 @@ def run(args, log):
 	command = [
 		'ssh', args.server,
 		''' dbopts="-h {dbhost} -p {dbport} -U {dbuser}"
-		
+
 			dbconn="ALTER DATABASE {dbname} ALLOW_CONNECTIONS false;"
 			dbterm="SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = '{dbname}';"
-	
+
 			PGPASSWORD="{dbpass}" psql     $dbopts -c "$dbconn"          &> /dev/null
 			PGPASSWORD="{dbpass}" psql     $dbopts -c "$dbterm"          || error=$?
 			PGPASSWORD="{dbpass}" dropdb   $dbopts     {dbname}          || error=$?
 			PGPASSWORD="{dbpass}" createdb $dbopts -O  {dbuser} {dbname} || error=$?
-			
+
 			gunzip -c {tmp}/{file} | PGPASSWORD="{dbpass}" psql -v ON_ERROR_STOP=1 $dbopts -d {dbname}
 			for i in ${{PIPESTATUS[@]}}; {{ ((error+=$i)); }}; exit $error
 		'''.format(
