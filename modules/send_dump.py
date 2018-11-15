@@ -38,7 +38,7 @@ def run(args, log):
 			dbterm="ALTER DATABASE {dbname} ALLOW_CONNECTIONS false;
 					SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = '{dbname}';"
 	
-			PGPASSWORD="{dbpass}" psql     $dbopts -c "$dbterm"          || error=$?
+			PGPASSWORD="{dbpass}" psql     $dbopts -c "$dbterm"          &> /dev/null
 			PGPASSWORD="{dbpass}" dropdb   $dbopts     {dbname}          || error=$?
 			PGPASSWORD="{dbpass}" createdb $dbopts -O  {dbuser} {dbname} || error=$?
 			
