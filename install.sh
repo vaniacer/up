@@ -2,7 +2,7 @@
 
 admin=admin
 paswd=1234qwer
-email=marov@krista.ru
+email=admin@pisem.net
 
 [[ -s conf.py ]] || { printf "\nCreate conf.py!\n\ncp conf.py{.template,}\n"; exit 1; }
 
@@ -20,21 +20,23 @@ printf "Create some folders\n"
 mkdir -p static media/{dumps,scripts,updates} ../logs/{run,srv}
 
 printf "Add logrotate\n"
-logdir="`dirname $PWD`/logs/srv/*"
+logdir="$(dirname $PWD)/logs/srv/*"
 for file in access error log; {
-sudo cat >> /etc/logrotate.d/ups/$file << EOF
-$logdir {
-    daily
-    dateext
-    rotate 5
+
+logfile=$logdir/$file
+sudo cat >> /etc/logrotate.d/ups << EOF
+$logfile {
+    weekly
+    rotate 4
     compress
     missingok
     notifempty
-    dateformat .%Y-%m-%d
+    delaycompress
     create 0640 $USER $USER
 }
 
 EOF
+
 }
 
 printf "Install requirements\n"

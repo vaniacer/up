@@ -9,15 +9,14 @@ from django.contrib.auth.decorators import login_required
 from .commands import run_cmd, info, commandick, back_url
 from django.shortcuts import render, get_object_or_404
 from .models import Project, Update, Script, History
+from os.path import getsize, exists, join as opj
 from django.conf import settings as conf
 from wsgiref.util import FileWrapper
 from re import search, IGNORECASE
 from mimetypes import guess_type
 from operator import itemgetter
-from os.path import join as opj
 from subprocess import call
 from .dump import get_dumps
-from os.path import getsize
 from os import remove
 
 
@@ -27,7 +26,7 @@ def index(request):
 
 
 def pagination(request, hist):
-	"""Создает страницы для закладки 'History'."""
+	"""Создает страницы для History."""
 	hist_pages = Paginator(hist, 20)
 	page = request.GET.get('page') or 1
 	try:
@@ -48,10 +47,8 @@ def pagination(request, hist):
 def delete_files(files):
 	"""Удаляет список файлов."""
 	for f in files:
-		try:
+		if exists(f):
 			remove(f)
-		except OSError:
-			continue
 
 
 def download(file_path, file_name):
@@ -120,7 +117,7 @@ def cancel(request):
 
 @login_required
 def mini_log(request):
-	"""Выводит страницу логов выполняющейся комманды."""
+	"""Выводит мини лог выполняющейся команды."""
 	data = request.GET
 	current_project = get_object_or_404(Project, id=data['prid'])
 	check_perm_or404('view_project', current_project, request.user)
@@ -152,15 +149,16 @@ def mini_log(request):
 
 @login_required
 def command_log(request):
-	"""Выводит страницу логов выполняющейся комманды."""
+	"""Выводит страницу логов выполняющейся команды."""
 	data = request.GET
 	current_project = get_object_or_404(Project, id=data['prid'])
 	check_perm_or404('view_project', current_project, request.user)
 	check_perm_or404('run_command', current_project, request.user)
 
-	qst = request.META['QUERY_STRING']
+	final = {}
+	logids = data.getlist('logid')
 	url = request.META['SERVER_NAME']
-
+	qst = request.META['QUERY_STRING']
 	context = {
 		'name':    data['cmd'].capitalize().replace('_', ' '),
 		'his':     commandick[data['cmd']].his,
@@ -172,36 +170,30 @@ def command_log(request):
 		'color':   '',
 	}
 
-	logids = data.getlist('logid')
-	final = {}
-
 	for logid in logids:
 
+		err = 999
+		event = None
+		log = 'Working...'
 		final[logid] = False
-		try:
+		logfile = conf.LOG_FILE + logid
+		errfile = conf.ERR_FILE + logid
+
+		if context['his']:
 			event = get_object_or_404(History, uniq=logid)
-		except:
-			event = None
-
-		try:
-			log = open(conf.LOG_FILE + logid, 'r').read()
-		except IOError:
-			try:
-				log = event.desc
-			except:
-				log = 'Working...'
-
-		try:
-			err = int(event.exit)
-			final[logid] = True
-			if err > 0:
-				context['ok'] = 'btn-danger'
-		except:
-			try:
-				err = int(open(conf.ERR_FILE + logid, 'r').read())
+			log = event.desc
+			if event.exit:
+				err = int(event.exit)
 				final[logid] = True
-			except IOError:
-				err = 999
+
+		if exists(logfile):
+			with open(logfile) as f:
+				log = f.read()
+
+		if exists(errfile):
+			with open(errfile) as f:
+				err = int(f.read())
+			final[logid] = True
 
 		context['logs'].extend([{'id': logid, 'log': log.replace('__URL__', url), 'err': err, 'event': event}])
 
@@ -213,10 +205,10 @@ def command_log(request):
 
 @login_required
 def history(request, project_id):
-	"""Выводит один проект, все его серверы, пакеты обновлений и скрипты, обрабатывает кнопки действий."""
+	"""Выводит страницу истории."""
 	current_project = get_object_or_404(Project, id=project_id)
 	check_perm_or404('view_project', current_project, request.user)
-	check_perm_or404('run_command',  current_project, request.user)
+	check_perm_or404('view_history',  current_project, request.user)
 
 	hist = current_project.history_set.order_by('date').reverse()
 	hist, hist_fd, hist_bk = pagination(request, hist)
@@ -233,7 +225,7 @@ def history(request, project_id):
 
 @login_required
 def project(request, project_id):
-	"""Выводит один проект, все его серверы, пакеты обновлений и скрипты, обрабатывает кнопки действий."""
+	"""Выводит всю информацию о проекте, обрабатывает кнопки действий."""
 	current_project = get_object_or_404(Project, id=project_id)
 	check_perm_or404('view_project', current_project, request.user)
 

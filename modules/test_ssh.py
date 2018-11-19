@@ -1,9 +1,13 @@
 # -*- encoding: utf-8 -*-
 
-from subprocess import call
+from popen_call import my_call
 
 
-def ssh_yes(server):
+def description(args, log):
+	log.write("\nTest ssh connection to server %s" % args.server)
+
+
+def run(args, log):
 
 	command = [
 		'expect', '-c',
@@ -18,10 +22,11 @@ def ssh_yes(server):
 				}}
 				"assword:" {{ exit }}
 				"$ "       {{ send "exit\n" }}
+				"fail"     {{ exit 1 }}
+				timeout    {{ exit 1 }}
 			}}
-			exit
-			}}
-		'''.format(server=server)
+		'''.format(server=args.server)
 	]
 
-	call(command)
+	error = my_call(command, log)
+	return error

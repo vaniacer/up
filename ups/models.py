@@ -34,50 +34,52 @@ class Project(models.Model):
 	class Meta:
 		"""Добавляет доп. разрешения."""
 		permissions = (
-			("view_project", "Can view project"),
+			("view_project",   "Can view project"),
+			("view_history",   "Can view project's history"),
 
-			("dld_dump",     "Can download dumps"),
-			("dld_update",   "Can download updates"),
-			("dld_script",   "Can download scripts"),
+			("dld_dump",       "Can download dumps"),
+			("dld_update",     "Can download updates"),
+			("dld_script",     "Can download scripts"),
 
-			("add_server",   "Can add servers to project"),
-			("add_update",   "Can add updates to project"),
-			("add_script",   "Can add scripts to project"),
-			("add_sql",      "Can add SQL scripts to project"),
-			("add_yml",      "Can add YAML scripts to project"),
-			("add_sh",       "Can add BASH scripts to project"),
-			("add_py",       "Can add Python scripts to project"),
+			("add_server",     "Can add servers to project"),
+			("add_update",     "Can add updates to project"),
+			("add_script",     "Can add scripts to project"),
+			("add_sql",        "Can add SQL scripts to project"),
+			("add_yml",        "Can add YAML scripts to project"),
+			("add_sh",         "Can add BASH scripts to project"),
+			("add_py",         "Can add Python scripts to project"),
 
-			("edit_project", "Can edit project"),
-			("edit_server",  "Can edit projects's servers"),
-			("edit_update",  "Can edit projects's updates"),
-			("edit_script",  "Can edit projects's scripts"),
+			("edit_project",   "Can edit project"),
+			("edit_server",    "Can edit projects's servers"),
+			("edit_update",    "Can edit projects's updates"),
+			("edit_script",    "Can edit projects's scripts"),
 
-			("del_server",   "Can delete project's servers"),
-			("del_update",   "Can delete project's updates"),
-			("del_script",   "Can delete project's scripts"),
-			("del_dump",     "Can delete project's dumps"),
+			("del_server",     "Can delete project's servers"),
+			("del_update",     "Can delete project's updates"),
+			("del_script",     "Can delete project's scripts"),
+			("del_dump",       "Can delete project's dumps"),
 
-			("run_command",  "Can run commands"),
-			("tunnel",       "Can create tunnel"),
-			("run_cron",     "Can run cron commands"),
-			("run_dump",     "Can run dump commands"),
-			("run_update",   "Can run update commands"),
-			("run_script",   "Can run project's scripts"),
-			("send_dump",    "Can run command 'Send dump'"),
-			("peep_pass",    "Can run command 'Peep passwords'"),
-			("check_logs",   "Can view\download server's log files"),
-			("check_conf",   "Can view server's standalone-full.xml"),
-			("maintenance",  """Can run maintenance commands:
-								Maintenance ON/OFF
-								Reload config
-								Restart jboss
-								Start jboss
-								Stop jboss
-								Kill jboss
-								Backup full
-								Backup base
-								Backup system"""),
+			("run_command",    "Can run commands"),
+			("tunnel",         "Can create tunnel"),
+			("run_cron",       "Can run cron commands"),
+			("run_dump",       "Can run dump commands"),
+			("run_update",     "Can run update commands"),
+			("run_sql_script", "Can run project .sql scripts"),
+			("run_script",     "Can run project .sh, .py, .yml scripts"),
+			("send_dump",      "Can run command 'Send dump'"),
+			("peep_pass",      "Can run command 'Peep passwords'"),
+			("check_logs",     "Can view\download server's log files"),
+			("check_conf",     "Can view server's standalone-full.xml"),
+			("maintenance",    """Can run maintenance commands:
+									'Maintenance ON/OFF'
+									'Reload config'
+									'Restart jboss'
+									'Start jboss'
+									'Stop jboss'
+									'Kill jboss'
+									'Backup full'
+									'Backup base'
+									'Backup system'"""),
 		)
 		get_latest_by = 'date'
 

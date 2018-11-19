@@ -6,6 +6,13 @@
     <title>UpS: {{project}}</title>
 {% endblock header %}
 
+{% block history %}
+    {% get_obj_perms request.user for project as "pr_view_perms" %}
+    {% if "view_history" in pr_view_perms %}
+        <li><a href="{% url 'ups:history' project.id %}">History</a></li>
+    {% endif %}
+{% endblock history %}
+
 {% block content %}
 
     {% get_obj_perms request.user for project as "pr_view_perms" %}
@@ -31,7 +38,7 @@
                 <a href="javascript:;" title="{{project.desc}}">{{project}}</a>
             </li>
 
-            {% if "run_script" in pr_view_perms %}
+            {% if "run_script" in pr_view_perms or "run_sql_script" in pr_view_perms %}
                 <li role="presentation" class="active">
                     <a title="Project scripts and servers"
                        href="#scripts" aria-controls="scripts" role="tab" data-toggle="tab">Scripts</a>
@@ -80,7 +87,7 @@
         <!-- Tab panes -->
         <div class="tab-content">
 
-            {% if "run_script" in pr_view_perms %}
+            {% if "run_script" in pr_view_perms or "run_sql_script" in pr_view_perms %}
                 <div role="tabpanel" class="tab-pane in active" id="scripts">
                     <div class="col-sm-5">{% include "ups/project_scripts.html" %}</div>
                 </div>

@@ -8,7 +8,7 @@
         {% include "ups/commands_list_dumps.html" %}
     {% endif %}
 
-    {% if "run_script" in pr_view_perms %}
+    {% if "run_script" in pr_view_perms or "run_sql_script" in pr_view_perms %}
         {% include "ups/commands_list_scripts.html" %}
     {% endif %}
 
