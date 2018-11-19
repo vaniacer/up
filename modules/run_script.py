@@ -2,12 +2,26 @@
 
 from download_upload import upload_file
 from popen_call import my_call, message
+from re import findall, MULTILINE
+from up.settings import LOG_FILE
 from os.path import expanduser
 
 
 def description(args, log):
 	scripts = '\n'.join(script.split('/')[-1] for script in args.script)
 	log.write('\nRun script(s):\n{scripts}\non server {server}\n'.format(scripts=scripts, server=args.server))
+
+
+def download(args, log):
+	dlist =[]
+	logfile = LOG_FILE + args.key
+	with open(logfile) as f:
+		logbody = f.read()
+	down = findall(r'^_DOWNLOAD_.*', logbody, MULTILINE)
+	for item in down:
+		dlist.extend(item.split(' ')[1::])
+
+	print dlist
 
 
 def check_opt(opt):
@@ -90,6 +104,7 @@ def run(args, log):
 			message('\nUnknown script type.\n', log)
 			error += 1
 
+	download(args, log)
 	remove_tmp = ['ssh', args.server, 'rm -rf {tmp}'.format(tmp=tmp_dir)]
 	my_call(remove_tmp, log)
 	return error
