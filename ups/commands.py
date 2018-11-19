@@ -216,7 +216,7 @@ commandick = {
 		section='script',
 		title='Delete selected script(s).',
 		name='del_script',
-		menu='Del script',
+		menu='Delete script',
 		scr='true',
 	),
 
