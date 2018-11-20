@@ -15,7 +15,7 @@ def find_job(key):
 		for line in f:
 			if jobid in line:
 				line = line.strip()
-				job = line.split(' ')
+				job = line.split()
 				break
 
 	return job, jobid

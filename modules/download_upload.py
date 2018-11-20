@@ -2,6 +2,7 @@
 
 from up.settings import DUMP_DIR
 from os.path import join as opj
+from popen_call import message
 from subprocess import call
 
 
@@ -23,6 +24,10 @@ def download_file(download, server, log):
 
 	dump_dir = DUMP_DIR
 	files = ' '.join(download['file'])
+
+	if not files:
+		message('\n<b>Файлы не найдены!</b>\n', log)
+		return 1
 
 	if download['dest']:
 		dump_dir = opj(DUMP_DIR, download['dest'])

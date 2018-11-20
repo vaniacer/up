@@ -1,9 +1,9 @@
 # -*- encoding: utf-8 -*-
 
-from download_upload import upload_file
+from download_upload import upload_file, download_file
+from up.settings import LOG_FILE, DUMP_DIR
 from popen_call import my_call, message
 from re import findall, MULTILINE
-from up.settings import LOG_FILE
 from os.path import expanduser
 
 
@@ -12,16 +12,26 @@ def description(args, log):
 	log.write('\nRun script(s):\n{scripts}\non server {server}\n'.format(scripts=scripts, server=args.server))
 
 
-def download(args, log):
-	dlist =[]
+def download_check(args, log):
+	error = 0
+	dlist = []
 	logfile = LOG_FILE + args.key
 	with open(logfile) as f:
 		logbody = f.read()
-	down = findall(r'^_DOWNLOAD_.*', logbody, MULTILINE)
-	for item in down:
-		dlist.extend(item.split(' ')[1::])
+	download_list = findall(r'^_DOWNLOAD_.*', logbody, MULTILINE)
+	for item in download_list:
+		dlist.extend(item.split()[1::])
 
-	print dlist
+	if dlist:
+		download = {'file': dlist, 'dest': DUMP_DIR, 'kill': False}
+		error += download_file(download, args.server, log)
+		if error == 0:
+			download_links = ["<a class='btn btn-primary' href='/dumps/{fname}'>Download {fname}</a>\n".format(
+				fname=fname.split('/')[-1]) for fname in dlist]
+			message("\n<b>Files will be stored until tomorrow, download them please if you need!</b>\n{links}".format(
+				links='\n'.join(download_links)), log
+			)
+	return error
 
 
 def check_opt(opt):
@@ -97,14 +107,14 @@ def run(args, log):
 			]
 			syntax_check = my_call(command, log)
 			if syntax_check == 0:
-				error += my_call(command[0:-1], log)  # run without '--syntax-check'
+				error += my_call(command[0:-1], log)  # if no errors found run without '--syntax-check'
 
 		# ------------------{ Unknown script type }----------------------------
 		else:
 			message('\nUnknown script type.\n', log)
 			error += 1
 
-	download(args, log)
+	error += download_check(args, log)
 	remove_tmp = ['ssh', args.server, 'rm -rf {tmp}'.format(tmp=tmp_dir)]
 	my_call(remove_tmp, log)
 	return error

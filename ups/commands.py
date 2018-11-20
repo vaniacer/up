@@ -9,7 +9,7 @@ from datetime import datetime, timedelta
 from modules.uniq import uniq as uniqkey
 from os.path import join as opj
 from subprocess import Popen
-from re import split, escape
+from re import escape
 
 
 class CommandClass:
@@ -624,7 +624,7 @@ def starter(dick):
 		script = get_object_or_404(Script, id=ID)
 		opt.extend(['-x', str(script.file)])
 		# split options string coz re.escape escapes spaces as well
-		oplist = split(' ', str(dick['data'].get('script_opt' + ID)))
+		oplist = str(dick['data'].get('script_opt' + ID)).split()
 		# join it back and escape special symbols
 		opdone = ' '.join(escape(opt) for opt in oplist)
 		# add result as script arg -o 'test 123'
