@@ -22,7 +22,7 @@ for key in keys:
 	errfile = ERR_FILE + key
 	arg = Namespace(key=key, cron=False)
 
-	pids = [s.lstrip().split(' ')[0] for s in pid_list if key in s]
+	pids = [s.split()[0] for s in pid_list if key in s]
 	if pids:
 		kill.extend(pids)
 		call(kill)
