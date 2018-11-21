@@ -8,11 +8,14 @@ from subprocess import call
 
 def upload_file(upload, server, log):
 
-	list_of_files = upload['file']
-	destination = upload['dest']
+	files = upload['file']
+	if not files:
+		message('\n<b>Файлы не найдены!</b>\n', log)
+		return 1
 
+	destination = upload['dest']
 	rsync_opt = ['rsync', '--progress', '-lzuogthvr']
-	rsync_opt.extend(list_of_files)
+	rsync_opt.extend(files)
 	rsync_opt.extend(['{addr}:{dest}/'.format(dest=destination, addr=server)])
 
 	error = call(rsync_opt, stdout=log, stderr=log)
@@ -22,13 +25,12 @@ def upload_file(upload, server, log):
 def download_file(download, server, log):
 	"""Закачка файлов."""
 
-	dump_dir = DUMP_DIR
 	files = ' '.join(download['file'])
-
 	if not files:
 		message('\n<b>Файлы не найдены!</b>\n', log)
 		return 1
 
+	dump_dir = DUMP_DIR
 	if download['dest']:
 		dump_dir = opj(DUMP_DIR, download['dest'])
 
