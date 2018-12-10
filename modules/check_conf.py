@@ -17,7 +17,7 @@ def run(args, log):
 			ps axo command | grep {wdir} | grep [j]ava
 	
 			printf '\n<b>Standalone-full.xml</b>\n\n'
-			cat {wdir}/jboss-bas-*/standalone/configuration/standalone-full.xml | sed 's|<|\&lt\;|g;s|>|\&gt\;|g'
+			cat {wdir}/jboss-bas-*/standalone/configuration/standalone-full.xml
 			for i in ${{PIPESTATUS[@]}}; {{ ((error+=$i)); }}; exit $error
 		""".format(wdir=args.wdir, server=args.server)
 	]

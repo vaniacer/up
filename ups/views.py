@@ -189,13 +189,16 @@ def command_log(request):
 		if exists(logfile):
 			with open(logfile) as f:
 				log = f.read()
+				log = log.replace('<', '&lt;')
+				log = log.replace('>', '&gt;')
+				log = log.replace('__URL__', url)
 
 		if exists(errfile):
 			with open(errfile) as f:
 				err = int(f.read())
 			final[logid] = True
 
-		context['logs'].extend([{'id': logid, 'log': log.replace('__URL__', url), 'err': err, 'event': event}])
+		context['logs'].extend([{'id': logid, 'log': log, 'err': err, 'event': event}])
 
 	if all(value is True for value in final.values()):
 		context['end'] = True
