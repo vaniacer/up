@@ -19,10 +19,8 @@
         </div>
 
         <div class="panel-body">
-            {% if end %}
-                {{text}}
-            {% else %}
-                {{text}}
+            <div class="mini_log_txt">{{text}}</div><div class="hint">click to view log</div>
+            {% if not end %}
                 <meta http-equiv="refresh" content="1">
             {% endif %}
         </div>

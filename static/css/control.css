@@ -87,6 +87,16 @@
     cursor: pointer;
 }
 
+.mini_log_txt {
+    float: left;
+}
+
+.hint {
+    color:     gray;
+    font-size: small;
+    float:     right;
+}
+
 /*---{ Individual info on\off buttons }---*/
 .glyphicon-menu-down, .glyphicon-menu-up {
     color:     SteelBlue;
