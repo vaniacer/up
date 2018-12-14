@@ -1,19 +1,20 @@
 #!/bin/bash
 
-#-------------------| Default options |---------------------------------------------------------------------------------
-addr=localhost      # Bind address
-port=8000           # Bind port
-pidf=/tmp/gpid      # Pid file
-daem=--daemon       # Daemon mode
-logd=../logs/srv/   # Logs dir
-acsf=access         # Access log filename(in logs dir)
-errf=error          # Error log filename(in logs dir)
-logf=log            # Main log filename(in logs dir)
-time=600            # Timeout in sec
-grce=10             # Graceful timeout in sec
-work=5              # Number of workers
+#-----------------------| Default options |-----------------------------------------------------------------------------
+wdir=$(dirname $0)      # Get working dir
+addr=localhost          # Bind address
+port=8000               # Bind port
+pidf=/tmp/gpid          # Pid file
+daem=--daemon           # Daemon mode
+logd=$wdir/../logs/srv/ # Logs dir
+acsf=access             # Access log filename(in logs dir)
+errf=error              # Error log filename(in logs dir)
+logf=log                # Main log filename(in logs dir)
+time=600                # Timeout in sec
+grce=10                 # Graceful timeout in sec
+work=5                  # Number of workers
 #-----------------------------------------------------------------------------------------------------------------------
-[[ -f run.conf ]] && . run.conf # get saved conf if exist
+[[ -f $wdir/run.conf ]] && . $wdir/run.conf # get saved conf if exist
 
 help="
 Available options are:
@@ -34,24 +35,8 @@ Usage:
     ./$(basename $0) -k
 "
 
-function conf {
-cat > run.conf << EOF
-addr=${addr}$(echo -e '\t')# Bind address
-port=${port}$(echo -e '\t\t')# Bind port
-pidf=${pidf}$(echo -e '\t\t')# Pid file
-daem=${daem}$(echo -e '\t\t')# Daemon mode
-logd=${logd}$(echo -e '\t\t')# Logs dir
-acsf=${acsf}$(echo -e '\t\t')# Access log filename(in logs dir)
-errf=${errf}$(echo -e '\t\t')# Error log filename(in logs dir)
-logf=${logf}$(echo -e '\t\t')# Main log filename(in logs dir)
-time=${time}$(echo -e '\t\t')# Timeout in sec
-grce=${grce}$(echo -e '\t\t\t')# Graceful timeout in sec
-work=${work}$(echo -e '\t\t\t')# Number of workers
-EOF
-}
-
 function start {
-    . ../env/bin/activate
+    . $wdir/../env/bin/activate
     gunicorn ups.wsgi                \
              --pid ${pidf}            \
              --workers ${work}         \
@@ -61,7 +46,7 @@ function start {
              --graceful-timeout ${grce}    \
              --error-logfile ${logd}${errf} \
              --access-logfile ${logd}${acsf} \
-             ${daem} && { conf; }
+             ${daem}
 }
 
 function stop {
@@ -78,7 +63,7 @@ until [[ -z "$1" ]]; do case $1 in
 
     -addr  | -a) shift; addr=${1};;
     -port  | -p) shift; port=${1};;
-    -kill  | -k) starter=kill;;
+    -kill  | -k) starter=kill ;;
     -reset | -r) starter=reset;;
     -help  | -h) echo -e "${help}"; exit 0;;
               *) echo -e "Unknown option - ${1}"; exit 1;;
