@@ -2,6 +2,7 @@
 
 #-----------------------| Default options |-----------------------------------------------------------------------------
 wdir=$(dirname $0)      # Get working dir
+name=$(basename $0)     # Get script name
 addr=localhost          # Bind address
 port=8000               # Bind port
 pidf=/tmp/gpid          # Pid file
@@ -26,31 +27,31 @@ Available options are:
 
 Usage:
     # Simple start
-    ./$(basename $0)
+    ./$name
 
     # Change bind address and port
-    ./$(basename $0) -a 192.168.0.1 -p 9000
+    ./$name -a 192.168.0.1 -p 9000
 
     # Kill
-    ./$(basename $0) -k
+    ./$name -k
 "
 
 function start {
     . $wdir/../env/bin/activate
-    gunicorn ups.wsgi                \
-             --pid ${pidf}            \
-             --workers ${work}         \
-             --timeout ${time}          \
-             --bind ${addr}:${port}      \
-             --log-file ${logd}${logf}    \
-             --graceful-timeout ${grce}    \
-             --error-logfile ${logd}${errf} \
-             --access-logfile ${logd}${acsf} \
-             ${daem}
+    gunicorn ups.wsgi            \
+             --pid $pidf          \
+             --workers $work       \
+             --timeout $time        \
+             --bind $addr:$port      \
+             --log-file $logd$logf    \
+             --graceful-timeout $grce  \
+             --error-logfile $logd$errf \
+             --access-logfile $logd$acsf \
+             $daem
 }
 
 function stop {
-    [ -e ${pidf} ] && { kill $(cat ${pidf}); rm ${pidf}; }
+    [[ -e $pidf ]] && { kill $(cat $pidf); rm $pidf; }
 }
 
 function reset {
