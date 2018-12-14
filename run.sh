@@ -14,7 +14,7 @@ time=600                # Timeout in sec
 grce=10                 # Graceful timeout in sec
 work=5                  # Number of workers
 #-----------------------------------------------------------------------------------------------------------------------
-[[ -f $wdir/run.conf ]] && . $wdir/run.conf # get saved conf if exist
+[[ -f $wdir/run.conf ]] && . $wdir/run.conf # get conf from file if exist
 
 help="
 Available options are:
