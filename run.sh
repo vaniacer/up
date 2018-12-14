@@ -59,20 +59,18 @@ function reset {
     start
 }
 
+starter=start
+
 # Get opts
 until [[ -z "$1" ]]; do case $1 in
 
-    -addr  | -a) shift; addr=${1};;
-    -port  | -p) shift; port=${1};;
-    -kill  | -k) starter=kill ;;
-    -reset | -r) starter=reset;;
-    -help  | -h) echo -e "${help}"; exit 0;;
-              *) echo -e "Unknown option - ${1}"; exit 1;;
+    -addr  | -a) shift; addr=$1;;
+    -port  | -p) shift; port=$1;;
+    -kill  | -k) starter=stop  ;;
+    -reset | -r) starter=reset ;;
+    -help  | -h) printf "$help"; exit;;
+              *) printf "Unknown option - $1"; exit 1;;
 
 esac; shift; done
 
-case ${starter} in
-    kill ) stop;;
-    reset) reset;;
-        *) start;;
-esac
+$starter
