@@ -30,9 +30,7 @@ def run(args, log):
 
 	error = my_call(command, log)
 	if error == 0:
-		download_error = download_file(download, args.server, log)
-		if download_error > 0:
-			error = download_error
+		error += download_file(download, args.server, log)
 
 		message(
 			""" \n<b>File will be stored until tomorrow, please download it if you need this file!</b>

@@ -10,9 +10,8 @@ def description(args, log):
 
 def run(args, log):
 
-	error = db_bkp(args, log)
-	sys_error = sys_bkp(args, log)
-	if sys_error > 0:
-		error = sys_error
+	error = 0
+	error += db_bkp(args,  log)
+	error += sys_bkp(args, log)
 
 	return error

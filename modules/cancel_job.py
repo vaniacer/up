@@ -12,11 +12,12 @@ def description(args, log):
 
 def run(args, log):
 
+	error = 0
 	cronfile = opj('/var/spool/cron/crontabs', getuser())
 	message('\nCancel cron job {job}\n'.format(job=args.job), log)
 	command = ['sed', '/%s/d' % args.job, '-i', cronfile]
 	sql = "DELETE FROM ups_job WHERE cron = '{job}';".format(job=args.job)
-	error = my_call(command, log)
+	error += my_call(command, log)
 	error += psql(sql)
 
 	return error

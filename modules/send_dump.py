@@ -14,6 +14,7 @@ def description(args, log):
 
 def run(args, log):
 
+	error = 0
 	filename = args.dump[0]
 	dump = opj(DUMP_DIR, args.proname, args.dump[0])
 	tmp_dir = '{wdir}/temp/{key}'.format(wdir=args.wdir, key=args.key)
@@ -25,7 +26,7 @@ def run(args, log):
 
 	message('\n<b>Копирую файл {}</b>\n'.format(filename), log)
 	upload = {'file': [dump], 'dest': tmp_dir}
-	error = upload_file(upload, args.server, log)
+	error += upload_file(upload, args.server, log)
 
 	dbhost, dbport, dbname, dbuser, dbpass = get_db_parameters(
 		args.server, '{wdir}/jboss-bas-*/standalone/configuration/standalone-full.xml'.format(wdir=args.wdir)
@@ -57,7 +58,6 @@ def run(args, log):
 		)
 	]
 
-	cmd_error = my_call(command, log)
-	if cmd_error > 0:
-		error = cmd_error
+	error += my_call(command, log)
+
 	return error

@@ -12,6 +12,7 @@ def description(args, log):
 
 def run(args, log):
 
+	error = 0
 	filename = '{server}_dbdump_{date:%d-%m-%Y}.gz'.format(server=args.server, date=datetime.now())
 	message('\n<b>Копирую файл {file}</b>\n'.format(file=filename), log)
 
@@ -41,11 +42,9 @@ def run(args, log):
 		)
 	]
 
-	error = my_call(command, log)
+	error += my_call(command, log)
 	if error == 0:
-		download_error = download_file(download, args.server, log)
-		if download_error > 0:
-			error = download_error
+		error += download_file(download, args.server, log)
 
 		message(
 			''' \n<b>File will be stored until tomorrow, please download it if you need this file!</b>

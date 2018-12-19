@@ -13,6 +13,7 @@ def description(args, log):
 
 def run(args, log):
 
+	error = 0
 	job, jobid = find_job(args.job)
 	new_command = ' '.join(escape(opt) for opt in job[4:])
 	datetime_object = datetime.strptime(args.date, '%Y-%m-%d %H:%M')
@@ -27,7 +28,7 @@ def run(args, log):
 	message('\nChange run date and time for job {job}\n'.format(job=args.job), log)
 	command = ['sed', "/{id}/c{new}".format(id=jobid, job=args.job, new=new_job), '-i', cronfile]
 	sql = "UPDATE ups_job SET cdat = '{date}' WHERE cron = '{job}';".format(date=args.date, job=args.job)
-	error = my_call(command, log)
+	error += my_call(command, log)
 	error += psql(sql)
 
 	return error

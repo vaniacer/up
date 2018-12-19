@@ -13,6 +13,7 @@ def description(args, log):
 
 def run(args, log):
 
+	error = 0
 	job, jobid = find_job(args.job)
 	datetime_object = datetime.strptime(args.date, '%Y-%m-%d %H:%M')
 	job[3] = datetime_object.month  # change month and day to current
@@ -28,7 +29,7 @@ def run(args, log):
 		H=job[1],
 		M=job[0],
 	)
-	error = my_call(command, log)
+	error += my_call(command, log)
 	error += psql(sql)
 
 	return error

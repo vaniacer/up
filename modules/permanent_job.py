@@ -12,6 +12,7 @@ def description(args, log):
 
 def run(args, log):
 
+	error = 0
 	job, jobid = find_job(args.job)
 	job[3] = '*'  # change month and day
 	job[2] = '*'  # to * (everyday)
@@ -24,7 +25,7 @@ def run(args, log):
 		time=args.date.split()[-1],
 		job=args.job
 	)
-	error = my_call(command, log)
+	error += my_call(command, log)
 	error += psql(sql)
 
 	return error
