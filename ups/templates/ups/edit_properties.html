@@ -1,0 +1,23 @@
+{% extends "ups/base.html" %}
+{% load guardian_tags %}
+{% load bootstrap3 %}
+
+{% block header %}
+    <br>
+    <h2>Edit jboss.properties on {{server.name}}</h2>
+{% endblock header %}
+
+{% block content %}
+
+    <form action="{% url 'ups:edit_properties' server.id %}?{{info}}" method='post'>
+        {% csrf_token %}
+        {% bootstrap_form form %}
+
+        {% buttons %}
+            <input type="submit" name="ok" value="Save changes" class="btn btn-primary"/>
+            <a class="btn btn-primary" href="{% url 'ups:project' project.id %}?{{info}}">Cancel</a>
+        {% endbuttons %}
+
+    </form>
+
+{% endblock content %}

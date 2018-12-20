@@ -4,12 +4,12 @@
 
 {% block header %}
     <br>
-    <h2>Edit config files on {{ server.name }}</h2>
+    <h2>Edit standalone-full.xml on {{server.name}}</h2>
 {% endblock header %}
 
 {% block content %}
 
-    <form action="{% url 'ups:config_server' server.id %}?{{info}}" method='post'>
+    <form action="{% url 'ups:edit_standalone' server.id %}?{{info}}" method='post'>
         {% csrf_token %}
         {% bootstrap_form form %}
 

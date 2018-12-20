@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 
-from .forms import ProjectForm, ServerForm, UpdateForm, ScriptEditForm, ConfigsForm
+from .forms import ProjectForm, ServerForm, UpdateForm, ScriptEditForm, PropertiesForm, StandaloneForm
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 from .models import Project, Server, Update, Script
@@ -9,10 +9,17 @@ from django.core.urlresolvers import reverse
 from .permissions import check_perm_or404
 from django.conf import settings as conf
 from .commands import info, add_event
+from subprocess import check_output
 from modules.uniq import uniq
 from difflib import Differ
 from shutil import rmtree
 from os import remove
+
+
+def get_file_body(server, filename):
+	command = ['ssh', server, 'cat %s' % filename]
+	body = check_output(command)
+	return body
 
 
 def delete_project(project):
@@ -154,26 +161,52 @@ def edit_server(request, server_id):
 
 
 @login_required
-def config_server(request, server_id):
-	"""Редактирует конфигурационные файлы сервера."""
+def edit_properties(request, server_id):
+	"""Редактирует jboss.properties сервера."""
 	server = get_object_or_404(Server, id=server_id)
 	project = server.proj
 	data = request.GET
-
 	check_perm_or404('edit_config', project, request.user)
 
 	if request.method != 'POST':
 		# Исходный запрос; форма заполняется данными текущей записи.
-		form = ConfigsForm()
+		properties = get_file_body(server.addr, 'jboss.properties')
+		form = PropertiesForm(initial={'properties': properties})
 	else:
 		# Отправка данных POST; обработать данные.
-		form = ConfigsForm()
-
+		form = PropertiesForm(request.POST)
 		if form.is_valid():
+			properties = form.__getitem__('properties')
+			print properties
 			return HttpResponseRedirect('/projects/%s/?%s' % (project.id, info(data)))
 
-	context = {'server': server, 'project': project, 'form': form, 'info': info(data)}
-	return render(request, 'ups/config_server.html', context)
+	context = {'server': server, 'project': project, 'form': form, 'info': info(data), 'conf': 'jboss.properties'}
+	return render(request, 'ups/edit_properties.html', context)
+
+
+@login_required
+def edit_standalone(request, server_id):
+	"""Редактирует standalone-full.xml сервера."""
+	server = get_object_or_404(Server, id=server_id)
+	project = server.proj
+	data = request.GET
+	check_perm_or404('edit_config', project, request.user)
+
+	if request.method != 'POST':
+		# Исходный запрос; форма заполняется данными текущей записи.
+		properties = get_file_body(server.addr, 'jboss.properties')
+		standalone = get_file_body(server.addr, 'jboss-bas-*/standalone/configuration/standalone-full.xml')
+		form = StandaloneForm(initial={'properties': properties, 'standalone': standalone})
+	else:
+		# Отправка данных POST; обработать данные.
+		form = StandaloneForm(request.POST)
+		if form.is_valid():
+			standalone = form.__getitem__('standalone')
+			print standalone
+			return HttpResponseRedirect('/projects/%s/?%s' % (project.id, info(data)))
+
+	context = {'server': server, 'project': project, 'form': form, 'info': info(data), 'conf': 'standalone-full.xml'}
+	return render(request, 'ups/edit_standalone.html', context)
 
 
 @login_required

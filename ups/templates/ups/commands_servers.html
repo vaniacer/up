@@ -35,9 +35,14 @@
        href="{{server.http}}"
        class="small">URL</a>
 {% endif %}
+
 {% if "edit_config" in pr_view_perms %}
     <a onclick="selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS');"
-       href="{% url 'ups:config_server' server.id %}?{{info}}"
-       title="Edit this server's config files"
-       class="small">Reconfig</a>
+       href="{% url 'ups:edit_properties' server.id %}?{{info}}"
+       title="Edit this server's jboss.properties"
+       class="small">Prop</a>
+    <a onclick="selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS');"
+       href="{% url 'ups:edit_standalone' server.id %}?{{info}}"
+       title="Edit this server's standalone-full.xml"
+       class="small">Full</a>
 {% endif %}

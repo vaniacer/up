@@ -64,7 +64,7 @@ class ScriptCreateForm(forms.ModelForm):
 			'body': 'Script body',
 		}
 		widgets = {
-			'body': forms.Textarea(attrs={'style': 'height: 50%;font-family: "Lucida Console", Monaco, monospace;'}),
+			'body': forms.Textarea(attrs={'style': 'height: 50%; font-family: "Lucida Console", Monaco, monospace;'}),
 			'flnm': forms.TextInput(attrs={'placeholder': 'File name'}),
 			'desc': forms.Textarea(attrs={'style': 'height: 7%;'}),
 		}
@@ -76,7 +76,7 @@ class ScriptEditForm(forms.ModelForm):
 		fields = ['desc', 'body']
 		labels = {'desc': 'Script description', 'body': 'Script body'}
 		widgets = {
-			'body': forms.Textarea(attrs={'style': 'height: 50%;font-family: "Lucida Console", Monaco, monospace;'}),
+			'body': forms.Textarea(attrs={'style': 'height: 50%; font-family: "Lucida Console", Monaco, monospace;'}),
 			'desc': forms.Textarea(attrs={'style': 'height: 7%;'})
 		}
 
@@ -90,9 +90,14 @@ class HideInfoForm(forms.Form):
 	dbdump_info = forms.BooleanField(label='', required=False)
 
 
-class ConfigsForm(forms.Form):
-	properties = forms.Textarea(attrs={'label': 'Jboss.properties'})
-	standalone = forms.Textarea(attrs={'label': 'Standalone-full.xml'})
+class PropertiesForm(forms.Form):
+	properties = forms.CharField(required=True, widget=forms.Textarea(
+		attrs={'style': 'height: 70%; font-family: "Lucida Console", Monaco, monospace;'}))
+
+
+class StandaloneForm(forms.Form):
+	standalone = forms.CharField(required=True, widget=forms.Textarea(
+		attrs={'style': 'height: 80%; font-family: "Lucida Console", Monaco, monospace;'}))
 
 
 class ServersFilterForm(forms.Form):
