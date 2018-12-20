@@ -1,6 +1,5 @@
 # -*- encoding: utf-8 -*-
 
-from time import sleep
 from stop import run as stop
 from kill import run as kill
 from start import run as start
