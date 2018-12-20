@@ -2,6 +2,7 @@
 
 from time import sleep
 from stop import run as stop
+from kill import run as kill
 from start import run as start
 
 
@@ -12,6 +13,7 @@ def description(args, log):
 def run(args, log):
 
 	error = stop(args, log)
-	sleep(3)
+	if error:
+		error += kill(args, log)
 	error += start(args, log)
 	return error
