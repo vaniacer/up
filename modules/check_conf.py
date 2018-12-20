@@ -13,9 +13,12 @@ def run(args, log):
 		'ssh', args.server,
 		""" printf '\n-----{{ <b>Server {server}</b> }}-----\n'
 		
-			printf '\n<b>Java options</b>\n\n'
+			printf '\n<b>Running options</b>\n\n'
 			ps axo command | grep {wdir} | grep [j]ava
-	
+			
+			printf '\n<b>Jboss.properties</b>\n\n'
+			cat {wdir}/jboss.properties | sed 's|<|\&lt\;|g;s|>|\&gt\;|g'
+			
 			printf '\n<b>Standalone-full.xml</b>\n\n'
 			cat {wdir}/jboss-bas-*/standalone/configuration/standalone-full.xml | sed 's|<|\&lt\;|g;s|>|\&gt\;|g'
 			for i in ${{PIPESTATUS[@]}}; {{ ((error+=$i)); }}; exit $error
