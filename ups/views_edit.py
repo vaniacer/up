@@ -7,9 +7,9 @@ from .models import Project, Server, Update, Script
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from .permissions import check_perm_or404
+from subprocess import check_output, call
 from django.conf import settings as conf
 from .commands import info, add_event
-from subprocess import check_output
 from modules.uniq import uniq
 from difflib import Differ
 from shutil import rmtree
@@ -20,6 +20,11 @@ def get_file_body(server, filename):
 	command = ['ssh', server, 'cat %s' % filename]
 	body = check_output(command)
 	return body
+
+
+def set_file_body(server, filename, body):
+	command = ['ssh', server, "cat > {file} << 'EOF'\n{body}\nEOF".format(file=filename, body=body)]
+	call(command)
 
 
 def delete_project(project):
@@ -176,11 +181,11 @@ def edit_properties(request, server_id):
 		# Отправка данных POST; обработать данные.
 		form = PropertiesForm(request.POST)
 		if form.is_valid():
-			properties = form.__getitem__('properties')
-			print properties
+			properties = form.data.get('properties').encode('utf-8')
+			set_file_body(server.addr, 'jboss.properties', properties)
 			return HttpResponseRedirect('/projects/%s/?%s' % (project.id, info(data)))
 
-	context = {'server': server, 'project': project, 'form': form, 'info': info(data), 'conf': 'jboss.properties'}
+	context = {'server': server, 'project': project, 'form': form, 'info': info(data)}
 	return render(request, 'ups/edit_properties.html', context)
 
 
@@ -194,18 +199,17 @@ def edit_standalone(request, server_id):
 
 	if request.method != 'POST':
 		# Исходный запрос; форма заполняется данными текущей записи.
-		properties = get_file_body(server.addr, 'jboss.properties')
 		standalone = get_file_body(server.addr, 'jboss-bas-*/standalone/configuration/standalone-full.xml')
-		form = StandaloneForm(initial={'properties': properties, 'standalone': standalone})
+		form = StandaloneForm(initial={'standalone': standalone})
 	else:
 		# Отправка данных POST; обработать данные.
 		form = StandaloneForm(request.POST)
 		if form.is_valid():
-			standalone = form.__getitem__('standalone')
-			print standalone
+			standalone = form.data.get('standalone').encode('utf-8')
+			set_file_body(server.addr, 'jboss-bas-*/standalone/configuration/standalone-full.xml', standalone)
 			return HttpResponseRedirect('/projects/%s/?%s' % (project.id, info(data)))
 
-	context = {'server': server, 'project': project, 'form': form, 'info': info(data), 'conf': 'standalone-full.xml'}
+	context = {'server': server, 'project': project, 'form': form, 'info': info(data)}
 	return render(request, 'ups/edit_standalone.html', context)
 
 
