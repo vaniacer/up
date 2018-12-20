@@ -53,6 +53,7 @@ class Project(models.Model):
 			("edit_server",    "Can edit projects's servers"),
 			("edit_update",    "Can edit projects's updates"),
 			("edit_script",    "Can edit projects's scripts"),
+			("edit_config",    "Can edit server config files"),
 
 			("del_server",     "Can delete project's servers"),
 			("del_update",     "Can delete project's updates"),

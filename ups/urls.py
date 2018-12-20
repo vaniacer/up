@@ -31,6 +31,8 @@ urlpatterns = [
 	url(r'^new_server/(?P<project_id>\d+)/$', views_new.new_server, name='new_server'),
 	# Страница для редактирования сервера
 	url(r'^edit_server/(?P<server_id>\d+)/$', views_edit.edit_server, name='edit_server'),
+	# Страница для редактирования конфигурационных файлов сервера
+	url(r'^config_server/(?P<server_id>\d+)/$', views_edit.config_server, name='config_server'),
 
 	# Страница для добавления нового обновления
 	url(r'^new_update/(?P<project_id>\d+)/$', views_new.upload_update, name='new_update'),

@@ -90,6 +90,11 @@ class HideInfoForm(forms.Form):
 	dbdump_info = forms.BooleanField(label='', required=False)
 
 
+class ConfigsForm(forms.Form):
+	properties = forms.Textarea(attrs={'label': 'Jboss.properties'})
+	standalone = forms.Textarea(attrs={'label': 'Standalone-full.xml'})
+
+
 class ServersFilterForm(forms.Form):
 	servers = forms.CharField(label='', required=False)
 

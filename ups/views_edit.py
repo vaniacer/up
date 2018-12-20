@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 
-from .forms import ProjectForm, ServerForm, UpdateForm, ScriptEditForm
+from .forms import ProjectForm, ServerForm, UpdateForm, ScriptEditForm, ConfigsForm
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 from .models import Project, Server, Update, Script
@@ -151,6 +151,29 @@ def edit_server(request, server_id):
 
 	context = {'server': server, 'project': project, 'form': form, 'info': info(data)}
 	return render(request, 'ups/edit_server.html', context)
+
+
+@login_required
+def config_server(request, server_id):
+	"""Редактирует конфигурационные файлы сервера."""
+	server = get_object_or_404(Server, id=server_id)
+	project = server.proj
+	data = request.GET
+
+	check_perm_or404('edit_config', project, request.user)
+
+	if request.method != 'POST':
+		# Исходный запрос; форма заполняется данными текущей записи.
+		form = ConfigsForm()
+	else:
+		# Отправка данных POST; обработать данные.
+		form = ConfigsForm()
+
+		if form.is_valid():
+			return HttpResponseRedirect('/projects/%s/?%s' % (project.id, info(data)))
+
+	context = {'server': server, 'project': project, 'form': form, 'info': info(data)}
+	return render(request, 'ups/config_server.html', context)
 
 
 @login_required
