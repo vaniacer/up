@@ -17,7 +17,7 @@ printf "Add virtual env\n"
 virtualenv ../env; . ../env/bin/activate
 
 printf "Create some folders\n"
-mkdir -p static media/{dumps,scripts,updates} ../logs/{run,srv}
+mkdir -p static media/{dumps,scripts,updates} ../logs/{run,srv,tmp}
 
 printf "Add logrotate\n"
 logdir="$(dirname $PWD)/logs/srv/*"

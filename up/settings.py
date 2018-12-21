@@ -21,6 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LOG_FILE = os.path.join(BASE_DIR, '../logs/run/log')
 ERR_FILE = os.path.join(BASE_DIR, '../logs/run/err')
 RUN_DIR = os.path.join(BASE_DIR,  '../logs/run/')
+TMP_DIR = os.path.join(BASE_DIR,  '../logs/tmp/')
 
 # STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)

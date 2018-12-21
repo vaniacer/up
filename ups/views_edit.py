@@ -11,6 +11,8 @@ from subprocess import check_output, call
 from django.conf import settings as conf
 from .commands import info, add_event
 from difflib import unified_diff
+from up.settings import TMP_DIR
+from os.path import join as opj
 from modules.uniq import uniq
 from shutil import rmtree
 from os import remove
@@ -194,9 +196,9 @@ def edit_properties(request, server_id):
 	check_perm_or404('edit_config', project, request.user)
 	confname = 'jboss.properties'
 	destanation = '{wdir}/{conf}'.format(wdir=server.wdir, conf=confname)
+	filename = opj(TMP_DIR, 'properties{}'.format(uniq()))
 	properties_old = get_file_body(server.addr, confname)
 	old_text = properties_old.splitlines(True)
-	filename = 'properties{}'.format(uniq())
 
 	if request.method != 'POST':
 		# Исходный запрос; форма заполняется данными текущей записи.
@@ -231,9 +233,9 @@ def edit_standalone(request, server_id):
 	check_perm_or404('edit_config', project, request.user)
 	confname = 'jboss-bas-*/standalone/configuration/standalone-full.xml'
 	destanation = '{wdir}/{conf}'.format(wdir=server.wdir, conf=confname)
+	filename = opj(TMP_DIR, 'standalone{}'.format(uniq()))
 	standalone_old = get_file_body(server.addr, confname)
 	old_text = standalone_old.splitlines(True)
-	filename = 'standalone{}'.format(uniq())
 
 	if request.method != 'POST':
 		# Исходный запрос; форма заполняется данными текущей записи.
