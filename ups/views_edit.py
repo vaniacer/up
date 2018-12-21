@@ -10,8 +10,8 @@ from .permissions import check_perm_or404
 from subprocess import check_output, call
 from django.conf import settings as conf
 from .commands import info, add_event
+from difflib import unified_diff
 from modules.uniq import uniq
-from difflib import Differ
 from shutil import rmtree
 from os import remove
 
@@ -22,8 +22,12 @@ def get_file_body(server, filename):
 	return body
 
 
-def set_file_body(server, filename, body):
-	command = ['ssh', server, "cat > {file} << 'EOF'\n{body}\nEOF".format(file=filename, body=body)]
+def send_file(server, filename, destanation):
+	command = ['rsync', '--remove-source-files', '-lzuogthvr', filename, '{server}:{dest}'.format(
+		dest=destanation,
+		file=filename,
+		server=server,
+	)]
 	call(command)
 
 
@@ -85,8 +89,8 @@ def edit_server_log(request, server):
 		'desc': 'Изменен cервер:\n%s\n\nНазначение:\n%s' % (str(server), server.desc.encode('utf-8')),
 	}
 	add_event(dick)
-	
-	
+
+
 def edit_object_log(request, obj, diff=''):
 	"""Записывает событие редактирования обновлений\скриптов в историю."""
 	dick = {
@@ -94,8 +98,8 @@ def edit_object_log(request, obj, diff=''):
 		'cron': '',
 		'cdat': '',
 		'serv': None,
-		'proj': obj.proj,
 		'uniq': uniq(),
+		'proj': obj.proj,
 		'user': request.user,
 		'name': 'Edit upd\scr',
 		'desc': 'Изменен файл:\n{file}\n\nНазначение:\n{desc}{diff}'.format(
@@ -103,6 +107,22 @@ def edit_object_log(request, obj, diff=''):
 			file=str(obj),
 			diff=diff,
 		),
+	}
+	add_event(dick)
+
+
+def edit_conf(request, server, conf, diff=''):
+	"""Записывает событие редактирования обновлений\скриптов в историю."""
+	dick = {
+		'exit': 0,
+		'cron': '',
+		'cdat': '',
+		'desc': diff,
+		'serv': None,
+		'uniq': uniq(),
+		'proj': server.proj,
+		'user': request.user,
+		'name': 'Edit {conf} on server {server}'.format(conf=conf, server=server),
 	}
 	add_event(dick)
 
@@ -172,17 +192,28 @@ def edit_properties(request, server_id):
 	project = server.proj
 	data = request.GET
 	check_perm_or404('edit_config', project, request.user)
+	confname = 'jboss.properties'
+	destanation = '{wdir}/{conf}'.format(wdir=server.wdir, conf=confname)
+	properties_old = get_file_body(server.addr, confname)
+	old_text = properties_old.splitlines(True)
+	filename = 'properties{}'.format(uniq())
 
 	if request.method != 'POST':
 		# Исходный запрос; форма заполняется данными текущей записи.
-		properties = get_file_body(server.addr, 'jboss.properties')
-		form = PropertiesForm(initial={'properties': properties})
+		form = PropertiesForm(initial={'properties': properties_old})
 	else:
 		# Отправка данных POST; обработать данные.
 		form = PropertiesForm(request.POST)
 		if form.is_valid():
-			properties = form.data.get('properties').encode('utf-8')
-			set_file_body(server.addr, 'jboss.properties', properties)
+			properties_new = form.data.get('properties').encode('utf-8')
+			new_text = properties_new.splitlines(True)
+			with open(filename, 'wb') as f:
+					f.write(properties_new)
+			send_file(server.addr, filename, destanation)
+			result = unified_diff(old_text, new_text)
+			diff = 'Изменено:\n%s' % ''.join(result)
+			edit_conf(request, server, 'jboss.properties', diff)
+
 			return HttpResponseRedirect('/projects/%s/?%s' % (project.id, info(data)))
 
 	context = {'server': server, 'project': project, 'form': form, 'info': info(data)}
@@ -196,17 +227,28 @@ def edit_standalone(request, server_id):
 	project = server.proj
 	data = request.GET
 	check_perm_or404('edit_config', project, request.user)
+	confname = 'jboss-bas-*/standalone/configuration/standalone-full.xml'
+	destanation = '{wdir}/{conf}'.format(wdir=server.wdir, conf=confname)
+	standalone_old = get_file_body(server.addr, confname)
+	old_text = standalone_old.splitlines(True)
+	filename = 'standalone{}'.format(uniq())
 
 	if request.method != 'POST':
 		# Исходный запрос; форма заполняется данными текущей записи.
-		standalone = get_file_body(server.addr, 'jboss-bas-*/standalone/configuration/standalone-full.xml')
-		form = StandaloneForm(initial={'standalone': standalone})
+		form = StandaloneForm(initial={'standalone': standalone_old})
 	else:
 		# Отправка данных POST; обработать данные.
 		form = StandaloneForm(request.POST)
 		if form.is_valid():
-			standalone = form.data.get('standalone').encode('utf-8')
-			set_file_body(server.addr, 'jboss-bas-*/standalone/configuration/standalone-full.xml', standalone)
+			standalone_new = form.data.get('standalone').encode('utf-8')
+			new_text = standalone_new.splitlines(True)
+			with open(filename, 'wb') as f:
+					f.write(standalone_new)
+			send_file(server.addr, filename, destanation)
+			result = unified_diff(old_text, new_text)
+			diff = '\n\nИзменено:\n%s' % ''.join(result)
+			edit_conf(request, server, confname, diff)
+
 			return HttpResponseRedirect('/projects/%s/?%s' % (project.id, info(data)))
 
 	context = {'server': server, 'project': project, 'form': form, 'info': info(data)}
@@ -274,15 +316,14 @@ def edit_script(request, script_id):
 				form.save()
 
 				with open(str(filename)) as f:
-					old_text = f.readlines(1)
+					old_text = f.readlines(True)
 
 				new_text = script.body.replace('\r\n', '\n').encode('utf-8')
 				with open(str(filename), 'wb') as f:
 					f.write(new_text)
 
-				show_difference = Differ()
-				new_text = new_text.splitlines(1)
-				result = list(show_difference.compare(old_text, new_text))
+				new_text = new_text.splitlines(True)
+				result = unified_diff(old_text, new_text)
 				diff = '\n\nИзменено:\n%s' % ''.join(result)
 				edit_object_log(request, script, diff)
 
