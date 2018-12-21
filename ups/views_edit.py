@@ -113,7 +113,7 @@ def edit_object_log(request, obj, diff=''):
 	add_event(dick)
 
 
-def edit_conf(request, server, conf, diff=''):
+def edit_conf(request, server, confile, diff=''):
 	"""Записывает событие редактирования обновлений\скриптов в историю."""
 	dick = {
 		'exit': 0,
@@ -124,7 +124,7 @@ def edit_conf(request, server, conf, diff=''):
 		'uniq': uniq(),
 		'proj': server.proj,
 		'user': request.user,
-		'name': 'Edit {conf} on server {server}'.format(conf=conf, server=server),
+		'name': 'Edit {conf} on server {server}'.format(conf=confile, server=server),
 	}
 	add_event(dick)
 
@@ -197,7 +197,7 @@ def edit_properties(request, server_id):
 	confname = 'jboss.properties'
 	destanation = '{wdir}/{conf}'.format(wdir=server.wdir, conf=confname)
 	filename = opj(TMP_DIR, 'properties{}'.format(uniq()))
-	properties_old = get_file_body(server.addr, confname)
+	properties_old = get_file_body(server.addr, '{wdir}/{file}'.format(wdir=server.wdir, file=confname))
 	old_text = properties_old.splitlines(True)
 
 	if request.method != 'POST':
@@ -234,7 +234,7 @@ def edit_standalone(request, server_id):
 	confname = 'jboss-bas-*/standalone/configuration/standalone-full.xml'
 	destanation = '{wdir}/{conf}'.format(wdir=server.wdir, conf=confname)
 	filename = opj(TMP_DIR, 'standalone{}'.format(uniq()))
-	standalone_old = get_file_body(server.addr, confname)
+	standalone_old = get_file_body(server.addr, '{wdir}/{file}'.format(wdir=server.wdir, file=confname))
 	old_text = standalone_old.splitlines(True)
 
 	if request.method != 'POST':
