@@ -246,8 +246,8 @@ def edit_standalone(request, server_id):
 					f.write(standalone_new)
 			send_file(server.addr, filename, destanation)
 			result = unified_diff(old_text, new_text)
-			diff = '\n\nИзменено:\n%s' % ''.join(result)
-			edit_conf(request, server, confname, diff)
+			diff = '\n\nИзменено:\n{}'.format(''.join(result))
+			edit_conf(request, server, 'standalone-full.xml', diff)
 
 			return HttpResponseRedirect('/projects/%s/?%s' % (project.id, info(data)))
 

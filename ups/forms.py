@@ -97,7 +97,7 @@ class PropertiesForm(forms.Form):
 
 class StandaloneForm(forms.Form):
 	standalone = forms.CharField(required=True, widget=forms.Textarea(
-		attrs={'style': 'height: 80%; font-family: "Lucida Console", Monaco, monospace;'}))
+		attrs={'style': 'height: 70%; font-family: "Lucida Console", Monaco, monospace;'}))
 
 
 class ServersFilterForm(forms.Form):
