@@ -1,13 +1,13 @@
 # -*- encoding: utf-8 -*-
 
 from .forms import ProjectForm, ServerForm, UpdateForm, ScriptEditForm, PropertiesForm, StandaloneForm
+from subprocess import check_output, call, CalledProcessError
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 from .models import Project, Server, Update, Script
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from .permissions import check_perm_or404
-from subprocess import check_output, call
 from django.conf import settings as conf
 from .commands import info, add_event
 from difflib import unified_diff
@@ -20,7 +20,10 @@ from os import remove
 
 def get_file_body(server, filename):
 	command = ['ssh', server, 'cat %s' % filename]
-	body = check_output(command)
+	try:
+		body = check_output(command)
+	except CalledProcessError:
+		body = 'Server unreachable'
 	return body
 
 
