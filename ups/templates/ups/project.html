@@ -11,6 +11,9 @@
     {% if "view_history" in pr_view_perms %}
         <li><a href="{% url 'ups:history' project.id %}">History</a></li>
     {% endif %}
+    {% if user.is_staff %}
+        <li><a href="/admin">Admin</a></li>
+    {% endif %}
 {% endblock history %}
 
 {% block content %}
