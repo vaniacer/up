@@ -1,11 +1,10 @@
 # -*- encoding: utf-8 -*-
 
 from .forms import ProjectForm, ServerForm, UpdateForm, ScriptEditForm, PropertiesForm, StandaloneForm
-from subprocess import check_output, call, CalledProcessError
+from django.http import HttpResponseRedirect, HttpResponseNotFound
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 from .models import Project, Server, Update, Script
-from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from .permissions import check_perm_or404
 from django.conf import settings as conf
@@ -14,17 +13,18 @@ from difflib import unified_diff
 from up.settings import TMP_DIR
 from os.path import join as opj
 from modules.uniq import uniq
+from subprocess import call
 from shutil import rmtree
 from os import remove
 
 
-def get_file_body(server, filename):
-	command = ['ssh', server, 'cat %s' % filename]
-	try:
-		body = check_output(command)
-	except CalledProcessError:
-		body = 'Server unreachable'
-	return body
+def get_file(server, source, dest):
+	command = ['rsync', '-lzuogthvr', '{server}:{source}'.format(
+		source=source,
+		server=server,
+	), dest]
+	error = call(command)
+	return error
 
 
 def send_file(server, filename, destanation):
@@ -200,7 +200,13 @@ def edit_properties(request, server_id):
 	confname = 'jboss.properties'
 	destanation = '{wdir}/{conf}'.format(wdir=server.wdir, conf=confname)
 	filename = opj(TMP_DIR, 'properties{}'.format(uniq()))
-	properties_old = get_file_body(server.addr, '{wdir}/{file}'.format(wdir=server.wdir, file=confname))
+
+	error = get_file(server.addr, destanation, filename)
+	if error:
+		return HttpResponseNotFound('<h1>Server unreachable</h1>')
+	with open(filename, 'r') as f:
+		properties_old = f.read()
+		remove(filename)
 	old_text = properties_old.splitlines(True)
 
 	if request.method != 'POST':
@@ -212,7 +218,7 @@ def edit_properties(request, server_id):
 		if form.is_valid():
 			properties_new = form.data.get('properties').encode('utf-8')
 			new_text = properties_new.splitlines(True)
-			with open(filename, 'wb') as f:
+			with open(filename, 'w') as f:
 					f.write(properties_new)
 			send_file(server.addr, filename, destanation)
 			result = unified_diff(old_text, new_text)
@@ -237,7 +243,13 @@ def edit_standalone(request, server_id):
 	confname = 'jboss-bas-*/standalone/configuration/standalone-full.xml'
 	destanation = '{wdir}/{conf}'.format(wdir=server.wdir, conf=confname)
 	filename = opj(TMP_DIR, 'standalone{}'.format(uniq()))
-	standalone_old = get_file_body(server.addr, '{wdir}/{file}'.format(wdir=server.wdir, file=confname))
+
+	error = get_file(server.addr, destanation, filename)
+	if error:
+		return HttpResponseNotFound('<h1>Server unreachable</h1>')
+	with open(filename, 'r') as f:
+		standalone_old = f.read()
+		remove(filename)
 	old_text = standalone_old.splitlines(True)
 
 	if request.method != 'POST':
