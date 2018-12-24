@@ -19,7 +19,7 @@ from os import remove
 
 
 def get_file(server, source, dest):
-	command = ['rsync', '-lzuogthvr', '{server}:{source}'.format(
+	command = ['rsync', '-gzort', '{server}:{source}'.format(
 		source=source,
 		server=server,
 	), dest]
@@ -28,7 +28,7 @@ def get_file(server, source, dest):
 
 
 def send_file(server, filename, destanation):
-	command = ['rsync', '--remove-source-files', '-lzuogthvr', filename, '{server}:{dest}'.format(
+	command = ['rsync', '--remove-source-files', '-gzort', filename, '{server}:{dest}'.format(
 		dest=destanation,
 		file=filename,
 		server=server,

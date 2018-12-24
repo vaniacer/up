@@ -14,7 +14,7 @@ def upload_file(upload, server, log):
 		return 1
 
 	destination = upload['dest']
-	rsync_opt = ['rsync', '--progress', '-lzuogthvr']
+	rsync_opt = ['rsync', '--progress', '-gzort']
 	rsync_opt.extend(files)
 	rsync_opt.extend(['{addr}:{dest}/'.format(dest=destination, addr=server)])
 
@@ -35,7 +35,7 @@ def download_file(download, server, log):
 		dump_dir = opj(DUMP_DIR, download['dest'])
 
 	rsync_opt = [
-		'rsync', '--progress', '-lzuogthvr',
+		'rsync', '--progress', '-gzort',
 		'{addr}:{files}'.format(addr=server, files=files), dump_dir,
 	]
 
