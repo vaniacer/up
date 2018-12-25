@@ -27,7 +27,7 @@ class Project(models.Model):
 	"""Проект: web-исполнение, web-нси, web-соглашения..."""
 	date = models.DateTimeField(auto_now_add=True, db_index=True)  # Creation date
 	name = models.CharField(max_length=255, unique=True)           # Name in web interface
-	desc = models.TextField(max_length=255)                        # Description
+	desc = models.TextField(max_length=999)                        # Description
 	slug = models.SlugField(max_length=64)                         # Slug
 	user = models.ForeignKey(User)                                 # User relation
 
