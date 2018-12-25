@@ -19,21 +19,41 @@ from os import remove
 
 
 def get_file(server, source, dest):
+	file_body = ''
 	command = ['rsync', '-gzort', '{server}:{source}'.format(
 		source=source,
 		server=server,
 	), dest]
+
 	error = call(command)
-	return error
+
+	if not error:
+		with open(dest, 'r') as f:
+			file_body = f.read()
+			remove(dest)
+
+	return error, file_body
 
 
-def send_file(server, filename, destanation):
+def send_file(server, filename, destination, text):
+
+	with open(filename, 'w') as f:
+		f.write(text)
+
 	command = ['rsync', '--remove-source-files', '-gzort', filename, '{server}:{dest}'.format(
-		dest=destanation,
+		dest=destination,
 		file=filename,
 		server=server,
 	)]
 	call(command)
+
+
+def log_diff(request, server, confname, old_text, new_text):
+	result = unified_diff(old_text, new_text)
+	diff = 'Изменено:\n%s' % ''.join(result)
+	diff = diff.replace('<', '&lt;')
+	diff = diff.replace('>', '&gt;')
+	edit_conf(request, server, confname, diff)
 
 
 def delete_project(project):
@@ -198,15 +218,12 @@ def edit_properties(request, server_id):
 	data = request.GET
 	check_perm_or404('edit_config', project, request.user)
 	confname = 'jboss.properties'
-	destanation = '{wdir}/{conf}'.format(wdir=server.wdir, conf=confname)
 	filename = opj(TMP_DIR, 'properties{}'.format(uniq()))
+	destanation = '{wdir}/{conf}'.format(wdir=server.wdir, conf=confname)
 
-	error = get_file(server.addr, destanation, filename)
+	error, properties_old = get_file(server.addr, destanation, filename)
 	if error:
 		return HttpResponseNotFound('<h1>Server unreachable</h1>')
-	with open(filename, 'r') as f:
-		properties_old = f.read()
-		remove(filename)
 	old_text = properties_old.splitlines(True)
 
 	if request.method != 'POST':
@@ -218,15 +235,8 @@ def edit_properties(request, server_id):
 		if form.is_valid():
 			properties_new = form.data.get('properties').encode('utf-8')
 			new_text = properties_new.splitlines(True)
-			with open(filename, 'w') as f:
-					f.write(properties_new)
-			send_file(server.addr, filename, destanation)
-			result = unified_diff(old_text, new_text)
-			diff = 'Изменено:\n%s' % ''.join(result)
-			diff = diff.replace('<', '&lt;')
-			diff = diff.replace('>', '&gt;')
-			edit_conf(request, server, 'jboss.properties', diff)
-
+			send_file(server.addr, filename, destanation, properties_new)
+			log_diff(request, server, confname, old_text, new_text)
 			return HttpResponseRedirect('/projects/%s/?%s' % (project.id, info(data)))
 
 	context = {'server': server, 'project': project, 'form': form, 'info': info(data)}
@@ -240,16 +250,13 @@ def edit_standalone(request, server_id):
 	project = server.proj
 	data = request.GET
 	check_perm_or404('edit_config', project, request.user)
-	confname = 'jboss-bas-*/standalone/configuration/standalone-full.xml'
-	destanation = '{wdir}/{conf}'.format(wdir=server.wdir, conf=confname)
+	confname = 'standalone-full.xml'
 	filename = opj(TMP_DIR, 'standalone{}'.format(uniq()))
+	destanation = '{wdir}/jboss-bas-*/standalone/configuration/{conf}'.format(wdir=server.wdir, conf=confname)
 
-	error = get_file(server.addr, destanation, filename)
+	error, standalone_old = get_file(server.addr, destanation, filename)
 	if error:
 		return HttpResponseNotFound('<h1>Server unreachable</h1>')
-	with open(filename, 'r') as f:
-		standalone_old = f.read()
-		remove(filename)
 	old_text = standalone_old.splitlines(True)
 
 	if request.method != 'POST':
@@ -261,15 +268,8 @@ def edit_standalone(request, server_id):
 		if form.is_valid():
 			standalone_new = form.data.get('standalone').encode('utf-8')
 			new_text = standalone_new.splitlines(True)
-			with open(filename, 'wb') as f:
-					f.write(standalone_new)
-			send_file(server.addr, filename, destanation)
-			result = unified_diff(old_text, new_text)
-			diff = '\n\nИзменено:\n{}'.format(''.join(result))
-			diff = diff.replace('<', '&lt;')
-			diff = diff.replace('>', '&gt;')
-			edit_conf(request, server, 'standalone-full.xml', diff)
-
+			send_file(server.addr, filename, destanation, standalone_new)
+			log_diff(request, server, confname, old_text, new_text)
 			return HttpResponseRedirect('/projects/%s/?%s' % (project.id, info(data)))
 
 	context = {'server': server, 'project': project, 'form': form, 'info': info(data)}
