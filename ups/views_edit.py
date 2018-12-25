@@ -18,25 +18,26 @@ from shutil import rmtree
 from os import remove
 
 
-def get_file(server, source, dest):
+def get_file(server, source, destination):
+	"""Читает тело файла, возвращает ошибку и тело."""
 	file_body = ''
 	command = ['rsync', '-gzort', '{server}:{source}'.format(
 		source=source,
 		server=server,
-	), dest]
+	), destination]
 
 	error = call(command)
 
 	if not error:
-		with open(dest, 'r') as f:
+		with open(destination, 'r') as f:
 			file_body = f.read()
-			remove(dest)
+			remove(destination)
 
 	return error, file_body
 
 
 def send_file(server, filename, destination, text):
-
+	"""Записывает текст в файл, отправляет файл по адресу"""
 	with open(filename, 'w') as f:
 		f.write(text)
 
@@ -49,6 +50,7 @@ def send_file(server, filename, destination, text):
 
 
 def log_diff(request, server, confname, old_text, new_text):
+	"""Создает запись в истории о изменении в конфайле."""
 	result = unified_diff(old_text, new_text)
 	diff = 'Изменено:\n%s' % ''.join(result)
 	diff = diff.replace('<', '&lt;')
