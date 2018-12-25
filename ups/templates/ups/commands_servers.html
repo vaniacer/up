@@ -29,13 +29,6 @@
 {% endif %}
 
 <!--------------------------------------------{ Servers URL }------------------------------------->
-{% if server.http %}
-    <a onclick="selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS')"
-       title="{{server.http}}"
-       href="{{server.http}}"
-       class="small">URL</a>
-{% endif %}
-
 {% if "edit_config" in pr_view_perms %}
     <a onclick="selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS');"
        href="{% url 'ups:edit_properties' server.id %}?{{info}}"
@@ -45,4 +38,10 @@
        href="{% url 'ups:edit_standalone' server.id %}?{{info}}"
        title="Edit standalone-full.xml on this server"
        class="small">Full</a>
+{% endif %}
+{% if server.http %}
+    <a onclick="selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS')"
+       title="{{server.http}}"
+       href="{{server.http}}"
+       class="small">URL</a>
 {% endif %}
