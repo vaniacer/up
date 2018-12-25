@@ -27,7 +27,7 @@ class Project(models.Model):
 	"""Проект: web-исполнение, web-нси, web-соглашения..."""
 	date = models.DateTimeField(auto_now_add=True, db_index=True)  # Creation date
 	name = models.CharField(max_length=255, unique=True)           # Name in web interface
-	desc = models.TextField(max_length=999)                        # Description
+	desc = models.TextField(max_length=255)                        # Description
 	slug = models.SlugField(max_length=64)                         # Slug
 	user = models.ForeignKey(User)                                 # User relation
 
@@ -101,7 +101,7 @@ class Server(models.Model):
 	port = models.CharField(max_length=5, default='8080')              # Bind port, default - 8080
 	addr = models.CharField(max_length=255)                            # SSH address
 	name = models.CharField(max_length=255)                            # Name in web interface
-	desc = models.TextField(max_length=255)                            # Description
+	desc = models.TextField(max_length=999)                            # Description
 	proj = models.ForeignKey(Project)                                  # Project relation
 	user = models.ForeignKey(User)                                     # User relation
 
