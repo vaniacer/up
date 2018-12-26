@@ -52,7 +52,7 @@ def send_file(server, filename, destination, text):
 def log_diff(request, server, confname, old_text, new_text):
 	"""Создает запись в истории о изменении в конфайле."""
 	result = unified_diff(old_text.splitlines(True), new_text.splitlines(True))
-	diff = 'Изменено:\n%s' % ''.join(result)
+	diff = 'Изменено:\n{}'.format(''.join(result))
 	diff = diff.replace('<', '&lt;')
 	diff = diff.replace('>', '&gt;')
 	edit_conf(request, server, confname, diff)
