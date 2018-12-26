@@ -51,7 +51,7 @@ def send_file(server, filename, destination, text):
 
 def log_diff(request, server, confname, old_text, new_text):
 	"""Создает запись в истории о изменении в конфайле."""
-	result = unified_diff(old_text, new_text)
+	result = unified_diff(old_text.splitlines(True), new_text.splitlines(True))
 	diff = 'Изменено:\n%s' % ''.join(result)
 	diff = diff.replace('<', '&lt;')
 	diff = diff.replace('>', '&gt;')
@@ -227,7 +227,6 @@ def edit_properties(request, server_id):
 	if error:
 		context = {'server': server, 'project': project, 'info': info(data)}
 		return render(request, 'ups/server_unreachable.html', context)
-	old_text = properties_old.splitlines(True)
 
 	if request.method != 'POST':
 		# Исходный запрос; форма заполняется данными текущей записи.
@@ -237,9 +236,8 @@ def edit_properties(request, server_id):
 		form = PropertiesForm(request.POST)
 		if form.is_valid():
 			properties_new = form.data.get('properties').encode('utf-8')
-			new_text = properties_new.splitlines(True)
 			send_file(server.addr, filename, destanation, properties_new)
-			log_diff(request, server, confname, old_text, new_text)
+			log_diff(request, server, confname, properties_old, properties_new)
 			return HttpResponseRedirect('/projects/{id}/?{opts}'.format(id=project.id, opts=info(data)))
 
 	context = {'server': server, 'project': project, 'form': form, 'info': info(data)}
@@ -261,7 +259,6 @@ def edit_standalone(request, server_id):
 	if error:
 		context = {'server': server, 'project': project, 'info': info(data)}
 		return render(request, 'ups/server_unreachable.html', context)
-	old_text = standalone_old.splitlines(True)
 
 	if request.method != 'POST':
 		# Исходный запрос; форма заполняется данными текущей записи.
@@ -271,9 +268,8 @@ def edit_standalone(request, server_id):
 		form = StandaloneForm(request.POST)
 		if form.is_valid():
 			standalone_new = form.data.get('standalone').encode('utf-8')
-			new_text = standalone_new.splitlines(True)
 			send_file(server.addr, filename, destanation, standalone_new)
-			log_diff(request, server, confname, old_text, new_text)
+			log_diff(request, server, confname, standalone_old, standalone_new)
 			return HttpResponseRedirect('/projects/{id}/?{opts}'.format(id=project.id, opts=info(data)))
 
 	context = {'server': server, 'project': project, 'form': form, 'info': info(data)}
