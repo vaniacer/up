@@ -1,0 +1,11 @@
+{% extends "ups/base.html" %}
+{% load bootstrap3 %}
+
+{% block header %}
+    <br>
+    <h2>Sorry, but server <strong>{{server.name}}</strong> is unreachable :(</h2>
+{% endblock header %}
+
+{% block content %}
+    <a class="btn btn-primary" href="{% url 'ups:project' project.id %}?{{info}}">Back</a>
+{% endblock content %}

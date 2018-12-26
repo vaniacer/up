@@ -1,10 +1,10 @@
 # -*- encoding: utf-8 -*-
 
 from .forms import ProjectForm, ServerForm, UpdateForm, ScriptEditForm, PropertiesForm, StandaloneForm
-from django.http import HttpResponseRedirect, HttpResponseNotFound
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 from .models import Project, Server, Update, Script
+from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from .permissions import check_perm_or404
 from django.conf import settings as conf
@@ -225,7 +225,8 @@ def edit_properties(request, server_id):
 
 	error, properties_old = get_file(server.addr, destanation, filename)
 	if error:
-		return HttpResponseNotFound('<h1>Server unreachable</h1>')
+		context = {'server': server, 'project': project, 'info': info(data)}
+		return render(request, 'ups/server_unreachable.html', context)
 	old_text = properties_old.splitlines(True)
 
 	if request.method != 'POST':
@@ -239,7 +240,7 @@ def edit_properties(request, server_id):
 			new_text = properties_new.splitlines(True)
 			send_file(server.addr, filename, destanation, properties_new)
 			log_diff(request, server, confname, old_text, new_text)
-			return HttpResponseRedirect('/projects/%s/?%s' % (project.id, info(data)))
+			return HttpResponseRedirect('/projects/{id}/?{opts}'.format(id=project.id, opts=info(data)))
 
 	context = {'server': server, 'project': project, 'form': form, 'info': info(data)}
 	return render(request, 'ups/edit_properties.html', context)
@@ -258,7 +259,8 @@ def edit_standalone(request, server_id):
 
 	error, standalone_old = get_file(server.addr, destanation, filename)
 	if error:
-		return HttpResponseNotFound('<h1>Server unreachable</h1>')
+		context = {'server': server, 'project': project, 'info': info(data)}
+		return render(request, 'ups/server_unreachable.html', context)
 	old_text = standalone_old.splitlines(True)
 
 	if request.method != 'POST':
@@ -272,7 +274,7 @@ def edit_standalone(request, server_id):
 			new_text = standalone_new.splitlines(True)
 			send_file(server.addr, filename, destanation, standalone_new)
 			log_diff(request, server, confname, old_text, new_text)
-			return HttpResponseRedirect('/projects/%s/?%s' % (project.id, info(data)))
+			return HttpResponseRedirect('/projects/{id}/?{opts}'.format(id=project.id, opts=info(data)))
 
 	context = {'server': server, 'project': project, 'form': form, 'info': info(data)}
 	return render(request, 'ups/edit_standalone.html', context)
