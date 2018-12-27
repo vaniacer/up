@@ -105,14 +105,14 @@ def cancel(request):
 	"""Отмена выполняющейся команды."""
 	data = request.GET
 	current_project = get_object_or_404(Project, id=data['prid'])
-	check_perm_or404('view_project', current_project, request.user)
+	check_perm_or404('run_command', current_project, request.user)
 
 	logids = data.getlist('logid')
 	command = [opj(conf.BASE_DIR, '../env/bin/python'), 'killer.py']
 	command.extend(logids)
 	call(command)
 
-	return HttpResponseRedirect(back_url(data))
+	return render(request, 'ups/cancel.html')
 
 
 @login_required
