@@ -64,7 +64,9 @@ def run(args, log):
 
 		with open(script) as f:
 			body = f.read()
-
+		body = body.replace('<', '&lt;')
+		body = body.replace('>', '&gt;')
+	
 		if updates:
 			options += ' {}'.format(' '.join(updates))
 

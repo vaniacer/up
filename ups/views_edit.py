@@ -221,9 +221,9 @@ def edit_properties(request, server_id):
 	check_perm_or404('edit_config', project, request.user)
 	confname = 'jboss.properties'
 	filename = opj(TMP_DIR, 'properties{}'.format(uniq()))
-	destanation = '{wdir}/{conf}'.format(wdir=server.wdir, conf=confname)
+	destination = '{wdir}/{conf}'.format(wdir=server.wdir, conf=confname)
 
-	error, properties_old = get_file(server.addr, destanation, filename)
+	error, properties_old = get_file(server.addr, destination, filename)
 	if error:
 		context = {'server': server, 'project': project, 'info': info(data)}
 		return render(request, 'ups/server_unreachable.html', context)
@@ -236,7 +236,7 @@ def edit_properties(request, server_id):
 		form = PropertiesForm(request.POST)
 		if form.is_valid():
 			properties_new = form.data.get('properties').encode('utf-8')
-			send_file(server.addr, filename, destanation, properties_new)
+			send_file(server.addr, filename, destination, properties_new)
 			log_diff(request, server, confname, properties_old, properties_new)
 			return HttpResponseRedirect('/projects/{id}/?{opts}'.format(id=project.id, opts=info(data)))
 
@@ -253,9 +253,9 @@ def edit_standalone(request, server_id):
 	check_perm_or404('edit_config', project, request.user)
 	confname = 'standalone-full.xml'
 	filename = opj(TMP_DIR, 'standalone{}'.format(uniq()))
-	destanation = '{wdir}/jboss-bas-*/standalone/configuration/{conf}'.format(wdir=server.wdir, conf=confname)
+	destination = '{wdir}/jboss-bas-*/standalone/configuration/{conf}'.format(wdir=server.wdir, conf=confname)
 
-	error, standalone_old = get_file(server.addr, destanation, filename)
+	error, standalone_old = get_file(server.addr, destination, filename)
 	if error:
 		context = {'server': server, 'project': project, 'info': info(data)}
 		return render(request, 'ups/server_unreachable.html', context)
@@ -268,7 +268,7 @@ def edit_standalone(request, server_id):
 		form = StandaloneForm(request.POST)
 		if form.is_valid():
 			standalone_new = form.data.get('standalone').encode('utf-8')
-			send_file(server.addr, filename, destanation, standalone_new)
+			send_file(server.addr, filename, destination, standalone_new)
 			log_diff(request, server, confname, standalone_old, standalone_new)
 			return HttpResponseRedirect('/projects/{id}/?{opts}'.format(id=project.id, opts=info(data)))
 

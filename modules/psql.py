@@ -8,7 +8,6 @@ from conf import dbname, dbhost, dbpass, dbport, dbuser
 
 def psql(query, select=False):
 	"""Клиент посгреса."""
-
 	psql_opt = ['psql', '-U', dbuser, '-h', dbhost, '-p', dbport, '-d', dbname, '-tAc', query]
 	if select:
 		data = check_output(psql_opt, env={"PGPASSWORD": dbpass})
@@ -20,7 +19,6 @@ def psql(query, select=False):
 
 def cron_log(args, error, log):
 	"""Создает лог после выполнения задания в кроне."""
-
 	today = datetime.today()
 	date = today.strftime('%Y-%m-%d %H:%M')
 	data = psql("SELECT perm, name, proj_id, user_id, serv_id FROM ups_job WHERE cron='{}';".format(args.key), True)
@@ -51,7 +49,6 @@ def cron_log(args, error, log):
 
 def regular_log(args, error, log):
 	"""Логирует все остальные комманды."""
-
 	sql = u"UPDATE ups_history SET \"desc\" = $$ {desc} $$, exit={exit} WHERE uniq='{uniq}';".format(
 		uniq=args.key,
 		exit=error,
