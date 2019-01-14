@@ -10,7 +10,7 @@ def update_upload_to(instance, filename):
 	return '{home}/updates/{project}/{file}'.format(
 		project=instance.proj.name,
 		home=conf.MEDIA_ROOT,
-		file=filename,
+		file=filename.encode('utf-8'),
 	)
 
 
@@ -19,7 +19,7 @@ def script_upload_to(instance, filename):
 	return '{home}/scripts/{project}/{file}'.format(
 		project=instance.proj.name,
 		home=conf.MEDIA_ROOT,
-		file=filename,
+		file=filename.encode('utf-8'),
 	)
 
 
