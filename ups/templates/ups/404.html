@@ -1,5 +1,11 @@
 {% extends "ups/base.html" %}
 {% block header %}
     <br>
-    <h2>The item you requested is not available. (404)</h2>
+    <h2>
+        {% if not error %}
+            The item you requested is not available. (404)
+        {% else %}
+            {{error}}
+        {% endif %}
+    </h2>
 {% endblock header %}

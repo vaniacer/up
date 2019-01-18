@@ -157,7 +157,7 @@ def upload_script(request, project_id):
 			except ValueError:
 				remove(str(script.file))
 				script.delete()
-				return render(request, 'ups/500.html')
+				return render(request, 'ups/500.html', {'error': 'Encoding not supported.'})
 
 			return HttpResponseRedirect('/projects/%s/?%s' % (project.id, info(data)))
 
