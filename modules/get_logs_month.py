@@ -22,7 +22,7 @@ def run(args, log):
 
 	command = [
 		'ssh', args.server,
-		''' find {wdir}/jboss-bas-*/standalone/log -type f -daystart -ctime 30 | xargs zip -jy {file} > /dev/null
+		''' find {wdir}/jboss-bas-*/standalone/log -type f -daystart -ctime -30 | xargs zip -jy {file} > /dev/null
 			for i in ${{PIPESTATUS[@]}}; {{ ((error+=$i)); }}; exit $error
 		'''.format(wdir=args.wdir, file=download['file'][0])
 	]
