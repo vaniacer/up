@@ -214,6 +214,13 @@ function filter_by(id, value) {
     document.getElementById('selector').submit();
 }
 
+function filter_selected(id, name) {
+    var selected_names = []
+    var array = Array.from(document.getElementsByName(name));
+    array.forEach(function(S) {if (S.checked) {selected_names.push(S.dataset.target);}});
+    filter_by(id, selected_names.join('|'))
+}
+
 function show_commands(name) {
 
     var cmdlist = document.getElementById(name);

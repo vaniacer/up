@@ -56,6 +56,10 @@
 
                     <li class="divider"></li>
 
+                    <li><a href="javascript:;" onclick="filter_selected('id_jobs', 'selected_jobs')">Selected</a></li>
+
+                    <li class="divider"></li>
+
                     {% for JOB in jobs %}
                         <li>
                             <a href="javascript:;" onclick="filter_by('id_jobs', '{{JOB}} on {{JOB.serv}} {{JOB.cdat}}')">

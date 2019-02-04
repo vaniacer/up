@@ -64,6 +64,10 @@
 
                     <li class="divider"></li>
 
+                    <li><a href="javascript:;" onclick="filter_selected('id_servers', 'selected_servers')">Selected</a></li>
+
+                    <li class="divider"></li>
+
                     {% for SRV in servers %}
                         <li><a href="javascript:;" onclick="filter_by('id_servers', '{{SRV}}')">{{SRV}}</a></li>
                     {% endfor %}
