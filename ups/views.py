@@ -108,11 +108,12 @@ def cancel(request):
 	check_perm_or404('run_command', current_project, request.user)
 
 	logids = data.getlist('logid')
+	context = {'info': info(data), 'project': current_project}
 	command = [opj(conf.BASE_DIR, '../env/bin/python'), 'killer.py']
 	command.extend(logids)
 	call(command)
 
-	return render(request, 'ups/cancel.html')
+	return render(request, 'ups/cancel.html', context)
 
 
 @login_required
