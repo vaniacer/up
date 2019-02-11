@@ -25,7 +25,7 @@ def run(args, log):
 				|| {{ printf '\nПорт закрыт\n'; ((error+=2)); }}
 
 			printf '<b>\nПроверяю http доступ(локально)</b>\n'
-			wget -qO- -T10 'http://localhost:{port}/application' > /dev/null \
+			wget -qO- -T10 -t1 'http://localhost:{port}/application' > /dev/null \
 				&& {{ printf '\nДоступ есть\n'; }} \
 				|| {{ printf '\nДоступа нет\n'; ((error+=3)); }}
 				
