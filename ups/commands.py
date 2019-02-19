@@ -419,7 +419,7 @@ commandick = {
 
 	# Backup
 	'backup_db': CommandClass(
-		permission='maintenance',
+		permission='make_backup',
 		position=60,
 		section='server',
 		title='Database backup, files will be stored on the server(s) and downloaded to UpS.',
@@ -429,7 +429,7 @@ commandick = {
 	),
 
 	'backup_sys': CommandClass(
-		permission='maintenance',
+		permission='make_backup',
 		position=61,
 		section='server',
 		title='System backup files will be stored on the server(s) and downloaded to UpS.',
@@ -439,7 +439,7 @@ commandick = {
 	),
 
 	'backup_full': CommandClass(
-		permission='maintenance',
+		permission='make_backup',
 		position=62,
 		section='server',
 		title='System and DB backup files will be stored on the server(s) and downloaded to UpS.',

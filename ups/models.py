@@ -77,10 +77,12 @@ class Project(models.Model):
 									'Restart jboss'
 									'Start jboss'
 									'Stop jboss'
-									'Kill jboss'
+									'Kill jboss'"""),
+			("make_backup",    """Can run backup commands:
 									'Backup full'
 									'Backup base'
 									'Backup system'"""),
+
 		)
 		get_latest_by = 'date'
 
