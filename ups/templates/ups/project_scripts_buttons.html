@@ -67,10 +67,14 @@
 
                     <li class="divider"></li>
 
-                    <li><a href="javascript:;" onclick="filter_by('id_scripts', '\\.sql')">SQL   </a></li>
-                    <li><a href="javascript:;" onclick="filter_by('id_scripts', '\\.yml')">YAML  </a></li>
-                    <li><a href="javascript:;" onclick="filter_by('id_scripts', '\\.sh')" >BASH  </a></li>
-                    <li><a href="javascript:;" onclick="filter_by('id_scripts', '\\.py')" >Python</a></li>
+                    {% if 'run_sql_script' in pr_view_perms %}
+                        <li><a href="javascript:;" onclick="filter_by('id_scripts', '\\.sql')">SQL   </a></li>
+                    {% endif %}
+                    {% if 'run_script' in pr_view_perms %}
+                        <li><a href="javascript:;" onclick="filter_by('id_scripts', '\\.yml')">YAML  </a></li>
+                        <li><a href="javascript:;" onclick="filter_by('id_scripts', '\\.sh')" >BASH  </a></li>
+                        <li><a href="javascript:;" onclick="filter_by('id_scripts', '\\.py')" >Python</a></li>
+                    {% endif %}
 
                     <li class="divider"></li>
 
@@ -79,7 +83,9 @@
                     <li class="divider"></li>
 
                     {% for SCR in scripts %}
-                        <li><a href="javascript:;" onclick="filter_by('id_scripts', '{{SCR}}')">{{SCR}}</a></li>
+                        {% if SCR.type == 'sql' and 'run_sql_script' in pr_view_perms or SCR.type != 'sql' and 'run_script' in pr_view_perms %}
+                            <li><a href="javascript:;" onclick="filter_by('id_scripts', '{{SCR}}')">{{SCR}}</a></li>
+                        {% endif %}
                     {% endfor %}
                 </ul>
 
