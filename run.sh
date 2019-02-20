@@ -38,15 +38,15 @@ Usage:
 
 function start {
     . $wdir/../env/bin/activate
-    gunicorn ups.wsgi            \
-             --pid $pidf          \
-             --workers $work       \
-             --timeout $time        \
-             --bind $addr:$port      \
-             --log-file $logd$logf    \
-             --graceful-timeout $grce  \
-             --error-logfile $logd$errf \
-             --access-logfile $logd$acsf \
+    gunicorn ups.wsgi             \
+             --pid $pidf           \
+             --workers $work        \
+             --timeout $time         \
+             --bind $addr:$port       \
+             --log-file $logd$logf     \
+             --graceful-timeout $grce   \
+             --error-logfile $logd/$errf \
+             --access-logfile $logd/$acsf \
              $daem
 }
 
