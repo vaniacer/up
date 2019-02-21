@@ -1,0 +1,25 @@
+{% extends "ups/base.html" %}
+{% load guardian_tags %}
+{% load bootstrap3 %}
+
+{% block header %}
+    <br>
+    <h2>Make tunnel to some port on {{server.name}}</h2>
+{% endblock header %}
+
+{% block content %}
+
+    <form action="{% url 'ups:tunnel' server.id %}?{{info}}" method='GET'>
+        {% csrf_token %}
+
+        <div class="input-group col-md-2">
+            <div class="input-group-btn">
+                <input id="port" name="port" value="{{port}}" class="form-control"/>
+                <input onclick="show_loader()" type="submit" name="ok" value="Go" class="btn btn-primary"/>
+                <a class="btn btn-primary" href="{% url 'ups:project' project.id %}?{{info}}">Cancel</a>
+            </div>
+        </div>
+
+    </form>
+
+{% endblock content %}

@@ -29,6 +29,12 @@
 {% endif %}
 
 <!--------------------------------------------{ Servers URL }------------------------------------->
+{% if "tunnel" in pr_view_perms %}
+    <a onclick="selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS'); show_loader()"
+       href="{% url 'ups:tunnel' server.id %}?{{info}}"
+       title="Make ssh tunnel to the bind port(or some other) on this server."
+       class="small">Tunnel</a>
+{% endif %}
 {% if "edit_config" in pr_view_perms %}
     <a onclick="selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS'); show_loader()"
        href="{% url 'ups:edit_properties' server.id %}?{{info}}"

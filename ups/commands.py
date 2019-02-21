@@ -497,7 +497,6 @@ commandick = {
 		run="run_or_cron('RUN');",
 		srv='true',
 		his=False,
-		fst=True,
 	),
 
 	'test_ssh': CommandClass(
@@ -707,10 +706,11 @@ def run_cmd(data, project, user):
 
 			uniq = uniqkey()
 			serv = get_object_or_404(Server, id=server_id)
+			port = data.get('port') or serv.port
 
 			dick['logi'] += '&logid=%s' % uniq
 			dick.update({'uniq': uniq, 'serv': serv})
-			dick['opt'] = ['--server', serv.addr, '--wdir', serv.wdir, '--port', serv.port]
+			dick['opt'] = ['--server', serv.addr, '--wdir', serv.wdir, '--port', port]
 
 			if data['run_type'] == 'CRON':
 				if not dick['his']:

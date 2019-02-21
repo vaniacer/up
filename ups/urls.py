@@ -35,6 +35,8 @@ urlpatterns = [
 	url(r'^edit_properties/(?P<server_id>\d+)/$', views_edit.edit_properties, name='edit_properties'),
 	# Страница для редактирования standalone-full.xml файла сервера
 	url(r'^edit_standalone/(?P<server_id>\d+)/$', views_edit.edit_standalone, name='edit_standalone'),
+	# Страница тунелирования
+	url(r'^tunnel/(?P<server_id>\d+)/$', views_edit.tunnel, name='tunnel'),
 
 	# Страница для добавления нового обновления
 	url(r'^new_update/(?P<project_id>\d+)/$', views_new.upload_update, name='new_update'),
