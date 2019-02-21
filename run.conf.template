@@ -1,0 +1,11 @@
+addr=localhost  # Bind address
+port=8000       # Bind port
+pidf=/tmp/gpid  # Pid file
+daem=--daemon   # Daemon mode
+logd=../logs/   # Logs dir
+acsf=access     # Access log filename(in logs dir)
+errf=error      # Error log filename(in logs dir)
+logf=log        # Main log filename(in logs dir)
+time=600        # Timeout in sec
+grce=10         # Graceful timeout in sec
+work=5          # Number of workers
