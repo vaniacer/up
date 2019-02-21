@@ -11,6 +11,7 @@ logd=$wdir/../logs/srv/ # Logs dir
 acsf=access             # Access log filename(in logs dir)
 errf=error              # Error log filename(in logs dir)
 logf=log                # Main log filename(in logs dir)
+logl=info               # Error log level. Valid level names are: debug, info, warning, error, critical
 time=600                # Timeout in sec
 grce=10                 # Graceful timeout in sec
 work=5                  # Number of workers
@@ -38,10 +39,11 @@ Usage:
 
 function start {
     . $wdir/../env/bin/activate
-    gunicorn ups.wsgi             \
-             --pid $pidf           \
-             --workers $work        \
-             --timeout $time         \
+    gunicorn ups.wsgi            \
+             --pid $pidf          \
+             --workers $work       \
+             --timeout $time        \
+             --log-level $logl       \
              --bind $addr:$port       \
              --log-file $logd$logf     \
              --graceful-timeout $grce   \
