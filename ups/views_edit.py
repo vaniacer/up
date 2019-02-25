@@ -218,7 +218,6 @@ def tunnel(request, server_id):
 	server = get_object_or_404(Server, id=server_id)
 	project = server.proj
 	data = request.GET
-	# print request.META['HTTP_REFERER']
 	check_perm_or404('tunnel', project, request.user)
 
 	if data.get('port'):

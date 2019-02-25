@@ -732,7 +732,7 @@ def run_cmd(data, project, user):
 			command_name=name,
 		)
 	else:
-		tab = data.get('tab')
+		tab = data.get('tab', default='')
 		if tab == 'logs':
 			tab = 'scripts'
 
