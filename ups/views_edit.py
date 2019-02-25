@@ -213,6 +213,27 @@ def edit_server(request, server_id):
 
 
 @login_required
+def tunnel(request, server_id):
+	"""Создает тунель на сервер."""
+	server = get_object_or_404(Server, id=server_id)
+	project = server.proj
+	data = request.GET
+	check_perm_or404('tunnel', project, request.user)
+
+	if data.get('port'):
+		port = data.get('port')
+		opts = request.META['HTTP_REFERER']
+		opts = opts.split('?')[1]
+
+		url = '/projects/{pid}/?run_type=RUN&run_cmnd=tunnel&selected_servers={sid}&port={port}{opts}'.format(
+			pid=project.id, sid=server_id, port=port, opts=opts)
+		return HttpResponseRedirect(url)
+
+	context = {'server': server, 'project': project, 'port': server.port, 'info': info(data)}
+	return render(request, 'ups/tunnel.html', context)
+
+
+@login_required
 def edit_properties(request, server_id):
 	"""Редактирует jboss.properties сервера."""
 	server = get_object_or_404(Server, id=server_id)
