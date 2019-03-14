@@ -206,7 +206,7 @@ def edit_server(request, server_id):
 				form.save()
 				edit_server_log(request, server)
 
-			return HttpResponseRedirect('/projects/%s/?%s' % (project.id, info(data)))
+			return HttpResponseRedirect(u'/projects/%s/?%s' % (project.id, info(data)))
 
 	context = {'server': server, 'project': project, 'form': form, 'info': info(data)}
 	return render(request, 'ups/edit_server.html', context)
@@ -225,7 +225,7 @@ def tunnel(request, server_id):
 		opts = request.META['HTTP_REFERER']
 		opts = opts.split('?')[1]
 
-		url = '/projects/{pid}/?run_type=RUN&run_cmnd=tunnel&selected_servers={sid}&port={port}{opts}'.format(
+		url = u'/projects/{pid}/?run_type=RUN&run_cmnd=tunnel&selected_servers={sid}&port={port}{opts}'.format(
 			pid=project.id, sid=server_id, port=port, opts=opts)
 		return HttpResponseRedirect(url)
 
@@ -259,7 +259,7 @@ def edit_properties(request, server_id):
 			properties_new = form.data.get('properties').encode('utf-8')
 			send_file(server.addr, filename, destination, properties_new)
 			log_diff(request, server, confname, properties_old, properties_new)
-			return HttpResponseRedirect('/projects/{id}/?{opts}'.format(id=project.id, opts=info(data)))
+			return HttpResponseRedirect(u'/projects/{id}/?{opts}'.format(id=project.id, opts=info(data)))
 
 	context = {'server': server, 'project': project, 'form': form, 'info': info(data)}
 	return render(request, 'ups/edit_properties.html', context)
@@ -291,7 +291,7 @@ def edit_standalone(request, server_id):
 			standalone_new = form.data.get('standalone').encode('utf-8')
 			send_file(server.addr, filename, destination, standalone_new)
 			log_diff(request, server, confname, standalone_old, standalone_new)
-			return HttpResponseRedirect('/projects/{id}/?{opts}'.format(id=project.id, opts=info(data)))
+			return HttpResponseRedirect(u'/projects/{id}/?{opts}'.format(id=project.id, opts=info(data)))
 
 	context = {'server': server, 'project': project, 'form': form, 'info': info(data)}
 	return render(request, 'ups/edit_standalone.html', context)
@@ -327,7 +327,7 @@ def edit_update(request, update_id):
 				form.save()
 				edit_object_log(request, update)
 
-			return HttpResponseRedirect('/projects/%s/?%s' % (project.id, info(data)))
+			return HttpResponseRedirect(u'/projects/%s/?%s' % (project.id, info(data)))
 
 	context = {'update': update, 'project': project, 'form': form, 'info': info(data)}
 	return render(request, 'ups/edit_update.html', context)
@@ -369,7 +369,7 @@ def edit_script(request, script_id):
 				diff = '\n\nИзменено:\n%s' % ''.join(result)
 				edit_object_log(request, script, diff)
 
-			return HttpResponseRedirect('/projects/%s/?%s' % (project.id, info(data)))
+			return HttpResponseRedirect(u'/projects/%s/?%s' % (project.id, info(data)))
 
 	context = {'script': script, 'project': project, 'form': form, 'info': info(data)}
 	return render(request, 'ups/edit_script.html', context)
