@@ -46,9 +46,20 @@ def run(args, log):
 		error += download_file(download, args.server, log)
 
 		message(
-			"\n<a class='btn btn-primary' href='/download_dump/{pro}/{file}'>Download</a>".format(
-				file=filename,
-				pro=args.proid,
+			""" \n<a class='btn btn-primary' href='/download_dump/{PI}/{FN}'>Download</a>
+				\n<b>Команда для быстрого разворачивания дампа(Linux):</b>
+				<div class="input-group col-md-10">
+					<div class="input-group-btn">
+						<input class="form-control" type="text"
+						value="curl {OP} https://ups.krista.ru/dumps/{PN}/{FN} | zcat | psql testdb" id="DBC">					
+						<input onclick="copy_to_clipboard('DBC')" type="button" value="Copy" class="btn btn-primary"/>				
+					</div>
+				</div>
+			""".format(
+				OP='-o- --noproxy ups.krista.ru --netrc-file ~/.ups_download',
+				PN=args.proname,
+				PI=args.proid,
+				FN=filename,
 			), log
 		)
 
