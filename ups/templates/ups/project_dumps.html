@@ -18,6 +18,22 @@
             <div class="panel-body">
                 <dl class="dl-horizontal dbdump-panel" id="dp{{dump.id}}">
                     <dt>              Name</dt><dd>{{dump.name|truncatechars:50}}</dd>
+                    <dt>              Copy</dt><dd>
+                        <div class="input-group col-md-10">
+                            <div class="input-group-btn">
+                                <input type="text"
+                                       class="form-control input-sm"
+                                       title="Console command to download and restore dump"
+                                       value="curl -o- --noproxy ups.krista.ru --netrc-file ~/.ups_download https://ups.krista.ru/dumps/{{project}}/{{dump.name}} | zcat | psql testdb" id="DBC{{dump.id}}">
+                                <input value="Copy"
+                                       type="button"
+                                       class="btn btn-primary input-sm"
+                                       title="Copy to clipboard"
+                                       onclick="selector('dx{{ dump.id }}', 'db{{ dump.id }}', '{{ dump.name }}', 'SD');
+                                                copy_to_clipboard('DBC{{dump.id}}')"/>
+                            </div>
+                        </div>
+                    </dd>
                     <dt>              Size</dt><dd>{{dump.size|filesizeformat}}</dd>
                     <dt class="small">Date</dt><dd class="small">{{dump.date|date:'M d, Y H:i'}}</dd>
                 </dl>
