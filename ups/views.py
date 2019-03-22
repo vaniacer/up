@@ -211,13 +211,19 @@ def history(request, project_id):
 	check_perm_or404('view_project', current_project, request.user)
 	check_perm_or404('view_history',  current_project, request.user)
 
+	data = request.GET
+	fltr = data.get('filter', '')
+	serv = current_project.server_set.order_by('name')
 	hist = current_project.history_set.order_by('date').reverse()
+	hist = hist.filter(serv__name__iregex=fltr)
 	hist, hist_fd, hist_bk = pagination(request, hist)
 
 	context = {
 		'project': current_project,
 		'hist_bk': hist_bk,
 		'hist_fd': hist_fd,
+		'servers': serv,
+		'fltrval': fltr,
 		'history': hist,
 	}
 

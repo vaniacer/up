@@ -3,28 +3,28 @@
     <nav aria-label="...">
         <ul class="pagination">
             {% if history.has_previous %}
-                <li><a href="?page=1#history" title="Go to the first page">first</a></li>
-                <li><a href="?page={{history.previous_page_number}}#history"
+                <li><a href="?page=1&filter={{fltrval}}" title="Go to the first page">first</a></li>
+                <li><a href="?page={{history.previous_page_number}}&filter={{fltrval}}"
                        title="Go to the previous page">prev</a></li>
             {% endif %}
 
             {% for a in hist_bk %}
-                <li><a href="?page={{a}}#history"
+                <li><a href="?page={{a}}&filter={{fltrval}}"
                        title="Go to the page number {{a}}">{{a}}</a></li>
             {% endfor %}
 
             <!--Current-->
-            <li class="active"><a href="?page={{history.number}}#history">{{history.number}}</a></li>
+            <li class="active"><a href="?page={{history.number}}&filter={{fltrval}}">{{history.number}}</a></li>
 
             {% for a in hist_fd %}
-                <li><a href="?page={{a}}#history"
+                <li><a href="?page={{a}}&filter={{fltrval}}"
                        title="Go to the page number {{a}}">{{a}}</a></li>
             {% endfor %}
 
             {% if history.has_next %}
-                <li><a href="?page={{history.next_page_number}}#history"
+                <li><a href="?page={{history.next_page_number}}&filter={{fltrval}}"
                        title="Go to the next page">next</a></li>
-                <li><a href="?page={{history.paginator.num_pages}}#history"
+                <li><a href="?page={{history.paginator.num_pages}}&filter={{fltrval}}"
                        title="Go to the last page({{history.paginator.num_pages}})">
                        last({{history.paginator.num_pages}})</a></li>
             {% endif %}

@@ -17,41 +17,89 @@
         <input id="id_job_info"/>
     </div>
 
-    {% if history %}
-        {% include "ups/history_paginator.html" %}
-    {% endif %}
 
-    {% for event in history %}
+    <form action="{% url 'ups:history' project.id %}" method='GET' id="selector">
+        {% csrf_token %}
 
-        <dl class="dl-horizontal" id="event{{event.id}}">
-            <!--<dt>Event id</dt><dd>{{event.uniq}}</dd>-->
-            {% if event.serv %}
-                <dt>Server name</dt><dd>{{event.serv}}</dd>
+        <div class="row">
+        <div class="col-md-3">
+            <div class="input-group hist-filter">
+                <div class="input-group-btn">
+
+                    <input id="filter" name="filter" value="{{fltrval}}" class="form-control"/>
+
+                    <!-- Hidden submit button -->
+                    <button class="hidden">submit</button>
+
+                    <!-- Dropdown using dropdown-toggle class -->
+                    <button data-toggle="dropdown"
+                            title="Filter by server name or type"
+                            class="btn btn-primary dropdown-toggle">Fltr <span class="caret"></span></button>
+
+                    <!-- Dropdown list items -->
+                    <ul class="dropdown-menu dropdown-menu" role="menu">
+                        <li><a href="javascript:;" onclick="filter_by('filter', '')"              >All </a></li>
+
+                        <li class="divider"></li>
+
+                        <li><a href="javascript:;" onclick="filter_by('filter', 'dev|дев|разраб')">Dev </a></li>
+                        <li><a href="javascript:;" onclick="filter_by('filter', 'test|тест')"     >Test</a></li>
+                        <li><a href="javascript:;" onclick="filter_by('filter', 'prod|прод')"     >Prod</a></li>
+                        <li><a href="javascript:;" onclick="filter_by('filter', 'demo|демо')"     >Demo</a></li>
+
+                        <li class="divider"></li>
+
+                        {% for SRV in servers %}
+                            <li><a href="javascript:;" onclick="filter_by('filter', '{{SRV}}')">{{SRV}}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-9">
+            {% if history %}
+                {% include "ups/history_paginator.html" %}
             {% endif %}
-            <dt>Event name</dt><dd>{{event.name}}</dd>
-            {% if event.cron %}
-                <dt>Cron name</dt><dd>{{event.cron}}</dd>
-                <dt>Cron date</dt><dd>{{event.cdat|capfirst}}</dd>
-            {% endif %}
-            <dt>Event  log</dt><dd class="log"><tt>{{event.desc|safe}}</tt></dd>
-            <dt>Error code</dt><dd>{{event.exit}}</dd>
+        </div>
+    </div>
 
-            <dt class="small">User</dt><dd class="small">{{event.user}}</dd>
-            <dt class="small">Date</dt><dd class="small">{{event.date|date:'M d, Y H:i'}}</dd>
-        </dl>
+    </form>
 
-        <hr>
 
-        <script type="text/javascript">
-            color('event{{event.id}}', '{{event.exit}}', '{{event.cron}}');
-        </script>
+    <div>
+        {% for event in history %}
 
-    {% empty %}
-        <br>There are no events in this project yet.
-    {% endfor %}
+            <dl class="dl-horizontal" id="event{{event.id}}">
+                <!--<dt>Event id</dt><dd>{{event.uniq}}</dd>-->
+                {% if event.serv %}
+                    <dt>Server name</dt><dd>{{event.serv}}</dd>
+                {% endif %}
+                <dt>Event name</dt><dd>{{event.name}}</dd>
+                {% if event.cron %}
+                    <dt>Cron name</dt><dd>{{event.cron}}</dd>
+                    <dt>Cron date</dt><dd>{{event.cdat|capfirst}}</dd>
+                {% endif %}
+                <dt>Event  log</dt><dd class="log"><tt>{{event.desc|safe}}</tt></dd>
+                <dt>Error code</dt><dd>{{event.exit}}</dd>
 
-    {% if history %}
-        {% include "ups/history_paginator.html" %}
-    {% endif %}
+                <dt class="small">User</dt><dd class="small">{{event.user}}</dd>
+                <dt class="small">Date</dt><dd class="small">{{event.date|date:'M d, Y H:i'}}</dd>
+            </dl>
+
+            <hr>
+
+            <script type="text/javascript">
+                color('event{{event.id}}', '{{event.exit}}', '{{event.cron}}');
+            </script>
+
+        {% empty %}
+            <br>There are no events in this project yet.
+        {% endfor %}
+
+        {% if history %}
+            {% include "ups/history_paginator.html" %}
+        {% endif %}
+    </div>
 
 {% endblock content %}

@@ -176,6 +176,10 @@ td:hover, th:hover {
     border-bottom: 0;
 }
 
+.hist-filter {
+    margin-top: 20;
+}
+
 /*-------------{ Tabs mod }-----------------------*/
 .nav-tabs li.disabled a {
     color:     black;

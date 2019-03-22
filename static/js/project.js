@@ -220,7 +220,9 @@ function Validation(cmd, srv, upd, job, scr, dmp, dgr) {
 }
 
 function filter_by(id, value) {
-    document.getElementById('run_cmnd').value = '';
+    var run_cmnd = document.getElementById('run_cmnd');
+    if (run_cmnd) { run_cmnd.value = ''; }
+
     document.getElementById(id).value = value;
     document.getElementById('selector').submit();
 }
