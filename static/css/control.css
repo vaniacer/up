@@ -202,11 +202,11 @@ td:hover, th:hover {
 }
 
 .hist-filter input {
-    width:      130px !important;
+    width:      140px !important;
 }
 
 .hist-filter input[type=date] {
-    padding-top: 0;
+    padding: 0 0 0 10;
 }
 
 .hist-filter button {
