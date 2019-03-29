@@ -12,6 +12,7 @@ from .models import Project, Update, Script, History
 from os.path import getsize, exists, join as opj
 from django.conf import settings as conf
 from wsgiref.util import FileWrapper
+from commands import date_validate
 from re import search, IGNORECASE
 from mimetypes import guess_type
 from operator import itemgetter
@@ -219,6 +220,7 @@ def history(request, project_id):
 	if name:
 		hist = hist.filter(serv__name__iregex=name)
 	if date:
+		date_validate(date, '%Y\\-%m\\-%d')
 		hist = hist.filter(date__date=date)
 	hist, hifd, hibk = pagination(request, hist)
 

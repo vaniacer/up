@@ -7,6 +7,7 @@ from .permissions import check_perm_or404
 from django.conf import settings as conf
 from datetime import datetime, timedelta
 from modules.uniq import uniq as uniqkey
+from django.http import Http404
 from os.path import join as opj
 from subprocess import Popen
 from re import escape
@@ -551,6 +552,14 @@ def back_url(data):
 	)
 
 
+def date_validate(date, date_format):
+	try:
+		print escape(date)
+		datetime.strptime(escape(date), date_format)
+	except ValueError:
+		raise Http404
+
+
 def run_date():
 	"""Если не указана дата, возвращает текущую дату + 1 минута."""
 	date = datetime.now() + timedelta(minutes=1)
@@ -648,6 +657,7 @@ def run_cmd(data, project, user):
 
 	if data.get('selected_date', default=None) and data.get('selected_time', default=None):
 		date = '%s %s' % (data['selected_date'], data['selected_time'])
+		date_validate(date, "%Y\\-%m\\-%d\\ %H\\:%M")
 
 	dick = {
 		'opt': [],
