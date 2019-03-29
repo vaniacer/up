@@ -18,6 +18,7 @@ from operator import itemgetter
 from subprocess import call
 from .dump import get_dumps
 from os import remove
+import datetime
 
 
 def index(request):
@@ -212,18 +213,27 @@ def history(request, project_id):
 	check_perm_or404('view_history',  current_project, request.user)
 
 	data = request.GET
-	fltr = data.get('filter', '')
+	name = data.get('filter_name', '')
+	date = data.get('filter_date', '')
 	serv = current_project.server_set.order_by('name')
 	hist = current_project.history_set.order_by('date').reverse()
-	hist = hist.filter(serv__name__iregex=fltr)
-	hist, hist_fd, hist_bk = pagination(request, hist)
+	if name:
+		hist = hist.filter(serv__name__iregex=name)
+	if date:
+		splittedate = date.split('-')
+		day = int(splittedate[0])
+		month = int(splittedate[1])
+		year = int(splittedate[2])
+		hist = hist.filter(date__date=datetime.date(day, month, year))
+	hist, hifd, hibk = pagination(request, hist)
 
 	context = {
 		'project': current_project,
-		'hist_bk': hist_bk,
-		'hist_fd': hist_fd,
+		'hist_bk': hibk,
+		'hist_fd': hifd,
+		'fnamevl': name,
+		'fdatevl': date,
 		'servers': serv,
-		'fltrval': fltr,
 		'history': hist,
 	}
 

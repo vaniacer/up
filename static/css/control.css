@@ -176,10 +176,6 @@ td:hover, th:hover {
     border-bottom: 0;
 }
 
-.hist-filter {
-    margin-top: 20;
-}
-
 /*-------------{ Tabs mod }-----------------------*/
 .nav-tabs li.disabled a {
     color:     black;
@@ -199,3 +195,16 @@ td:hover, th:hover {
 #updown   { right:  10px; position: fixed; top: 45%; }
 #updown a { right:  0px;  position: absolute; }
 .goto-bot { top:    35px; }
+
+/*-----------------{ History }--------------------*/
+.hist-filter {
+    margin-top: 20;
+}
+
+.hdate input {
+    width:      130px !important;
+}
+
+.hdate button {
+    height:      34px !important;
+}

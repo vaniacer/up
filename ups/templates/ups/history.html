@@ -18,52 +18,66 @@
     </div>
 
 
-    <form action="{% url 'ups:history' project.id %}" method='GET' id="selector">
-        {% csrf_token %}
-
+    <form action="{% url 'ups:history' project.id %}" method='GET' id="selector">{% csrf_token %}
         <div class="row">
-        <div class="col-md-3">
-            <div class="input-group hist-filter">
-                <div class="input-group-btn">
 
-                    <input id="filter" name="filter" value="{{fltrval}}" class="form-control"/>
-
-                    <!-- Hidden submit button -->
-                    <button class="hidden">submit</button>
-
-                    <!-- Dropdown using dropdown-toggle class -->
-                    <button data-toggle="dropdown"
-                            title="Filter by server name or type"
-                            class="btn btn-primary dropdown-toggle">Fltr <span class="caret"></span></button>
-
-                    <!-- Dropdown list items -->
-                    <ul class="dropdown-menu dropdown-menu" role="menu">
-                        <li><a href="javascript:;" onclick="filter_by('filter', '')"              >All </a></li>
-
-                        <li class="divider"></li>
-
-                        <li><a href="javascript:;" onclick="filter_by('filter', 'dev|дев|разраб')">Dev </a></li>
-                        <li><a href="javascript:;" onclick="filter_by('filter', 'test|тест')"     >Test</a></li>
-                        <li><a href="javascript:;" onclick="filter_by('filter', 'prod|прод')"     >Prod</a></li>
-                        <li><a href="javascript:;" onclick="filter_by('filter', 'demo|демо')"     >Demo</a></li>
-
-                        <li class="divider"></li>
-
-                        {% for SRV in servers %}
-                            <li><a href="javascript:;" onclick="filter_by('filter', '{{SRV}}')">{{SRV}}</a></li>
-                        {% endfor %}
-                    </ul>
+            <div class="col-md-2">
+                <div class="input-group hist-filter">
+                    <div class="input-group-btn hdate">
+                        <input type="date"
+                               id="filter_date"
+                               name="filter_date"
+                               value="{{fdatevl}}"
+                               class="form-control">
+                        <button class="btn btn-primary" title="Filter by date">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="col-md-9">
-            {% if history %}
-                {% include "ups/history_paginator.html" %}
-            {% endif %}
-        </div>
-    </div>
+            <div class="col-md-2">
+                <div class="input-group hist-filter">
+                    <div class="input-group-btn">
 
+                        <input id="filter_name" name="filter_name" value="{{fnamevl}}" class="form-control"/>
+
+                        <!-- Hidden submit button -->
+                        <button class="hidden">submit</button>
+
+                        <!-- Dropdown using dropdown-toggle class -->
+                        <button data-toggle="dropdown"
+                                title="Filter by server name"
+                                class="btn btn-primary dropdown-toggle">Fltr <span class="caret"></span></button>
+
+                        <!-- Dropdown list items -->
+                        <ul class="dropdown-menu dropdown-menu" role="menu">
+                            <li><a href="javascript:;" onclick="filter_by('filter_name', '')"              >All </a></li>
+
+                            <li class="divider"></li>
+
+                            <li><a href="javascript:;" onclick="filter_by('filter_name', 'dev|дев|разраб')">Dev </a></li>
+                            <li><a href="javascript:;" onclick="filter_by('filter_name', 'test|тест')"     >Test</a></li>
+                            <li><a href="javascript:;" onclick="filter_by('filter_name', 'prod|прод')"     >Prod</a></li>
+                            <li><a href="javascript:;" onclick="filter_by('filter_name', 'demo|демо')"     >Demo</a></li>
+
+                            <li class="divider"></li>
+
+                            {% for SRV in servers %}
+                                <li><a href="javascript:;" onclick="filter_by('filter_name', '{{SRV}}')">{{SRV}}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-8">
+                {% if history %}
+                    {% include "ups/history_paginator.html" %}
+                {% endif %}
+            </div>
+
+        </div>
     </form>
 
 
