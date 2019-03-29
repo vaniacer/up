@@ -18,7 +18,6 @@ from operator import itemgetter
 from subprocess import call
 from .dump import get_dumps
 from os import remove
-import datetime
 
 
 def index(request):
@@ -220,11 +219,7 @@ def history(request, project_id):
 	if name:
 		hist = hist.filter(serv__name__iregex=name)
 	if date:
-		splittedate = date.split('-')
-		day = int(splittedate[0])
-		month = int(splittedate[1])
-		year = int(splittedate[2])
-		hist = hist.filter(date__date=datetime.date(day, month, year))
+		hist = hist.filter(date__date=date)
 	hist, hifd, hibk = pagination(request, hist)
 
 	context = {
