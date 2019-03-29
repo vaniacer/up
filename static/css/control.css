@@ -205,6 +205,10 @@ td:hover, th:hover {
     width:      130px !important;
 }
 
+.hist-filter input[type=date] {
+    padding-top: 0;
+}
+
 .hist-filter button {
     height:      34px !important;
 }
