@@ -554,7 +554,6 @@ def back_url(data):
 
 def date_validate(date, date_format):
 	try:
-		print escape(date)
 		datetime.strptime(escape(date), date_format)
 	except ValueError:
 		raise Http404
