@@ -208,15 +208,15 @@ def command_log(request):
 @login_required
 def history(request, project_id):
 	"""Выводит страницу истории."""
-	current_project = get_object_or_404(Project, id=project_id)
-	check_perm_or404('view_project', current_project, request.user)
-	check_perm_or404('view_history',  current_project, request.user)
+	proj = get_object_or_404(Project, id=project_id)
+	check_perm_or404('view_project', proj, request.user)
+	check_perm_or404('view_history',  proj, request.user)
 
 	data = request.GET
 	name = data.get('fltr_name', '')
 	date = data.get('fltr_date', '')
-	serv = current_project.server_set.order_by('name')
-	hist = current_project.history_set.order_by('date').reverse()
+	serv = proj.server_set.order_by('name')
+	hist = proj.history_set.order_by('date').reverse()
 	if name:
 		hist = hist.filter(serv__name__iregex=name)
 	if date:
@@ -228,13 +228,13 @@ def history(request, project_id):
 	hist, hifd, hibk = pagination(request, hist)
 
 	context = {
-		'project': current_project,
+		'project': proj,
 		'hist_bk': hibk,
+		'history': hist,
 		'hist_fd': hifd,
 		'fnamevl': name,
 		'fdatevl': date,
 		'servers': serv,
-		'history': hist,
 	}
 
 	return render(request, 'ups/history.html', context)
