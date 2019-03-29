@@ -25,8 +25,8 @@
                 <div class="input-group hist-filter">
                     <div class="input-group-btn hdate">
                         <input type="date"
-                               id="filter_date"
-                               name="filter_date"
+                               id="fltr_date"
+                               name="fltr_date"
                                value="{{fdatevl}}"
                                class="form-control">
                         <button class="btn btn-primary" title="Filter by date">
@@ -40,7 +40,7 @@
                 <div class="input-group hist-filter">
                     <div class="input-group-btn">
 
-                        <input id="filter_name" name="filter_name" value="{{fnamevl}}" class="form-control"/>
+                        <input id="fltr_name" name="fltr_name" value="{{fnamevl}}" class="form-control"/>
 
                         <!-- Hidden submit button -->
                         <button class="hidden">submit</button>
@@ -52,19 +52,19 @@
 
                         <!-- Dropdown list items -->
                         <ul class="dropdown-menu dropdown-menu" role="menu">
-                            <li><a href="javascript:;" onclick="filter_by('filter_name', '')"              >All </a></li>
+                            <li><a href="javascript:;" onclick="filter_by('fltr_name', '')"              >All </a></li>
 
                             <li class="divider"></li>
 
-                            <li><a href="javascript:;" onclick="filter_by('filter_name', 'dev|дев|разраб')">Dev </a></li>
-                            <li><a href="javascript:;" onclick="filter_by('filter_name', 'test|тест')"     >Test</a></li>
-                            <li><a href="javascript:;" onclick="filter_by('filter_name', 'prod|прод')"     >Prod</a></li>
-                            <li><a href="javascript:;" onclick="filter_by('filter_name', 'demo|демо')"     >Demo</a></li>
+                            <li><a href="javascript:;" onclick="filter_by('fltr_name', 'dev|дев|разраб')">Dev </a></li>
+                            <li><a href="javascript:;" onclick="filter_by('fltr_name', 'test|тест')"     >Test</a></li>
+                            <li><a href="javascript:;" onclick="filter_by('fltr_name', 'prod|прод')"     >Prod</a></li>
+                            <li><a href="javascript:;" onclick="filter_by('fltr_name', 'demo|демо')"     >Demo</a></li>
 
                             <li class="divider"></li>
 
                             {% for SRV in servers %}
-                                <li><a href="javascript:;" onclick="filter_by('filter_name', '{{SRV}}')">{{SRV}}</a></li>
+                                <li><a href="javascript:;" onclick="filter_by('fltr_name', '{{SRV}}')">{{SRV}}</a></li>
                             {% endfor %}
                         </ul>
                     </div>

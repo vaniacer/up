@@ -213,8 +213,8 @@ def history(request, project_id):
 	check_perm_or404('view_history',  current_project, request.user)
 
 	data = request.GET
-	name = data.get('filter_name', '')
-	date = data.get('filter_date', '')
+	name = data.get('fltr_name', '')
+	date = data.get('fltr_date', '')
 	serv = current_project.server_set.order_by('name')
 	hist = current_project.history_set.order_by('date').reverse()
 	if name:
