@@ -209,7 +209,7 @@ def history(request, project_id):
 	"""Выводит страницу истории."""
 	proj = get_object_or_404(Project, id=project_id)
 	check_perm_or404('view_project', proj, request.user)
-	check_perm_or404('view_history',  proj, request.user)
+	check_perm_or404('view_history', proj, request.user)
 
 	data = request.GET
 	name = data.get('fltr_name', '')
