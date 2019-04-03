@@ -11,19 +11,18 @@
 
     {% get_obj_perms request.user for project as "edit_project_perms" %}
 
-    <form action="{% url 'ups:edit_project' project.id %}?{{info}}" method='post'>
-        {% csrf_token %}
+    <form onsubmit="show_loader()" action="{% url 'ups:edit_project' project.id %}?{{info}}" method='post'>
+
         {% bootstrap_form form %}
+        {% csrf_token %}
 
-        {% buttons %}
-            <input type="submit" name="ok" value="Save changes" class="btn btn-primary"/>
-            <a class="btn btn-primary" href="{% url 'ups:projects' %}">Cancel</a>
+        <input type="submit" name="ok" value="Save changes" class="btn btn-primary"/>
+        <a class="btn btn-primary" href="{% url 'ups:projects' %}">Cancel</a>
 
-            {% if "delete_project" in edit_project_perms %}
-                <hr>
-                <input type="submit" name="delete" value="Delete" class="btn btn-danger"/>
-            {% endif %}
-        {% endbuttons %}
+        {% if "delete_project" in edit_project_perms %}
+            <hr>
+            <input type="submit" name="delete" value="Delete" class="btn btn-danger"/>
+        {% endif %}
     </form>
 
 {% endblock content %}

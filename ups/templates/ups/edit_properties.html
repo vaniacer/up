@@ -9,14 +9,13 @@
 
 {% block content %}
 
-    <form action="{% url 'ups:edit_properties' server.id %}?{{info}}" method='post'>
-        {% csrf_token %}
-        {% bootstrap_form form %}
+    <form onsubmit="show_loader()" action="{% url 'ups:edit_properties' server.id %}?{{info}}" method='post'>
 
-        {% buttons %}
-            <input onclick="show_loader()" type="submit" name="ok" value="Save changes" class="btn btn-primary"/>
-            <a class="btn btn-primary" href="{% url 'ups:project' project.id %}?{{info}}">Cancel</a>
-        {% endbuttons %}
+        {% bootstrap_form form %}
+        {% csrf_token %}
+
+        <input onclick="show_loader()" type="submit" name="ok" value="Save changes" class="btn btn-primary"/>
+        <a class="btn btn-primary" href="{% url 'ups:project' project.id %}?{{info}}">Cancel</a>
 
     </form>
 

@@ -11,21 +11,18 @@
 
     {% get_obj_perms request.user for project as "edit_server_perms" %}
 
-    <form action="{% url 'ups:edit_server' server.id %}?{{info}}" method='post'>
-        {% csrf_token %}
+    <form onsubmit="show_loader()" action="{% url 'ups:edit_server' server.id %}?{{info}}" method='post'>
+
         {% bootstrap_form form %}
+        {% csrf_token %}
 
-        {% buttons %}
-            <input type="submit" name="ok" value="Save changes" class="btn btn-primary"/>
-            <a class="btn btn-primary" href="{% url 'ups:project' project.id %}?{{info}}">Cancel</a>
-            <!--<a class="btn btn-primary" onclick="window.history.back();">Cancel</a>-->
+        <input type="submit" name="ok" value="Save changes" class="btn btn-primary"/>
+        <a class="btn btn-primary" href="{% url 'ups:project' project.id %}?{{info}}">Cancel</a>
 
-            {% if "del_server" in edit_server_perms %}
-                <hr>
-                <input type="submit" name="delete" value="Delete" class="btn btn-danger"/>
-            {% endif %}
-        {% endbuttons %}
-
+        {% if "del_server" in edit_server_perms %}
+            <hr>
+            <input type="submit" name="delete" value="Delete" class="btn btn-danger"/>
+        {% endif %}
     </form>
 
 {% endblock content %}

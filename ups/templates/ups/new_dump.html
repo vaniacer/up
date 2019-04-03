@@ -8,12 +8,16 @@
 
 {% block content %}
 
-    <form method="POST" action="{% url 'ups:add_dump' project.id %}?{{info}}" enctype="multipart/form-data">
-        {% bootstrap_form form %}
-        {% csrf_token %}
+    <form method="POST"
+          onsubmit="show_loader()"
+          enctype="multipart/form-data"
+          action="{% url 'ups:add_dump' project.id %}?{{info}}">
 
-        <button onclick="show_loader()" class="btn btn-primary" name='submit'>Upload</button>
-        <a class="btn btn-primary" href="{% url 'ups:project' project.id %}?{{info}}">Cancel</a>
+          {% bootstrap_form form %}
+          {% csrf_token %}
+
+          <button onclick="show_loader()" class="btn btn-primary" name='submit'>Upload</button>
+          <a class="btn btn-primary" href="{% url 'ups:project' project.id %}?{{info}}">Cancel</a>
     </form>
 
 {% endblock content %}

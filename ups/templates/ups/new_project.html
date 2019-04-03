@@ -8,14 +8,13 @@
 
 {% block content %}
 
-    <form action="{% url 'ups:new_project' %}" method='post'>
-        {% csrf_token %}
-        {% bootstrap_form form %}
+    <form onsubmit="show_loader()" action="{% url 'ups:new_project' %}" method='post'>
 
-        {% buttons %}
-            <button class="btn btn-primary" name="submit">Add Project</button>
-            <a class="btn btn-primary" href="{% url 'ups:projects' %}">Cancel</a>
-        {% endbuttons %}
+        {% bootstrap_form form %}
+        {% csrf_token %}
+
+        <button class="btn btn-primary" name="submit">Add Project</button>
+        <a class="btn btn-primary" href="{% url 'ups:projects' %}">Cancel</a>
     </form>
 
 {% endblock content %}

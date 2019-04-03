@@ -8,15 +8,16 @@
 
 {% block content %}
 
-    <form action="{% url 'ups:new_update' project.id %}?{{info}}" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {% bootstrap_form form %}
+    <form method="post"
+          onsubmit="show_loader()"
+          enctype="multipart/form-data"
+          action="{% url 'ups:new_update' project.id %}?{{info}}">
 
-        {% buttons %}
-            <button class="btn btn-primary" name='submit'>Add Update</button>
-            <a class="btn btn-primary" href="{% url 'ups:project' project.id %}?{{info}}">Cancel</a>
-            <!--<a class="btn btn-primary" onclick="window.history.back();">Cancel</a>-->
-        {% endbuttons %}
+          {% bootstrap_form form %}
+          {% csrf_token %}
+
+          <button class="btn btn-primary" name='submit'>Add Update</button>
+          <a class="btn btn-primary" href="{% url 'ups:project' project.id %}?{{info}}">Cancel</a>
     </form>
 
 {% endblock content %}

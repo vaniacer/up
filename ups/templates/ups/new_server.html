@@ -9,15 +9,13 @@
 
 {% block content %}
 
-    <form action="{% url 'ups:new_server' project.id %}?{{info}}" method='post'>
-        {% csrf_token %}
-        {% bootstrap_form form %}
+    <form onsubmit="show_loader()" action="{% url 'ups:new_server' project.id %}?{{info}}" method='post'>
 
-        {% buttons %}
-            <button class="btn btn-primary" name='submit'>Add Server</button>
-            <a class="btn btn-primary" href="{% url 'ups:project' project.id %}?{{info}}">Cancel</a>
-            <!--<a class="btn btn-primary" onclick="window.history.back();">Cancel</a>-->
-        {% endbuttons %}
+        {% bootstrap_form form %}
+        {% csrf_token %}
+
+        <button class="btn btn-primary" name='submit'>Add Server</button>
+        <a class="btn btn-primary" href="{% url 'ups:project' project.id %}?{{info}}">Cancel</a>
     </form>
 
 {% endblock content %}
