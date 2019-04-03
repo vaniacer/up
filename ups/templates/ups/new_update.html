@@ -13,7 +13,7 @@
         {% bootstrap_form form %}
 
         {% buttons %}
-            <button onclick="show_loader()" class="btn btn-primary" name='submit'>Add Update</button>
+            <button class="btn btn-primary" name='submit'>Add Update</button>
             <a class="btn btn-primary" href="{% url 'ups:project' project.id %}?{{info}}">Cancel</a>
             <!--<a class="btn btn-primary" onclick="window.history.back();">Cancel</a>-->
         {% endbuttons %}
