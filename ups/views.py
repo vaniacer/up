@@ -295,10 +295,10 @@ def project(request, project_id):
 		jobs = current_project.job_set.order_by('serv')
 		jobs_filter = data.get('jobs', '')
 		jobs_filtered = [
-			job for job in jobs if search(jobs_filter, '{jobname!s} on {servername!s} {time!s}'.format(
-				servername=job.serv,
-				jobname=job,
+			job for job in jobs if search(jobs_filter, '{name!s} on {serv!s} {time!s}'.format(
+				serv=job.serv,
 				time=job.cdat,
+				name=job,
 			), IGNORECASE)
 		]
 		jobs_filter_form = JobsFilterForm(initial=data)
