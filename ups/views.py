@@ -285,6 +285,7 @@ def project_view(request, project_id):
 		'jobs': jobs,
 		'logs': logids,
 		'info': info(data),
+
 		'cmdlog':   cmdlog,
 		'project':  project,
 		'updates':  updates,
