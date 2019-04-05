@@ -21,7 +21,7 @@ urlpatterns = [
 	# Страница для добавления нового проекта
 	url(r'^new_project/$', views_new.new_project, name='new_project'),
 	# Страница истории проекта
-	url(r'^history/(?P<project_id>\d+)/$', views.history, name='history'),
+	url(r'^history/(?P<project_id>\d+)/$', views.history_view, name='history'),
 	# Страница с подробной информацией по отдельному проекту
 	url(r'^projects/(?P<project_id>\d+)/$', views.project_view, name='project'),
 	# Страница для редактирования проекта

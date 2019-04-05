@@ -206,32 +206,29 @@ def command_log(request):
 
 
 @login_required
-def history(request, project_id):
+def history_view(request, project_id):
 	"""Выводит страницу истории."""
 	project = get_object_or_404(Project, id=project_id)
 	check_perm_or404('view_project', project, request.user)
 	check_perm_or404('view_history', project, request.user)
 
 	data = request.GET
-	name = data.get('fltr_name', default='')
-	date = data.get('fltr_date', default='')
-	serv = project.server_set.order_by('name')
-	hist = project.history_set.order_by('date').reverse()
+	name = data.get('name', default='')
+	date = data.get('date', default='')
+	servers = project.server_set.order_by('name')
+	history = project.history_set.order_by('date').reverse()
 	if name:
-		hist = hist.filter(serv__name__iregex=name)
+		history = history.filter(serv__name__iregex=name)
 	if date:
 		date_validate(date, '%Y\\-%m\\-%d')
-		hist = hist.filter(date__date=date)
-	hist, hifd, hibk = pagination(request, hist)
+		history = history.filter(date__date=date)
+	hist, hifd, hibk = pagination(request, history)
 
 	context = {
+		'history': {'back': hibk, 'now':  hist, 'forward': hifd},
+		'filter':  {'name': name, 'date': date},
 		'project': project,
-		'hist_bk': hibk,
-		'history': hist,
-		'hist_fd': hifd,
-		'fnamevl': name,
-		'fdatevl': date,
-		'servers': serv,
+		'servers': servers,
 	}
 
 	return render(request, 'ups/history.html', context)
