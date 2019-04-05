@@ -213,8 +213,8 @@ def history(request, project_id):
 	check_perm_or404('view_history', proj, request.user)
 
 	data = request.GET
-	name = data.get('fltr_name', '')
-	date = data.get('fltr_date', '')
+	name = data.get('fltr_name', default='')
+	date = data.get('fltr_date', default='')
 	serv = proj.server_set.order_by('name')
 	hist = proj.history_set.order_by('date').reverse()
 	if name:
@@ -245,22 +245,22 @@ def project(request, project_id):
 
 	data = request.GET
 
-	servers_filter = data.get('servers', '')
+	servers_filter = data.get('servers', default='')
 	servers = current_project.server_set.order_by('name')
 	servers_filtered = servers.filter(name__iregex=servers_filter)
 	servers_filter_form = ServersFilterForm(initial=data)
 
-	scripts_filter = data.get('scripts', '')
+	scripts_filter = data.get('scripts', default='')
 	scripts = current_project.script_set.order_by('desc')
 	scripts_filtered = scripts.filter(flnm__iregex=scripts_filter)
 	scripts_filter_form = ScriptsFilterForm(initial=data)
 
-	updates_filter = data.get('updates', '')
+	updates_filter = data.get('updates', default='')
 	updates = current_project.update_set.order_by('date').reverse()
 	updates_filtered = updates.filter(flnm__iregex=updates_filter)
 	updates_filter_form = UpdatesFilterForm(initial=data)
 
-	dmplist_filter = data.get('dumps', '')
+	dmplist_filter = data.get('dumps', default='')
 	dmplist = sorted(get_dumps(current_project.name) or '', key=itemgetter('date'), reverse=True)
 	dmplist_filtered = [dump for dump in dmplist if search(dmplist_filter, dump['name'], IGNORECASE)]
 	dmplist_filter_form = DumpsFilterForm(initial=data)
@@ -293,7 +293,7 @@ def project(request, project_id):
 
 		commandsorted = sorted(commandick.itervalues(), key=lambda cmd: cmd.position)
 		jobs = current_project.job_set.order_by('serv')
-		jobs_filter = data.get('jobs', '')
+		jobs_filter = data.get('jobs', default='')
 		jobs_filtered = [
 			job for job in jobs if search(jobs_filter, '{name!s} on {serv!s} {time!s}'.format(
 				serv=job.serv,
