@@ -72,7 +72,7 @@
             </div>
 
             <div class="col-md-8">
-                {% if history %}
+                {% if history.now %}
                     {% include "ups/history_paginator.html" %}
                 {% endif %}
             </div>
@@ -108,10 +108,10 @@
             </script>
 
         {% empty %}
-            <br>There are no events in this project yet.
+            <br>There are no events in history of this project.
         {% endfor %}
 
-        {% if history %}
+        {% if history.now %}
             {% include "ups/history_paginator.html" %}
         {% endif %}
     </div>
