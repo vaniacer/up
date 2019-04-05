@@ -67,28 +67,28 @@ def download(file_path, file_name):
 @login_required
 def download_upd(request, project_id, update_id):
 	"""Скачать обновление."""
-	update = get_object_or_404(Update, id=update_id)
-	current_project = get_object_or_404(Project, id=project_id)
-	check_perm_or404('dld_update', current_project, request.user)
+	update = get_object_or_404(Update,   id=update_id)
+	project = get_object_or_404(Project, id=project_id)
+	check_perm_or404('dld_update', project, request.user)
 	return download(str(update.file), str(update))
 
 
 @login_required
 def download_script(request, project_id, script_id):
 	"""Скачать скрипт."""
-	script = get_object_or_404(Script, id=script_id)
-	current_project = get_object_or_404(Project, id=project_id)
-	check_perm_or404('dld_script', current_project, request.user)
+	script = get_object_or_404(Script,   id=script_id)
+	project = get_object_or_404(Project, id=project_id)
+	check_perm_or404('dld_script', project, request.user)
 	return download(str(script.file), str(script))
 
 
 @login_required
 def download_dump(request, project_id, dump):
 	"""Закачка дампов."""
-	current_project = get_object_or_404(Project, id=project_id)
-	check_perm_or404('dld_dump', current_project, request.user)
+	project = get_object_or_404(Project, id=project_id)
+	check_perm_or404('dld_dump', project, request.user)
 	return download(conf.MEDIA_ROOT + '/dumps/{project_name!s}/{file_name!s}'.format(
-		project_name=current_project,
+		project_name=project,
 		file_name=dump
 	), str(dump))
 
@@ -105,11 +105,11 @@ def projects(request):
 def cancel(request):
 	"""Отмена выполняющейся команды."""
 	data = request.GET
-	current_project = get_object_or_404(Project, id=data['prid'])
-	check_perm_or404('run_command', current_project, request.user)
+	project = get_object_or_404(Project, id=data['prid'])
+	check_perm_or404('run_command', project, request.user)
 
 	logids = data.getlist('logid')
-	context = {'info': info(data), 'project': current_project}
+	context = {'info': info(data), 'project': project}
 	command = [opj(conf.BASE_DIR, '../env/bin/python'), 'killer.py']
 	command.extend(logids)
 	call(command)
@@ -121,18 +121,18 @@ def cancel(request):
 def mini_log(request):
 	"""Выводит мини лог выполняющейся команды."""
 	data = request.GET
-	current_project = get_object_or_404(Project, id=data['prid'])
-	check_perm_or404('view_project', current_project, request.user)
-	check_perm_or404('run_command', current_project, request.user)
+	project = get_object_or_404(Project, id=data['prid'])
+	check_perm_or404('view_project', project, request.user)
+	check_perm_or404('run_command', project, request.user)
 
 	logid = data.get('logid')
 	event = get_object_or_404(History, uniq=logid)
 
 	context = {
-		'project': current_project,
 		'panel':   'panel-default',
 		'text':    'Working...',
 		'cmd':     data['cmd'],
+		'project': project,
 		'event':   event,
 		'end':     False,
 	}
@@ -153,9 +153,9 @@ def mini_log(request):
 def command_log(request):
 	"""Выводит страницу логов выполняющейся команды."""
 	data = request.GET
-	current_project = get_object_or_404(Project, id=data['prid'])
-	check_perm_or404('view_project', current_project, request.user)
-	check_perm_or404('run_command', current_project, request.user)
+	project = get_object_or_404(Project, id=data['prid'])
+	check_perm_or404('view_project', project, request.user)
+	check_perm_or404('run_command',  project, request.user)
 
 	final = {}
 	logids = data.getlist('logid')
@@ -165,9 +165,9 @@ def command_log(request):
 		'name':    data['cmd'].capitalize().replace('_', ' '),
 		'his':     commandick[data['cmd']].his,
 		'cancel':  '/cancel/?%s' % qst,
-		'project': current_project,
 		'back':    back_url(data),
 		'ok':      'btn-success',
+		'project': project,
 		'logs':    [],
 		'color':   '',
 	}
@@ -208,15 +208,15 @@ def command_log(request):
 @login_required
 def history(request, project_id):
 	"""Выводит страницу истории."""
-	proj = get_object_or_404(Project, id=project_id)
-	check_perm_or404('view_project', proj, request.user)
-	check_perm_or404('view_history', proj, request.user)
+	project = get_object_or_404(Project, id=project_id)
+	check_perm_or404('view_project', project, request.user)
+	check_perm_or404('view_history', project, request.user)
 
 	data = request.GET
 	name = data.get('fltr_name', default='')
 	date = data.get('fltr_date', default='')
-	serv = proj.server_set.order_by('name')
-	hist = proj.history_set.order_by('date').reverse()
+	serv = project.server_set.order_by('name')
+	hist = project.history_set.order_by('date').reverse()
 	if name:
 		hist = hist.filter(serv__name__iregex=name)
 	if date:
@@ -225,7 +225,7 @@ def history(request, project_id):
 	hist, hifd, hibk = pagination(request, hist)
 
 	context = {
-		'project': proj,
+		'project': project,
 		'hist_bk': hibk,
 		'history': hist,
 		'hist_fd': hifd,
