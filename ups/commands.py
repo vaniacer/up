@@ -734,22 +734,22 @@ def run_cmd(data, project, user):
 			starter(dick)
 
 	if dick['his']:
-		url = u'/projects/{project_id!s}/?&cmdlog={command_name!s}{log_ids!s}{parameters!s}'.format(
-			parameters=info(data, tab),
-			project_id=project.id,
-			log_ids=dick['logi'],
-			command_name=name,
+		url = u'/projects/{pid!s}/?&cmdlog={cmd!s}{log!s}{opt!s}'.format(
+			opt=info(data, tab),
+			log=dick['logi'],
+			pid=project.id,
+			cmd=name,
 		)
 	else:
 		tab = data.get('tab', default='')
 		if tab == 'logs':
 			tab = 'scripts'
 
-		url = u'/command_log/?cmd={command_name!s}&tab={tab!s}&prid={project_id!s}{log_ids!s}{parameters!s}'.format(
-			parameters=info(data, tab),
-			project_id=project.id,
-			log_ids=dick['logi'],
-			command_name=name,
+		url = u'/command_log/?cmd={cmd!s}&tab={tab!s}&prid={pid!s}{log!s}{opt!s}'.format(
+			opt=info(data, tab),
+			log=dick['logi'],
+			pid=project.id,
+			cmd=name,
 			tab=tab,
 		)
 
