@@ -277,7 +277,8 @@ def project(request, project_id):
 
 	jobs = proj.job_set.order_by('serv')
 	jobs_filter = data.get('jobs', default='')
-	jobs_filtered = [J for J in jobs if search(jobs_filter, '{} on {} {}'.format(J.serv, J.cdat, J), IGNORECASE)]
+	jobs_filtered = [J for J in jobs if search(jobs_filter, '{name} on {serv} {date}'.format(
+		name=J, serv=J.serv, date=J.cdat), IGNORECASE)]
 	jobs_filter_form = JobsFilterForm(initial=data)
 
 	context = {
@@ -306,10 +307,7 @@ def project(request, project_id):
 
 	if len(logids) > 1:
 		# Create allogs url if there are more then 1 log
-		context['allogs'] = u'/command_log/?cmd={cmd!s}&prid={pid!s}&logid={lid!s}'.format(
-			lid='&logid='.join(logids),
-			pid=project_id,
-			cmd=cmdlog,
-		)
+		context['allogs'] = u'/command_log/?cmd={cmd!s}&prid={pid!s}&logid={log!s}'.format(
+			cmd=cmdlog, pid=project_id, log='&logid='.join(logids))
 
 	return render(request, 'ups/project.html', context)
