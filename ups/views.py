@@ -1,15 +1,15 @@
 # -*- encoding: utf-8 -*-
 
-from .forms import ServersFilterForm, ScriptsFilterForm, \
-	HideInfoForm, UpdatesFilterForm, DumpsFilterForm, JobsFilterForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from .forms import ServersFilterForm, ScriptsFilterForm, HideInfoForm
+from .forms import UpdatesFilterForm, DumpsFilterForm, JobsFilterForm
 from django.http import HttpResponseRedirect, StreamingHttpResponse
-from .permissions import check_perm_or404, check_permission
 from django.contrib.auth.decorators import login_required
 from .commands import run_cmd, info, commandick, back_url
 from django.shortcuts import render, get_object_or_404
 from .models import Project, Update, Script, History
 from os.path import getsize, exists, join as opj
+from .permissions import check_perm_or404
 from django.conf import settings as conf
 from wsgiref.util import FileWrapper
 from commands import date_validate
