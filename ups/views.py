@@ -238,44 +238,44 @@ def history(request, project_id):
 
 
 @login_required
-def project(request, project_id):
+def project_view(request, project_id):
 	"""Выводит всю информацию о проекте, обрабатывает кнопки действий."""
-	proj = get_object_or_404(Project, id=project_id)
-	check_perm_or404('view_project', proj, request.user)
+	project = get_object_or_404(Project, id=project_id)
+	check_perm_or404('view_project', project, request.user)
 
 	data = request.GET
 	if data.get('run_cmnd'):
-		check_perm_or404('run_command', proj, request.user)
-		url = run_cmd(data, proj, request.user)
+		check_perm_or404('run_command', project, request.user)
+		url = run_cmd(data, project, request.user)
 		return HttpResponseRedirect(url)
 
 	logids = data.getlist('logid', default=[])
 	cmdlog = data.get('cmdlog',  default=None)
 
-	hide_info_form = HideInfoForm(initial=data)
+	hide_details_form = HideInfoForm(initial=data)
 	commandsorted = sorted(commandick.itervalues(), key=lambda cmd: cmd.position)
 
 	servers_filter = data.get('servers', default='')
-	servers = proj.server_set.order_by('name')
+	servers = project.server_set.order_by('name')
 	servers_filtered = servers.filter(name__iregex=servers_filter)
 	servers_filter_form = ServersFilterForm(initial=data)
 
 	scripts_filter = data.get('scripts', default='')
-	scripts = proj.script_set.order_by('desc')
+	scripts = project.script_set.order_by('desc')
 	scripts_filtered = scripts.filter(flnm__iregex=scripts_filter)
 	scripts_filter_form = ScriptsFilterForm(initial=data)
 
 	updates_filter = data.get('updates', default='')
-	updates = proj.update_set.order_by('date').reverse()
+	updates = project.update_set.order_by('date').reverse()
 	updates_filtered = updates.filter(flnm__iregex=updates_filter)
 	updates_filter_form = UpdatesFilterForm(initial=data)
 
 	dmplist_filter = data.get('dumps', default='')
-	dmplist = sorted(get_dumps(proj.name) or '', key=itemgetter('date'), reverse=True)
+	dmplist = sorted(get_dumps(project.name) or '', key=itemgetter('date'), reverse=True)
 	dmplist_filtered = [dump for dump in dmplist if search(dmplist_filter, dump['name'], IGNORECASE)]
 	dmplist_filter_form = DumpsFilterForm(initial=data)
 
-	jobs = proj.job_set.order_by('serv')
+	jobs = project.job_set.order_by('serv')
 	jobs_filter = data.get('jobs', default='')
 	jobs_filtered = [J for J in jobs if search(jobs_filter, '{name} on {serv} {date}'.format(
 		name=J, serv=J.serv, date=J.cdat), IGNORECASE)]
@@ -285,24 +285,26 @@ def project(request, project_id):
 		'jobs': jobs,
 		'logs': logids,
 		'info': info(data),
-		'project':  proj,
 		'cmdlog':   cmdlog,
+		'project':  project,
 		'updates':  updates,
 		'dmplist':  dmplist,
 		'scripts':  scripts,
 		'servers':  servers,
 		'commands': commandsorted,
-		'hide_info_form':   hide_info_form,
-		'jobs_filter':      jobs_filter_form,
+
 		'jobs_filtered':    jobs_filtered,
 		'servers_filtered': servers_filtered,
-		'servers_filter':   servers_filter_form,
 		'scripts_filtered': scripts_filtered,
-		'scripts_filter':   scripts_filter_form,
 		'updates_filtered': updates_filtered,
-		'updates_filter':   updates_filter_form,
 		'dmplist_filtered': dmplist_filtered,
-		'dmplist_filter':   dmplist_filter_form,
+
+		'jobs_filter':    jobs_filter_form,
+		'hide_info_form': hide_details_form,
+		'servers_filter': servers_filter_form,
+		'scripts_filter': scripts_filter_form,
+		'updates_filter': updates_filter_form,
+		'dmplist_filter': dmplist_filter_form,
 	}
 
 	if len(logids) > 1:
