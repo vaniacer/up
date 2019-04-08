@@ -609,16 +609,15 @@ def history(dick):
 
 
 def starter(dick):
-	"""Выполняет комманду."""
-
+	"""Запускает выполнение комманды в фоновом процессе."""
 	history(dick)
 	python = opj(conf.BASE_DIR, '../env/bin/python')
 	opt = [
 		python, 'starter.py', dick['cmnd'],
-		'--proname', str(dick['proj'].name),
-		'--proid', str(dick['proj'].id),
+		'--name', str(dick['proj'].name),
+		'--pid',  str(dick['proj'].id),
+		'--key',  dick['uniq'],
 		'--date', dick['cdat'],
-		'--key', dick['uniq'],
 	]
 
 	opt.extend(dick['opt'])
@@ -638,7 +637,7 @@ def starter(dick):
 		opt.extend(['-o', opdone])
 
 	for dump in dick['data'].getlist('selected_dbdumps'):
-		opt.extend(['-m', str(dump)])
+		opt.extend(['-d', str(dump)])
 
 	if conf.DEBUG:
 		print '\n', opt, '\n\n', dick, '\n'
