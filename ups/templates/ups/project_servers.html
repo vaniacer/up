@@ -18,7 +18,8 @@
                 <dl class="dl-horizontal server-panel" id="sp{{server.id}}">
                     <dt>       SSH address</dt><dd>{{server.addr}}</dd>
                     {% if server.http %}
-                        <dt>  HTTP address</dt><dd>{{server.http|urlize}}</dd>
+                    <dt>  HTTP address</dt><dd>
+                        <a target="_blank" rel="noopener noreferrer" href="{{server.http}}">{{server.http}}</a></dd>
                     {% endif %}
                     <dt>    Working folder</dt><dd>{{server.wdir}}</dd>
                     <dt>  Server bind port</dt><dd>{{server.port}}</dd>
