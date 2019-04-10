@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from .commands import run_cmd, info, commandick, back_url
 from django.shortcuts import render, get_object_or_404
 from .models import Project, Update, Script, History
+from django.template.defaultfilters import register
 from os.path import getsize, exists, join as opj
 from .permissions import check_perm_or404
 from django.conf import settings as conf
@@ -19,6 +20,14 @@ from operator import itemgetter
 from subprocess import call
 from .dump import get_dumps
 from os import remove
+
+
+def url_target_blank(text):
+	"""Добавляет target="_blank" к ссылкам автоматически созданным в описании сервера."""
+	return text.replace('<a ', '<a target="_blank" ')
+
+
+url_target_blank = register.filter(url_target_blank, is_safe=True)
 
 
 def index(request):
