@@ -27,8 +27,9 @@ def run(args, log):
 
 	command = [
 		'ssh', args.server,
-		''' dbopts="-h {dbhost} -p {dbport} -U {dbuser}"
-			PGPASSWORD="{dbpass}" pg_dump -Ox $dbopts -d {dbname} | gzip > "{file}"
+		''' export PGPASSWORD="{dbpass}"
+			dbopts="-h {dbhost} -p {dbport} -U {dbuser}"
+			pg_dump -Ox $dbopts -d {dbname} | gzip > "{file}"
 			for i in ${{PIPESTATUS[@]}}; {{ ((error+=$i)); }}; exit $error
 		'''.format(
 			file=download['file'][0],

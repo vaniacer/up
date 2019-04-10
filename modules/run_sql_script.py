@@ -46,8 +46,9 @@ def run(args, log):
 		# ------------------{ Run SQL script }---------------------------------
 		command = [
 			'ssh', args.server,
-			''' dbopts="-h {dbhost} -p {dbport} -U {dbuser}"
-				PGPASSWORD="{dbpass}" psql -v ON_ERROR_STOP=1 $dbopts -d {dbname} < "{file}"
+			''' export PGPASSWORD="{dbpass}"
+				dbopts="-h {dbhost} -p {dbport} -U {dbuser}"
+				psql -v ON_ERROR_STOP=1 $dbopts -d {dbname} < "{file}"
 			'''.format(
 				wdir=args.wdir,
 				file=filepath,
