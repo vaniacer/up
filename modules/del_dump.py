@@ -15,7 +15,7 @@ def run(args, log):
 	dumps = '\n'.join(args.dump)
 	message('\n<b>Удаляю дамп(ы):</b>\n{dumps}\n'.format(dumps=dumps), log)
 
-	dumps = [opj(DUMP_DIR, args.proname, dump) for dump in args.dump]
+	dumps = [opj(DUMP_DIR, args.name, dump) for dump in args.dump]
 	command = ['rm']
 	command.extend(dumps)
 	error = my_call(command, log)

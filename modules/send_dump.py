@@ -16,7 +16,7 @@ def run(args, log):
 
 	error = 0
 	filename = args.dump[0]
-	dump = opj(DUMP_DIR, args.proname, args.dump[0])
+	dump = opj(DUMP_DIR, args.name, args.dump[0])
 	tmp_dir = '{wdir}/temp/{key}'.format(wdir=args.wdir, key=args.key)
 
 	warning('You are sending dump - <b>{dump}</b>\nto server - <b>{server}</b>'.format(

@@ -17,7 +17,7 @@ def run(args, log):
 
 	download = {
 		'file': ['{wdir}/backup/{file}'.format(wdir=args.wdir, file=filename)],
-		'dest': args.proname,
+		'dest': args.name,
 		'kill': True,
 	}
 
@@ -58,8 +58,8 @@ def run(args, log):
 				</div>
 			""".format(
 				OP='-o- --noproxy ups.krista.ru --netrc-file ~/.ups_download',
-				PN=args.proname,
-				PI=args.proid,
+				PN=args.name,
+				PI=args.pid,
 				FN=filename,
 			), log
 		)
