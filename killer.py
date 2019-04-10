@@ -14,7 +14,7 @@ from up.settings import LOG_FILE, ERR_FILE
 error = 1
 keys = argv[1::]
 kill = ['kill', '-9']
-pids_raw = check_output(['ps', 'ao', 'pid,cmd'])
+pids_raw = check_output(['ps', '-eo', 'pid,cmd'])
 pid_list = findall('.*starter.py.*', pids_raw)
 
 for key in keys:
