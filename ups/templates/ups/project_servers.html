@@ -23,7 +23,7 @@
                     {% endif %}
                     <dt>    Working folder</dt><dd>{{server.wdir}}</dd>
                     <dt>  Server bind port</dt><dd>{{server.port}}</dd>
-                    <dt>       Description</dt><dd>{{server.desc|linebreaks|urlize|url_target_blank}}</dd>
+                    <dt>       Description</dt><dd>{{server.desc|linebreaks|urlize|target_blank}}</dd>
                     <dt class="small">User</dt><dd class="small">{{server.user}}</dd>
                     <dt class="small">Date</dt><dd class="small">{{server.date|date:'M d, Y H:i'}}</dd>
                 </dl>

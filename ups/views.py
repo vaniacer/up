@@ -22,12 +22,10 @@ from .dump import get_dumps
 from os import remove
 
 
+@register.filter(name='target_blank', is_safe=True)
 def url_target_blank(text):
 	"""Добавляет target="_blank" к ссылкам автоматически созданным в описании сервера."""
 	return text.replace('<a ', '<a target="_blank" ')
-
-
-url_target_blank = register.filter(url_target_blank, is_safe=True)
 
 
 def index(request):
