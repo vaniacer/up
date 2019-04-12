@@ -43,16 +43,17 @@
         {% endfor %}
 
         {% if end %}
-            {% if his %}
-                <dt><p><a title="Close this window"
-                          class="btn ok_btn {{ok}}"
-                          onclick="window.close();">Close</a></p></dt>
-            {% else %}
-                <dt><p><a title="Go back to project" class="btn ok_btn {{ok}}" href="{{back}}">OK</a></p></dt>
-            {% endif %}
+            <div class="btn-group row">
+                {% if his %}
+                    <a title="Close this window"   class="btn {{ok}}" onclick="window.close();">Close</a>
+                {% else %}
+                    <a title="Go back to project"  class="btn {{ok}}" href="{{back}}">OK</a>
+                {% endif %}
+                <a title="Repeat this command" class="btn {{ok}}" href="">Repeat</a>
+            </div>
         {% else %}
             <meta http-equiv="refresh" content="2">
-            <div class="btn-group ok_btn">
+            <div class="btn-group row">
                 <a title="Cancel this command" class="btn btn-primary" href="{{cancel}}">Cancel</a>
                 <a title="Close this window"   class="btn btn-default" onclick="window.close();">Close</a>
             </div>
