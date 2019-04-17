@@ -73,6 +73,7 @@ def delete_server(request, server):
 		'exit': 0,
 		'cron': '',
 		'cdat': '',
+		'http': '',
 		'serv': None,
 		'uniq': uniq(),
 		'proj': server.proj,
@@ -85,16 +86,17 @@ def delete_server(request, server):
 
 
 def delete_object(request, obj):
-	"""Удаляет обновление\скрипт и соотв. файлы, записывает событие в историю."""
+	"""Удаляет обновление или скрипт и соотв. файлы, записывает событие в историю."""
 	dick = {
 		'exit': 0,
 		'cron': '',
 		'cdat': '',
+		'http': '',
 		'serv': None,
 		'proj': obj.proj,
 		'uniq': uniq(),
 		'user': request.user,
-		'name': 'Del upd\scr',
+		'name': 'Del update or script',
 		'desc': 'Удален файл:\n%s\n\nНазначение:\n%s' % (str(obj), obj.desc.encode('utf-8')),
 	}
 	add_event(dick)
@@ -108,6 +110,7 @@ def edit_server_log(request, server):
 		'exit': 0,
 		'cron': '',
 		'cdat': '',
+		'http': '',
 		'serv': None,
 		'uniq': uniq(),
 		'proj': server.proj,
@@ -119,11 +122,12 @@ def edit_server_log(request, server):
 
 
 def edit_object_log(request, obj, diff=''):
-	"""Записывает событие редактирования обновлений\скриптов в историю."""
+	"""Записывает событие редактирования обновлений или скриптов в историю."""
 	dick = {
 		'exit': 0,
 		'cron': '',
 		'cdat': '',
+		'http': '',
 		'serv': None,
 		'uniq': uniq(),
 		'proj': obj.proj,
@@ -139,11 +143,12 @@ def edit_object_log(request, obj, diff=''):
 
 
 def edit_conf(request, server, confile, diff=''):
-	"""Записывает событие редактирования обновлений\скриптов в историю."""
+	"""Записывает событие редактирования обновлений или скриптов в историю."""
 	dick = {
 		'exit': 0,
 		'cron': '',
 		'cdat': '',
+		'http': '',
 		'desc': diff,
 		'serv': None,
 		'uniq': uniq(),
