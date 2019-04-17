@@ -103,12 +103,12 @@
                 <dt class="small">User</dt><dd class="small">{{event.user}}</dd>
                 <dt class="small">Date</dt><dd class="small">{{event.date|date:'M d, Y H:i'}}</dd>
                 {% if event.http and "run_command" in hist_perms and not event.cron %}
-                    <dt></dt><dd>
+                    <dt></dt><dd><div class="row">
                         <a target="_blank"
                            href="{{event.http}}"
-                           title="Repeat this command"
+                           title="Repeat {{event.name|lower}} on server {{event.serv}}"
                            class="btn btn-primary btn-sm">Repeat</a>
-                    </dd>
+                    </div></dd>
                 {% endif %}
             </dl>
 

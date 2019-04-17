@@ -37,9 +37,11 @@
                     <div id="loader-min" class="loader">{% include "ups/5div.html" %}</div>
                 {% endif %}
                 {% if log.event.http %}
-                    <dt><a class="btn btn-primary"
-                           href="{{log.event.http}}"
-                           title="Repeat this command on this server">Repeat</a></dt><dd></dd>
+                    <dt></dt><dd><div class="row">
+                            <a class="btn btn-primary"
+                               href="{{log.event.http}}"
+                               title="Repeat {{log.event.name|lower}} on server {{log.event.serv}}">Repeat</a>
+                    </div></dd>
                 {% endif %}
             </dl>
             <hr>
