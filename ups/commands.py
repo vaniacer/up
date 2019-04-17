@@ -598,19 +598,12 @@ def add_event(dick):
 		cdat=dick['cdat'],
 		desc=dick['desc'],
 		exit=dick['exit'],
+		http=dick['http'],
 	)
-
-
-def history(dick):
-	"""Создает событие в истории"""
-	if dick['his']:
-		dick['opt'].extend(['--history'])
-		add_event(dick)
 
 
 def starter(dick):
 	"""Запускает выполнение комманды в фоновом процессе."""
-	history(dick)
 	python = opj(conf.BASE_DIR, '../env/bin/python')
 	opt = [
 		python, 'starter.py', dick['cmnd'],
@@ -623,21 +616,30 @@ def starter(dick):
 	opt.extend(dick['opt'])
 
 	for ID in dick['data'].getlist('selected_updates'):
+		dick['http'] += '&selected_updates={}'.format(ID)
 		update = get_object_or_404(Update, id=ID)
 		opt.extend(['-u', str(update.file)])
 
 	for ID in dick['data'].getlist('selected_scripts'):
+		dick['http'] += '&selected_scripts={}'.format(ID)
 		script = get_object_or_404(Script, id=ID)
 		opt.extend(['-x', str(script.file)])
 		# split options string coz re.escape escapes spaces as well
-		oplist = str(dick['data'].get('script_opt' + ID)).split()
+		oplist = str(dick['data'].get('script_opt' + ID))
+		dick['http'] += '&script_opt{id}={val}'.format(id=ID, val=oplist)
+		oplist = oplist.split()
 		# join it back and escape special symbols
 		opdone = ' '.join(escape(opt) for opt in oplist)
 		# add result as script arg -o 'test 123'
 		opt.extend(['-o', opdone])
 
 	for dump in dick['data'].getlist('selected_dbdumps'):
+		dick['http'] += '&selected_dbdumps={}'.format(dump)
 		opt.extend(['-d', str(dump)])
+
+	if dick['his']:
+		opt.extend(['--history'])
+		add_event(dick)
 
 	if conf.DEBUG:
 		print '\n', opt, '\n\n', dick, '\n'
@@ -649,9 +651,11 @@ def run_cmd(data, project, user):
 	"""Запускает выбранную команду."""
 	tab = ''
 	date = run_date()
+	runt = data['run_type']
 	name = data['run_cmnd']
 	check_perm_or404('run_command', project, user)
 	check_perm_or404(commandick[name].permission, project, user)
+	http = '/projects/{P}/?repeat=1&run_cmnd={C}&run_type={T}'.format(C=name, T=runt, P=project.id)
 
 	if data.get('selected_date', default=None) and data.get('selected_time', default=None):
 		date = '%s %s' % (data['selected_date'], data['selected_time'])
@@ -664,6 +668,7 @@ def run_cmd(data, project, user):
 		'uniq': '',
 		'exit': '',
 		'logi': '',
+		'http': http,
 		'serv': None,
 		'cmnd': name,
 		'name': name,
@@ -718,9 +723,10 @@ def run_cmd(data, project, user):
 
 			dick['logi'] += '&logid=%s' % uniq
 			dick.update({'uniq': uniq, 'serv': serv})
+			dick['http'] = '{http}&selected_servers={srv}'.format(http=http, srv=server_id)
 			dick['opt'] = ['--server', serv.addr, '--wdir', serv.wdir, '--port', port]
 
-			if data['run_type'] == 'CRON':
+			if runt == 'CRON':
 				if not dick['his']:
 					return back_url(data)
 
@@ -732,7 +738,7 @@ def run_cmd(data, project, user):
 
 			starter(dick)
 
-	if dick['his']:
+	if dick['his'] and not data.get('repeat'):
 		url = u'/projects/{pid!s}/?&cmdlog={cmd!s}{log!s}{opt!s}'.format(
 			opt=info(data, tab),
 			log=dick['logi'],

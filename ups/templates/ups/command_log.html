@@ -36,19 +36,21 @@
                 {% else %}
                     <div id="loader-min" class="loader">{% include "ups/5div.html" %}</div>
                 {% endif %}
+                {% if log.event.http %}
+                    <dt><a class="btn btn-primary"
+                           href="{{log.event.http}}"
+                           title="Repeat this command on this server">Repeat</a></dt><dd></dd>
+                {% endif %}
             </dl>
-
             <hr>
 
         {% endfor %}
 
         {% if end %}
             {% if his %}
-                <dt><p><a title="Close this window"
-                          class="btn ok_btn {{ok}}"
-                          onclick="window.close();">Close</a></p></dt>
+                <a title="Close this window" class="btn ok_btn {{ok}}" onclick="window.close();">Close</a>
             {% else %}
-                <dt><p><a title="Go back to project" class="btn ok_btn {{ok}}" href="{{back}}">OK</a></p></dt>
+                <a title="Go back to project" class="btn ok_btn {{ok}}" href="{{back}}">OK</a>
             {% endif %}
         {% else %}
             <meta http-equiv="refresh" content="2">
