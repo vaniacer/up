@@ -249,7 +249,6 @@ def project_view(request, project_id):
 
 	data = request.GET
 	if data.get('run_cmnd'):
-		check_perm_or404('run_command', project, request.user)
 		url = run_cmd(data, project, request.user)
 		return HttpResponseRedirect(url)
 
