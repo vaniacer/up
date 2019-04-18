@@ -642,10 +642,10 @@ def starter(dick):
 		add_event(dick)
 
 	if conf.DEBUG:
-		print '\n{l40}{{ Starter options }}{l40}\n{opt}\n{l40}{{ Full commandick }}{l40}\n{dick}\n{l100}\n'.format(
+		print '\n{l2}{{ Starter options }}{l2}\n{opt}\n{l2}{{ Full commandick }}{l2}\n{dick}\n{l1}\n'.format(
 			dick='\n'.join('%s:%s' % (key, val) for key, val in dick.iteritems()),
-			l100='-' * 100,
-			l40='-' * 40,
+			l1='-' * 100,
+			l2='-' * 40,
 			opt=opt,
 		)
 
