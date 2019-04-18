@@ -642,7 +642,12 @@ def starter(dick):
 		add_event(dick)
 
 	if conf.DEBUG:
-		print '\n', opt, '\n\n', dick, '\n'
+		print '\n{l40}{{ Starter options }}{l40}\n{opt}\n{l40}{{ Full commandick }}{l40}\n{dick}\n{l100}\n'.format(
+			dick='\n'.join('%s:%s' % (key, val) for key, val in dick.iteritems()),
+			l100='-' * 100,
+			l40='-' * 40,
+			opt=opt,
+		)
 
 	Popen(opt)
 
@@ -655,7 +660,7 @@ def run_cmd(data, project, user):
 	name = data['run_cmnd']
 	check_perm_or404('run_command', project, user)
 	check_perm_or404(commandick[name].permission, project, user)
-	http = '/projects/{P}/?repeat=1&run_cmnd={C}&run_type={T}'.format(C=name, T=runt, P=project.id)
+	http = u'/projects/{P}/?repeat=1&run_cmnd={C}&run_type={T}'.format(C=name, T=runt, P=project.id)
 
 	if data.get('selected_date', default=None) and data.get('selected_time', default=None):
 		date = '%s %s' % (data['selected_date'], data['selected_time'])
@@ -723,7 +728,7 @@ def run_cmd(data, project, user):
 
 			dick['logi'] += '&logid=%s' % uniq
 			dick.update({'uniq': uniq, 'serv': serv})
-			dick['http'] = '{http}&selected_servers={srv}'.format(http=http, srv=server_id)
+			dick['http'] = u'{http}&selected_servers={srv}'.format(http=http, srv=server_id)
 			dick['opt'] = ['--server', serv.addr, '--wdir', serv.wdir, '--port', port]
 
 			if runt == 'CRON':
