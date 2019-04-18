@@ -641,7 +641,7 @@ def starter(dick):
 		opt.extend(['--history'])
 		add_event(dick)
 
-	if conf.DEBUG:
+	if conf.DEBUG:  # Print debug information in console if DEBUG = True
 		print '\n{l2}{{ Starter options }}{l2}\n{opt}\n{l2}{{ Full commandick }}{l2}\n{dick}\n{l1}\n'.format(
 			dick='\n'.join('%s:%s' % (key, val) for key, val in dick.iteritems()),
 			l1='-' * 100,
