@@ -92,7 +92,7 @@
                                    <dt> Event name</dt><dd>{{event.name}}</dd>
                 {% if event.cron %}<dt>  Cron name</dt><dd>{{event.cron}}</dd>
                                    <dt>  Cron date</dt><dd>{{event.cdat|capfirst}}</dd>{% endif %}
-                                   <dt> Event  log</dt><dd class="log"><tt>{{event.desc|safe}}</tt></dd>
+                                   <dt>  Event log</dt><dd class="log">{{event.desc|safe}}</dd>
                                    <dt> Error code</dt><dd>{{event.exit}}</dd>
 
                                    <dt class="small">User</dt><dd class="small">{{event.user}}</dd>

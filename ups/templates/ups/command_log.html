@@ -23,7 +23,7 @@
 
             <dl class="dl-horizontal" id="log{{log.id}}">
                 {% if log.event %}    <dt>Server name</dt><dd>{{log.event.serv}}</dd>{% endif %}
-                                      <dt> Event logs</dt><dd class="log"><tt>{{log.log|safe}}</tt></dd>
+                                      <dt> Event logs</dt><dd class="log">{{log.log|safe}}</dd>
                 {% if log.err < 999 %}<dt> Error code</dt><dd>{{log.err}}</dd>
                     {% if log.err > 0 %}
                         <script type="text/javascript">
