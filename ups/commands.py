@@ -660,7 +660,7 @@ def run_cmd(data, project, user):
 	name = data['run_cmnd']
 	check_perm_or404('run_command', project, user)
 	check_perm_or404(commandick[name].permission, project, user)
-	http = u'/projects/{P}/?repeat=1&run_cmnd={C}&run_type={T}'.format(C=name, T=runt, P=project.id)
+	http = u'/projects/{P}/?repeat=1&run_cmnd={C}&run_type=RUN'.format(C=name, P=project.id)
 
 	if data.get('selected_date', default=None) and data.get('selected_time', default=None):
 		date = '%s %s' % (data['selected_date'], data['selected_time'])
