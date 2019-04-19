@@ -20,7 +20,6 @@
         <input id="id_job_info"/>
     </div>
 
-
     <form action="{% url 'ups:history' project.id %}" method='GET' id="selector">{% csrf_token %}
         <div class="row">
 
@@ -83,43 +82,40 @@
         </div>
     </form>
 
+    {% for event in history.now %}
 
-    <div>
-        {% for event in history.now %}
+        <dl class="dl-horizontal" id="event{{event.id}}">
+            {% if event.serv %}<dt>Server name</dt><dd>{{event.serv}}</dd>{% endif %}
+                               <dt> Event name</dt><dd>{{event.name}}</dd>
+            {% if event.cron %}<dt>  Cron name</dt><dd>{{event.cron}}</dd>
+                               <dt>  Cron date</dt><dd>{{event.cdat|capfirst}}</dd>{% endif %}
+                               <dt>  Event log</dt><dd class="log">{{event.desc|safe}}</dd>
+                               <dt> Error code</dt><dd>{{event.exit}}</dd>
 
-            <dl class="dl-horizontal" id="event{{event.id}}">
-                {% if event.serv %}<dt>Server name</dt><dd>{{event.serv}}</dd>{% endif %}
-                                   <dt> Event name</dt><dd>{{event.name}}</dd>
-                {% if event.cron %}<dt>  Cron name</dt><dd>{{event.cron}}</dd>
-                                   <dt>  Cron date</dt><dd>{{event.cdat|capfirst}}</dd>{% endif %}
-                                   <dt>  Event log</dt><dd class="log">{{event.desc|safe}}</dd>
-                                   <dt> Error code</dt><dd>{{event.exit}}</dd>
+                               <dt class="small">User</dt><dd class="small">{{event.user}}</dd>
+                               <dt class="small">Date</dt><dd class="small">{{event.date|date:'M d, Y H:i'}}</dd>
+            {% if event.http and "run_command" in hist_perms and not event.cron %}
+                <dt></dt><dd><div class="row">
+                    <a target="_blank"
+                       href="{{event.http}}"
+                       title="Repeat {{event.name|lower}} on server {{event.serv}}"
+                       class="btn btn-primary btn-sm">Repeat</a>
+                </div></dd>
+            {% endif %}
+        </dl>
 
-                                   <dt class="small">User</dt><dd class="small">{{event.user}}</dd>
-                                   <dt class="small">Date</dt><dd class="small">{{event.date|date:'M d, Y H:i'}}</dd>
-                {% if event.http and "run_command" in hist_perms and not event.cron %}
-                    <dt></dt><dd><div class="row">
-                        <a target="_blank"
-                           href="{{event.http}}"
-                           title="Repeat {{event.name|lower}} on server {{event.serv}}"
-                           class="btn btn-primary btn-sm">Repeat</a>
-                    </div></dd>
-                {% endif %}
-            </dl>
+        <hr>
 
-            <hr>
+        <script type="text/javascript">
+            color('event{{event.id}}', '{{event.exit}}', '{{event.cron}}');
+        </script>
 
-            <script type="text/javascript">
-                color('event{{event.id}}', '{{event.exit}}', '{{event.cron}}');
-            </script>
+    {% empty %}
+        <br>There are no events in history of this project.
+    {% endfor %}
 
-        {% empty %}
-            <br>There are no events in history of this project.
-        {% endfor %}
-
-        {% if history.now %}
-            {% include "ups/history_paginator.html" %}
-        {% endif %}
-    </div>
+    {% if history.now %}
+        {% include "ups/history_paginator.html" %}
+    {% endif %}
 
 {% endblock content %}
