@@ -14,11 +14,12 @@ class ProjectForm(forms.ModelForm):
 class ServerForm(forms.ModelForm):
 	class Meta:
 		model = Server
-		fields = ['name', 'addr', 'wdir', 'http', 'desc', 'port']
+		fields = ['name', 'addr', 'wdir', 'http', 'zabx', 'desc', 'port']
 		labels = {
 			'name': 'Server name', 'desc': 'Server description',
 			'addr': 'SSH address', 'wdir': 'Working directory',
 			'http': 'HTTP(S) address(if available)',
+			'zabx': 'Zabbix(monitoring) address(if available)',
 			'port': 'Server binding port'
 		}
 

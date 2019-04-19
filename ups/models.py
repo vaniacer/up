@@ -99,6 +99,7 @@ class Server(models.Model):
 	"""Серверы проекта."""
 	wdir = models.CharField(max_length=255, default='/var/lib/jboss')  # Work dir
 	http = models.CharField(max_length=255, blank=True, null=True)     # Http\s url
+	zabx = models.CharField(max_length=255, blank=True, null=True)     # Zabbix url
 	date = models.DateTimeField(auto_now_add=True, db_index=True)      # Creation date
 	port = models.CharField(max_length=5, default='8080')              # Bind port, default - 8080
 	addr = models.CharField(max_length=255)                            # SSH address

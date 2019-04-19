@@ -19,7 +19,11 @@
                     <dt>       SSH address</dt><dd>{{server.addr}}</dd>
                     {% if server.http %}
                     <dt>  HTTP address</dt><dd>
-                        <a target="_blank" rel="noopener noreferrer" href="{{server.http}}">{{server.http}}</a></dd>
+                        <a href="{{server.http}}">{{server.http|urlizetrunc:50|target_blank}}</a></dd>
+                    {% endif %}
+                    {% if server.zabx %}
+                    <dt>  Zabbix address</dt><dd>
+                        <a href="{{server.zabx}}">{{server.zabx|urlizetrunc:50|target_blank}}</a></dd>
                     {% endif %}
                     <dt>    Working folder</dt><dd>{{server.wdir}}</dd>
                     <dt>  Server bind port</dt><dd>{{server.port}}</dd>

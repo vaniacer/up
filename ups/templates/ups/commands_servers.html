@@ -47,9 +47,15 @@
 {% endif %}
 {% if server.http %}
     <a onclick="selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS')"
-       rel="noopener noreferrer"
        title="{{server.http}}"
        href="{{server.http}}"
        target="_blank"
        class="small">URL</a>
+{% endif %}
+{% if server.zabx %}
+    <a onclick="selector('sx{{ server.id }}', 'sb{{ server.id }}', '{{ server }}', 'SS')"
+       title="Zabbix screen link"
+       href="{{server.zabx}}"
+       target="_blank"
+       class="small">ZBX</a>
 {% endif %}
