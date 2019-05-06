@@ -642,8 +642,8 @@ def starter(dick):
 		add_event(dick)
 
 	if conf.DEBUG:  # Print debug information in console if DEBUG = True
-		print '\n{l2}{{ Starter options }}{l2}\n{opt}\n{l2}{{ Full commandick }}{l2}\n{dick}\n{l1}\n'.format(
-			dick='\n'.join('%s:%s' % (key, val) for key, val in dick.iteritems()),
+		print u'\n{l2}{{ Starter options }}{l2}\n{opt}\n{l2}{{ Full commandick }}{l2}\n{dick}\n{l1}\n'.format(
+			dick=u'\n'.join(u'{K}:{V}'.format(K=key, V=val) for key, val in dick.iteritems()),
 			l1='-' * 100,
 			l2='-' * 40,
 			opt=opt,
