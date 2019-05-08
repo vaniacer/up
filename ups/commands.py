@@ -323,6 +323,20 @@ commandick = {
 		fst=True,
 	),
 
+	'version': CommandClass(
+		permission='view_project',
+		position=34,
+		section='server',
+		title='Show current version of application.',
+		short='Ver',
+		name='version',
+		menu='App version',
+		run="run_or_cron('RUN');",
+		srv='true',
+		his=False,
+		fst=True,
+	),
+
 	'health_check': CommandClass(
 		permission='view_project',
 		position=35,
