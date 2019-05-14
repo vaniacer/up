@@ -16,8 +16,8 @@ def run(args, log):
 			printf -- '-----{{ <b>Server {server}</b> }}-----\n'
 			pass=$(grep system jboss-bas-*/standalone/configuration/krista-users.properties)
 			[[ $pass ]] && pass=$(printf -- '%q' "${{pass//system=/system:}}" | base64) || exit 1
-			wget -qO- http://localhost:8080/application/sysinfo/app/version --header="Authorization: Basic $pass"
-		'''.format(wdir=args.wdir, server=args.server)
+			wget -qO- http://localhost:{port}/application/sysinfo/app/version --header="Authorization: Basic $pass"
+		'''.format(wdir=args.wdir, server=args.server, port=args.port)
 	]
 	error += my_call(command, log)
 
