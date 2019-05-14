@@ -15,7 +15,7 @@ def run(args, log):
 		''' cd {wdir}
 			printf -- '-----{{ <b>Server {server}</b> }}-----\n'
 			pass=$(grep system jboss-bas-*/standalone/configuration/krista-users.properties)
-			[[ $pass ]] && pass=$(printf -- "${{pass//system=/system:}}" | base64) || exit 1
+			[[ $pass ]] && pass=$(base64 <<< ${{pass//system=/system:}}) || exit 1
 			wget -qO- http://localhost:8080/application/sysinfo/app/version --header="Authorization: Basic $pass"
 		'''.format(wdir=args.wdir, server=args.server)
 	]
