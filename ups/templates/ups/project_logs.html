@@ -12,12 +12,14 @@
     {% endif %}
 
     {% for log in history %}
-        <div class="mini_log">
-            <iframe scrolling="no"
-                    frameborder="no"
-                    src="/mini_log/?cmd={{log.name}}&prid={{project.id}}&logid={{log.uniq}}">
-            </iframe>
-        </div>
+        {% if not log.cron %}
+            <div class="mini_log">
+                <iframe scrolling="no"
+                        frameborder="no"
+                        src="/mini_log/?cmd={{log.name}}&prid={{project.id}}&logid={{log.uniq}}">
+                </iframe>
+            </div>
+        {% endif %}
     {% empty %}
         <br>Do something.
     {% endfor %}
