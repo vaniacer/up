@@ -71,12 +71,11 @@
                     </li>
                 {% endif %}
 
-                {% if logs %}
-                    <li role="presentation">
-                        <a title="Command logs"
-                           href="#logs" aria-controls="logs" role="tab" data-toggle="tab">Logs</a>
-                    </li>
-                {% endif %}
+                <li role="presentation">
+                    <a title="Command logs"
+                       href="#logs" aria-controls="logs" role="tab" data-toggle="tab">Logs</a>
+                </li>
+
             {% endif %}
 
         </ul>
@@ -115,11 +114,10 @@
                     </div>
                 {% endif %}
 
-                {% if logs %}
-                    <div role="tabpanel" class="tab-pane" id="logs">
-                        <div class="col-sm-5">{% include "ups/project_logs.html" %}</div>
-                    </div>
-                {% endif %}
+                <div role="tabpanel" class="tab-pane" id="logs">
+                    <div class="col-sm-5">{% include "ups/project_logs.html" %}</div>
+                </div>
+
             {% endif %}
         </div>
 

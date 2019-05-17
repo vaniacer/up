@@ -20,6 +20,7 @@ from operator import itemgetter
 from subprocess import call
 from .dump import get_dumps
 from os import remove
+from datetime import datetime
 
 
 @register.filter(name='target_blank', is_safe=True)
@@ -138,7 +139,7 @@ def mini_log(request):
 	context = {
 		'panel':   'panel-default',
 		'text':    'Working...',
-		'cmd':     data['cmd'],
+		'cmd':     event.name,
 		'project': project,
 		'event':   event,
 		'end':     False,
@@ -169,11 +170,11 @@ def command_log(request):
 	url = request.META['SERVER_NAME']
 	qst = request.META['QUERY_STRING']
 	context = {
-		'name':    data['cmd'].capitalize().replace('_', ' '),
-		'his':     commandick[data['cmd']].his,
+		'his':     commandick[data['cmd'].lower().replace(' ', '_')].his,
 		'cancel':  '/cancel/?%s' % qst,
 		'back':    back_url(data),
 		'ok':      'btn-success',
+		'name':    data['cmd'],
 		'project': project,
 		'logs':    [],
 		'color':   '',
@@ -258,6 +259,10 @@ def project_view(request, project_id):
 	hide_details_form = HideInfoForm(initial=data)
 	commandsorted = sorted(commandick.itervalues(), key=lambda cmd: cmd.position)
 
+	today = datetime.now()
+	history = project.history_set.order_by('date').reverse()
+	history = history.filter(date__date=today, user=request.user)
+
 	servers_filter = data.get('servers', default='')
 	servers = project.server_set.order_by('name')
 	servers_filtered = servers.filter(name__iregex=servers_filter)
@@ -295,6 +300,7 @@ def project_view(request, project_id):
 		'dmplist':  dmplist,
 		'scripts':  scripts,
 		'servers':  servers,
+		'history':  history,
 		'commands': commandsorted,
 
 		'jobs_filtered':    jobs_filtered,

@@ -15,7 +15,11 @@
          onclick="window.open('/command_log/?cmd={{cmd}}&prid={{project.id}}&logid={{event.uniq}}', '_blank');">
 
         <div class="panel-heading">
-            <nobr>{{event.name}} {% if event.serv %} on <strong>{{event.serv.name}}</strong> {% endif %}</nobr>
+            <nobr>
+                {{event.name}}
+                {% if event.serv %} on <strong>{{event.serv.name}}</strong> {% endif %}
+                <small>{{event.date|date:'H:i'}}</small>
+            </nobr>
         </div>
 
         <div class="panel-body">

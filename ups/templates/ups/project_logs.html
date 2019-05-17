@@ -7,17 +7,19 @@
         <div class="well well-sm"
              title="View all logs in one window"
              onclick="window.open('{{allogs}}', '_blank');">
-             <strong>All logs</strong>
+             <strong>All running logs</strong>
         </div>
     {% endif %}
 
-    {% for log in logs %}
+    {% for log in history %}
         <div class="mini_log">
             <iframe scrolling="no"
                     frameborder="no"
-                    src="/mini_log/?cmd={{cmdlog}}&prid={{project.id}}&logid={{log}}">
+                    src="/mini_log/?cmd={{log.name}}&prid={{project.id}}&logid={{log.uniq}}">
             </iframe>
         </div>
+    {% empty %}
+        <br>Do something.
     {% endfor %}
 
 </div>
