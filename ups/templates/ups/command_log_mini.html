@@ -18,12 +18,12 @@
             <nobr>
                 {{event.name}}
                 {% if event.serv %} on <strong>{{event.serv.name}}</strong> {% endif %}
-                <small>{{event.date|date:'H:i'}}</small>
+                <div class="hint">{{event.date|date:'H:i'}}</div>
             </nobr>
         </div>
 
         <div class="panel-body">
-            <div class="mini_log_txt">{{text}}</div><div class="hint">click to view log</div>
+            <div class="mini_log_txt">{{text}}</div><div class="hint">click to view</div>
             {% if not end %}
                 <meta http-equiv="refresh" content="1">
             {% endif %}
