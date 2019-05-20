@@ -161,16 +161,16 @@ def mini_log(request):
 def command_log(request):
 	"""Выводит страницу логов выполняющейся команды."""
 	data = request.GET
+	cname = data['cmd'].lower().replace(' ', '_')
 	project = get_object_or_404(Project, id=data['prid'])
-	check_perm_or404('view_project', project, request.user)
-	check_perm_or404('run_command',  project, request.user)
+	check_perm_or404(commandick[cname].permission,  project, request.user)
 
 	final = {}
 	logids = data.getlist('logid')
 	url = request.META['SERVER_NAME']
 	qst = request.META['QUERY_STRING']
 	context = {
-		'his':     commandick[data['cmd'].lower().replace(' ', '_')].his,
+		'his':     commandick[cname].his,
 		'cancel':  '/cancel/?%s' % qst,
 		'back':    back_url(data),
 		'ok':      'btn-success',
