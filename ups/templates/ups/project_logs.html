@@ -12,7 +12,7 @@
     {% endif %}
 
     {% for log in history %}
-        {% if not log.cron %}
+        {% if log.serv and not log.cron %}
             <div class="mini_log">
                 <iframe scrolling="no"
                         frameborder="no"
