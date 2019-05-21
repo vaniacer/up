@@ -27,7 +27,8 @@
     {% for log in history %}
         {% if log.serv and not log.cron and log.uniq not in running %}
 
-            <div title="Click to view command log"
+            <div title="Click to view full log
+                        {{log.desc|striptags|truncatechars:500}}"
                  class="panel {% if log.exit != '0' %} panel-danger {% else %} panel-success {% endif %}"
                  onclick="window.open('/command_log/?cmd={{log.name}}&prid={{project.id}}&logid={{log.uniq}}', '_blank');">
 
