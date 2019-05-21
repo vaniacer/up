@@ -29,13 +29,14 @@ def cron_log(args, error, log):
 		(id, date, name, cron, cdat, exit, \"desc\", uniq, proj_id, user_id, serv_id)
 		VALUES
 		(DEFAULT, current_timestamp, '{name}', '{cron}', '{cdat}', {exit}, '', '{uniq}', {proj}, {user}, {serv});
-		UPDATE ups_history SET \"desc\" = $_SAVE1_$ {desc} $_SAVE1_$ WHERE uniq='{uniq}';
+		UPDATE ups_history SET \"desc\" = $_{save}_$ {desc} $_{save}_$ WHERE uniq='{uniq}';
 	'''.format(
 		cron=args.key,
 		proj=proj_id,
 		serv=serv_id,
 		user=user_id,
 		uniq=uniq(),
+		save=uniq(),
 		exit=error,
 		name=name,
 		cdat=date,
@@ -49,14 +50,16 @@ def cron_log(args, error, log):
 
 def regular_log(args, error, log):
 	"""Логирует все остальные комманды."""
-	sql = u"UPDATE ups_history SET \"desc\" = $_SAVE1_$ {desc} $_SAVE1_$, exit={exit} WHERE uniq='{uniq}';".format(
+	sql = u"UPDATE ups_history SET \"desc\" = $_{save}_$ {desc} $_{save}_$, exit={exit} WHERE uniq='{uniq}';".format(
 		uniq=args.key,
+		save=uniq(),
 		exit=error,
 		desc=log,)
 
 	if args.cron:
-		sql += u"UPDATE ups_job SET \"desc\" = $_SAVE1_$ {desc} $_SAVE1_$ WHERE cron='{cron}';".format(
+		sql += u"UPDATE ups_job SET \"desc\" = $_{save}_$ {desc} $_{save}_$ WHERE cron='{cron}';".format(
 			cron=args.key,
+			save=uniq(),
 			desc=log,)
 
 	psql(sql)
