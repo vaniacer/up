@@ -21,15 +21,10 @@
 
         {% for log in logs %}
 
-            <dl class="dl-horizontal" id="log{{log.id}}">
+            <dl class="dl-horizontal {% if log.err < 999 and log.err > 0 %} danger {% endif %}">
                 {% if log.event %}    <dt>Server name</dt><dd>{{log.event.serv}}</dd>{% endif %}
                                       <dt> Event logs</dt><dd class="log">{{log.log|safe}}</dd>
                 {% if log.err < 999 %}<dt> Error code</dt><dd>{{log.err}}</dd>
-                    {% if log.err > 0 %}
-                        <script type="text/javascript">
-                            document.getElementById('log{{log.id}}').style.background = 'MistyRose';
-                        </script>
-                    {% endif %}
                     {% if log.event.http %}
                         <dt></dt><dd><div class="row">
                             <a class="btn btn-primary"
@@ -41,6 +36,7 @@
                     <div id="loader-min" class="loader">{% include "ups/5div.html" %}</div>
                 {% endif %}
             </dl>
+
             <hr>
 
         {% endfor %}

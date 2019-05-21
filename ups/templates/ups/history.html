@@ -84,7 +84,8 @@
 
     {% for event in history.now %}
 
-        <dl class="dl-horizontal" id="event{{event.id}}">
+        <dl class="dl-horizontal {% if event.cron and event.exit == '0' %} cron
+                                 {% elif event.exit != '0' %} danger {% endif %}">
             {% if event.serv %}<dt>Server name</dt><dd>{{event.serv}}</dd>{% endif %}
                                <dt> Event name</dt><dd>{{event.name}}</dd>
             {% if event.cron %}<dt>  Cron name</dt><dd>{{event.cron}}</dd>
@@ -105,10 +106,6 @@
         </dl>
 
         <hr>
-
-        <script type="text/javascript">
-            color('event{{event.id}}', '{{event.exit}}', '{{event.cron}}');
-        </script>
 
     {% empty %}
         <br>There are no events in history of this project.
