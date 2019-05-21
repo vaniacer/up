@@ -11,14 +11,34 @@
         </div>
     {% endif %}
 
-    {% for log in history %}
-        {% if log.serv and not log.cron %}
+    {% for log in running %}
+        {% if log.serv and not log.cron and not log.exit %}
             <div class="mini_log">
                 <iframe scrolling="no"
                         frameborder="no"
                         src="/mini_log/?cmd={{log.name}}&prid={{project.id}}&logid={{log.uniq}}">
                 </iframe>
             </div>
+        {% endif %}
+    {% endfor %}
+
+    <hr><strong>Logs history</strong><hr>
+
+    {% for log in history %}
+        {% if log.serv and not log.cron and log.uniq not in running %}
+
+            <div title="Click to view command log"
+                 class="panel {% if log.exit != '0' %} panel-danger {% else %} panel-success {% endif %}"
+                 onclick="window.open('/command_log/?cmd={{log.name}}&prid={{project.id}}&logid={{log.uniq}}', '_blank');">
+
+                <div class="panel-heading">
+                    <nobr>{{log.name}}{% if log.serv %} on <strong>{{log.serv.name}}</strong> {% endif %}</nobr>
+                </div>
+
+                <div class="panel-body">{{log.date|date:'H:i'}}<div class="hint">click to view</div></div>
+
+            </div>
+
         {% endif %}
     {% empty %}
         <br>Do something.

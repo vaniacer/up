@@ -262,6 +262,7 @@ def project_view(request, project_id):
 	today = datetime.now()
 	history = project.history_set.order_by('date').reverse()
 	history = history.filter(date__date=today, user=request.user)
+	running = history.filter(exit='')
 
 	servers_filter = data.get('servers', default='')
 	servers = project.server_set.order_by('name')
@@ -301,6 +302,7 @@ def project_view(request, project_id):
 		'scripts':  scripts,
 		'servers':  servers,
 		'history':  history,
+		'running':  running,
 		'commands': commandsorted,
 
 		'jobs_filtered':    jobs_filtered,
@@ -317,8 +319,10 @@ def project_view(request, project_id):
 		'dmplist_filter': dmplist_filter_form,
 	}
 
-	if len(logids) > 1:
+	if len(running) > 1:
 		# Create allogs url if there are more then 1 running log
+		running_list = list(running)
+		logids = [i.uniq for i in running_list]
 		context['allogs'] = u'/command_log/?cmd={cmd!s}&prid={pid!s}&logid={log!s}'.format(
 			cmd=cmdlog, pid=project_id, log='&logid='.join(logids))
 
