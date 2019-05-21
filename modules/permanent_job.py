@@ -21,9 +21,10 @@ def run(args, log):
 
 	message('\nSet job {job} to run everyday\n'.format(job=args.job), log)
 	command = ['sed', '/{id}/c{new}'.format(id=jobid, job=args.job, new=new_job), '-i', cronfile]
-	sql = "UPDATE ups_job SET cdat = 'Everyday {time}', perm = true WHERE cron = '{job}';".format(
-		time=args.date.split()[-1],
-		job=args.job
+	sql = "UPDATE ups_job SET cdat = 'Everyday {H}:{M}', perm = true WHERE cron = '{job}';".format(
+		job=args.job,
+		H=job[1],
+		M=job[0],
 	)
 	error += my_call(command, log)
 	error += psql(sql)

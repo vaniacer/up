@@ -20,7 +20,7 @@ def run(args, log):
 	job[2] = datetime_object.day    # or to selected date\time
 	new_job = ' '.join(escape(str(opt)) for opt in job)
 	new_job += "; sed '/{key}/d' \-i '{cronfile}'".format(cronfile=cronfile, key=args.job)  # add cancel command
-
+	print job[0], job[1]
 	message('\nSet job {job} to run once\n'.format(job=args.job), log)
 	command = ['sed', '/{id}/c{new}'.format(id=jobid, job=args.job, new=new_job), '-i', cronfile]
 	sql = "UPDATE ups_job SET cdat = '{date} {H}:{M}', perm = false WHERE cron = '{job}';".format(
