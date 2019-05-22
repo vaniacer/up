@@ -22,7 +22,7 @@
         {% endif %}
     {% endfor %}
 
-    <hr><strong>Logs history</strong><hr>
+    {% if history %} <hr><strong>Logs history</strong><hr> {% endif %}
 
     {% for log in history %}
         {% if log.serv and log.exit and not log.cron %}
