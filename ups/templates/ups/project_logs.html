@@ -26,7 +26,6 @@
 
     {% for log in history %}
         {% if log.serv and log.exit and not log.cron %}
-
             <div title="Click to view full log
                         {{log.desc|striptags|truncatechars:500}}"
                  class="panel {% if log.exit and log.exit != '0' %} panel-danger {% else %} panel-success {% endif %}"
@@ -39,7 +38,6 @@
                 <div class="panel-body">{{log.date|date:'H:i'}}<div class="hint">click to view</div></div>
 
             </div>
-
         {% endif %}
     {% empty %}
         <br>Do something.
