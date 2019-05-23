@@ -619,17 +619,19 @@ def starter(dick):
 	opt.extend(dick['opt'])
 
 	for ID in dick['data'].getlist('selected_updates'):
-		dick['http'] += '&selected_updates={}'.format(ID)
+		if dick['http']:
+			dick['http'] += '&selected_updates={}'.format(ID)
 		update = get_object_or_404(Update, id=ID)
 		opt.extend(['-u', str(update.file)])
 
 	for ID in dick['data'].getlist('selected_scripts'):
-		dick['http'] += '&selected_scripts={}'.format(ID)
 		script = get_object_or_404(Script, id=ID)
 		opt.extend(['-x', str(script.file)])
 		# split options string coz re.escape escapes spaces as well
 		oplist = str(dick['data'].get('script_opt' + ID))
-		dick['http'] += '&script_opt{id}={val}'.format(id=ID, val=oplist)
+		if dick['http']:
+			dick['http'] += '&selected_scripts={}'.format(ID)
+			dick['http'] += '&script_opt{id}={val}'.format(id=ID, val=oplist)
 		oplist = oplist.split()
 		# join it back and escape special symbols
 		opdone = ' '.join(escape(opt) for opt in oplist)
@@ -637,7 +639,8 @@ def starter(dick):
 		opt.extend(['-o', opdone])
 
 	for dump in dick['data'].getlist('selected_dbdumps'):
-		dick['http'] += '&selected_dbdumps={}'.format(dump)
+		if dick['http']:
+			dick['http'] += '&selected_dbdumps={}'.format(dump)
 		opt.extend(['-d', str(dump)])
 
 	if conf.DEBUG:  # Print debug information in console if DEBUG = True
@@ -674,8 +677,8 @@ def run_cmd(data, project, request):
 		'uniq': '',
 		'exit': '',
 		'logi': '',
+		'http': '',
 		'surl': surl,
-		'http': http,
 		'serv': None,
 		'cmnd': name,
 		'name': name,
@@ -710,7 +713,6 @@ def run_cmd(data, project, request):
 	elif dick['srv'] == 'false':
 
 			uniq = uniqkey()
-
 			dick.update({'uniq': uniq})
 			dick['logi'] += '&logid=%s' % uniq
 
