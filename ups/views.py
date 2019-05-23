@@ -131,7 +131,7 @@ def mini_log(request):
 	data = request.GET
 	project = get_object_or_404(Project, id=data['prid'])
 	check_perm_or404('view_project', project, request.user)
-	check_perm_or404('run_command', project, request.user)
+	check_perm_or404('run_command',  project, request.user)
 
 	logid = data.get('logid')
 	event = get_object_or_404(History, uniq=logid)
@@ -163,7 +163,7 @@ def command_log(request):
 	data = request.GET
 	project = get_object_or_404(Project, id=data['prid'])
 	check_perm_or404('view_project',  project, request.user)
-	check_perm_or404('run_command',  project, request.user)
+	check_perm_or404('run_command',   project, request.user)
 
 	final = {}
 	logids = data.getlist('logid')
@@ -171,11 +171,11 @@ def command_log(request):
 	qst = request.META['QUERY_STRING']
 
 	context = {
-		'cancel':  '/cancel/?%s' % qst,
-		'back':    back_url(data),
-		'ok':      'btn-success',
-		'name':    'Command log',
-		'logs':    [],
+		'cancel': '/cancel/?%s' % qst,
+		'back':   back_url(data),
+		'ok':     'btn-success',
+		'name':   'Command log',
+		'logs':   [],
 	}
 
 	if len(logids) > 1:
