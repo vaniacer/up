@@ -262,7 +262,7 @@ def project_view(request, project_id):
 	today = datetime.now()
 	history = project.history_set.order_by('date').reverse()
 	history = history.filter(date__date=today, user=request.user)
-	running = history.filter(exit='')
+	running = history.filter(exit='').reverse()
 
 	servers_filter = data.get('servers', default='')
 	servers = project.server_set.order_by('name')
