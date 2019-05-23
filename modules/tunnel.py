@@ -21,13 +21,7 @@ def run(args, log):
 			break
 		lport += 1
 
-	link = ''
-	postfixes = ('/application', '/login', '')
-	for postfix in postfixes:
-		link += '\n<a target="_blank" href="http://__URL__:{port}{url}">http://__URL__:{port}{url}</a>\n'.format(
-			url=postfix,
-			port=lport,
-		)
+	link = '\n<a target="_blank" href="__URL__:{port}/application">application</a>\n'.format(port=lport)
 
 	log.write('\n-----{{ <b>Server {server}</b> }}-----\n{link}'.format(server=args.server, link=link))
 	command2 = [

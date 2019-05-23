@@ -161,51 +161,42 @@ def mini_log(request):
 def command_log(request):
 	"""Выводит страницу логов выполняющейся команды."""
 	data = request.GET
-	cname = data['cmd'].lower().replace(' ', '_')
 	project = get_object_or_404(Project, id=data['prid'])
-	check_perm_or404(commandick[cname].permission,  project, request.user)
+	check_perm_or404('view_project',  project, request.user)
+	check_perm_or404('run_command',  project, request.user)
 
 	final = {}
 	logids = data.getlist('logid')
-	url = request.META['SERVER_NAME']
+	events = History.objects.filter(uniq__in=logids)
 	qst = request.META['QUERY_STRING']
+
 	context = {
-		'his':     commandick[cname].his,
 		'cancel':  '/cancel/?%s' % qst,
 		'back':    back_url(data),
 		'ok':      'btn-success',
-		'name':    data['cmd'],
-		'project': project,
+		'name':    'Command log',
 		'logs':    [],
-		'color':   '',
 	}
 
-	for logid in logids:
+	if len(logids) > 1:
+		context['name'] = 'Multiple command log'
 
-		err = 999
-		event = None
-		log = 'Working...'
-		final[logid] = False
-		logfile = conf.LOG_FILE + logid
-		errfile = conf.ERR_FILE + logid
+	for event in events:
 
-		if context['his']:
-			event = get_object_or_404(History, uniq=logid)
-			log = event.desc
-			if event.exit:
-				err = int(event.exit)
-				final[logid] = True
+		log = event.desc
+		final[event.uniq] = False
+		logfile = conf.LOG_FILE + event.uniq
+		cname = event.name.lower().replace(' ', '_')
+		check_perm_or404(commandick[cname].permission, project, request.user)
+
+		if event.exit:
+			final[event.uniq] = True
 
 		if exists(logfile):
 			with open(logfile) as f:
 				log = f.read()
 
-		if exists(errfile):
-			with open(errfile) as f:
-				err = int(f.read())
-			final[logid] = True
-
-		context['logs'].extend([{'id': logid, 'log': log.replace('__URL__', url), 'err': err, 'event': event}])
+		context['logs'].extend([{'log': log, 'event': event}])
 
 	if all(value is True for value in final.values()):
 		context['end'] = True
@@ -253,8 +244,8 @@ def project_view(request, project_id):
 		url = run_cmd(data, project, request.user)
 		return HttpResponseRedirect(url)
 
-	logids = data.getlist('logid', default=[])
-	cmdlog = data.get('cmdlog',  default=None)
+	# logids = data.getlist('logid', default=[])
+	# cmdlog = data.get('cmdlog',  default=None)
 
 	hide_details_form = HideInfoForm(initial=data)
 	commandsorted = sorted(commandick.itervalues(), key=lambda cmd: cmd.position)
@@ -292,10 +283,10 @@ def project_view(request, project_id):
 
 	context = {
 		'jobs': jobs,
-		'logs': logids,
+		# 'logs': logids,
 		'info': info(data),
 
-		'cmdlog':   cmdlog,
+		# 'cmdlog':   cmdlog,
 		'project':  project,
 		'updates':  updates,
 		'dmplist':  dmplist,
@@ -322,7 +313,7 @@ def project_view(request, project_id):
 	if len(running) > 1:
 		# Create allogs url if there are more then 1 running log
 		logids = [i.uniq for i in running]
-		context['allogs'] = u'/command_log/?cmd={cmd!s}&prid={pid!s}&logid={log!s}'.format(
-			cmd=cmdlog, pid=project_id, log='&logid='.join(logids))
+		context['allogs'] = u'/command_log/?&prid={pid!s}&logid={log!s}'.format(
+			pid=project_id, log='&logid='.join(logids))
 
 	return render(request, 'ups/project.html', context)

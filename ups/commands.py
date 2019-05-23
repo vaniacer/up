@@ -26,7 +26,6 @@ class CommandClass:
 		menu='',                   # Command name in UI
 		name='',                   # Command name(an internal command name)
 		run='',                    # Pre validation command, add "run_or_cron('RUN');" to prevent CRONing
-		his=True,                  # If True, command log will be saved to history
 		fst=False,                 # Add command to quick section
 		dgr='false',               # If true will show confirmation window
 		job='false',               # Check if some cron jobs selected
@@ -44,7 +43,6 @@ class CommandClass:
 		self.name = name
 		self.menu = menu
 		self.run = run
-		self.his = his
 		self.fst = fst
 		self.srv = srv
 		self.upd = upd
@@ -319,7 +317,6 @@ commandick = {
 		menu='System Info',
 		run="run_or_cron('RUN');",
 		srv='true',
-		his=False,
 		fst=True,
 	),
 
@@ -333,7 +330,6 @@ commandick = {
 		menu='App version',
 		run="run_or_cron('RUN');",
 		srv='true',
-		his=False,
 		fst=True,
 	),
 
@@ -347,7 +343,6 @@ commandick = {
 		menu='Check health',
 		run="run_or_cron('RUN');",
 		srv='true',
-		his=False,
 		fst=True,
 	),
 
@@ -361,7 +356,6 @@ commandick = {
 		menu='Check conf',
 		run="run_or_cron('RUN');",
 		srv='true',
-		his=False,
 		fst=True,
 	),
 
@@ -376,7 +370,6 @@ commandick = {
 		menu='Check logs',
 		run="run_or_cron('RUN');",
 		srv='true',
-		his=False,
 		fst=True,
 	),
 
@@ -389,7 +382,6 @@ commandick = {
 		menu='Check GC log',
 		run="run_or_cron('RUN');",
 		srv='true',
-		his=False,
 	),
 
 	'get_logs_day': CommandClass(
@@ -483,7 +475,6 @@ commandick = {
 		menu='Peep passwords',
 		run="run_or_cron('RUN');",
 		srv='true',
-		his=False,
 		fst=True,
 	),
 
@@ -497,7 +488,6 @@ commandick = {
 		menu='Check updates',
 		run="run_or_cron('RUN');",
 		srv='true',
-		his=False,
 		fst=True,
 	),
 
@@ -511,7 +501,6 @@ commandick = {
 		menu='Create tunnel',
 		run="run_or_cron('RUN');",
 		srv='true',
-		his=False,
 	),
 
 	'test_ssh': CommandClass(
@@ -524,7 +513,6 @@ commandick = {
 		menu='Test ssh',
 		run="run_or_cron('RUN');",
 		srv='true',
-		his=False,
 	),
 }
 
@@ -651,10 +639,6 @@ def starter(dick):
 		dick['http'] += '&selected_dbdumps={}'.format(dump)
 		opt.extend(['-d', str(dump)])
 
-	if dick['his']:
-		opt.extend(['--history'])
-		add_event(dick)
-
 	if conf.DEBUG:  # Print debug information in console if DEBUG = True
 		print u'\n{l2}{{ Starter options }}{l2}\n{opt}\n{l2}{{ Full commandick }}{l2}\n{dick}\n{l1}\n'.format(
 			dick=u'\n'.join(u'{K}:{V}'.format(K=key, V=val) for key, val in dick.iteritems()),
@@ -663,6 +647,7 @@ def starter(dick):
 			opt=opt,
 		)
 
+	add_event(dick)
 	Popen(opt)
 
 
@@ -697,7 +682,6 @@ def run_cmd(data, project, user):
 		'proj': project,
 		'desc': 'Working...',
 
-		'his':  commandick[name].his,
 		'job':  commandick[name].job,
 		'srv':  commandick[name].srv,
 	}
@@ -746,8 +730,6 @@ def run_cmd(data, project, user):
 			dick['opt'] = ['--server', serv.addr, '--wdir', serv.wdir, '--port', port]
 
 			if runt == 'CRON':
-				if not dick['his']:
-					return back_url(data)
 
 				dick.update({'cron': uniq, 'cdat': date})
 				add_job(dick)
@@ -757,24 +739,9 @@ def run_cmd(data, project, user):
 
 			starter(dick)
 
-	if dick['his'] and not data.get('repeat'):
-		url = u'/projects/{pid!s}/?&cmdlog={cmd!s}{log!s}{opt!s}'.format(
-			opt=info(data, tab),
-			log=dick['logi'],
-			pid=project.id,
-			cmd=name,
-		)
-	else:
-		tab = data.get('tab', default='')
-		if tab == 'logs':
-			tab = 'scripts'
-
-		url = u'/command_log/?cmd={cmd!s}&tab={tab!s}&prid={pid!s}{log!s}{opt!s}'.format(
-			opt=info(data, tab),
-			log=dick['logi'],
-			pid=project.id,
-			cmd=name,
-			tab=tab,
-		)
+	url = u'/projects/{pid!s}/?{opt!s}'.format(
+		opt=info(data, tab),
+		pid=project.id,
+	)
 
 	return url

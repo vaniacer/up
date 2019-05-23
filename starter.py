@@ -11,8 +11,8 @@ from os.path import join as opj
 from importlib import import_module
 from argparse import ArgumentParser
 from modules.log_cutter import log_cutter
+from up.settings import LOG_FILE, BASE_DIR
 from modules.psql import cron_log, regular_log
-from up.settings import LOG_FILE, ERR_FILE, BASE_DIR
 
 
 parser = ArgumentParser()
@@ -35,7 +35,6 @@ parser.add_argument('-p', '--pid',     help='Project id')
 args = parser.parse_args()
 
 command = import_module('modules.%s' % args.cmd)
-errfile = ERR_FILE + args.key
 logfile = LOG_FILE + args.key
 
 
@@ -90,13 +89,9 @@ log = log_cutter(fullog)
 if args.from_cron:
 	cron_log(args, error, log)
 else:
-	if args.history:
-		regular_log(args, error, log)
-	with open(errfile, 'w') as f:
-		f.write(str(error))
+	regular_log(args, error, log)
 
 # Delete log files }-------------------
 sleep(10)
-for f in logfile, errfile:
-	if exists(f):
-		remove(f)
+if exists(logfile):
+	remove(logfile)

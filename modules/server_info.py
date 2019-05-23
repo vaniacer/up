@@ -11,9 +11,7 @@ def run(args, log):
 
 	command = [
 		'ssh', args.server,
-		""" printf '\n-----{{ <b>Server {server}</b> }}-----\n'
-		
-			printf '\n<b>Date:</b>\n'
+		""" printf '\n<b>Date:</b>\n'
 			date
 			
 			printf '\n<b>Hostname:</b>\n'
