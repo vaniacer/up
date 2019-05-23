@@ -32,6 +32,7 @@ parser.add_argument('cmd',             help='Command name')
 parser.add_argument('-j', '--job',     help='Cron job id')
 parser.add_argument('-k', '--key',     help='Unique key')
 parser.add_argument('-p', '--pid',     help='Project id')
+parser.add_argument('--url',           help='UpS url')
 args = parser.parse_args()
 
 command = import_module('modules.%s' % args.cmd)

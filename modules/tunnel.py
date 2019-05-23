@@ -21,13 +21,22 @@ def run(args, log):
 			break
 		lport += 1
 
-	link = '\n<a target="_blank" href="__URL__:{port}/application">application</a>\n'.format(port=lport)
+	link = ''
+	postfixes = ('/application', '/login', '')
+	for postfix in postfixes:
+		link += '\n<a target="_blank" href="{url}:{port}{post}">https://{url}:{port}{post}</a>\n'.format(
+			url=args.url,
+			post=postfix,
+			port=lport,
+		)
 
-	log.write('\n-----{{ <b>Server {server}</b> }}-----\n{link}'.format(server=args.server, link=link))
 	command2 = [
 		'ssh', args.server, '-f', '-L', '0.0.0.0:{LP}:127.0.0.1:{RP}'.format(LP=lport, RP=args.port),
 		'sleep', str(timer)
 	]
 
 	error = my_call(command2, log)
+	if not error:
+		log.write(link)
+
 	return error

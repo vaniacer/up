@@ -241,11 +241,8 @@ def project_view(request, project_id):
 
 	data = request.GET
 	if data.get('run_cmnd'):
-		url = run_cmd(data, project, request.user)
+		url = run_cmd(data, project, request)
 		return HttpResponseRedirect(url)
-
-	# logids = data.getlist('logid', default=[])
-	# cmdlog = data.get('cmdlog',  default=None)
 
 	hide_details_form = HideInfoForm(initial=data)
 	commandsorted = sorted(commandick.itervalues(), key=lambda cmd: cmd.position)
@@ -283,10 +280,8 @@ def project_view(request, project_id):
 
 	context = {
 		'jobs': jobs,
-		# 'logs': logids,
 		'info': info(data),
 
-		# 'cmdlog':   cmdlog,
 		'project':  project,
 		'updates':  updates,
 		'dmplist':  dmplist,

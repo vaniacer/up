@@ -608,9 +608,10 @@ def starter(dick):
 	"""Запускает выполнение комманды в фоновом процессе."""
 	python = opj(conf.BASE_DIR, '../env/bin/python')
 	opt = [
-		python, 'starter.py', dick['cmnd'],
+		python,   'starter.py', dick['cmnd'],
 		'--name', str(dick['proj'].name),
 		'--pid',  str(dick['proj'].id),
+		'--url',  dick['surl'],
 		'--key',  dick['uniq'],
 		'--date', dick['cdat'],
 	]
@@ -651,14 +652,15 @@ def starter(dick):
 	Popen(opt)
 
 
-def run_cmd(data, project, user):
+def run_cmd(data, project, request):
 	"""Запускает выбранную команду."""
 	tab = ''
 	date = run_date()
 	runt = data['run_type']
 	name = data['run_cmnd']
-	check_perm_or404('run_command', project, user)
-	check_perm_or404(commandick[name].permission, project, user)
+	surl = request.META['SERVER_NAME']
+	check_perm_or404('run_command', project, request.user)
+	check_perm_or404(commandick[name].permission, project, request.user)
 	http = u'/projects/{P}/?repeat=1&run_cmnd={C}&run_type=RUN'.format(C=name, P=project.id)
 
 	if data.get('selected_date', default=None) and data.get('selected_time', default=None):
@@ -672,14 +674,15 @@ def run_cmd(data, project, user):
 		'uniq': '',
 		'exit': '',
 		'logi': '',
+		'surl': surl,
 		'http': http,
 		'serv': None,
 		'cmnd': name,
 		'name': name,
-		'user': user,
 		'cdat': date,
 		'data': data,
 		'proj': project,
+		'user': request.user,
 		'desc': 'Working...',
 
 		'job':  commandick[name].job,
@@ -739,9 +742,6 @@ def run_cmd(data, project, user):
 
 			starter(dick)
 
-	url = u'/projects/{pid!s}/?{opt!s}'.format(
-		opt=info(data, tab),
-		pid=project.id,
-	)
+	url = u'/projects/{pid!s}/?{opt!s}'.format(opt=info(data, tab), pid=project.id)
 
 	return url

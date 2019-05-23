@@ -13,7 +13,6 @@ def run(args, log):
 	command = [
 		'ssh', args.server,
 		''' cd {wdir}
-			printf -- '-----{{ <b>Server {server}</b> }}-----\n'
 			pass=$(grep system jboss-bas-*/standalone/configuration/krista-users.properties)
 			[[ $pass ]] && pass=$(printf -- '%q' "${{pass//system=/system:}}" | base64) || exit 1
 			wget -qO- http://localhost:{port}/application/sysinfo/app/version --header="Authorization: Basic $pass"

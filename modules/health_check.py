@@ -11,9 +11,7 @@ def run(args, log):
 
 	command = [
 		'ssh', args.server,
-		""" printf '\n-----{{ <b>Server {server}</b> }}-----\n'
-		
-			printf '<b>\nИщу jboss процес </b>\n'
+		""" printf '<b>\nИщу jboss процес </b>\n'
 			ps axu | head -n1
 			ps axu | grep {wdir} | grep [j]ava \
 				&& {{ printf '\nПриложение работает\n'; }} \

@@ -11,9 +11,7 @@ def run(args, log):
 
 	command = [
 		'ssh', args.server,
-		""" printf '\n-----{{ <b>Server {server}</b> }}-----\n'
-		
-			printf '\n<b>Running options</b>\n\n'
+		""" printf '\n<b>Running options</b>\n\n'
 			ps axo command | grep {wdir} | grep [j]ava
 			
 			printf '\n<b>Jboss.properties</b>\n\n'
