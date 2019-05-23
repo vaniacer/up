@@ -744,4 +744,7 @@ def run_cmd(data, project, request):
 
 	url = u'/projects/{pid!s}/?{opt!s}'.format(opt=info(data, tab), pid=project.id)
 
+	if data.get('repeat'):
+		url = u'/command_log/?&prid={pid!s}{log!s}'.format(log=dick['logi'], pid=project.id)
+
 	return url
