@@ -135,14 +135,14 @@ def mini_log(request):
 
 	logid = data.get('logid')
 	event = get_object_or_404(History, uniq=logid)
+	cname = event.name.lower().replace(' ', '_')
+	check_perm_or404(commandick[cname].permission, project, request.user)
 
 	context = {
-		'panel':   'panel-default',
-		'text':    'Working...',
-		'cmd':     event.name,
-		'project': project,
-		'event':   event,
-		'end':     False,
+		'panel': 'panel-default',
+		'text':  'Working...',
+		'event': event,
+		'end':   False,
 	}
 
 	if event.exit:
