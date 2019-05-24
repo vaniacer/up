@@ -11,7 +11,7 @@ def log_cutter(log):
 	log_size = len(log)
 	if log_size > logsize:
 		cutted_log = u'{head!s}{first!s}\n...\n{last!s}'.format(
-			head='<b>Log is too long to store in history, cutting</b>\n',
+			head='\n<b>Log is too long to store in history, cutting</b>\n',
 			first=log[:halfsize],
 			last=log[-halfsize:],
 		)

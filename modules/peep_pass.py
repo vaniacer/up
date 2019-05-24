@@ -9,7 +9,7 @@ def description(args, log):
 
 def run(args, log):
 
-	message('<b>Подглядываю пароли, никому не показывай;)</b>\n', log)
+	message('\n<b>Подглядываю пароли, никому не показывай;)</b>\n', log)
 	command = ['ssh', args.server, 'cat {home}/jboss-bas-*/standalone/configuration/krista-users.properties'.format(
 		home=args.wdir
 	)]
