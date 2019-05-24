@@ -250,6 +250,9 @@ window.onload = function() {
     var tabs = document.getElementById('id_tab');
     var hash = window.location.hash;
 
+    console.log(hash);
+    console.log(tabs.value);
+
     // Deselect all on load
     select_all('selected_jobs',    'job-body',    false, 'SJ');
     select_all('selected_dbdumps', 'dump-body',   false, 'SD');
@@ -267,11 +270,9 @@ window.onload = function() {
                                             if (item.scrollTop > 10) { updown.classList.remove('hidden'); }
                                                                 else { updown.classList.add('hidden');    } }});
     // Change tab on load
-    if (!hash) { hash = '#scripts'; }
-    if (tabs)  {
-        tabs.value = hash.replace('#', '');
-        show_commands(tabs.value + '_commands');
-        go_up();
+    if (!hash) {
+        if (tabs) { hash = '#' + tabs.value; }
+        else      { hash = '#scripts'; }
     }
     hash && $('ul.nav a[href="' + hash + '"]').tab('show');
 
