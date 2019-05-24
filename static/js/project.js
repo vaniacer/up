@@ -250,9 +250,6 @@ window.onload = function() {
     var tabs = document.getElementById('id_tab');
     var hash = window.location.hash;
 
-    console.log(hash);
-    console.log(tabs.value);
-
     // Deselect all on load
     select_all('selected_jobs',    'job-body',    false, 'SJ');
     select_all('selected_dbdumps', 'dump-body',   false, 'SD');
