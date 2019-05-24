@@ -27,7 +27,7 @@
                 </div>
             {% endif %}
 
-            {% if scripts %}
+            {% if scripts.all %}
 
                 <!--Select\deselect button-->
                 <div class="dropdown btn-group">
@@ -82,7 +82,7 @@
 
                     <li class="divider"></li>
 
-                    {% for SCR in scripts %}
+                    {% for SCR in scripts.all %}
                         {% if SCR.type == 'sql' and 'run_sql_script' in pr_view_perms or SCR.type != 'sql' and 'run_script' in pr_view_perms %}
                             <li><a href="javascript:;" onclick="filter_by('id_scripts', '{{SCR}}')">{{SCR}}</a></li>
                         {% endif %}
@@ -93,8 +93,8 @@
 
         </div>
 
-        {% if scripts %}
-            {% bootstrap_form scripts_filter size="sm" %}
+        {% if scripts.all %}
+            <input id="id_scripts" name="scripts" value="{{filter.scr}}" class="form-control input-sm"/>
         {% endif %}
 
     </div>

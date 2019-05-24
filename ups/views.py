@@ -1,8 +1,6 @@
 # -*- encoding: utf-8 -*-
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from .forms import ServersFilterForm, ScriptsFilterForm, HideInfoForm
-from .forms import UpdatesFilterForm, DumpsFilterForm, JobsFilterForm
 from django.http import HttpResponseRedirect, StreamingHttpResponse
 from django.contrib.auth.decorators import login_required
 from .commands import run_cmd, info, commandick, back_url
@@ -17,10 +15,11 @@ from commands import date_validate
 from re import search, IGNORECASE
 from mimetypes import guess_type
 from operator import itemgetter
+from .forms import HideInfoForm
+from datetime import datetime
 from subprocess import call
 from .dump import get_dumps
 from os import remove
-from datetime import datetime
 
 
 @register.filter(name='target_blank', is_safe=True)
@@ -247,68 +246,49 @@ def project_view(request, project_id):
 	hide_details_form = HideInfoForm(initial=data)
 	commandsorted = sorted(commandick.itervalues(), key=lambda cmd: cmd.position)
 
-	today = datetime.now()
 	history = project.history_set.order_by('date').reverse()
-	history = history.filter(date__date=today, user=request.user)
+	history = history.filter(date__date=datetime.now(), user=request.user)
 	running = history.filter(exit='').reverse()
 
-	servers_filter = data.get('servers', default='')
+	srv_filter = data.get('servers', default='')
 	servers = project.server_set.order_by('name')
-	servers_filtered = servers.filter(name__iregex=servers_filter)
-	servers_filter_form = ServersFilterForm(initial=data)
+	servers_filtered = servers.filter(name__iregex=srv_filter)
 
-	scripts_filter = data.get('scripts', default='')
+	scr_filter = data.get('scripts', default='')
 	scripts = project.script_set.order_by('desc')
-	scripts_filtered = scripts.filter(flnm__iregex=scripts_filter)
-	scripts_filter_form = ScriptsFilterForm(initial=data)
+	scripts_filtered = scripts.filter(flnm__iregex=scr_filter)
 
-	updates_filter = data.get('updates', default='')
+	upd_filter = data.get('updates', default='')
 	updates = project.update_set.order_by('date').reverse()
-	updates_filtered = updates.filter(flnm__iregex=updates_filter)
-	updates_filter_form = UpdatesFilterForm(initial=data)
+	updates_filtered = updates.filter(flnm__iregex=upd_filter)
 
-	dmplist_filter = data.get('dumps', default='')
+	dmp_filter = data.get('dumps', default='')
 	dmplist = sorted(get_dumps(project.name) or '', key=itemgetter('date'), reverse=True)
-	dmplist_filtered = [dump for dump in dmplist if search(dmplist_filter, dump['name'], IGNORECASE)]
-	dmplist_filter_form = DumpsFilterForm(initial=data)
+	dmplist_filtered = [dump for dump in dmplist if search(dmp_filter, dump['name'], IGNORECASE)]
 
 	jobs = project.job_set.order_by('serv')
-	jobs_filter = data.get('jobs', default='')
-	jobs_filtered = [J for J in jobs if search(jobs_filter, '{name} on {serv} {date}'.format(
+	job_filter = data.get('jobs', default='')
+	jobs_filtered = [J for J in jobs if search(job_filter, '{name} on {serv} {date}'.format(
 		name=J, serv=J.serv, date=J.cdat), IGNORECASE)]
-	jobs_filter_form = JobsFilterForm(initial=data)
 
 	context = {
-		'jobs': jobs,
 		'info': info(data),
-
 		'project':  project,
-		'updates':  updates,
-		'dmplist':  dmplist,
-		'scripts':  scripts,
-		'servers':  servers,
 		'history':  history,
 		'running':  running,
 		'commands': commandsorted,
-
-		'jobs_filtered':    jobs_filtered,
-		'servers_filtered': servers_filtered,
-		'scripts_filtered': scripts_filtered,
-		'updates_filtered': updates_filtered,
-		'dmplist_filtered': dmplist_filtered,
-
-		'jobs_filter':    jobs_filter_form,
 		'hide_info_form': hide_details_form,
-		'servers_filter': servers_filter_form,
-		'scripts_filter': scripts_filter_form,
-		'updates_filter': updates_filter_form,
-		'dmplist_filter': dmplist_filter_form,
+		'jobs':    {'all': jobs,    'filtered': jobs_filtered},
+		'updates': {'all': updates, 'filtered': updates_filtered},
+		'dmplist': {'all': dmplist, 'filtered': dmplist_filtered},
+		'scripts': {'all': scripts, 'filtered': scripts_filtered},
+		'servers': {'all': servers, 'filtered': servers_filtered},
+		'filter':  {'srv': srv_filter, 'scr': scr_filter, 'upd': upd_filter, 'dmp': dmp_filter, 'job': job_filter},
 	}
 
 	if len(running) > 1:
 		# Create allogs url if there are more then 1 running log
-		logids = [i.uniq for i in running]
-		context['allogs'] = u'/command_log/?&prid={pid!s}&logid={log!s}'.format(
-			pid=project_id, log='&logid='.join(logids))
+		logids = '&logid='.join([i.uniq for i in running])
+		context['allogs'] = u'/command_log/?&prid={pid!s}&logid={log!s}'.format(pid=project_id, log=logids)
 
 	return render(request, 'ups/project.html', context)

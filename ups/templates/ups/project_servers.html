@@ -3,7 +3,7 @@
 {% include "ups/project_servers_buttons.html" %}
 
 <div class="roller" id="servers_roller">
-    {% for server in servers_filtered %}
+    {% for server in servers.filtered %}
 
         <div id="sb{{server.id}}"
              class="panel panel-default server-body"

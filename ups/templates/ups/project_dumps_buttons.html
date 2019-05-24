@@ -26,7 +26,7 @@
                 </div>
             {% endif %}
 
-            {% if dmplist %}
+            {% if dmplist.all %}
 
                 <!--Select\deselect button-->
                 <div class="dropdown btn-group">
@@ -80,13 +80,13 @@
 
                     <li class="divider"></li>
 
-                    {% for SRV in servers %}
+                    {% for SRV in servers.all %}
                         <li><a href="javascript:;" onclick="filter_by('id_dumps', '{{SRV.addr}}')">{{SRV.addr}}</a></li>
                     {% endfor %}
 
                     <li class="divider"></li>
 
-                    {% for DMP in dmplist %}
+                    {% for DMP in dmplist.all %}
                         <li><a href="javascript:;" onclick="filter_by('id_dumps', '{{DMP.name}}')">{{DMP.name}}</a></li>
                     {% endfor %}
                 </ul>
@@ -95,8 +95,8 @@
 
         </div>
 
-        {% if dmplist %}
-            {% bootstrap_form dmplist_filter size="sm" %}
+        {% if dmplist.all %}
+            <input id="id_dumps" name="dumps" value="{{filter.dmp}}" class="form-control input-sm"/>
         {% endif %}
 
     </div>

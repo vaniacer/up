@@ -3,7 +3,7 @@
 {% include "ups/project_updates_buttons.html" %}
 
 <div class="roller" id="updates_roller">
-    {% for update in updates_filtered %}
+    {% for update in updates.filtered %}
 
         <div id="ub{{update.id}}"
              class="panel panel-default update-body"

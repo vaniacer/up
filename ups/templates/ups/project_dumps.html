@@ -3,7 +3,7 @@
 {% include "ups/project_dumps_buttons.html" %}
 
 <div class="roller" id="dumps_roller">
-    {% for dump in dmplist_filtered %}
+    {% for dump in dmplist.filtered %}
 
         <div id="db{{dump.id}}"
              class="panel panel-default dump-body"

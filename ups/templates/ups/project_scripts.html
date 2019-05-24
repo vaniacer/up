@@ -2,7 +2,7 @@
 
 <div class="roller" id="scripts_roller">
 
-    {% for script in scripts_filtered %}                                               <!--arrrrrrrrr-rrrrrrrrrr-gh WTF?! too long-->
+    {% for script in scripts.filtered %}                                               <!--arrrrrrrrr-rrrrrrrrrr-gh WTF?! too long-->
         {% if script.type == 'sql' and 'run_sql_script' in pr_view_perms or script.type != 'sql' and 'run_script' in pr_view_perms %}
 
             <div id="xb{{script.id}}"

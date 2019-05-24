@@ -14,7 +14,7 @@
                    href="{% url 'ups:new_server' project.id %}?{{info}}">Add</a>
             {% endif %}
 
-            {% if servers %}
+            {% if servers.all %}
             
                 <!--Select\deselect button-->
                 <div class="dropdown btn-group">
@@ -68,17 +68,16 @@
 
                     <li class="divider"></li>
 
-                    {% for SRV in servers %}
+                    {% for SRV in servers.all %}
                         <li><a href="javascript:;" onclick="filter_by('id_servers', '{{SRV}}')">{{SRV}}</a></li>
                     {% endfor %}
                 </ul>
-
             {% endif %}
 
         </div>
 
-        {% if servers %}
-            {% bootstrap_form servers_filter size="sm" %}
+        {% if servers.all %}
+            <input id="id_servers" name="servers" value="{{filter.srv}}" class="form-control input-sm"/>
         {% endif %}
 
     </div>

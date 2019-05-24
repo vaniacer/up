@@ -99,23 +99,3 @@ class PropertiesForm(forms.Form):
 class StandaloneForm(forms.Form):
 	standalone = forms.CharField(required=True, widget=forms.Textarea(
 		attrs={'style': 'height: 70%; font-family: "Lucida Console", Monaco, monospace;'}))
-
-
-class ServersFilterForm(forms.Form):
-	servers = forms.CharField(label='', required=False)
-
-
-class ScriptsFilterForm(forms.Form):
-	scripts = forms.CharField(label='', required=False)
-
-
-class UpdatesFilterForm(forms.Form):
-	updates = forms.CharField(label='', required=False)
-
-
-class DumpsFilterForm(forms.Form):
-	dumps = forms.CharField(label='', required=False)
-
-
-class JobsFilterForm(forms.Form):
-	jobs = forms.CharField(label='', required=False)

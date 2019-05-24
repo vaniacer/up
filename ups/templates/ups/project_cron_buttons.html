@@ -7,7 +7,7 @@
             <!--Updates label-->
             <a class="btn btn-primary btn-sm disabled">Cron</a>
 
-            {% if jobs %}
+            {% if jobs.all %}
 
                 <!--Select\deselect button-->
                 <div class="dropdown btn-group">
@@ -26,8 +26,8 @@
                                onclick="select_all('selected_jobs', 'job-body', false, 'SJ')">Deselect all</a>
                         </li>
                     </ul>
-                </div>            
-            
+                </div>
+
                 <!--Info visibility button-->
                 <input id="jshow"
                        type="button"
@@ -60,7 +60,7 @@
 
                     <li class="divider"></li>
 
-                    {% for JOB in jobs %}
+                    {% for JOB in jobs.all %}
                         <li>
                             <a href="javascript:;" onclick="filter_by('id_jobs', '{{JOB}} on {{JOB.serv}} {{JOB.cdat}}')">
                                 {{JOB}} on {{JOB.serv}} {{JOB.cdat}}
@@ -70,7 +70,7 @@
 
                     <li class="divider"></li>
 
-                    {% for SRV in servers %}
+                    {% for SRV in servers.all %}
                         <li><a href="javascript:;" onclick="filter_by('id_jobs', '{{SRV}}')">{{SRV}}</a></li>
                     {% endfor %}
                 </ul>
@@ -79,8 +79,8 @@
 
         </div>
 
-        {% if jobs %}
-            {% bootstrap_form jobs_filter size="sm" %}
+        {% if jobs.all %}
+            <input id="id_jobs" name="jobs" value="{{filter.job}}" class="form-control input-sm"/>
         {% endif %}
 
     </div>
