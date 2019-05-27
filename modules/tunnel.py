@@ -30,12 +30,12 @@ def run(args, log):
 			port=lport,
 		)
 
-	command2 = [
+	command = [
 		'ssh', args.server, '-f', '-L', '0.0.0.0:{LP}:127.0.0.1:{RP}'.format(LP=lport, RP=args.port),
 		'sleep', str(timer)
 	]
 
-	error = my_call(command2, log)
+	error = my_call(command, log)
 	if not error:
 		log.write(link)
 
