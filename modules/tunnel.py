@@ -11,7 +11,15 @@ def description(args, log):
 def run(args, log):
 
 	timer = 60     # If not used, connection will be dropped after this amount of seconds
-	lport = 42249  # default 42250
+	lport = 42250  # default 42250
+
+	for i in range(42250, 42300):
+		lport = i
+		sock = socket(AF_INET, SOCK_STREAM)
+		ptest = sock.connect_ex(('127.0.0.1', lport))
+		sock.close()
+		if ptest:
+			break
 
 	link = ''
 	postfixes = ('/application', '/login', '')
@@ -21,14 +29,6 @@ def run(args, log):
 			post=postfix,
 			port=lport,
 		)
-
-	while True:
-		lport += 1
-		sock = socket(AF_INET, SOCK_STREAM)
-		ptest = sock.connect_ex(('127.0.0.1', lport))
-		sock.close()
-		if ptest:
-			break
 
 	command2 = [
 		'ssh', args.server, '-f', '-L', '0.0.0.0:{LP}:127.0.0.1:{RP}'.format(LP=lport, RP=args.port),
