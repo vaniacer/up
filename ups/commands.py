@@ -736,6 +736,7 @@ def run_cmd(data, project, request):
 
 			if runt == 'CRON':
 
+				tab = 'cron'
 				dick.update({'cron': uniq, 'cdat': date})
 				add_job(dick)
 

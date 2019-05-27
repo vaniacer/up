@@ -19,7 +19,7 @@ function go_up() {
     if (tabs) {
         var active_tab = document.getElementById(tabs.value + '_roller');
         var server_tab = document.getElementById('servers_roller');
-        active_tab.scrollTop = 0;
+        if (active_tab) { active_tab.scrollTop = 0; }
         server_tab.scrollTop = 0;
     }
 
@@ -32,7 +32,7 @@ function go_down() {
     if (tabs) {
         var active_tab = document.getElementById(tabs.value + '_roller');
         var server_tab = document.getElementById('servers_roller');
-        active_tab.scrollTop = active_tab.scrollHeight;
+        if (active_tab) { active_tab.scrollTop = active_tab.scrollHeight; }
         server_tab.scrollTop = server_tab.scrollHeight;
     }
 
@@ -268,10 +268,11 @@ window.onload = function() {
                                                                 else { updown.classList.add('hidden');    } }});
     // Change tab on load
     if (!hash) {
-        if (tabs) { hash = '#' + tabs.value; }
+        if (tabs) { hash = '#' + tabs.value; show_commands(tabs.value + '_commands'); }
         else      { hash = '#scripts'; }
     }
     hash && $('ul.nav a[href="' + hash + '"]').tab('show');
+    show_commands(hash.replace('#', '') + '_commands');
 
     // Change tab on click
     $('.nav-tabs a').click(function() {
