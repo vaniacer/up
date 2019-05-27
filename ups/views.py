@@ -272,7 +272,7 @@ def project_view(request, project_id):
 		name=J, serv=J.serv, date=J.cdat), IGNORECASE)]
 
 	context = {
-		'info': info(data),
+		'info':  info(data),
 		'project':  project,
 		'history':  history,
 		'running':  running,
