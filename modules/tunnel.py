@@ -24,7 +24,7 @@ def run(args, log):
 	link = ''
 	postfixes = ('/application', '/login', '')
 	for postfix in postfixes:
-		link += '\n<a target="_blank" href="{url}:{port}{post}">https://{url}:{port}{post}</a>\n'.format(
+		link += '\n<a target="_blank" href="http://{url}:{port}{post}">http://{url}:{port}{post}</a>\n'.format(
 			url=args.url,
 			post=postfix,
 			port=lport,
