@@ -25,7 +25,7 @@
     {% if history %} <hr><strong>Logs history</strong><hr> {% endif %}
 
     {% for log in history %}
-        {% if log.serv and log.exit and not log.cjob %}
+        {% if log.serv and log.exit %}
             <div title="Click to view full log
                         {{log.desc|striptags|truncatechars:500}}"
                  class="panel {% if log.exit and log.exit != '0' %} panel-danger
