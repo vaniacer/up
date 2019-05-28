@@ -247,7 +247,7 @@ def project_view(request, project_id):
 	commandsorted = sorted(commandick.itervalues(), key=lambda cmd: cmd.position)
 
 	history = project.history_set.order_by('date').reverse()
-	history = history.filter(date__date=datetime.now(), user=request.user)
+	history = history.filter(date__date=datetime.now(), user=request.user, cjob=False)
 	running = history.filter(exit='').reverse()
 
 	srv_filter = data.get('servers', default='')
