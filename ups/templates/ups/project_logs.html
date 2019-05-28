@@ -25,10 +25,13 @@
     {% if history %} <hr><strong>Logs history</strong><hr> {% endif %}
 
     {% for log in history %}
-        {% if log.serv and log.exit and not log.cron %}
+        {% if log.serv and log.exit and not log.cjob %}
             <div title="Click to view full log
                         {{log.desc|striptags|truncatechars:500}}"
-                 class="panel {% if log.exit and log.exit != '0' %} panel-danger {% else %} panel-success {% endif %}"
+                 class="panel {% if log.exit and log.exit != '0' %} panel-danger
+                                                {% elif log.cron %} panel-info
+                                                         {% else %} panel-success
+                                                        {% endif %}"
                  onclick="window.open('/command_log/?cmd={{log.name}}&prid={{project.id}}&logid={{log.uniq}}', '_blank');">
 
                 <div class="panel-heading">

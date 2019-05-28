@@ -165,17 +165,18 @@ class Job(models.Model):
 
 class History(models.Model):
 	"""История проекта."""
-	http = models.CharField(max_length=999, null=True, blank=True)  # Url to repeat command
-	date = models.DateTimeField(auto_now_add=True, db_index=True)   # Creation date
-	serv = models.ForeignKey(Server, blank=True, null=True)         # Server relation
-	name = models.CharField(max_length=255)                         # Name in web interface
-	cron = models.CharField(max_length=255)                         # Unique cron id if event from cron
-	uniq = models.CharField(max_length=255)                         # Unique id
-	exit = models.CharField(max_length=10)                          # Command exit code
-	cdat = models.CharField(max_length=30)                          # End of job time and date if event from cron
-	proj = models.ForeignKey(Project)                               # Project relation
-	user = models.ForeignKey(User)                                  # User relation
-	desc = models.TextField()                                       # Command log
+	cjob = models.NullBooleanField(default=False, blank=True, null=True)  # Cron job set event
+	http = models.CharField(max_length=999, null=True, blank=True)        # Url to repeat command
+	date = models.DateTimeField(auto_now_add=True, db_index=True)         # Creation date
+	serv = models.ForeignKey(Server, blank=True, null=True)               # Server relation
+	name = models.CharField(max_length=255)                               # Name in web interface
+	cron = models.CharField(max_length=255)                               # Unique cron id if event from cron
+	uniq = models.CharField(max_length=255)                               # Unique id
+	exit = models.CharField(max_length=10)                                # Command exit code
+	cdat = models.CharField(max_length=30)                                # End of job time and date if event from cron
+	proj = models.ForeignKey(Project)                                     # Project relation
+	user = models.ForeignKey(User)                                        # User relation
+	desc = models.TextField()                                             # Command log
 
 	class Meta:
 		"""Название множественного числа объектов."""

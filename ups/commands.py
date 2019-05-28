@@ -592,6 +592,7 @@ def add_event(dick):
 	"""Создает событие в истории."""
 	History.objects.create(
 		name=dick['name'].capitalize().replace('_', ' '),
+		cjob=dick['cjob'],
 		proj=dick['proj'],
 		user=dick['user'],
 		serv=dick['serv'],
@@ -684,6 +685,7 @@ def run_cmd(data, project, request):
 		'name': name,
 		'cdat': date,
 		'data': data,
+		'cjob': False,
 		'proj': project,
 		'user': request.user,
 		'desc': 'Working...',
@@ -702,7 +704,7 @@ def run_cmd(data, project, request):
 			jobj = get_object_or_404(Job, cron=jobi)
 			serv = jobj.serv
 			uniq = uniqkey()
-
+			dick['cjob'] = True
 			dick['opt'] = ['--job', jobi]
 			dick['logi'] += '&logid=%s' % uniq
 			dick.update({'cron': jobi, 'uniq': uniq, 'serv': serv, 'jobj': jobj})
@@ -739,7 +741,7 @@ def run_cmd(data, project, request):
 				tab = 'cron'
 				dick.update({'cron': uniq, 'cdat': date})
 				add_job(dick)
-
+				dick['cjob'] = True
 				dick['name'] = 'Set cron job - %s' % name.lower()
 				dick['opt'].extend(['--cron'])
 
