@@ -1,9 +1,9 @@
 # -*- encoding: utf-8 -*-
 
+from conf import dbname, dbhost, dbpass, dbport, dbuser
+from subprocess import call, check_output
 from modules.uniq import uniq
 from datetime import datetime
-from subprocess import call, check_output
-from conf import dbname, dbhost, dbpass, dbport, dbuser
 
 
 def psql(query, select=False):
