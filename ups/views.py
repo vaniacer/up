@@ -16,6 +16,7 @@ from re import search, IGNORECASE
 from mimetypes import guess_type
 from operator import itemgetter
 from .forms import HideInfoForm
+from django.http import Http404
 from datetime import datetime
 from subprocess import call
 from .dump import get_dumps
@@ -186,7 +187,10 @@ def command_log(request):
 		final[event.uniq] = False
 		logfile = conf.LOG_FILE + event.uniq
 		cname = event.name.replace('Set cron job - ', '').lower().replace(' ', '_')
-		check_perm_or404(commandick[cname].permission, project, request.user)
+		try:
+			check_perm_or404(commandick[cname].permission, project, request.user)
+		except KeyError:
+			raise Http404
 
 		if event.exit:
 			final[event.uniq] = True
