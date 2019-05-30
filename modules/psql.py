@@ -26,11 +26,12 @@ def cron_log(args, error, log):
 
 	sql = u'''
 		INSERT INTO ups_history
-		(id, date, name, cron, cdat, exit, \"desc\", uniq, proj_id, user_id, serv_id)
-		VALUES
-		(DEFAULT, current_timestamp, '{name}', '{cron}', '{cdat}', {exit}, '', '{uniq}', {proj}, {user}, {serv});
+		(  id,    date,    name,    cjob,    cron,     cdat,    exit, \"desc\", uniq,    proj_id, user_id, serv_id) {V}
+		({dflt}, {time}, '{name}', {cjob}, '{cron}', '{cdat}', {exit},   '',  '{uniq}', {proj},  {user},  {serv});
 		UPDATE ups_history SET \"desc\" = $_{save}_$ {desc} $_{save}_$ WHERE uniq='{uniq}';
 	'''.format(
+		time='current_timestamp',
+		dflt='DEFAULT',
 		cron=args.key,
 		proj=proj_id,
 		serv=serv_id,
@@ -38,6 +39,8 @@ def cron_log(args, error, log):
 		uniq=uniq(),
 		save=uniq(),
 		exit=error,
+		cjob=False,
+		V='VALUES',
 		name=name,
 		cdat=date,
 		desc=log,)
