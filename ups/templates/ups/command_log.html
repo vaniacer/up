@@ -22,8 +22,7 @@
         {% for log in logs %}
 
             <dl class="dl-horizontal {% if log.event.cron and log.event.exit == '0' %} cron
-                                   {% elif log.event.exit and log.event.exit != '0' %} danger
-                                   {% endif %}">
+                                   {% elif log.event.exit and log.event.exit != '0' %} danger {% endif %}">
                                        <dt>Server name</dt><dd>{{log.event.serv}}</dd>
                 {% if log.event.cron %}<dt>  Cron name</dt><dd>{{log.event.cron}}</dd>
                                        <dt>  Cron date</dt><dd>{{log.event.cdat|capfirst}}</dd>{% endif %}

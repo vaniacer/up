@@ -166,7 +166,7 @@ def command_log(request):
 
 	final = {}
 	logids = data.getlist('logid')
-	events = History.objects.filter(uniq__in=logids)
+	events = project.history_set.filter(uniq__in=logids)
 	qst = request.META['QUERY_STRING']
 
 	context = {
@@ -247,7 +247,7 @@ def project_view(request, project_id):
 	commandsorted = sorted(commandick.itervalues(), key=lambda cmd: cmd.position)
 
 	history = project.history_set.order_by('date').reverse()
-	history = history.filter(date__date=datetime.now(), user=request.user, cjob=False)
+	history = history.filter(date__date=datetime.now(), user=request.user)
 	running = history.filter(exit='').reverse()
 
 	srv_filter = data.get('servers', default='')

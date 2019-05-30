@@ -373,12 +373,12 @@ commandick = {
 		fst=True,
 	),
 
-	'check_GClog': CommandClass(
+	'check_gclog': CommandClass(
 		permission='check_logs',
 		position=51,
 		section='server',
 		title='Check GC log.',
-		name='check_GClog',
+		name='check_gclog',
 		menu='Check GC log',
 		run="run_or_cron('RUN');",
 		srv='true',
