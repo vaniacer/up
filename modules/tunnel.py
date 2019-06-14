@@ -13,7 +13,7 @@ def run(args, log):
 	timer = 60     # If not used, connection will be dropped after this amount of seconds
 	lport = 42250  # default 42250
 
-	for i in range(42250, 42300):
+	for i in range(42250, 42260):
 		lport = i
 		sock = socket(AF_INET, SOCK_STREAM)
 		ptest = sock.connect_ex(('127.0.0.1', lport))

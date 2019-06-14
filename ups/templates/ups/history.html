@@ -23,19 +23,27 @@
     <form action="{% url 'ups:history' project.id %}" method='GET' id="selector">{% csrf_token %}
         <div class="row">
 
-            <div class="col-md-2">
+            <div class="col-md-3">
                 <div class="input-group hist-filter">
                     <div class="input-group-btn">
-                        <input type="date"
-                               id="date"
-                               name="date"
+                        <input id="date1"
+                               type="date"
+                               name="date1"
+                               title="Start date"
                                class="form-control"
-                               value="{{filter.date}}">
+                               value="{{filter.date1}}">
+                        <input id="date2"
+                               type="date"
+                               name="date2"
+                               title="End date"
+                               class="form-control"
+                               value="{{filter.date2}}">
                         <button class="btn btn-primary" title="Filter by date">
                             <span class="glyphicon glyphicon-calendar"></span>
                         </button>
                     </div>
                 </div>
+
             </div>
 
             <div class="col-md-2">
@@ -73,7 +81,7 @@
                 </div>
             </div>
 
-            <div class="col-md-8">
+            <div class="col-md-7">
                 {% if history.now %}
                     {% include "ups/history_paginator.html" %}
                 {% endif %}

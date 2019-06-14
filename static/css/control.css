@@ -200,8 +200,8 @@ td:hover, th:hover {
 /*-----------------{ History }--------------------*/
 .hist-filter { margin-top: 20; }
 
-.hist-filter input  { width:   140px !important; }
+.hist-filter input  { width:   115px !important; }
 .hist-filter button { height:  34px  !important; }
 
-.hist-filter input[type=date] { padding: 0 0 0 10; }
+.hist-filter input[type=date] { padding: 0 0 0 5; }
 

@@ -216,19 +216,25 @@ def history_view(request, project_id):
 
 	data = request.GET
 	name = data.get('name', default='')
-	date = data.get('date', default='')
+	date1 = data.get('date1', default='')
+	date2 = data.get('date2', default='')
 	servers = project.server_set.order_by('name')
 	history = project.history_set.order_by('date').reverse()
 	if name:
 		history = history.filter(serv__name__iregex=name)
-	if date:
-		date_validate(date, '%Y\\-%m\\-%d')
-		history = history.filter(date__date=date)
+	if date1 and date2:
+		date_validate(date1, '%Y\\-%m\\-%d')
+		date_validate(date2, '%Y\\-%m\\-%d')
+		history = history.filter(date__range=[date1, date2])
+	elif date1 and not date2:
+		date_validate(date1, '%Y\\-%m\\-%d')
+		history = history.filter(date__date=date1)
+
 	hist, hifd, hibk = pagination(request, history)
 
 	context = {
 		'history': {'back': hibk, 'now':  hist, 'forward': hifd},
-		'filter':  {'name': name, 'date': date},
+		'filter':  {'name': name, 'date1': date1, 'date2': date2},
 		'project': project,
 		'servers': servers,
 	}

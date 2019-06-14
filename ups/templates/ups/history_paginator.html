@@ -4,43 +4,43 @@
         <ul class="pagination">
             {% if history.now.has_previous %}
                 <li>
-                    <a href="?page=1&date={{filter.date}}&name={{filter.name}}"
+                    <a href="?page=1&date1={{filter.date1}}&date2={{filter.date2}}&name={{filter.name}}"
                        title="Go to the first page">first</a>
                 </li>
                 <li>
-                    <a href="?page={{history.now.previous_page_number}}&date={{filter.date}}&name={{filter.name}}"
+                    <a href="?page={{history.now.previous_page_number}}&date1={{filter.date1}}&date2={{filter.date2}}&name={{filter.name}}"
                        title="Go to the previous page">prev</a>
                 </li>
             {% endif %}
 
             {% for a in history.back %}
                 <li>
-                    <a href="?page={{a}}&date={{filter.date}}&name={{filter.name}}"
+                    <a href="?page={{a}}&date1={{filter.date1}}&date2={{filter.date2}}&name={{filter.name}}"
                        title="Go to the page number {{a}}">{{a}}</a>
                 </li>
             {% endfor %}
 
             <!--Current-->
             <li class="active">
-                <a href="?page={{history.now.number}}&date={{filter.date}}&name={{filter.name}}">
+                <a href="?page={{history.now.number}}&date1={{filter.date1}}&date2={{filter.date2}}&name={{filter.name}}">
                     {{history.now.number}}
                 </a>
             </li>
 
             {% for a in history.forward %}
                 <li>
-                    <a href="?page={{a}}&date={{filter.date}}&name={{filter.name}}"
+                    <a href="?page={{a}}&date1={{filter.date1}}&date2={{filter.date2}}&name={{filter.name}}"
                        title="Go to the page number {{a}}">{{a}}</a>
                 </li>
             {% endfor %}
 
             {% if history.now.has_next %}
                 <li>
-                    <a href="?page={{history.now.next_page_number}}&date={{filter.date}}&name={{filter.name}}"
+                    <a href="?page={{history.now.next_page_number}}&date1={{filter.date1}}&date2={{filter.date2}}&name={{filter.name}}"
                        title="Go to the next page">next</a>
                 </li>
                 <li>
-                    <a href="?page={{history.now.paginator.num_pages}}&date={{filter.date}}&name={{filter.name}}"
+                    <a href="?page={{history.now.paginator.num_pages}}&date1={{filter.date1}}&date2={{filter.date2}}&name={{filter.name}}"
                        title="Go to the last page({{history.now.paginator.num_pages}})">
                        last({{history.now.paginator.num_pages}})</a>
                 </li>

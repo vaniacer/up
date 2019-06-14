@@ -16,7 +16,7 @@ time=600                # Timeout in sec
 grce=10                 # Graceful timeout in sec
 work=5                  # Number of workers
 #-----------------------------------------------------------------------------------------------------------------------
-[[ -f $wdir/run.conf ]] && . $wdir/run.conf # get conf from file if exist
+cd $wdir; [[ -f run.conf ]] && . run.conf # get conf from file if exist
 
 help="
 Available options are:
@@ -38,7 +38,7 @@ Usage:
 "
 
 function start {
-    . $wdir/../env/bin/activate
+    . ../env/bin/activate
     gunicorn ups.wsgi            \
              --pid $pidf          \
              --workers $work       \
