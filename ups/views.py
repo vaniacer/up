@@ -241,8 +241,8 @@ def history_view(request, project_id):
 	hist, hifd, hibk = pagination(request, history)
 
 	context = {
-		'history': {'back': hibk, 'now':  hist, 'forward': hifd},
 		'filter':  {'name': name, 'user': user, 'date1': date1, 'date2': date2, 'url': furl},
+		'history': {'back': hibk, 'now': hist, 'forward': hifd},
 		'project': project,
 		'servers': servers,
 	}
