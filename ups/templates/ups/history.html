@@ -43,7 +43,6 @@
                         </button>
                     </div>
                 </div>
-
             </div>
 
             <div class="col-md-2">
@@ -81,7 +80,22 @@
                 </div>
             </div>
 
-            <div class="col-md-7">
+            <div class="col-md-2">
+                <div class="input-group hist-filter">
+                    <div class="input-group-btn">
+                        <input id="user"
+                               name="user"
+                               title="User name"
+                               class="form-control"
+                               value="{{filter.user}}">
+                        <button class="btn btn-primary" title="Filter by user name">
+                            <span class="glyphicon glyphicon-user"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-5">
                 {% if history.now %}
                     {% include "ups/history_paginator.html" %}
                 {% endif %}

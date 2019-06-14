@@ -214,19 +214,27 @@ def history_view(request, project_id):
 	check_perm_or404('view_project', project, request.user)
 	check_perm_or404('view_history', project, request.user)
 
+	furl = ''
 	data = request.GET
 	name = data.get('name', default='')
+	user = data.get('user', default='')
 	date1 = data.get('date1', default='')
 	date2 = data.get('date2', default='')
 	servers = project.server_set.order_by('name')
 	history = project.history_set.order_by('date').reverse()
+	if user:
+		furl += '&user={}'.format(user)
+		history = history.filter(user__username__iregex=user)
 	if name:
+		furl += '&name={}'.format(name)
 		history = history.filter(serv__name__iregex=name)
 	if date1 and date2:
+		furl += '&date1={date1}&date2={date2}'.format(date1=date1, date2=date2)
 		date_validate(date1, '%Y\\-%m\\-%d')
 		date_validate(date2, '%Y\\-%m\\-%d')
 		history = history.filter(date__range=[date1, date2])
 	elif date1 and not date2:
+		furl += '&date1={}'.format(date1)
 		date_validate(date1, '%Y\\-%m\\-%d')
 		history = history.filter(date__date=date1)
 
@@ -234,7 +242,7 @@ def history_view(request, project_id):
 
 	context = {
 		'history': {'back': hibk, 'now':  hist, 'forward': hifd},
-		'filter':  {'name': name, 'date1': date1, 'date2': date2},
+		'filter':  {'name': name, 'user': user, 'date1': date1, 'date2': date2, 'url': furl},
 		'project': project,
 		'servers': servers,
 	}
