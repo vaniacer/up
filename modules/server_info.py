@@ -18,7 +18,7 @@ def run(args, log):
 			hostname
 	
 			printf '\n<b>Interfaces:</b>\n'
-			ip a | grep 'inet ' | sed '/127.0.0.1/d; s/.*inet //g; s|/.*$||g'
+			ip -br a | grep -v 127.0.0.1
 	
 			printf '\n<b>Memory:</b>\n'
 			LANG=Us free --si -h
