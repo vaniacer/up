@@ -31,6 +31,7 @@ def run(args, log):
 	
 			printf '\n<b>Software:</b>\n'
 			uname -a; echo
+			[[ -e /etc/system-release  ]] && {{ cat /etc/system-release; echo; }}			
 			[[ -e /usr/bin/lsb_release ]] && {{ lsb_release -a; echo; }}
 			[[ -e /usr/bin/java        ]] && {{ java  -version; echo; }}
 			[[ -e /usr/bin/psql        ]] && {{ psql  -V      ; echo; }}
