@@ -2,13 +2,13 @@
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponseRedirect, StreamingHttpResponse
+from .permissions import check_permission, check_perm_or404
 from django.contrib.auth.decorators import login_required
 from .commands import run_cmd, info, commandick, back_url
 from django.shortcuts import render, get_object_or_404
 from .models import Project, Update, Script, History
 from django.template.defaultfilters import register
 from os.path import getsize, exists, join as opj
-from .permissions import check_perm_or404
 from django.conf import settings as conf
 from wsgiref.util import FileWrapper
 from commands import date_validate
@@ -274,6 +274,10 @@ def project_view(request, project_id):
 
 	scr_filter = data.get('scripts', default='')
 	scripts = project.script_set.order_by('desc')
+	if not check_permission('run_sql_script', project, request.user):
+		scripts = scripts.exclude(flnm__iregex='.sql')
+	if not check_permission('run_script', project, request.user):
+		scripts = scripts.exclude(flnm__iregex='.sh|.py|.yml')
 	scripts_filtered = scripts.filter(flnm__iregex=scr_filter)
 
 	upd_filter = data.get('updates', default='')
