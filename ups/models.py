@@ -88,10 +88,10 @@ class Project(models.Model):
 			("run_script",     "Can run project .sh, .py, .yml scripts"),
 			("send_dump",      "Can run command 'Send dump'"),
 			("peep_pass",      "Can run command 'Peep passwords'"),
-			("check_logs",     "Can view\download server's log files"),
+			("check_logs",     "Can view|download server's log files"),
 			("check_conf",     "Can view server's standalone-full.xml"),
 			("maintenance",    """Can run maintenance commands:
-									'Maintenance ON/OFF'
+									'Maintenance ON|OFF'
 									'Reload config'
 									'Restart jboss'
 									'Start jboss'
