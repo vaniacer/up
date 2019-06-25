@@ -23,6 +23,25 @@ def script_upload_to(instance, filename):
 	)
 
 
+def script_opts_parser(text):
+	"""Формирует список опций скрипта."""
+	opts = []
+	opt_strings = ''.join(text.split('OPTIONS:')[1:]).strip()
+
+	for string in opt_strings.splitlines():
+		desc = ''.join(string.split('#')[1:]).strip()
+		desc_less = ''.join(string.split('#')[0:1])
+
+		value = ''.join(desc_less.split('=')[1:]).strip()
+		value_less = ''.join(desc_less.split('=')[0:1])
+
+		name = value_less.strip()
+
+		opts.append({'name': name, 'value': value, 'desc': desc})
+
+	return opts
+
+
 class Project(models.Model):
 	"""Проект: web-исполнение, web-нси, web-соглашения..."""
 	date = models.DateTimeField(auto_now_add=True, db_index=True)  # Creation date
@@ -140,6 +159,10 @@ class Script(models.Model):
 	def type(self):
 		"""Возвращает расширение файла."""
 		return self.file.name.split('.')[-1]
+
+	def options(self):
+		"""Возвращает список опций скрипта."""
+		return script_opts_parser(self.desc)
 
 	def __unicode__(self):
 		"""Возвращает строковое представление модели(имя файла)."""

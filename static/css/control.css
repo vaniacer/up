@@ -135,20 +135,21 @@
 .panel-body    { padding: 0px 2px 2px 5px; }
 .panel-body dl { margin:  5px; }
 
+.server-panel dt { width:       110px; }
+.server-panel dd { margin-left: 120px; }
+
 .update-panel dt { width:       80px; }
 .update-panel dd { margin-left: 90px; }
 
 .dbdump-panel dt { width:       40px; }
 .dbdump-panel dd { margin-left: 50px; }
 
-.script-panel dt { width:       80px; }
-.script-panel dd { margin-left: 90px; }
-
-.server-panel dt { width:       110px; }
-.server-panel dd { margin-left: 120px; }
-
 .job-panel   dt { width:       90px;  }
 .job-panel   dd { margin-left: 100px; }
+
+.script-panel dt { width:       80px; }
+.script-panel dd { margin-left: 90px; }
+.scr_opts { margin: 0px 0px 10px 0px; }
 
 /*-------------{ Tables }-----------------*/
 .commands_table, th, td {

@@ -628,13 +628,14 @@ def starter(dick):
 	for ID in dick['data'].getlist('selected_scripts'):
 		script = get_object_or_404(Script, id=ID)
 		opt.extend(['-x', str(script.file)])
-		# split options string coz re.escape escapes spaces as well
-		oplist = str(dick['data'].get('script_opt' + ID))
+		# get list of options
+		oplist = dick['data'].getlist('script_opt' + ID)
+		print oplist
 		if dick['http']:
+			opjoiner = '&script_opt{}='.format(ID)
 			dick['http'] += '&selected_scripts={}'.format(ID)
-			dick['http'] += '&script_opt{id}={val}'.format(id=ID, val=oplist)
-		oplist = oplist.split()
-		# join it back and escape special symbols
+			dick['http'] += opjoiner + opjoiner.join(oplist)
+		# escape special symbols in options
 		opdone = ' '.join(escape(opt) for opt in oplist)
 		# add result as script arg -o 'test 123'
 		opt.extend(['-o', opdone])

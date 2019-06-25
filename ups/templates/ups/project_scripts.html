@@ -17,14 +17,17 @@
                 <dl class="dl-horizontal script-panel" id="xp{{script.id}}">
                     <dt>       Description</dt><dd>{{script.desc|linebreaks}}</dd>
 
-                    {% if script.type == 'sh' or script.type ==  'py' %}
-                        <dt>Options</dt>
-                        <dd>
-                            <input class="form-control input-md"
-                                   name="script_opt{{script.id}}"
-                                   title="Enter custom options here"
-                                   onclick="selector('xx{{script.id}}', 'xb{{script.id}}', '{{script}}', 'SX')">
-                        </dd>
+                    {% if script.type == 'sh' and script.options or script.type ==  'py' and script.options %}
+                        {% for opt in script.options %}
+                            <dt>{{opt.name|capfirst}}</dt>
+                            <dd>
+                                <input value="{{opt.value}}"
+                                       title="{{opt.desc|capfirst}}"
+                                       name="script_opt{{script.id}}"
+                                       class="form-control input-md scr_opts"
+                                       onclick="selector('xx{{script.id}}', 'xb{{script.id}}', '{{script}}', 'SX')">
+                            </dd>
+                        {% endfor %}
                     {% endif %}
 
                     <dt>           Preview</dt><dd><samp>{{script.body|linebreaks|truncatewords:10}}</samp></dd>
