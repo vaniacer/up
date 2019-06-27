@@ -92,11 +92,11 @@ class Project(models.Model):
 			("check_conf",     "Can view server's standalone-full.xml"),
 			("maintenance",    """Can run maintenance commands:
 									'Maintenance ON|OFF'
-									'Reload config'
+									'Reload  config'
 									'Restart jboss'
-									'Start jboss'
-									'Stop jboss'
-									'Kill jboss'"""),
+									'Start   jboss'
+									'Stop    jboss'
+									'Kill    jboss'"""),
 			("make_backup",    """Can run backup commands:
 									'Backup full'
 									'Backup base'
