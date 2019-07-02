@@ -169,7 +169,7 @@ td:hover, th:hover {
     cursor:     pointer;
 }
 
-.no_padding{
+.no_padding {
     padding: 0;
 }
 
@@ -195,13 +195,13 @@ td:hover, th:hover {
 
 /*-------------{ Up\Down arrows }-----------------*/
 #updown   { right:  10px; position: fixed; top: 45%; }
-#updown a { right:  0px;  position: absolute; }
+#updown a { right:   0px; position: absolute; }
 .goto-bot { top:    35px; }
 
 /*-----------------{ History }--------------------*/
-
-.hist-filter input  { width:   130px !important; }
-.hist-filter button { height:  34px  !important; }
+ ul.hist-filter      { margin-top: 0  !important; }
+.hist-filter input   { width:    130  !important; }
+.hist-filter button  { height:    34  !important; }
 
 .hist-filter input[type=date] { padding: 0 0 0 5; }
 
