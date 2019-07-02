@@ -3,16 +3,9 @@
 
 {% block header %}
 
-    <title>UpS: {{project}} history log</title>
-
-    <div class="row">
-        <br><h4 class="Name">{{project}} history</h4>
-    </div>
-
-{% endblock header %}
-{% block content %}
-
     {% get_obj_perms request.user for project as "hist_perms" %}
+
+    <title>UpS: {{project}} history log</title>
 
     <div class="hidden">
         <input id="id_server_info"/><input id="id_script_info"/>
@@ -22,8 +15,9 @@
 
     <form action="{% url 'ups:history' project.id %}" method='GET' id="selector">{% csrf_token %}
 
-        <div class="row">
-            <div class="col-md-8">
+        <div class="row"><br>
+            <div class="col-md-2"><h4 class="Name">{{project}} history</h4></div>
+            <div class="col-md-10">
                 <div class="input-group hist-filter">
                     <div class="input-group-btn">
                         <input id="date1"
@@ -94,6 +88,13 @@
             </div>
         </div>
     </form>
+
+{% endblock header %}
+{% block content %}
+
+    {% if history.now %}
+        {% include "ups/history_paginator.html" %}
+    {% endif %}
 
     {% for event in history.now %}
 
