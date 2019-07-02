@@ -217,17 +217,12 @@ def history_view(request, project_id):
 	furl = u''
 	data = request.GET
 	name = data.get('name', default='')
+	serv = data.get('serv', default='')
 	user = data.get('user', default='')
 	date1 = data.get('date1', default='')
 	date2 = data.get('date2', default='')
 	servers = project.server_set.order_by('name')
 	history = project.history_set.order_by('date').reverse()
-	if user:
-		furl += u'&user={}'.format(user)
-		history = history.filter(user__username__iregex=user)
-	if name:
-		furl += u'&name={}'.format(name)
-		history = history.filter(serv__name__iregex=name)
 	if date1 and date2:
 		date_validate(date1, '%Y\\-%m\\-%d')
 		date_validate(date2, '%Y\\-%m\\-%d')
@@ -237,11 +232,20 @@ def history_view(request, project_id):
 		furl += u'&date1={}'.format(date1)
 		date_validate(date1, '%Y\\-%m\\-%d')
 		history = history.filter(date__date=date1)
+	if serv:
+		furl += u'&serv={}'.format(serv)
+		history = history.filter(serv__name__iregex=serv)
+	if user:
+		furl += u'&user={}'.format(user)
+		history = history.filter(user__username__iregex=user)
+	if name:
+		furl += u'&name={}'.format(name)
+		history = history.filter(name__iregex=name)
 
 	hist, hifd, hibk = pagination(request, history)
 
 	context = {
-		'filter':  {'name': name, 'user': user, 'date1': date1, 'date2': date2, 'url': furl},
+		'filter':  {'serv': serv, 'name': name, 'user': user, 'date1': date1, 'date2': date2, 'url': furl},
 		'history': {'back': hibk, 'now': hist, 'forward': hifd},
 		'project': project,
 		'servers': servers,

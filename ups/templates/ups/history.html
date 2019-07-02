@@ -21,9 +21,9 @@
     </div>
 
     <form action="{% url 'ups:history' project.id %}" method='GET' id="selector">{% csrf_token %}
-        <div class="row">
 
-            <div class="col-md-3">
+        <div class="row">
+            <div class="col-md-7">
                 <div class="input-group hist-filter">
                     <div class="input-group-btn">
                         <input id="date1"
@@ -38,18 +38,24 @@
                                title="End date"
                                class="form-control"
                                value="{{filter.date2}}">
-                        <button class="btn btn-primary" title="Filter by date">
-                            <span class="glyphicon glyphicon-calendar"></span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-2">
-                <div class="input-group hist-filter">
-                    <div class="input-group-btn">
-
-                        <input id="name" title="Server name" name="name" value="{{filter.name}}" class="form-control"/>
+                        <input id="name"
+                               name="name"
+                               title="Event name"
+                               class="form-control"
+                               value="{{filter.name}}"
+                               placeholder="Event name">
+                        <input id="user"
+                               name="user"
+                               title="User name"
+                               class="form-control"
+                               placeholder="User name"
+                               value="{{filter.user}}">
+                        <input id="serv"
+                               name="serv"
+                               title="Server name"
+                               class="form-control"
+                               value="{{filter.serv}}"
+                               placeholder="Server name">
 
                         <!-- Hidden submit button -->
                         <button class="hidden">submit</button>
@@ -60,48 +66,30 @@
                                 class="btn btn-primary dropdown-toggle">Srv <span class="caret"></span></button>
 
                         <!-- Dropdown list items -->
-                        <ul class="dropdown-menu dropdown-menu" role="menu">
-                            <li><a href="javascript:;" onclick="filter_by('name', '')"              >All </a></li>
+                        <ul class="dropdown-menu dropdown-menu dropdown-menu-right" role="menu">
+                            <li><a href="javascript:;" onclick="filter_by('serv', '')"              >All </a></li>
 
                             <li class="divider"></li>
 
-                            <li><a href="javascript:;" onclick="filter_by('name', 'dev|дев|разраб')">Dev </a></li>
-                            <li><a href="javascript:;" onclick="filter_by('name', 'test|тест')"     >Test</a></li>
-                            <li><a href="javascript:;" onclick="filter_by('name', 'prod|прод')"     >Prod</a></li>
-                            <li><a href="javascript:;" onclick="filter_by('name', 'demo|демо')"     >Demo</a></li>
+                            <li><a href="javascript:;" onclick="filter_by('serv', 'dev|дев|разраб')">Dev </a></li>
+                            <li><a href="javascript:;" onclick="filter_by('serv', 'test|тест')"     >Test</a></li>
+                            <li><a href="javascript:;" onclick="filter_by('serv', 'prod|прод')"     >Prod</a></li>
+                            <li><a href="javascript:;" onclick="filter_by('serv', 'demo|демо')"     >Demo</a></li>
 
                             <li class="divider"></li>
 
                             {% for SRV in servers %}
-                                <li><a href="javascript:;" onclick="filter_by('name', '{{SRV}}')">{{SRV}}</a></li>
+                                <li><a href="javascript:;" onclick="filter_by('serv', '{{SRV}}')">{{SRV}}</a></li>
                             {% endfor %}
                         </ul>
+                        <button type="submit"
+                                title="Filter"
+                                class="btn btn-primary"><span class="glyphicon glyphicon-filter"></span></button>
                     </div>
                 </div>
             </div>
-
-            <div class="col-md-2">
-                <div class="input-group hist-filter">
-                    <div class="input-group-btn">
-                        <input id="user"
-                               name="user"
-                               title="User name"
-                               class="form-control"
-                               value="{{filter.user}}">
-                        <button class="btn btn-primary" title="Filter by user name">
-                            <span class="glyphicon glyphicon-user"></span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-5">
-                {% if history.now %}
-                    {% include "ups/history_paginator.html" %}
-                {% endif %}
-            </div>
-
         </div>
+
     </form>
 
     {% for event in history.now %}
