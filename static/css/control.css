@@ -199,7 +199,6 @@ td:hover, th:hover {
 .goto-bot { top:    35px; }
 
 /*-----------------{ History }--------------------*/
-.hist-filter { margin-top: 20; }
 
 .hist-filter input  { width:   130px !important; }
 .hist-filter button { height:  34px  !important; }
