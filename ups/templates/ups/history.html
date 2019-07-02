@@ -20,21 +20,21 @@
             <div class="col-md-10">
                 <div class="input-group hist-filter">
                     <div class="input-group-btn">
-                        <input id="date1"
+                        <input id="dat1"
                                type="text"
-                               name="date1"
+                               name="dat1"
                                title="Start date"
                                class="form-control"
-                               value="{{filter.date1}}"
+                               value="{{filter.dat1}}"
                                placeholder="Date start"
                                onfocus="(this.type='date')">
-                        <input id="date2"
+                        <input id="dat2"
                                type="text"
-                               name="date2"
+                               name="dat2"
                                title="End date"
                                class="form-control"
-                               value="{{filter.date2}}"
                                placeholder="Date end"
+                               value="{{filter.dat2}}"
                                onfocus="(this.type='date')">
                         <input id="name"
                                name="name"
@@ -83,6 +83,10 @@
                         <button type="submit"
                                 title="Filter"
                                 class="btn btn-primary"><span class="glyphicon glyphicon-filter"></span></button>
+                        <button type="button"
+                                title="Reset filter"
+                                onclick="window.location.replace('?dat1=&dat2=&name=&user=&serv=');"
+                                class="btn btn-primary"><span class="glyphicon glyphicon-remove"></span></button>
                     </div>
                 </div>
             </div>
