@@ -3,7 +3,6 @@
 
 {% block header %}
     <title>UpS: {{project}} history log</title>
-    {% get_obj_perms request.user for project as "hist_perms" %}
 {% endblock header %}
 
 {% block content %}
@@ -13,6 +12,7 @@
         <input id="id_job_info"/>
     </div>
 
+    {% get_obj_perms request.user for project as "hist_perms" %}
     <form action="{% url 'ups:history' project.id %}" method='GET' id="selector">{% csrf_token %}
 
         <div class="row">
