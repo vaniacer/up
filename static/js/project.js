@@ -9,10 +9,12 @@ function copy_to_clipboard(id) {
   document.execCommand("copy");
 }
 
-function show_loader() {
-    document.getElementById('project-body').classList.add('hidden');
-    document.getElementById('loader-max').classList.remove('hidden');
+function show_hide(show, hide) {
+    document.getElementById(hide).classList.add('hidden');
+    document.getElementById(show).classList.remove('hidden');
 }
+
+function show_loader() { show_hide('loader-max', 'project-body'); }
 
 function go_up() {
     var tabs = document.getElementById('id_tab');
