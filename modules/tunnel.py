@@ -22,7 +22,7 @@ def run(args, log):
 			break
 
 	link = ''
-	postfixes = ('/application', '/login', '')
+	postfixes = ('/application/?auth-profile=local', '/login/?auth-profile=local', '')
 	for postfix in postfixes:
 		link += '\n<a target="_blank" href="http://{url}:{port}{post}">http://{url}:{port}{post}</a>\n'.format(
 			url=args.url,
