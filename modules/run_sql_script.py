@@ -62,7 +62,7 @@ def run(args, log):
 
 		try:
 			sql_result = check_output(command, stderr=STDOUT)
-			log_name = '{file}_{key}.log'.format(file=filename, key=args.key)
+			log_name = '{file}_{srv}_{key}.log'.format(file=filename, key=args.key, srv=args.server)
 			with open(opj(DUMP_DIR, log_name), 'w') as f:
 				f.write(sql_result)
 			message(
