@@ -44,6 +44,11 @@ def run(args, log):
 			printf '\n<b>Port usage info:</b>\n'
 			netstat -tulpn 2> /dev/null
 	
+			jps &> /dev/null && {{
+				printf '\n<b>JPS:</b>\n'
+				jps -lv
+			}}
+			
 			printf '\n<b>Processes:</b>\n'
 			COLUMNS=120 top -bcn1 | head -n30
 		""".format(server=args.server)
