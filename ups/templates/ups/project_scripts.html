@@ -17,7 +17,7 @@
                 <dl class="dl-horizontal script-panel" id="xp{{script.id}}">
                     <dt>       Description</dt><dd>{{script.desc|linebreaks}}</dd>
 
-                    {% if script.type == 'sh' and script.options or script.type ==  'py' and script.options %}
+                    {% if script.type == 'sh' and script.options or script.type == 'py' and script.options %}
                         {% for opt in script.options %}
                             <dt>{{opt.name|capfirst}}</dt>
                             <dd>
