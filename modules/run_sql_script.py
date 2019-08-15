@@ -1,11 +1,9 @@
 # -*- encoding: utf-8 -*-
 
-from subprocess import check_output, STDOUT, CalledProcessError
+from download_upload import upload_file, download_file
 from xml_parser import get_db_parameters
-from download_upload import upload_file
 from popen_call import my_call, message
 from up.settings import DUMP_DIR
-from os.path import join as opj
 
 
 def description(args, log):
@@ -33,46 +31,39 @@ def run(args, log):
 
 	for script in scripts:
 
-		with open(script) as f:
-			body = f.read()
-
 		filename = script.split('/')[-1]
 		filepath = '{tmp}/{file}'.format(tmp=tmp_dir, file=filename)
-		message('\n<b>Выполняю скрипт {file}, тело скрипта:</b>\n<i>{body}</i>\n\n<b>Результат:</b>\n'.format(
-			file=filename,
-			body=body,
-		), log)
+		log_path = '{tmp}/{file}_{srv}.log'.format(tmp=tmp_dir, file=filename, srv=args.server)
 
 		# ------------------{ Run SQL script }---------------------------------
 		command = [
 			'ssh', args.server,
 			''' export PGPASSWORD="{dbpass}"
 				dbopts="-h {dbhost} -p {dbport} -U {dbuser}"
-				psql -v ON_ERROR_STOP=1 $dbopts -d {dbname} < "{file}"
+				
+				printf "\n<b>Выполняю скрипт {name}, тело скрипта:</b>\n<i>"
+				cat "{file}"
+
+				psql -v ON_ERROR_STOP=1 $dbopts -d {dbname} < "{file}" &> {log}
+				
+				printf "</i>\n\n<b>Результат:</b>\n"
+				cat {log}
 			'''.format(
 				wdir=args.wdir,
+				name=filename,
 				file=filepath,
 				dbhost=dbhost,
 				dbport=dbport,
 				dbuser=dbuser,
 				dbpass=dbpass,
 				dbname=dbname,
+				log=log_path,
 			)
 		]
 
-		try:
-			sql_result = check_output(command, stderr=STDOUT)
-			log_name = '{file}_{srv}_{key}.log'.format(file=filename, key=args.key, srv=args.server)
-			with open(opj(DUMP_DIR, log_name), 'w') as f:
-				f.write(sql_result)
-			message(
-				''' {sql}\n<b>Log will be stored until tomorrow, download it please if you need it!</b>
-					\n<a class='btn btn-primary' href='/dumps/{file}'>Download</a>
-				'''.format(file=log_name, sql=sql_result), log
-			)
-		except CalledProcessError as e:
-			message(e.output, log)
-			error += e.returncode
+		error += my_call(command, log)
+		download = {'file': [log_path], 'dest': DUMP_DIR, 'kill': False}
+		error += download_file(download, args.server, log, link=True, silent=True)
 
 	remove_tmp = ['ssh', args.server, 'rm -rf {tmp}'.format(tmp=tmp_dir)]
 	my_call(remove_tmp, log)

@@ -1,10 +1,10 @@
 # -*- encoding: utf-8 -*-
 
 from download_upload import upload_file, download_file
+from os.path import expanduser, splitext, basename
 from up.settings import LOG_FILE, DUMP_DIR
 from popen_call import my_call, message
 from re import findall, MULTILINE
-from os.path import expanduser
 
 
 def description(args, log):
@@ -24,13 +24,8 @@ def download_check(args, log):
 
 	if dlist:
 		download = {'file': dlist, 'dest': DUMP_DIR, 'kill': False}
-		error += download_file(download, args.server, log)
-		if error == 0:
-			download_links = ["<a class='btn btn-primary' href='/dumps/{fname}'>Download {fname}</a>\n".format(
-				fname=fname.split('/')[-1]) for fname in dlist]
-			message("\n<b>Files will be stored until tomorrow, download them please if you need!</b>\n{links}".format(
-				links='\n'.join(download_links)), log
-			)
+		error += download_file(download, args.server, log, link=True)
+
 	return error
 
 
@@ -70,8 +65,8 @@ def run(args, log):
 		if updates:
 			options += ' {}'.format(' '.join(updates))
 
-		filename = script.split('/')[-1]
-		script_type = script.split('.')[-1]
+		filename = basename(script)
+		script_type = splitext(filename)[1]
 		filepath = '{tmp}/{file}'.format(tmp=tmp_dir, file=filename)
 		message('\n<b>Выполняю скрипт {file}, тело скрипта:</b>\n<i>{body}</i>\n{opts}\n<b>Результат:</b>\n'.format(
 			opts=check_opt(options),
@@ -80,7 +75,7 @@ def run(args, log):
 		), log)
 
 		# ------------------{ Run bash script }--------------------------------
-		if script_type == 'sh':
+		if script_type == '.sh':
 			command = [
 				'ssh', args.server, 'cd {wdir}; bash {file} {options}'.format(
 					options=options,
@@ -91,7 +86,7 @@ def run(args, log):
 			error += my_call(command, log)
 
 		# ------------------{ Run python script }------------------------------
-		elif script_type == 'py':
+		elif script_type == '.py':
 			command = [
 				'ssh', args.server, 'cd {wdir}; python {file} {options}'.format(
 					options=options,
@@ -102,7 +97,7 @@ def run(args, log):
 			error += my_call(command, log)
 
 		# ------------------{ Run YML script }---------------------------------
-		elif script_type == 'yml':
+		elif script_type == '.yml':
 			command = [
 				'ansible-playbook', script, '-i', '%s,' % args.server,
 				'--vault-password-file', '%s/vault.txt' % home, '--syntax-check'
