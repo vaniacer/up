@@ -8,7 +8,7 @@ from re import findall, MULTILINE
 
 
 def description(args, log):
-	scripts = '\n'.join(script.split('/')[-1] for script in args.script)
+	scripts = '\n'.join(basename(script) for script in args.script)
 	log.write('\nRun script(s):\n{scripts}\non server {server}\n'.format(scripts=scripts, server=args.server))
 
 
