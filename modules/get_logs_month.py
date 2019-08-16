@@ -29,12 +29,6 @@ def run(args, log):
 
 	error = my_call(command, log)
 	if error == 0:
-		error += download_file(download, args.server, log)
-
-		message(
-			""" \n<b>File will be stored until tomorrow, please download it if you need this file!</b>
-				\n<a class='btn btn-primary' href='/dumps/{file}'>Download</a>\n
-			""".format(file=filename), log
-		)
+		error += download_file(download, args.server, log, link=True)
 
 	return error

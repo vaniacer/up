@@ -1,9 +1,9 @@
 # -*- encoding: utf-8 -*-
 
-from datetime import datetime
-from popen_call import my_call, message
-from xml_parser import get_db_parameters
 from download_upload import download_file
+from popen_call import my_call, message
+from xml_parser import xml_parser
+from datetime import datetime
 
 
 def description(args, log):
@@ -14,6 +14,7 @@ def run(args, log):
 
 	error = 0
 	filename = '{server}_dbdump_{date:%d-%m-%Y}.gz'.format(server=args.server, date=datetime.now())
+	cnf_dir = '{wdir}/jboss-bas-*/standalone/configuration'.format(wdir=args.wdir)
 	message('\n<b>Копирую файл {file}</b>\n'.format(file=filename), log)
 
 	download = {
@@ -22,35 +23,33 @@ def run(args, log):
 		'dest': '',
 	}
 
-	dbhost, dbport, dbname, dbuser, dbpass = get_db_parameters(
-		args.server, '{wdir}/jboss-bas-*/standalone/configuration/standalone-full.xml'.format(wdir=args.wdir)
-	)
-
 	command = [
 		'ssh', args.server,
-		''' export PGPASSWORD="{dbpass}"
-			dbopts="-h {dbhost} -p {dbport} -U {dbuser}"
-			pg_dump -Ox $dbopts -d {dbname} | gzip > "{file}"
-			for i in ${{PIPESTATUS[@]}}; {{ ((error+=$i)); }}; exit $error
+		''' cd {conf}
+			data=($(python -c "{parser}"))
+			dbhost=${{data[0]}}
+			dbport=${{data[1]}}
+			dbname=${{data[2]}}
+			dbuser=${{data[3]}}
+			dbpass=${{data[4]}}
+			cd - &> /dev/null
+
+			export PGPASSWORD="$dbpass"
+			dbopts="-h $dbhost -p $dbport -U $dbuser -d $dbname"
+			
+			pg_dump -Ox $dbopts | gzip > "{file}"
+			for i in ${{PIPESTATUS[@]}}; {{ ((error+=$i)); }}
+			exit $error
 		'''.format(
 			file=download['file'][0],
+			parser=xml_parser,
 			wdir=args.wdir,
-			dbhost=dbhost,
-			dbport=dbport,
-			dbuser=dbuser,
-			dbpass=dbpass,
-			dbname=dbname,
+			conf=cnf_dir,
 		)
 	]
 
 	error += my_call(command, log)
 	if error == 0:
-		error += download_file(download, args.server, log)
-
-		message(
-			''' \n<b>File will be stored until tomorrow, please download it if you need this file!</b>
-				\n<a class='btn btn-primary' href='/dumps/{file}'>Download</a>
-			'''.format(file=filename), log
-		)
+		error += download_file(download, args.server, log, link=True)
 
 	return error

@@ -1,9 +1,9 @@
 # -*- encoding: utf-8 -*-
 
-from datetime import datetime
-from popen_call import my_call, message
-from xml_parser import get_db_parameters
 from download_upload import download_file
+from popen_call import my_call, message
+from xml_parser import xml_parser
+from datetime import datetime
 
 
 def description(args, log):
@@ -12,7 +12,8 @@ def description(args, log):
 
 def run(args, log):
 
-	filename = '{server}_dbdump_{date:%d-%m-%Y}.gz'.format(server=args.server, date=datetime.now())
+	filename = '{server}_dbdump_{date:%d-%m-%Y_%H%M}.gz'.format(server=args.server, date=datetime.now())
+	cnf_dir = '{wdir}/jboss-bas-*/standalone/configuration'.format(wdir=args.wdir)
 	message('\n<b>Копирую файл {file}</b>\n'.format(file=filename), log)
 
 	download = {
@@ -21,24 +22,28 @@ def run(args, log):
 		'kill': True,
 	}
 
-	dbhost, dbport, dbname, dbuser, dbpass = get_db_parameters(
-		args.server, '{wdir}/jboss-bas-*/standalone/configuration/standalone-full.xml'.format(wdir=args.wdir)
-	)
-
 	command = [
 		'ssh', args.server,
-		''' export PGPASSWORD="{dbpass}"
-			dbopts="-h {dbhost} -p {dbport} -U {dbuser}"
-			pg_dump -Ox $dbopts -d {dbname} | gzip > "{file}"
-			for i in ${{PIPESTATUS[@]}}; {{ ((error+=$i)); }}; exit $error
+		''' cd {conf}
+			data=($(python -c "{parser}"))
+			dbhost=${{data[0]}}
+			dbport=${{data[1]}}
+			dbname=${{data[2]}}
+			dbuser=${{data[3]}}
+			dbpass=${{data[4]}}
+			cd - &> /dev/null
+
+			export PGPASSWORD="$dbpass"
+			dbopts="-h $dbhost -p $dbport -U $dbuser -d $dbname"
+			
+			pg_dump -Ox $dbopts | gzip > "{file}"
+			for i in ${{PIPESTATUS[@]}}; {{ ((error+=$i)); }}
+			exit $error
 		'''.format(
 			file=download['file'][0],
+			parser=xml_parser,
 			wdir=args.wdir,
-			dbhost=dbhost,
-			dbport=dbport,
-			dbuser=dbuser,
-			dbpass=dbpass,
-			dbname=dbname,
+			conf=cnf_dir,
 		)
 	]
 

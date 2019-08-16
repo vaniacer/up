@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
-from .backup_db import run as db_bkp
 from .backup_sys import run as sys_bkp
+from .backup_db import run as db_bkp
 
 
 def description(args, log):
