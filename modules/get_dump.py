@@ -14,8 +14,8 @@ def run(args, log):
 
 	filename = '{server}_dbdump_{date:%d-%m-%Y_%H%M}.gz'.format(server=args.server, date=datetime.now())
 	cnf_dir = '{wdir}/jboss-bas-*/standalone/configuration'.format(wdir=args.wdir)
-	message('\n<b>Копирую файл {file}</b>\n'.format(file=filename), log)
 
+	message('\n<b>Копирую файл {file}</b>\n'.format(file=filename), log)
 	download = {
 		'file': ['{wdir}/backup/{file}'.format(wdir=args.wdir, file=filename)],
 		'dest': args.name,

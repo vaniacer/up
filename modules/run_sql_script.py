@@ -52,7 +52,7 @@ def run(args, log):
 				printf "\n<b>Выполняю скрипт $filename, тело скрипта:</b>\n<i>"
 				cat "$script"
 
-				psql -v ON_ERROR_STOP=1 $dbopts < "$script" &> $log_path || error+=$?
+				psql -v ON_ERROR_STOP=1 $dbopts < "$script" &> $log_path || ((error+=$?))
 				
 				printf "</i>\n\n<b>Результат:</b>\n"
 				cat "$log_path"
