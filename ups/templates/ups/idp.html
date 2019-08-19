@@ -10,7 +10,7 @@
 {% block content %}
 
 
-    <form action="{% url 'ups:idp' project.id %}" method='GET'>
+    <form action="{% url 'ups:idp' project.id %}?{{info}}" method='GET'>
         {% csrf_token %}
 
         <div class="input-group">
@@ -28,8 +28,12 @@
         </div>
         <div class="input-group-btn">
             <input onclick="show_loader()" type="submit" name="ok" value="Go" class="btn btn-primary"/>
-            <a title="Close this window"   class="btn btn-primary" onclick="window.close();">Close</a>
+            <a class="btn btn-primary" href="{% url 'ups:project' project.id %}?{{info}}">Cancel</a>
         </div>
+
+        <input class="hidden"
+               value="{{info}}"
+               name="info"/>
 
         {% for server in servers %}
         <!--Hidden checkboxes-->

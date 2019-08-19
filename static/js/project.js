@@ -1,11 +1,11 @@
 var check = function(item) { return item.checked; }
 
-function connect_to_idp(pid) {
+function connect_to_idp(pid, info) {
     var selected_servers = '';
     var servers = Array.from(document.getElementsByName('selected_servers'));
     if (!servers.some(check)) { alert('Server(s) not selected.'); return false; }
     servers.forEach(function(S) { if (S.checked) { selected_servers += '&selected_servers=' + S.value; }});
-    window.open('/idp/' + pid + '/?' + selected_servers, '_blank');
+    window.open('/idp/' + pid + '/?' + info + selected_servers, '_self');
 }
 
 function copy_to_clipboard(id) {

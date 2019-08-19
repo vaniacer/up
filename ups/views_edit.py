@@ -260,11 +260,11 @@ def idp(request, project_id):
 		opts = '&selected_dbdumps={A}&selected_dbdumps={P}&selected_dbdumps={N}'.format(A=addr, N=name, P=path)
 		servers = ['&selected_servers={S}'.format(S=server) for server in servers]
 		servers = ''.join(servers)
-		url = u'/projects/{pid}/?run_type=RUN&run_cmnd=connect_to_idp{servers}{opts}'.format(
-			pid=project.id, servers=servers, opts=opts)
+		url = u'/projects/{pid}/?run_type=RUN&run_cmnd=connect_to_idp{servers}{opts}{info}'.format(
+			pid=project.id, servers=servers, opts=opts, info=data.get('info'))
 		return HttpResponseRedirect(url)
 
-	context = {'servers': servers, 'project': project, 'addr': addr, 'path': path, 'name': name}
+	context = {'servers': servers, 'project': project, 'addr': addr, 'path': path, 'name': name, 'info': info(data)}
 	return render(request, 'ups/idp.html', context)
 
 
