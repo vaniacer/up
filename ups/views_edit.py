@@ -244,6 +244,31 @@ def tunnel(request, server_id):
 
 
 @login_required
+def idp(request, project_id):
+	"""Создает тунель на сервер."""
+	project = get_object_or_404(Project, id=project_id)
+	check_perm_or404('view_project', project, request.user)
+	check_perm_or404('connect_to_idp', project, request.user)
+
+	data = request.GET
+	addr = data.get('addr') or ''
+	name = data.get('name') or ''
+	path = data.get('path') or '/var/lib/jboss/idp'
+	servers = data.getlist('selected_servers')
+
+	if addr and name:
+		opts = '&selected_dbdumps={A}&selected_dbdumps={P}&selected_dbdumps={N}'.format(A=addr, N=name, P=path)
+		servers = ['&selected_servers={S}'.format(S=server) for server in servers]
+		servers = ''.join(servers)
+		url = u'/projects/{pid}/?run_type=RUN&run_cmnd=connect_to_idp{servers}{opts}'.format(
+			pid=project.id, servers=servers, opts=opts)
+		return HttpResponseRedirect(url)
+
+	context = {'servers': servers, 'project': project, 'addr': addr, 'path': path, 'name': name}
+	return render(request, 'ups/idp.html', context)
+
+
+@login_required
 def edit_properties(request, server_id):
 	"""Редактирует jboss.properties сервера."""
 	server = get_object_or_404(Server, id=server_id)

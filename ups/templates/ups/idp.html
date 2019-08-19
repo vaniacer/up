@@ -1,0 +1,45 @@
+{% extends "ups/base.html" %}
+{% load guardian_tags %}
+{% load bootstrap3 %}
+
+{% block header %}
+    <br>
+    <h2>Connect to IDP</h2>
+{% endblock header %}
+
+{% block content %}
+
+
+    <form action="{% url 'ups:idp' project.id %}" method='GET'>
+        {% csrf_token %}
+
+        <div class="input-group">
+            <label> IDP server address
+                <input id="addr" name="addr" value="{{addr}}" class="form-control"/>
+            </label>
+
+            <label> Path to IDP
+                <input id="path" name="path" value="{{path}}" class="form-control"/>
+            </label>
+
+            <label> Client name
+                <input id="name" name="name" value="{{name}}" class="form-control"/>
+            </label>
+        </div>
+        <div class="input-group-btn">
+            <input onclick="show_loader()" type="submit" name="ok" value="Go" class="btn btn-primary"/>
+            <a title="Close this window"   class="btn btn-primary" onclick="window.close();">Close</a>
+        </div>
+
+        {% for server in servers %}
+        <!--Hidden checkboxes-->
+        <input class="hidden"
+               type="checkbox"
+               id="id{{server}}"
+               checked="checked"
+               value="{{server}}"
+               name="selected_servers"/>
+        {% endfor %}
+    </form>
+
+{% endblock content %}

@@ -4,7 +4,7 @@
 
 <table class="commands_table" id="servers_commands">
     {% for command in commands %}
-        {% if command.section == "server" %}
+        {% if command.section == "server" and not command.ctm %}
             {% include "ups/commands_table.html" %}
         {% endif %}
     {% endfor %}

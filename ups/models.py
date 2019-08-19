@@ -81,6 +81,7 @@ class Project(models.Model):
 
 			("run_command",    "Can run commands"),
 			("tunnel",         "Can create tunnel"),
+			("connect_to_idp", "Can add client to IDP"),
 			("run_cron",       "Can run cron commands"),
 			("run_dump",       "Can run dump commands"),
 			("run_update",     "Can run update commands"),

@@ -8,7 +8,7 @@ from modules.uniq import uniq
 from subprocess import call
 
 
-def upload_file(upload, server, log):
+def upload_file(upload, server, log, kill=False):
 
 	files = upload['file']
 	if not files:
@@ -19,6 +19,8 @@ def upload_file(upload, server, log):
 	rsync_opt = ['rsync', '--progress', '-gzort']
 	rsync_opt.extend(files)
 	rsync_opt.extend(['{addr}:{dest}/'.format(dest=destination, addr=server)])
+	if kill:
+		rsync_opt.extend(['--remove-source-files'])
 
 	error = call(rsync_opt, stdout=log, stderr=log)
 	return error

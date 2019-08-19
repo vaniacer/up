@@ -1,3 +1,13 @@
+var check = function(item) { return item.checked; }
+
+function connect_to_idp(pid) {
+    var selected_servers = '';
+    var servers = Array.from(document.getElementsByName('selected_servers'));
+    if (!servers.some(check)) { alert('Server(s) not selected.'); return false; }
+    servers.forEach(function(S) { if (S.checked) { selected_servers += '&selected_servers=' + S.value; }});
+    window.open('/idp/' + pid + '/?' + selected_servers, '_blank');
+}
+
 function copy_to_clipboard(id) {
   /* Get the text field */
   var copyText = document.getElementById(id);
@@ -162,8 +172,6 @@ function select_all(box_name, body_name, state, obj) {
 }
 
 function Validation(cmd, srv, upd, job, scr, dmp, dgr) {
-
-    var check = function(item) { return item.checked; }
 
     if (job) {
         var jobs = Array.from(document.getElementsByName('selected_jobs'));

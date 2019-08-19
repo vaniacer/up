@@ -26,6 +26,7 @@ class CommandClass:
 		menu='',                   # Command name in UI
 		name='',                   # Command name(an internal command name)
 		run='',                    # Pre validation command, add "run_or_cron('RUN');" to prevent CRONing
+		ctm=False,                 # For custom hardcoded commands, they won't show in list
 		fst=False,                 # Add command to quick section
 		dgr='false',               # If true will show confirmation window
 		job='false',               # Check if some cron jobs selected
@@ -44,6 +45,7 @@ class CommandClass:
 		self.menu = menu
 		self.run = run
 		self.fst = fst
+		self.ctm = ctm
 		self.srv = srv
 		self.upd = upd
 		self.job = job
@@ -514,6 +516,19 @@ commandick = {
 		run="run_or_cron('RUN');",
 		srv='true',
 	),
+
+	'connect_to_idp': CommandClass(
+		permission='connect_to_idp',
+		run="run_or_cron('RUN');",
+		title='Connect to IDP.',
+		name='connect_to_idp',
+		menu='Connect to IDP',
+		section='server',
+		position=100,
+		short='IDP',
+		srv='true',
+		ctm=True,
+	),
 }
 
 
@@ -630,7 +645,6 @@ def starter(dick):
 		opt.extend(['-x', str(script.file)])
 		# get list of options
 		oplist = dick['data'].getlist('script_opt' + ID)
-		print oplist
 		if dick['http']:
 			opjoiner = '&script_opt{}='.format(ID)
 			dick['http'] += '&selected_scripts={}'.format(ID)
