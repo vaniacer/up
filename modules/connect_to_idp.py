@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
-from popen_call import my_call
 from up.settings import DUMP_DIR
+from popen_call import my_call, message
 from download_upload import download_file, upload_file
 
 idp_xml = '''
@@ -88,6 +88,8 @@ def run(args, log):
 	idp_path = args.dump[1]
 	name = args.dump[2]
 	arch = 'idp_{uniq}.zip'.format(uniq=args.key)
+
+	message('\n<b>Копирую конфиги с сервера {S}</b>\n'.format(S=idp_addr), log)
 
 	# -------------------{ Connect to IDP server add client and download config }------------------
 	command = [
