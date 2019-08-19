@@ -89,9 +89,8 @@ def run(args, log):
 	name = args.dump[2]
 	arch = 'idp_{uniq}.zip'.format(uniq=args.key)
 
-	message('\n<b>Копирую конфиги с сервера {S}</b>\n'.format(S=idp_addr), log)
-
 	# -------------------{ Connect to IDP server add client and download config }------------------
+	message('\n<b>Добавляю клиента {C} на сервер {S} и перезапускаю IDP</b>\n'.format(S=idp_addr, C=name), log)
 	command = [
 		'ssh', idp_addr,
 		''' cd {idp}/config
@@ -101,7 +100,7 @@ def run(args, log):
 			./krupd jboss.stop  || ((error+=$?))
 			./krupd jboss.start || ((error+=$?))
 			
-			zip -jry {idp}/temp/{arch} {idp}/config/*
+			zip -jryq {idp}/temp/{arch} {idp}/config/*
 			exit $error
 		'''.format(
 			parser=idp_xml,
@@ -116,6 +115,7 @@ def run(args, log):
 	error += download_file(download, args.server, log, silent=True)
 
 	# -------------------{ Copy config to target server }------------------------------------------
+	message('\n<b>Копирую конфиги с сервера {S}</b>\n'.format(S=idp_addr), log)
 	tmp_dir = '{wdir}/temp/{key}'.format(wdir=args.wdir, key=args.key)
 	upload = {'file': ['{dir}/{arch}'.format(dir=DUMP_DIR, arch=arch)], 'dest': tmp_dir}
 	error += upload_file(upload, args.server, log, kill=True)
@@ -126,7 +126,7 @@ def run(args, log):
 		''' cd {wdir}
 			mkdir -p config/keys
 			cd config
-			unzip -o {wdir}/temp/{key}/{arch}
+			unzip -oq {wdir}/temp/{key}/{arch}
 			chmod 600 *
 			chmod 700 keys
 			. ./idpconfig.sh  # get vars: $issu, $cont and $pswd
