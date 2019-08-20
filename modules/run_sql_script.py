@@ -50,12 +50,12 @@ def run(args, log):
 				log_path="${{script}}_{srv}.log"
 				
 				printf "\n<b>Выполняю скрипт $filename, тело скрипта:</b>\n<i>"
-				cat "$script"
+				cat "$script" | sed 's|<|\&lt\;|g;s|>|\&gt\;|g'
 
 				psql -v ON_ERROR_STOP=1 $dbopts < "$script" &> $log_path || ((error+=$?))
 				
 				printf "</i>\n\n<b>Результат:</b>\n"
-				cat "$log_path"
+				cat "$log_path" | sed 's|<|\&lt\;|g;s|>|\&gt\;|g'
 			}}
 			exit $error
 		'''.format(
