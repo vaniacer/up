@@ -77,6 +77,13 @@ client_xml = '''
 </config>
 '''
 
+client_auth = '''
+saml=true
+idp.default-idp=${issu%%/*}.idp
+saml.config-uri=file://$fold/config/saml-config.xml
+sso.join.usermanager-class=ru.krista.retools.login.RetoolsUserManager
+'''
+
 
 def description(args, log):
 	log.write("\nMake ssh tunnel to bind port of server %s" % args.server)
@@ -140,10 +147,12 @@ def run(args, log):
 			mv *.crt *.jks keys
 			
 			cat > saml-config.xml << EOF{client}EOF
-
+			cat > auth-profile.properties << EOF{auth}EOF
+			
 			exit $error
 		'''.format(
 			client=client_xml,
+			auth=client_auth,
 			parser=idp_xml,
 			wdir=args.wdir,
 			key=args.key,
