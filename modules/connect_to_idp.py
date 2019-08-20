@@ -112,7 +112,7 @@ def run(args, log):
 
 	error += my_call(command, log)
 	download = {'file': ['{idp}/temp/{arch}'.format(idp=idp_path, arch=arch)], 'dest': DUMP_DIR, 'kill': True}
-	error += download_file(download, args.server, log, silent=True)
+	error += download_file(download, idp_addr, log, silent=True)
 
 	# -------------------{ Copy config to target server }------------------------------------------
 	message('\n<b>Копирую конфиги с сервера {S}</b>\n'.format(S=idp_addr), log)

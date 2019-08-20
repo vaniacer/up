@@ -16,7 +16,7 @@ def upload_file(upload, server, log, kill=False):
 		return 1
 
 	destination = upload['dest']
-	rsync_opt = ['rsync', '--progress', '--rsh=ssh', '-gzort']
+	rsync_opt = ['rsync', '--progress', '-gzort']
 	rsync_opt.extend(files)
 	rsync_opt.extend(['{addr}:{dest}/'.format(dest=destination, addr=server)])
 	if kill:
@@ -44,7 +44,7 @@ def download_file(download, server, log, link=False, silent=False):
 			filename = '{old}_{key}{ext}'.format(old=filename, key=uniq(), ext=extension)
 			destination = opj(dump_dir, filename)
 
-		rsync_opt = ['rsync', '--progress', '-gzort', '--rsh=ssh', '{S}:{F}'.format(S=server, F=remote_file), destination]
+		rsync_opt = ['rsync', '--progress', '-gzort', '{S}:{F}'.format(S=server, F=remote_file), destination]
 
 		if download['kill']:
 			rsync_opt.extend(['--remove-source-files'])
