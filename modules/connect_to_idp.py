@@ -149,6 +149,11 @@ def run(args, log):
 			cat > saml-config.xml << EOF{client}EOF
 			cat > auth-profile.properties << EOF{auth}EOF
 			
+			# add system property
+			pname="ru.krista.login.auth-profile"
+			value="file://{wdir}/config/auth-profile.properties"
+			{wdir}/jboss-bas-*/bin/jboss-cli.sh -c commands="/system-property=$pname:add(value='$value')"
+			
 			exit $error
 		'''.format(
 			client=client_xml,
