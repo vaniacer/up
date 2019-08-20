@@ -52,6 +52,7 @@ for client in clients:
 
 if not client_exists:
 	add_new_client()
+	print 'restart'
 '''
 
 client_xml = '''
@@ -97,8 +98,10 @@ def run(args, log):
 			data=$(python -c "{parser}" {name} || ((error+=$?)))
 			cd {idp}
 			
-			./krupd jboss.stop  || ((error+=$?))
-			./krupd jboss.start || ((error+=$?))
+			case $data in 'restart')
+				./krupd jboss.stop  || ((error+=$?))
+				./krupd jboss.start || ((error+=$?));;
+			esac
 			
 			zip -jryq {idp}/temp/{arch} {idp}/config/*
 			exit $error
