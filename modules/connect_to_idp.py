@@ -86,7 +86,7 @@ sso.join.usermanager-class=ru.krista.retools.login.RetoolsUserManager
 
 
 def description(args, log):
-	log.write("\nMake ssh tunnel to bind port of server %s" % args.server)
+	log.write("\nAdd this server %s as client to IDP" % args.server)
 
 
 def run(args, log):
