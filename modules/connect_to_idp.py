@@ -131,6 +131,7 @@ def run(args, log):
 			chmod 700 keys
 			. ./idpconfig.sh  # get vars: $issu, $cont and $pswd
 			name={name}
+			fold={wdir}
 			nsiurl=$(grep 'nsi.server.url' auth-profile.properties)
 			nsiurl=${{nsiurl##*=}}
 			mv *.crt *.jks keys
