@@ -98,7 +98,6 @@ def run(args, log):
 	arch = 'idp_{uniq}.zip'.format(uniq=args.key)
 
 	# -------------------{ Connect to IDP server add client and download config }------------------
-	message('\n<b>Добавляю клиента {C} на сервер {S} и перезапускаю IDP</b>\n'.format(S=idp_addr, C=name), log)
 	command = [
 		'ssh', idp_addr,
 		''' cd {idp}/config
@@ -106,6 +105,7 @@ def run(args, log):
 			cd {idp}
 			
 			case $data in 'restart')
+				printf "\n<b>Добавляю клиента {name} на сервер {srv} и перезапускаю IDP</b>\n"
 				./krupd jboss.stop  || ((error+=$?))
 				./krupd jboss.start || ((error+=$?));;
 			esac
@@ -114,6 +114,7 @@ def run(args, log):
 			exit $error
 		'''.format(
 			parser=idp_xml,
+			srv=idp_addr,
 			idp=idp_path,
 			arch=arch,
 			name=name,
