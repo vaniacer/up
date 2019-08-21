@@ -245,18 +245,38 @@ def tunnel(request, server_id):
 
 @login_required
 def idp(request, project_id):
-	"""Создает тунель на сервер."""
+	"""Подключает нового клиента к ЕТВ"""
 	project = get_object_or_404(Project, id=project_id)
 	check_perm_or404('view_project', project, request.user)
 	check_perm_or404('connect_to_idp', project, request.user)
 
+	idprojects = Project.objects.order_by('name')
+	idprojects = [P.name for P in idprojects]
+
 	data = request.GET
 	addr = data.get('addr') or ''
 	name = data.get('name') or ''
+	prod = data.get('prod') or ''
 	path = data.get('path') or '/var/lib/jboss/idp'
 	servers = data.getlist('selected_servers')
+	context = {
+		'idprojects': idprojects,
+		'servers': servers,
+		'project': project,
+		'addr': addr,
+		'path': path,
+		'name': name,
+		'info': info(data)
+	}
 
-	if addr and name:
+	if prod:
+		idprod = get_object_or_404(Project, name=prod)
+		idpsrv = idprod.server_set.order_by('name')
+		idpsrv = [{'name': S.name, 'addr': S.addr} for S in idpsrv]
+		context['idp_servers'] = idpsrv
+		context['prod'] = prod
+
+	if addr and name and path:
 		opts = '&selected_dbdumps={A}&selected_dbdumps={P}&selected_dbdumps={N}'.format(A=addr, N=name, P=path)
 		servers = ['&selected_servers={S}'.format(S=server) for server in servers]
 		servers = ''.join(servers)
@@ -264,7 +284,6 @@ def idp(request, project_id):
 			pid=project.id, servers=servers, opts=opts, info=data.get('info'))
 		return HttpResponseRedirect(url)
 
-	context = {'servers': servers, 'project': project, 'addr': addr, 'path': path, 'name': name, 'info': info(data)}
 	return render(request, 'ups/idp.html', context)
 
 

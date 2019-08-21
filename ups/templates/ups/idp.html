@@ -10,25 +10,70 @@
 {% block content %}
 
 
-    <form action="{% url 'ups:idp' project.id %}?{{info}}" method='GET'>
+    <form action="{% url 'ups:idp' project.id %}?{{info}}" method='GET' id="selector">
         {% csrf_token %}
 
-        <div class="input-group">
-            <label> IDP server address
-                <input id="addr" name="addr" value="{{addr}}" class="form-control"/>
-            </label>
-
-            <label> Path to IDP
-                <input id="path" name="path" value="{{path}}" class="form-control"/>
-            </label>
-
-            <label> Client name
-                <input id="name" name="name" value="{{name}}" class="form-control"/>
-            </label>
+        <div class="col-sm-2">
+            <label>Project with IDP servers</label>
+            <div class="input-group">
+                <div class="input-group-btn">
+                    <input type="submit" class="hidden">
+                    <input id="prod" name="prod" value="{{prod}}" class="form-control"/>
+                    <!-- Dropdown using dropdown-toggle class -->
+                    <button data-toggle="dropdown"
+                            title="Select project with IDP servers"
+                            class="btn btn-primary dropdown-toggle">Select <span class="caret"></span></button>
+                    <!-- Dropdown list items -->
+                    <ul class="dropdown-menu" role="menu">
+                        {% for idp in idprojects %}
+                            <li><a href="javascript:;" onclick="filter_by('prod', '{{idp}}')">{{idp}}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
         </div>
-        <div class="input-group-btn">
-            <input onclick="show_loader()" type="submit" name="ok" value="Go" class="btn btn-primary"/>
-            <a class="btn btn-primary" href="{% url 'ups:project' project.id %}?{{info}}">Cancel</a>
+
+        <div class="col-sm-1"></div>
+
+        <div class="col-sm-2">
+            <label>IDP server address</label>
+            <div class="input-group">
+                <div class="input-group-btn">
+                    <input title="Enter IDP server address" id="addr" name="addr" value="{{addr}}" class="form-control"/>
+                    <!-- Dropdown using dropdown-toggle class -->
+                    <button data-toggle="dropdown"
+                            title="Select IDP server"
+                            class="btn btn-primary dropdown-toggle">Select <span class="caret"></span></button>
+                    <!-- Dropdown list items -->
+                    <ul class="dropdown-menu" role="menu">
+                        {% for S in idp_servers %}
+                            <li><a href="javascript:;" onclick="filter_by('addr', '{{S.addr}}')">{{S.name}}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-1"></div>
+
+        <div class="col-sm-2">
+            <label>Path to IDP</label>
+            <div class="input-group">
+                <div class="input-group-btn">
+                    <input id="path" name="path" value="{{path}}" class="form-control"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-2">
+            <label>Client name</label>
+            <div class="input-group">
+                <div class="input-group-btn">
+                    <input id="name" name="name" value="{{name}}" class="form-control" autofocus/>
+                    <input onclick="show_loader()" type="submit" name="ok" value="Go" class="btn btn-primary"/>
+                    <a class="btn btn-primary" href="{% url 'ups:project' project.id %}?{{info}}">Cancel</a>
+                </div>
+            </div>
         </div>
 
         <input class="hidden"
