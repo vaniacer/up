@@ -257,6 +257,7 @@ def idp(request, project_id):
 	addr = data.get('addr') or ''
 	name = data.get('name') or ''
 	prod = data.get('prod') or ''
+	urli = data.get('info') or info(data)
 	path = data.get('path') or '/var/lib/jboss/idp'
 	servers = data.getlist('selected_servers')
 	context = {
@@ -266,7 +267,7 @@ def idp(request, project_id):
 		'addr': addr,
 		'path': path,
 		'name': name,
-		'info': info(data)
+		'info': urli
 	}
 
 	if prod:
@@ -281,7 +282,7 @@ def idp(request, project_id):
 		servers = ['&selected_servers={S}'.format(S=server) for server in servers]
 		servers = ''.join(servers)
 		url = u'/projects/{pid}/?run_type=RUN&run_cmnd=connect_to_idp{servers}{opts}{info}'.format(
-			pid=project.id, servers=servers, opts=opts, info=data.get('info'))
+			pid=project.id, servers=servers, opts=opts, info=urli)
 		return HttpResponseRedirect(url)
 
 	return render(request, 'ups/idp.html', context)
