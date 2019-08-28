@@ -43,11 +43,15 @@ def run(args, log):
 			dbconn="ALTER DATABASE $dbname ALLOW_CONNECTIONS false;"
 			dbterm="SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = '$dbname';"
 
+			printf "\nTerminate DB connections"
 			psql     $dbopts -c "$dbconn" &> /dev/null || ((error+=$?))
 			psql     $dbopts -c "$dbterm"              || ((error+=$?))
+			printf "\nDrop DB"
 			dropdb   $dbopts     $dbname               || ((error+=$?))
+			printf "\nRecreate DB"
 			createdb $dbopts -O  $dbuser     $dbname   || ((error+=$?))
 
+			printf "\nRestore dump"
 			gunzip -c {tmp}/{file} | psql -v ON_ERROR_STOP=1 $dbopts -d $dbname
 			for i in ${{PIPESTATUS[@]}}; {{ ((error+=$i)); }}
 			exit $error
