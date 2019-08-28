@@ -43,7 +43,7 @@ def run(args, log):
 			dbconn="ALTER DATABASE $dbname ALLOW_CONNECTIONS false;"
 			dbterm="SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = '$dbname';"
 
-			printf "\n$dbopts\n"
+			printf "\n$dbterm\n"
 			printf "\nRestrict DB connections"
 			psql     $dbopts -c "$dbconn" &> /dev/null || ((error+=$?))
 			printf "\nTerminate DB connections"
