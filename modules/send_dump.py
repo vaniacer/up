@@ -39,12 +39,14 @@ def run(args, log):
 			cd - &> /dev/null
 
 			export PGPASSWORD="$dbpass"
-			dbopts="-h $dbhost -p $dbport -U $dbuser"
+			dbopts="-h $dbhost -p $dbport -U $dbuser "
 			dbconn="ALTER DATABASE $dbname ALLOW_CONNECTIONS false;"
 			dbterm="SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = '$dbname';"
 
-			printf "\nTerminate DB connections"
+			printf "\n$dbopts\n"
+			printf "\nRestrict DB connections"
 			psql     $dbopts -c "$dbconn" &> /dev/null || ((error+=$?))
+			printf "\nTerminate DB connections"
 			psql     $dbopts -c "$dbterm"              || ((error+=$?))
 			printf "\nDrop DB"
 			dropdb   $dbopts     $dbname               || ((error+=$?))
