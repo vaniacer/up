@@ -10,6 +10,6 @@ def description(args, log):
 def run(args, log):
 
 	message('\n<b>Выключаю страницу "Регламентные работы"</b>\n'.format(wdir=args.wdir), log)
-	command = ['ssh', args.server, '~/.utils/dp.sh --stop']
+	command = ['ssh', args.server, '~/.utils/dp.sh --stop --jport {port}'.format(port=args.port)]
 	error = my_call(command, log)
 	return error
