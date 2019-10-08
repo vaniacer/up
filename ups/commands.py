@@ -717,6 +717,8 @@ def run_cmd(data, project, request):
 		for jobi in data.getlist('selected_jobs'):
 
 			jobj = get_object_or_404(Job, cron=jobi)
+			if jobj.proj.id != project.id:
+				raise Http404
 			serv = jobj.serv
 			uniq = uniqkey()
 			dick['cjob'] = True
@@ -744,6 +746,8 @@ def run_cmd(data, project, request):
 
 			uniq = uniqkey()
 			serv = get_object_or_404(Server, id=server_id)
+			if serv.proj.id != project.id:
+				raise Http404
 			port = data.get('port') or serv.port
 
 			dick['logi'] += '&logid=%s' % uniq
