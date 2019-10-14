@@ -8,4 +8,12 @@
             {% include "ups/commands_table.html" %}
         {% endif %}
     {% endfor %}
+
+    {% if "connect_to_idp" in pr_view_perms %}
+        <tr>
+            <td title="Add client to IDP" onclick="connect_to_idp('{{project.id}}', '{{info}}');">Connect to IDP
+            </td>
+        </tr>
+    {% endif %}
+
 </table>

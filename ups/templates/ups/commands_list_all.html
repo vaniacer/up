@@ -18,13 +18,4 @@
 
     {% include "ups/commands_list_servers.html" %}
 
-    {% if "connect_to_idp" in pr_view_perms %}
-        <table class="commands_table" id="servers_commands">
-            <tr>
-                <td title="Add client to IDP" onclick="connect_to_idp('{{project.id}}', '{{info}}');">Connect to IDP
-                </td>
-            </tr>
-        </table>
-    {% endif %}
-
 </div>
