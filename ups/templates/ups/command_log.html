@@ -29,7 +29,7 @@
                                        <dt> Event logs</dt><dd class="log">{{log.log|safe}}</dd>
                 {% if log.event.exit %}<dt> Error code</dt><dd>{{log.event.exit}}</dd>
                     {% if log.event.http %}
-                        <dt></dt><dd><div class="row">
+                        <dt></dt><dd class="running-button"><div class="row">
                             <a class="btn btn-primary"
                                href="{{log.event.http}}"
                                title="Repeat {{log.event.name|lower}} on server {{log.event.serv}}">Repeat</a>

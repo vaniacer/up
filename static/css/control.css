@@ -205,3 +205,5 @@ td:hover, th:hover {
 
 .hist-filter input[type=date] { padding: 0 0 0 5; }
 
+/*-------------------{ Fun }----------------------*/
+.running-button:hover { margin-left: 85px; }
