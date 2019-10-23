@@ -53,13 +53,13 @@ class Project(models.Model):
 	class Meta:
 		"""Добавляет доп. разрешения."""
 		permissions = (
+			# view\download
 			("view_project",   "Can view project"),
 			("view_history",   "Can view project's history"),
-
 			("dld_dump",       "Can download dumps"),
 			("dld_update",     "Can download updates"),
 			("dld_script",     "Can download scripts"),
-
+			# add
 			("add_server",     "Can add servers"),
 			("add_update",     "Can add updates"),
 			("add_script",     "Can add scripts"),
@@ -67,18 +67,18 @@ class Project(models.Model):
 			("add_yml",        "Can add YAML   scripts"),
 			("add_sh",         "Can add BASH   scripts"),
 			("add_py",         "Can add Python scripts"),
-
+			# edit
 			("edit_project",   "Can edit project"),
 			("edit_server",    "Can edit servers"),
 			("edit_update",    "Can edit updates"),
 			("edit_script",    "Can edit scripts"),
 			("edit_config",    "Can edit server's config files"),
-
+			# delete
 			("del_server",     "Can delete servers"),
 			("del_update",     "Can delete updates"),
 			("del_script",     "Can delete scripts"),
 			("del_dump",       "Can delete dumps"),
-
+			# run
 			("run_command",    "Can run commands"),
 			("tunnel",         "Can create tunnel"),
 			("connect_to_idp", "Can add client to IDP"),
