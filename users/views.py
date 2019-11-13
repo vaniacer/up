@@ -1,10 +1,10 @@
 # -*- encoding: utf-8 -*-
 
-from django.shortcuts import render
-from django.http import HttpResponseRedirect
-from django.core.urlresolvers import reverse
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import UserCreationForm
+from django.http import HttpResponseRedirect
+from django.core.urlresolvers import reverse
+from django.shortcuts import render
 
 
 def logout_view(request):
