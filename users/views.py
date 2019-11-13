@@ -25,8 +25,10 @@ def register(request):
 	if form.is_valid():
 		new_user = form.save()
 		# Выполнение входа и перенаправление на домашнюю страницу.
-		authenticated_user = authenticate(username=new_user.username,
-		password=request.POST['password1'])
+		authenticated_user = authenticate(
+			username=new_user.username,
+			password=request.POST['password1']
+		)
 		login(request, authenticated_user)
 		return HttpResponseRedirect(reverse('ups:index'))
 
