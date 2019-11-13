@@ -38,7 +38,7 @@ urlpatterns = [
 
 	# Страница тунелирования
 	url(r'^tunnel/(?P<server_id>\d+)/$', views_edit.tunnel, name='tunnel'),
-	# Страница тунелирования
+	# Страница добавления к ЕТВ
 	url(r'^idp/(?P<project_id>\d+)/$', views_edit.idp, name='idp'),
 
 	# Страница для добавления нового обновления
