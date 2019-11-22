@@ -43,10 +43,10 @@ def run(args, log):
 			dbconn="ALTER DATABASE $dbname ALLOW_CONNECTIONS false;"
 			dbterm="SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = '$dbname';"
 
-			psql     $dbopts -c "$dbconn" &> /dev/null || ((error+=$?))
-			psql     $dbopts -c "$dbterm"              || ((error+=$?))
-			dropdb   $dbopts     $dbname               || ((error+=$?))
-			createdb $dbopts -O  $dbuser     $dbname   || ((error+=$?))
+			psql     $dbopts -c "$dbconn" template1 || ((error+=$?))
+			psql     $dbopts -c "$dbterm" template1 || ((error+=$?))
+			dropdb   $dbopts     $dbname            || ((error+=$?))
+			createdb $dbopts -O  $dbuser  $dbname   || ((error+=$?))
 
 			gunzip -c {tmp}/{file} | psql -v ON_ERROR_STOP=1 $dbopts -d $dbname
 			for i in ${{PIPESTATUS[@]}}; {{ ((error+=$i)); }}
