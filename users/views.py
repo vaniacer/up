@@ -57,7 +57,7 @@ def activate(request, uidb64, token):
 	if user is not None and account_activation_token.check_token(user, token):
 		user.is_active = True
 		user.save()
-		context = {'mess': 'Thank you for your email confirmation. Now you can login to your account.'}
+		context = {'mess': 'Email confirmed. Now you can login to your account.'}
 	else:
-		context = {'mess': 'Activation link is invalid!'}
+		context = {'mess': "You've done a bad thing!"}
 	return render(request, 'users/after_register.html', context)
