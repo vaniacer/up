@@ -1,0 +1,12 @@
+{% extends "ups/base.html" %}
+{% load bootstrap3 %}
+
+{% block header %}
+    <title>UpS: Registration</title><br>
+    {% if mess %}<h2>{{mess}}</h2>{% endif %}
+{% endblock header %}
+
+{% block content %}
+    <a title="Try to login" class="btn btn-primary" href="{% url 'users:login' %}">Login</a>
+    <a title="Go back the registration" class="btn btn-primary" href="{% url 'users:register' %}">Registration</a>
+{% endblock content %}

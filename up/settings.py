@@ -29,6 +29,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DUMP_DIR = os.path.join(MEDIA_ROOT, 'dumps')
 MEDIA_URL = '/media/'
 
+LOGIN_REDIRECT_URL = '/projects/'
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
@@ -131,3 +133,14 @@ AUTHENTICATION_BACKENDS = (
 	'django.contrib.auth.backends.ModelBackend',  # this is default
 	'guardian.backends.ObjectPermissionBackend',
 )
+
+# Email settings
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = '25'
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = ''
+# EMAIL_HOST_USER = ''
+# EMAIL_HOST_PASSWORD = ''
+# EMAIL_USE_TLS = True
+# EMAIL_PORT = ''
+# DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

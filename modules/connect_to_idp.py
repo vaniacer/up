@@ -57,12 +57,12 @@ if not client_exists:
 
 client_xml = '''
 <config xmlns="http://krista.ru/idp-config">
-    <idp-client issuer="${issu%%/*}/$name" assertionService="$addr/login">
+    <idp-client issuer="${issu%%/*}/$name" assertionService="$nsiurl/login">
         <id-providers>
             <provider logout-url="$nsiurl/idp?logout=1"
                       service="$nsiurl/idp/saml"
                       title="Единый вход"
-                      issuer="${issu%%/*}/$name"
+                      issuer="$issu"
                       name="${issu%%/*}.idp"
                       protocol="saml/v2"
                       deflated="false"
@@ -134,21 +134,20 @@ def run(args, log):
 	# -------------------{ Connect to target server and apply IDP config }-------------------------
 	command = [
 		'ssh', args.server,
-		''' cd {wdir}
-			mkdir -p config/keys
-			cd config
+		''' cd {wdir}/config
 			unzip -oq {wdir}/temp/{key}/{arch}
-			chmod 600 *
-			chmod 700 keys
-			. ./idpconfig.sh  # get vars: $issu, $cont and $pswd
 			name={name}
 			fold={wdir}
-			nsiurl=$(grep 'nsi.server.url' auth-profile.properties)
-			nsiurl=${{nsiurl##*=}}
-			mv *.crt *.jks keys
+			nsiurl=$(grep 'nsi.server.url' auth-profile.properties); nsiurl=${{nsiurl##*=}}
+			. ./idpconfig.sh; rm idpconfig.sh # get vars: $issu, $cont, $pswd and remove this file			
 			
 			cat > saml-config.xml << EOF{client}EOF
 			cat > auth-profile.properties << EOF{auth}EOF
+			
+			chmod 600 *
+			mkdir keys
+			chmod 700 keys						
+			mv *.crt *.jks keys
 			
 			# add system property
 			pname="ru.krista.login.auth-profile"
