@@ -10,7 +10,7 @@ from .tokens import account_activation_token
 from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
 from django.contrib.auth import logout
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .forms import SignupForm
 
 
@@ -49,12 +49,10 @@ def register(request):
 
 
 def activate(request, uidb64, token):
-	try:
-		uid = force_text(urlsafe_base64_decode(uidb64))
-		user = User.objects.get(pk=uid)
-	except(TypeError, ValueError, OverflowError, User.DoesNotExist):
-		user = None
-	if user is not None and account_activation_token.check_token(user, token):
+	uid = force_text(urlsafe_base64_decode(uidb64))
+	user = get_object_or_404(User, pk=uid)
+	check = account_activation_token.check_token(user, token)
+	if user and check:
 		user.is_active = True
 		user.save()
 		context = {'mess': 'Email confirmed. Now you can login to your account.'}
