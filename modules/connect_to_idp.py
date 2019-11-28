@@ -57,7 +57,7 @@ if not client_exists:
 
 client_xml = '''
 <config xmlns="http://krista.ru/idp-config">
-    <idp-client issuer="${issu%%/*}/$name" assertionService="$nsiurl/login">
+    <idp-client issuer="${issu%%/*}/$name" assertionService="$appurl/login">
         <id-providers>
             <provider logout-url="$nsiurl/idp?logout=1"
                       service="$nsiurl/idp/saml"
@@ -138,6 +138,10 @@ def run(args, log):
 			unzip -oq {wdir}/temp/{key}/{arch}
 			name={name}
 			fold={wdir}
+			conf={wdir}/jboss-bas-*/standalone/configuration/standalone-full.xml			
+			prot=( $(grep krista.webadmin.protocol.name $conf) ); prot=${{prot[2]//'value="'/}}; prot=${{prot//'"/>'/}}
+			addr=( $(grep krista.webadmin.mail.apphost  $conf) ); addr=${{addr[2]//'value="'/}}; addr=${{addr//'"/>'/}}
+			appurl=$prot$addr
 			nsiurl=$(grep 'nsi.server.url' auth-profile.properties); nsiurl=${{nsiurl##*=}}
 			. ./idpconfig.sh; rm idpconfig.sh # get vars: $issu, $cont, $pswd and remove this file			
 			

@@ -3,6 +3,7 @@
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_text
+from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
@@ -10,8 +11,20 @@ from .tokens import account_activation_token
 from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
 from django.contrib.auth import logout
-from django.shortcuts import render, get_object_or_404
 from .forms import SignupForm
+
+
+def get_object_or_false(func):
+	def wrapper(*args, **kwargs):
+		try:
+			obj = func(*args, **kwargs)
+			return obj
+		except:
+			return False
+	return wrapper
+
+
+get_object_or_404 = get_object_or_false(get_object_or_404)
 
 
 def logout_view(request):
@@ -50,12 +63,12 @@ def register(request):
 
 def activate(request, uidb64, token):
 	uid = force_text(urlsafe_base64_decode(uidb64))
+	context = {'mess': "You've done a bad thing!"}
 	user = get_object_or_404(User, pk=uid)
-	check = account_activation_token.check_token(user, token)
-	if user and check:
-		user.is_active = True
-		user.save()
-		context = {'mess': 'Email confirmed. Now you can login to your account.'}
-	else:
-		context = {'mess': "You've done a bad thing!"}
+	if user:
+		check = account_activation_token.check_token(user, token)
+		if check:
+			user.is_active = True
+			user.save()
+			context = {'mess': 'Email confirmed. Now you can login to your account.'}
 	return render(request, 'users/after_register.html', context)
