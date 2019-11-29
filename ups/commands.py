@@ -55,26 +55,14 @@ class CommandClass:
 
 
 commandick = {
-
 	# Cron submenu }----------------------------------------------------------------------------------------------------
-	'cancel_job': CommandClass(
+	'change_date': CommandClass(
 		permission='run_cron',
-		position=4,
+		position=1,
 		section='cron',
-		title='Cancel selected cron job.',
-		name='cancel_job',
-		menu='Remove job',
-		job='true',
-		run="run_or_cron('RUN');",
-	),
-
-	'permanent_job': CommandClass(
-		permission='run_cron',
-		position=3,
-		section='cron',
-		title='Make selected cron job permanent.',
-		name='permanent_job',
-		menu='Run everyday',
+		title='Change selected cron job run date and time. If date\\time not set, it will set current date\\time.',
+		name='change_date',
+		menu='Change date',
 		job='true',
 		run="run_or_cron('RUN');",
 	),
@@ -90,13 +78,46 @@ commandick = {
 		run="run_or_cron('RUN');",
 	),
 
-	'change_date': CommandClass(
+	'permanent_job': CommandClass(
 		permission='run_cron',
-		position=1,
+		position=3,
 		section='cron',
-		title='Change selected cron job run date and time. If date\\time not set, it will set current date\\time.',
-		name='change_date',
-		menu='Change date',
+		title='Make selected cron job permanent.',
+		name='permanent_job',
+		menu='Run everyday',
+		job='true',
+		run="run_or_cron('RUN');",
+	),
+
+	'cancel_job': CommandClass(
+		permission='run_cron',
+		position=4,
+		section='cron',
+		title='Cancel selected cron job.',
+		name='cancel_job',
+		menu='Remove job',
+		job='true',
+		run="run_or_cron('RUN');",
+	),
+
+	'email_job': CommandClass(
+		permission='run_cron',
+		position=5,
+		section='cron',
+		title='Tell cron to send log to my email when job finished.',
+		name='email_job',
+		menu='Email me',
+		job='true',
+		run="run_or_cron('RUN');",
+	),
+
+	'email_job_not': CommandClass(
+		permission='run_cron',
+		position=6,
+		section='cron',
+		title='Tell cron to stop sending log to my email when job finished.',
+		name='email_job_not',
+		menu='Stop bugging me',
 		job='true',
 		run="run_or_cron('RUN');",
 	),
@@ -713,6 +734,8 @@ def run_cmd(data, project, request):
 	if dick['job'] == 'true':
 
 		tab = 'cron'
+		if name == 'email_job' or name == 'email_job_not':
+			dick['opt'].extend(['--email', request.user.email])
 
 		for jobi in data.getlist('selected_jobs'):
 
@@ -722,8 +745,8 @@ def run_cmd(data, project, request):
 			serv = jobj.serv
 			uniq = uniqkey()
 			dick['cjob'] = True
-			dick['opt'] = ['--job', jobi]
 			dick['logi'] += '&logid=%s' % uniq
+			dick['opt'].extend(['--job', jobi])
 			dick.update({'cron': jobi, 'uniq': uniq, 'serv': serv, 'jobj': jobj})
 
 			starter(dick)

@@ -14,7 +14,6 @@ from modules.log_cutter import log_cutter
 from up.settings import LOG_FILE, BASE_DIR
 from modules.psql import cron_log, regular_log
 
-
 parser = ArgumentParser()
 parser.add_argument('-H', '--history', help="Save log to history",   action='store_true')
 parser.add_argument('-c', '--cron',    help='Set cron job',          action='store_true')
@@ -23,6 +22,7 @@ parser.add_argument('-u', '--update',  help='List of update files',  action='app
 parser.add_argument('-x', '--script',  help='List of script files',  action='append')
 parser.add_argument('-o', '--options', help='Custom script options', action='append')
 parser.add_argument('-d', '--dump',    help='List of dump files',    action='append')
+parser.add_argument('--email',         help="Email to send log",     action='append')
 parser.add_argument('-w', '--wdir',    help="Server's working directory")
 parser.add_argument('-s', '--server',  help="Server's ssh address")
 parser.add_argument('-P', '--port',    help="Server's port")
@@ -41,7 +41,6 @@ logfile = LOG_FILE + args.key
 
 def add_cron_job():
 	"""Создает запись в кронтабзе"""
-
 	save_argv = argv
 	save_argv.remove('--cron')
 	save_argv.remove('starter.py')
@@ -73,6 +72,16 @@ def add_cron_job():
 	call(sed)
 
 
+def send_email(message):
+	"""Отправляет лог на почту"""
+	from django.conf import settings
+	settings.configure(**locals())
+	from django.core.mail import EmailMessage
+	mail_subject = 'Cron job %s log' % args.key
+	email = EmailMessage(mail_subject, message, to=args.email)
+	email.send()
+
+
 error = 0
 # Run command }------------------------
 with open(logfile, 'a') as log:
@@ -89,6 +98,8 @@ log = log_cutter(fullog)
 
 if args.from_cron:
 	cron_log(args, error, log)
+	if args.email:
+		send_email(fullog)
 else:
 	regular_log(args, error, log)
 
