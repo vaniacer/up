@@ -78,7 +78,8 @@ def send_email(message):
 	settings.configure(**locals())
 	from django.core.mail import EmailMessage
 	mail_subject = 'Cron job %s log' % args.key
-	email = EmailMessage(mail_subject, message, to=args.email)
+	email = EmailMessage(mail_subject, '<pre>%s</pre>' % message, to=args.email)
+	email.content_subtype = "html"
 	email.send()
 
 
