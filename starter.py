@@ -72,13 +72,17 @@ def add_cron_job():
 	call(sed)
 
 
-def send_email(message):
+def send_email(message, err):
 	"""Отправляет лог на почту"""
 	from django.conf import settings
 	settings.configure(**locals())
 	from django.core.mail import EmailMessage
-	mail_subject = 'Cron job %s log' % args.key
-	email = EmailMessage(mail_subject, '<pre>%s</pre>' % message, to=args.email)
+	status = 'success'
+	if err > 0:
+		status = 'fail'
+	mail_subject = 'Cron job {key} log {stat}'.format(key=args.key, stat=status)
+	message = '<pre>{mes}</pre>\nКод ошибки: {err}'.format(mes=message, err=err)
+	email = EmailMessage(mail_subject, message, to=args.email)
 	email.content_subtype = "html"
 	email.send()
 
@@ -100,7 +104,7 @@ log = log_cutter(fullog)
 if args.from_cron:
 	cron_log(args, error, log)
 	if args.email:
-		send_email(fullog)
+		send_email(fullog, error)
 else:
 	regular_log(args, error, log)
 
