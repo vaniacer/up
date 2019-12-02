@@ -134,7 +134,8 @@ def run(args, log):
 	# -------------------{ Connect to target server and apply IDP config }-------------------------
 	command = [
 		'ssh', args.server,
-		''' cd {wdir}/config
+		''' mkdir -p  {wdir}/config
+			cd        {wdir}/config
 			unzip -oq {wdir}/temp/{key}/{arch}
 			name={name}
 			fold={wdir}
