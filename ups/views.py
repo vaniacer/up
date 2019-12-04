@@ -273,7 +273,7 @@ def project_view(request, project_id):
 	running = history.filter(exit='').reverse()
 
 	# -------------{filter servers}--------------
-	srv_filter = data.get('servers', default='')
+	srv_filter = data.get('servers', default=request.user.profile.server_fltr)
 	if request.user.profile.server:
 		# show only my servers
 		servers = project.server_set.filter(user=request.user).order_by('name')
@@ -282,7 +282,7 @@ def project_view(request, project_id):
 	servers_filtered = servers.filter(name__iregex=srv_filter)
 
 	# -------------{filter scripts}--------------
-	scr_filter = data.get('scripts', default='')
+	scr_filter = data.get('scripts', default=request.user.profile.script_fltr)
 	if request.user.profile.script:
 		# show only my scripts
 		scripts = project.script_set.filter(user=request.user).order_by('desc')
@@ -295,7 +295,7 @@ def project_view(request, project_id):
 	scripts_filtered = scripts.filter(flnm__iregex=scr_filter)
 
 	# -------------{filter updates}--------------
-	upd_filter = data.get('updates', default='')
+	upd_filter = data.get('updates', default=request.user.profile.update_fltr)
 	if request.user.profile.update:
 		# show only my updates
 		updates = project.update_set.filter(user=request.user).order_by('date').reverse()
@@ -309,7 +309,7 @@ def project_view(request, project_id):
 	dmplist_filtered = [dump for dump in dmplist if search(dmp_filter, dump['name'], IGNORECASE)]
 
 	# -------------{filter jobs}-----------------
-	job_filter = data.get('jobs', default='')
+	job_filter = data.get('jobs', default=request.user.profile.cron_fltr)
 	if request.user.profile.cron:
 		# show only my jobs
 		jobs = project.job_set.filter(user=request.user).order_by('serv')

@@ -1,6 +1,7 @@
 # -*- encoding: utf-8 -*-
 
-from .forms import ProjectForm, ServerForm, UpdateForm, ScriptEditForm, PropertiesForm, StandaloneForm, ProfileForm
+from .forms import ProjectForm, ServerForm, UpdateForm, ScriptEditForm,\
+	PropertiesForm, StandaloneForm, ProfileForm1, ProfileForm2
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 from .models import Project, Server, Update, Script
@@ -172,15 +173,17 @@ def edit_profile(request):
 	profile = user.profile
 
 	if request.method == 'POST':
-		form = ProfileForm(instance=profile, data=request.POST)
-		if form.is_valid():
-			profile = form.save()
-			profile.save()
+		form1 = ProfileForm1(instance=profile, data=request.POST)
+		form2 = ProfileForm2(instance=profile, data=request.POST)
+		if form1.is_valid() and form2.is_valid():
+			form1.save()
+			form2.save()
 			return HttpResponseRedirect(reverse('ups:profile'))
 	else:
-		form = ProfileForm(instance=profile)
+		form1 = ProfileForm1(instance=profile)
+		form2 = ProfileForm2(instance=profile)
 
-	context = {'form': form}
+	context = {'form1': form1, 'form2': form2}
 	return render(request, 'ups/edit_profile.html', context)
 
 
