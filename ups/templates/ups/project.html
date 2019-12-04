@@ -9,10 +9,10 @@
 {% block history %}
     {% get_obj_perms request.user for project as "pr_view_perms" %}
     {% if "view_history" in pr_view_perms %}
-        <li><a target="_blank" href="{% url 'ups:history' project.id %}">History</a></li>
+        <li><a target="_blank" title="View logs history" href="{% url 'ups:history' project.id %}">History</a></li>
     {% endif %}
     {% if user.is_staff %}
-        <li><a target="_blank" href="/admin">Admin</a></li>
+        <li><a target="_blank" title="Go to admin utility" href="/admin">Admin</a></li>
     {% endif %}
 {% endblock history %}
 

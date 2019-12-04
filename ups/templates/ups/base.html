@@ -43,11 +43,13 @@
 
                         {% if user.is_authenticated %}
                             {% block history %}{% endblock history %}
-                            <li><a target="_blank" href="{% url 'ups:profile'%}">Hello, {{user.username}}</a></li>
-                            <li><a href="{% url 'users:logout' %}">log out</a></li>
+                            <li><a target="_blank"
+                                   title="Manage your profile settings"
+                                   href="{% url 'ups:profile'%}">Hello, {{user.username}}</a></li>
+                            <li><a title="Exit" href="{% url 'users:logout' %}">log out</a></li>
                         {% else %}
-                            <li><a href="{% url 'users:register' %}">register</a></li>
-                            <li><a href="{% url 'users:login' %}">log in</a></li>
+                            <li><a title="Register new account"  href="{% url 'users:register' %}">register</a></li>
+                            <li><a title="Log into your account" href="{% url 'users:login' %}">log in</a></li>
                         {% endif %}
 
                     </ul>
