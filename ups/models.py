@@ -1,7 +1,9 @@
 # -*- encoding: utf-8 -*-
 
+from django.db.models.signals import post_save
 from django.contrib.auth.models import User
 from django.conf import settings as conf
+from django.dispatch import receiver
 from django.db import models
 
 
@@ -209,3 +211,16 @@ class History(models.Model):
 	def __unicode__(self):
 		"""Возвращает строковое представление модели."""
 		return self.name
+
+
+class Profile(models.Model):
+	"""Доп. параметры для пользователя."""
+	user = models.OneToOneField(User, on_delete=models.CASCADE)             # User relation
+	script = models.NullBooleanField(default=False, blank=True, null=True)  # Show only my scripts
+
+
+@receiver(post_save, sender=User)
+def create_or_update_user_profile(sender, instance, created, **kwargs):
+	Profile.objects.get_or_create(user=instance)
+	instance.profile.save()
+

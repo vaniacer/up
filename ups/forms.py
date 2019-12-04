@@ -1,7 +1,14 @@
 # -*- encoding: utf-8 -*-
 
-from .models import Project, Server, Update, Script
+from .models import Project, Server, Update, Script, Profile
 from django import forms
+
+
+class ProfileForm(forms.ModelForm):
+	class Meta:
+		model = Profile
+		fields = ['script']
+		labels = {'script': 'Show only my scripts'}
 
 
 class ProjectForm(forms.ModelForm):

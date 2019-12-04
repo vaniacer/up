@@ -8,7 +8,7 @@
 
 {% block content %}
 
-    <form method="post" action="{% url 'users:register' %}">
+    <form onsubmit="show_loader()" method="post" action="{% url 'users:register' %}">
         {% csrf_token %}
         {% bootstrap_form form %}
 

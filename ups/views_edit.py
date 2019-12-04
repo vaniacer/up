@@ -1,11 +1,12 @@
 # -*- encoding: utf-8 -*-
 
-from .forms import ProjectForm, ServerForm, UpdateForm, ScriptEditForm, PropertiesForm, StandaloneForm
+from .forms import ProjectForm, ServerForm, UpdateForm, ScriptEditForm, PropertiesForm, StandaloneForm, ProfileForm
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 from .models import Project, Server, Update, Script
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
+from django.contrib.auth.models import User
 from .permissions import check_perm_or404
 from django.conf import settings as conf
 from .commands import info, add_event
@@ -162,6 +163,25 @@ def edit_conf(request, server, confile, diff=''):
 		'name': 'Edit {conf} on server {server}'.format(conf=confile, server=server),
 	}
 	add_event(dick)
+
+
+@login_required
+def edit_profile(request):
+	"""Редактирует пользовательские настройки."""
+	user = User.objects.get(username=request.user)
+	profile = user.profile
+
+	if request.method == 'POST':
+		form = ProfileForm(instance=profile, data=request.POST)
+		if form.is_valid():
+			profile = form.save()
+			profile.save()
+			return HttpResponseRedirect(reverse('ups:profile'))
+	else:
+		form = ProfileForm(instance=profile)
+
+	context = {'form': form}
+	return render(request, 'ups/edit_profile.html', context)
 
 
 @login_required

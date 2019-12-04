@@ -1,0 +1,22 @@
+{% extends "ups/base.html" %}
+{% load guardian_tags %}
+{% load bootstrap3 %}
+
+{% block header %}
+    <br>
+    <h2>Edit settings</h2>
+{% endblock header %}
+
+{% block content %}
+
+    <form onsubmit="show_loader()" method="post" class="form" action="{% url 'ups:profile'%}">
+
+        {% bootstrap_form form %}
+        {% csrf_token %}
+
+        <input type="submit" name="ok" value="Save changes" class="btn btn-primary"/>
+        <a title="Close this window"   class="btn btn-primary" onclick="window.close();">Close</a>
+
+    </form>
+
+{% endblock content %}

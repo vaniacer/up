@@ -9,6 +9,9 @@ urlpatterns = [
 	# Домашняя страница
 	url(r'^$', views.index, name='index'),
 
+	# Пользовательские настройки.
+	url(r'^profile/$', views_edit.edit_profile, name='profile'),
+
 	# Отмена команды.
 	url(r'^cancel/$', views.cancel, name='cancel'),
 	# Страница логов.
