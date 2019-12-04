@@ -215,8 +215,11 @@ class History(models.Model):
 
 class Profile(models.Model):
 	"""Доп. параметры для пользователя."""
-	user = models.OneToOneField(User, on_delete=models.CASCADE)             # User relation
-	script = models.NullBooleanField(default=False, blank=True, null=True)  # Show only my scripts
+	user = models.OneToOneField(User, on_delete=models.CASCADE)
+	cron = models.BooleanField(default=False)    # Show only my cron jobs
+	script = models.BooleanField(default=False)  # Show only my scripts
+	update = models.BooleanField(default=False)  # Show only my updates
+	server = models.BooleanField(default=False)  # Show only my servers
 
 
 @receiver(post_save, sender=User)

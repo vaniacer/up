@@ -7,8 +7,13 @@ from django import forms
 class ProfileForm(forms.ModelForm):
 	class Meta:
 		model = Profile
-		fields = ['script']
-		labels = {'script': 'Show only my scripts'}
+		fields = ['script', 'update', 'cron', 'server']
+		labels = {
+			'script': 'Show only my scripts',
+			'update': 'Show only my updates',
+			'server': 'Show only my servers',
+			'cron':   'Show only my cron jobs',
+		}
 
 
 class ProjectForm(forms.ModelForm):

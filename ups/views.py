@@ -272,28 +272,49 @@ def project_view(request, project_id):
 	history = history.filter(date__date=datetime.now(), user=request.user, cjob=False)
 	running = history.filter(exit='').reverse()
 
+	# -------------{filter servers}--------------
 	srv_filter = data.get('servers', default='')
-	servers = project.server_set.order_by('name')
+	if request.user.profile.server:
+		# show only my servers
+		servers = project.server_set.filter(user=request.user).order_by('name')
+	else:
+		servers = project.server_set.order_by('name')
 	servers_filtered = servers.filter(name__iregex=srv_filter)
 
+	# -------------{filter scripts}--------------
 	scr_filter = data.get('scripts', default='')
-	scripts = project.script_set.order_by('desc')
+	if request.user.profile.script:
+		# show only my scripts
+		scripts = project.script_set.filter(user=request.user).order_by('desc')
+	else:
+		scripts = project.script_set.order_by('desc')
 	if not check_permission('run_sql_script', project, request.user):
 		scripts = scripts.exclude(flnm__iregex='.sql')
 	if not check_permission('run_script', project, request.user):
 		scripts = scripts.exclude(flnm__iregex='.sh|.py|.yml')
 	scripts_filtered = scripts.filter(flnm__iregex=scr_filter)
 
+	# -------------{filter updates}--------------
 	upd_filter = data.get('updates', default='')
-	updates = project.update_set.order_by('date').reverse()
+	if request.user.profile.update:
+		# show only my updates
+		updates = project.update_set.filter(user=request.user).order_by('date').reverse()
+	else:
+		updates = project.update_set.order_by('date').reverse()
 	updates_filtered = updates.filter(flnm__iregex=upd_filter)
 
+	# -------------{filter dumps}----------------
 	dmp_filter = data.get('dumps', default='')
 	dmplist = sorted(get_dumps(project.name) or '', key=itemgetter('date'), reverse=True)
 	dmplist_filtered = [dump for dump in dmplist if search(dmp_filter, dump['name'], IGNORECASE)]
 
-	jobs = project.job_set.order_by('serv')
+	# -------------{filter jobs}-----------------
 	job_filter = data.get('jobs', default='')
+	if request.user.profile.cron:
+		# show only my jobs
+		jobs = project.job_set.filter(user=request.user).order_by('serv')
+	else:
+		jobs = project.job_set.order_by('serv')
 	jobs_filtered = [J for J in jobs if search(job_filter, '{name} on {serv} {date}'.format(
 		name=J, serv=J.serv, date=J.cdat), IGNORECASE)]
 
