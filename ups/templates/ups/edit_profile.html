@@ -10,8 +10,7 @@
 {% block content %}
     <form onsubmit="show_loader()" method="post" class="form" action="{% url 'ups:profile'%}">
         {% csrf_token %}
-        <div class="col-sm-3"><center><b>Visibility options</b></center><table>{{ form1.as_table }}</table></div>
-        <div class="col-sm-4"><center><b>Filtering options</b></center><table>{{ form2.as_table }}</table></div>
+        <div class="col-sm-2">{% bootstrap_form form %}</div>
         <div class="col-sm-12 row">
             <input type="submit" name="ok" value="Save changes" class="btn btn-primary"/>
             <a title="Close this window"   class="btn btn-primary" onclick="window.close();">Close</a>

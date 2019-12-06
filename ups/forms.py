@@ -4,23 +4,16 @@ from .models import Project, Server, Update, Script, Profile
 from django import forms
 
 
-class ProfileForm1(forms.ModelForm):
+class ProfileForm(forms.ModelForm):
 	class Meta:
 		model = Profile
-		fields = ['script', 'update', 'cron', 'server']
+		fields = ['script', 'update', 'cron', 'server', 'emailme', 'script_fltr', 'update_fltr', 'cron_fltr', 'server_fltr']
 		labels = {
-			'script': 'Show only my scripts',
-			'update': 'Show only my updates',
-			'server': 'Show only my servers',
-			'cron':   'Show only my cron jobs',
-		}
-
-
-class ProfileForm2(forms.ModelForm):
-	class Meta:
-		model = Profile
-		fields = ['script_fltr', 'update_fltr', 'cron_fltr', 'server_fltr']
-		labels = {
+			'script':  'Show only my scripts',
+			'update':  'Show only my updates',
+			'server':  'Show only my servers',
+			'cron':    'Show only my cron jobs',
+			'emailme': 'Email me by default',
 			'script_fltr': 'Default scripts filter',
 			'update_fltr': 'Default updates filter',
 			'server_fltr': 'Default servers filter',

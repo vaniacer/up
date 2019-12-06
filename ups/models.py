@@ -220,6 +220,7 @@ class Profile(models.Model):
 	script = models.BooleanField(default=False)  # Show only my scripts
 	update = models.BooleanField(default=False)  # Show only my updates
 	server = models.BooleanField(default=False)  # Show only my servers
+	emailme = models.BooleanField(default=False)  # Email me by default
 	cron_fltr = models.CharField(max_length=255,   default='', blank=True)  # Default cron jobs filter
 	script_fltr = models.CharField(max_length=255, default='', blank=True)  # Default scripts filter
 	update_fltr = models.CharField(max_length=255, default='', blank=True)  # Default updates filter

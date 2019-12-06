@@ -777,6 +777,8 @@ def run_cmd(data, project, request):
 			dick.update({'uniq': uniq, 'serv': serv})
 			dick['http'] = u'{http}&selected_servers={srv}'.format(http=http, srv=server_id)
 			dick['opt'] = ['--server', serv.addr, '--wdir', serv.wdir, '--port', port]
+			if request.user.profile.emailme:
+				dick['opt'].extend(['--email', request.user.email])
 
 			if runt == 'CRON':
 
