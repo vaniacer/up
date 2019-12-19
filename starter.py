@@ -80,7 +80,7 @@ def send_email(message, err):
 	status = 'success'
 	if err > 0:
 		status = 'fail'
-	subject = 'Cron job {key} log {stat}'.format(key=args.key, stat=status)
+	subject = 'Cron job {key} on {srv} {stat}'.format(key=args.key, srv=args.server, stat=status)
 	message = '<pre>{mes}</pre>\nКод ошибки: {err}'.format(mes=message, err=err)
 	email = EmailMessage(subject, message, to=args.email)
 	email.content_subtype = "html"
