@@ -46,5 +46,4 @@ def run(args, log):
 				FN=filename,
 			), log
 		)
-
 	return error
