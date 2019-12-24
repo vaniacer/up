@@ -50,7 +50,6 @@ def run(args, log):
 	error = my_call(command, log)
 	if error == 0:
 		error += download_file(download, args.server, log)
-
 		message(
 			""" \n<a class='btn btn-primary' href='/download_dump/{PI}/{FN}'>Download</a>
 				\n<b>Команда для быстрого разворачивания дампа(Linux):</b>
