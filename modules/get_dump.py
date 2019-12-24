@@ -3,6 +3,7 @@
 from download_upload import download_file
 from popen_call import my_call, message
 from xml_parser import xml_parser
+from modules.uniq import uniq
 from datetime import datetime
 
 
@@ -56,8 +57,8 @@ def run(args, log):
 				<div class="input-group col-md-10">
 					<div class="input-group-btn">
 						<input class="form-control" type="text"
-						value="curl {OP} https://ups.krista.ru/dumps/{PN}/{FN} | zcat | psql testdb" id="DBC">
-						<input onclick="copy_to_clipboard('DBC')" type="button" value="Copy" class="btn btn-primary"
+						value="curl {OP} https://ups.krista.ru/dumps/{PN}/{FN} | zcat | psql testdb" id="{ID}">
+						<input onclick="copy_to_clipboard('{ID}')" type="button" value="Copy" class="btn btn-primary"
 						title="Copy to clipboard"/>
 					</div>
 				</div>
@@ -66,7 +67,7 @@ def run(args, log):
 				PN=args.name,
 				PI=args.pid,
 				FN=filename,
+				ID=uniq(),
 			), log
 		)
-
 	return error

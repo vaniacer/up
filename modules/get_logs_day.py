@@ -1,6 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 from datetime import datetime
+from modules.uniq import uniq
 from popen_call import my_call, message
 from download_upload import download_file
 
@@ -35,8 +36,8 @@ def run(args, log):
 				<div class="input-group col-md-10">
 					<div class="input-group-btn">
 						<input class="form-control" type="text"
-						value="curl {OP} https://ups.krista.ru/dumps/{FN}; unzip -o {FN}" id="DBC">
-						<input onclick="copy_to_clipboard('DBC')" type="button" value="Copy" class="btn btn-primary"
+						value="curl {OP} https://ups.krista.ru/dumps/{FN}; unzip -o {FN}" id="{ID}">
+						<input onclick="copy_to_clipboard('{ID}')" type="button" value="Copy" class="btn btn-primary"
 						title="Copy to clipboard"/>
 					</div>
 				</div>
@@ -44,6 +45,7 @@ def run(args, log):
 				OP='-O --noproxy ups.krista.ru --netrc-file ~/.ups_download',
 				PI=args.pid,
 				FN=filename,
+				ID=uniq(),
 			), log
 		)
 	return error
