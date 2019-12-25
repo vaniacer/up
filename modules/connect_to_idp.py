@@ -159,6 +159,9 @@ def run(args, log):
 			value="file://{wdir}/config/auth-profile.properties"
 			{wdir}/jboss-bas-*/bin/jboss-cli.sh -c commands="/system-property=$pname:add(value='$value')"
 			
+			# redeploy login.war
+			touch {wdir}/jboss-bas-*/standalone/deployments/login.war
+			
 			exit $error
 		'''.format(
 			client=client_xml,
