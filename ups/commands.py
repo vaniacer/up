@@ -24,7 +24,7 @@ class CommandClass:
 		title='',                  # Pop up help message(via title)
 		short='',                  # Short name for commands in quick section
 		menu='',                   # Command name in UI
-		name='',                   # Command name(an internal command name)
+		name='',                   # Internal command name
 		run='',                    # Pre validation command, add "run_or_cron('RUN');" to prevent CRONing
 		ctm=False,                 # For custom hardcoded commands, they won't show in list
 		fst=False,                 # Add command to quick section
