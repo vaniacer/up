@@ -261,35 +261,11 @@ window.onload = function() {
     var hash = window.location.hash;
 
     // Deselect all on load
-//    select_all('selected_jobs',    'job-body',    false, 'SJ');
-//    select_all('selected_dbdumps', 'dump-body',   false, 'SD');
-//    select_all('selected_scripts', 'script-body', false, 'SX');
-//    select_all('selected_servers', 'server-body', false, 'SS');
-//    select_all('selected_updates', 'update-body', false, 'SU');
-
-    // Or select selected
-    var jobs = Array.from(document.getElementsByName('selected_jobs'));
-    var dumps = Array.from(document.getElementsByName('selected_dbdumps'));
-    var scripts = Array.from(document.getElementsByName('selected_scripts'));
-    var updates = Array.from(document.getElementsByName('selected_updates'));
-    var servers = Array.from(document.getElementsByName('selected_servers'));
-
-    servers.forEach( function(item) {
-        item.checked && selector('sx' + item.id, 'sb' + item.value, item, 'SS')
-//        item.checked && document.getElementById('sb' + item.value).classList.add('selected');
-    });
-    scripts.forEach( function(item) {
-        item.checked && document.getElementById('xb' + item.value).classList.add('selected');
-    });
-    updates.forEach( function(item) {
-        item.checked && document.getElementById('ub' + item.value).classList.add('selected');
-    });
-    dumps.forEach( function(item) {
-        item.checked && document.getElementById(item.id.replace('x', 'b')).classList.add('selected');
-    });
-    jobs.forEach( function(item) {
-        item.checked && document.getElementById('jb' + item.value).classList.add('selected');
-    });
+    select_all('selected_jobs',    'job-body',    false, 'SJ');
+    select_all('selected_dbdumps', 'dump-body',   false, 'SD');
+    select_all('selected_scripts', 'script-body', false, 'SX');
+    select_all('selected_servers', 'server-body', false, 'SS');
+    select_all('selected_updates', 'update-body', false, 'SU');
 
     // Empty command just in case)
     if (run_cmnd) { run_cmnd.value = ''; }
