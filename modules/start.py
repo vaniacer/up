@@ -17,7 +17,7 @@ def run(args, log):
 			'ssh', args.server,
 			'''	cd {wdir}/jboss-bas-*/standalone/deployments
 				for file in *.failed; {{
-					echo "------------{{ $file }}------------"
+					printf "\n------------{{ $file }}------------\n"
 					cat $file			
 				}}
 			'''.format(wdir=args.wdir)]
