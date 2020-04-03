@@ -36,7 +36,7 @@ def run(args, log):
 				<div class="input-group col-md-10">
 					<div class="input-group-btn">
 						<input class="form-control" type="text"
-						value="curl {OP} https://ups.krista.ru/dumps/{FN}; unzip -o {FN}" id="{ID}">
+						value="curl {OP} https://ups.krista.ru/dumps/{FN} && unzip -o {FN}" id="{ID}">
 						<input onclick="copy_to_clipboard('{ID}')" type="button" value="Copy" class="btn btn-primary"
 						title="Copy to clipboard"/>
 					</div>
