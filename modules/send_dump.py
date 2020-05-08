@@ -40,7 +40,7 @@ def run(args, log):
 
 			export PGPASSWORD="$dbpass"
 			dbopts="-h $dbhost -p $dbport -U $dbuser "
-			dbconn="ALTER DATABASE $dbname ALLOW_CONNECTIONS false;"
+			dbconn="ALTER DATABASE '$dbname' ALLOW_CONNECTIONS false;"
 			dbterm="SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = '$dbname';"
 
 			psql     $dbopts -c "$dbconn" template1 || ((error+=$?))
