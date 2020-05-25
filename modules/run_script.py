@@ -55,6 +55,10 @@ def run(args, log):
 		updates = ['{dir}/{upd}'.format(dir=upd_dir, upd=update.split('/')[-1]) for update in args.update]
 		error += upload_file(upload, args.server, log)
 
+	if error:
+		message('\n<b>Ошибка копирования файлов, прерываю выполнение.</b>\n', log)
+		return error
+
 	for script, options in zip(args.script, args.options):
 
 		with open(script) as f:

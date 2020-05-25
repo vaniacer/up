@@ -27,6 +27,10 @@ def run(args, log):
 	upload = {'file': scripts, 'dest': tmp_dir}
 	error += upload_file(upload, args.server, log)
 
+	if error:
+		message('\n<b>Ошибка копирования файлов, прерываю выполнение.</b>\n', log)
+		return error
+
 	scripts = ['{tmp}/{scr}'.format(tmp=tmp_dir, scr=basename(script)) for script in scripts]
 
 	# ------------------{ Run SQL script }---------------------------------
