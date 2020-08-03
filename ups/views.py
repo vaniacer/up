@@ -9,10 +9,10 @@ from django.shortcuts import render, get_object_or_404
 from .models import Project, Update, Script, History
 from django.template.defaultfilters import register
 from os.path import getsize, exists, join as opj
+from re import sub, search, IGNORECASE, DOTALL
 from django.conf import settings as conf
 from wsgiref.util import FileWrapper
 from commands import date_validate
-from re import search, IGNORECASE
 from mimetypes import guess_type
 from operator import itemgetter
 from .forms import HideInfoForm
@@ -27,6 +27,12 @@ from os import remove
 def url_target_blank(text):
 	"""Добавляет target="_blank" к ссылкам автоматически созданным в описании сервера."""
 	return text.replace('<a ', '<a target="_blank" ')
+
+
+@register.filter(name='preview', is_safe=True)
+def make_preview(text):
+	"""Отрезает часть лога до 'результата'."""
+	return sub(u'^.*Результат:', '', text, flags=DOTALL)
 
 
 def index(request):
