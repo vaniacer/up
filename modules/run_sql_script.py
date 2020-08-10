@@ -49,14 +49,13 @@ def run(args, log):
 			dbopts="-h $dbhost -p $dbport -U $dbuser -d $dbname"
 			
 			for script in {scripts}; {{
-			
 				filename=$(basename $script)
 				log_path="${{script}}_{srv}.log"
 				
 				printf "\n<b>Выполняю скрипт $filename, тело скрипта:</b>\n<i>"
 				sed 's|<|\&lt\;|g;s|>|\&gt\;|g' "$script"
 
-				psql -v ON_ERROR_STOP=1 $dbopts < "$script" &> $log_path || ((error+=$?))
+				psql -v ON_ERROR_STOP=1 $dbopts < "$script" &> "$log_path" || ((error+=$?))
 				
 				printf "</i>\n\n<b>Результат:</b>\n"
 				sed 's|<|\&lt\;|g;s|>|\&gt\;|g' "$log_path"
