@@ -34,9 +34,13 @@ def run(args, log):
 			[[ -e /etc/system-release  ]] && {{ cat /etc/system-release; echo; }}	
 			[[ -e /etc/os-release      ]] && {{ cat /etc/os-release;     echo; }}	
 			[[ -e /usr/bin/lsb_release ]] && {{ lsb_release -a; echo; }}
-			[[ -e /usr/bin/java        ]] && {{ java  -version; echo; }}
 			[[ -e /usr/bin/psql        ]] && {{ psql  -V      ; echo; }}
 			[[ -e /usr/sbin/nginx      ]] && {{ nginx -v      ; echo; }}
+			if [[ -e ~/jdk ]]; then
+				~/jdk/bin/java -version; echo
+			elif [[ -e /usr/bin/java ]]; then
+				java -version; echo;
+			fi
 	
 			printf '<b>Logged in Users:</b>\n'
 			who
