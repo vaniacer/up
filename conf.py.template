@@ -16,6 +16,8 @@ dbpass = '1234qwer'
 # Commands log size in symbols
 logsize = 15000
 
+# Rsync speed limit
+rslimit=5000
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
