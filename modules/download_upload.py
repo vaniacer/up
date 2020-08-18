@@ -17,7 +17,9 @@ def upload_file(upload, server, log, kill=False):
 		return 1
 
 	destination = upload['dest']
-	rsync_opt = ['rsync', '--progress', '-gzort', '--bwlimit={}'.format(rslimit)]
+	rsync_opt = ['rsync', '--progress', '-gzort']
+	if rslimit:
+		rsync_opt.extend(['--bwlimit={}'.format(rslimit)])
 	rsync_opt.extend(files)
 	rsync_opt.extend(['{addr}:{dest}/'.format(dest=destination, addr=server)])
 	if kill:
@@ -45,18 +47,16 @@ def download_file(download, server, log, link=False, silent=False):
 			filename = '{old}_{key}{ext}'.format(old=filename, key=uniq(), ext=extension)
 			destination = opj(dump_dir, filename)
 
-		rsync_opt = [
-			'rsync',
-			'-gzort',
-			'--progress',
-			'--bwlimit={}'.format(rslimit),
-			'{S}:{F}'.format(S=server, F=remote_file), destination]
+		rsync_opt = ['rsync', '-gzort', '--progress', '{S}:{F}'.format(S=server, F=remote_file), destination]
+
+		if silent:
+			rsync_opt.extend(['--quiet'])
 
 		if download['kill']:
 			rsync_opt.extend(['--remove-source-files'])
 
-		if silent:
-			rsync_opt.extend(['--quiet'])
+		if rslimit:
+			rsync_opt.extend(['--bwlimit={}'.format(rslimit)])
 
 		new_error = call(rsync_opt, stdout=log, stderr=log)
 		if new_error == 0 and link:
