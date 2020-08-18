@@ -35,7 +35,7 @@ def upload_file(upload, server, log, kill=False, limit=0):
 
 def download_file(download, server, log, kill=False, link=False, silent=False, limit=0):
 	"""Закачка файлов с сервера, опции:
-		link=False - добавить ссылку если True
+		link=False - добавить ссылку на закачку с UpS'а если True
 		kill=False - удалить источник если True
 		silent=False - не выводить % загрузки если True
 		limit=0 - макс. скорость закачки для rsync в kb, 0 - без ограничений"""
