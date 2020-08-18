@@ -14,5 +14,5 @@ def run(args, log):
 	home = expanduser('~')
 	message('\n<b>Копирую скрипты</b>\n', log)
 	upload = {'file': ['{home}/utils/'.format(home=home)], 'dest': '~/.utils'}
-	error = upload_file(upload, args.server, log)
+	error = upload_file(upload, args.server, log, limit=args.limit)
 	return error

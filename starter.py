@@ -24,6 +24,7 @@ parser.add_argument('-o', '--options', help='Custom script options', action='app
 parser.add_argument('-d', '--dump',    help='List of dump files',    action='append')
 parser.add_argument('--email',         help="Email to send log",     action='append')
 parser.add_argument('-w', '--wdir',    help="Server's working directory")
+parser.add_argument('-l', '--limit',   help="Server's rsync speed limit")
 parser.add_argument('-s', '--server',  help="Server's ssh address")
 parser.add_argument('-P', '--port',    help="Server's port")
 parser.add_argument('-D', '--date',    help='Cron job date')

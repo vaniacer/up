@@ -776,7 +776,7 @@ def run_cmd(data, project, request):
 			dick['logi'] += '&logid=%s' % uniq
 			dick.update({'uniq': uniq, 'serv': serv})
 			dick['http'] = u'{http}&selected_servers={srv}'.format(http=http, srv=server_id)
-			dick['opt'] = ['--server', serv.addr, '--wdir', serv.wdir, '--port', port]
+			dick['opt'] = ['--server', serv.addr, '--wdir', serv.wdir, '--port', port, '--limit', str(serv.slim)]
 			if request.user.profile.emailme:
 				dick['opt'].extend(['--email', request.user.email])
 

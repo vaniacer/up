@@ -23,8 +23,8 @@ def download_check(args, log):
 		dlist.extend(item.split()[1::])
 
 	if dlist:
-		download = {'file': dlist, 'dest': DUMP_DIR, 'kill': False}
-		error += download_file(download, args.server, log, link=True)
+		download = {'file': dlist, 'dest': DUMP_DIR}
+		error += download_file(download, args.server, log, link=True, limit=args.limit)
 
 	return error
 
@@ -48,12 +48,12 @@ def run(args, log):
 	if files_to_upload:
 		message('\n<b>Копирую файл(ы):</b>\n', log)
 		upload = {'file': files_to_upload, 'dest': tmp_dir}
-		error += upload_file(upload, args.server, log)
+		error += upload_file(upload, args.server, log, limit=args.limit)
 
 	if args.update:
 		upload = {'file': args.update, 'dest': upd_dir}
 		updates = ['{dir}/{upd}'.format(dir=upd_dir, upd=update.split('/')[-1]) for update in args.update]
-		error += upload_file(upload, args.server, log)
+		error += upload_file(upload, args.server, log, limit=args.limit)
 
 	if error:
 		message('\n<b>Ошибка копирования файлов, прерываю выполнение.</b>\n', log)

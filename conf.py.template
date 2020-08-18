@@ -17,7 +17,7 @@ dbpass = '1234qwer'
 logsize = 15000
 
 
-# Rsync speed limit, 0 - unlimited
+# Rsync speed limit in kb, 0 - unlimited
 rslimit = 0
 
 

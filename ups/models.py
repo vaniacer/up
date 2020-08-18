@@ -129,6 +129,7 @@ class Server(models.Model):
 	desc = models.TextField(max_length=999)                            # Description
 	proj = models.ForeignKey(Project)                                  # Project relation
 	user = models.ForeignKey(User)                                     # User relation
+	slim = models.IntegerField(default=0)                              # Rsync speed limit, default 0 - unlimited
 
 	def __unicode__(self):
 		"""Возвращает строковое представление модели."""

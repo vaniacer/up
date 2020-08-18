@@ -17,12 +17,7 @@ def run(args, log):
 	cnf_dir = '{wdir}/jboss-bas-*/standalone/configuration'.format(wdir=args.wdir)
 	message('\n<b>Копирую файл {file}</b>\n'.format(file=filename), log)
 
-	download = {
-		'file': ['{wdir}/backup/{file}'.format(wdir=args.wdir, file=filename)],
-		'kill': False,
-		'dest': '',
-	}
-
+	download = {'file': ['{wdir}/backup/{file}'.format(wdir=args.wdir, file=filename)], 'dest': ''}
 	command = [
 		'ssh', args.server,
 		''' cd {conf}
@@ -50,6 +45,6 @@ def run(args, log):
 
 	error += my_call(command, log)
 	if error == 0:
-		error += download_file(download, args.server, log, link=True)
+		error += download_file(download, args.server, log, link=True, limit=args.limit)
 
 	return error

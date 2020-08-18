@@ -15,12 +15,7 @@ def run(args, log):
 	filename = '{server}_allogs_{date:%d-%m-%Y}.zip'.format(server=args.server, date=datetime.now())
 	message('\n<b>Копирую файл - {file}</b>\n'.format(file=filename), log)
 
-	download = {
-		'file': ['{wdir}/temp/{file}'.format(wdir=args.wdir, file=filename)],
-		'kill': True,
-		'dest': '',
-	}
-
+	download = {'file': ['{wdir}/temp/{file}'.format(wdir=args.wdir, file=filename)], 'dest': ''}
 	command = [
 		'ssh', args.server,
 		'zip -jy {file} {wdir}/jboss-bas-*/standalone/log/* > /dev/null'.format(
@@ -31,7 +26,7 @@ def run(args, log):
 
 	error = my_call(command, log)
 	if error == 0:
-		error += download_file(download, args.server, log, link=True)
+		error += download_file(download, args.server, log, link=True, limit=args.limit, kill=True)
 		message(
 			""" \n<b>Команда для быстрого извлечения логов(Linux):</b>
 				<div class="input-group col-md-10">

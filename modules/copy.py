@@ -14,5 +14,5 @@ def run(args, log):
 	updates = '\n'.join(update.split('/')[-1] for update in args.update)
 	message('\n<b>Копирую файл(ы):\n{files}</b>\n'.format(files=updates), log)
 	upload = {'file': args.update, 'dest': '{wdir}/updates/new/'.format(wdir=args.wdir)}
-	error = upload_file(upload, args.server, log)
+	error = upload_file(upload, args.server, log, limit=args.limit)
 	return error

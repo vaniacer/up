@@ -31,13 +31,16 @@ class ProjectForm(forms.ModelForm):
 class ServerForm(forms.ModelForm):
 	class Meta:
 		model = Server
-		fields = ['name', 'addr', 'wdir', 'http', 'zabx', 'desc', 'port']
+		fields = ['name', 'addr', 'wdir', 'http', 'zabx', 'desc', 'port', 'slim']
 		labels = {
-			'name': 'Server name', 'desc': 'Server description',
-			'addr': 'SSH address', 'wdir': 'Working directory',
+			'name': 'Server name',
+			'desc': 'Server description',
+			'addr': 'SSH address',
+			'wdir': 'Working directory',
 			'http': 'HTTP(S) address(if available)',
 			'zabx': 'Zabbix(monitoring) address(if available)',
-			'port': 'Server binding port'
+			'port': 'Server binding port',
+			'slim': 'Rsync speed limit in kb, 0 - unlimited, used in upload\\download',
 		}
 
 

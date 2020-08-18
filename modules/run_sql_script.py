@@ -25,7 +25,7 @@ def run(args, log):
 
 	message('\n<b>Копирую файл(ы):</b>\n', log)
 	upload = {'file': scripts, 'dest': tmp_dir}
-	error += upload_file(upload, args.server, log)
+	error += upload_file(upload, args.server, log, limit=args.limit)
 
 	if error:
 		message('\n<b>Ошибка копирования файлов, прерываю выполнение.</b>\n', log)
@@ -74,8 +74,8 @@ def run(args, log):
 
 	# ------------------{ Download logs }---------------------------------
 	download_list = ['{scr}_{srv}.log'.format(srv=args.server, scr=script) for script in scripts]
-	download = {'file': download_list, 'dest': DUMP_DIR, 'kill': False}
-	error += download_file(download, args.server, log, link=True, silent=True)
+	download = {'file': download_list, 'dest': DUMP_DIR}
+	error += download_file(download, args.server, log, link=True, silent=True, limit=args.limit)
 
 	# ------------------{ Delete tmp folder }-----------------------------
 	remove_tmp = ['ssh', args.server, 'rm -rf {tmp}'.format(tmp=tmp_dir)]

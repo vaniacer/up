@@ -25,7 +25,7 @@ def run(args, log):
 
 	message('\n<b>Копирую файл {}</b>\n'.format(filename), log)
 	upload = {'file': [dump], 'dest': tmp_dir}
-	error += upload_file(upload, args.server, log)
+	error += upload_file(upload, args.server, log, limit=args.limit)
 
 	command = [
 		'ssh', args.server,
