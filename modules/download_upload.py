@@ -9,7 +9,7 @@ from subprocess import call
 from conf import rslimit
 
 
-def upload_file(upload, server, log, kill=False, limit=0):
+def upload_file(upload, server, log, kill=False, limit=rslimit):
 	"""Закачка файлов на сервер, опции:
 		kill=False - удалить источник если True
 		limit=0 - макс. скорость закачки для rsync в kb, 0 - без ограничений"""
@@ -24,8 +24,6 @@ def upload_file(upload, server, log, kill=False, limit=0):
 		rsync_opt.extend(['--remove-source-files'])
 	if int(limit):
 		rsync_opt.extend(['--bwlimit={}'.format(limit)])
-	elif rslimit:
-		rsync_opt.extend(['--bwlimit={}'.format(rslimit)])
 	rsync_opt.extend(files)
 	rsync_opt.extend(['{addr}:{dest}/'.format(dest=destination, addr=server)])
 
@@ -33,7 +31,7 @@ def upload_file(upload, server, log, kill=False, limit=0):
 	return error
 
 
-def download_file(download, server, log, kill=False, link=False, silent=False, limit=0):
+def download_file(download, server, log, kill=False, link=False, silent=False, limit=rslimit):
 	"""Закачка файлов с сервера, опции:
 		link=False - добавить ссылку на закачку с UpS'а если True
 		kill=False - удалить источник если True
@@ -61,8 +59,6 @@ def download_file(download, server, log, kill=False, link=False, silent=False, l
 			rsync_opt.extend(['--remove-source-files'])
 		if int(limit):
 			rsync_opt.extend(['--bwlimit={}'.format(limit)])
-		elif rslimit:
-			rsync_opt.extend(['--bwlimit={}'.format(rslimit)])
 
 		new_error = call(rsync_opt, stdout=log, stderr=log)
 		if new_error == 0 and link:

@@ -3,6 +3,7 @@
 from sys import argv
 from os import remove
 from time import sleep
+from conf import rslimit
 from os.path import exists
 from getpass import getuser
 from subprocess import call
@@ -23,7 +24,7 @@ parser.add_argument('-x', '--script',  help='List of script files',  action='app
 parser.add_argument('-o', '--options', help='Custom script options', action='append')
 parser.add_argument('-d', '--dump',    help='List of dump files',    action='append')
 parser.add_argument('--email',         help="Email to send log",     action='append')
-parser.add_argument('-l', '--limit',   help="Server's rsync speed limit",  default=0)
+parser.add_argument('-l', '--limit',   help="Server's rsync speed limit", default=rslimit)
 parser.add_argument('-w', '--wdir',    help="Server's working directory")
 parser.add_argument('-s', '--server',  help="Server's ssh address")
 parser.add_argument('-P', '--port',    help="Server's port")
