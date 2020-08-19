@@ -84,7 +84,7 @@ def send_email(message, err):
 	if err > 0:
 		status = 'fail'
 	subject = 'Cron job {key} on {srv} {stat}'.format(key=args.key, srv=args.server, stat=status)
-	message = sub(u'.*езультат:', '', message, flags=DOTALL)  # cut script body from email message
+	message = sub('.*езультат:</b>', '', message, flags=DOTALL)  # cut script body from email message
 	message = '<pre>{mes}</pre>\nКод ошибки: {err}'.format(mes=message, err=err)
 	email = EmailMessage(subject, message, to=args.email)
 	email.content_subtype = "html"
