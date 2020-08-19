@@ -32,7 +32,7 @@ def url_target_blank(text):
 @register.filter(name='preview', is_safe=True)
 def make_preview(text):
 	"""Отрезает часть лога до 'результата'."""
-	return sub(u'^.*Результат:', '', text, flags=DOTALL)
+	return sub(u'.*езультат:', '', text, flags=DOTALL)
 
 
 def index(request):

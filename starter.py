@@ -76,6 +76,7 @@ def add_cron_job():
 
 def send_email(message, err):
 	"""Отправляет лог на почту"""
+	from re import sub, DOTALL
 	from django.conf import settings
 	settings.configure(**locals())
 	from django.core.mail import EmailMessage
@@ -83,6 +84,7 @@ def send_email(message, err):
 	if err > 0:
 		status = 'fail'
 	subject = 'Cron job {key} on {srv} {stat}'.format(key=args.key, srv=args.server, stat=status)
+	message = sub(u'.*езультат:', '', message, flags=DOTALL)  # cut script body from email message
 	message = '<pre>{mes}</pre>\nКод ошибки: {err}'.format(mes=message, err=err)
 	email = EmailMessage(subject, message, to=args.email)
 	email.content_subtype = "html"
